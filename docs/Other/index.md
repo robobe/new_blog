@@ -24,7 +24,9 @@
         <p>Block 5 Description</p>
     </div>
     <div class="grid-item">
-        <img src="images/block6.png" alt="Block 6">
-        <p>Block 6 Description</p>
+    <a href="Presentation/">
+        <img src="images/presentation.png" width="150" height="150">
+        <p>Presentation</p>
+        </a>
     </div>
 </div>

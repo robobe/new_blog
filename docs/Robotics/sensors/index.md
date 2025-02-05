@@ -1,10 +1,10 @@
-# Robotics
+# Sensors
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="sensors">
-                <img src="images/sensors.png"  width="150" height="150">
-                <p>sensors</p></a>
+        <a href="imu">
+                <img src="images/imu.png"  width="150" height="150">
+                <p>imu</p></a>
     </div>
     <div class="grid-item">
         <img src="images/block2.png" alt="Block 2">
