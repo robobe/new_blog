@@ -1,5 +1,15 @@
+---
+tags:
+    - vscode
+    - tips
+    - settings
+---
+
+
 # VSCode tips and settings
 
+
+  
 ## keyboard shortcuts
 ### VSCode explorer 
 Add `new file` and `new folder` keyboard shortcut in file explorer

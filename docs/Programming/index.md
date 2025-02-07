@@ -2,22 +2,24 @@
 
 <div class="grid-container">
     <div class="grid-item">
-    <a href="python">
-        <img src="images/python.png" alt="Block 1"  width="150" height="150">
-        <p>Python</p>
+        <a href="python">
+            <img src="images/python.png"  width="150" height="150">
+            <p>Python</p>
         </a>
     </div>
     <div class="grid-item">
-        <img src="images/block2.png" alt="Block 2">
+        <img src="images/cpp.png"   width="150" height="150">
         <p>C/CPP</p>
     </div>
     <div class="grid-item">
-        <img src="images/block3.png" alt="Block 3">
+        <img src="images/website.png"   width="150" height="150">
         <p>Web</p>
     </div>
     <div class="grid-item">
-        <img src="images/block4.png" alt="Block 4">
-        <p>Block 4 Description</p>
+        <a href="ai">
+            <img src="images/ai.png"  width="150" height="150">
+            <p>AI</p>
+        </a>
     </div>
     <div class="grid-item">
         <img src="images/block5.png" alt="Block 5">
