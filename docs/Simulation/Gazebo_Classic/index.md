@@ -1,10 +1,9 @@
 ---
 tags:
-    - git
+    - gazebo
 ---
 
-
-# Git
+# Gazebo Classic
 
 <div class="grid-container">
     <div class="grid-item">
@@ -14,21 +13,16 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href="branching">
-        <img src="images/git_flow.png" width="150" height="150">
-        <p>Git branching</p>
+    <a href="sensors">
+        <img src="images/sensors.png" width="150" height="150">
+        <p>Sensors</p>
         </a>
     </div>
     <div class="grid-item">
-         <a href="github_action">
-        <img src="images/github_action.png" width="150" height="150">
-        <p>Github Actions</p>
+        <a href="docker_nvidia">
+        <img src="images/docker_nvidia.png" width="150" height="150">
+        <p>TBD</p>
         </a>
     </div>
     
 </div>
-
-
-
-- [Git submodule](git_submodule.md)
-- [Git hooks](git_hooks.md)

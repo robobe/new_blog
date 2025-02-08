@@ -5,10 +5,44 @@ tags:
     - tmuxp
 ---
 
+# tmuxp
+
+Tmuxp is a session manager for tmux, allowing you to define tmux sessions using a YAML configuration
+
+### install
+
+```
+pip install tmuxp
+```
+
+### config
+
+```yaml title="my_session.yaml"
+session_name: my_session
+windows:
+  - window_name: my_window
+    panes:
+      - shell_command: 
+          - printf '\033]2;%s\033\\' 'pane1'
+          - ./script1.sh  # Runs script1 in the first pane
+        focus: true
+      - shell_command:
+          - printf '\033]2;%s\033\\' 'pane2'
+          - ./script2.sh  # Runs script2 in the second pane
+```
+
+### usage
+```bash
+tmuxp load my_session.yaml
+```
+
+--- 
+
 # tmux
 
 ## Config
 
+<details><summary>tmux.conf</summary>
 ```
 # unbind
 unbind C-b
@@ -56,3 +90,5 @@ bind r source-file ~/.tmux.conf
 
 # settings
 ```
+
+</details>

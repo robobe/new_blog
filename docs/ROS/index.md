@@ -13,17 +13,21 @@
         </div>
     <div class="grid-item">
     <a href="ros_eco">
-        <img src="images/ros_echo.png"   width="150" height="150">
+        <img src="images/ros_echo.png"  width="150" height="150">
             <p>ROS Eco</p>
             </a>
     </div>
     <div class="grid-item">
-        <img src="images/block4.png" alt="Block 4">
-        <p>Block 4 Description</p>
+    <a href="urdf_xacro">
+        <img src="images/urdf_xacro.png"  width="150" height="150">
+        <p>URDF and XACRO</p>
+        </a>
     </div>
     <div class="grid-item">
-        <img src="images/block5.png" alt="Block 5">
-        <p>Block 5 Description</p>
+        <a href="ros_world">
+        <img src="images/ros_world.png"  width="150" height="150">
+        <p>ROS world</p>
+        </a>
     </div>
     <div class="grid-item">
         <a href="zenoh">
