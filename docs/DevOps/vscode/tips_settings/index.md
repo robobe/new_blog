@@ -55,3 +55,10 @@ I accidentally pressed some key combonition and the "Tab" switch the focus mode 
 
 ![](images/tab_focus_mode.png)
 
+### Add custom color to active tab
+
+```json
+"workbench.colorCustomizations": {
+        "tab.activeBorder": "#ff0000",
+        "tab.activeBackground": "#373737"
+    },
