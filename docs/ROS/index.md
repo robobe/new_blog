@@ -25,7 +25,7 @@
     </div>
     <div class="grid-item">
         <a href="ros_world">
-        <img src="images/ros_world.png"  width="150" height="150">
+        <img src="images/ros_world.png"  width="300" height="150">
         <p>ROS world</p>
         </a>
     </div>

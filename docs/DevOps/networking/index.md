@@ -28,5 +28,3 @@ tags:
 
 ---
 
-## 
-- [checking mtu](checking_mtu.md)

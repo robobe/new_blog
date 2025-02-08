@@ -44,3 +44,14 @@ Add `key` to `keybindings.json` file
 ```
 
 - rcfile: specify an alternative initialization file (RC file) to source when starting a new bash session
+
+---
+
+## Editor
+
+### Tab key function
+
+I accidentally pressed some key combonition and the "Tab" switch the focus mode between pans' using command pallette to change tab function
+
+![](images/tab_focus_mode.png)
+
