@@ -133,9 +133,9 @@ Bridge send data from gz to ros one way
     ```
 
 !!! tip sign between ros2 type to gz type
-    @  == a bidirectional bridge, 
-    [  == a bridge from Gazebo to ROS,
-    ]  == a bridge from ROS to Gazebo.
+    - @  → a bidirectional bridge, 
+    - [  → a bridge from Gazebo to ROS,
+    - ]  → a bridge from ROS to Gazebo.
      
 
 

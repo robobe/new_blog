@@ -18,9 +18,9 @@
             </a>
     </div>
     <div class="grid-item">
-    <a href="urdf_xacro">
-        <img src="images/urdf_xacro.png"  width="150" height="150">
-        <p>URDF and XACRO</p>
+    <a href="dev_environment">
+        <img src="images/ros_dev.png"  width="220" height="150">
+        <p>Dev Environment</p>
         </a>
     </div>
     <div class="grid-item">
@@ -36,3 +36,4 @@
         </a>
     </div>
 </div>
+

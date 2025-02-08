@@ -12,7 +12,6 @@
             <p>Gazebo</p></a>
     </div>
     <div class="grid-item">
-        <img src="images/block3.png" alt="Block 3">
         <p>Block 3 Description</p>
     </div>
    </div>
