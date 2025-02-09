@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/packages/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/zenoh/ros_bridge/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>ROS Eco system - Robots Inside</title>
+        <title>Zenoh ROS Bridge - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ros-eco-system" class="md-skip">
+        <a href="#zenoh-ros-bridge" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ROS Eco system
+              Zenoh ROS Bridge
             
           </span>
         </div>
@@ -567,9 +567,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#message_filters" class="md-nav__link">
+  <a href="#install-zenoh-plugin-ros2dds" class="md-nav__link">
     <span class="md-ellipsis">
-      Message_filters
+      Install zenoh-plugin-ros2dds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-pycdr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install pycdr
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sub-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sub Demo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pub-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pub Demo
     </span>
   </a>
   
@@ -589,48 +616,146 @@
                 
                   
 
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">bridge</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">ros</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">zenoh</span>
+      
+    
+  </nav>
+
 
   
   
 
 
-<h1 id="ros-eco-system">ROS Eco system</h1>
-<p>Ros packages and tools that are used in the ROS eco system.</p>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="diagnostics">
-            <img src="images/diagnostics.png"  width="150" height="150">
-            <p>Diagnostics</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <p>TBD</p>
-    </div>
-    <div class="grid-item">
-        <p>TBD</p>
-    </div>
-</div>
+<h1 id="zenoh-ros-bridge">Zenoh ROS Bridge</h1>
+<p>Using zenoh bridge to pub/sub message from python script to ROS2 and vice versa.</p>
+<h2 id="install-zenoh-plugin-ros2dds">Install zenoh-plugin-ros2dds</h2>
+<p>Download and extract , bridge standalone executable </p>
+<p><a href="https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/releases">zenoh-plugin-ros2dds-1.2.0-x86_64-unknown-linux-gnu-standalone.zip </a></p>
+<h2 id="install-pycdr">Install pycdr</h2>
+<p>The IDL part of the CycloneDDS package as standalone version, to support packages that need CDR (de)serialisation without the Cyclone DDS API.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>pip install pycdr2
+</code></pre></div></td></tr></table></div>
+<h2 id="sub-demo">Sub Demo</h2>
+<p>Send ROS2 messages to zenoh and receive it using python script</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal 1</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>./zenoh-bridge-ros2dds
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal 2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/my_int32_topic<span class="w"> </span>std_msgs/msg/Int32<span class="w"> </span><span class="s2">&quot;{data: 10}&quot;</span><span class="w"> </span>--rate<span class="w"> </span><span class="m">1</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">zenoh</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pycdr2</span><span class="w"> </span><span class="kn">import</span> <span class="n">IdlStruct</span> 
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pycdr2.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">int32</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">Int32</span><span class="p">(</span><span class="n">IdlStruct</span><span class="p">,</span> <span class="n">typename</span><span class="o">=</span><span class="s2">&quot;Int32&quot;</span><span class="p">):</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    <span class="n">data</span><span class="p">:</span> <span class="n">int32</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">msg</span> <span class="o">=</span> <span class="n">Int32</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">payload</span><span class="p">))</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="n">conf</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">Config</span><span class="p">()</span>    
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="n">session</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="n">sub</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">declare_subscriber</span><span class="p">(</span><span class="s1">&#39;my_int32_topic&#39;</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="pub-demo">Pub Demo</h2>
+<p>Pub ROS2 messages to zenoh and subscribe using ROS</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal 1</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>./zenoh-bridge-ros2dds
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">zenoh</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pycdr2</span><span class="w"> </span><span class="kn">import</span> <span class="n">IdlStruct</span> 
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pycdr2.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">int32</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">Int32</span><span class="p">(</span><span class="n">IdlStruct</span><span class="p">,</span> <span class="n">typename</span><span class="o">=</span><span class="s2">&quot;Int32&quot;</span><span class="p">):</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="n">data</span><span class="p">:</span> <span class="n">int32</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="n">conf</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">Config</span><span class="p">()</span>    
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="n">session</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>    <span class="n">session</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s1">&#39;my_int32_topic&#39;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">counter</span><span class="p">)</span><span class="o">.</span><span class="n">serialize</span><span class="p">())</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a>    <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Published: </span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
 
-<div class="grid-container">
-    <div class="grid-item">
-        <p>TBD</p>
-    </div>
-    <div class="grid-item">
-        <p>TBD</p>
-    </div>
-    <div class="grid-item">
-        <p>TBD</p>
-    </div>
-</div>
-
-<h2 id="message_filters">Message_filters</h2>
-<p>Message_filters is a collection of message "filters" which take messages in. and may or may not output the message at some time in the future, depending on a policy defined for that filter. <a href="ros_package_message_filter/">more</a></p>
 
 
 
 
 
 
+  
+  
 
 
 
