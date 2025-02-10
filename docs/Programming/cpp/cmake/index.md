@@ -1,0 +1,8 @@
+---
+tags:
+    - cmake
+    - cpp
+---
+
+# CMake
+

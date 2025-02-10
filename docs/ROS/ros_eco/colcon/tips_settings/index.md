@@ -22,17 +22,24 @@ source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 ---
 
 ## colcon defaults
+[colcon read the docs](https://colcon.readthedocs.io/en/released/user/configuration.html#defaults-yaml)
 
-Set default option for `colcon` by create file `defaults.yaml` at `~/.colcon/` directory.
+Set default option for `colcon` by create file `colcon_defaults.yaml` file at `workspace` directory.
 
-```yaml title=default.yaml
-{
-    "build": {
-        "cmake-args": ["-DCMAKE_BUILD_TYPE=RelWithDebInfo"],
-        "merge-install": true,
-        "symlink-install": true
-    },
-    "test": {
-        "merge-install": true,
-    },
-}
+```yaml title="default.yaml"
+build:
+  # Use symlink install to speed up builds
+  symlink-install: true
+  # Set build type (e.g., Release or Debug)
+  cmake-args:
+    - "-DCMAKE_BUILD_TYPE=Release"
+
+test:
+  # Run tests in parallel
+  parallel-workers: 4
+
+# Additional settings for colcon test and other commands
+test-result:
+  verbose: true
+
+```
