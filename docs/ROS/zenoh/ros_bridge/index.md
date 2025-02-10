@@ -8,16 +8,24 @@ tags:
 # Zenoh ROS Bridge
 Using zenoh bridge to pub/sub message from python script to ROS2 and vice versa.
 
+!!! warning "versions"
+    - ubuntu 22.04
+    - ROS humble
+    - zenoh 1.2.0
+    - zenoh-plugin-ros2dds 1.2.0
+    - pycdr2 1.0.0
+     
 ## Install zenoh-plugin-ros2dds
 Download and extract , bridge standalone executable 
 
 [zenoh-plugin-ros2dds-1.2.0-x86_64-unknown-linux-gnu-standalone.zip ](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/releases)
 
-## Install pycdr
+## Install 
 The IDL part of the CycloneDDS package as standalone version, to support packages that need CDR (de)serialisation without the Cyclone DDS API.
 
 ```
 pip install pycdr2
+pip install eclipse-zenoh==1.2.0
 ```
 
 
@@ -63,12 +71,16 @@ while True:
 ## Pub Demo
 Pub ROS2 messages to zenoh and subscribe using ROS
 
+!!! warning "subscriber"
+     For this demo to work there must be running subscriber ROS node for this topic.
+
+
 ```bash title="Terminal 1"
 export ROS_DISTRO=humble
 ./zenoh-bridge-ros2dds
 ```
 
-```python
+```python title="zenoh pub"
 import zenoh
 from dataclasses import dataclass
 from pycdr2 import IdlStruct 
@@ -87,4 +99,32 @@ while True:
     session.put('my_int32_topic', Int32(data=counter).serialize())
     counter += 1
     print(f"Published: {counter}")
+```
+
+```python title="subscriber node"
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Int32
+
+TOPIC = "my_int32_topic"
+
+class MyNode(Node):
+    def __init__(self):
+        node_name="minimal"
+        super().__init__(node_name)
+        self.create_subscription(Int32, TOPIC, self.callback, 10)
+        self.get_logger().info("Hello ROS2")
+
+    def callback(self, msg):
+        self.get_logger().info(f"Received: {msg.data}")
+        
+def main(args=None):
+    rclpy.init(args=args)
+    node = MyNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
 ```

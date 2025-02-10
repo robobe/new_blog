@@ -7,7 +7,7 @@ tags:
 ---
 
 # ROS2 Python Unit Test
-
+[base on](https://arnebaeyens.com/blog/2024/ros2-integration-testing/)
 ## Simple very simple demo
 Show how to use pytest in ros2 python package using ament_cmake 
 
@@ -53,3 +53,8 @@ colcon test --packages-select ros_py  --event-handlers console_direct+
 # run specific test
 colcon test --packages-select ros_py --pytest-args -k test_math --event-handlers console_direct+
 ```
+
+---
+
+## Reference
+- [Integration and unit testing in ROS 2](https://arnebaeyens.com/blog/2024/ros2-integration-testing/)
