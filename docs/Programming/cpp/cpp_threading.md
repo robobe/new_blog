@@ -32,6 +32,7 @@ int main() {
 ```
 
 ## Mutex, Race Conditiion and Critical Section
+A std::mutex is an object that prevents multiple threads from accessing a shared resource simultaneously. It ensures that only one thread can lock it at a time, avoiding race conditions.
 
 ```cpp
 #include<mutex>
@@ -58,6 +59,22 @@ int main(){
     cout << amount << endl;
     return 0;
 }
+```
+
+- std::lock_guard: Automatically locks the mutex when it’s created and unlocks it when destroyed.
+- std::unique_lock: More flexible than lock_guard. Can lock and unlock mutexes multiple times.
+
+### lock_guard
+Instead of manually calling lock() and unlock(), use std::lock_guard, which automatically releases the lock when it goes out of scope.
+
+- Prevents forgetting unlock()
+- Handles exceptions safely
+
+```cpp
+void addAmount(){
+    std::lock_guard<std::mutex> guard(mtx);
+    amount++;//Critical Section
+} // Automatically unlocks when `guard` goes out of scope
 ```
 
 ---

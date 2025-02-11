@@ -5,7 +5,7 @@ tags:
 ---
 
 # Docker Compose
-
+Docker Compose is a tool for defining and managing multi-container Docker applications using a YAML configuration file. Instead of manually running multiple docker run commands
 
 !!! note "`docker-compose` vs `docker compose`"
     `docker-compose` is the original command, `docker compose` is the new command. 

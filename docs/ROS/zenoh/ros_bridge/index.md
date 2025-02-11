@@ -6,11 +6,12 @@ tags:
 ---
 
 # Zenoh ROS Bridge
-Using zenoh bridge to pub/sub message from python script to ROS2 and vice versa.
+Using zenoh bridge to pub/sub and message call from python script to ROS2 and vice versa.
 
 !!! warning "versions"
     - ubuntu 22.04
     - ROS humble
+    - cycloneDDS
     - zenoh 1.2.0
     - zenoh-plugin-ros2dds 1.2.0
     - pycdr2 1.0.0
@@ -127,4 +128,126 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+```
+
+---
+
+## Service Demo
+Call ROS2 service from zenoh python 
+
+### Demo
+- Service node with message type `std_srv.srv.Trigger`
+- zenoh ros bridge
+- zenoh service client (get)
+
+
+#### ROS Service Node
+ROS node that run service with nessage `std_srv.srv.Trigger`
+
+```python title="demo_service.py"
+#!/usr/bin/env python3
+
+
+import rclpy
+from rclpy.node import Node
+from std_srvs.srv import Trigger
+from rclpy.qos import qos_profile_services_default
+
+TOPIC = "trigger_srv"
+
+class MyNode(Node):
+    def __init__(self):
+        node_name="minimal_srv"
+        super().__init__(node_name)
+        self.srv = self.create_service(Trigger, TOPIC, self.handler, qos_profile=qos_profile_services_default)
+        self.get_logger().info("Hello ROS2")
+
+    def handler(self, request: Trigger.Request, response: Trigger.Response):
+        self.get_logger().info("Trigger service called")
+        response.success = True
+        response.message = "success"
+        print(response)
+        return response
+    
+def main(args=None):
+    rclpy.init(args=args)
+    node = MyNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+#### Zenoh client
+
+```python title="zenoh get"
+import zenoh
+
+from dataclasses import dataclass
+from pycdr2 import IdlStruct
+from zenoh import Reply
+import time
+
+# ros2 service call /trigger_srv std_srvs/srv/Trigger
+
+TOPIC = "trigger_srv"
+
+@dataclass
+class TriggerRequest(IdlStruct):
+   pass
+
+
+@dataclass
+class TriggerResponse(IdlStruct):
+   success: bool
+   message: str
+   
+
+
+def handle_replay(reply: Reply):
+    try:
+        print(reply.ok)
+        message = TriggerResponse.deserialize(reply.ok.payload.to_bytes())
+
+        print(f">> Received {message}")
+    except Exception as e:
+        print(e)
+        print(">> Received ERROR")
+
+conf = zenoh.Config()    
+session = zenoh.open(conf)
+
+req = TriggerRequest().serialize()
+replies = session.get(TOPIC, payload=req, handler=handle_replay)
+
+time.sleep(2)
+session.close()
+
+```
+
+#### usage
+
+```bash title="Terminal 1"
+export ROS_DISTRO=humble
+./zenoh-bridge-ros2dds
+```
+
+```bash title="terminal 2"
+# run ros service
+```
+
+```bash title="check service"
+# using ros2 cli
+
+ros2 service call /trigger_srv std_srvs/srv/Trigger
+```
+
+```bash title="zeno client"
+# run zeno client
+python3 ros_srv_call.py 
+
+
+>> Received TriggerResponse(success=True, message='success')
 ```

@@ -20,7 +20,7 @@
     <div class="grid-item">
     <a href="dev_environment">
         <img src="images/ros_dev.png"  width="220" height="150">
-        <p>Dev Environment</p>
+        <p>Dev/Build/Deploy Env.</p>
         </a>
     </div>
     <div class="grid-item">
