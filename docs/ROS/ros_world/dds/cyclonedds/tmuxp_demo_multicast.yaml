@@ -5,10 +5,11 @@ windows:
     suppress_history: false
     shell_command_before:
       - source /opt/ros/humble/setup.bash
-      - export CYCLONEDDS_URI=file:///home/user/temp.xml
+      # - sudo sysctl -w net.core.rmem_max=30000000
+      - export CYCLONEDDS_URI=file:///home/user/projects/blog/docs/ROS/ros_world/dds/cyclonedds/cyclonedds.xml
     panes:
       - shell_command: #
-          - export GSCAM_CONFIG="videotestsrc pattern=snow ! video/x-raw,width=640,height=480,framerate=30/1 ! videoconvert"
+          - export GSCAM_CONFIG="videotestsrc pattern=snow ! video/x-raw,width=640,height=480,framerate=10/1 ! videoconvert"
           - ros2 run gscam gscam_node
       - shell_command: #
           - ros2 run rqt_image_view rqt_image_view

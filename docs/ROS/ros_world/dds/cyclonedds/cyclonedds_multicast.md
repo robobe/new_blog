@@ -7,6 +7,8 @@ tags:
 ---
 
 # CycloneDDS XML configuration
+- [CycloneDDS config](https://cyclonedds.io/docs/cyclonedds/0.9.1/config.html)
+- [xml reference](https://cyclonedds.io/docs/cyclonedds/latest/config/config_file_reference.html)
 
 Default Multicast Behavior in CycloneDDS (ROS 2 Humble)
 
@@ -106,3 +108,8 @@ tmuxp load tmuxp_demo_multicast.yaml
     support multicast
 
 ![alt text](images/multicst_pub_image_two_subscriber.png)
+
+---
+
+## Reference
+- [Download tmuxp file](tmuxp_demo_multicast.yaml)
