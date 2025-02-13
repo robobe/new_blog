@@ -30,7 +30,8 @@ tags:
 ---
 
 - [zenoh json5 configuration schema](https://github.com/eclipse-zenoh/zenoh/blob/main/DEFAULT_CONFIG.json5)
-- 
+- [build zenoh bridge with shm support ](ros_bridge/zenoh_bridge_build_with_shm.md)
+
 ---
 
 ## References

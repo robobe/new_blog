@@ -1,0 +1,21 @@
+session_name: dds
+windows:
+  - window_name: cyclone
+    layout: tiled
+    suppress_history: false
+    shell_command_before:
+      - source /opt/ros/humble/setup.bash
+      - export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - export CYCLONEDDS_URI=file:///shm.xml
+    panes:
+      - shell_command:
+          - iox-roudi 
+      - shell_command:
+          - export ROS_DISTRO=humble
+          - cd ~/apps/zenoh
+          - ./zenoh-bridge-ros2dds  --dds-enable-shm
+      - shell_command: #
+          - echo "pub"
+          # - ros2 topic pub /my_int32_topic std_msgs/msg/Int32 "{data: 10}" --rate 1
+      - shell_command: #
+          - python3 /home/user/workspaces/zenoh_ws/ros_subscriber.py

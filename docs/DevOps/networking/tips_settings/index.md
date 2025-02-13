@@ -15,5 +15,12 @@ sudo iptables -t nat -s 10.0.0.0/24 -A POSTROUTING -j MASQUERADE
 echo 1 > sudo tee /proc/sys/net/ipv4/ip_forward
 ```
 
+## Allow multicast on Locakhost
+```
+sudo ifconfig lo multicast
+```
+
+---
+
 ## Posts
 - [checking mtu](checking_mtu.md)

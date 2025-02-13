@@ -9,6 +9,25 @@ tags:
 
 # Using VSCode devcontainer and docker as dev environment
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="dev_container">
+        <img src="images/dev_container.png" width="150" height="150">
+        <p>devcontainer</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="build">
+        <p>TBD</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="prod">
+        <p>TBD</p>
+        </a>
+    </div>
+    
+</div>
 
 ## Project Docker images 
 

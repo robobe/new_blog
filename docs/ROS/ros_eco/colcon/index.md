@@ -13,7 +13,10 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <p>TBD</p>
+    <a href="ament">
+        <img src="images/tips_and_settings.png" width="150" height="150">
+        <p>ament</p>
+        </a>
     </div>
     <div class="grid-item">
         <p>TBD</p>

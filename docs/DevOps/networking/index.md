@@ -28,3 +28,6 @@ tags:
 
 ---
 
+## Posts
+
+- [configure netplan and netowokd](network_netplan.md)
