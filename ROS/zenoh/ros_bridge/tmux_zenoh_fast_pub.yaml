@@ -1,0 +1,18 @@
+session_name: dds
+windows:
+  - window_name: cyclone
+    layout: tiled
+    suppress_history: false
+    shell_command_before:
+      - source /opt/ros/humble/setup.bash
+      - export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    panes:
+      - shell_command:
+          - export ROS_DISTRO=humble
+          - cd ~/apps/zenoh
+          - ./zenoh-bridge-ros2dds
+      - shell_command: #ros subscriber
+          - python3 /home/user/workspaces/zenoh_ws/ros_subscriber.py
+      - shell_command: #pub from zenoh
+          - python3 /home/user/workspaces/zenoh_ws/zenoh_publisher.py
+

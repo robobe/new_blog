@@ -560,6 +560,41 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#config-machine-as-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      config machine as router
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#allow-multicast-on-locakhost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allow multicast on Locakhost
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#posts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Posts
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -594,6 +629,22 @@
 
 
 <h1 id="networking-tips-and-settings">Networking Tips and Settings</h1>
+<h2 id="config-machine-as-router">config machine as router</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>#!/bin/sh
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>sudo iptables -P FORWARD ACCEPT
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>sudo iptables -t nat -s 10.0.0.0/24 -A POSTROUTING -j MASQUERADE
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>echo 1 &gt; sudo tee /proc/sys/net/ipv4/ip_forward
+</code></pre></div></td></tr></table></div>
+<h2 id="allow-multicast-on-locakhost">Allow multicast on Locakhost</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo ifconfig lo multicast
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="posts">Posts</h2>
 <ul>
 <li><a href="checking_mtu/">checking mtu</a></li>
 </ul>
