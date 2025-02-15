@@ -6,13 +6,13 @@ windows:
     shell_command_before:
       - source /opt/ros/humble/setup.bash
       - export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - export CYCLONEDDS_URI=file:///shm.xml
+      - export CYCLONEDDS_URI=file:///home/user/projects/blog/docs/ROS/zenoh/ros_bridge/shm.xml
     panes:
       - shell_command:
           - iox-roudi 
       - shell_command:
           - export ROS_DISTRO=humble
-          - cd ~/apps/zenoh
+          - cd /home/user/git/zenoh-plugin-ros2dds-1.1.0/target/release
           - ./zenoh-bridge-ros2dds  --dds-enable-shm
       - shell_command: #
           - echo "pub"

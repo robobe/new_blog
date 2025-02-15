@@ -560,71 +560,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#build-with-shm" class="md-nav__link">
-    <span class="md-ellipsis">
-      build with SHM
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="build with SHM">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#build" class="md-nav__link">
-    <span class="md-ellipsis">
-      Build
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Usage
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tmux-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      tmux script
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reference
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -671,24 +606,16 @@
 
 
 <h1 id="zenoh-bridge-with-shm-support">Zenoh Bridge with SHM support</h1>
+<h1 id="under-construction">under construction</h1>
 <ul>
 <li>zenoh-plugin-ros2dds</li>
 </ul>
 <h2 id="build-with-shm">build with SHM</h2>
 <ul>
-<li>Clone <a href="">zenoh-plugin-ros2dds</a></li>
-<li>Clone <a href="">iceoryx</a></li>
+<li>Download source (v 1.2.0) <a href="https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/archive/refs/tags/1.2.0.zip">download</a></li>
+<li>Extract and run:</li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title">fix include</p>
-<p>Create symbolink link between <code>/usr/include</code> to build location</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>cd /usr/include
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo ls -s &lt;&gt;/include/iceoryx_binding_c /iceoryx_binding_c
-</code></pre></div></td></tr></table></div>
-</div>
-<h3 id="build">Build</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>cargo build --releases --features dds_shm
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>cargo build --release --features dds_shm
 </code></pre></div></td></tr></table></div>
 <div class="admonition note">
 <p>binary locate at <code>target/release</code> folder</p>
@@ -698,9 +625,30 @@
 <li>Run with shm flag</li>
 <li>Set cyclondds.xml for shm</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>./zenoh-bridge-ros2dds<span class="w"> </span>--dds-enable-shm
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>./zenoh-bridge-ros2dds<span class="w"> </span>--dds-enable-shm
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">cyclondds.xml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">cyclondds.xml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://cdds.io/config&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">    </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/iceoryx/etc/cyclonedds.xsd&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;any&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span><span class="nt">&lt;SharedMemory&gt;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">            </span><span class="nt">&lt;Enable&gt;</span>true<span class="nt">&lt;/Enable&gt;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">            </span><span class="nt">&lt;LogLevel&gt;</span>info<span class="nt">&lt;/LogLevel&gt;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="nt">&lt;/SharedMemory&gt;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="nt">&lt;/Domain&gt;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="tmux-script">tmux script</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
@@ -709,59 +657,38 @@
 <span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-3-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://cdds.io/config&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/iceoryx/etc/cyclonedds.xsd&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;any&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">        </span><span class="nt">&lt;SharedMemory&gt;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">            </span><span class="nt">&lt;Enable&gt;</span>true<span class="nt">&lt;/Enable&gt;</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">            </span><span class="nt">&lt;LogLevel&gt;</span>info<span class="nt">&lt;/LogLevel&gt;</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">        </span><span class="nt">&lt;/SharedMemory&gt;</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="nt">&lt;/Domain&gt;</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
-</code></pre></div></td></tr></table></div>
-<h4 id="tmux-script">tmux script</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span>
-<span class="normal"><a href="#__codelineno-4-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">session_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dds</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">windows</span><span class="p">:</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">window_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cyclone</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="nt">layout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tiled</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">    </span><span class="nt">suppress_history</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">    </span><span class="nt">shell_command_before</span><span class="p">:</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source /opt/ros/humble/setup.bash</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export CYCLONEDDS_URI=file:///shm.xml</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">    </span><span class="nt">panes</span><span class="p">:</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iox-roudi</span><span class="w"> </span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export ROS_DISTRO=humble</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cd ~/apps/zenoh</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./zenoh-bridge-ros2dds  --dds-enable-shm</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span><span class="w"> </span><span class="c1">#</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;pub&quot;</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">          </span><span class="c1"># - ros2 topic pub /my_int32_topic std_msgs/msg/Int32 &quot;{data: 10}&quot; --rate 1</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span><span class="w"> </span><span class="c1">#</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python3 /home/user/workspaces/zenoh_ws/ros_subscriber.py</span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">session_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dds</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">windows</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">window_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cyclone</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="nt">layout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tiled</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="nt">suppress_history</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="nt">shell_command_before</span><span class="p">:</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source /opt/ros/humble/setup.bash</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export CYCLONEDDS_URI=file:///home/user/projects/blog/docs/ROS/zenoh/ros_bridge/shm.xml</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="nt">panes</span><span class="p">:</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iox-roudi</span><span class="w"> </span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export ROS_DISTRO=humble</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cd /home/user/git/zenoh-plugin-ros2dds-1.1.0/target/release</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./zenoh-bridge-ros2dds  --dds-enable-shm</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span><span class="w"> </span><span class="c1">#</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;pub&quot;</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">          </span><span class="c1"># - ros2 topic pub /my_int32_topic std_msgs/msg/Int32 &quot;{data: 10}&quot; --rate 1</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span><span class="w"> </span><span class="c1">#</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python3 /home/user/workspaces/zenoh_ws/ros_subscriber.py</span>
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="reference">Reference</h2>

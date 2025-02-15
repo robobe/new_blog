@@ -656,16 +656,14 @@
 <span class="normal"><a href="#__codelineno-0-5">5</a></span>
 <span class="normal"><a href="#__codelineno-0-6">6</a></span>
 <span class="normal"><a href="#__codelineno-0-7">7</a></span>
-<span class="normal"><a href="#__codelineno-0-8">8</a></span>
-<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://cdds.io/config&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/iceoryx/etc/cyclonedds.xsd&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;any&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">        </span><span class="nt">&lt;SharedMemory&gt;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">            </span><span class="nt">&lt;Enable&gt;</span>true<span class="nt">&lt;/Enable&gt;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">            </span><span class="nt">&lt;LogLevel&gt;</span>info<span class="nt">&lt;/LogLevel&gt;</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">        </span><span class="nt">&lt;/SharedMemory&gt;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="nt">&lt;/Domain&gt;</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://cdds.io/config&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/iceoryx/etc/cyclonedds.xsd&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;any&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">        </span><span class="nt">&lt;SharedMemory&gt;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">            </span><span class="nt">&lt;Enable&gt;</span>true<span class="nt">&lt;/Enable&gt;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">            </span><span class="nt">&lt;LogLevel&gt;</span>info<span class="nt">&lt;/LogLevel&gt;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">        </span><span class="nt">&lt;/SharedMemory&gt;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nt">&lt;/Domain&gt;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
 </code></pre></div></td></tr></table></div>
 <h2 id="iox-roudi">iox-roudi</h2>
 <p><a href="https://iceoryx.io/latest/advanced/configuration-guide/">roudi config</a>
@@ -674,15 +672,65 @@
 <h2 id="demo">Demo</h2>
 <p>Run tmuxp script that run <code>iox-roudi</code> server and publish image using gscam with two subscribers
 We can see using bmon or other network sniffer that is no traffic</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">environment variables</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">RMW_IMPLEMENTATION</span><span class="o">=</span>rmw_cyclonedds_cpp
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CYCLONEDDS_URI</span><span class="o">=</span>file:///cyclonedds.xml
+</code></pre></div></td></tr></table></div>
+<details>
+<summary>tmux script</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">session_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dds</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">windows</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">window_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cyclone</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="nt">layout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tiled</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="nt">suppress_history</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="nt">shell_command_before</span><span class="p">:</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source /opt/ros/humble/setup.bash</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export CYCLONEDDS_URI=file:///home/user/projects/blog/docs/ROS/ros_world/dds/cyclonedds/shm.xml</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="nt">panes</span><span class="p">:</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iox-roudi</span><span class="w"> </span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span><span class="w"> </span><span class="c1">#</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">export GSCAM_CONFIG=&quot;videotestsrc pattern=snow ! video/x-raw,width=640,height=480,framerate=30/1 ! videoconvert&quot;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ros2 run gscam gscam_node</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span><span class="w"> </span><span class="c1">#</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ros2 run rqt_image_view rqt_image_view</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">shell_command</span><span class="p">:</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="c1"># ros2 topic echo /camera/image_raw</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">        </span><span class="nt">split</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vertical</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
 <ul>
 <li><a href="../shm.xml">cyclonedd.xml</a></li>
 <li><a href="../tmuxp_shm.yaml">tmuxp yaml to run the demo</a></li>
 </ul>
 <hr />
 <h2 id="iceoryx-introspection">iceoryx-introspection</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros-humble-iceoryx-introspection
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>ros-humble-iceoryx-introspection
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>iox-introspection-client --h
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>iox-introspection-client --h
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="reference">reference</h2>
