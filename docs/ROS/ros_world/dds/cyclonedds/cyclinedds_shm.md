@@ -17,15 +17,7 @@ Using cycloneDDS using shm
 
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/iceoryx/etc/cyclonedds.xsd">
-    <Domain id="any">
-        <SharedMemory>
-            <Enable>true</Enable>
-            <LogLevel>info</LogLevel>
-        </SharedMemory>
-    </Domain>
-</CycloneDDS>
+--8<-- "docs/ROS/ros_world/dds/cyclonedds/shm.xml"
 ```
 
 ## iox-roudi
@@ -38,6 +30,17 @@ iox-roudi
 Run tmuxp script that run `iox-roudi` server and publish image using gscam with two subscribers
 We can see using bmon or other network sniffer that is no traffic
 
+```bash title="environment variables"
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export CYCLONEDDS_URI=file:///cyclonedds.xml
+```
+
+<details>
+<summary>tmux script</summary>
+```yaml
+--8<-- "docs/ROS/ros_world/dds/cyclonedds/tmuxp_shm.yaml"
+```
+</details>
 
 - [cyclonedd.xml](shm.xml)
 - [tmuxp yaml to run the demo](tmuxp_shm.yaml)

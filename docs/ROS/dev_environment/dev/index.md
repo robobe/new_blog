@@ -17,8 +17,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href="build">
-        <p>TBD</p>
+     <a href="remote_ssh">
+        <img src="images/remote_ssh.png" width="150" height="150">
+        <p>renote</p>
         </a>
     </div>
     <div class="grid-item">

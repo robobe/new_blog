@@ -8,25 +8,17 @@ tags:
 
 # Zenoh Bridge with SHM support
 
+# under construction
+
+
 - zenoh-plugin-ros2dds
 
 ## build with SHM
-- Clone [zenoh-plugin-ros2dds]()
-- Clone [iceoryx]()
-
-!!! warning "fix include"
-    Create symbolink link between `/usr/include` to build location
-
-    ```
-    cd /usr/include
-    sudo ls -s <>/include/iceoryx_binding_c /iceoryx_binding_c
-    ```
-
-
-### Build
+- Download source (v 1.2.0) [download](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/archive/refs/tags/1.2.0.zip)
+- Extract and run:
 
 ```
-cargo build --releases --features dds_shm
+cargo build --release --features dds_shm
 ```
 
 !!! note ""

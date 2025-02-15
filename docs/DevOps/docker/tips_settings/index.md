@@ -13,3 +13,6 @@ tags:
 ```bash
 docker image prune
 ```
+
+---
+

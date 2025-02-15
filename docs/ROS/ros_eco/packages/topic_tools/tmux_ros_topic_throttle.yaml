@@ -1,0 +1,17 @@
+session_name: my_session
+windows:
+  - window_name: my_window
+    layout: even-vertical
+    shell_command_before:
+      - source /opt/ros/humble/setup.bash
+      - export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    panes:
+      - shell_command: #
+          - printf '\033]2;%s\033\\' 'pub'
+          - python3 /workspace/src/g_stream/scripts/counter_publisher.py
+      - shell_command: #
+          - printf '\033]2;%s\033\\' 'throttle'
+          - ros2 run topic_tools throttle messages counter 1.0 counter_t
+      - shell_command: #
+          - printf '\033]2;%s\033\\' 'sub'
+          - ros2 topic echo /counter_t

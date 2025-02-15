@@ -45,4 +45,5 @@ Message_filters is a collection of message "filters" which take messages in. and
 ---
 
 ## topic_tools
-[ros_packages_topic_tools](ros_packages_topic_tools.md)
+Tools for directing, throttling, selecting, and otherwise manipulating ROS 2 topics at a meta-level. These tools do not generally perform serialization on the streams being manipulated, instead acting on generic binary data using rclcpp's GenericPublisher and GenericSubscription
+[ros_packages_topic_tools](topic_tools)
