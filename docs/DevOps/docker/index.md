@@ -25,3 +25,8 @@
 
 ## Posts 
 - [Running and Building ARM Docker Containers on x86](docker_build_arm.md)
+
+---
+
+## To Read
+- [Shared Memory & Docker](https://datawookie.dev/blog/2021/11/shared-memory-docker/)
