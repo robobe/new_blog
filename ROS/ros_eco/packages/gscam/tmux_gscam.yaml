@@ -1,0 +1,16 @@
+session_name: gscam
+windows:
+  - window_name: gscam
+    layout: tiled
+    suppress_history: false
+    shell_command_before:
+      - source /opt/ros/humble/setup.bash
+    panes:
+      - shell_command: 
+          - printf '\033]2;%s\033\\' 'gscam'
+          - export GSCAM_CONFIG="videotestsrc ! video/x-raw,width=640,height=480,framrate=10/1 ! videoconvert"
+          - ros2 run gscam gscam_node --ros-args -p use_sensor_data_qos:=true -p camera_info_url:=file:///home/user/projects/blog/docs/ROS/ros_eco/packages/gscam/uncalibrated_parameters.ini
+        focus: true
+      - shell_command:
+          - printf '\033]2;%s\033\\' 'view'
+          - ros2 run rqt_image_view rqt_image_view
