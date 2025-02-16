@@ -8,7 +8,10 @@
             </a>
         </div>
         <div class="grid-item">
-            <p>TBD</p>
+            <a href="ros_python">
+                <img src="images/ros_python_tutorial.png"  width="150" height="150">
+                <p>ROS2 python tutorials</p>
+            </a>
         </div>
     <div class="grid-item">
     <a href="ros_eco">

@@ -9,7 +9,7 @@ tags:
 
 ROS Package for broadcasting `gstreamer` video stream via ROS2 camera API, publish video as `sensors_msgs/Image` with frame_id and timestamp
 
-## Demo
+### Demo
 
 !!! note "gstreamer pipe"
     input gstreamer pipe can set by environment variable `GSCAM_CONFIG` or ros parameter `gscam_config`
@@ -28,9 +28,9 @@ ros2 run rqt_image_view rat_image_view
 
 ---
 
-### More control
+## More control
 
-#### QOS
+### QOS
 Run with parameter `use_sensor_data_qos:=true` to publish as `best_effort` qos
 
 ```bash
@@ -42,7 +42,7 @@ ros2 run gscam gscam_node --ros-args \
      
 ---     
 
-### Camera info
+## Camera info
 gscam using `camera_info_manager` package to control `camera_info` topic , we can change the data using `set_camera_info` service
 
 The init `camera_info` can control by parameter `camera_info_url`
@@ -64,7 +64,7 @@ ros2 run gscam gscam_node --ros-args \
 [Download ini file](uncalibrated_parameters.ini)
 
 
-#### update service
+### update service
 The `/set_camera_info` service is part of [camera_info_manager](http://wiki.ros.org/camera_info_manager)
 
 
