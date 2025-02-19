@@ -37,5 +37,12 @@ Ros packages and tools that are used in the ROS eco system.
                <p>Colcon</p>
                </a>
            </div>
+    <div class="grid-item">
+           <a href="rviz_rqt">
+               <img src="images/rviz_rqt.png"  width="150" height="150">
+               <p>rviz, rqt and other tools</p>
+               </a>
+           </div>
+
 </div>
 

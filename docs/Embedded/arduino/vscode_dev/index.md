@@ -151,13 +151,13 @@ void loop() {
 ---
 
 ### Create custom Library
-[Create an Arduino library](https://youtu.be/IiZl3p-ZohM)
+[Create an Arduino library](https://youtu.be/IiZl3p-ZohM){:target="_blank"}
 
 # TODO: Arduino custom library
 
 ---
 
 ### Arduino OOP
-[Arduino OOP [40-Minute Crash Course]](https://youtu.be/cUVryWbVkXk)
+[Arduino OOP [40-Minute Crash Course]](https://youtu.be/cUVryWbVkXk){:target="_blank"}
 
 # TODO: arduino OOP 
