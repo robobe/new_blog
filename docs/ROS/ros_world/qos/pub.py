@@ -12,6 +12,7 @@ TOPIC = "pub_topic"
 class PubNode(Node):
     def __init__(self):
         node_name="pub"
+        self.counter = 0
         super().__init__(node_name)
         qos_profile = QoSProfile(
             reliability=ReliabilityPolicy.RELIABLE,  # or BEST_EFFORT
@@ -22,13 +23,16 @@ class PubNode(Node):
         )
         qos_profile.lifespan = Duration(seconds=5, nanoseconds=0)  # Message lifespan
         qos_profile.deadline = Duration(seconds=2, nanoseconds=0)  # Deadline duration
+        
         self.pub = self.create_publisher(String, TOPIC, qos_profile)
         self.timer = self.create_timer(1.0, self.timer_handler)
+        
         self.get_logger().info("Hello PUB")
 
     def timer_handler(self):
         msg = String()
-        msg.data = "hello"
+        msg.data = f"hello {self.counter}"
+        self.counter += 1
         self.pub.publish(msg)
 
 def main(args=None):
