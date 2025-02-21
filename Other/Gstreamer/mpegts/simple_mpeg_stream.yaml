@@ -1,0 +1,22 @@
+session_name: rtsp
+windows:
+  - window_name: gst
+    layout: tiled
+    suppress_history: false
+    panes:
+      - shell_command: # sender
+          - printf '\033]2;sender\033\\'
+          - |
+            gst-launch-1.0 -v videotestsrc is-live=true \
+            ! x264enc tune=zerolatency bitrate=1000 speed-preset=superfast key-int-max=15 \
+            ! video/x-h264,profile=main \
+            ! mpegtsmux \
+            ! udpsink host=127.0.0.1 port=5000
+      - shell_command: # receiver
+          - printf '\033]2;receiver\033\\'
+          - |
+            gst-launch-1.0 -v udpsrc port=5000 \
+            ! tsdemux \
+            ! h264parse \
+            ! avdec_h264 \
+            ! autovideosink

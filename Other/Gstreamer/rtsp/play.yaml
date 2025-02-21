@@ -1,0 +1,12 @@
+session_name: rtsp
+windows:
+  - window_name: gst
+    layout: tiled
+    suppress_history: false
+    panes:
+      - shell_command: # rtsp server
+          - printf '\033]2;ertsp\033\\'
+          - python rtsp/server.py
+      - shell_command: # player
+          - printf '\033]2;player\033\\'
+          - rtsp/player.sh
