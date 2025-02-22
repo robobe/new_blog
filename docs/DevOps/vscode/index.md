@@ -28,6 +28,9 @@ tags:
 
 ## Video and posts
 
+## ToDO: read
+- [vscode profile](https://youtu.be/0bIU-5JkHr0)
+
 ## copilot
 - [ Get to know GitHub Copilot in VS Code and be productive IMMEDIATELY ](https://youtu.be/jXp5D5ZnxGM)
 - [ What's new with Copilot Chat and VS Code - v1.84 ](https://youtu.be/HpzdGAGXFXE)
