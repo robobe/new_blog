@@ -24,7 +24,6 @@ tags:
         <p>Remote ssh</p>
         </a>
     </div>
-    
 </div>
 
 ## Video and posts

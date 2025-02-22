@@ -24,7 +24,12 @@ tags:
         <p>Zenoh pico</p>
         </a>
     </div>
-    
+     <div class="grid-item">
+        <a href="rmw">
+        <img src="images/zenoh_rmw.png" width="150" height="150">
+        <p>ROS RMW</p>
+        </a>
+    </div>
 </div>
 
 ---

@@ -8,8 +8,31 @@ tags:
 
 # VSCode tips and settings
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="tasks">
+        <img src="images/tasks.png" width="150" height="150">
+        <p>Tasks</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="launch">
+        <img src="images/launch.png" width="150" height="150">
+        <p>Launch</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="remote_ssh">
+        
+        <p>TBD</p>
+        </a>
+    </div>
+</div>
 
-  
+- [Keyboard shortcuts](#keyboard-shortcuts)
+- [Editor](#editor)
+- [Terminal](#terminal)
+
 ## keyboard shortcuts
 ### VSCode explorer 
 Add `new file` and `new folder` keyboard shortcut in file explorer
@@ -28,7 +51,11 @@ Add `key` to `keybindings.json` file
 },
 ```
 
+
+
 ---
+
+
 
 ## Terminal
 ### run script when terminal open
@@ -47,7 +74,11 @@ Add `key` to `keybindings.json` file
 
 ---
 
+
 ## Editor
+- [Mark active tab](#add-custom-color-to-active-tab)
+- [Tab focus mode](#tab-key-function)
+
 
 ### Tab key function
 
@@ -62,3 +93,4 @@ I accidentally pressed some key combonition and the "Tab" switch the focus mode 
         "tab.activeBorder": "#ff0000",
         "tab.activeBackground": "#373737"
     },
+```
