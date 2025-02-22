@@ -137,3 +137,40 @@ Running Bridge with `--rest-http-port 8000` expose web interface to query bridge
 ## Config
 [zenoh config from github](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/blob/main/DEFAULT_CONFIG.json5)
 
+- [Allow/Deny topics](#allow-deny)
+- [MAx rate](#pub_max_frequencies)
+
+### Allow /Deny
+
+!!! tip "Allow / Deny"
+    In the config we set Allow key **or** Deny key
+    Both of them not work
+     
+
+```json title="allow.json5"
+--8<-- "docs/ROS/zenoh/ros_bridge/allow.json5"
+```
+
+```bash title="bridge log"
+INFO tokio-runtime-worker ThreadId(04) zenoh_plugin_ros2dds: Node /_ros2cli_5087 declares Publisher /my_int32_topic: std_msgs/msg/Int32 - Allowed
+INFO tokio-runtime-worker ThreadId(04) zenoh_plugin_ros2dds::routes_mgr: Route Publisher (ROS:/my_int32_topic -> Zenoh:my_int32_topic) created
+
+```
+
+### pub_max_frequencies
+Config maximum publish rate for topic 
+
+
+
+```json title="allow.json5"
+--8<-- "docs/ROS/zenoh/ros_bridge/pub_feq.json5"
+```
+
+```bash
+ros2 topic hz /my_int32_topic 
+average rate: 0.500
+	min: 2.001s max: 2.001s std dev: 0.00019s window: 2
+average rate: 0.500
+	min: 2.001s max: 2.001s std dev: 0.00017s window: 3
+
+```

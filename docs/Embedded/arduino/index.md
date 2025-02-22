@@ -22,3 +22,7 @@ tags:
     </div>
     
 </div>
+
+# Posts
+- [Arduino i2c](arduino_i2c.md)
+- [Simple FOC with arduino](arduino_foc.md)
