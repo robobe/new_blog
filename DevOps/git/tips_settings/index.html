@@ -567,6 +567,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      prompt
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#git-branching" class="md-nav__link">
     <span class="md-ellipsis">
       Git branching
@@ -626,10 +635,48 @@
 
 
 <h1 id="git-tips-and-settings">Git Tips and Settings</h1>
+<h2 id="prompt">prompt</h2>
+<p>Effective prompt with git branch name</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">function</span><span class="w"> </span>git-branch-name<span class="w"> </span><span class="o">{</span><span class="w"> </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span>git<span class="w"> </span>symbolic-ref<span class="w"> </span>HEAD<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span>-<span class="w"> </span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="o">}</span><span class="w"> </span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">function</span><span class="w"> </span>git-branch-prompt<span class="w"> </span><span class="o">{</span><span class="w"> </span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">branch</span><span class="o">=</span><span class="sb">`</span>git-branch-name<span class="sb">`</span><span class="w"> </span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$branch</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot; [%s]&quot;</span><span class="w"> </span><span class="nv">$branch</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span><span class="w"> </span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="o">}</span><span class="w"> </span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="k">function</span><span class="w"> </span>re-prompt<span class="w"> </span><span class="o">{</span><span class="w"> </span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\u@\h \[\033[0;36m\]\W\[\033[0m\]\[\033[0;32m\]\$(git-branch-prompt)\[\033[0m\] \$ &quot;</span><span class="w"> </span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="o">}</span><span class="w"> </span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="nv">PROMPT_COMMAND</span><span class="o">=</span>re-prompt<span class="w"> </span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="nb">trap</span><span class="w"> </span><span class="s1">&#39;re-prompt&#39;</span><span class="w"> </span>DEBUG<span class="w"> </span>
+</code></pre></div></td></tr></table></div>
 <h2 id="git-branching">Git branching</h2>
 <h3 id="sync-remote-branch-with-local-branch">Sync remote branch with local branch</h3>
 <p>Remove all remote branches that no longer exist on the remote repository.
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--prune
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>--prune
 </code></pre></div></td></tr></table></div></p>
 
 

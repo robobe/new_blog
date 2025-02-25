@@ -16,16 +16,28 @@ from gi.repository import Gst, GLib
 # Initialize GStreamer
 Gst.init(None)
 
-WIDTH, height, FRAMERATE = 640, 480, 5
+WIDTH, height, FRAMERATE = 640, 480, 20
 PIPELINE = f"""appsrc is-live=true name=source is-live=true format=time \
 ! video/x-raw,format=BGR,width={WIDTH},height={height},framerate={FRAMERATE}/1 \
 ! videoconvert \
 ! timeoverlay time-mode=buffer-count \
-! x264enc tune=zerolatency bitrate=1000 speed-preset=superfast key-int-max=15 \
+! x264enc tune=zerolatency bitrate=1000 speed-preset=ultrafast key-int-max={FRAMERATE} \
 ! video/x-h264,profile=main \
 ! mpegtsmux \
 ! udpsink host=127.0.0.1 port=5000"""
 
+
+# change pipe for rtp support
+PIPELINE = f"""appsrc is-live=true name=source is-live=true format=time \
+! video/x-raw,format=BGR,width={WIDTH},height={height},framerate={FRAMERATE}/1 \
+! videoconvert \
+! timeoverlay time-mode=buffer-count \
+! queue \
+! x264enc tune=zerolatency bitrate=1000 speed-preset=ultrafast key-int-max={FRAMERATE} \
+! video/x-h264,profile=main \
+! mpegtsmux alignment=7 \
+! rtpmp2tpay \
+! udpsink host=127.0.0.1 port=5000"""
 
 def gen_frame(id:int) -> bytes:
     """Generate omage

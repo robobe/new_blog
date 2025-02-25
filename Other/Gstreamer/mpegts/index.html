@@ -661,9 +661,9 @@
 <h1 id="gstreamer-mpegts">Gstreamer mpegts</h1>
 <div class="grid-container">
     <div class="grid-item">
-        <a href="klv">
-        <img src="images/tips_and_settings.png" width="150" height="150">
-        <p>klv</p>
+        <a href="kvl">
+
+        <p>kvl</p>
         </a>
     </div>
     <div class="grid-item">
@@ -749,100 +749,112 @@
 <h2 id="appsrc-demo">AppSrc Demo</h2>
 <p>Send generated image using opencv to <code>appsrc</code> element</p>
 <details><summary>Send image using appsrc example</summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-5-10">10</a></span>
-<span class="normal"><a href="#__codelineno-5-11">11</a></span>
-<span class="normal"><a href="#__codelineno-5-12">12</a></span>
-<span class="normal"><a href="#__codelineno-5-13">13</a></span>
-<span class="normal"><a href="#__codelineno-5-14">14</a></span>
-<span class="normal"><a href="#__codelineno-5-15">15</a></span>
-<span class="normal"><a href="#__codelineno-5-16">16</a></span>
-<span class="normal"><a href="#__codelineno-5-17">17</a></span>
-<span class="normal"><a href="#__codelineno-5-18">18</a></span>
-<span class="normal"><a href="#__codelineno-5-19">19</a></span>
-<span class="normal"><a href="#__codelineno-5-20">20</a></span>
-<span class="normal"><a href="#__codelineno-5-21">21</a></span>
-<span class="normal"><a href="#__codelineno-5-22">22</a></span>
-<span class="normal"><a href="#__codelineno-5-23">23</a></span>
-<span class="normal"><a href="#__codelineno-5-24">24</a></span>
-<span class="normal"><a href="#__codelineno-5-25">25</a></span>
-<span class="normal"><a href="#__codelineno-5-26">26</a></span>
-<span class="normal"><a href="#__codelineno-5-27">27</a></span>
-<span class="normal"><a href="#__codelineno-5-28">28</a></span>
-<span class="normal"><a href="#__codelineno-5-29">29</a></span>
-<span class="normal"><a href="#__codelineno-5-30">30</a></span>
-<span class="normal"><a href="#__codelineno-5-31">31</a></span>
-<span class="normal"><a href="#__codelineno-5-32">32</a></span>
-<span class="normal"><a href="#__codelineno-5-33">33</a></span>
-<span class="normal"><a href="#__codelineno-5-34">34</a></span>
-<span class="normal"><a href="#__codelineno-5-35">35</a></span>
-<span class="normal"><a href="#__codelineno-5-36">36</a></span>
-<span class="normal"><a href="#__codelineno-5-37">37</a></span>
-<span class="normal"><a href="#__codelineno-5-38">38</a></span>
-<span class="normal"><a href="#__codelineno-5-39">39</a></span>
-<span class="normal"><a href="#__codelineno-5-40">40</a></span>
-<span class="normal"><a href="#__codelineno-5-41">41</a></span>
-<span class="normal"><a href="#__codelineno-5-42">42</a></span>
-<span class="normal"><a href="#__codelineno-5-43">43</a></span>
-<span class="normal"><a href="#__codelineno-5-44">44</a></span>
-<span class="normal"><a href="#__codelineno-5-45">45</a></span>
-<span class="normal"><a href="#__codelineno-5-46">46</a></span>
-<span class="normal"><a href="#__codelineno-5-47">47</a></span>
-<span class="normal"><a href="#__codelineno-5-48">48</a></span>
-<span class="normal"><a href="#__codelineno-5-49">49</a></span>
-<span class="normal"><a href="#__codelineno-5-50">50</a></span>
-<span class="normal"><a href="#__codelineno-5-51">51</a></span>
-<span class="normal"><a href="#__codelineno-5-52">52</a></span>
-<span class="normal"><a href="#__codelineno-5-53">53</a></span>
-<span class="normal"><a href="#__codelineno-5-54">54</a></span>
-<span class="normal"><a href="#__codelineno-5-55">55</a></span>
-<span class="normal"><a href="#__codelineno-5-56">56</a></span>
-<span class="normal"><a href="#__codelineno-5-57">57</a></span>
-<span class="normal"><a href="#__codelineno-5-58">58</a></span>
-<span class="normal"><a href="#__codelineno-5-59">59</a></span>
-<span class="normal"><a href="#__codelineno-5-60">60</a></span>
-<span class="normal"><a href="#__codelineno-5-61">61</a></span>
-<span class="normal"><a href="#__codelineno-5-62">62</a></span>
-<span class="normal"><a href="#__codelineno-5-63">63</a></span>
-<span class="normal"><a href="#__codelineno-5-64">64</a></span>
-<span class="normal"><a href="#__codelineno-5-65">65</a></span>
-<span class="normal"><a href="#__codelineno-5-66">66</a></span>
-<span class="normal"><a href="#__codelineno-5-67">67</a></span>
-<span class="normal"><a href="#__codelineno-5-68">68</a></span>
-<span class="normal"><a href="#__codelineno-5-69">69</a></span>
-<span class="normal"><a href="#__codelineno-5-70">70</a></span>
-<span class="normal"><a href="#__codelineno-5-71">71</a></span>
-<span class="normal"><a href="#__codelineno-5-72">72</a></span>
-<span class="normal"><a href="#__codelineno-5-73">73</a></span>
-<span class="normal"><a href="#__codelineno-5-74">74</a></span>
-<span class="normal"><a href="#__codelineno-5-75">75</a></span>
-<span class="normal"><a href="#__codelineno-5-76">76</a></span>
-<span class="normal"><a href="#__codelineno-5-77">77</a></span>
-<span class="normal"><a href="#__codelineno-5-78">78</a></span>
-<span class="normal"><a href="#__codelineno-5-79">79</a></span>
-<span class="normal"><a href="#__codelineno-5-80">80</a></span>
-<span class="normal"><a href="#__codelineno-5-81">81</a></span>
-<span class="normal"><a href="#__codelineno-5-82">82</a></span>
-<span class="normal"><a href="#__codelineno-5-83">83</a></span>
-<span class="normal"><a href="#__codelineno-5-84">84</a></span>
-<span class="normal"><a href="#__codelineno-5-85">85</a></span>
-<span class="normal"><a href="#__codelineno-5-86">86</a></span>
-<span class="normal"><a href="#__codelineno-5-87">87</a></span>
-<span class="normal"><a href="#__codelineno-5-88">88</a></span>
-<span class="normal"><a href="#__codelineno-5-89">89</a></span>
-<span class="normal"><a href="#__codelineno-5-90">90</a></span>
-<span class="normal"><a href="#__codelineno-5-91">91</a></span>
-<span class="normal"><a href="#__codelineno-5-92">92</a></span>
-<span class="normal"><a href="#__codelineno-5-93">93</a></span>
-<span class="normal"><a href="#__codelineno-5-94">94</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="hll"><span class="sd">&quot;&quot;&quot;simple pipeline and wait for bus message</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-5-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-5-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-5-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-5-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-5-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-5-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-5-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-5-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-5-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-5-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-5-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-5-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-5-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-5-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-5-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-5-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-5-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-5-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-5-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-5-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-5-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-5-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-5-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-5-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-5-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-5-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-5-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-5-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-5-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-5-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-5-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-5-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-5-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-5-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-5-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-5-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-5-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-5-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-5-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-5-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-5-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-5-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-5-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-5-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-5-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-5-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-5-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-5-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-5-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-5-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-5-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-5-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-5-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-5-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-5-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-5-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-5-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-5-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-5-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-5-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-5-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-5-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-5-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-5-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-5-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-5-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-5-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-5-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-5-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-5-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-5-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-5-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-5-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-5-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-5-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-5-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-5-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-5-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-5-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-5-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-5-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-5-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-5-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-5-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-5-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-5-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-5-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-5-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-5-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-5-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-5-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-5-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-5-100">100</a></span>
+<span class="normal"><a href="#__codelineno-5-101">101</a></span>
+<span class="normal"><a href="#__codelineno-5-102">102</a></span>
+<span class="normal"><a href="#__codelineno-5-103">103</a></span>
+<span class="normal"><a href="#__codelineno-5-104">104</a></span>
+<span class="normal"><a href="#__codelineno-5-105">105</a></span>
+<span class="normal"><a href="#__codelineno-5-106">106</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="hll"><span class="sd">&quot;&quot;&quot;simple pipeline and wait for bus message</span>
 </span><a id="__codelineno-5-2" name="__codelineno-5-2"></a>
 <a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="sd">Tags:</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="sd">    - add_signal_watch</span>
@@ -860,82 +872,94 @@
 <a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="c1"># Initialize GStreamer</span>
 <a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="n">Gst</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 <a id="__codelineno-5-18" name="__codelineno-5-18"></a>
-<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="n">WIDTH</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">FRAMERATE</span> <span class="o">=</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">5</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="n">WIDTH</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">FRAMERATE</span> <span class="o">=</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">20</span>
 <a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="n">PIPELINE</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;appsrc is-live=true name=source is-live=true format=time </span><span class="se">\</span>
 <a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="s2">! video/x-raw,format=BGR,width=</span><span class="si">{</span><span class="n">WIDTH</span><span class="si">}</span><span class="s2">,height=</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s2">,framerate=</span><span class="si">{</span><span class="n">FRAMERATE</span><span class="si">}</span><span class="s2">/1 </span><span class="se">\</span>
 <a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="s2">! videoconvert </span><span class="se">\</span>
 <a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="s2">! timeoverlay time-mode=buffer-count </span><span class="se">\</span>
-<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="s2">! x264enc tune=zerolatency bitrate=1000 speed-preset=superfast key-int-max=15 </span><span class="se">\</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="s2">! x264enc tune=zerolatency bitrate=1000 speed-preset=ultrafast key-int-max=</span><span class="si">{</span><span class="n">FRAMERATE</span><span class="si">}</span><span class="s2"> </span><span class="se">\</span>
 <a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="s2">! video/x-h264,profile=main </span><span class="se">\</span>
 <a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="s2">! mpegtsmux </span><span class="se">\</span>
 <a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="s2">! udpsink host=127.0.0.1 port=5000&quot;&quot;&quot;</span>
 <a id="__codelineno-5-28" name="__codelineno-5-28"></a>
 <a id="__codelineno-5-29" name="__codelineno-5-29"></a>
-<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="k">def</span><span class="w"> </span><span class="nf">gen_frame</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate omage</span>
-<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="sd">    Create black image with counter text</span>
-<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-5-34" name="__codelineno-5-34"></a>    <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">WIDTH</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-<a id="__codelineno-5-35" name="__codelineno-5-35"></a>    <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Appsrc Video </span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">height</span> <span class="o">//</span> <span class="mi">2</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-5-36" name="__codelineno-5-36"></a>    <span class="c1"># Convert the frame to a GStreamer buffer</span>
-<a id="__codelineno-5-37" name="__codelineno-5-37"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
-<a id="__codelineno-5-38" name="__codelineno-5-38"></a>    <span class="k">return</span> <span class="n">data</span>
-<a id="__codelineno-5-39" name="__codelineno-5-39"></a>
-<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="k">def</span><span class="w"> </span><span class="nf">push_data</span><span class="p">():</span>
-<a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;push gen image to gst buffer</span>
-<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="sd">    set pts dts and duration</span>
-<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="sd">        _type_: _description_</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="c1"># change pipe for rtp support</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="n">PIPELINE</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;appsrc is-live=true name=source is-live=true format=time </span><span class="se">\</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="s2">! video/x-raw,format=BGR,width=</span><span class="si">{</span><span class="n">WIDTH</span><span class="si">}</span><span class="s2">,height=</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s2">,framerate=</span><span class="si">{</span><span class="n">FRAMERATE</span><span class="si">}</span><span class="s2">/1 </span><span class="se">\</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="s2">! videoconvert </span><span class="se">\</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="s2">! timeoverlay time-mode=buffer-count </span><span class="se">\</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="s2">! queue </span><span class="se">\</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a><span class="s2">! x264enc tune=zerolatency bitrate=1000 speed-preset=ultrafast key-int-max=</span><span class="si">{</span><span class="n">FRAMERATE</span><span class="si">}</span><span class="s2"> </span><span class="se">\</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a><span class="s2">! video/x-h264,profile=main </span><span class="se">\</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="s2">! mpegtsmux alignment=7 </span><span class="se">\</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a><span class="s2">! rtpmp2tpay </span><span class="se">\</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="s2">! udpsink host=127.0.0.1 port=5000&quot;&quot;&quot;</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="k">def</span><span class="w"> </span><span class="nf">gen_frame</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate omage</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="sd">    Create black image with counter text</span>
 <a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-5-46" name="__codelineno-5-46"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">gen_frame</span><span class="p">(</span><span class="n">push_data</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
-<a id="__codelineno-5-47" name="__codelineno-5-47"></a>    <span class="n">buf</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Buffer</span><span class="o">.</span><span class="n">new_allocate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
-<a id="__codelineno-5-48" name="__codelineno-5-48"></a>    <span class="n">buf</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<a id="__codelineno-5-49" name="__codelineno-5-49"></a>
-<a id="__codelineno-5-50" name="__codelineno-5-50"></a>    <span class="n">duration_ns</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e9</span> <span class="o">/</span> <span class="n">FRAMERATE</span><span class="p">)</span>
-<a id="__codelineno-5-51" name="__codelineno-5-51"></a>    <span class="n">buf</span><span class="o">.</span><span class="n">pts</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">dts</span> <span class="o">=</span> <span class="n">push_data</span><span class="o">.</span><span class="n">counter</span> <span class="o">*</span> <span class="n">duration_ns</span>
-<a id="__codelineno-5-52" name="__codelineno-5-52"></a>    <span class="n">buf</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">duration_ns</span>
-<a id="__codelineno-5-53" name="__codelineno-5-53"></a>    <span class="n">GLib</span><span class="o">.</span><span class="n">log_default_handler</span><span class="p">(</span><span class="s2">&quot;MyApp&quot;</span><span class="p">,</span> <span class="n">GLib</span><span class="o">.</span><span class="n">LogLevelFlags</span><span class="o">.</span><span class="n">LEVEL_MESSAGE</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;This </span><span class="si">{</span><span class="n">push_data</span><span class="o">.</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-54" name="__codelineno-5-54"></a>    <span class="c1"># Push the buffer to appsrc</span>
-<a id="__codelineno-5-55" name="__codelineno-5-55"></a>    <span class="n">retval</span> <span class="o">=</span> <span class="n">appsrc</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;push-buffer&quot;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
-<a id="__codelineno-5-56" name="__codelineno-5-56"></a>    <span class="k">if</span> <span class="n">retval</span> <span class="o">!=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
-<a id="__codelineno-5-57" name="__codelineno-5-57"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error pushing buffer:&quot;</span><span class="p">,</span> <span class="n">retval</span><span class="p">)</span>
-<a id="__codelineno-5-58" name="__codelineno-5-58"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-<a id="__codelineno-5-59" name="__codelineno-5-59"></a>
-<a id="__codelineno-5-60" name="__codelineno-5-60"></a>    <span class="n">push_data</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-<a id="__codelineno-5-61" name="__codelineno-5-61"></a>    <span class="k">return</span> <span class="kc">True</span>
-<a id="__codelineno-5-62" name="__codelineno-5-62"></a>
-<a id="__codelineno-5-63" name="__codelineno-5-63"></a><span class="k">def</span><span class="w"> </span><span class="nf">bus_callback</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">loop</span><span class="p">):</span>
-<a id="__codelineno-5-64" name="__codelineno-5-64"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<a id="__codelineno-5-65" name="__codelineno-5-65"></a><span class="sd">    Handle GStreamer bus messages.</span>
-<a id="__codelineno-5-66" name="__codelineno-5-66"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-5-67" name="__codelineno-5-67"></a>    <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">EOS</span><span class="p">:</span>
-<a id="__codelineno-5-68" name="__codelineno-5-68"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;End-of-stream received, exiting.&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-69" name="__codelineno-5-69"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-<a id="__codelineno-5-70" name="__codelineno-5-70"></a>    <span class="k">elif</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
-<a id="__codelineno-5-71" name="__codelineno-5-71"></a>        <span class="n">err</span><span class="p">,</span> <span class="n">debug</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">parse_error</span><span class="p">()</span>
-<a id="__codelineno-5-72" name="__codelineno-5-72"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">, Debug Info: </span><span class="si">{</span><span class="n">debug</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-73" name="__codelineno-5-73"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-<a id="__codelineno-5-74" name="__codelineno-5-74"></a>    <span class="k">elif</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">STATE_CHANGED</span><span class="p">:</span>
-<a id="__codelineno-5-75" name="__codelineno-5-75"></a>        <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">pending</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">parse_state_changed</span><span class="p">()</span>
-<a id="__codelineno-5-76" name="__codelineno-5-76"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State changed from </span><span class="si">{</span><span class="n">old</span><span class="o">.</span><span class="n">value_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">value_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-77" name="__codelineno-5-77"></a>    <span class="k">return</span> <span class="kc">True</span>
-<a id="__codelineno-5-78" name="__codelineno-5-78"></a>
-<a id="__codelineno-5-79" name="__codelineno-5-79"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">parse_launch</span><span class="p">(</span><span class="n">PIPELINE</span><span class="p">)</span>
-<a id="__codelineno-5-80" name="__codelineno-5-80"></a><span class="n">appsrc</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-81" name="__codelineno-5-81"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">)</span>
-<a id="__codelineno-5-82" name="__codelineno-5-82"></a><span class="n">push_data</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
-<a id="__codelineno-5-83" name="__codelineno-5-83"></a><span class="n">bus</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_bus</span><span class="p">()</span>
-<a id="__codelineno-5-84" name="__codelineno-5-84"></a><span class="n">bus</span><span class="o">.</span><span class="n">add_signal_watch</span><span class="p">()</span>
-<a id="__codelineno-5-85" name="__codelineno-5-85"></a><span class="n">loop</span> <span class="o">=</span> <span class="n">GLib</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
-<a id="__codelineno-5-86" name="__codelineno-5-86"></a><span class="n">bus</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">bus_callback</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
-<a id="__codelineno-5-87" name="__codelineno-5-87"></a><span class="c1"># gst timer</span>
-<a id="__codelineno-5-88" name="__codelineno-5-88"></a><span class="n">GLib</span><span class="o">.</span><span class="n">timeout_add</span><span class="p">(</span><span class="mi">1000</span> <span class="o">//</span> <span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">push_data</span><span class="p">)</span>
-<a id="__codelineno-5-89" name="__codelineno-5-89"></a><span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-5-90" name="__codelineno-5-90"></a>    <span class="n">loop</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-<a id="__codelineno-5-91" name="__codelineno-5-91"></a><span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-<a id="__codelineno-5-92" name="__codelineno-5-92"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exiting...&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-93" name="__codelineno-5-93"></a><span class="k">finally</span><span class="p">:</span>
-<a id="__codelineno-5-94" name="__codelineno-5-94"></a>    <span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">NULL</span><span class="p">)</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a>    <span class="n">frame</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">WIDTH</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a>    <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Appsrc Video </span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">height</span> <span class="o">//</span> <span class="mi">2</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a>    <span class="c1"># Convert the frame to a GStreamer buffer</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a>    <span class="k">return</span> <span class="n">data</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51"></a>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="k">def</span><span class="w"> </span><span class="nf">push_data</span><span class="p">():</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;push gen image to gst buffer</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a><span class="sd">    set pts dts and duration</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a><span class="sd">        _type_: _description_</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">gen_frame</span><span class="p">(</span><span class="n">push_data</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59"></a>    <span class="n">buf</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Buffer</span><span class="o">.</span><span class="n">new_allocate</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a>    <span class="n">buf</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61"></a>
+<a id="__codelineno-5-62" name="__codelineno-5-62"></a>    <span class="n">duration_ns</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e9</span> <span class="o">/</span> <span class="n">FRAMERATE</span><span class="p">)</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63"></a>    <span class="n">buf</span><span class="o">.</span><span class="n">pts</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">dts</span> <span class="o">=</span> <span class="n">push_data</span><span class="o">.</span><span class="n">counter</span> <span class="o">*</span> <span class="n">duration_ns</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64"></a>    <span class="n">buf</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">duration_ns</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65"></a>    <span class="n">GLib</span><span class="o">.</span><span class="n">log_default_handler</span><span class="p">(</span><span class="s2">&quot;MyApp&quot;</span><span class="p">,</span> <span class="n">GLib</span><span class="o">.</span><span class="n">LogLevelFlags</span><span class="o">.</span><span class="n">LEVEL_MESSAGE</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;This </span><span class="si">{</span><span class="n">push_data</span><span class="o">.</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66"></a>    <span class="c1"># Push the buffer to appsrc</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67"></a>    <span class="n">retval</span> <span class="o">=</span> <span class="n">appsrc</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;push-buffer&quot;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+<a id="__codelineno-5-68" name="__codelineno-5-68"></a>    <span class="k">if</span> <span class="n">retval</span> <span class="o">!=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error pushing buffer:&quot;</span><span class="p">,</span> <span class="n">retval</span><span class="p">)</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+<a id="__codelineno-5-71" name="__codelineno-5-71"></a>
+<a id="__codelineno-5-72" name="__codelineno-5-72"></a>    <span class="n">push_data</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73"></a>    <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-5-74" name="__codelineno-5-74"></a>
+<a id="__codelineno-5-75" name="__codelineno-5-75"></a><span class="k">def</span><span class="w"> </span><span class="nf">bus_callback</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">loop</span><span class="p">):</span>
+<a id="__codelineno-5-76" name="__codelineno-5-76"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-77" name="__codelineno-5-77"></a><span class="sd">    Handle GStreamer bus messages.</span>
+<a id="__codelineno-5-78" name="__codelineno-5-78"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-5-79" name="__codelineno-5-79"></a>    <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">EOS</span><span class="p">:</span>
+<a id="__codelineno-5-80" name="__codelineno-5-80"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;End-of-stream received, exiting.&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-81" name="__codelineno-5-81"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+<a id="__codelineno-5-82" name="__codelineno-5-82"></a>    <span class="k">elif</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+<a id="__codelineno-5-83" name="__codelineno-5-83"></a>        <span class="n">err</span><span class="p">,</span> <span class="n">debug</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">parse_error</span><span class="p">()</span>
+<a id="__codelineno-5-84" name="__codelineno-5-84"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">, Debug Info: </span><span class="si">{</span><span class="n">debug</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-85" name="__codelineno-5-85"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+<a id="__codelineno-5-86" name="__codelineno-5-86"></a>    <span class="k">elif</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">STATE_CHANGED</span><span class="p">:</span>
+<a id="__codelineno-5-87" name="__codelineno-5-87"></a>        <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">pending</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">parse_state_changed</span><span class="p">()</span>
+<a id="__codelineno-5-88" name="__codelineno-5-88"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State changed from </span><span class="si">{</span><span class="n">old</span><span class="o">.</span><span class="n">value_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">value_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-89" name="__codelineno-5-89"></a>    <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-5-90" name="__codelineno-5-90"></a>
+<a id="__codelineno-5-91" name="__codelineno-5-91"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">parse_launch</span><span class="p">(</span><span class="n">PIPELINE</span><span class="p">)</span>
+<a id="__codelineno-5-92" name="__codelineno-5-92"></a><span class="n">appsrc</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-93" name="__codelineno-5-93"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">)</span>
+<a id="__codelineno-5-94" name="__codelineno-5-94"></a><span class="n">push_data</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-5-95" name="__codelineno-5-95"></a><span class="n">bus</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_bus</span><span class="p">()</span>
+<a id="__codelineno-5-96" name="__codelineno-5-96"></a><span class="n">bus</span><span class="o">.</span><span class="n">add_signal_watch</span><span class="p">()</span>
+<a id="__codelineno-5-97" name="__codelineno-5-97"></a><span class="n">loop</span> <span class="o">=</span> <span class="n">GLib</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+<a id="__codelineno-5-98" name="__codelineno-5-98"></a><span class="n">bus</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">bus_callback</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+<a id="__codelineno-5-99" name="__codelineno-5-99"></a><span class="c1"># gst timer</span>
+<a id="__codelineno-5-100" name="__codelineno-5-100"></a><span class="n">GLib</span><span class="o">.</span><span class="n">timeout_add</span><span class="p">(</span><span class="mi">1000</span> <span class="o">//</span> <span class="n">FRAMERATE</span><span class="p">,</span> <span class="n">push_data</span><span class="p">)</span>
+<a id="__codelineno-5-101" name="__codelineno-5-101"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-5-102" name="__codelineno-5-102"></a>    <span class="n">loop</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<a id="__codelineno-5-103" name="__codelineno-5-103"></a><span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+<a id="__codelineno-5-104" name="__codelineno-5-104"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exiting...&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-105" name="__codelineno-5-105"></a><span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-5-106" name="__codelineno-5-106"></a>    <span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">NULL</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
