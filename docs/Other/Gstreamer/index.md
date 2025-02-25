@@ -2,7 +2,7 @@
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="pipes_and_">
+        <a href="gstreamer">
         <img src="images/tips_and_settings.png" width="150" height="150">
         <p>Element and Pipes</p>
         </a>

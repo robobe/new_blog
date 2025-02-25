@@ -1,4 +1,5 @@
 import gi
+import time
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst, GLib
 
@@ -15,6 +16,7 @@ def bus_callback(bus, message, loop):
     elif message.type == Gst.MessageType.ERROR:
         err, debug = message.parse_error()
         print(f"Error: {err}, Debug Info: {debug}")
+        pipeline.set_state(Gst.State.NULL)
         loop.quit()
     return True
 
@@ -49,6 +51,14 @@ udpsrc port=5000 caps="application/x-rtp, media=(string)video, payload=(int)33" 
 demux. ! multiqueue name=mq ! video/x-h264 ! decodebin ! videoconvert ! autovideosink
 demux. ! mq. mq. ! meta/x-klv ! appsink name=klv_sink
 """
+
+pipeline_description = """
+udpsrc port=5000 
+    ! tsdemux name=demux \
+demux. ! multiqueue name=mq ! video/x-h264 ! decodebin ! videoconvert ! autovideosink
+demux. ! mq. mq. ! meta/x-klv ! appsink name=klv_sink 
+"""
+
 pipeline = Gst.parse_launch(pipeline_description)
 counter = 0
 

@@ -12,11 +12,20 @@ appsrc is-live=true name=source is-live=true format=time \
 ! video/x-raw,format=BGR,width={WIDTH},height={height},framerate={FRAMERATE}/1 \
 ! videoconvert \
 ! timeoverlay time-mode=buffer-count \
-! x264enc tune=zerolatency bitrate=1000 speed-preset=superfast key-int-max=15 \
+! x264enc tune=zerolatency bitrate=1000 speed-preset=ultrafast key-int-max={FRAMERATE} \
 ! video/x-h264,profile=main ! mux. \
-appsrc name=klv_source is-live=true format=time ! meta/x-klv,parsed=true !  mux. 
+appsrc name=kvl_source is-live=true format=time ! meta/x-klv,parsed=true !  mux. 
 """
 
+PIPELINE = f"""mpegtsmux name=mux alignment=7 ! udpsink host=127.0.0.1 port=5000 \
+appsrc is-live=true name=source is-live=true format=time \
+! video/x-raw,format=BGR,width={WIDTH},height={height},framerate={FRAMERATE}/1 \
+! videoconvert \
+! timeoverlay time-mode=buffer-count \
+! x264enc tune=zerolatency bitrate=1000 speed-preset=ultrafast key-int-max={FRAMERATE} \
+! video/x-h264,profile=main ! mux. \
+appsrc name=kvl_source is-live=true format=time ! meta/x-klv,parsed=true !  mux. 
+"""
 
 def gen_frame(id:int) -> bytes:
     """Generate omage
@@ -109,7 +118,7 @@ def bus_callback(bus, message, loop):
 
 pipeline = Gst.parse_launch(PIPELINE)
 appsrc = pipeline.get_by_name("source")
-klv_appsrc = pipeline.get_by_name("klv_source")
+klv_appsrc = pipeline.get_by_name("kvl_source")
 pipeline.set_state(Gst.State.PLAYING)
 push_data.counter = 0
 bus = pipeline.get_bus()

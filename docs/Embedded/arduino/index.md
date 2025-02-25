@@ -26,3 +26,4 @@ tags:
 # Posts
 - [Arduino i2c](arduino_i2c.md)
 - [Simple FOC with arduino](arduino_foc.md)
+- [Arduino REST Server](arduino_web_rest_server.md)

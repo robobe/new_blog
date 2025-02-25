@@ -28,7 +28,14 @@ tags:
     
 </div>
 
+##  Cheat sheet
 
-
+- [git rebase](git_rebase.md)
+- [git cherrypick](git_cherrypick.md)
+- [Git stash](git_stash.md)
 - [Git submodule](git_submodule.md)
 - [Git hooks](git_hooks.md)
+
+
+### Git tools
+[GitKraken](https://www.gitkraken.com/download)

@@ -73,3 +73,13 @@ qos_profile.deadline = Duration(seconds=2, nanoseconds=0)  # Deadline duration
 ```
 
 ![alt text](images/queue_10_life_10.png)
+
+---
+
+## TODO: finish qos with deadline register to SubscriptionEventCallbacks
+
+<details><summary>QoS and deadline event</summary>
+```
+--8<-- "docs/ROS/ros_world/qos/sub_qos_deadline.py"
+```
+</details>

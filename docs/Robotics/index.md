@@ -16,7 +16,10 @@
         <p>Block 3 Description</p>
     </div>
     <div class="grid-item">
-        <p>Block 4 Description</p>
+         <a href="ardupilot">
+                <img src="images/ardupilot.png"  width="150" height="150">
+                <p>Ardupilot and Mavlink</p>
+            </a>
     </div>
     <div class="grid-item">
         <p>Block 5 Description</p>
@@ -25,3 +28,4 @@
         <p>Block 6 Description</p>
     </div>
 </div>
+
