@@ -29,7 +29,7 @@ tags:
 </div>
 
 ##  Cheat sheet
-
+- [git diff](git_diff.md)
 - [git rebase](git_rebase.md)
 - [git cherrypick](git_cherrypick.md)
 - [Git stash](git_stash.md)

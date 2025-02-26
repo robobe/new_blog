@@ -8,7 +8,14 @@ tags:
 
 ![alt text](images/rebase_1.png)
 
-![alt text](images.rebase_2.png)
+
+```bash
+#switch to feature branch
+git checkout feature/cool
+
+```
+![alt text](images/rebase_2.png)
+
 
 ```bash
 # from feature/cool
@@ -17,7 +24,7 @@ git rebase master
 ```
 
 
-![alt text](images/rebase_3.png)
+![](images/rebase_3.png)
 
 ```bash
 # from master

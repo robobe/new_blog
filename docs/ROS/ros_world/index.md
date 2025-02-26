@@ -25,4 +25,5 @@
 ## Posts
 
 - [Node Topics name and remap](node_topic_nameing.md)
+- [ROS2 Parameters](parameters)
 - [Topics QoS](qos)

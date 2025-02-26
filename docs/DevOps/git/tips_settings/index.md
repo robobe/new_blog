@@ -7,7 +7,7 @@ tags:
 # Git Tips and Settings
 
 ## prompt
-Cool prompt generate by ChatAI
+Effective prompt with git branch name
 
 ```bash
 function git-branch-name { 
