@@ -20,9 +20,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-         <a href="github_action">
-        <img src="images/github_action.png" width="150" height="150">
-        <p>Github Actions</p>
+         <a href="github">
+        <img src="images/github.png" width="150" height="150">
+        <p>Github</p>
         </a>
     </div>
     

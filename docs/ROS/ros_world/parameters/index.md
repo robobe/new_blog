@@ -51,14 +51,14 @@ if __name__ == '__main__':
 
 #### Param files
 
-```yaml title="parameters1.yaml"
+```yaml title="params1.yaml"
 minimal:
   ros__parameters:
     param1: 10
     param2: 20
 ```
 
-```yaml title="parameters2.yaml"
+```yaml title="params2.yaml"
 /**:
   ros__parameters:
     param1: 100
@@ -96,16 +96,20 @@ ros2 run ros_py param_demo.py
 ```
 
 ```bash title="load paras from file"
-ros2 run ros_py param_demo.py --ros-args --params-file /home/user/workspaces/ros_py/src/ros_py/ros_py/params.yaml
+ros2 run ros_py param_demo.py --ros-args --params-file params1.yaml
 [INFO] [1740517874.809880531] [minimal]: P1: 10
 [INFO] [1740517874.810112715] [minimal]: P1: 20
 ```
 
+##### load multiple params file
+!!! note "wildcard matching"
+    params2.yaml has global match `/**`
+     
 ```bash
 ros2 run ros_py param_demo.py \
 --ros-args \
---params-file /home/user/workspaces/ros_py/src/ros_py/ros_py/params2.yaml \
---params-file /home/user/workspaces/ros_py/src/ros_py/ros_py/params.yaml
+--params-file params1.yaml \
+--params-file params2.yaml
 [INFO] [1740518709.532923265] [minimal]: P1: 100
 [INFO] [1740518709.533163666] [minimal]: P1: 200
 ```
