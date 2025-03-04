@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Other/Gstreamer/gst_stream_pipes/">
+        <link rel="canonical" href="https://robobe.github.io/Embedded/Jetson/jetpack/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>GStreamer video stream pipe - Robots Inside</title>
+        <title>Nvidia jetson Jetpack - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gstreamer-video-stream-pipe" class="md-skip">
+        <a href="#nvidia-jetson-jetpack" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              GStreamer video stream pipe
+              Nvidia jetson Jetpack
             
           </span>
         </div>
@@ -281,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Embedded/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../Other/" class="md-tabs__link">
         
   
     
@@ -484,7 +484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Embedded/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../Other/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -567,35 +567,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#h265-cpu-encoder" class="md-nav__link">
+  <a href="#mapping" class="md-nav__link">
     <span class="md-ellipsis">
-      H265 cpu encoder
+      Mapping
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#h265-nvidia-jetson" class="md-nav__link">
-    <span class="md-ellipsis">
-      H265 nvidia jetson
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="H265 nvidia jetson">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#multicast" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multicast
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -618,19 +594,19 @@
       
       
       
-        <span class="md-tag">gst</span>
+        <span class="md-tag">jetpack</span>
       
     
       
       
       
-        <span class="md-tag">gstreamer</span>
+        <span class="md-tag">jetson</span>
       
     
       
       
       
-        <span class="md-tag">streaming</span>
+        <span class="md-tag">nvidia</span>
       
     
   </nav>
@@ -640,128 +616,22 @@
   
 
 
-<h1 id="gstreamer-video-stream-pipe">GStreamer video stream pipe</h1>
-<h2 id="h265-cpu-encoder">H265 cpu encoder</h2>
+<h1 id="nvidia-jetson-jetpack">Nvidia jetson Jetpack</h1>
+<h2 id="mapping">Mapping</h2>
+<p>Mapping between <strong>Jetpack</strong> version and <strong>Jetson Linux</strong></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span>
-<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>!<span class="w"> </span>video/x-raw,<span class="w"> </span><span class="nv">width</span><span class="o">=</span><span class="m">640</span>,<span class="w"> </span><span class="nv">height</span><span class="o">=</span><span class="m">480</span>,<span class="w"> </span><span class="nv">framerate</span><span class="o">=</span><span class="m">30</span>/1,<span class="w"> </span><span class="nv">format</span><span class="o">=</span>I420<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>!<span class="w"> </span>videoconvert<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>!<span class="w"> </span>x265enc<span class="w"> </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span>key-int-max<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>!<span class="w"> </span>rtph265pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">1400</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>cat<span class="w"> </span>/etc/nv_tegra_release
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1">#</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="c1"># R36 (release), REVISION: 4.3,</span>
 </code></pre></div></td></tr></table></div>
-<table>
-<thead>
-<tr>
-<th>property</th>
-<th>description</th>
-<th>more ...</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>config-interval</td>
-<td>Send VPS, SPS and PPS Insertion Interval in seconds (default 0)</td>
-<td>help decoder to interpret video stream</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span>
-<span class="normal"><a href="#__codelineno-1-3">3</a></span>
-<span class="normal"><a href="#__codelineno-1-4">4</a></span>
-<span class="normal"><a href="#__codelineno-1-5">5</a></span>
-<span class="normal"><a href="#__codelineno-1-6">6</a></span>
-<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1">## receive</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>gst-launch-1.0<span class="w"> </span>udpsrc<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>!<span class="w"> </span>application/x-rtp,<span class="w"> </span>encoding-name<span class="o">=</span>H265,<span class="w"> </span><span class="nv">payload</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>!<span class="w"> </span>rtpjitterbuffer<span class="w"> </span><span class="nv">latency</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a>!<span class="w"> </span>rtph265depay<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a>!<span class="w"> </span>decodebin<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>!<span class="w"> </span>fpsdisplaysink<span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
-</code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="h265-nvidia-jetson">H265 nvidia jetson</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>!<span class="w"> </span>video/x-raw,<span class="w"> </span><span class="nv">width</span><span class="o">=</span><span class="m">640</span>,<span class="w"> </span><span class="nv">height</span><span class="o">=</span><span class="m">480</span>,<span class="w"> </span><span class="nv">framerate</span><span class="o">=</span><span class="m">30</span>/1,<span class="w"> </span><span class="nv">format</span><span class="o">=</span>I420<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>!<span class="w"> </span>nvvidconv<span class="w"> </span>!<span class="w"> </span><span class="s1">&#39;video/x-raw(memory:NVMM)&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>!<span class="w"> </span>nvv4l2h265enc<span class="w"> </span>preset-level<span class="o">=</span>UltraFastPreset<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="nv">bitrate</span><span class="o">=</span><span class="m">500000</span><span class="w"> </span>vbv-size<span class="o">=</span><span class="m">500000</span><span class="w"> </span>control-rate<span class="o">=</span>GST_V4L2_VIDENC_CONSTANT_BITRATE<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>!<span class="w"> </span>rtph265pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
-</code></pre></div></td></tr></table></div>
-<table>
-<thead>
-<tr>
-<th>property</th>
-<th>description</th>
-<th>more ...</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vbv-size</td>
-<td>Control the encoder buffer size, affecting bitrate variability</td>
-<td>Smaller values = Stable bitrate (good for live streaming)</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span>
-<span class="normal"><a href="#__codelineno-3-4">4</a></span>
-<span class="normal"><a href="#__codelineno-3-5">5</a></span>
-<span class="normal"><a href="#__codelineno-3-6">6</a></span>
-<span class="normal"><a href="#__codelineno-3-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1">## receive</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>gst-launch-1.0<span class="w"> </span>udpsrc<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a>!<span class="w"> </span>application/x-rtp,<span class="w"> </span>encoding-name<span class="o">=</span>H265,<span class="w"> </span><span class="nv">payload</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a>!<span class="w"> </span>rtpjitterbuffer<span class="w"> </span><span class="nv">latency</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a>!<span class="w"> </span>rtph265depay<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a>!<span class="w"> </span>decodebin<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>!<span class="w"> </span>fpsdisplaysink<span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="multicast">Multicast</h3>
-<p>IPv4 multicast address define from <code>222.0.0.0</code> to <code>239.255.255.255</code></p>
-<p>To Stream over multicast just change the ip to multicast range
-<strong>udpsink</strong> support multicast by default</p>
-<div class="admonition tip">
-<p class="admonition-title">lo multicast</p>
-<p>By default multicast disabled on LO</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
-<span class="normal"><a href="#__codelineno-4-2">2</a></span>
-<span class="normal"><a href="#__codelineno-4-3">3</a></span>
-<span class="normal"><a href="#__codelineno-4-4">4</a></span>
-<span class="normal"><a href="#__codelineno-4-5">5</a></span>
-<span class="normal"><a href="#__codelineno-4-6">6</a></span>
-<span class="normal"><a href="#__codelineno-4-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1">#check </span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>ifconfig<span class="w"> </span>lo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>multicast
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="c1"># enable</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>sudo<span class="w"> </span>ifconfig<span class="w"> </span>lo<span class="w"> </span>multicast
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="c1">#or</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a>sudo<span class="w"> </span>ip<span class="w"> </span>list<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lo<span class="w"> </span>multicast<span class="w"> </span>on
+<p>it's map to Jetson linux 36.4.3</p>
+<div class="admonition note">
+<p class="admonition-title">Jetson linux Downloads</p>
+<p>The version map to link for download roosfs and toolchain</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>https://developer.nvidia.com/embedded/jetson-linux-r3643
 </code></pre></div></td></tr></table></div>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span>
-<span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span>
-<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a>!<span class="w"> </span>video/x-raw,<span class="w"> </span><span class="nv">width</span><span class="o">=</span><span class="m">640</span>,<span class="w"> </span><span class="nv">height</span><span class="o">=</span><span class="m">480</span>,<span class="w"> </span><span class="nv">framerate</span><span class="o">=</span><span class="m">30</span>/1,<span class="w"> </span><span class="nv">format</span><span class="o">=</span>I420<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a>!<span class="w"> </span>videoconvert<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a>!<span class="w"> </span>x265enc<span class="w"> </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span>key-int-max<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a>!<span class="w"> </span>rtph265pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">1400</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">224</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
-</code></pre></div></td></tr></table></div>
 
 
 

@@ -602,6 +602,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load-multiple-params-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      load multiple params file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -718,7 +733,7 @@ one of the file use wildcard as <code>node_name</code></p>
 </details>
 
 <h4 id="param-files">Param files</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">parameters1.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">params1.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span>
 <span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">minimal</span><span class="p">:</span>
@@ -726,7 +741,7 @@ one of the file use wildcard as <code>node_name</code></p>
 <a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">param1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">param2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">parameters2.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">params2.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
 <span class="normal"><a href="#__codelineno-2-2">2</a></span>
 <span class="normal"><a href="#__codelineno-2-3">3</a></span>
 <span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">/**</span><span class="p">:</span>
@@ -773,10 +788,15 @@ one of the file use wildcard as <code>node_name</code></p>
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">load paras from file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_py<span class="w"> </span>param_demo.py<span class="w"> </span>--ros-args<span class="w"> </span>--params-file<span class="w"> </span>/home/user/workspaces/ros_py/src/ros_py/ros_py/params.yaml
+<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_py<span class="w"> </span>param_demo.py<span class="w"> </span>--ros-args<span class="w"> </span>--params-file<span class="w"> </span>params1.yaml
 <a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517874</span>.809880531<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">10</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517874</span>.810112715<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">20</span>
 </code></pre></div></td></tr></table></div>
+<h5 id="load-multiple-params-file">load multiple params file</h5>
+<div class="admonition note">
+<p class="admonition-title">wildcard matching</p>
+<p>params2.yaml has global match <code>/**</code></p>
+</div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
 <span class="normal"><a href="#__codelineno-6-2">2</a></span>
 <span class="normal"><a href="#__codelineno-6-3">3</a></span>
@@ -784,8 +804,8 @@ one of the file use wildcard as <code>node_name</code></p>
 <span class="normal"><a href="#__codelineno-6-5">5</a></span>
 <span class="normal"><a href="#__codelineno-6-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_py<span class="w"> </span>param_demo.py<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2"></a>--ros-args<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a>--params-file<span class="w"> </span>/home/user/workspaces/ros_py/src/ros_py/ros_py/params2.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a>--params-file<span class="w"> </span>/home/user/workspaces/ros_py/src/ros_py/ros_py/params.yaml
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>--params-file<span class="w"> </span>params1.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>--params-file<span class="w"> </span>params2.yaml
 <a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740518709</span>.532923265<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">100</span>
 <a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740518709</span>.533163666<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">200</span>
 </code></pre></div></td></tr></table></div>

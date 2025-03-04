@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Other/Gstreamer/gst_stream_pipes/">
+        <link rel="canonical" href="https://robobe.github.io/DevOps/tools/devops_debootstrap/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>GStreamer video stream pipe - Robots Inside</title>
+        <title>Debootstrap - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gstreamer-video-stream-pipe" class="md-skip">
+        <a href="#debootstrap" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              GStreamer video stream pipe
+              Debootstrap
             
           </span>
         </div>
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../DevOps/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../Other/" class="md-tabs__link">
         
   
     
@@ -505,7 +505,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../DevOps/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../Other/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -567,35 +567,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#h265-cpu-encoder" class="md-nav__link">
+  <a href="#first-stage" class="md-nav__link">
     <span class="md-ellipsis">
-      H265 cpu encoder
+      First stage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#h265-nvidia-jetson" class="md-nav__link">
+  <a href="#second-stage" class="md-nav__link">
     <span class="md-ellipsis">
-      H265 nvidia jetson
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="H265 nvidia jetson">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#multicast" class="md-nav__link">
-    <span class="md-ellipsis">
-      Multicast
+      Second stage
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#install-ros-on-the-rootfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      install ros on the rootfs
+    </span>
+  </a>
   
 </li>
       
@@ -618,19 +612,13 @@
       
       
       
-        <span class="md-tag">gst</span>
+        <span class="md-tag">devops</span>
       
     
       
       
       
-        <span class="md-tag">gstreamer</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">streaming</span>
+        <span class="md-tag">tools</span>
       
     
   </nav>
@@ -640,128 +628,102 @@
   
 
 
-<h1 id="gstreamer-video-stream-pipe">GStreamer video stream pipe</h1>
-<h2 id="h265-cpu-encoder">H265 cpu encoder</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span>
-<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>!<span class="w"> </span>video/x-raw,<span class="w"> </span><span class="nv">width</span><span class="o">=</span><span class="m">640</span>,<span class="w"> </span><span class="nv">height</span><span class="o">=</span><span class="m">480</span>,<span class="w"> </span><span class="nv">framerate</span><span class="o">=</span><span class="m">30</span>/1,<span class="w"> </span><span class="nv">format</span><span class="o">=</span>I420<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>!<span class="w"> </span>videoconvert<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>!<span class="w"> </span>x265enc<span class="w"> </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span>key-int-max<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>!<span class="w"> </span>rtph265pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">1400</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+<h1 id="debootstrap">Debootstrap</h1>
+<ul>
+<li>First Stage: Downloads the basic packages and sets up the environment.</li>
+<li>Second Stage: Completes the system setup, installs additional packages, and configures the environment to be fully usable.</li>
+</ul>
+<h2 id="first-stage">First stage</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo debootstrap --arch=arm64 --foreign jammy /home/user/rootfs/ubuntuRootFS http://us.ports.ubuntu.com/ubuntu-ports
 </code></pre></div></td></tr></table></div>
-<table>
-<thead>
-<tr>
-<th>property</th>
-<th>description</th>
-<th>more ...</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>config-interval</td>
-<td>Send VPS, SPS and PPS Insertion Interval in seconds (default 0)</td>
-<td>help decoder to interpret video stream</td>
-</tr>
-</tbody>
-</table>
+<h2 id="second-stage">Second stage</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span>
 <span class="normal"><a href="#__codelineno-1-4">4</a></span>
 <span class="normal"><a href="#__codelineno-1-5">5</a></span>
 <span class="normal"><a href="#__codelineno-1-6">6</a></span>
-<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1">## receive</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>gst-launch-1.0<span class="w"> </span>udpsrc<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>!<span class="w"> </span>application/x-rtp,<span class="w"> </span>encoding-name<span class="o">=</span>H265,<span class="w"> </span><span class="nv">payload</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>!<span class="w"> </span>rtpjitterbuffer<span class="w"> </span><span class="nv">latency</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a>!<span class="w"> </span>rtph265depay<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a>!<span class="w"> </span>decodebin<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>!<span class="w"> </span>fpsdisplaysink<span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># Copy qemu binary to emulate ARM architecture on x86 machine</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>sudo<span class="w"> </span>cp<span class="w"> </span>/usr/bin/qemu-aarch64-static<span class="w"> </span>/path/to/rootfs/usr/bin/
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># Chroot into the new rootfs</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>sudo<span class="w"> </span>chroot<span class="w"> </span>/path/to/rootfs
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1"># Run the second-stage installation</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>/debootstrap/debootstrap<span class="w"> </span>--second-stage
 </code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="h265-nvidia-jetson">H265 nvidia jetson</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
 <span class="normal"><a href="#__codelineno-2-2">2</a></span>
 <span class="normal"><a href="#__codelineno-2-3">3</a></span>
 <span class="normal"><a href="#__codelineno-2-4">4</a></span>
 <span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>!<span class="w"> </span>video/x-raw,<span class="w"> </span><span class="nv">width</span><span class="o">=</span><span class="m">640</span>,<span class="w"> </span><span class="nv">height</span><span class="o">=</span><span class="m">480</span>,<span class="w"> </span><span class="nv">framerate</span><span class="o">=</span><span class="m">30</span>/1,<span class="w"> </span><span class="nv">format</span><span class="o">=</span>I420<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>!<span class="w"> </span>nvvidconv<span class="w"> </span>!<span class="w"> </span><span class="s1">&#39;video/x-raw(memory:NVMM)&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>!<span class="w"> </span>nvv4l2h265enc<span class="w"> </span>preset-level<span class="o">=</span>UltraFastPreset<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="nv">bitrate</span><span class="o">=</span><span class="m">500000</span><span class="w"> </span>vbv-size<span class="o">=</span><span class="m">500000</span><span class="w"> </span>control-rate<span class="o">=</span>GST_V4L2_VIDENC_CONSTANT_BITRATE<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>!<span class="w"> </span>rtph265pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>deb<span class="w"> </span>http://us.ports.ubuntu.com/ubuntu-ports<span class="w"> </span>jammy<span class="w"> </span>main<span class="w"> </span>restricted
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>deb<span class="w"> </span>http://us.ports.ubuntu.com/ubuntu-ports<span class="w"> </span>jammy-updates<span class="w"> </span>main<span class="w"> </span>restricted
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1"># deb-src http://tw.ports.ubuntu.com/ubuntu-ports jammy main restricted universe multiverse</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># deb-src http://tw.ports.ubuntu.com/ubuntu-ports jammy-updates main restricted universe multiverse</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>deb<span class="w"> </span>http://us.ports.ubuntu.com/ubuntu-ports<span class="w"> </span>jammy<span class="w"> </span>universe
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>deb<span class="w"> </span>http://us.ports.ubuntu.com/ubuntu-ports<span class="w"> </span>jammy-updates<span class="w"> </span>universe
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>deb<span class="w"> </span>http://us.ports.ubuntu.com/ubuntu-ports<span class="w"> </span>jammy<span class="w"> </span>multiverse
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>deb<span class="w"> </span>http://us.ports.ubuntu.com/ubuntu-ports<span class="w"> </span>jammy-updates<span class="w"> </span>multiverse
 </code></pre></div></td></tr></table></div>
-<table>
-<thead>
-<tr>
-<th>property</th>
-<th>description</th>
-<th>more ...</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vbv-size</td>
-<td>Control the encoder buffer size, affecting bitrate variability</td>
-<td>Smaller values = Stable bitrate (good for live streaming)</td>
-</tr>
-</tbody>
-</table>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
 <span class="normal"><a href="#__codelineno-3-2">2</a></span>
 <span class="normal"><a href="#__codelineno-3-3">3</a></span>
 <span class="normal"><a href="#__codelineno-3-4">4</a></span>
-<span class="normal"><a href="#__codelineno-3-5">5</a></span>
-<span class="normal"><a href="#__codelineno-3-6">6</a></span>
-<span class="normal"><a href="#__codelineno-3-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1">## receive</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>gst-launch-1.0<span class="w"> </span>udpsrc<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a>!<span class="w"> </span>application/x-rtp,<span class="w"> </span>encoding-name<span class="o">=</span>H265,<span class="w"> </span><span class="nv">payload</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a>!<span class="w"> </span>rtpjitterbuffer<span class="w"> </span><span class="nv">latency</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a>!<span class="w"> </span>rtph265depay<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a>!<span class="w"> </span>decodebin<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>!<span class="w"> </span>fpsdisplaysink<span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span><span class="nb">bind</span><span class="w"> </span>/dev<span class="w"> </span>/home/user/rootfs/ubuntuRootFS/dev
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>sudo<span class="w"> </span>mount<span class="w"> </span>-t<span class="w"> </span>devpts<span class="w"> </span>devpts<span class="w"> </span>/home/user/rootfs/ubuntuRootFS/dev/pts
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span><span class="nb">bind</span><span class="w"> </span>/proc<span class="w"> </span>/home/user/rootfs/ubuntuRootFS/proc
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span><span class="nb">bind</span><span class="w"> </span>/sys<span class="w"> </span>/home/user/rootfs/ubuntuRootFS/sys
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span><span class="nb">bind</span><span class="w"> </span>/run<span class="w"> </span>/home/user/rootfs/ubuntuRootFS/run
 </code></pre></div></td></tr></table></div>
-<h3 id="multicast">Multicast</h3>
-<p>IPv4 multicast address define from <code>222.0.0.0</code> to <code>239.255.255.255</code></p>
-<p>To Stream over multicast just change the ip to multicast range
-<strong>udpsink</strong> support multicast by default</p>
-<div class="admonition tip">
-<p class="admonition-title">lo multicast</p>
-<p>By default multicast disabled on LO</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
-<span class="normal"><a href="#__codelineno-4-2">2</a></span>
-<span class="normal"><a href="#__codelineno-4-3">3</a></span>
-<span class="normal"><a href="#__codelineno-4-4">4</a></span>
-<span class="normal"><a href="#__codelineno-4-5">5</a></span>
-<span class="normal"><a href="#__codelineno-4-6">6</a></span>
-<span class="normal"><a href="#__codelineno-4-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1">#check </span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>ifconfig<span class="w"> </span>lo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>multicast
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="c1"># enable</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>sudo<span class="w"> </span>ifconfig<span class="w"> </span>lo<span class="w"> </span>multicast
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="c1">#or</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a>sudo<span class="w"> </span>ip<span class="w"> </span>list<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lo<span class="w"> </span>multicast<span class="w"> </span>on
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>chroot<span class="w"> </span>/path/to/rootfs<span class="w"> </span>/bin/bash
 </code></pre></div></td></tr></table></div>
-</div>
+<h2 id="install-ros-on-the-rootfs">install ros on the rootfs</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
 <span class="normal"><a href="#__codelineno-5-3">3</a></span>
-<span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span>
-<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a>!<span class="w"> </span>video/x-raw,<span class="w"> </span><span class="nv">width</span><span class="o">=</span><span class="m">640</span>,<span class="w"> </span><span class="nv">height</span><span class="o">=</span><span class="m">480</span>,<span class="w"> </span><span class="nv">framerate</span><span class="o">=</span><span class="m">30</span>/1,<span class="w"> </span><span class="nv">format</span><span class="o">=</span>I420<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a>!<span class="w"> </span>videoconvert<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a>!<span class="w"> </span>x265enc<span class="w"> </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span>key-int-max<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a>!<span class="w"> </span>rtph265pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">1400</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">224</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>locales
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>$<span class="w"> </span>sudo<span class="w"> </span>locale-gen<span class="w"> </span>en_US<span class="w"> </span>en_US.UTF-8
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>$<span class="w"> </span>sudo<span class="w"> </span>update-locale<span class="w"> </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8<span class="w"> </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
 </code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>$ sudo apt install software-properties-common
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>$ sudo add-apt-repository universe
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>$ sudo apt update &amp;&amp; sudo apt install curl -y
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>$ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>$ echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main&quot; | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>apt update
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>sudo apt install ros-humble-ros-base
+</code></pre></div></td></tr></table></div>
+<p>```cmake title=""toolchain.cmake
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)  # Change to match your target architecture</p>
+<h1 id="set-cross-compiler-paths">Set cross-compiler paths</h1>
+<p>set(CMAKE_C_COMPILER /path/to/cross-compiler/bin/aarch64-linux-gnu-gcc)
+set(CMAKE_CXX_COMPILER /path/to/cross-compiler/bin/aarch64-linux-gnu-g++)
+set(CMAKE_SYSROOT /path/to/rootfs)  # Set to your root filesystem</p>
+<h1 id="set-where-cmake-should-look-for-libraries-and-headers">Set where CMake should look for libraries and headers</h1>
+<p>set(CMAKE_FIND_ROOT_PATH /path/to/rootfs /path/to/rootfs/usr /path/to/rootfs/usr/local)</p>
+<h1 id="only-search-inside-the-target-rootfs">Only search inside the target rootfs</h1>
+<p>set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)</p>
+<h1 id="ros-2-paths">ROS 2 paths</h1>
+<p>set(AMENT_PREFIX_PATH /path/to/rootfs/opt/ros/humble)
+set(CMAKE_PREFIX_PATH ${AMENT_PREFIX_PATH})</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>
+</code></pre></div></td></tr></table></div>
+colcon build --cmake-args -DCMAKE_TOOLCHAIN_FILE=/path/to/toolchain.cmake</p>
+<p>```</p>
 
 
 
