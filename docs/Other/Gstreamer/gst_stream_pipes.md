@@ -59,3 +59,31 @@ gst-launch-1.0 udpsrc port=5000 \
 ! decodebin \
 ! fpsdisplaysink sync=true
 ```
+
+### Multicast
+IPv4 multicast address define from `222.0.0.0` to `239.255.255.255`
+
+To Stream over multicast just change the ip to multicast range
+**udpsink** support multicast by default
+
+!!! tip "lo multicast"
+    By default multicast disabled on LO
+
+    ```bash
+    #check 
+    ifconfig lo | grep -i multicast
+
+    # enable
+    sudo ifconfig lo multicast
+    #or
+    sudo ip list set lo multicast on
+    ```
+     
+```bash
+gst-launch-1.0 videotestsrc \
+! video/x-raw, width=640, height=480, framerate=30/1, format=I420 \
+! videoconvert \
+! x265enc tune=zerolatency speed-preset=ultrafast key-int-max=30 bitrate=500 \
+! rtph265pay config-interval=1 mtu=1400 \
+! udpsink host=224.0.0.1 port=5000 sync=true
+```
