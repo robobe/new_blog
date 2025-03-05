@@ -114,3 +114,10 @@ set(CMAKE_PREFIX_PATH ${AMENT_PREFIX_PATH})
 colcon build --cmake-args -DCMAKE_TOOLCHAIN_FILE=/path/to/toolchain.cmake
 
 ```
+
+!!! warning "pyconfig.h"
+     
+     ```
+     //#  include <aarch64-linux-gnu/python3.10/pyconfig.h>
+    # include "/home/user/rootfs/ubuntuRootFS/usr/include/aarch64-linux-gnu/python3.10/pyconfig.h"
+     ```

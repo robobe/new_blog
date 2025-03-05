@@ -34,7 +34,7 @@
     <div class="grid-item">
         <a href="tools">
         <img src="images/tools.png" width="150" height="150">
-        <p>Aptly</p>
+        <p>Tools</p>
         </a>
     </div>
 </div>
