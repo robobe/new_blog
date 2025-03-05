@@ -592,6 +592,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -662,7 +677,7 @@
 
 
 <h1 id="run-github-action-locally">Run github action locally</h1>
-<p>GitHub Actions help automate tasks like building, testing, and deploying in your GitHub repository. 
+<p>GitHub Actions help automate tasks like building, testing, and deploying in your GitHub repository.
 With <code>act</code> CLI tool we can write and test the GitHub action locally.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
 </code></pre></div></td></tr></table></div>
@@ -677,8 +692,87 @@ With <code>act</code> CLI tool we can write and test the GitHub action locally.<
 </code></pre></div></td></tr></table></div>
 <h3 id="example">example</h3>
 <p>Run job on local docker</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>act -j build -P rome_arm=rome/arm:build --pull=false
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>act -j build_demo -P name=docker_image --pull=false
 </code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>arg</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-j</td>
+<td>job to run for workflow</td>
+</tr>
+<tr>
+<td>-P</td>
+<td>custom image to</td>
+</tr>
+<tr>
+<td>--pull</td>
+<td>pull image from hub or find it locally</td>
+</tr>
+</tbody>
+</table>
+<h4 id="workflow">Workflow</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">7</a></span>
+<span class="normal"><a href="#__codelineno-3-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>name: My Action
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>on: [workflow_dispatch]
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>jobs:
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>  build_demo:
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    runs-on: rome_arm
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    steps:
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>      - name: Hello, World!
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>        run: echo &quot;build job hello world&quot;
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>arg</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>workflow name</td>
+</tr>
+<tr>
+<td>on</td>
+<td>running trigger event [push, pull_request, workflow_dispatch]</td>
+</tr>
+<tr>
+<td>jobs</td>
+<td>workflow jobs</td>
+</tr>
+<tr>
+<td>runs-on</td>
+<td>platform to run on (image name declare in <strong>act</strong> command )</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">multiple lines</p>
+<p>use <code>|</code> to mark multiple lines</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">colcon</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"> </span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">        </span><span class="no">line 1</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">        </span><span class="no">line 2</span>
+</code></pre></div></td></tr></table></div>
+</div>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
