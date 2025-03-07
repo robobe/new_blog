@@ -19,7 +19,7 @@ tags:
     <div class="grid-item">
      <a href="remote_ssh">
         <img src="images/remote_ssh.png" width="150" height="150">
-        <p>renote</p>
+        <p>remote</p>
         </a>
     </div>
     <div class="grid-item">

@@ -5,7 +5,6 @@ tags:
     - settings
 ---
 
-
 # VSCode tips and settings
 
 <div class="grid-container">
@@ -78,7 +77,7 @@ Add `key` to `keybindings.json` file
 ## Editor
 - [Mark active tab](#add-custom-color-to-active-tab)
 - [Tab focus mode](#tab-key-function)
-
+- [Preview mode](#preview-mode)
 
 ### Tab key function
 
@@ -93,4 +92,24 @@ I accidentally pressed some key combonition and the "Tab" switch the focus mode 
         "tab.activeBorder": "#ff0000",
         "tab.activeBackground": "#373737"
     },
+```
+
+### Preview mode
+[preview or not](https://vscode.one/new-tab-vscode/)
+
+#### Preview mode
+VSCode default
+
+Preview Mode tabs **are not kept open**. As soon as you go to open another file from the sidebar, the existing Preview Mode tab (if one exists) is used. You can determine if a tab is in Preview Mode, by looking at its title in the tab bar. If the title is italic, the tab is in preview mode.
+
+To open a file for editing (i.e. don't open in Preview Mode), double-click on the file in the sidebar, or single-click it in the sidebar then double click the title of its Preview Mode tab.
+
+- Clicking on a file in the explorer opens it in the editor in preview (the file name well be italic).
+- Dbl-clicking on a file in the explorer opens it in the editor in a new tab.
+- To switch file from preview to tab, dbl-click on the file title bar. (or start to edit)
+
+
+#### Disabled preview mode
+```json
+"workbench.editor.enablePreview": false,
 ```

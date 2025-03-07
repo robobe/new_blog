@@ -10,9 +10,9 @@ Ros packages and tools that are used in the ROS eco system.
         </a>
     </div>
     <div class="grid-item">
-        <a href="python">
-            <img src="images/control.png"   width="150" height="150">
-            <p>ROS2 Control</p>
+        <a href="rosdep_bloom">
+            <img src="images/ros2.png"   width="150" height="150">
+            <p>rosdep bloom</p>
         </a>
     </div>
     <div class="grid-item">
