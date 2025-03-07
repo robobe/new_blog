@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/DevOps/docker/docker_build_arm/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/zenoh/zenoh_pico/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Running and Building ARM Docker Containers on x86 - Robots Inside</title>
+        <title>Zenoh pico - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#running-and-building-arm-docker-containers-on-x86" class="md-skip">
+        <a href="#zenoh-pico" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Running and Building ARM Docker Containers on x86
+              Zenoh pico
             
           </span>
         </div>
@@ -213,7 +213,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../ROS/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../DevOps/" class="md-tabs__link">
         
   
     
@@ -400,7 +400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ROS/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -505,7 +505,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../DevOps/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -567,36 +567,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Install
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#registration-with-docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      Registration With docker
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Usage
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
+      Reference
     </span>
   </a>
   
@@ -621,19 +594,19 @@
       
       
       
-        <span class="md-tag">arm</span>
+        <span class="md-tag">pico</span>
       
     
       
       
       
-        <span class="md-tag">docker</span>
+        <span class="md-tag">ros</span>
       
     
       
       
       
-        <span class="md-tag">qemu</span>
+        <span class="md-tag">zenoh</span>
       
     
   </nav>
@@ -643,38 +616,11 @@
   
 
 
-<h1 id="running-and-building-arm-docker-containers-on-x86">Running and Building ARM Docker Containers on x86</h1>
-<h2 id="install">Install</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>qemu<span class="w"> </span>binfmt-support<span class="w"> </span>qemu-user-static
-</code></pre></div></td></tr></table></div>
-<div class="admonition note">
-<p class="admonition-title">binfmt</p>
-<p>binfmt (Binary Format) is a Linux kernel feature that allows execution of non-native binary formats (executables compiled for different architectures). This enables cross-architecture execution, such as running ARM64 binaries on an x86_64 machine.</p>
-<p>binfmt works with interpreters like <strong>QEMU</strong> to translate and execute foreign binaries transparently.</p>
-</div>
-<h2 id="registration-with-docker">Registration With docker</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--privileged<span class="w"> </span>multiarch/qemu-user-static<span class="w"> </span>--reset<span class="w"> </span>-p<span class="w"> </span>yes
-</code></pre></div></td></tr></table></div>
-<div class="admonition note">
-<p class="admonition-title">-p yes</p>
-<p>This register qemu persistent and available for future docker to run</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">multiarch/qemu-user-static</p>
-<ul>
-<li>The <strong>multiarch/qemu-user-static</strong> image is pulled and run temporarily to register QEMU with your system.</li>
-<li>It doesn't leave behind an actual image that appears in docker images.</li>
-<li></li>
-</ul>
-</div>
-<p>The purpose of this command is to enable the host system to run binaries compiled for different architectures (such as ARM) using QEMU. This is particularly useful for building and running ARM Docker containers on an x86 host.</p>
-<h2 id="usage">Usage</h2>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">test</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--platform<span class="o">=</span>linux/arm64/v8<span class="w"> </span>--rm<span class="w"> </span>arm64v8/ubuntu<span class="w"> </span>uname<span class="w"> </span>-m<span class="w"> </span><span class="c1"># Testing the emulation environment</span>
-</code></pre></div></td></tr></table></div>
+<h1 id="zenoh-pico">Zenoh pico</h1>
 <hr />
-<h2 id="references">References</h2>
+<h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://www.stereolabs.com/docs/docker/building-arm-container-on-x86">Running and Building ARM Docker Containers on x86</a></li>
+<li><a href="https://zenoh.io/blog/2021-11-09-ros2-zenoh-pico/">ROS 2 and microcontrollers integration via Zenoh-pico</a></li>
 </ul>
 
 
