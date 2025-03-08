@@ -21,12 +21,13 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="remote_ssh">
-        
-        <p>TBD</p>
+        <a href="snippets">
+        <img src="images/snippets.png" width="150" height="150">
+        <p>Snippets</p>
         </a>
     </div>
 </div>
+
 
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Editor](#editor)

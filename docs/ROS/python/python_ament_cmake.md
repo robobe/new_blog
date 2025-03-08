@@ -67,6 +67,15 @@ Add `ament_cmake_python` in `buildtool_depend`
 <buildtool_depend>ament_cmake_python</buildtool_depend>
 ```
 
+### python nodes
+- Create folder with the package name
+- Create `__init__.py` in the folder
+- Every node should have `#!/usr/bin/env python3` as first line
+- Make the node executable `chmod +x my_node.py`
+
+
+
+
 ### usage
 
 ```bash

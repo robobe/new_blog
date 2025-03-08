@@ -27,3 +27,7 @@
         <p>Block 6 Description</p>
     </div>
 </div>
+
+## Posts
+
+- [Encoder](encoder/index.md)
