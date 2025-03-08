@@ -22,7 +22,7 @@
     
     
       
-        <title>Rosdep Bloom and other tools - Robots Inside</title>
+        <title>Package.xml, Rosdep, Bloom and other tools - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rosdep-bloom-and-other-tools" class="md-skip">
+        <a href="#packagexml-rosdep-bloom-and-other-tools" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Rosdep Bloom and other tools
+              Package.xml, Rosdep, Bloom and other tools
             
           </span>
         </div>
@@ -573,6 +573,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Package.xml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -582,12 +597,159 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Rosdep">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rosdep-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      rosdep install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rosdep-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      rosdep check
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rosdep-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      rosdep keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rosdep-resolve-python3-rosdep" class="md-nav__link">
+    <span class="md-ellipsis">
+      rosdep resolve python3-rosdep
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rosdep-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      rosdep db
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rosdep-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      rosdep update
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-rosdep-yaml-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom rosdep yaml file
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom rosdep yaml file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-create-custom-rosdep-yaml-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo: Create custom rosdep yaml file
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo: Create custom rosdep yaml file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resolve
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
   <a href="#bloom" class="md-nav__link">
     <span class="md-ellipsis">
       Bloom
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bloom">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-deb-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check deb package
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tools
     </span>
   </a>
   
@@ -658,55 +820,282 @@
   
 
 
-<h1 id="rosdep-bloom-and-other-tools">Rosdep Bloom and other tools</h1>
+<h1 id="packagexml-rosdep-bloom-and-other-tools">Package.xml, Rosdep, Bloom and other tools</h1>
 <h2 id="packagexml">Package.xml</h2>
 <p>It provides metadata about the package, such as its name, version, dependencies, and other important information.</p>
+<p>check REP 149 for more details <a href="https://www.ros.org/reps/rep-0149.html">here</a></p>
+<h3 id="dependencies">Dependencies</h3>
 <ul>
-<li>build_depend</li>
+<li><strong>depend</strong>: Specifies dependencies required to build and run the package.  A <depend> tag is equivalent to specifying <build_depend>, <build_export_depend> and <exec_depend>, all on the same package or key. The <depend> tag cannot be used in combination with any of the three equivalent tags for the same package or key name.</li>
+<li><strong>build_depend</strong>: Specifies dependencies required to build the package (e.g., libraries needed at build time).</li>
+<li><strong>exec_depend</strong>: Specifies runtime dependencies (e.g., libraries or tools needed when running the package).</li>
+<li><strong>test_depend</strong>: Specifies dependencies needed for running tests.
+doc_depend: Specifies dependencies related to documentation.</li>
+<li><strong>buildtool_depend</strong>: Specifies build tools required for the package.</li>
 </ul>
+<hr />
 <h2 id="rosdep">Rosdep</h2>
 <p>rosdep is a command-line tool for installing system dependencies <a href="https://github.com/ros-infrastructure/rosdep">more</a></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python3-rosdep
+</code></pre></div></td></tr></table></div>
+<h3 id="commands">commands</h3>
+<p><a href="https://docs.ros.org/en/independent/api/rosdep/html/commands.html">resdep command reference</a></p>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">init</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo<span class="w"> </span>rosdep<span class="w"> </span>init
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>rosdep<span class="w"> </span>update
+</code></pre></div></td></tr></table></div>
+- <strong>init</strong>: Download/update rosdep sources to  <code>/etc/ros/rosdep/sources.list.d/20-default.list</code>
+- <strong>update</strong>: Download databases from the above sources and store them in <code>~/.ros/rosdep</code></p>
+<h4 id="rosdep-install">rosdep install</h4>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>-r<span class="w"> </span>-y
+</code></pre></div></td></tr></table></div>
+<h4 id="rosdep-check">rosdep check</h4>
+<p>check if the dependencies of package(s) have been met.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">check</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>rosdep<span class="w"> </span>check<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>-r
+</code></pre></div></td></tr></table></div>
+<h4 id="rosdep-keys">rosdep keys</h4>
+<p>list the rosdep keys that the packages depend on.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>rosdep<span class="w"> </span>keys<span class="w"> </span>--from-path<span class="w"> </span>src
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="c1">#</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>rqt_gui_py
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>ament_cmake_pytest
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>rqt_gui
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>rosidl_default_runtime
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>ament_lint_common
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>diagnostic_updater
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>rosidl_default_generators
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>ament_cmake
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>python3-pyqt5
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>ament_lint_auto
+</code></pre></div></td></tr></table></div>
+<h4 id="rosdep-resolve-python3-rosdep">rosdep resolve python3-rosdep</h4>
+<p>resolve <code>&lt;rosdeps&gt;</code> to system dependencies</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1">#rosdep resolve &lt;rosdep&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>rosdep<span class="w"> </span>resolve<span class="w"> </span>diagnostic_updater
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="c1">#apt</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>ros-humble-diagnostic-updater
+</code></pre></div></td></tr></table></div>
+<div class="admonition note resolve not found">
+<p class="admonition-title">Note</p>
+<p>for example <code>bluez-hcidump</code> not defined for <code>ubuntu</code> is
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>rosdep<span class="w"> </span>resolve<span class="w"> </span>bluez-hcidump
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="c1">#</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>WARNING:<span class="w"> </span>ROS_PYTHON_VERSION<span class="w"> </span>is<span class="w"> </span>unset.<span class="w"> </span>Defaulting<span class="w"> </span>to<span class="w"> </span><span class="m">3</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>ERROR:<span class="w"> </span>No<span class="w"> </span>definition<span class="w"> </span>of<span class="w"> </span><span class="o">[</span>bluez-hcidump<span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>OS<span class="w"> </span><span class="o">[</span>ubuntu<span class="o">]</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>No<span class="w"> </span>definition<span class="w"> </span>of<span class="w"> </span><span class="o">[</span>bluez-hcidump<span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>OS<span class="w"> </span><span class="o">[</span>ubuntu<span class="o">]</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">        </span>rosdep<span class="w"> </span>key<span class="w"> </span>:<span class="w"> </span>bluez-hcidump
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">        </span>OS<span class="w"> </span>name<span class="w">    </span>:<span class="w"> </span>ubuntu
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">        </span>OS<span class="w"> </span>version<span class="w"> </span>:<span class="w"> </span>jammy
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">        </span>Data:
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a>debian:
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">                </span>-<span class="w"> </span>bluez-hcidump
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">                </span>fedora:
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">                </span>-<span class="w"> </span>bluez-hcidump
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">                </span>gentoo:
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">                </span>-<span class="w"> </span>net-wireless/bluez-hcidump
+</code></pre></div></td></tr></table></div></p>
+</div>
+<h4 id="rosdep-db">rosdep db</h4>
+<p>generate the dependency database and print it to the console.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">db</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>rosdep<span class="w"> </span>db<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>diagnostic
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="c1">#</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>diagnostic_msgs<span class="w"> </span>-&gt;<span class="w"> </span>ros-humble-diagnostic-msgs
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>diagnostic_aggregator<span class="w"> </span>-&gt;<span class="w"> </span>ros-humble-diagnostic-aggregator
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>diagnostic_common_diagnostics<span class="w"> </span>-&gt;<span class="w"> </span>ros-humble-diagnostic-common-diagnostics
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>diagnostic_updater<span class="w"> </span>-&gt;<span class="w"> </span>ros-humble-diagnostic-updater
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>diagnostics<span class="w"> </span>-&gt;<span class="w"> </span>ros-humble-diagnostics
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>...
+</code></pre></div></td></tr></table></div>
+<h4 id="rosdep-update">rosdep update</h4>
+<p>update the local rosdep database based on the rosdep sources.</p>
+<hr />
+<h2 id="custom-rosdep-yaml-file">Custom rosdep yaml file</h2>
+<p>The <strong>yaml</strong> schema define in <a href="https://www.ros.org/reps/rep-0111.html">REP-111</a></p>
+<div class="admonition note rosdistro">
+<p class="admonition-title">Note</p>
+<p>The rosdistro repository contains the package information for ROS distributions. 
+found in git https://github.com/ros/rosdistro/tree/master</p>
+</div>
+<div class="admonition note yaml format">
+<p class="admonition-title">Note</p>
+<p><code>yaml
+    ROSDEP_NAME:
+        OS_NAME1:
+            PACKAGE_MANAGER1:
+            PACKAGE_ARGUMENTS_A
+        OS_NAME2:
+            PACKAGE_MANAGER2:
+            PACKAGE_ARGUMENTS_A</code></p>
+<ul>
+<li>package_manager: apt, pip</li>
+<li>os_name: ubuntu, debian</li>
+</ul>
+<p><code>yaml
+adafruit-pca9685-pip:
+    ubuntu:
+        pip:
+        packages: [adafruit-pca9685]</code></p>
+</div>
+<h3 id="demo-create-custom-rosdep-yaml-file">Demo: Create custom rosdep yaml file</h3>
+<ul>
+<li>Create yaml file named <code>custom_rosdep.yaml</code></li>
+<li>Update rosdep sources</li>
+<li>Run rosdep update</li>
+<li>Check with rosdep resolve</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">custom_rosdeps.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span>
+<span class="normal"><a href="#__codelineno-8-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># ROSDEP_NAME:</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="c1">#   OS_NAME1:</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="c1">#     PACKAGE_MANAGER1:</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="c1">#       PACKAGE_ARGUMENTS_A</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="nt">parameters_utils</span><span class="p">:</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">  </span><span class="nt">ubuntu</span><span class="p">:</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/workspace/submodules/parameters_utils</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">    </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ros-humble-parameters-utils</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;yaml file:///workspace/custom_rosdep.yaml&quot; &gt; /etc/ros/rosdep/sources.list.d/30-custom.list&#39;</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="update">Update</h4>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">update</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span>
+<span class="normal"><a href="#__codelineno-10-8">8</a></span>
+<span class="normal"><a href="#__codelineno-10-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>rosdep<span class="w"> </span>update
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="c1">#</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>reading<span class="w"> </span><span class="k">in</span><span class="w"> </span>sources<span class="w"> </span>list<span class="w"> </span>data<span class="w"> </span>from<span class="w"> </span>/etc/ros/rosdep/sources.list.d
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>Hit<span class="w"> </span>https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/osx-homebrew.yaml
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>Hit<span class="w"> </span>https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/base.yaml
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>Hit<span class="w"> </span>https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/python.yaml
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>Hit<span class="w"> </span>https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/ruby.yaml
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>Hit<span class="w"> </span>https://raw.githubusercontent.com/ros/rosdistro/master/releases/fuerte.yaml
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="hll">Hit<span class="w"> </span>file:///workspace/custom_rosdep.yaml
+</span></code></pre></div></td></tr></table></div>
+<h4 id="resolve">Resolve</h4>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">resolve</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>rosdep<span class="w"> </span>resolve<span class="w"> </span>parameters_utils
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="c1">#apt</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>ros-humble-parameters-utils
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="bloom">Bloom</h2>
+<p>A tool for helping release software into git-buildpackage repositories. <a href="https://github.com/ros-infrastructure/bloom">more</a></p>
+<p>```bash title=install
+sudo apt-get install python3-bloom
+sudo apt install fakeroot
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>```bash
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>bloom-generate rosdebian
+</code></pre></div></td></tr></table></div></p>
+<p><img alt="alt text" src="images/bloom-generate_fail.png" /></p>
+<ul>
+<li>Add custom_rosdep.yaml to workspace</li>
+<li>Update rosdep sources</li>
+<li>Run rosdep update</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">custom_rosdeps.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nt">pkg_server</span><span class="p">:</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="w">  </span><span class="nt">ubuntu</span><span class="p">:</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ros-humble-pkg-server</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">30-custom.list</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>yaml<span class="w"> </span>file://&lt;workspace<span class="w"> </span>full<span class="w"> </span>path<span class="w"> </span>to<span class="w"> </span>yaml<span class="w"> </span>file&gt;/custom_rosdep.yaml
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># run again</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>bloom-generate<span class="w"> </span>rosdebian
+</code></pre></div></td></tr></table></div>
+<p><img alt="alt text" src="images/bloom-generate_success.png" /></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build deb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>fakeroot<span class="w"> </span>debian/rules<span class="w"> </span>binary
+</code></pre></div></td></tr></table></div>
+<h4 id="check-deb-package">Check deb package</h4>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">dpkg -I</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span>
+<span class="normal"><a href="#__codelineno-17-11">11</a></span>
+<span class="normal"><a href="#__codelineno-17-12">12</a></span>
+<span class="normal"><a href="#__codelineno-17-13">13</a></span>
+<span class="normal"><a href="#__codelineno-17-14">14</a></span>
+<span class="normal"><a href="#__codelineno-17-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>dpkg<span class="w"> </span>-I<span class="w"> </span>ros-humble-pkg-client_0.0.0-0jammy_amd64.deb<span class="w"> </span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="c1">#</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w"> </span>new<span class="w"> </span>Debian<span class="w"> </span>package,<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.0.
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="w"> </span>size<span class="w"> </span><span class="m">6390</span><span class="w"> </span>bytes:<span class="w"> </span>control<span class="w"> </span><span class="nv">archive</span><span class="o">=</span><span class="m">1189</span><span class="w"> </span>bytes.
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="w">     </span><span class="m">233</span><span class="w"> </span>bytes,<span class="w">     </span><span class="m">9</span><span class="w"> </span>lines<span class="w">      </span>control<span class="w">              </span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">    </span><span class="m">2650</span><span class="w"> </span>bytes,<span class="w">    </span><span class="m">27</span><span class="w"> </span>lines<span class="w">      </span>md5sums<span class="w">              </span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="w"> </span>Package:<span class="w"> </span>ros-humble-pkg-client
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="w"> </span>Version:<span class="w"> </span><span class="m">0</span>.0.0-0jammy
+<a id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="w"> </span>Architecture:<span class="w"> </span>amd64
+<a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="w"> </span>Maintainer:<span class="w"> </span>user<span class="w"> </span>&lt;robo2020@gmail.com&gt;
+<a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="w"> </span>Installed-Size:<span class="w"> </span><span class="m">62</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="w"> </span>Depends:<span class="w"> </span>ros-humble-pkg-server
+<a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="w"> </span>Section:<span class="w"> </span>misc
+<a id="__codelineno-17-14" name="__codelineno-17-14"></a><span class="w"> </span>Priority:<span class="w"> </span>optional
+<a id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="w"> </span>Description:<span class="w"> </span>TODO:<span class="w"> </span>Package<span class="w"> </span>description
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="tools">Tools</h2>
 <div class="admonition note git-buildpackage">
 <p class="admonition-title">Note</p>
 <p>git-buildpackage is a tool that helps you build Debian packages from a git repository. <a href="https://honk.sigxcpu.org/piki/projects/git-buildpackage/">more</a></p>
 </div>
-<p>```bash title=install
-sudo apt-get install python3-rosdep
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>```bash title=init
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo rosdep init
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>rosdep update
-</code></pre></div></td></tr></table></div></p>
-<p>```bash title=install
-rosdep install --from-paths src --ignore-src -r -y
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>```bash title=check
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>rosdep check --from-paths src --ignore-src -r
-</code></pre></div></td></tr></table></div></p>
-<p>```bash title=keys
-rosdep keys
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>```bash title=resolve
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>rosdep resolve python3-rosdep
-</code></pre></div></td></tr></table></div></p>
-<p>```bash title=db
-rosdep db
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>```bash title=update
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>rosdep update
-</code></pre></div></td></tr></table></div></p>
-<p>```bash title=where_defined
-rosdep where-defined python3-rosdep
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
-<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>```bash title=where_used
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>rosdep where-used python3-rosdep
-</code></pre></div></td></tr></table></div></p>
-<hr />
-<h2 id="bloom">Bloom</h2>
-<p>A tool for helping release software into git-buildpackage repositories. <a href="https://github.com/ros-infrastructure/bloom">more</a></p>
-<p><code>bash title=install
-sudo apt-get install python3-bloom</code></p>
 <hr />
 <h2 id="references">References</h2>
 <ul>

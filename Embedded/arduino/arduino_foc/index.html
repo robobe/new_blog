@@ -591,6 +591,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      Add encoder
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Add encoder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wiring_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wiring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -774,6 +813,147 @@
 <a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="na">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">uno</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="na">framework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">arduino</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="na">lib_deps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">askuric/Simple FOC@^2.2</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="add-encoder">Add encoder</h3>
+<p><a href="docs/Robotics/sensors/encoder/index.md">read more</a></p>
+<h4 id="wiring_1">Wiring</h4>
+<table>
+<thead>
+<tr>
+<th>color</th>
+<th>desc</th>
+<th>uno pin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>black</td>
+<td>CSN  (chip select)</td>
+<td>D10 (any gpio)</td>
+</tr>
+<tr>
+<td>purple</td>
+<td>CLK</td>
+<td>D13 (SCK)</td>
+</tr>
+<tr>
+<td>yellow</td>
+<td>MOSI (master out slave in)</td>
+<td>D11 (COPI)</td>
+</tr>
+<tr>
+<td>green</td>
+<td>MISO (master in slave out)</td>
+<td>D12 (CIPO)</td>
+</tr>
+<tr>
+<td>red</td>
+<td>5/3.3</td>
+<td></td>
+</tr>
+<tr>
+<td>white</td>
+<td>GND</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="code_1">Code</h4>
+<p>Using FOC library with encoder</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">src/main.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span>
+<span class="normal"><a href="#__codelineno-2-41">41</a></span>
+<span class="normal"><a href="#__codelineno-2-42">42</a></span>
+<span class="normal"><a href="#__codelineno-2-43">43</a></span>
+<span class="normal"><a href="#__codelineno-2-44">44</a></span>
+<span class="normal"><a href="#__codelineno-2-45">45</a></span>
+<span class="normal"><a href="#__codelineno-2-46">46</a></span>
+<span class="normal"><a href="#__codelineno-2-47">47</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;SimpleFOC.h&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1">// Define motor driver pins</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="cp">#define PWM_A 9</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="cp">#define PWM_B 6</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="cp">#define PWM_C 5</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="cp">#define ENABLE_PIN 4</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="c1">// Create the BLDC driver object</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">BLDCDriver3PWM</span><span class="w"> </span><span class="nf">driver</span><span class="p">(</span><span class="n">PWM_A</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_B</span><span class="p">,</span><span class="w"> </span><span class="n">PWM_C</span><span class="p">,</span><span class="w"> </span><span class="n">ENABLE_PIN</span><span class="p">);</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="c1">// Create the BLDC motor object</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="n">BLDCMotor</span><span class="w"> </span><span class="n">motor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BLDCMotor</span><span class="p">(</span><span class="mi">11</span><span class="p">);</span><span class="w"> </span><span class="c1">// 7 pole pairs (estimate for GM3506)</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="n">MagneticSensorSPI</span><span class="w"> </span><span class="n">as5047u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MagneticSensorSPI</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w"> </span><span class="mh">0x3FFF</span><span class="p">);</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="c1">// Create an open-loop velocity control</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="p">{</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">  </span><span class="n">as5047u</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;as5047u ready&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">  </span><span class="c1">// Initialize driver</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">  </span><span class="n">driver</span><span class="p">.</span><span class="n">voltage_power_supply</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span><span class="w"> </span><span class="c1">// Set to your supply voltage</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">  </span><span class="n">driver</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">  </span><span class="c1">// Link driver to motor</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">  </span><span class="n">motor</span><span class="p">.</span><span class="n">linkDriver</span><span class="p">(</span><span class="o">&amp;</span><span class="n">driver</span><span class="p">);</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="w">  </span><span class="c1">// Open-loop velocity mode</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">  </span><span class="n">motor</span><span class="p">.</span><span class="n">voltage_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="c1">// Limit voltage to half supply</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">  </span><span class="n">motor</span><span class="p">.</span><span class="n">controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MotionControlType</span><span class="o">::</span><span class="n">velocity_openloop</span><span class="p">;</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">  </span><span class="c1">// Initialize motor</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="w">  </span><span class="n">motor</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Motor Ready!&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="p">}</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a><span class="p">{</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a><span class="w">  </span><span class="n">motor</span><span class="p">.</span><span class="n">move</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a><span class="w">  </span><span class="n">motor</span><span class="p">.</span><span class="n">loopFOC</span><span class="p">();</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a><span class="w">  </span><span class="n">as5047u</span><span class="p">.</span><span class="n">update</span><span class="p">();</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a><span class="w">  </span><span class="c1">// display the angle and the angular velocity to the terminal</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">as5047u</span><span class="p">.</span><span class="n">getAngle</span><span class="p">());</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">as5047u</span><span class="p">.</span><span class="n">getVelocity</span><span class="p">());</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 
 

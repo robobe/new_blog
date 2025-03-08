@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/python/python_ament_cmake/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/sensors/encoder/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>python ament cmake - Robots Inside</title>
+        <title>Index - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#python-ament-cmake" class="md-skip">
+        <a href="#wiring" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              python ament cmake
+              Index
             
           </span>
         </div>
@@ -213,7 +213,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../ROS/" class="md-tabs__link">
         
   
     
@@ -247,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Robotics/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -400,7 +400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../ROS/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -442,7 +442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Robotics/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -557,8 +557,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -567,62 +565,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-package" class="md-nav__link">
+  <a href="#wiring" class="md-nav__link">
     <span class="md-ellipsis">
-      Create package
+      Wiring
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#cmakeliststxt" class="md-nav__link">
+  <a href="#code" class="md-nav__link">
     <span class="md-ellipsis">
-      CMakeLists.txt
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="CMakeLists.txt">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#packagexml" class="md-nav__link">
-    <span class="md-ellipsis">
-      package.xml
+      Code
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#python-nodes" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
-      python nodes
+      Reference
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      usage
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#vscode-tips" class="md-nav__link">
-    <span class="md-ellipsis">
-      VScode tips
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -645,19 +610,19 @@
       
       
       
-        <span class="md-tag">cmake</span>
+        <span class="md-tag">AS5048</span>
       
     
       
       
       
-        <span class="md-tag">python</span>
+        <span class="md-tag">encoder</span>
       
     
       
       
       
-        <span class="md-tag">ros</span>
+        <span class="md-tag">sensor</span>
       
     
   </nav>
@@ -667,92 +632,120 @@
   
 
 
-<h1 id="python-ament-cmake">python ament cmake</h1>
-<p>Use ament_cmake to create python package</p>
+  <h1>Index</h1>
+
+<h2 id="wiring">Wiring</h2>
+<p><img alt="alt text" src="images/AS5048.png" />
+| color  | desc                       | uno pin        |
+| ------ | -------------------------- | -------------- |
+| black  | CSN  (chip select)         | D10 (any gpio) |
+| purple | CLK                        | D13 (SCK)      |
+| yellow | MOSI (master out slave in) | D11 (COPI)     |
+| green  | MISO (master in slave out) | D12 (CIPO)     |
+| red    | 5/3.3                      |                |
+| white  | GND                        |                |</p>
+<p>white = purple
+red = green
+green = yellow
+yellow = black
+purple = red
+black = white</p>
+<p><img alt="alt text" src="images/spi_uno.png" /></p>
+<h2 id="code">Code</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;SPI.h&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="c1">// Define the AS5048A SPI settings</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">SPISettings</span><span class="w"> </span><span class="nf">AS5048ASettings</span><span class="p">(</span><span class="mi">1000000</span><span class="p">,</span><span class="w"> </span><span class="n">MSBFIRST</span><span class="p">,</span><span class="w"> </span><span class="n">SPI_MODE1</span><span class="p">);</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="c1">// Define the chip select pin</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CSPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">  </span><span class="c1">// Set the chip select pin as an output</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">CSPin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">  </span><span class="c1">// Begin SPI communication</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">  </span><span class="n">SPI</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">  </span><span class="c1">// Pull the chip select pin high to deselect the sensor</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">CSPin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">  </span><span class="c1">// Read the angle from the sensor</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readAS5048A</span><span class="p">();</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">  </span><span class="c1">// Print the angle to the Serial Monitor</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">angle</span><span class="p">);</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w"> </span><span class="c1">// Wait for 1 second</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="p">}</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">readAS5048A</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">  </span><span class="c1">// Variable to store the angle</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">  </span><span class="c1">// Pull the chip select pin low to select the sensor</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">CSPin</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">  </span><span class="c1">// Start SPI transaction with the defined settings</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">  </span><span class="n">SPI</span><span class="p">.</span><span class="n">beginTransaction</span><span class="p">(</span><span class="n">AS5048ASettings</span><span class="p">);</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">  </span><span class="c1">// Send the command to read the angle</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">  </span><span class="n">SPI</span><span class="p">.</span><span class="n">transfer</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">);</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="w">  </span><span class="c1">// Read the high byte of the angle</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">  </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SPI</span><span class="p">.</span><span class="n">transfer</span><span class="p">(</span><span class="mh">0x00</span><span class="p">);</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="w">  </span><span class="c1">// Shift the high byte and read the low byte</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">  </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">SPI</span><span class="p">.</span><span class="n">transfer</span><span class="p">(</span><span class="mh">0x00</span><span class="p">);</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="w">  </span><span class="c1">// End the SPI transaction</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="w">  </span><span class="n">SPI</span><span class="p">.</span><span class="n">endTransaction</span><span class="p">();</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">  </span><span class="c1">// Pull the chip select pin high to deselect the sensor</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">CSPin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a><span class="w">  </span><span class="c1">// Return the angle</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">angle</span><span class="p">;</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="reference">Reference</h2>
 <ul>
-<li>Create ament package</li>
-<li>Add folder <code>my_cmake_py_pkg</code> </li>
-<li>Add <code>__init__.py</code> in <code>my_cmake_py_pkg</code> to mark as python module</li>
-<li>Add node python file <code>my_node.py</code></li>
-<li>Set <code>my_node.py</code> as executable</li>
-<li>Add shabang <code>#!/usr/bin/env python3</code> in <code>my_node.py</code></li>
-<li>Edit to <code>CMakeLists.txt</code></li>
-<li>Edit <code>package.xml</code></li>
+<li><a href="https://docs.cirkitdesigner.com/component/1567e458-ca18-4c2a-bde0-71c2a0b48ecf">How to Use AS5048 Magnetic Encoder Position Sensor: Examples, Pinouts, and Specs </a></li>
 </ul>
-<h2 id="create-package">Create package</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>ros2 pkg create my_cmake_py_pkg --build-type ament_cmake
-</code></pre></div></td></tr></table></div>
-<h2 id="cmakeliststxt">CMakeLists.txt</h2>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span>
-<span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span>
-<span class="normal"><a href="#__codelineno-1-13">13</a></span>
-<span class="normal"><a href="#__codelineno-1-14">14</a></span>
-<span class="normal"><a href="#__codelineno-1-15">15</a></span>
-<span class="normal"><a href="#__codelineno-1-16">16</a></span>
-<span class="normal"><a href="#__codelineno-1-17">17</a></span>
-<span class="normal"><a href="#__codelineno-1-18">18</a></span>
-<span class="normal"><a href="#__codelineno-1-19">19</a></span>
-<span class="normal"><a href="#__codelineno-1-20">20</a></span>
-<span class="normal"><a href="#__codelineno-1-21">21</a></span>
-<span class="normal"><a href="#__codelineno-1-22">22</a></span>
-<span class="normal"><a href="#__codelineno-1-23">23</a></span>
-<span class="normal"><a href="#__codelineno-1-24">24</a></span>
-<span class="normal"><a href="#__codelineno-1-25">25</a></span>
-<span class="normal"><a href="#__codelineno-1-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.8</span><span class="p">)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nb">project</span><span class="p">(</span><span class="s">my_cmake_py_pkg</span><span class="p">)</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="nb">if</span><span class="p">(</span><span class="s">CMAKE_COMPILER_IS_GNUCXX</span><span class="w"> </span><span class="s">OR</span><span class="w"> </span><span class="s">CMAKE_CXX_COMPILER_ID</span><span class="w"> </span><span class="s">MATCHES</span><span class="w"> </span><span class="s2">&quot;Clang&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="nb">add_compile_options</span><span class="p">(</span><span class="s">-Wall</span><span class="w"> </span><span class="s">-Wextra</span><span class="w"> </span><span class="s">-Wpedantic</span><span class="p">)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="nb">endif</span><span class="p">()</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c"># find dependencies</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="hll"><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake_python</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-</span><a id="__codelineno-1-11" name="__codelineno-1-11"></a>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="c"># install python package</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="hll"><span class="nb">ament_python_install_package</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="p">)</span>
-</span><a id="__codelineno-1-14" name="__codelineno-1-14"></a>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="hll"><span class="nb">set</span><span class="p">(</span><span class="s">NODES</span>
-</span><a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="hll"><span class="w">  </span><span class="s">my_cmake_py_pkg/my_node.py</span>
-</span><a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="hll"><span class="p">)</span>
-</span><a id="__codelineno-1-18" name="__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="nb">install</span><span class="p">(</span><span class="s">PROGRAMS</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">    </span><span class="o">${</span><span class="nv">NODES</span><span class="o">}</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="s">DESTINATION</span><span class="w"> </span><span class="s">lib/</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="p">)</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24"></a>
-<a id="__codelineno-1-25" name="__codelineno-1-25"></a>
-<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="nb">ament_package</span><span class="p">()</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="packagexml">package.xml</h3>
-<p>Add <code>ament_cmake_python</code> in <code>buildtool_depend</code></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">&lt;buildtool_depend&gt;</span>ament_cmake_python<span class="nt">&lt;/buildtool_depend&gt;</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="python-nodes">python nodes</h3>
-<ul>
-<li>Create folder with the package name</li>
-<li>Create <code>__init__.py</code> in the folder</li>
-<li>Every node should have <code>#!/usr/bin/env python3</code> as first line</li>
-<li>Make the node executable <code>chmod +x my_node.py</code></li>
-</ul>
-<h3 id="usage">usage</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>my_cmake_py_pkg<span class="w"> </span>my_node.py
-</code></pre></div></td></tr></table></div>
-<hr />
-<h3 id="vscode-tips">VScode tips</h3>
-<p>Install <code>chmod</code> extension to set handle executable bit on file</p>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=dlech.chmod">chmod extension</a></p>
 
 
 
