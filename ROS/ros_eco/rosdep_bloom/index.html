@@ -1031,64 +1031,69 @@ adafruit-pca9685-pip:
 <hr />
 <h2 id="bloom">Bloom</h2>
 <p>A tool for helping release software into git-buildpackage repositories. <a href="https://github.com/ros-infrastructure/bloom">more</a></p>
-<p>```bash title=install
-sudo apt-get install python3-bloom
-sudo apt install fakeroot
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
-<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>```bash
-<a id="__codelineno-12-2" name="__codelineno-12-2"></a>bloom-generate rosdebian
-</code></pre></div></td></tr></table></div></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python3-bloom
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3-rosdep<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">    </span>fakeroot<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">    </span>debhelper<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">    </span>dh-python
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>bloom-generate<span class="w"> </span>rosdebian
+</code></pre></div></td></tr></table></div>
 <p><img alt="alt text" src="images/bloom-generate_fail.png" /></p>
 <ul>
 <li>Add custom_rosdep.yaml to workspace</li>
 <li>Update rosdep sources</li>
 <li>Run rosdep update</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">custom_rosdeps.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
-<span class="normal"><a href="#__codelineno-13-2">2</a></span>
-<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nt">pkg_server</span><span class="p">:</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="w">  </span><span class="nt">ubuntu</span><span class="p">:</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ros-humble-pkg-server</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">custom_rosdeps.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nt">pkg_server</span><span class="p">:</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span><span class="nt">ubuntu</span><span class="p">:</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">    </span><span class="nt">apt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ros-humble-pkg-server</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">30-custom.list</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>yaml<span class="w"> </span>file://&lt;workspace<span class="w"> </span>full<span class="w"> </span>path<span class="w"> </span>to<span class="w"> </span>yaml<span class="w"> </span>file&gt;/custom_rosdep.yaml
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">30-custom.list</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>yaml<span class="w"> </span>file://&lt;workspace<span class="w"> </span>full<span class="w"> </span>path<span class="w"> </span>to<span class="w"> </span>yaml<span class="w"> </span>file&gt;/custom_rosdep.yaml
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
-<span class="normal"><a href="#__codelineno-15-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># run again</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2"></a>bloom-generate<span class="w"> </span>rosdebian
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="c1"># run again</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>bloom-generate<span class="w"> </span>rosdebian
 </code></pre></div></td></tr></table></div>
 <p><img alt="alt text" src="images/bloom-generate_success.png" /></p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build deb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>fakeroot<span class="w"> </span>debian/rules<span class="w"> </span>binary
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build deb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>fakeroot<span class="w"> </span>debian/rules<span class="w"> </span>binary
 </code></pre></div></td></tr></table></div>
 <h4 id="check-deb-package">Check deb package</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">dpkg -I</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-17-10">10</a></span>
-<span class="normal"><a href="#__codelineno-17-11">11</a></span>
-<span class="normal"><a href="#__codelineno-17-12">12</a></span>
-<span class="normal"><a href="#__codelineno-17-13">13</a></span>
-<span class="normal"><a href="#__codelineno-17-14">14</a></span>
-<span class="normal"><a href="#__codelineno-17-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>dpkg<span class="w"> </span>-I<span class="w"> </span>ros-humble-pkg-client_0.0.0-0jammy_amd64.deb<span class="w"> </span>
-<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="c1">#</span>
-<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w"> </span>new<span class="w"> </span>Debian<span class="w"> </span>package,<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.0.
-<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="w"> </span>size<span class="w"> </span><span class="m">6390</span><span class="w"> </span>bytes:<span class="w"> </span>control<span class="w"> </span><span class="nv">archive</span><span class="o">=</span><span class="m">1189</span><span class="w"> </span>bytes.
-<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="w">     </span><span class="m">233</span><span class="w"> </span>bytes,<span class="w">     </span><span class="m">9</span><span class="w"> </span>lines<span class="w">      </span>control<span class="w">              </span>
-<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">    </span><span class="m">2650</span><span class="w"> </span>bytes,<span class="w">    </span><span class="m">27</span><span class="w"> </span>lines<span class="w">      </span>md5sums<span class="w">              </span>
-<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="w"> </span>Package:<span class="w"> </span>ros-humble-pkg-client
-<a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="w"> </span>Version:<span class="w"> </span><span class="m">0</span>.0.0-0jammy
-<a id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="w"> </span>Architecture:<span class="w"> </span>amd64
-<a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="w"> </span>Maintainer:<span class="w"> </span>user<span class="w"> </span>&lt;robo2020@gmail.com&gt;
-<a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="w"> </span>Installed-Size:<span class="w"> </span><span class="m">62</span>
-<a id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="w"> </span>Depends:<span class="w"> </span>ros-humble-pkg-server
-<a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="w"> </span>Section:<span class="w"> </span>misc
-<a id="__codelineno-17-14" name="__codelineno-17-14"></a><span class="w"> </span>Priority:<span class="w"> </span>optional
-<a id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="w"> </span>Description:<span class="w"> </span>TODO:<span class="w"> </span>Package<span class="w"> </span>description
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">dpkg -I</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-18-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-18-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-18-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-18-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-18-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-18-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-18-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-18-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-18-10">10</a></span>
+<span class="normal"><a href="#__codelineno-18-11">11</a></span>
+<span class="normal"><a href="#__codelineno-18-12">12</a></span>
+<span class="normal"><a href="#__codelineno-18-13">13</a></span>
+<span class="normal"><a href="#__codelineno-18-14">14</a></span>
+<span class="normal"><a href="#__codelineno-18-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>dpkg<span class="w"> </span>-I<span class="w"> </span>ros-humble-pkg-client_0.0.0-0jammy_amd64.deb<span class="w"> </span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="c1">#</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w"> </span>new<span class="w"> </span>Debian<span class="w"> </span>package,<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.0.
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="w"> </span>size<span class="w"> </span><span class="m">6390</span><span class="w"> </span>bytes:<span class="w"> </span>control<span class="w"> </span><span class="nv">archive</span><span class="o">=</span><span class="m">1189</span><span class="w"> </span>bytes.
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">     </span><span class="m">233</span><span class="w"> </span>bytes,<span class="w">     </span><span class="m">9</span><span class="w"> </span>lines<span class="w">      </span>control<span class="w">              </span>
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">    </span><span class="m">2650</span><span class="w"> </span>bytes,<span class="w">    </span><span class="m">27</span><span class="w"> </span>lines<span class="w">      </span>md5sums<span class="w">              </span>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w"> </span>Package:<span class="w"> </span>ros-humble-pkg-client
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="w"> </span>Version:<span class="w"> </span><span class="m">0</span>.0.0-0jammy
+<a id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="w"> </span>Architecture:<span class="w"> </span>amd64
+<a id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="w"> </span>Maintainer:<span class="w"> </span>user<span class="w"> </span>&lt;robo2020@gmail.com&gt;
+<a id="__codelineno-18-11" name="__codelineno-18-11"></a><span class="w"> </span>Installed-Size:<span class="w"> </span><span class="m">62</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="w"> </span>Depends:<span class="w"> </span>ros-humble-pkg-server
+<a id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="w"> </span>Section:<span class="w"> </span>misc
+<a id="__codelineno-18-14" name="__codelineno-18-14"></a><span class="w"> </span>Priority:<span class="w"> </span>optional
+<a id="__codelineno-18-15" name="__codelineno-18-15"></a><span class="w"> </span>Description:<span class="w"> </span>TODO:<span class="w"> </span>Package<span class="w"> </span>description
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="tools">Tools</h2>
