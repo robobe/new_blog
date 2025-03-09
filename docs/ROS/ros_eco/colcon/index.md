@@ -37,5 +37,15 @@ colcon clean workspace
 colcon clean packages 
 ```
 
+---
 
+## colcon-mixin
+Colcon mixin is a powerful feature of the colcon build system that allows you to define and reuse commonly used build configurations. It's particularly useful for cross-compilation scenarios because it helps you avoid typing long, complex build commands repeatedly.
+
+```bash
+sudo apt install python3-colcon-mixin
+```
+
+```bash title="Usage"
+colcon mixin list
 ```

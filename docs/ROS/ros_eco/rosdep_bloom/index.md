@@ -206,9 +206,12 @@ ros-humble-parameters-utils
 ## Bloom
 A tool for helping release software into git-buildpackage repositories. [more](https://github.com/ros-infrastructure/bloom)
 
-```bash title=install
+```bash title="install"
 sudo apt-get install python3-bloom
-sudo apt install fakeroot
+sudo apt install python3-rosdep \
+    fakeroot \
+    debhelper \
+    dh-python
 ```
 
 ```bash

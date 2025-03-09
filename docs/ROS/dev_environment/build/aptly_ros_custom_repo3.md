@@ -11,10 +11,11 @@ tags:
 # Using Docker and Aptly to check package installation
 
 ## Aptly
+Aptly allows you to mirror remote repositories, manage local package repositories and more. [more](https://www.aptly.info/)
 
 !!! warning aptly update
-    Download new version 1.60
-    The ubuntu repo version is 1.4.0 and support Zstd compression the use by `bloom-generate`
+    Download new version 1.6.1 [download](https://github.com/aptly-dev/aptly/releases/download/v1.6.1/aptly_1.6.1_linux_amd64.zip)
+    The ubuntu repo version is 1.4.0 isn't support **Zstd compression** that use by `bloom-generate`
 
     
      
@@ -61,6 +62,12 @@ aptly serve
 Install ROS Package on a docker container
 The docker image base on ubuntu 22.04 with ROS humble base
 
+!!! note Dockerfile
+     For test the installation i use docker from Allison [github](https://github.com/athackst/dockerfiles/blob/main/ros2/humble.Dockerfile)
+
+     ```bash
+     docker build -t humble:dev --target dev .
+     ```
 
 ```bash
 docker run -it --rm \
@@ -90,7 +97,19 @@ ros-humble-pkg-server/jammy 0.0.0-0jammy amd64
   TODO: Package description
 
 ```
+### Install
 
-![alt text](image-2.png)
+```bash
+apt install ros-humble-pkg-client
+```
 
-![alt text](image-3.png)
+![alt text](images/install_client.png)
+
+#### Usage and check installation
+
+```bash
+source /opt/ros/humble/setup.bash
+ros2 launch pkg_client client_server.launch.py
+```
+
+![alt text](images/docker__client_server_launch.png)
