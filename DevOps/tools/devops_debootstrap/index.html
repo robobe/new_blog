@@ -587,7 +587,7 @@
         <li class="md-nav__item">
   <a href="#install-ros-on-the-rootfs" class="md-nav__link">
     <span class="md-ellipsis">
-      install ros on the rootfs
+      install ROS on the rootfs
     </span>
   </a>
   
@@ -681,7 +681,7 @@
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>chroot<span class="w"> </span>/path/to/rootfs<span class="w"> </span>/bin/bash
 </code></pre></div></td></tr></table></div>
-<h2 id="install-ros-on-the-rootfs">install ros on the rootfs</h2>
+<h2 id="install-ros-on-the-rootfs">install ROS on the rootfs</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
 <span class="normal"><a href="#__codelineno-5-3">3</a></span>
@@ -704,32 +704,53 @@
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>sudo apt install ros-humble-ros-base
 </code></pre></div></td></tr></table></div>
-<p>```cmake title=""toolchain.cmake
-set(CMAKE_SYSTEM_NAME Linux)
-set(CMAKE_SYSTEM_PROCESSOR aarch64)  # Change to match your target architecture</p>
-<h1 id="set-cross-compiler-paths">Set cross-compiler paths</h1>
-<p>set(CMAKE_C_COMPILER /path/to/cross-compiler/bin/aarch64-linux-gnu-gcc)
-set(CMAKE_CXX_COMPILER /path/to/cross-compiler/bin/aarch64-linux-gnu-g++)
-set(CMAKE_SYSROOT /path/to/rootfs)  # Set to your root filesystem</p>
-<h1 id="set-where-cmake-should-look-for-libraries-and-headers">Set where CMake should look for libraries and headers</h1>
-<p>set(CMAKE_FIND_ROOT_PATH /path/to/rootfs /path/to/rootfs/usr /path/to/rootfs/usr/local)</p>
-<h1 id="only-search-inside-the-target-rootfs">Only search inside the target rootfs</h1>
-<p>set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)</p>
-<h1 id="ros-2-paths">ROS 2 paths</h1>
-<p>set(AMENT_PREFIX_PATH /path/to/rootfs/opt/ros/humble)
-set(CMAKE_PREFIX_PATH ${AMENT_PREFIX_PATH})</p>
-<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">toolchain.cmake</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span><span class="w"> </span><span class="s">Linux</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_PROCESSOR</span><span class="w"> </span><span class="s">aarch64</span><span class="p">)</span><span class="w">  </span><span class="c"># Change to match your target architecture</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="c"># Set cross-compiler paths</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_C_COMPILER</span><span class="w"> </span><span class="s">/path/to/cross-compiler/bin/aarch64-linux-gnu-gcc</span><span class="p">)</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span><span class="w"> </span><span class="s">/path/to/cross-compiler/bin/aarch64-linux-gnu-g++</span><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSROOT</span><span class="w"> </span><span class="s">/path/to/rootfs</span><span class="p">)</span><span class="w">  </span><span class="c"># Set to your root filesystem</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="c"># Set where CMake should look for libraries and headers</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH</span><span class="w"> </span><span class="s">/path/to/rootfs</span><span class="w"> </span><span class="s">/path/to/rootfs/usr</span><span class="w"> </span><span class="s">/path/to/rootfs/usr/local</span><span class="p">)</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="c"># Only search inside the target rootfs</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_PROGRAM</span><span class="w"> </span><span class="s">NEVER</span><span class="p">)</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_LIBRARY</span><span class="w"> </span><span class="s">ONLY</span><span class="p">)</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_FIND_ROOT_PATH_MODE_INCLUDE</span><span class="w"> </span><span class="s">ONLY</span><span class="p">)</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="c"># ROS 2 paths</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="nb">set</span><span class="p">(</span><span class="s">AMENT_PREFIX_PATH</span><span class="w"> </span><span class="s">/path/to/rootfs/opt/ros/humble</span><span class="p">)</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_PREFIX_PATH</span><span class="w"> </span><span class="o">${</span><span class="nv">AMENT_PREFIX_PATH</span><span class="o">}</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-colcon build --cmake-args -DCMAKE_TOOLCHAIN_FILE=/path/to/toolchain.cmake</p>
-<p>```</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>colcon build --cmake-args -DCMAKE_TOOLCHAIN_FILE=/path/to/toolchain.cmake
+</code></pre></div></td></tr></table></div>
 <div class="admonition warning">
 <p class="admonition-title">pyconfig.h</p>
-<p>```
- //#  include <aarch64-linux-gnu/python3.10/pyconfig.h></p>
-<h1 id="include-homeuserrootfsubunturootfsusrincludeaarch64-linux-gnupython310pyconfigh">include "/home/user/rootfs/ubuntuRootFS/usr/include/aarch64-linux-gnu/python3.10/pyconfig.h"</h1>
-<p>```</p>
+<p>Fix include path in pyconfig.h   <br />
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c1">//#  include &lt;aarch64-linux-gnu/python3.10/pyconfig.h&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="cp">#</span><span class="w"> </span><span class="cp">include</span><span class="w"> </span><span class="cpf">&quot;/home/user/rootfs/ubuntuRootFS/usr/include/aarch64-linux-gnu/python3.10/pyconfig.h&quot;</span>
+</code></pre></div></td></tr></table></div></p>
 </div>
 
 

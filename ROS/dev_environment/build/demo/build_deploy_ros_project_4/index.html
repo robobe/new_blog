@@ -560,6 +560,41 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#download-and-install-cross-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download and install cross compiler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-rootfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build rootfs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-mixin" class="md-nav__link">
+    <span class="md-ellipsis">
+      config mixin
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -612,7 +647,75 @@
 
 
 <h1 id="ros2-project-from-development-to-deployment-part-4-cross-compiler">ROS2 project from development to deployment, Part 4: Cross Compiler</h1>
-<p>TBD</p>
+<p>Build package for nvidia jetson using cross compiler<br />
+using <strong>colcon mixin</strong> to set cross compiler flags</p>
+<h2 id="download-and-install-cross-compiler">Download and install cross compiler</h2>
+<p>Download toolchain from <a href="https://developer.nvidia.com/embedded/jetson-linux-r3643">jetpack 6.2</a></p>
+<div class="admonition note">
+<p class="admonition-title">toolchain</p>
+<p>Every jetpack has it own toolchain, so make sure to download the correct one.</p>
+<p>The toolchain url can be build from</p>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">get jetson linux version</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>cat<span class="w"> </span>/etc/nv_tegra_release
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1">#</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="c1"># R36 (release), REVISION: 4.3,</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>https://developer.nvidia.com/embedded/jetson-linux-r3643
+</code></pre></div></td></tr></table></div></p>
+</div>
+<h2 id="build-rootfs">Build rootfs</h2>
+<p><a href="https://robobe.github.io/new_blog/DevOps/tools/devops_debootstrap/?h=cross#set-cross-compiler-paths">Build rootfs using Debootstrap</a></p>
+<hr />
+<h2 id="config-mixin">config mixin</h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mixin file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">mixins</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">cross-arm64</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">build-args</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">      </span><span class="nt">cmake</span><span class="p">:</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_TOOLCHAIN_FILE=/path/to/aarch64_toolchain.cmake</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_CXX_FLAGS=&quot;--sysroot=/path/to/arm64/sysroot&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_C_FLAGS=&quot;--sysroot=/path/to/arm64/sysroot&quot;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_EXE_LINKER_FLAGS=&quot;--sysroot=/path/to/arm64/sysroot&quot;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">register mixing file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>colcon<span class="w"> </span>mixin<span class="w"> </span>add<span class="w"> </span>cross_compile<span class="w"> </span>./cross_compile.mixin
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>colcon<span class="w"> </span>mixin<span class="w"> </span>update
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">usage</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>colcon<span class="w"> </span>build<span class="w"> </span>--mixin<span class="w"> </span>cross-arm64
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Humble ARM64 cross compiler</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>mixins:
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span>cross-arm64:
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span>build-args:
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">      </span>cmake:
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>/opt/cross_toolchain/aarch64.cmake
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_CXX_FLAGS<span class="o">=</span><span class="s2">&quot;--sysroot=/opt/sysroot/arm64&quot;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_C_FLAGS<span class="o">=</span><span class="s2">&quot;--sysroot=/opt/sysroot/arm64&quot;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_EXE_LINKER_FLAGS<span class="o">=</span><span class="s2">&quot;--sysroot=/opt/sysroot/arm64&quot;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">        </span>-<span class="w"> </span>-DBUILD_TESTING<span class="o">=</span>OFF
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_FIND_ROOT_PATH<span class="o">=</span><span class="s2">&quot;/opt/ros/humble;/opt/sysroot/arm64&quot;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM<span class="o">=</span>NEVER
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE<span class="o">=</span>ONLY
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">        </span>-<span class="w"> </span>-DPYTHON_SOABI<span class="o">=</span>cpython-310-aarch64-linux-gnu
+</code></pre></div></td></tr></table></div>
 
 
 
