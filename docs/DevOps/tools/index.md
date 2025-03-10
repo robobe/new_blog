@@ -24,3 +24,7 @@ tags:
     </div>
     
 </div>
+
+## Posts
+
+- [debootstrap - create custom rootfs](devops_debootstrap.md)

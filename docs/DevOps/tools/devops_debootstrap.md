@@ -55,7 +55,7 @@ sudo chroot /path/to/rootfs /bin/bash
 
 ```
 
-## install ros on the rootfs
+## install ROS on the rootfs
 
 ```bash
 $ sudo apt update && sudo apt install locales
@@ -86,7 +86,7 @@ sudo apt install ros-humble-ros-base
 ```
 
 
-```cmake title=""toolchain.cmake
+```cmake title="toolchain.cmake"
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR aarch64)  # Change to match your target architecture
 
@@ -106,8 +106,6 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 # ROS 2 paths
 set(AMENT_PREFIX_PATH /path/to/rootfs/opt/ros/humble)
 set(CMAKE_PREFIX_PATH ${AMENT_PREFIX_PATH})
-
-
 ```
 
 ```
@@ -116,8 +114,8 @@ colcon build --cmake-args -DCMAKE_TOOLCHAIN_FILE=/path/to/toolchain.cmake
 ```
 
 !!! warning "pyconfig.h"
-     
-     ```
-     //#  include <aarch64-linux-gnu/python3.10/pyconfig.h>
+    Fix include path in pyconfig.h     
+    ```cpp
+    //#  include <aarch64-linux-gnu/python3.10/pyconfig.h>
     # include "/home/user/rootfs/ubuntuRootFS/usr/include/aarch64-linux-gnu/python3.10/pyconfig.h"
-     ```
+    ```
