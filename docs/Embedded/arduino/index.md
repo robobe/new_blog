@@ -15,13 +15,17 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-            <p>TBD</p>
+            <a href="platformio">
+        <img src="images/platformio.png" width="150" height="150">
+        <p>platformio</p>
+        </a>
     </div>
     <div class="grid-item">
                 <p>TBD</p>
     </div>
     
 </div>
+
 
 # Posts
 - [Arduino i2c](arduino_i2c.md)

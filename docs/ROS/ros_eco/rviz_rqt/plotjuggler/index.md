@@ -68,6 +68,28 @@ pip install websocket-client
 
 ### MQTT
 
+#### Prerequisites
+
+Install mqtt broker on ubuntu machine
+
+```bash
+sudo apt install mosquitto mosquitto-clients
+```
+
+```bash
+sudo systemctl status mosquitto
+```
+##### Test mqtt broker
+- Without authentication
+
+```bash title="terminal 1, subscriber"
+mosquitto_sub -t "hello/topic"
+```
+
+```bash title="terminal 2, publisher"
+mosquitto_pub -t 'hello/topic' -m 'hello MQTT'
+```
+
 #### Install
 
 ```bash
