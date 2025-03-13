@@ -3,74 +3,64 @@ tags:
     - ros
     - deploy
     - tutorial
-    - cross-compile
-    - mixing
 ---
 
-# ROS2 project from development to deployment, Part 4: Cross Compiler
+# ROS2 project from development to deployment, Part 4: Using docker for cross compiler
 
-Build package for nvidia jetson using cross compiler  
-using **colcon mixin** to set cross compiler flags
+- Build docker image for ARM 
+- Using github action to run build process on the docker
+    - using `act` to run locally
+  - 
+## Build docker image
+Run ARM docker architecture on x64 machine [install](docs/ROS/dev_environment/build/ros_build_using_docker_cross_compile.md)
 
-## Download and install cross compiler
-Download toolchain from [jetpack 6.2](https://developer.nvidia.com/embedded/jetson-linux-r3643)
+<details>
+    <summary>Docker</summary>
+```Dockerfile
+{{PLUGIN uri="/home/user/workspaces/deploy_demo_ws/Docker/Dockerfile.arm"}}
+```
 
-!!! note "toolchain"
-    Every jetpack has it own toolchain, so make sure to download the correct one.
-
-    The toolchain url can be build from
-
-    ```bash title="get jetson linux version"
-    cat /etc/nv_tegra_release
-    #
-    # R36 (release), REVISION: 4.3,
-    ```
-    ```bash
-    https://developer.nvidia.com/embedded/jetson-linux-r3643
-    ```
+</details>
 
 
-## Build rootfs
-[Build rootfs using Debootstrap](https://robobe.github.io/new_blog/DevOps/tools/devops_debootstrap/?h=cross#set-cross-compiler-paths)
+```
+docker build -t ros2_cross_compile:arm64v8 -f Docker/Dockerfile.arm .
+```
 
 ---
 
-## config mixin
+## Using github actions
+### Using github actions local using `act`
 
-```yaml title="mixin file"
-mixins:
-  cross-arm64:
-    build-args:
-      cmake:
-        - -DCMAKE_TOOLCHAIN_FILE=/path/to/aarch64_toolchain.cmake
-        - -DCMAKE_CXX_FLAGS="--sysroot=/path/to/arm64/sysroot"
-        - -DCMAKE_C_FLAGS="--sysroot=/path/to/arm64/sysroot"
-        - -DCMAKE_EXE_LINKER_FLAGS="--sysroot=/path/to/arm64/sysroot"
-  
+```bash title="install act"
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
 
 ```
 
-```bash title="register mixing file"
-colcon mixin add cross_compile ./cross_compile.mixin
-colcon mixin update
+### Config github action in project
+
+- Add `.github` folder
+- Add `workflows` folder
+- Add action yaml file
+
+```bash title=".github action folder and files"
+.github/
+└── workflows
+    ├── build.yml
+    └── README.md
+
 ```
 
-```bash title="usage"
-colcon build --mixin cross-arm64
+```yaml title="build.yaml" linenums="1" hl_lines="25-27"
+{{PLUGIN uri="/home/user/workspaces/deploy_demo_ws/.github/workflows/build.yml"}}
 ```
 
-```bash title="Humble ARM64 cross compiler"
-mixins:
-  cross-arm64:
-    build-args:
-      cmake:
-        - -DCMAKE_TOOLCHAIN_FILE=/opt/cross_toolchain/aarch64.cmake
-        - -DCMAKE_CXX_FLAGS="--sysroot=/opt/sysroot/arm64"
-        - -DCMAKE_C_FLAGS="--sysroot=/opt/sysroot/arm64"
-        - -DCMAKE_EXE_LINKER_FLAGS="--sysroot=/opt/sysroot/arm64"
-        - -DBUILD_TESTING=OFF
-        - -DCMAKE_FIND_ROOT_PATH="/opt/ros/humble;/opt/sysroot/arm64"
-        - -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER
-        - -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY
-        - -DPYTHON_SOABI=cpython-310-aarch64-linux-gnu
+!!! tip "update rosdep sources"
+    Update docker `/etc/ros/rosdep/source.list.d` with project custom DB and run `rosdep update` 
+     
+
+```bash title="run"
+act -j build_pkg_interface -P arm=ros2_cross_compile:arm64v8 \
+    --pull=false \
+    --bind --directory . 
 ```

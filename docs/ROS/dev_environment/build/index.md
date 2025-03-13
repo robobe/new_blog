@@ -20,5 +20,6 @@ tags:
 - [Part1: Project struct](demo/build_deploy_ros_project_1.md)
 - [Part2: Create Debian packages](demo/build_deploy_ros_project_2.md)
 - [Part3: Setup aptly, Install and test on docker](demo/build_deploy_ros_project_3.md)
-- [Part4: Cross compiler](demo/build_deploy_ros_project_4.md)
+- [Part4: Cross compiler using docker](demo/build_deploy_ros_project_4.md) 
+- [Part5: Cross compiler](demo/build_deploy_ros_project_5.md)
 - [draft: from ros package to deploy](aptly_ros_custom_repo.md)
