@@ -12,24 +12,24 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/dev_environment/build/demo/build_deploy_ros_project_3/">
+        <link rel="canonical" href="https://robobe.github.io/Embedded/ESP32/esp32_mqtt/">
       
       
       
       
-      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.2">
     
     
       
-        <title>ROS2 project from development to deployment, Part 3: Aptly, Docker and Install - Robots Inside</title>
+        <title>ESP32 MQTT - Robots Inside</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.d7758b05.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../extra.css">
+      <link rel="stylesheet" href="../../../extra.css">
     
-    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ros2-project-from-development-to-deployment-part-3-aptly-docker-and-install" class="md-skip">
+        <a href="#esp32-mqtt" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +88,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ROS2 project from development to deployment, Part 3: Aptly, Docker and Install
+              ESP32 MQTT
             
           </span>
         </div>
@@ -196,7 +196,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
     
@@ -213,7 +213,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../" class="md-tabs__link">
+      <a href="../../../ROS/" class="md-tabs__link">
         
   
     
@@ -230,7 +230,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Simulation/" class="md-tabs__link">
+      <a href="../../../Simulation/" class="md-tabs__link">
         
   
     
@@ -247,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Robotics/" class="md-tabs__link">
+      <a href="../../../Robotics/" class="md-tabs__link">
         
   
     
@@ -264,7 +264,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Programming/" class="md-tabs__link">
+      <a href="../../../Programming/" class="md-tabs__link">
         
   
     
@@ -281,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Embedded/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../DevOps/" class="md-tabs__link">
+      <a href="../../../DevOps/" class="md-tabs__link">
         
   
     
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Other/" class="md-tabs__link">
+      <a href="../../../Other/" class="md-tabs__link">
         
   
     
@@ -349,7 +349,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -379,7 +379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -400,7 +400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../" class="md-nav__link">
+      <a href="../../../ROS/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -421,7 +421,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Simulation/" class="md-nav__link">
+      <a href="../../../Simulation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -442,7 +442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Robotics/" class="md-nav__link">
+      <a href="../../../Robotics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -463,7 +463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Programming/" class="md-nav__link">
+      <a href="../../../Programming/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -484,7 +484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Embedded/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -505,7 +505,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../DevOps/" class="md-nav__link">
+      <a href="../../../DevOps/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -526,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Other/" class="md-nav__link">
+      <a href="../../../Other/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -560,6 +560,38 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-mqtt-broker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test mqtt broker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -577,13 +609,19 @@
       
       
       
-        <span class="md-tag">deploy</span>
+        <span class="md-tag">arduino</span>
       
     
       
       
       
-        <span class="md-tag">ros</span>
+        <span class="md-tag">esp32</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">mqtt</span>
       
     
       
@@ -599,7 +637,24 @@
   
 
 
-<h1 id="ros2-project-from-development-to-deployment-part-3-aptly-docker-and-install">ROS2 project from development to deployment, Part 3: Aptly, Docker and Install</h1>
+<h1 id="esp32-mqtt">ESP32 MQTT</h1>
+<p>Connect esp32 running arduino framework to ubuntu machine using MQTT protocol</p>
+<p>Connect ESP32 to PlotJuggler to visualize data</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Install mqtt broker on ubuntu machine</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>mosquitto<span class="w"> </span>mosquitto-clients
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>mosquitto
+</code></pre></div></td></tr></table></div>
+<h3 id="test-mqtt-broker">Test mqtt broker</h3>
+<ul>
+<li>Without authentication</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 1, subscriber</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>mosquitto_sub<span class="w"> </span>-t<span class="w"> </span><span class="s2">&quot;hello/topic&quot;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 2, publisher</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>mosquitto_pub<span class="w"> </span>-t<span class="w"> </span><span class="s1">&#39;hello/topic&#39;</span><span class="w"> </span>-m<span class="w"> </span><span class="s1">&#39;hello MQTT&#39;</span>
+</code></pre></div></td></tr></table></div>
+<h1 id="under-construction">UNDER CONSTRUCTION</h1>
 
 
 
@@ -655,10 +710,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share"], "search": "../../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.f13b1293.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
       
         <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
       

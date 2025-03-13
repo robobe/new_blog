@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/dev_environment/build/demo/build_deploy_ros_project_3/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/dev_environment/build/demo/build_deploy_ros_project_5/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>ROS2 project from development to deployment, Part 3: Aptly, Docker and Install - Robots Inside</title>
+        <title>ROS2 project from development to deployment, Part 4: Cross Compiler - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ros2-project-from-development-to-deployment-part-3-aptly-docker-and-install" class="md-skip">
+        <a href="#ros2-project-from-development-to-deployment-part-4-cross-compiler" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ROS2 project from development to deployment, Part 3: Aptly, Docker and Install
+              ROS2 project from development to deployment, Part 4: Cross Compiler
             
           </span>
         </div>
@@ -577,7 +577,19 @@
       
       
       
+        <span class="md-tag">cross-compile</span>
+      
+    
+      
+      
+      
         <span class="md-tag">deploy</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">mixing</span>
       
     
       
@@ -599,7 +611,102 @@
   
 
 
-<h1 id="ros2-project-from-development-to-deployment-part-3-aptly-docker-and-install">ROS2 project from development to deployment, Part 3: Aptly, Docker and Install</h1>
+<h1 id="ros2-project-from-development-to-deployment-part-4-cross-compiler">ROS2 project from development to deployment, Part 4: Cross Compiler</h1>
+<h1 id="in-progress">In progress</h1>
+<p>Build package for nvidia jetson using cross compiler<br />
+using <strong>colcon mixin</strong> to set cross compiler flags</p>
+<h2 id="download-and-install-cross-compiler">Download and install cross compiler</h2>
+<p>Download toolchain from <a href="https://developer.nvidia.com/embedded/jetson-linux-r3643">jetpack 6.2</a></p>
+<div class="admonition note">
+<p class="admonition-title">toolchain</p>
+<p>Every jetpack has it own toolchain, so make sure to download the correct one.</p>
+<p>The toolchain url can be build from</p>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">get jetson linux version</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>cat<span class="w"> </span>/etc/nv_tegra_release
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1">#</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="c1"># R36 (release), REVISION: 4.3,</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>https://developer.nvidia.com/embedded/jetson-linux-r3643
+</code></pre></div></td></tr></table></div></p>
+</div>
+<h2 id="build-rootfs">Build rootfs</h2>
+<p><a href="https://robobe.github.io/new_blog/DevOps/tools/devops_debootstrap/?h=cross#set-cross-compiler-paths">Build rootfs using Debootstrap</a></p>
+<hr />
+<h2 id="config-mixin">config mixin</h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mixin file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">mixins</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">cross-arm64</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">build-args</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">      </span><span class="nt">cmake</span><span class="p">:</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_TOOLCHAIN_FILE=/path/to/aarch64_toolchain.cmake</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_CXX_FLAGS=&quot;--sysroot=/path/to/arm64/sysroot&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_C_FLAGS=&quot;--sysroot=/path/to/arm64/sysroot&quot;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-DCMAKE_EXE_LINKER_FLAGS=&quot;--sysroot=/path/to/arm64/sysroot&quot;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">register mixing file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>colcon<span class="w"> </span>mixin<span class="w"> </span>add<span class="w"> </span>cross_compile<span class="w"> </span>./cross_compile.mixin
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>colcon<span class="w"> </span>mixin<span class="w"> </span>update
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">usage</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>colcon<span class="w"> </span>build<span class="w"> </span>--mixin<span class="w"> </span>cross-arm64
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="demo">Demo</h3>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">aarch64.cmake</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>set<span class="o">(</span>CMAKE_SYSTEM_NAME<span class="w"> </span>Linux<span class="o">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>set<span class="o">(</span>CMAKE_SYSTEM_PROCESSOR<span class="w"> </span>aarch64<span class="o">)</span><span class="w">  </span><span class="c1"># Change to match your target architecture</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>set<span class="o">(</span>CROSS_COMPILER_PATH<span class="w"> </span>/home/user/cross_compilers/aarch64--glibc--stable-2022.08-1<span class="o">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="c1"># Set cross-compiler paths</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>set<span class="o">(</span>CMAKE_C_COMPILER<span class="w"> </span><span class="si">${</span><span class="nv">CROSS_COMPILER_PATH</span><span class="si">}</span>/bin/<span class="si">${</span><span class="nv">CMAKE_SYSTEM_PROCESSOR</span><span class="si">}</span>-buildroot-linux-gnu-gcc<span class="o">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>set<span class="o">(</span>CMAKE_CXX_COMPILER<span class="w"> </span><span class="si">${</span><span class="nv">CROSS_COMPILER_PATH</span><span class="si">}</span>/bin/<span class="si">${</span><span class="nv">CMAKE_SYSTEM_PROCESSOR</span><span class="si">}</span>-linux-gnu-g++<span class="o">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>set<span class="o">(</span>CMAKE_SYSROOT<span class="w"> </span>/home/user/rootfs/ubuntuRootFS<span class="o">)</span><span class="w">  </span><span class="c1"># Set to your root filesystem</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="c1"># Set where CMake should look for libraries and headers</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>set<span class="o">(</span>CMAKE_FIND_ROOT_PATH<span class="w"> </span><span class="si">${</span><span class="nv">CMAKE_SYSROOT</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">CMAKE_SYSROOT</span><span class="si">}</span>/usr<span class="w"> </span><span class="si">${</span><span class="nv">CMAKE_SYSROOT</span><span class="si">}</span>/usr/local<span class="o">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="c1"># Only search inside the target rootfs</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>set<span class="o">(</span>CMAKE_FIND_ROOT_PATH_MODE_PROGRAM<span class="w"> </span>NEVER<span class="o">)</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>set<span class="o">(</span>CMAKE_FIND_ROOT_PATH_MODE_LIBRARY<span class="w"> </span>ONLY<span class="o">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>set<span class="o">(</span>CMAKE_FIND_ROOT_PATH_MODE_INCLUDE<span class="w"> </span>ONLY<span class="o">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="c1"># ROS 2 paths</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>set<span class="o">(</span>AMENT_PREFIX_PATH<span class="w"> </span><span class="si">${</span><span class="nv">CMAKE_SYSROOT</span><span class="si">}</span>/opt/ros/humble<span class="o">)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>set<span class="o">(</span>CMAKE_PREFIX_PATH<span class="w"> </span><span class="si">${</span><span class="nv">AMENT_PREFIX_PATH</span><span class="si">}</span><span class="o">)</span>
+</code></pre></div></td></tr></table></div>
+`
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Humble ARM64 cross compiler</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>mixins:
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span>cross-arm64:
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span>build-args:
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">      </span>cmake:
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">        </span>-<span class="w"> </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>/opt/cross_toolchain/aarch64.cmake
+</code></pre></div></td></tr></table></div></p>
 
 
 
