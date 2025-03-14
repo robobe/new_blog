@@ -21,7 +21,10 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-                <p>TBD</p>
+        <a href="libraries">
+        <img src="images/arduino_library.png" width="150" height="150">
+        <p>Libraries</p>
+        </a>
     </div>
     
 </div>

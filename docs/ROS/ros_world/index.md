@@ -19,7 +19,12 @@
                 <p>DDS</p>
             </a>
     </div>
-    
+    <div class="grid-item">
+          <a href="ros_control">
+                <img src="images/ros_control.png"  width="150" height="150">
+                <p>ROS Control</p>
+            </a>
+    </div>
 </div>
 
 ## Posts

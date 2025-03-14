@@ -10,13 +10,15 @@ Ros packages and tools that are used in the ROS eco system.
         </a>
     </div>
     <div class="grid-item">
-        <p>TBD</p>
+        <a href="generate_parameter_library">
+            <img src="images/picknik_robotics.png"  width="150" height="150">
+            <p>parameters generate</p>
+        </a>
     </div>
     <div class="grid-item">
         <p>TBD</p>
     </div>
 </div>
-    
 
 <div class="grid-container">
     <div class="grid-item">

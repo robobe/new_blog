@@ -85,7 +85,7 @@ lib_deps = askuric/Simple FOC@^2.2
 ---
 
 ### Add encoder
-[read more](docs/Robotics/sensors/encoder/index.md)
+<!-- [read more](docs/Robotics/sensors/encoder/index.md) -->
 
 #### Wiring
 

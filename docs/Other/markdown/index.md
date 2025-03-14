@@ -20,6 +20,26 @@ tags:
 
 ---
 
+## Links
+
+|   |   |
+|---|---|
+| new tab  | `[link](https://uri){:target="_blank"}`  |
+
+
+---
+
+## images
+
+
+
+|   |   |   |
+|---|---|---|
+| width control  | `![](images/markdown.png){ width=10% }` | ![](images/markdown.png){ width=10% } |
+| width control  | `![](images/markdown.png){ width=20% }` | ![](images/markdown.png){ width=20% } |
+
+---
+
 ### headings
 
 # Heading 1
