@@ -1,0 +1,1523 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros_world/ros_tf/">
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.2">
+    
+    
+      
+        <title>TF2 - Robots Inside</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.d7758b05.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tf2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robots Inside
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TF2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Simulation/" class="md-tabs__link">
+        
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Robotics/" class="md-tabs__link">
+        
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Programming/" class="md-tabs__link">
+        
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Embedded/" class="md-tabs__link">
+        
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../DevOps/" class="md-tabs__link">
+        
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Other/" class="md-tabs__link">
+        
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robots Inside
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Simulation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Robotics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Robotics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Programming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Programming
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Embedded/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embedded
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Other/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rotation-and-translation-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rotation and Translation Matrix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-ros-tf-support-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install ROS tf support packages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static-and-dynamic-tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static and Dynamic TF
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Static and Dynamic TF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static-tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static TF
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Static TF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resolve-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resolve code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo2-send-static-transformation-from-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo2: Send static transformation from code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic TF
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dynamic TF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-dynamic-tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo: Dynamic TF
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tf-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      TF Performance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TF Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listener-qos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listener QoS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">quaternion</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">ros</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">tf</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">tf2</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="tf2">TF2</h1>
+<p>tf2  provides a coordinate transformation framework, allowing nodes to track and transform data between different coordinate frames over time</p>
+<div class="grid-container">
+    <div class="grid-item">
+            <a href="euler">
+                <img src="images/euler.png"  width="150" height="150">
+                <p>Euler RPY</p>
+            </a>
+        </div>
+        <div class="grid-item">
+             <a href="quaternion">
+                <img src="images/quaternion.png"  width="150" height="150">
+                <p>Quaternion</p>
+            </a>
+        </div>
+    <div class="grid-item">
+          <a href="liner_algebra">
+                <img src="images/linear_algebra.png"  width="150" height="150">
+                <p>Linear algebra</p>
+            </a>
+    </div>
+
+</div>
+
+<h2 id="rotation-and-translation-matrix">Rotation and Translation Matrix</h2>
+<ul>
+<li><strong>Translation</strong>: Shifts a point in space (represented as a vector [x, y, z]).</li>
+<li><strong>Rotation</strong>: Rotates a point around an axis (using quaternions or rotation matrices).</li>
+</ul>
+<p>A transformation matrix combines rotation and translation</p>
+<div class="arithmatex">\[
+T=\begin{bmatrix}
+R &amp; t \\
+0 &amp; 1
+\end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+T = \begin{bmatrix}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; x \\
+r_{21} &amp; r_{22} &amp; r_{23} &amp; y \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; z \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]</div>
+<hr />
+<h2 id="install-ros-tf-support-packages">Install ROS tf support packages</h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>ros-humble-tf2-tools<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>ros-humble-tf-transformations<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>ros-humble-rqt-tf-tree
+</code></pre></div></td></tr></table></div>
+<h2 id="static-and-dynamic-tf">Static and Dynamic TF</h2>
+<h3 id="static-tf">Static TF</h3>
+<p>Use to publish fix coordinate relation (coordinate that not change in time) it publish to <code>tf_static</code> topic </p>
+<h4 id="demo">Demo</h4>
+<p>Publish the relation between world to robot_1</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">publish static tf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># new style quaternion</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>tf2_ros<span class="w"> </span>static_transform_publisher<span class="w"> </span>--x<span class="w"> </span><span class="m">2</span><span class="w"> </span>--y<span class="w"> </span><span class="m">1</span><span class="w"> </span>--z<span class="w"> </span><span class="m">0</span><span class="w"> </span>--qx<span class="w"> </span><span class="m">0</span><span class="w"> </span>--qy<span class="w"> </span><span class="m">0</span><span class="w"> </span>--qz<span class="w"> </span><span class="m">0</span><span class="w"> </span>--qw<span class="w"> </span><span class="m">1</span><span class="w"> </span>--frame-id<span class="w"> </span>world<span class="w"> </span>--child-frame-id<span class="w"> </span>robot_1
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># new style euler</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>ros2<span class="w"> </span>run<span class="w"> </span>tf2_ros<span class="w"> </span>static_transform_publisher<span class="w"> </span>--x<span class="w"> </span><span class="m">2</span><span class="w"> </span>--y<span class="w"> </span><span class="m">1</span><span class="w"> </span>--z<span class="w"> </span><span class="m">0</span><span class="w"> </span>--roll<span class="w"> </span><span class="m">0</span><span class="w"> </span>--pitch<span class="w"> </span><span class="m">0</span><span class="w"> </span>--yaw<span class="w"> </span><span class="m">0</span><span class="w"> </span>--frame-id<span class="w"> </span>world<span class="w"> </span>--child-frame-id<span class="w"> </span>robot_1
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1">#</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>translation:<span class="w"> </span><span class="o">(</span><span class="s1">&#39;2.000000&#39;</span>,<span class="w"> </span><span class="s1">&#39;1.000000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.000000&#39;</span><span class="o">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>rotation:<span class="w"> </span><span class="o">(</span><span class="s1">&#39;0.000000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.000000&#39;</span>,<span class="w"> </span><span class="s1">&#39;0.000000&#39;</span>,<span class="w"> </span><span class="s1">&#39;1.000000&#39;</span><span class="o">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>from<span class="w"> </span><span class="s1">&#39;world&#39;</span><span class="w"> </span>to<span class="w"> </span><span class="s1">&#39;robot_1&#39;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">echo topic</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/tf_static
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>transforms:
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>-<span class="w"> </span>header:
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span>stamp:
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">      </span>sec:<span class="w"> </span><span class="m">1742018434</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">      </span>nanosec:<span class="w"> </span><span class="m">760327680</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span>frame_id:<span class="w"> </span>world
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">  </span>child_frame_id:<span class="w"> </span>robot_1
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">  </span>transform:
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span>translation:
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">      </span>x:<span class="w"> </span><span class="m">2</span>.0
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">      </span>y:<span class="w"> </span><span class="m">1</span>.0
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">      </span>z:<span class="w"> </span><span class="m">0</span>.0
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span>rotation:
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">      </span>x:<span class="w"> </span><span class="m">0</span>.0
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">      </span>y:<span class="w"> </span><span class="m">0</span>.0
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">      </span>z:<span class="w"> </span><span class="m">0</span>.0
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">      </span>w:<span class="w"> </span><span class="m">1</span>.0
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>---
+</code></pre></div></td></tr></table></div>
+<p><img alt="alt text" src="images/rqt_tf_tree_static.png" /></p>
+<p><img alt="alt text" src="images/rviz_static_demo_1.png" /></p>
+<div class="admonition tip">
+<p class="admonition-title">coordinate</p>
+<ul>
+<li>X: red</li>
+<li>Y: green</li>
+<li>Z: blue</li>
+</ul>
+</div>
+<h5 id="resolve-code">Resolve code</h5>
+<p>ROS node that resolve the translation and Rotation between two coordinate, in the example is to resolve between robot_1 to world, </p>
+<details>
+    <summary>tf resolve code</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="ch">#!/bin/usr/env python</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tf2_ros</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformStamped</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">TFResolver</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;tf_resolver&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>        <span class="c1"># Create TF buffer and listener</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">Buffer</span><span class="p">()</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="c1"># Timer to check TF every 1 second</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookup_transform</span><span class="p">)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">lookup_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="n">from_frame</span> <span class="o">=</span> <span class="s1">&#39;robot_1&#39;</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="n">to_frame</span> <span class="o">=</span> <span class="s1">&#39;world&#39;</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>            <span class="c1"># Lookup transform from &#39;world&#39; to &#39;robot_1&#39;</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>            <span class="n">transform</span><span class="p">:</span> <span class="n">TransformStamped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="o">.</span><span class="n">lookup_transform</span><span class="p">(</span><span class="n">from_frame</span><span class="p">,</span> <span class="n">to_frame</span><span class="p">,</span> <span class="n">rclpy</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Time</span><span class="p">())</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>            <span class="c1"># Extract translation</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>            <span class="n">translation</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Translation: x=</span><span class="si">{</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z=</span><span class="si">{</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>            <span class="c1"># Extract rotation (quaternion)</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>            <span class="n">rotation</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rotation (quaternion): x=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">, w=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">w</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="k">except</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">LookupException</span><span class="p">:</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transform from </span><span class="si">{</span><span class="n">from_frame</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">to_frame</span><span class="si">}</span><span class="s2"> not found!&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="k">except</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ConnectivityException</span><span class="p">:</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Connectivity issue!&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>        <span class="k">except</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ExtrapolationException</span><span class="p">:</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Extrapolation error!&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>    <span class="n">node</span> <span class="o">=</span> <span class="n">TFResolver</span><span class="p">()</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>python /home/user/projects/blog/docs/ROS/ros_world/ros_tf/code/demo1_reslove.py
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>[INFO] [1742019661.607132099] [tf_resolver]: Translation: x=-2.0, y=-1.0, z=0.0
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>[INFO] [1742019661.607396088] [tf_resolver]: Rotation (quaternion): x=0.0, y=0.0, z=0.0, w=1.0
+</code></pre></div></td></tr></table></div>
+<p>The <code>robot_1</code> need to move back 2m in <strong>X</strong> and 1m back in <strong>Y</strong> to return to the word coordinate frame</p>
+<hr />
+<h4 id="demo2-send-static-transformation-from-code">Demo2: Send static transformation from code</h4>
+<p>Send <code>static tf</code> from code</p>
+<details>
+    <summary>static tf</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">StaticTransformBroadcaster</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="hll"><span class="ch">#!/bin/usr/env python</span>
+</span><a id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf2_ros</span><span class="w"> </span><span class="kn">import</span> <span class="n">StaticTransformBroadcaster</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformStamped</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">StaticTFPublisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;static_tf_publisher&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_broadcaster</span> <span class="o">=</span> <span class="n">StaticTransformBroadcaster</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">publish_static_transform</span><span class="p">()</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">publish_static_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">TransformStamped</span><span class="p">()</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>        <span class="n">t</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clock</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a>        <span class="n">t</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s1">&#39;robot_1&#39;</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>        <span class="n">t</span><span class="o">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s1">&#39;world&#39;</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">2.0</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a>        <span class="c1"># Set Rotation (Quaternion)</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.7071</span>  <span class="c1"># 90° rotation around Z</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">0.7071</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_broadcaster</span><span class="o">.</span><span class="n">sendTransform</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Published static transform&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="n">node</span> <span class="o">=</span> <span class="n">StaticTFPublisher</span><span class="p">()</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<p><img alt="alt text" src="images/demo2_rviz.png" /></p>
+<hr />
+<h3 id="dynamic-tf">Dynamic TF</h3>
+<h4 id="demo-dynamic-tf">Demo: Dynamic TF</h4>
+<p>Publish <code>tf</code> in 10 HZ, (change robot orientation)</p>
+<details>
+    <summary>dynamic tf broadcaster</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span>
+<span class="normal"><a href="#__codelineno-6-38">38</a></span>
+<span class="normal"><a href="#__codelineno-6-39">39</a></span>
+<span class="normal"><a href="#__codelineno-6-40">40</a></span>
+<span class="normal"><a href="#__codelineno-6-41">41</a></span>
+<span class="normal"><a href="#__codelineno-6-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="ch">#!/bin/usr/env python</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf2_ros</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformBroadcaster</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformStamped</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="n">HZ</span> <span class="o">=</span> <span class="mf">0.1</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="k">class</span><span class="w"> </span><span class="nc">MovingTFPublisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;moving_tf_publisher&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_broadcaster</span> <span class="o">=</span> <span class="n">TransformBroadcaster</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">HZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_transform</span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Time step</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">publish_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">TransformStamped</span><span class="p">()</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a>        <span class="n">t</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clock</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a>        <span class="n">t</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s1">&#39;robot_1&#39;</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a>        <span class="n">t</span><span class="o">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s1">&#39;world&#39;</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a>        <span class="c1"># Simulate movement: circular motion</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a>        <span class="c1"># Quaternion Rotation (yaw only)</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a>        <span class="n">qz</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a>        <span class="n">qw</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">qz</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">qw</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_broadcaster</span><span class="o">.</span><span class="n">sendTransform</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mf">0.1</span>  <span class="c1"># Increment time step</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Publish tf&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38"></a>
+<a id="__codelineno-6-39" name="__codelineno-6-39"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40"></a><span class="n">node</span> <span class="o">=</span> <span class="n">MovingTFPublisher</span><span class="p">()</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<p><img alt="alt text" src="images/dynamic_rqt_tf_tree.png" /></p>
+<details>
+    <summary>tf resolver</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span>
+<span class="normal"><a href="#__codelineno-7-32">32</a></span>
+<span class="normal"><a href="#__codelineno-7-33">33</a></span>
+<span class="normal"><a href="#__codelineno-7-34">34</a></span>
+<span class="normal"><a href="#__codelineno-7-35">35</a></span>
+<span class="normal"><a href="#__codelineno-7-36">36</a></span>
+<span class="normal"><a href="#__codelineno-7-37">37</a></span>
+<span class="normal"><a href="#__codelineno-7-38">38</a></span>
+<span class="normal"><a href="#__codelineno-7-39">39</a></span>
+<span class="normal"><a href="#__codelineno-7-40">40</a></span>
+<span class="normal"><a href="#__codelineno-7-41">41</a></span>
+<span class="normal"><a href="#__codelineno-7-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="ch">#!/bin/usr/env python</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf2_ros</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformBroadcaster</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformStamped</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="n">HZ</span> <span class="o">=</span> <span class="mf">0.1</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="k">class</span><span class="w"> </span><span class="nc">MovingTFPublisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;moving_tf_publisher&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_broadcaster</span> <span class="o">=</span> <span class="n">TransformBroadcaster</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">HZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_transform</span><span class="p">)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Time step</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">publish_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">TransformStamped</span><span class="p">()</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>        <span class="n">t</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clock</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a>        <span class="n">t</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s1">&#39;robot_1&#39;</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a>        <span class="n">t</span><span class="o">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s1">&#39;world&#39;</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a>        <span class="c1"># Simulate movement: circular motion</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a>        <span class="c1"># Quaternion Rotation (yaw only)</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a>        <span class="n">qz</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a>        <span class="n">qw</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">qz</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a>        <span class="n">t</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">qw</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_broadcaster</span><span class="o">.</span><span class="n">sendTransform</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mf">0.1</span>  <span class="c1"># Increment time step</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Publish tf&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38"></a>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40"></a><span class="n">node</span> <span class="o">=</span> <span class="n">MovingTFPublisher</span><span class="p">()</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42"></a><span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h2 id="tf-performance">TF Performance</h2>
+<h3 id="listener-qos">Listener QoS</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">default tf QOS</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span>
+<span class="normal"><a href="#__codelineno-8-21">21</a></span>
+<span class="normal"><a href="#__codelineno-8-22">22</a></span>
+<span class="normal"><a href="#__codelineno-8-23">23</a></span>
+<span class="normal"><a href="#__codelineno-8-24">24</a></span>
+<span class="normal"><a href="#__codelineno-8-25">25</a></span>
+<span class="normal"><a href="#__codelineno-8-26">26</a></span>
+<span class="normal"><a href="#__codelineno-8-27">27</a></span>
+<span class="normal"><a href="#__codelineno-8-28">28</a></span>
+<span class="normal"><a href="#__codelineno-8-29">29</a></span>
+<span class="normal"><a href="#__codelineno-8-30">30</a></span>
+<span class="normal"><a href="#__codelineno-8-31">31</a></span>
+<span class="normal"><a href="#__codelineno-8-32">32</a></span>
+<span class="normal"><a href="#__codelineno-8-33">33</a></span>
+<span class="normal"><a href="#__codelineno-8-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>info<span class="w"> </span>--verbose<span class="w"> </span>/tf
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>Type:<span class="w"> </span>tf2_msgs/msg/TFMessage
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>Publisher<span class="w"> </span>count:<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>Node<span class="w"> </span>name:<span class="w"> </span>moving_tf_publisher
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>Node<span class="w"> </span>namespace:<span class="w"> </span>/
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>Topic<span class="w"> </span>type:<span class="w"> </span>tf2_msgs/msg/TFMessage
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>Endpoint<span class="w"> </span>type:<span class="w"> </span>PUBLISHER
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>GID:<span class="w"> </span><span class="m">01</span>.10.75.c8.eb.03.e1.a2.15.e9.45.5c.00.00.14.03.00.00.00.00.00.00.00.00
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>QoS<span class="w"> </span>profile:
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">  </span>Reliability:<span class="w"> </span>RELIABLE
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">  </span>History<span class="w"> </span><span class="o">(</span>Depth<span class="o">)</span>:<span class="w"> </span>KEEP_LAST<span class="w"> </span><span class="o">(</span><span class="m">100</span><span class="o">)</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">  </span>Durability:<span class="w"> </span>VOLATILE
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="w">  </span>Lifespan:<span class="w"> </span>Infinite
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="w">  </span>Deadline:<span class="w"> </span>Infinite
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="w">  </span>Liveliness:<span class="w"> </span>AUTOMATIC
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="w">  </span>Liveliness<span class="w"> </span>lease<span class="w"> </span>duration:<span class="w"> </span>Infinite
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a>
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a>Subscription<span class="w"> </span>count:<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21"></a>
+<a id="__codelineno-8-22" name="__codelineno-8-22"></a>Node<span class="w"> </span>name:<span class="w"> </span>tf_resolver
+<a id="__codelineno-8-23" name="__codelineno-8-23"></a>Node<span class="w"> </span>namespace:<span class="w"> </span>/
+<a id="__codelineno-8-24" name="__codelineno-8-24"></a>Topic<span class="w"> </span>type:<span class="w"> </span>tf2_msgs/msg/TFMessage
+<a id="__codelineno-8-25" name="__codelineno-8-25"></a>Endpoint<span class="w"> </span>type:<span class="w"> </span>SUBSCRIPTION
+<a id="__codelineno-8-26" name="__codelineno-8-26"></a>GID:<span class="w"> </span><span class="m">01</span>.10.e4.9b.73.91.d0.2b.17.52.17.b6.00.00.14.04.00.00.00.00.00.00.00.00
+<a id="__codelineno-8-27" name="__codelineno-8-27"></a>QoS<span class="w"> </span>profile:
+<a id="__codelineno-8-28" name="__codelineno-8-28"></a><span class="w">  </span>Reliability:<span class="w"> </span>RELIABLE
+<a id="__codelineno-8-29" name="__codelineno-8-29"></a><span class="w">  </span>History<span class="w"> </span><span class="o">(</span>Depth<span class="o">)</span>:<span class="w"> </span>KEEP_LAST<span class="w"> </span><span class="o">(</span><span class="m">100</span><span class="o">)</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30"></a><span class="w">  </span>Durability:<span class="w"> </span>VOLATILE
+<a id="__codelineno-8-31" name="__codelineno-8-31"></a><span class="w">  </span>Lifespan:<span class="w"> </span>Infinite
+<a id="__codelineno-8-32" name="__codelineno-8-32"></a><span class="w">  </span>Deadline:<span class="w"> </span>Infinite
+<a id="__codelineno-8-33" name="__codelineno-8-33"></a><span class="w">  </span>Liveliness:<span class="w"> </span>AUTOMATIC
+<a id="__codelineno-8-34" name="__codelineno-8-34"></a><span class="w">  </span>Liveliness<span class="w"> </span>lease<span class="w"> </span>duration:<span class="w"> </span>Infinite
+</code></pre></div></td></tr></table></div>
+<details>
+    <summary>tf listener with best effort qos</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span>
+<span class="normal"><a href="#__codelineno-9-34">34</a></span>
+<span class="normal"><a href="#__codelineno-9-35">35</a></span>
+<span class="normal"><a href="#__codelineno-9-36">36</a></span>
+<span class="normal"><a href="#__codelineno-9-37">37</a></span>
+<span class="normal"><a href="#__codelineno-9-38">38</a></span>
+<span class="normal"><a href="#__codelineno-9-39">39</a></span>
+<span class="normal"><a href="#__codelineno-9-40">40</a></span>
+<span class="normal"><a href="#__codelineno-9-41">41</a></span>
+<span class="normal"><a href="#__codelineno-9-42">42</a></span>
+<span class="normal"><a href="#__codelineno-9-43">43</a></span>
+<span class="normal"><a href="#__codelineno-9-44">44</a></span>
+<span class="normal"><a href="#__codelineno-9-45">45</a></span>
+<span class="normal"><a href="#__codelineno-9-46">46</a></span>
+<span class="normal"><a href="#__codelineno-9-47">47</a></span>
+<span class="normal"><a href="#__codelineno-9-48">48</a></span>
+<span class="normal"><a href="#__codelineno-9-49">49</a></span>
+<span class="normal"><a href="#__codelineno-9-50">50</a></span>
+<span class="normal"><a href="#__codelineno-9-51">51</a></span>
+<span class="normal"><a href="#__codelineno-9-52">52</a></span>
+<span class="normal"><a href="#__codelineno-9-53">53</a></span>
+<span class="normal"><a href="#__codelineno-9-54">54</a></span>
+<span class="normal"><a href="#__codelineno-9-55">55</a></span>
+<span class="normal"><a href="#__codelineno-9-56">56</a></span>
+<span class="normal"><a href="#__codelineno-9-57">57</a></span>
+<span class="normal"><a href="#__codelineno-9-58">58</a></span>
+<span class="normal"><a href="#__codelineno-9-59">59</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="ch">#!/bin/usr/env python</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tf2_ros</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformStamped</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">QoSProfile</span><span class="p">,</span> <span class="n">QoSReliabilityPolicy</span><span class="p">,</span> <span class="n">QoSHistoryPolicy</span><span class="p">,</span> <span class="n">QoSDurabilityPolicy</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="n">RESOLVE_HZ</span> <span class="o">=</span> <span class="mf">0.5</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="k">class</span><span class="w"> </span><span class="nc">TFResolver</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;tf_resolver&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a>        <span class="n">qos</span> <span class="o">=</span> <span class="n">QoSProfile</span><span class="p">(</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a>            <span class="n">reliability</span><span class="o">=</span><span class="n">QoSReliabilityPolicy</span><span class="o">.</span><span class="n">BEST_EFFORT</span><span class="p">,</span>  <span class="c1"># RELIABLE is default</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>            <span class="n">history</span><span class="o">=</span><span class="n">QoSHistoryPolicy</span><span class="o">.</span><span class="n">KEEP_LAST</span><span class="p">,</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a>            <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                                     <span class="c1"># Adjust buffer size</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>            <span class="n">durability</span><span class="o">=</span><span class="n">QoSDurabilityPolicy</span><span class="o">.</span><span class="n">VOLATILE</span>       <span class="c1"># TRANSIENT_LOCAL is default for TF</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a>        <span class="p">)</span>          
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a>        <span class="c1"># Create TF buffer and listener</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">Buffer</span><span class="p">(</span><span class="n">cache_time</span><span class="o">=</span><span class="n">rclpy</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mf">0.1</span><span class="p">))</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="n">qos</span><span class="p">)</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a>        <span class="c1"># Timer to check TF every 1 second</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">RESOLVE_HZ</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookup_transform</span><span class="p">)</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">lookup_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a>        <span class="n">from_frame</span> <span class="o">=</span> <span class="s1">&#39;robot_1&#39;</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a>        <span class="n">to_frame</span> <span class="o">=</span> <span class="s1">&#39;world&#39;</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a>
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34"></a>            <span class="c1"># Lookup transform from &#39;world&#39; to &#39;robot_1&#39;</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35"></a>            <span class="n">transform</span><span class="p">:</span> <span class="n">TransformStamped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="o">.</span><span class="n">lookup_transform</span><span class="p">(</span><span class="n">from_frame</span><span class="p">,</span> <span class="n">to_frame</span><span class="p">,</span> <span class="n">rclpy</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Time</span><span class="p">())</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36"></a>
+<a id="__codelineno-9-37" name="__codelineno-9-37"></a>            <span class="c1"># Extract translation</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38"></a>            <span class="n">translation</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Translation: x=</span><span class="si">{</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z=</span><span class="si">{</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40"></a>
+<a id="__codelineno-9-41" name="__codelineno-9-41"></a>            <span class="c1"># Extract rotation (quaternion)</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42"></a>            <span class="n">rotation</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotation</span>
+<a id="__codelineno-9-43" name="__codelineno-9-43"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rotation (quaternion): x=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">, w=</span><span class="si">{</span><span class="n">rotation</span><span class="o">.</span><span class="n">w</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44"></a>
+<a id="__codelineno-9-45" name="__codelineno-9-45"></a>        <span class="k">except</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">LookupException</span><span class="p">:</span>
+<a id="__codelineno-9-46" name="__codelineno-9-46"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transform from </span><span class="si">{</span><span class="n">from_frame</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">to_frame</span><span class="si">}</span><span class="s2"> not found!&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-47" name="__codelineno-9-47"></a>        <span class="k">except</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ConnectivityException</span><span class="p">:</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Connectivity issue!&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-49" name="__codelineno-9-49"></a>        <span class="k">except</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ExtrapolationException</span><span class="p">:</span>
+<a id="__codelineno-9-50" name="__codelineno-9-50"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Extrapolation error!&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51"></a>
+<a id="__codelineno-9-52" name="__codelineno-9-52"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-9-53" name="__codelineno-9-53"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<a id="__codelineno-9-54" name="__codelineno-9-54"></a>    <span class="n">node</span> <span class="o">=</span> <span class="n">TFResolver</span><span class="p">()</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-9-56" name="__codelineno-9-56"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<a id="__codelineno-9-57" name="__codelineno-9-57"></a>
+<a id="__codelineno-9-58" name="__codelineno-9-58"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://articulatedrobotics.xyz/tutorials/ready-for-ros/tf/">Articulated Robotics - The Transform System (tf2)</a></li>
+<li><a href="https://articulatedrobotics.xyz/category/coordinate-transforms-for-robotics">Coordinate Transforms For Robotics</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f13b1293.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
