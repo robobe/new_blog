@@ -29,10 +29,10 @@
         <p>ROS world</p>
         </a>
     </div>
-    <div class="grid-item">
-        <a href="zenoh">
-        <img src="images/zenoh.png" width="150" height="150">
-        <p>Zenoh</p>
+     <div class="grid-item">
+        <a href="ros_basic" tooltip="">
+        <img src="images/ros_core.png"  width="150" height="150">
+        <p>ROS basic</p>
         </a>
     </div>
 </div>

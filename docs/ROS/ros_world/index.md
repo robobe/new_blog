@@ -31,10 +31,15 @@
                 <p>TF</p>
             </a>
     </div>
+    <div class="grid-item">
+            <a href="zenoh">
+            <img src="images/zenoh.png" width="150" height="150">
+            <p>Zenoh</p>
+            </a>
+        </div>
 </div>
 
 ## Posts
 
-- [Node Topics name and remap](node_topic_nameing.md)
+
 - [ROS2 Parameters](parameters)
-- [Topics QoS](qos)
