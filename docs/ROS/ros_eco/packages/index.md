@@ -1,3 +1,10 @@
+---
+tags:
+    - ros
+    - packages
+
+---
+{{ render_nav_path }}
 # ROS Eco system
 
 Ros packages and tools that are used in the ROS eco system.
