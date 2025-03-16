@@ -567,6 +567,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profiles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#demos" class="md-nav__link">
     <span class="md-ellipsis">
       Demos
@@ -577,14 +586,41 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#queue-depth-message-livespan-and-durability" class="md-nav__link">
+  <a href="#publisher-queue-size" class="md-nav__link">
     <span class="md-ellipsis">
-      Queue Depth message livespan and Durability
+      Publisher Queue size
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Queue Depth message livespan and Durability">
+    <nav class="md-nav" aria-label="Publisher Queue size">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qos_profile_system_default" class="md-nav__link">
+    <span class="md-ellipsis">
+      qos_profile_system_default
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qos_profile_sensor_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      qos_profile_sensor_data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#queue-and-durability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Queue and Durability
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#publisher-livespan" class="md-nav__link">
@@ -602,6 +638,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#todo-finish-example-with-035-durations" class="md-nav__link">
+    <span class="md-ellipsis">
+      TODO: finish example with 0,3,5 durations
+    </span>
+  </a>
   
 </li>
       
@@ -677,7 +722,7 @@
 <tr>
 <td>Depth</td>
 <td>Number of messages to store in KEEP_LAST(N)</td>
-<td>Any positive integer (e.g., 10, 100)</td>
+<td>Any positive integer (default 10)</td>
 </tr>
 <tr>
 <td>Deadline</td>
@@ -687,7 +732,7 @@
 <tr>
 <td>Lifespan</td>
 <td>How long messages remain valid before being discarded</td>
-<td>Duration (e.g., 5s, 10s)</td>
+<td>Duration in sec (default infinity)</td>
 </tr>
 <tr>
 <td>Liveliness</td>
@@ -701,15 +746,380 @@
 </tr>
 </tbody>
 </table>
+<h2 id="profiles">Profiles</h2>
+<p>rclpy define predefine profiles that define in the rmw</p>
+<ul>
+<li>qos_profile_system_default</li>
+<li>qos_profile_sensor_data</li>
+</ul>
+<details>
+    <summary>rmw profile</summary>
+!!! note "humble version"
+    [qos_profiles.h](https://github.com/ros2/rmw/blob/humble/rmw/include/rmw/qos_profiles.h)
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">rmw_qos_profile_t</span><span class="w"> </span><span class="n">rmw_qos_profile_system_default</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_HISTORY_SYSTEM_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_DEPTH_SYSTEM_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_RELIABILITY_SYSTEM_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_DURABILITY_SYSTEM_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="n">RMW_QOS_DEADLINE_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="n">RMW_QOS_LIFESPAN_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">  </span><span class="n">RMW_QOS_LIVELINESS_LEASE_DURATION_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="nb">false</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="p">};</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">rmw_qos_profile_t</span><span class="w"> </span><span class="n">rmw_qos_profile_sensor_data</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="p">{</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_HISTORY_KEEP_LAST</span><span class="p">,</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">  </span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT</span><span class="p">,</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_DURABILITY_VOLATILE</span><span class="p">,</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">  </span><span class="n">RMW_QOS_DEADLINE_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">  </span><span class="n">RMW_QOS_LIFESPAN_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">  </span><span class="n">RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">  </span><span class="n">RMW_QOS_LIVELINESS_LEASE_DURATION_DEFAULT</span><span class="p">,</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">  </span><span class="nb">false</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
 <h2 id="demos">Demos</h2>
-<h3 id="queue-depth-message-livespan-and-durability">Queue Depth message livespan and Durability</h3>
-<p><strong>Publisher QOS settings</strong>
-The publisher keep 10 messages for late joiners
-The subscriber wait 10 sec and then subscriber to topic
-It well get only 5 messages because the livespan of the message is set to 5 sec</p>
+<h3 id="publisher-queue-size">Publisher Queue size</h3>
+<p>Simulate publisher queue size control for late binding subscribers</p>
+<h4 id="qos_profile_system_default">qos_profile_system_default</h4>
+<p>In this profile the depth is zero and from result we saw that the subscribe not receives any message from history</p>
+<details>
+    <summary>demo code</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span>
+<span class="normal"><a href="#__codelineno-1-54">54</a></span>
+<span class="normal"><a href="#__codelineno-1-55">55</a></span>
+<span class="normal"><a href="#__codelineno-1-56">56</a></span>
+<span class="normal"><a href="#__codelineno-1-57">57</a></span>
+<span class="normal"><a href="#__codelineno-1-58">58</a></span>
+<span class="normal"><a href="#__codelineno-1-59">59</a></span>
+<span class="normal"><a href="#__codelineno-1-60">60</a></span>
+<span class="normal"><a href="#__codelineno-1-61">61</a></span>
+<span class="normal"><a href="#__codelineno-1-62">62</a></span>
+<span class="normal"><a href="#__codelineno-1-63">63</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.executors</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiThreadedExecutor</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">QoSProfile</span><span class="p">,</span> <span class="n">ReliabilityPolicy</span><span class="p">,</span> <span class="n">DurabilityPolicy</span><span class="p">,</span> <span class="n">HistoryPolicy</span><span class="p">,</span> <span class="n">LivelinessPolicy</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">qos_profile_system_default</span><span class="p">,</span> <span class="n">qos_profile_sensor_data</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.duration</span><span class="w"> </span><span class="kn">import</span> <span class="n">Duration</span>  <span class="c1"># Correct import</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="n">TOPIC</span> <span class="o">=</span> <span class="s2">&quot;test_topic&quot;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="n">SUB_START_DELAY</span> <span class="o">=</span> <span class="mi">5</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="n">PUB_RATE</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="k">class</span><span class="w"> </span><span class="nc">SubNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;sub_node&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sub_start_delay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">SUB_START_DELAY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_handler</span><span class="p">)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello SUB&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">destroy_timer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_start_delay</span><span class="p">)</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;--Create subscriber--&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">TOPIC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span> <span class="n">qos_profile</span><span class="o">=</span><span class="n">qos_profile_system_default</span><span class="p">)</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="k">class</span><span class="w"> </span><span class="nc">PubNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;pub_node&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">TOPIC</span><span class="p">,</span> <span class="n">qos_profile</span><span class="o">=</span><span class="n">qos_profile_system_default</span><span class="p">)</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">qos_profile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">PUB_RATE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_handler</span><span class="p">)</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello PUB&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a>        <span class="n">msg</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a>        <span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;hello </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a>
+<a id="__codelineno-1-49" name="__codelineno-1-49"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a>    <span class="n">pub_node</span> <span class="o">=</span> <span class="n">PubNode</span><span class="p">()</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a>    <span class="n">sub_node</span> <span class="o">=</span> <span class="n">SubNode</span><span class="p">()</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53"></a>    <span class="n">executer</span> <span class="o">=</span> <span class="n">MultiThreadedExecutor</span><span class="p">()</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">pub_node</span><span class="p">)</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">sub_node</span><span class="p">)</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56"></a>
+<a id="__codelineno-1-57" name="__codelineno-1-57"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58"></a>
+<a id="__codelineno-1-59" name="__codelineno-1-59"></a>
+<a id="__codelineno-1-60" name="__codelineno-1-60"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61"></a>
+<a id="__codelineno-1-62" name="__codelineno-1-62"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-1-63" name="__codelineno-1-63"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+
+</details>
+
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">result</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span>
+<span class="normal"><a href="#__codelineno-2-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102162</span>.025442844<span class="o">]</span><span class="w"> </span><span class="o">[</span>pub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>PUB
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102162</span>.026666484<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>SUB
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102167</span>.029141089<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>--Create<span class="w"> </span>subscriber--
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102168</span>.029089360<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">5</span>
+</span><a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102169</span>.028827506<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">6</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102170</span>.029061624<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">7</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102171</span>.029371443<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">8</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102172</span>.028809769<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">9</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742102173</span>.028644708<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">10</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h4 id="qos_profile_sensor_data">qos_profile_sensor_data</h4>
+<p>In this profile the depth set to <strong>5</strong> but the the durability set to <strong>VOLATILE</strong> (no history, new subscribers get only new messages), the result saw that late subscriber got only new messages</p>
+<details>
+    <summary>demo code</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span>
+<span class="normal"><a href="#__codelineno-3-50">50</a></span>
+<span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span>
+<span class="normal"><a href="#__codelineno-3-53">53</a></span>
+<span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span>
+<span class="normal"><a href="#__codelineno-3-62">62</a></span>
+<span class="normal"><a href="#__codelineno-3-63">63</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.executors</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiThreadedExecutor</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">QoSProfile</span><span class="p">,</span> <span class="n">ReliabilityPolicy</span><span class="p">,</span> <span class="n">DurabilityPolicy</span><span class="p">,</span> <span class="n">HistoryPolicy</span><span class="p">,</span> <span class="n">LivelinessPolicy</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">qos_profile_system_default</span><span class="p">,</span> <span class="n">qos_profile_sensor_data</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.duration</span><span class="w"> </span><span class="kn">import</span> <span class="n">Duration</span>  <span class="c1"># Correct import</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="n">TOPIC</span> <span class="o">=</span> <span class="s2">&quot;test_topic&quot;</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="n">SUB_START_DELAY</span> <span class="o">=</span> <span class="mi">5</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="n">PUB_RATE</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="k">class</span><span class="w"> </span><span class="nc">SubNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;sub_node&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sub_start_delay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">SUB_START_DELAY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_handler</span><span class="p">)</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello SUB&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">destroy_timer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_start_delay</span><span class="p">)</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;--Create subscriber--&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">TOPIC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span> <span class="n">qos_profile</span><span class="o">=</span><span class="n">qos_profile_sensor_data</span><span class="p">)</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="k">class</span><span class="w"> </span><span class="nc">PubNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;pub_node&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">TOPIC</span><span class="p">,</span> <span class="n">qos_profile</span><span class="o">=</span><span class="n">qos_profile_sensor_data</span><span class="p">)</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">qos_profile</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">PUB_RATE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_handler</span><span class="p">)</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello PUB&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>        <span class="n">msg</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>        <span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;hello </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>    <span class="n">pub_node</span> <span class="o">=</span> <span class="n">PubNode</span><span class="p">()</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>    <span class="n">sub_node</span> <span class="o">=</span> <span class="n">SubNode</span><span class="p">()</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>    <span class="n">executer</span> <span class="o">=</span> <span class="n">MultiThreadedExecutor</span><span class="p">()</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">pub_node</span><span class="p">)</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">sub_node</span><span class="p">)</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+
+</details>
+
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">result</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">8</a></span>
+<span class="normal"><a href="#__codelineno-4-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742103996</span>.715762333<span class="o">]</span><span class="w"> </span><span class="o">[</span>pub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>PUB
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742103996</span>.717355657<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>SUB
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104001</span>.719799187<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>--Create<span class="w"> </span>subscriber--
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104002</span>.713190568<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">5</span>
+</span><a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104003</span>.713665142<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">6</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104004</span>.713264404<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">7</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104005</span>.713393306<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">8</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104006</span>.713138227<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">9</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104007</span>.713481727<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">10</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h4 id="queue-and-durability">Queue and Durability</h4>
+<p>Allow late subscriber to get history</p>
 <ul>
 <li>Durability: <strong>TRANSIENT_LOCAL</strong> stores past messages for late joiners</li>
-<li>livespan: 5sec pub side settings</li>
 <li>depth: 10</li>
 </ul>
 <p><strong>Subscriber QOS settings</strong>
@@ -718,49 +1128,233 @@ The durability must be transient local because in <strong>VOLATILE</strong> mean
 <ul>
 <li>depth: 10</li>
 <li>durability: <strong>TRANSIENT_LOCAL</strong> </li>
-<li>lifespan: #TODO: from my testing on cyclone it is not influence about the message life time</li>
 </ul>
-<details><summary>pub sub code</summary>
+<details>
+    <summary>demo code</summary>
 
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pub.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span>
+<span class="normal"><a href="#__codelineno-5-36">36</a></span>
+<span class="normal"><a href="#__codelineno-5-37">37</a></span>
+<span class="normal"><a href="#__codelineno-5-38">38</a></span>
+<span class="normal"><a href="#__codelineno-5-39">39</a></span>
+<span class="normal"><a href="#__codelineno-5-40">40</a></span>
+<span class="normal"><a href="#__codelineno-5-41">41</a></span>
+<span class="normal"><a href="#__codelineno-5-42">42</a></span>
+<span class="normal"><a href="#__codelineno-5-43">43</a></span>
+<span class="normal"><a href="#__codelineno-5-44">44</a></span>
+<span class="normal"><a href="#__codelineno-5-45">45</a></span>
+<span class="normal"><a href="#__codelineno-5-46">46</a></span>
+<span class="normal"><a href="#__codelineno-5-47">47</a></span>
+<span class="normal"><a href="#__codelineno-5-48">48</a></span>
+<span class="normal"><a href="#__codelineno-5-49">49</a></span>
+<span class="normal"><a href="#__codelineno-5-50">50</a></span>
+<span class="normal"><a href="#__codelineno-5-51">51</a></span>
+<span class="normal"><a href="#__codelineno-5-52">52</a></span>
+<span class="normal"><a href="#__codelineno-5-53">53</a></span>
+<span class="normal"><a href="#__codelineno-5-54">54</a></span>
+<span class="normal"><a href="#__codelineno-5-55">55</a></span>
+<span class="normal"><a href="#__codelineno-5-56">56</a></span>
+<span class="normal"><a href="#__codelineno-5-57">57</a></span>
+<span class="normal"><a href="#__codelineno-5-58">58</a></span>
+<span class="normal"><a href="#__codelineno-5-59">59</a></span>
+<span class="normal"><a href="#__codelineno-5-60">60</a></span>
+<span class="normal"><a href="#__codelineno-5-61">61</a></span>
+<span class="normal"><a href="#__codelineno-5-62">62</a></span>
+<span class="normal"><a href="#__codelineno-5-63">63</a></span>
+<span class="normal"><a href="#__codelineno-5-64">64</a></span>
+<span class="normal"><a href="#__codelineno-5-65">65</a></span>
+<span class="normal"><a href="#__codelineno-5-66">66</a></span>
+<span class="normal"><a href="#__codelineno-5-67">67</a></span>
+<span class="normal"><a href="#__codelineno-5-68">68</a></span>
+<span class="normal"><a href="#__codelineno-5-69">69</a></span>
+<span class="normal"><a href="#__codelineno-5-70">70</a></span>
+<span class="normal"><a href="#__codelineno-5-71">71</a></span>
+<span class="normal"><a href="#__codelineno-5-72">72</a></span>
+<span class="normal"><a href="#__codelineno-5-73">73</a></span>
+<span class="normal"><a href="#__codelineno-5-74">74</a></span>
+<span class="normal"><a href="#__codelineno-5-75">75</a></span>
+<span class="normal"><a href="#__codelineno-5-76">76</a></span>
+<span class="normal"><a href="#__codelineno-5-77">77</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.executors</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiThreadedExecutor</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">QoSProfile</span><span class="p">,</span> <span class="n">ReliabilityPolicy</span><span class="p">,</span> <span class="n">DurabilityPolicy</span><span class="p">,</span> <span class="n">HistoryPolicy</span><span class="p">,</span> <span class="n">LivelinessPolicy</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.qos</span><span class="w"> </span><span class="kn">import</span> <span class="n">qos_profile_system_default</span><span class="p">,</span> <span class="n">qos_profile_sensor_data</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.duration</span><span class="w"> </span><span class="kn">import</span> <span class="n">Duration</span>  <span class="c1"># Correct import</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="n">TOPIC</span> <span class="o">=</span> <span class="s2">&quot;test_topic&quot;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="n">SUB_START_DELAY</span> <span class="o">=</span> <span class="mi">5</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="n">PUB_RATE</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="k">class</span><span class="w"> </span><span class="nc">SubNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;sub_node&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sub_start_delay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">SUB_START_DELAY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_handler</span><span class="p">)</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello SUB&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">destroy_timer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_start_delay</span><span class="p">)</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;--Create subscriber--&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a>        <span class="n">qos_profile</span> <span class="o">=</span> <span class="n">QoSProfile</span><span class="p">(</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a>            <span class="n">reliability</span><span class="o">=</span><span class="n">ReliabilityPolicy</span><span class="o">.</span><span class="n">RELIABLE</span><span class="p">,</span>  <span class="c1"># or BEST_EFFORT</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a>            <span class="n">durability</span><span class="o">=</span><span class="n">DurabilityPolicy</span><span class="o">.</span><span class="n">TRANSIENT_LOCAL</span><span class="p">,</span>  <span class="c1"># or VOLATILE</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a>            <span class="n">history</span><span class="o">=</span><span class="n">HistoryPolicy</span><span class="o">.</span><span class="n">KEEP_LAST</span><span class="p">,</span>  <span class="c1"># or KEEP_ALL</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a>            <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Queue depth</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a>            <span class="n">liveliness</span><span class="o">=</span><span class="n">LivelinessPolicy</span><span class="o">.</span><span class="n">AUTOMATIC</span><span class="p">,</span>  <span class="c1"># or MANUAL_BY_TOPIC</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a>        <span class="p">)</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">TOPIC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span> <span class="n">qos_profile</span><span class="o">=</span><span class="n">qos_profile</span><span class="p">)</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a>
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a>
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="k">class</span><span class="w"> </span><span class="nc">PubNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;pub_node&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a>        <span class="n">qos_profile</span> <span class="o">=</span> <span class="n">QoSProfile</span><span class="p">(</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a>            <span class="n">reliability</span><span class="o">=</span><span class="n">ReliabilityPolicy</span><span class="o">.</span><span class="n">RELIABLE</span><span class="p">,</span>  <span class="c1"># or BEST_EFFORT</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45"></a>            <span class="n">durability</span><span class="o">=</span><span class="n">DurabilityPolicy</span><span class="o">.</span><span class="n">TRANSIENT_LOCAL</span><span class="p">,</span>  <span class="c1"># or VOLATILE</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a>            <span class="n">history</span><span class="o">=</span><span class="n">HistoryPolicy</span><span class="o">.</span><span class="n">KEEP_LAST</span><span class="p">,</span>  <span class="c1"># or KEEP_ALL</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a>            <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Queue depth</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a>            <span class="n">liveliness</span><span class="o">=</span><span class="n">LivelinessPolicy</span><span class="o">.</span><span class="n">AUTOMATIC</span><span class="p">,</span>  <span class="c1"># or MANUAL_BY_TOPIC</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a>        <span class="p">)</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">TOPIC</span><span class="p">,</span> <span class="n">qos_profile</span><span class="p">)</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a>        <span class="c1"># self.get_logger().info(f&quot;{self.pub.qos_profile}&quot;)</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">PUB_RATE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_handler</span><span class="p">)</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Hello PUB&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">timer_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a>        <span class="n">msg</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59"></a>        <span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;hello </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62"></a>
+<a id="__codelineno-5-63" name="__codelineno-5-63"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65"></a>    <span class="n">pub_node</span> <span class="o">=</span> <span class="n">PubNode</span><span class="p">()</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66"></a>    <span class="n">sub_node</span> <span class="o">=</span> <span class="n">SubNode</span><span class="p">()</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67"></a>    <span class="n">executer</span> <span class="o">=</span> <span class="n">MultiThreadedExecutor</span><span class="p">()</span>
+<a id="__codelineno-5-68" name="__codelineno-5-68"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">pub_node</span><span class="p">)</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">sub_node</span><span class="p">)</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70"></a>
+<a id="__codelineno-5-71" name="__codelineno-5-71"></a>    <span class="n">executer</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+<a id="__codelineno-5-72" name="__codelineno-5-72"></a>
+<a id="__codelineno-5-73" name="__codelineno-5-73"></a>
+<a id="__codelineno-5-74" name="__codelineno-5-74"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<a id="__codelineno-5-75" name="__codelineno-5-75"></a>
+<a id="__codelineno-5-76" name="__codelineno-5-76"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-5-77" name="__codelineno-5-77"></a>    <span class="n">main</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">sub.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>
-</code></pre></div></td></tr></table></div>
-
 </details>
 
-<p><img alt="alt text" src="images/queue_10_life_5.png" /></p>
-<h4 id="publisher-livespan">Publisher livespan</h4>
-<p><strong>Publisher QOS settings</strong></p>
-<ul>
-<li>Durability: <strong>TRANSIENT_LOCAL</strong> stores past messages for late joiners</li>
-<li>livespan: 10sec pub side settings</li>
-<li>depth: 10</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span>
-<span class="normal"><a href="#__codelineno-2-7">7</a></span>
-<span class="normal"><a href="#__codelineno-2-8">8</a></span>
-<span class="normal"><a href="#__codelineno-2-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">qos_profile</span> <span class="o">=</span> <span class="n">QoSProfile</span><span class="p">(</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>    <span class="n">reliability</span><span class="o">=</span><span class="n">ReliabilityPolicy</span><span class="o">.</span><span class="n">RELIABLE</span><span class="p">,</span>  <span class="c1"># or BEST_EFFORT</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="n">durability</span><span class="o">=</span><span class="n">DurabilityPolicy</span><span class="o">.</span><span class="n">TRANSIENT_LOCAL</span><span class="p">,</span>  <span class="c1"># or VOLATILE</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="n">history</span><span class="o">=</span><span class="n">HistoryPolicy</span><span class="o">.</span><span class="n">KEEP_LAST</span><span class="p">,</span>  <span class="c1"># or KEEP_ALL</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="n">depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># Queue depth</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="n">liveliness</span><span class="o">=</span><span class="n">LivelinessPolicy</span><span class="o">.</span><span class="n">AUTOMATIC</span><span class="p">,</span>  <span class="c1"># or MANUAL_BY_TOPIC</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="p">)</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="hll"><span class="n">qos_profile</span><span class="o">.</span><span class="n">lifespan</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">nanoseconds</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Message lifespan</span>
-</span><a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="n">qos_profile</span><span class="o">.</span><span class="n">deadline</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nanoseconds</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Deadline duration</span>
+<p>From the result we saw that we got five (0-4) message from publisher history in the same time slot almost</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">result</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104307</span>.703495396<span class="o">]</span><span class="w"> </span><span class="o">[</span>pub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>PUB
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104307</span>.704634957<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>SUB
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104312</span>.706942284<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>--Create<span class="w"> </span>subscriber--
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104312</span>.709927579<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">0</span>
+</span><a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104312</span>.712135500<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">1</span>
+</span><a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104312</span>.714533710<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">2</span>
+</span><a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104312</span>.717377731<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">3</span>
+</span><a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104312</span>.719738278<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">4</span>
+</span><a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104313</span>.701471401<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">5</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104314</span>.701632809<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">6</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104315</span>.699930835<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">7</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104316</span>.701096571<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">8</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104317</span>.701580589<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">9</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742104318</span>.701305347<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">10</span>
 </code></pre></div></td></tr></table></div>
-<p><img alt="alt text" src="images/queue_10_life_10.png" /></p>
+<hr />
+<h4 id="publisher-livespan">Publisher livespan</h4>
+<p>controls how long a message remains valid in the publisher’s queue before it is discarded.</p>
+<p>lifespan = {0,0} default message never expire store until queue is exceeded</p>
+<h2 id="todo-finish-example-with-035-durations">TODO: finish example with 0,3,5 durations</h2>
+<p><strong>Publisher QOS settings</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">duration infinity</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119324</span>.479144324<span class="o">]</span><span class="w"> </span><span class="o">[</span>pub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>PUB
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119324</span>.480279021<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Hello<span class="w"> </span>SUB
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119329</span>.482579604<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>--Create<span class="w"> </span>subscriber--
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119329</span>.487386342<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">0</span>
+</span><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119329</span>.490330176<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">1</span>
+</span><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119329</span>.493336125<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">2</span>
+</span><a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119329</span>.494006959<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">3</span>
+</span><a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="hll"><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119329</span>.494655886<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">4</span>
+</span><a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119330</span>.477924823<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">5</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119331</span>.477839792<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">6</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119332</span>.478648855<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">7</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119333</span>.479034641<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">8</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119334</span>.479176439<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">9</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1742119335</span>.479199605<span class="o">]</span><span class="w"> </span><span class="o">[</span>sub_node<span class="o">]</span>:<span class="w"> </span>Received:<span class="w"> </span>hello<span class="w"> </span><span class="m">10</span>
+</code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="todo-finish-qos-with-deadline-register-to-subscriptioneventcallbacks">TODO: finish qos with deadline register to SubscriptionEventCallbacks</h2>
 <details><summary>QoS and deadline event</summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>
 </code></pre></div></td></tr></table></div>
 </details>
 
