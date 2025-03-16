@@ -28,9 +28,13 @@
         </a>
     </div>
     <div class="grid-item">
-        <p>TBD</p>
+        <a href="tiny_ml">
+            <img src="images/tiny_ml.png"  width="150" height="150">
+            <p>TinyML</p>
+        </a>
     </div>
     <div class="grid-item">
         <p>TBD</p>
     </div>
 </div>
+![alt text](image.png)

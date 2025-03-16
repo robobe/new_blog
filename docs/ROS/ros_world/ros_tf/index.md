@@ -191,6 +191,11 @@ Publish `tf` in 10 HZ, (change robot orientation)
 ---
 
 ## TF Performance
+- Qos
+- Buffer duration (size)
+
+### QOS
+Change listener QOS
 
 ### Listener QoS
 ```bash title="default tf QOS"
