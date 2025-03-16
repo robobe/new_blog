@@ -160,12 +160,22 @@ From the result we saw that we got five (0-4) message from publisher history in 
 
 ---
 
-#### Publisher livespan
-controls how long a message remains valid in the publisher’s queue before it is discarded.
+### Publisher livespan
+Controls how long a message remains valid in the publisher’s queue before it is discarded.
 
 lifespan = {0,0} default message never expire store until queue is exceeded
 
-## TODO: finish example with 0,3,5 durations
+<details>
+    <summary>demo code</summary>
+
+!!! note "duration"
+     Change `DURATION` at line 20 to simulate different duration behavior
+
+```python
+--8<-- "docs/ROS/ros_basic/ros_qos/code/pub_qos_queue_and_lifespan.py"
+```
+</details>
+
 
 **Publisher QOS settings**
 
@@ -186,12 +196,112 @@ lifespan = {0,0} default message never expire store until queue is exceeded
 [INFO] [1742119335.479199605] [sub_node]: Received: hello 10
 ```
 
+```bash title="duration 3 sec" linenums="1" hl_lines="4-6"
+[INFO] [1742148850.009442835] [pub_node]: Hello PUB
+[INFO] [1742148850.010507589] [sub_node]: Hello SUB
+[INFO] [1742148855.013188581] [sub_node]: --Create subscriber--
+[INFO] [1742148855.017414763] [sub_node]: Received: hello 2
+[INFO] [1742148855.019736517] [sub_node]: Received: hello 3
+[INFO] [1742148855.022239024] [sub_node]: Received: hello 4
+[INFO] [1742148856.008740366] [sub_node]: Received: hello 5
+[INFO] [1742148857.008514352] [sub_node]: Received: hello 6
+[INFO] [1742148858.008535595] [sub_node]: Received: hello 7
+[INFO] [1742148859.008868188] [sub_node]: Received: hello 8
+[INFO] [1742148860.008177597] [sub_node]: Received: hello 9
+[INFO] [1742148861.008890986] [sub_node]: Received: hello 10
+```
+
+The subscriber start 5 sec after the publisher because the publisher message duration is 5 sec  
+The subscriber got all the message history
+
+```bash title="duration 5 sec" linenums="1" hl_lines="4-8"
+[INFO] [1742148971.724443752] [pub_node]: Hello PUB
+[INFO] [1742148971.725656236] [sub_node]: Hello SUB
+[INFO] [1742148976.726798282] [sub_node]: --Create subscriber--
+[INFO] [1742148976.729821746] [sub_node]: Received: hello 0
+[INFO] [1742148976.731418745] [sub_node]: Received: hello 1
+[INFO] [1742148976.732847415] [sub_node]: Received: hello 2
+[INFO] [1742148976.734682250] [sub_node]: Received: hello 3
+[INFO] [1742148976.736104530] [sub_node]: Received: hello 4
+[INFO] [1742148977.722802777] [sub_node]: Received: hello 5
+[INFO] [1742148978.722967570] [sub_node]: Received: hello 6
+[INFO] [1742148979.722813556] [sub_node]: Received: hello 7
+[INFO] [1742148980.723007282] [sub_node]: Received: hello 8
+[INFO] [1742148981.720740806] [sub_node]: Received: hello 9
+[INFO] [1742148982.722850261] [sub_node]: Received: hello 10
+```
+
 ---
 
-## TODO: finish qos with deadline register to SubscriptionEventCallbacks
+## Deadline
 
 <details><summary>QoS and deadline event</summary>
-```
---8<-- "docs/ROS/ros_world/qos/sub_qos_deadline.py"
+```python title="result" linenums="1" hl_lines="30-31 36-37 52"
+--8<-- "docs/ROS/ros_basic/ros_qos/code/qos_deadline.py"
 ```
 </details>
+
+The demo code stop to publish after 5 sec, the subscriber trigger the deadline_missed_callback callback
+
+!!! note 
+
+     The publisher rate and deadline both are 1 hz,
+     the alert in line 6,8 occurs because the narrower delta
+
+
+```bash title="deadline" linenums="1" hl_lines="12-17"
+[INFO] [1742149968.340318813] [pub_node]: Hello PUB
+[INFO] [1742149968.341837588] [sub_node]: --Create subscriber--
+[INFO] [1742149968.342220114] [sub_node]: Hello SUB
+[INFO] [1742149969.337432339] [sub_node]: Received: hello 0
+[INFO] [1742149970.335727680] [sub_node]: Received: hello 1
+[WARN] [1742149971.337700875] [sub_node]: Deadline missed !!
+[INFO] [1742149971.339943550] [sub_node]: Received: hello 2
+[WARN] [1742149972.338132778] [sub_node]: Deadline missed !!
+[INFO] [1742149972.340649610] [sub_node]: Received: hello 3
+[INFO] [1742149973.337361905] [sub_node]: Received: hello 4
+[INFO] [1742149974.337383148] [sub_node]: Received: hello 5
+[WARN] [1742149975.337733058] [sub_node]: Deadline missed !!
+[WARN] [1742149976.337944293] [sub_node]: Deadline missed !!
+[WARN] [1742149977.337851314] [sub_node]: Deadline missed !!
+[WARN] [1742149978.337756163] [sub_node]: Deadline missed !!
+[WARN] [1742149979.337504946] [sub_node]: Deadline missed !!
+[WARN] [1742149980.336326724] [sub_node]: Deadline missed !!
+```
+
+---
+
+## Liveliness
+Use liveliness if you need to detect dead or disconnected publishers (e.g., checking if a node is still online).
+
+!!! note "deadline"
+    Check that message are received on time
+     
+<details>
+    <summary>publisher</summary>
+
+```python
+--8<-- "docs/ROS/ros_basic/ros_qos/code/livelines_publisher.py"
+```
+</details>
+
+<details>
+    <summary>subscriber</summary>
+
+```python
+--8<-- "docs/ROS/ros_basic/ros_qos/code/livelines_subscriber.py"
+```
+</details>
+
+- Run the subscriber
+- Start/Stop the publisher trigger the event
+
+```bash title="liveliness" linenums="1" hl_lines="1 7"
+[INFO] [1742157714.393511232] [liveliness_subscriber]: Liveliness changed. Active publishers: 1
+[INFO] [1742157715.395080289] [liveliness_subscriber]: Received: Hello 0
+[INFO] [1742157716.395343254] [liveliness_subscriber]: Received: Hello 1
+[INFO] [1742157717.395050895] [liveliness_subscriber]: Received: Hello 2
+[INFO] [1742157718.395029525] [liveliness_subscriber]: Received: Hello 3
+[INFO] [1742157719.394828524] [liveliness_subscriber]: Received: Hello 4
+[WARN] [1742157720.395358162] [liveliness_subscriber]: Liveliness lost! Publisher is inactive.
+```
