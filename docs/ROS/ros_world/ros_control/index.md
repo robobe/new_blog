@@ -25,3 +25,32 @@ tags:
             </a>
     </div>
 </div>
+
+## Install
+
+```bash
+sudo apt install ros-humble-ros2-control
+sudo apt install ros-humble-ros2-controllers
+sudo apt install ros-humble-control-msgs
+# gazebo classic 
+sudo apt install ros-humble-gazebo-ros2-control
+```
+
+
+![alt text](images/ros2_control.png)
+
+## Controller Manager
+
+## Resource Manager
+
+
+
+---
+
+## To Read and Watch
+- [The construct - ROS2 Control Framework ](https://app.theconstruct.ai/Course/102)
+- [You can use ANY hardware with ros2_control ](https://youtu.be/J02jEKawE5U)
+- [ros2_control Concepts & Simulation](https://articulatedrobotics.xyz/tutorials/mobile-robot/applications/ros2_control-concepts/)
+- [ros2_control_custom_hardware_interface](https://github.com/masum919/ros2_control_custom_hardware_interface/tree/main)
+- [Using I2C to control PWM | ROS Control with the JetBot Part 1 ](https://youtu.be/MdHeETllDN8)
+    - [ROS2 Control with the JetBot Part 1: Using I2C to control PWM](https://mikelikesrobots.github.io/blog/jetbot-motors-pt1)

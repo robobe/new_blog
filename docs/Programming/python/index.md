@@ -13,8 +13,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href="dev_container">
-        <p>TBD</p>
+    <a href="python_project">
+        <img src="images/python_project_to_debian.png" width="150" height="150">
+        <p>python_project</p>
         </a>
     </div>
     <div class="grid-item">

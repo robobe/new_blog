@@ -37,4 +37,3 @@
         <p>TBD</p>
     </div>
 </div>
-![alt text](image.png)

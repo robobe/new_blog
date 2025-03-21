@@ -6,6 +6,22 @@ tags:
     - ubuntu
 ---
 
+<div class="grid-container">
+        <div class="grid-item">
+        <a href="debconf">
+            <img src="images/debian_package.png" width="150" height="150">
+            <p>debconf</p>
+             </a>
+        </div>
+    <div class="grid-item">
+        <p>TBD</p>
+    </div>
+    <div class="grid-item">
+        <p>TBD</p>
+    </div>
+
+</div>
+
 # Debian package
 
 !!! tip "dpkg-deb"

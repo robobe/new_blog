@@ -8,8 +8,10 @@
             </a>
         </div>
         <div class="grid-item">
-            <img src="images/cpp.png"   width="150" height="150">
-            <p>C/CPP</p>
+            <a href="ros_cpp">
+                <img src="images/cpp.png"   width="150" height="150">
+                <p>C/CPP</p>
+            </a>
         </div>
     <div class="grid-item">
     <a href="ros_eco">
