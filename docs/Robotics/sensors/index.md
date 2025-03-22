@@ -31,3 +31,4 @@
 ## Posts
 
 - [Encoder](encoder/index.md)
+- [GPIO - MCP23017](gpio/mcp23017_gpio_i2c_extension_interface.md)

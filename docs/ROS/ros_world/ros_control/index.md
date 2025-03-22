@@ -36,6 +36,10 @@ sudo apt install ros-humble-control-msgs
 sudo apt install ros-humble-gazebo-ros2-control
 ```
 
+ROS2_control abstract controller from hardware interfaces
+Hardware interface expose hardware functionality in a standard way:
+- state interface (read-only) feedback from hardware
+- command interface (Read/Write) : command to the hardware
 
 ![alt text](images/ros2_control.png)
 
@@ -43,11 +47,37 @@ sudo apt install ros-humble-gazebo-ros2-control
 
 ## Resource Manager
 
+## Hardware interface
 
+
+### Lifecycle State
+
+
+
+```mermaid
+stateDiagram-v2
+    [*] --> Unconfigured: on_init
+    Unconfigured --> Inactive: on_configure
+    Inactive --> Active: on_activate()
+    Active --> Inactive: on_deactivate()
+    Inactive --> Unconfigured: on_cleanup()
+    Unconfigured --> [*]: on_shutdown()
+
+    Active --> Active: read()      write()
+
+
+```
+**on_init**: read parameters
+**on_configure**: establish comms
+**on_activate**: engage actuators
+**on_deactivate**: disengage actuators
+**on_cleanup**: disconnect comms
+**on_shutdown**: graceful shutdown
 
 ---
 
 ## To Read and Watch
+- [must watch](https://youtu.be/J02jEKawE5U)
 - [The construct - ROS2 Control Framework ](https://app.theconstruct.ai/Course/102)
 - [You can use ANY hardware with ros2_control ](https://youtu.be/J02jEKawE5U)
 - [ros2_control Concepts & Simulation](https://articulatedrobotics.xyz/tutorials/mobile-robot/applications/ros2_control-concepts/)
