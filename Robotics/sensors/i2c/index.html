@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Embedded/Jetson/jetpack/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/sensors/i2c/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Nvidia jetson Jetpack - Robots Inside</title>
+        <title>Index - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#nvidia-jetson-jetpack" class="md-skip">
+        <a href="#i2c-tools" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Nvidia jetson Jetpack
+              Index
             
           </span>
         </div>
@@ -247,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Robotics/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -281,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../Embedded/" class="md-tabs__link">
         
   
     
@@ -442,7 +442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Robotics/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -484,7 +484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../Embedded/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -557,8 +557,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -567,18 +565,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sdk-manager" class="md-nav__link">
+  <a href="#i2c-tools" class="md-nav__link">
     <span class="md-ellipsis">
-      SDK Manager
+      i2c-tools
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="i2c-tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect-i2c-sensor-at-address-0x18" class="md-nav__link">
+    <span class="md-ellipsis">
+      connect i2c sensor at address 0x18
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#mapping" class="md-nav__link">
+  <a href="#udev-rule" class="md-nav__link">
     <span class="md-ellipsis">
-      Mapping
+      udev rule
     </span>
   </a>
   
@@ -603,19 +616,19 @@
       
       
       
-        <span class="md-tag">jetpack</span>
+        <span class="md-tag">cp2112</span>
       
     
       
       
       
-        <span class="md-tag">jetson</span>
+        <span class="md-tag">i2c</span>
       
     
       
       
       
-        <span class="md-tag">nvidia</span>
+        <span class="md-tag">usb</span>
       
     
   </nav>
@@ -625,29 +638,100 @@
   
 
 
-<h1 id="nvidia-jetson-jetpack">Nvidia jetson Jetpack</h1>
-<h2 id="sdk-manager">SDK Manager</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># TODO: check when and way to command relevant</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1"># I install from sdk and missing opencv and nvcc, the command fix it</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>nvidia-jetpack
+  <h1>Index</h1>
+
+<p>The CP2112 USB-to-I2C Bridge is a device from Silicon Labs designed to facilitate communication between a USB host (like a PC) and I2C devices</p>
+<p><img alt="" src="images/cp2112.png" /></p>
+<h2 id="i2c-tools">i2c-tools</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo apt install i2c-tools
 </code></pre></div></td></tr></table></div>
-<h2 id="mapping">Mapping</h2>
-<p>Mapping between <strong>Jetpack</strong> version and <strong>Jetson Linux</strong></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
-<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>cat<span class="w"> </span>/etc/nv_tegra_release
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>i2cdetect<span class="w"> </span>-l
 <a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="c1">#</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1"># R36 (release), REVISION: 4.3,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>...
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>i2c-16<span class="w">  </span>unknown<span class="w">         </span>CP2112<span class="w"> </span>SMBus<span class="w"> </span>Bridge<span class="w"> </span>on<span class="w"> </span>hidraw5<span class="w">          </span>N/A
 </code></pre></div></td></tr></table></div>
-<p>it's map to Jetson linux 36.4.3</p>
-<div class="admonition note">
-<p class="admonition-title">Jetson linux Downloads</p>
-<p>The version map to link for download roosfs and toolchain</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>https://developer.nvidia.com/embedded/jetson-linux-r3643
+<h3 id="connect-i2c-sensor-at-address-0x18">connect i2c sensor at address 0x18</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>sudo<span class="w"> </span>i2cdetect<span class="w"> </span>-y<span class="w"> </span>-r<span class="w"> </span><span class="m">16</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="o">[</span>sudo<span class="o">]</span><span class="w"> </span>password<span class="w"> </span><span class="k">for</span><span class="w"> </span>user:<span class="w"> </span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">     </span><span class="m">0</span><span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">2</span><span class="w">  </span><span class="m">3</span><span class="w">  </span><span class="m">4</span><span class="w">  </span><span class="m">5</span><span class="w">  </span><span class="m">6</span><span class="w">  </span><span class="m">7</span><span class="w">  </span><span class="m">8</span><span class="w">  </span><span class="m">9</span><span class="w">  </span>a<span class="w">  </span>b<span class="w">  </span>c<span class="w">  </span>d<span class="w">  </span>e<span class="w">  </span>f
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="m">00</span>:<span class="w">                         </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="m">10</span>:<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span><span class="m">18</span><span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="m">20</span>:<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="m">30</span>:<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="m">40</span>:<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="m">50</span>:<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="m">60</span>:<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="m">70</span>:<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w"> </span>--<span class="w">                         </span>
 </code></pre></div></td></tr></table></div>
-</div>
+<h2 id="udev-rule">udev rule</h2>
+<p>Add udev rule to add permission <code>rw</code> for all</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ll<span class="w"> </span>/dev/i2c-16
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1">#</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>crw-rw----<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>i2c<span class="w"> </span><span class="m">89</span>,<span class="w"> </span><span class="m">16</span><span class="w"> </span>Nov<span class="w">  </span><span class="m">1</span><span class="w"> </span><span class="m">07</span>:10<span class="w"> </span>/dev/i2c-16
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-a<span class="w"> </span>-p<span class="w">  </span><span class="k">$(</span>udevadm<span class="w"> </span>info<span class="w"> </span>-q<span class="w"> </span>path<span class="w"> </span>-n<span class="w"> </span>/dev/i2c-16<span class="k">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="c1">#</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span>looking<span class="w"> </span>at<span class="w"> </span>device<span class="w"> </span><span class="s1">&#39;/devices/pci0000:00/0000:00:14.0/usb3/3-4/3-4.2/3-4.2.4/3-4.2.4:1.0/0003:10C4:EA90.0011/i2c-16/i2c-dev/i2c-16&#39;</span>:
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">    </span><span class="nv">KERNEL</span><span class="o">==</span><span class="s2">&quot;i2c-16&quot;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">    </span><span class="nv">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;i2c-dev&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">    </span><span class="nv">DRIVER</span><span class="o">==</span><span class="s2">&quot;&quot;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">    </span>ATTR<span class="o">{</span>name<span class="o">}==</span><span class="s2">&quot;CP2112 SMBus Bridge on hidraw5&quot;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">    </span>ATTR<span class="o">{</span>power/async<span class="o">}==</span><span class="s2">&quot;disabled&quot;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">    </span>ATTR<span class="o">{</span>power/control<span class="o">}==</span><span class="s2">&quot;auto&quot;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">    </span>ATTR<span class="o">{</span>power/runtime_active_kids<span class="o">}==</span><span class="s2">&quot;0&quot;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">    </span>ATTR<span class="o">{</span>power/runtime_active_time<span class="o">}==</span><span class="s2">&quot;0&quot;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">    </span>ATTR<span class="o">{</span>power/runtime_enabled<span class="o">}==</span><span class="s2">&quot;disabled&quot;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">    </span>ATTR<span class="o">{</span>power/runtime_status<span class="o">}==</span><span class="s2">&quot;unsupported&quot;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">    </span>ATTR<span class="o">{</span>power/runtime_suspended_time<span class="o">}==</span><span class="s2">&quot;0&quot;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">    </span>ATTR<span class="o">{</span>power/runtime_usage<span class="o">}==</span><span class="s2">&quot;0&quot;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">udev rule</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;SUBSYSTEMS==&quot;i2c-dev&quot;, ATTRS{name}==&quot;CP2112 SMBus Bridge on hidraw5&quot;, MODE=&quot;0666&quot;&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/udev/rules.d/90-i2c-usb.rules
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">check rule</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span>
+<span class="normal"><a href="#__codelineno-6-6">6</a></span>
+<span class="normal"><a href="#__codelineno-6-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="c1"># plug out/ in</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="c1"># check device permission</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>ll<span class="w"> </span>/dev/i2c-16
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>crw-rw-rw-<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>i2c<span class="w"> </span><span class="m">89</span>,<span class="w"> </span><span class="m">16</span><span class="w"> </span>Nov<span class="w">  </span><span class="m">1</span><span class="w"> </span><span class="m">08</span>:05<span class="w"> </span>/dev/i2c-16
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="c1">#know we can run i2cdetect without sudo</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>i2cdetect<span class="w"> </span>-y<span class="w"> </span>-r<span class="w"> </span><span class="m">16</span>
+</code></pre></div></td></tr></table></div>
 
 
 

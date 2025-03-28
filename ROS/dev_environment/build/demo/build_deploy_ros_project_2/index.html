@@ -560,6 +560,47 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#build-offline-without-internet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build offline without internet
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build offline without internet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    <span class="md-ellipsis">
+      files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-offline-rosdep-and-bloom" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Offline rosdep and bloom
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -600,10 +641,48 @@
 
 
 <h1 id="ros2-project-from-development-to-deployment-part-2-build-debian-packages">ROS2 project from development to deployment, Part 2: Build Debian packages</h1>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>bloom-generate<span class="w"> </span>rosdebian
+<p>Run the command From package folder</p>
+<div class="admonition tip">
+<p class="admonition-title">deb location</p>
+<p>The deb file locate in parent folder: <code>src</code> folder</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>bloom-generate<span class="w"> </span>rosdebian<span class="w"> </span>--ros-distro<span class="w"> </span>humble
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build deb</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>fakeroot<span class="w"> </span>debian/rules<span class="w"> </span>binary
 </code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="build-offline-without-internet">Build offline without internet</h2>
+<h3 id="files">files</h3>
+<p>rosdep files index location at <code>/etc/ros/rosdep/sources.list.d</code> the default file <code>20-default.list</code> can be download from github <code>rosdistro/rosdep/source.list.d/20-default.list</code></p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base.yaml</td>
+<td>system dependencies that are not ROS specific like boost, opencv</td>
+</tr>
+<tr>
+<td>python.yaml</td>
+<td>map python package name</td>
+</tr>
+</tbody>
+</table>
+<p>bloom try to download <code>index-v4.yaml</code>  file from github rosdistro it can be override by setting the <code>ROSDISTRO_INDEX_URL</code> environment variable, the default <code>index-v4.yaml</code> map each ros distro to yaml file that also locate in rosdistro github. </p>
+<h3 id="build-offline-rosdep-and-bloom">Build Offline rosdep and bloom</h3>
+<ul>
+<li>Download base.yaml, python.yaml, index-v4.yaml and the request distribution.yaml file in our case <code>humble</code> to local folder</li>
+<li>update <code>20-default.list</code> file entry to point to the download file (replace http:// with file://)</li>
+<li>Add project_rosdep.yaml file that map the workspace packages, it can be locate in the project folder or in other central location with other projects.</li>
+<li>update this location in <code>/etc/ros/rosdep/sources.list.d</code> as <code>30-custom_project.list</code></li>
+<li>set <code>ROSDISTRO_INDEX_URL</code> to index-v4.yaml local location</li>
+<li>Run <code>rosdep update --rosdistro humble</code></li>
+<li>Run <code>bloom-generate rosdebian --ros-distro humble</code> to build</li>
+</ul>
 
 
 
