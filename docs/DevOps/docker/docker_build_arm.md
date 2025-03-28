@@ -36,7 +36,8 @@ The purpose of this command is to enable the host system to run binaries compile
 
 ## Usage
 ```bash title="test"
-docker run --platform=linux/arm64/v8 --rm arm64v8/ubuntu uname -m # Testing the emulation environment
+
+docker run --platform=linux/arm64/v8 --rm ubuntu:22.04 uname -m
 ```
 
 

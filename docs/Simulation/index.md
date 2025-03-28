@@ -12,6 +12,9 @@
             <p>Gazebo</p></a>
     </div>
     <div class="grid-item">
-        <p>Block 3 Description</p>
+        <a href="nvidia_issac">
+            <img src="images/nvidia_isaac.png"  width="150" height="150">
+            <p>NVidia Isaac</p></a>
     </div>
    </div>
+   ![alt text](.png)

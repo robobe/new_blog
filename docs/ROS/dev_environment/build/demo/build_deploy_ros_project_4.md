@@ -10,7 +10,7 @@ tags:
 - Build docker image for ARM 
 - Using github action to run build process on the docker
     - using `act` to run locally
-  - 
+  
 ## Build docker image
 Run ARM docker architecture on x64 machine [install](docs/ROS/dev_environment/build/ros_build_using_docker_cross_compile.md)
 
@@ -24,9 +24,11 @@ Run ARM docker architecture on x64 machine [install](docs/ROS/dev_environment/bu
 
 
 ```
-docker build -t ros2_cross_compile:arm64v8 -f Docker/Dockerfile.arm .
+docker build --platform=linux/arm64/v8 -t ros2_cross_compile:arm64v8 -f Docker/Dockerfile.arm .
 ```
 
+!!! note "linux/arm64/v8"
+    `linux/arm64/v8` is an Alias for `linux/arm64`
 ---
 
 ## Using github actions

@@ -104,6 +104,40 @@ configured as outputs.
      
 ---
 
+## Permission
+
+Check file owner and add you'r user to file group
+
+```bash
+sudo usermod -aG i2c $USER
+```
+
+---
+
+## CPP Demo
+
+Toggle PA0 on/off
+
+```cpp
+--8<-- "docs/Robotics/sensors/gpio/code/hello_mcp23017_i2c_gpio.cpp"
+```
+
+---
+
+## Python Demo
+
+```bash
+pip3 install smbus2
+```
+
+Toggle PA0 on/off
+
+```python
+--8<-- "docs/Robotics/sensors/gpio/code/hello_mcp23017_i2c_gpio.py"
+```
+
+---
+
 ## Reference
 
 - [Datasheet](https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf)

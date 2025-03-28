@@ -7,7 +7,14 @@ tags:
 
 # Nvidia jetson Jetpack
 
+## SDK Manager
 
+
+```bash
+# TODO: check when and way to command relevant
+# I install from sdk and missing opencv and nvcc, the command fix it
+sudo apt install nvidia-jetpack
+```
 
 ## Mapping 
 Mapping between **Jetpack** version and **Jetson Linux**
