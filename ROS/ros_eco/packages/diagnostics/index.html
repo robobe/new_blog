@@ -166,7 +166,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/robobe/blog" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/robobe" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -376,7 +376,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/robobe/blog" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/robobe" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -605,18 +605,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#diagnostictask" class="md-nav__link">
+  <a href="#diagnostic_updater" class="md-nav__link">
     <span class="md-ellipsis">
-      DiagnosticTask
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#diagnostics_msg" class="md-nav__link">
-    <span class="md-ellipsis">
-      diagnostics_msg
+      diagnostic_updater
     </span>
   </a>
   
@@ -629,14 +620,47 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="diagnostic_aggregator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagnostictask" class="md-nav__link">
+    <span class="md-ellipsis">
+      DiagnosticTask
+    </span>
+  </a>
+  
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
+  <a href="#diagnostics_msg" class="md-nav__link">
+    <span class="md-ellipsis">
+      diagnostics_msg
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagnostic_aggregator_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      diagnostic_aggregator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#diagnostics-viewers" class="md-nav__link">
     <span class="md-ellipsis">
       diagnostics viewers
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -687,11 +711,13 @@
 <h1 id="ros-diagnostics">ROS diagnostics</h1>
 <p>ROS diagnostics gives you the ability to monitor your system. There are two components in its architecture:</p>
 <ul>
-<li><strong>updater</strong></li>
-<li><strong>aggregator</strong></li>
+<li><strong>diagnostic_updater</strong></li>
+<li><strong>diagnostic_aggregator</strong></li>
 </ul>
-<p>The <strong>updater</strong> publishes diagnostic status messages on the <code>/diagnostics</code> topic, and the <strong>aggregator</strong> listens to these statuses, aggregates them, and publishes the results on the <code>/diagnostics_agg</code> topic.</p>
-<p>A system can have multiple updaters. They are meant to communicate with devices such as motors, sensors, computers, batteries, etc, in order to retrieve and publish relevant status data. The information being published on the /diagnostics topic is flat  </p>
+<p>The <strong>diagnostic_updater</strong> publishes diagnostic status messages on the <code>/diagnostics</code> topic, and the <strong>aggregator</strong> listens to these statuses, aggregates them, and publishes the results on the <code>/diagnostics_agg</code> topic.</p>
+<h2 id="diagnostic_updater">diagnostic_updater</h2>
+<p>Provide an easy way to publish diagnostic information from node </p>
+<h2 id="diagnostic_aggregator">diagnostic_aggregator</h2>
 <p>The aggregator collects, categorizes, and groups the statuses from all the system components. You can take a look at what is being published on the /diagnostics and /diagnostics_agg topics with the rqt_runtime_monitor and rqt_robot_monitor tools</p>
 <h3 id="diagnostictask">DiagnosticTask</h3>
 <p>DiagnosticTask is an abstract base class for collecting diagnostic data. </p>
@@ -727,7 +753,7 @@
 <a id="__codelineno-0-8" name="__codelineno-0-8"></a>string hardware_id
 <a id="__codelineno-0-9" name="__codelineno-0-9"></a>diagnostic_msgs/msg/KeyValue[] values
 </code></pre></div></td></tr></table></div>
-<h3 id="diagnostic_aggregator">diagnostic_aggregator</h3>
+<h3 id="diagnostic_aggregator_1">diagnostic_aggregator</h3>
 <p>Aggregator is a node that subscribes to <code>/diagnostics</code>, processes it and republishes aggregated data on <code>/diagnostics_agg</code>.</p>
 <p>The aggregator creates a series of analyzers to handle incoming <code>DiagnosticStatus</code></p>
 <p><a href="https://docs.ros.org/en/humble/p/diagnostic_aggregator/generated/classdiagnostic__aggregator_1_1Aggregator.html#class-documentation">API</a></p>
