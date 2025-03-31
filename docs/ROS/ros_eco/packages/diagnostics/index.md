@@ -8,28 +8,37 @@ tags:
 
 ROS diagnostics gives you the ability to monitor your system. There are two components in its architecture:
 
-- **updater**
-- **aggregator**
+- **diagnostic_updater**
+- **diagnostic_aggregator**
   
-  The **updater** publishes diagnostic status messages on the `/diagnostics` topic, and the **aggregator** listens to these statuses, aggregates them, and publishes the results on the `/diagnostics_agg` topic.
+  The **diagnostic_updater** publishes diagnostic status messages on the `/diagnostics` topic, and the **aggregator** listens to these statuses, aggregates them, and publishes the results on the `/diagnostics_agg` topic.
 
-A system can have multiple updaters. They are meant to communicate with devices such as motors, sensors, computers, batteries, etc, in order to retrieve and publish relevant status data. The information being published on the /diagnostics topic is flat  
+## diagnostic_updater
+Provide an easy way to publish diagnostic information from node 
 
+## diagnostic_aggregator
 The aggregator collects, categorizes, and groups the statuses from all the system components. You can take a look at what is being published on the /diagnostics and /diagnostics_agg topics with the rqt_runtime_monitor and rqt_robot_monitor tools
 
+<div class="grid-container">
+     <div class="grid-item">
+            <a href="diagnostic_tasks">
+            <img src="images/diagnostic_task.png"  width="150" height="150">
+            <p>Diagnostic Tasks</p></a>
+        </div>
+    <div class="grid-item">
+       <a href="diagnostic_aggregator">
+            <img src="images/xxx.png"  width="150" height="150">
+            <p>Diagnostic aggregator</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="diagnostic_monitor">
+            <img src="images/xxx.png"  width="300" height="300">
+            <p>Diagnostic monitor</p></a>
+    </div>
+   </div>
 
-### DiagnosticTask
-DiagnosticTask is an abstract base class for collecting diagnostic data. 
 
-A DiagnosticTask has a name, and a function that is called to create a DiagnosticStatusWrapper. 
 
-DiagnosticsTask subclass by
-
-- CompositeDiagnosticTask
-- FrequencyStatus
-- GenericFunctionDiagnosticTask
-- Heartbeat
-- TimeStampStatus
 
 ### diagnostics_msg
 
@@ -59,11 +68,6 @@ The aggregator creates a series of analyzers to handle incoming `DiagnosticStatu
 ![](images/schema.png)
 
 
-### diagnostics viewers
-```bash title="install"
-sudo apt install ros-humble-rqt-robot-monitor
-sudo apt install ros-humble-rqt-runtime-monitor
-```
 
 ---
 

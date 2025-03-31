@@ -13,7 +13,7 @@
     </div>
     <div class="grid-item">
         <a href="Simulation">
-        <img src="images/gazebo.png"  width="150" height="150">
+        <img src="images/simulation.png"  width="150" height="150">
         <p>Simulation</p></a>
     </div>
     <div class="grid-item">
