@@ -28,3 +28,4 @@ tags:
 ## Posts
 
 - [debootstrap - create custom rootfs](devops_debootstrap.md)
+- [gpg](gpg/index.md)

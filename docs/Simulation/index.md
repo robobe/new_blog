@@ -13,8 +13,7 @@
     </div>
     <div class="grid-item">
         <a href="nvidia_issac">
-            <img src="images/nvidia_isaac.png"  width="150" height="150">
+            <img src="images/nvidia_isaac.png"  width="300" height="300">
             <p>NVidia Isaac</p></a>
     </div>
    </div>
-   ![alt text](.png)

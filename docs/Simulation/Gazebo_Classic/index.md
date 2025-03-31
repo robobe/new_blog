@@ -15,13 +15,13 @@ tags:
     <div class="grid-item">
     <a href="sensors">
         <img src="images/sensors.png" width="150" height="150">
-        <p>Sensors</p>
+        <p>Plugin and Sensors</p>
         </a>
     </div>
     <div class="grid-item">
-        <a href="docker_nvidia">
-        <img src="images/docker_nvidia.png" width="150" height="150">
-        <p>TBD</p>
+        <a href="custom_plugins">
+        <img src="images/custom_plugin.png" width="150" height="150">
+        <p>Custom plugin</p>
         </a>
     </div>
     

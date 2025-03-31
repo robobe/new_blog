@@ -11,7 +11,8 @@ Tmuxp is a session manager for tmux, allowing you to define tmux sessions using 
 
 ### install
 
-```
+```bash
+sudo apt install tmux
 pip install tmuxp
 ```
 
@@ -30,6 +31,15 @@ tmuxp load my_session.yaml
 
 # tmux
 
+## script
+Open screen with 4 panes
+
+```bash
+--8<-- "docs/DevOps/linux/code/tmux_layout.sh"
+```
+
+!!! note "don't forget to chmod +x"
+     
 ## Config
 
 <details><summary>tmux.conf</summary>

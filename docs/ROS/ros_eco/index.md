@@ -28,7 +28,7 @@ Ros packages and tools that are used in the ROS eco system.
    <div class="grid-item">
            <a href="urdf_xacro_gz_plugin">
                <img src="images/urdf_xacro.png"  width="150" height="150">
-               <p>URDF, XACRO and Gazebo plugins</p>
+               <p>URDF, XACRO and Gazebo</p>
                </a>
            </div>
     <div class="grid-item">
