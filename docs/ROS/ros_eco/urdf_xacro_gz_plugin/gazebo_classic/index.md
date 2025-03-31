@@ -11,4 +11,5 @@ tags:
 sudo apt install ros-humble-gazebo-ros-pkgs
 ```
 
-- [diff drive](diff_drive.md)
+- [Diff drive](diff_drive.md)
+- [Camera](camera.md)
