@@ -620,7 +620,16 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="diagnostic_aggregator">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      install
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="install">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -709,38 +718,59 @@
         </div>
     <div class="grid-item">
        <a href="diagnostic_aggregator">
-            <img src="images/xxx.png"  width="150" height="150">
+            <img src="images/diagnostic_aggregator.png"  width="150" height="150">
             <p>Diagnostic aggregator</p></a>
     </div>
     <div class="grid-item">
         <a href="diagnostic_monitor">
-            <img src="images/xxx.png"  width="150" height="150">
+            <img src="images/diagnostic_monitor_rqt.png"  width="150" height="150">
             <p>Diagnostic monitor</p></a>
     </div>
    </div>
 
+<h2 id="install">install</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span>ros-humble-diagnostic-updater<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span>ros-humble-diagnostic-aggregator<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span>ros-humble-diagnostic-msgs<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span>ros-humble-diagnostic-common-diagnostics
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="c1"># rqt</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-humble-rqt-robot-monitor
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-humble-rqt-runtime-monitor
+</code></pre></div></td></tr></table></div>
 <h3 id="diagnostics_msg">diagnostics_msg</h3>
 <ul>
 <li><a href="https://docs.ros2.org/foxy/api/diagnostic_msgs/msg/DiagnosticStatus.html">DiagnosticStatus.msg</a></li>
 <li><a href="https://docs.ros2.org/foxy/api/diagnostic_msgs/msg/DiagnosticArray.html">DiagnosticArray</a></li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span>
-<span class="normal"><a href="#__codelineno-0-6">6</a></span>
-<span class="normal"><a href="#__codelineno-0-7">7</a></span>
-<span class="normal"><a href="#__codelineno-0-8">8</a></span>
-<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>octet OK=0
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>octet WARN=1
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>octet ERROR=2
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>octet STALE=3
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>octet level
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>string name
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>string message
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>string hardware_id
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>diagnostic_msgs/msg/KeyValue[] values
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>octet OK=0
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>octet WARN=1
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>octet ERROR=2
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>octet STALE=3
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>octet level
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>string name
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>string message
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>string hardware_id
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>diagnostic_msgs/msg/KeyValue[] values
 </code></pre></div></td></tr></table></div>
 <h3 id="diagnostic_aggregator_1">diagnostic_aggregator</h3>
 <p>Aggregator is a node that subscribes to <code>/diagnostics</code>, processes it and republishes aggregated data on <code>/diagnostics_agg</code>.</p>
