@@ -4,6 +4,7 @@ tags:
     - docker
     - jetson
     - build
+    - arm
 ---
 
 # ROS2 humble docker for Jetson
@@ -13,20 +14,30 @@ tags:
 <details>
     <summary>Dockerfile</summary>
 
+Base on ubuntu 22.04 without any nvidia support
+
 ```dockerfile
---8<-- "docs/ROS/dev_environment/build/Dockerfile.jetson"
+--8<-- "docs/ROS/dev_environment/build/code/Dockerfile"
 ```
 </details>
 
+```bash title="build"
+docker buildx build --platform linux/arm64 -t humble/arm:build -f Dockerfile .
+```
+
 ### Usage
 
-```bash
+```bash title="check"
 docker run -it --rm \
+--platform linux/arm64 \
 --net host \
 --hostname ros \
 --user user \
-humble:ver1 /bin/bash
+humble/arm:build uname -a
 ```
+
+---
+
 
 # TODO
 - support cuda

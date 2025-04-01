@@ -7,6 +7,39 @@ tags:
 ---
 # VSCode settings and extension for ROS
 
+## VSCode extension
+
+| ext  | language / tool  |
+|---|---|
+| ms-python.python  | python  |
+| ms-vscode.cpptools  | cpp  |
+| twxs.cmake  | cmake  |
+| redhat.vscode-xml  | xml  |
+| redhat.vscode-yaml  | yaml  |
+| **TOOLS**  |   |
+| albert.tabout  | tab out  |
+| actboy168.tasks | tasks   |
+| streetsidesoftware.code-spell-checker  | speller  |
+|   |   |
+|   |   |
+
+
+```
+"ms-python.python",
+"ms-vscode.cpptools",
+"twxs.cmake",
+"redhat.vscode-xml",
+"redhat.vscode-yaml",
+"albert.tabout",
+"actboy168.tasks",
+"streetsidesoftware.code-spell-checker",
+"rioj7.command-variable",
+"mhutchie.git-graph",
+"dlech.chmod",
+"mkloubert.vscode-deploy-reloaded"
+```
+
+
 ## VSCode settings
 ### Python
 

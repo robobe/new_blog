@@ -40,3 +40,7 @@ diagnostic_aggregator:
 ### expected
 
 The expected parameter in the aggregator checks for the presence of specific name values inside the messages published to /diagnostics.
+
+!!! note "stale"
+    In diagnostic_aggregator, stale severity is the severity level assigned to a diagnostic status when a message is not received within the configured timeout. This helps in detecting missing diagnostics.
+     

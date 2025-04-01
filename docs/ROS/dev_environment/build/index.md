@@ -12,7 +12,6 @@ tags:
 
 
 
-- ~~ [Build ROS2 debian package using CPack](ros_build_using_cpack.md) ~~
 - [Build ARM ROS2 packages using docker](ros_build_using_docker_cross_compile.md)
 - [Build ROS2 humble docker for Jetson](ros_build_docker_jetson.md)
 

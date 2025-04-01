@@ -2,6 +2,7 @@
 tags:
     - linux
 ---
+# Linux 
 
 <div class="grid-container">
         <div class="grid-item">
@@ -11,9 +12,9 @@ tags:
              </a>
         </div>
     <div class="grid-item">
-        <a href="linux">
-        <img src="images/linux.png" width="150" height="150">
-        <p>Linux</p>
+        <a href="udev">
+        <img src="images/udev.png" width="150" height="150" style="margin: 25px;">
+        <p>Udev</p>
         </a>
     </div>
     <div class="grid-item">
@@ -24,7 +25,7 @@ tags:
     </div>
 
 </div>
-
+![alt text](image.png)
 
 - [tmux / tmuxp config and usage](linux_tmux_tmuxp.md)
 

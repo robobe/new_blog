@@ -12,9 +12,9 @@ Debconf is Debian’s configuration management system. It stores user inputs and
 
 ## Structure of the templates File
 
-A templates file consists of multiple template entries, each defining a specific question. Each entry follows this format:
+A `templates` file consists of multiple template entries, each defining a specific question. Each entry follows this format:
 
-```
+```init title="debian/templates"
 Template: mypackage/question_name
 Type: string
 Default: default_value

@@ -27,18 +27,30 @@ The aggregator collects, categorizes, and groups the statuses from all the syste
         </div>
     <div class="grid-item">
        <a href="diagnostic_aggregator">
-            <img src="images/xxx.png"  width="150" height="150">
+            <img src="images/diagnostic_aggregator.png"  width="150" height="150">
             <p>Diagnostic aggregator</p></a>
     </div>
     <div class="grid-item">
         <a href="diagnostic_monitor">
-            <img src="images/xxx.png"  width="300" height="300">
+            <img src="images/diagnostic_monitor_rqt.png"  width="150" height="150">
             <p>Diagnostic monitor</p></a>
     </div>
    </div>
 
+## install
 
+```bash
+sudo apt update
+sudo apt install -y \
+  ros-humble-diagnostic-updater \
+  ros-humble-diagnostic-aggregator \
+  ros-humble-diagnostic-msgs \
+  ros-humble-diagnostic-common-diagnostics
 
+# rqt
+sudo apt install ros-humble-rqt-robot-monitor
+sudo apt install ros-humble-rqt-runtime-monitor
+```
 
 ### diagnostics_msg
 

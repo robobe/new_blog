@@ -1,4 +1,4 @@
-FROM docker.io/arm64v8/ubuntu:22.04
+FROM ubuntu:22.04
 
 ARG VERSION=0.0.1
 
