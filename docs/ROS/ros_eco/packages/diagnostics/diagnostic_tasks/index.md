@@ -16,7 +16,7 @@ DiagnosticsTask subclass by
 - CompositeDiagnosticTask
 - FrequencyStatus
 - GenericFunctionDiagnosticTask
-- Heartbeat
+- [Heartbeat](#heartbeat)
 - TimeStampStatus
 
 

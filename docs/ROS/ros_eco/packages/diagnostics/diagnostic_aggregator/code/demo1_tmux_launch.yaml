@@ -1,0 +1,23 @@
+session_name: agg_hb
+windows:
+  - window_name: dia
+    layout: tiled
+    suppress_history: false
+    shell_command_before:
+      - cd /workspace
+      - source install/setup.bash
+    panes:
+      - shell_command: # node1
+          - printf '\033]2;hb\033\\'
+          - python3 /workspace/src/dia_demo/scripts/diagnostic_hb.py --ros-args -r __node:=node1
+      - shell_command: # node1
+          - printf '\033]2;hb\033\\'
+          - python3 /workspace/src/dia_demo/scripts/diagnostic_hb.py --ros-args -r __node:=node2
+      - shell_command: # dia_agg
+          - printf '\033]2;agg\033\\'
+          - ros2 run diagnostic_aggregator aggregator_node --ros-args --params-file /workspace/src/dia_demo/config/dia_agg.yaml
+      - shell_command: # monitor
+          - printf '\033]2;monitor\033\\'
+          - ros2 run rqt_robot_monitor rqt_robot_monitor
+
+
