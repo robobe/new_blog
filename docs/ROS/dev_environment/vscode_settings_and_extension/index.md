@@ -20,8 +20,10 @@ tags:
 | albert.tabout  | tab out  |
 | actboy168.tasks | tasks   |
 | streetsidesoftware.code-spell-checker  | speller  |
-|   |   |
-|   |   |
+| **git**  |   |
+| mhutchie.git-graph  | git graph  |
+| **OS**  |   |
+| dlech.chmod  | set executable bit  |
 
 
 ```
@@ -33,8 +35,8 @@ tags:
 "albert.tabout",
 "actboy168.tasks",
 "streetsidesoftware.code-spell-checker",
-"rioj7.command-variable",
 "mhutchie.git-graph",
+"rioj7.command-variable",
 "dlech.chmod",
 "mkloubert.vscode-deploy-reloaded"
 ```
