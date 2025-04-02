@@ -605,9 +605,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#write-rule" class="md-nav__link">
+  <a href="#udev-rule" class="md-nav__link">
     <span class="md-ellipsis">
-      write rule
+      udev Rule
     </span>
   </a>
   
@@ -624,9 +624,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#set-name" class="md-nav__link">
+  <a href="#set-symbolic-name" class="md-nav__link">
     <span class="md-ellipsis">
-      Set name
+      Set symbolic name
     </span>
   </a>
   
@@ -636,15 +636,6 @@
   <a href="#check" class="md-nav__link">
     <span class="md-ellipsis">
       check
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#set-permission" class="md-nav__link">
-    <span class="md-ellipsis">
-      Set permission
     </span>
   </a>
   
@@ -704,75 +695,95 @@
 
 <h1 id="custom-udev-rules">Custom udev rules</h1>
 <p><img alt="" src="../../../assets/images/under_construction.png" /></p>
-<h2 id="write-rule">write rule</h2>
+<p>udev (the device manager for the Linux kernel) uses rules to manage device events (e.g., when a USB is plugged in). Rules are typically stored in <code>/etc/udev/rules.d/</code> or <code>/lib/udev/rules.d/</code> as files with a <code>.rules</code> extension (e.g., 10-my-rule.rules). Lower-numbered files are processed first.</p>
+<h2 id="udev-rule">udev Rule</h2>
+<p>A rule consists of match keys (conditions) and assignment keys (actions), written in the format:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>KEY==&quot;value&quot;, ACTION=&quot;value&quot;
+</code></pre></div></td></tr></table></div>
 <ul>
-<li>place <code>rule</code> under <code>/etc/udev/rules.d/xx-my-udev.rule</code></li>
+<li>Match keys: <strong>Conditions</strong> to identify a device (e.g., SUBSYSTEM, ATTR).</li>
+<li>Assignment keys: <strong>Actions</strong> to take (e.g., NAME, RUN, SYMLINK).</li>
 </ul>
 <h2 id="demos">demos</h2>
-<h3 id="set-name">Set name</h3>
-<p>Set name / symbolic name every time my arduino mega connected</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">monitor</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>udevadm<span class="w"> </span>monitor<span class="w"> </span>--property<span class="w"> </span>--subsystem-match<span class="o">=</span>usb
+<h3 id="set-symbolic-name">Set symbolic name</h3>
+<p>Set symbolic name every time my arduino mega connected</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>udevadm<span class="w"> </span>info<span class="w"> </span>-a<span class="w"> </span>-p<span class="w"> </span>/sys/class/tty/ttyACM0
 </code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>udevadm</strong>: A utility for managing and querying udev, the Linux device manager.</li>
+<li><strong>info</strong>: A subcommand that provides information about a device.</li>
+<li><strong>-a</strong> : Walks up the device tree (from the specified device to its parents) and shows all attributes available for matching in udev rules.</li>
+<li><strong>-p</strong> : Specifies the sysfs path of the device to query <code>/sys/class/tty/ttyACM0</code>.</li>
+</ul>
 <details>
-    <summary>monitor result</summary>
+    <summary>result: Show only the part i use for the rule</summary>
 
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span>
-<span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span>
-<span class="normal"><a href="#__codelineno-1-13">13</a></span>
-<span class="normal"><a href="#__codelineno-1-14">14</a></span>
-<span class="normal"><a href="#__codelineno-1-15">15</a></span>
-<span class="normal"><a href="#__codelineno-1-16">16</a></span>
-<span class="normal"><a href="#__codelineno-1-17">17</a></span>
-<span class="normal"><a href="#__codelineno-1-18">18</a></span>
-<span class="normal"><a href="#__codelineno-1-19">19</a></span>
-<span class="normal"><a href="#__codelineno-1-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>...
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>UDEV  [73077.265181] add      /devices/pci0000:00/0000:00:14.0/usb3/3-4/3-4.1/3-4.1.5/3-4.1.5.4 (usb)
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>ACTION=add
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a>DEVPATH=/devices/pci0000:00/0000:00:14.0/usb3/3-4/3-4.1/3-4.1.5/3-4.1.5.4
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a>SUBSYSTEM=usb
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>DEVNAME=/dev/bus/usb/003/019
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a>DEVTYPE=usb_device
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a>PRODUCT=2341/10/1
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a>TYPE=2/0/0
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a>BUSNUM=003
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a>DEVNUM=019
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a>SEQNUM=6445
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a>USEC_INITIALIZED=73077264733
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a>ID_VENDOR=Arduino__www.arduino.cc_
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a>ID_VENDOR_ENC=Arduino\x20\x28www.arduino.cc\x29
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a>ID_VENDOR_ID=2341
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a>ID_MODEL=Arduino_Mega_2560
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a>...
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>looking at parent device &#39;/devices/pci0000:00/0000:00:14.0/usb3/3-4/3-4.1/3-4.1.5/3-4.1.5.3&#39;:
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>    KERNELS==&quot;3-4.1.5.3&quot;
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>    SUBSYSTEMS==&quot;usb&quot;
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    DRIVERS==&quot;usb&quot;
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    ATTRS{authorized}==&quot;1&quot;
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    ...
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    ATTRS{configuration}==&quot;&quot;
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    ATTRS{devnum}==&quot;24&quot;
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>    ATTRS{devpath}==&quot;4.1.5.3&quot;
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    ATTRS{idProduct}==&quot;0010&quot;
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>    ATTRS{idVendor}==&quot;2341&quot;
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>    ATTRS{ltm_capable}==&quot;no&quot;
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    ATTRS{manufacturer}==&quot;Arduino (www.arduino.cc)&quot;
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    ...
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    ATTRS{product}==&quot;Arduino Mega 2560&quot;
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    ATTRS{quirks}==&quot;0x0&quot;
 </code></pre></div></td></tr></table></div>
 </details>
 
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">/etc/udev/rules.d/91-arduino.rules</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nv">ACTION</span><span class="o">==</span><span class="s2">&quot;add&quot;</span>,SUBSYSTEM<span class="o">==</span><span class="s2">&quot;usb&quot;</span>,ATTRS<span class="o">{</span>ID_VENDOR_ID<span class="o">}==</span><span class="s2">&quot;2341&quot;</span>,ATTRS<span class="o">{</span>ID_MODEL<span class="o">}==</span><span class="s2">&quot;Arduino_Mega_2560&quot;</span>,SYMLINK+<span class="o">=</span><span class="s2">&quot;arduino_mega&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">/etc/udev/rules.d/91-arduino.rules</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nv">ACTION</span><span class="o">==</span><span class="s2">&quot;add&quot;</span>,SUBSYSTEMS<span class="o">==</span><span class="s2">&quot;usb&quot;</span>,ATTRS<span class="o">{</span>idVendor<span class="o">}==</span><span class="s2">&quot;2341&quot;</span>,ATTRS<span class="o">{</span>product<span class="o">}==</span><span class="s2">&quot;Arduino Mega 2560&quot;</span>,<span class="w"> </span><span class="nv">SYMLINK</span><span class="o">+=</span><span class="s2">&quot;arduino_mega&quot;</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition tip">
 <p class="admonition-title">debug and monitor</p>
 <p>monitor service using</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-f<span class="w"> </span>-u<span class="w"> </span>systemd-udev.service
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-f<span class="w"> </span>-u<span class="w"> </span>systemd-udev.service
 </code></pre></div></td></tr></table></div>
 </div>
 <h3 id="check">check</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
 </code></pre></div></td></tr></table></div>
+<ul>
+<li>Disconnect / Connect the device for <code>add</code> event
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>ll<span class="w"> </span>/dev/arduino_mega<span class="w"> </span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="c1">#</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">7</span><span class="w"> </span>Apr<span class="w">  </span><span class="m">2</span><span class="w"> </span><span class="m">06</span>:56<span class="w"> </span>/dev/arduino_mega<span class="w"> </span>-&gt;<span class="w"> </span>ttyACM0
+</code></pre></div></td></tr></table></div></li>
+</ul>
+<hr />
+<h1 id="todo">TODO</h1>
+<ul>
+<li>explain monitor</li>
+<li>explain device tree</li>
+<li>explain ATTR ATTRS ENV</li>
+<li>explain SUBSYSTEMS</li>
+</ul>
 <hr />
 <h3 id="set-permission">Set permission</h3>
 <p>Set permission to usb device</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nv">SUBSYSTEMS</span><span class="o">==</span><span class="s2">&quot;i2c-dev&quot;</span>,<span class="w"> </span>ATTRS<span class="o">{</span>name<span class="o">}==</span><span class="s2">&quot;CP2112 SMBus Bridge on hidraw5&quot;</span>,<span class="w"> </span><span class="nv">MODE</span><span class="o">=</span><span class="s2">&quot;0666&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nv">SUBSYSTEMS</span><span class="o">==</span><span class="s2">&quot;i2c-dev&quot;</span>,<span class="w"> </span>ATTRS<span class="o">{</span>name<span class="o">}==</span><span class="s2">&quot;CP2112 SMBus Bridge on hidraw5&quot;</span>,<span class="w"> </span><span class="nv">MODE</span><span class="o">=</span><span class="s2">&quot;0666&quot;</span>
 </code></pre></div></td></tr></table></div>
 
 
