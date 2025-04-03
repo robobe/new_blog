@@ -6,6 +6,8 @@ tags:
     - cuda
 ---
 
+# OpenCV with cuda support on jetson
+
 Build scripts from [ Qengineering/Install-OpenCV-Jetson-Nano
 ](https://github.com/Qengineering/Install-OpenCV-Jetson-Nano)
 
@@ -56,6 +58,8 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D CPACK_BINARY_DEB=ON  ..
 ```
 
+!!! note "CUDA_ARCH_BIN, CUDA_ARCH_PTX"
+     
 !!! note "DEB"
     The CPACK_BINARY_DEB option in OpenCV’s CMake configuration enables packaging OpenCV as a Debian (.deb) package using CPack.
 

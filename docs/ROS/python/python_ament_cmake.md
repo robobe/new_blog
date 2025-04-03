@@ -3,11 +3,13 @@ tags:
     - ros
     - python
     - cmake
+    - ament
 ---
 
 # python ament cmake
 
 Use ament_cmake to create python package
+
 
 - Create ament package
 - Add folder `my_cmake_py_pkg` 
@@ -23,10 +25,6 @@ Use ament_cmake to create python package
 ```
 ros2 pkg create my_cmake_py_pkg --build-type ament_cmake
 ```
-
-
-
-    
 
 
 ## CMakeLists.txt
@@ -74,7 +72,30 @@ Add `ament_cmake_python` in `buildtool_depend`
 - Make the node executable `chmod +x my_node.py`
 
 
+```python
+#!/usr/bin/env python3
 
+import rclpy
+from rclpy.node import Node
+
+class MyNode(Node):
+    def __init__(self):
+        node_name="minimal"
+        super().__init__(node_name)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MyNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+---
 
 ### usage
 

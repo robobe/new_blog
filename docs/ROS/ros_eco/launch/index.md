@@ -4,10 +4,12 @@ tags:
   - launch
 ---
 
-# ROS launch
+# ROS2 launch
+Launch system is used to start multiple nodes and configure their execution. The Python-based launch system (launch_ros) provides flexibility through Python scripts.
 
 
-```python
+## Minimal example
+```python title="minimal launch file to run ros2 node"
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
@@ -26,8 +28,14 @@ def generate_launch_description():
     return ld
 ```
 
-```cmake
+```cmake title="cmake copy launch to share"
 install(DIRECTORY launch/
   DESTINATION share/${PROJECT_NAME}/launch
 )
 ```
+
+## ROS2 Launch system API
+
+- [DeclareLaunchArgument and LaunchConfiguration](launch_config_and_argument.md)
+- [PathJoinSubstitution](launch_path_and_paramfile.md)
+- [IncludeLaunchDescription](launch_include_demo.md)

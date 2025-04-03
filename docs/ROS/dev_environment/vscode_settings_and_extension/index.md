@@ -24,6 +24,12 @@ tags:
 | mhutchie.git-graph  | git graph  |
 | **OS**  |   |
 | dlech.chmod  | set executable bit  |
+| **ROS**  |   |
+| nonanonno.vscode-ros2  | Syntax highlighting for ros2 interface files (.msg, .srv, .action)  |
+|  JaehyunShim.vscode-ros2 | Toolset around ROS2  |
+| **URDF**  |   |
+| smilerobotics.urdf  | URDF support for VSCode  |
+
 
 
 ```
@@ -38,7 +44,10 @@ tags:
 "mhutchie.git-graph",
 "rioj7.command-variable",
 "dlech.chmod",
-"mkloubert.vscode-deploy-reloaded"
+"mkloubert.vscode-deploy-reloaded",
+"nonanonno.vscode-ros2",
+"smilerobotics.urdf",
+"JaehyunShim.vscode-ros2"
 ```
 
 
