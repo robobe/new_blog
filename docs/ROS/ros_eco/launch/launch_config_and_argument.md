@@ -39,12 +39,14 @@ def generate_launch_description():
 
 ## usage
 
-```bash
+```bash title="list all launch arguments"
 # Output default value
 ros2 launch launch_tutorial args_log_demo.launch.py 
 #
 [INFO] [launch.user]: Argument 'arg1' value: hello world
+```
 
+```bash title="run with argument"
 # Show launch arguments
 ros2 launch launch_tutorial args_log_demo.launch.py -s
 #

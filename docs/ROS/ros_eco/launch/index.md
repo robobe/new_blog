@@ -36,6 +36,21 @@ install(DIRECTORY launch/
 
 ## ROS2 Launch system API
 
+- **launch.actions**: Contains actions like:
+    - Node (from launch_ros.actions): Launches a ROS 2 node.
+    - IncludeLaunchDescription: Embeds another launch file.
+    - ExecuteProcess: Runs a generic process.
+    - DeclareLaunchArgument: Defines launch arguments.
+
+- **launch.substitutions**: Tools for dynamic values, e.g.:
+    - LaunchConfiguration: References launch arguments.
+    - TextSubstitution: Inserts static text.
+    - PythonExpression: Evaluates Python expressions.
+- **launch.conditions**: Conditional execution (e.g., IfCondition, UnlessCondition).
+
 - [DeclareLaunchArgument and LaunchConfiguration](launch_config_and_argument.md)
 - [PathJoinSubstitution](launch_path_and_paramfile.md)
 - [IncludeLaunchDescription](launch_include_demo.md)
+- [EnvironmentVariable](environment_variable.md)
+- [Conditions]()
+- [events]()
