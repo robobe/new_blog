@@ -13,20 +13,21 @@ tags:
         </div>
     <div class="grid-item">
         <a href="udev">
-        <img src="images/udev.png" width="150" height="150" style="margin: 25px;">
+        <img src="images/linux_udev.png" width="150" height="150" >
         <p>Udev</p>
         </a>
     </div>
     <div class="grid-item">
         <a href="networking">
-        <img src="images/networking.png" width="150" height="150">
+        <img src="images/linux_networking.png" width="150" height="150">
         <p>Networking</p>
         </a>
     </div>
 
 </div>
-![alt text](image.png)
 
+
+## TMUX
 - [tmux / tmuxp config and usage](linux_tmux_tmuxp.md)
 
 ## Cheat sheet
