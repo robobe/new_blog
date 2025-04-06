@@ -29,7 +29,6 @@ Launch system is used to start multiple nodes and configure their execution. The
     </div>
 
 </div>
-
 ## Minimal example
 ```python title="minimal launch file to run ros2 node"
 from launch import LaunchDescription
@@ -58,11 +57,7 @@ install(DIRECTORY launch/
 
 ## ROS2 Launch system API
 
-- **launch.actions**: Contains actions like:
-    - Node (from launch_ros.actions): Launches a ROS 2 node.
-    - IncludeLaunchDescription: Embeds another launch file.
-    - ExecuteProcess: Runs a generic process.
-    - DeclareLaunchArgument: Defines launch arguments.
+
 
 - **launch.substitutions**: Tools for dynamic values, e.g.:
     - LaunchConfiguration: References launch arguments.

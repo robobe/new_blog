@@ -25,6 +25,12 @@
         <p>vscode setting and extension</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="gdb_debug">
+        <img src="images/ros_dev.png" width="150" height="150">
+        <p>GDB</p>
+        </a>
+    </div>
 </div>
 
 ## Project Template
