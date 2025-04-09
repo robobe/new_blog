@@ -65,7 +65,16 @@ gst-launch-1.0 videotestsrc ! videoconvert ! autovideosink
 # v4l
 gst-launch-1.0 v4l2src device=/dev/video0 ! videoconvert ! autovideosink
 ```
+
+
 ### Advanced
+
+```bash
+ls -l /dev/video*
+#
+crw-rw----+ 1 root video 81, 0 Apr  5 16:57 /dev/video0
+```
+
 ```bash title="run"
 docker run -it --rm \
     --user user \
@@ -78,3 +87,8 @@ docker run -it --rm \
     ubuntu/22.04:gui \
     /bin/bash
 ```
+
+!!! note "Advanced"
+    - **--device-cgroup-rule**: allows the container to interact with any video device (major number 81) created after startup.
+    - **-v /dev:/dev**: ensures the container sees the host’s /dev directory in real-time.host.
+     

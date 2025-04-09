@@ -29,6 +29,8 @@ Add udev rule to `/etc/udev/rules.d/`
 #!/bin/bash
 
 cat <<EOF >> src/<package_name>/debian/rules
+
+override_dh_install:
     mkdir -p \$(DEBIAN)/etc/udev/rules.d
     cp -r udev/* \$(DEBIAN)/etc/udev/rules.d
     dh_install
