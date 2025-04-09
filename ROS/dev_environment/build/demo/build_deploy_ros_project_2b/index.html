@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/dev_environment/build/demo/build_deploy_ros_project_2a/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/dev_environment/build/demo/build_deploy_ros_project_2b/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>ROS2 project from development to deployment, Part 2: Add udev and other system files - Robots Inside</title>
+        <title>ROS2 project from development to deployment, Part 2: Using github actions to Automatic build and deploy - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ros2-project-from-development-to-deployment-part-2-add-udev-and-other-system-files" class="md-skip">
+        <a href="#ros2-project-from-development-to-deployment-part-2-using-github-actions-to-automatic-build-and-deploy" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ROS2 project from development to deployment, Part 2: Add udev and other system files
+              ROS2 project from development to deployment, Part 2: Using github actions to Automatic build and deploy
             
           </span>
         </div>
@@ -598,23 +598,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#demo-add-udev-rules" class="md-nav__link">
-    <span class="md-ellipsis">
-      Demo: Add udev rules
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -654,89 +637,75 @@
   
 
 
-<h1 id="ros2-project-from-development-to-deployment-part-2-add-udev-and-other-system-files">ROS2 project from development to deployment, Part 2: Add udev and other system files</h1>
-<p>How to add additional system files to the package, like udev rules, systemd service, etc.</p>
-<h2 id="demo-add-udev-rules">Demo: Add udev rules</h2>
-<div class="admonition note">
-<p class="admonition-title">github action</p>
-<p>We use github actions and <code>act</code> to run it locally.</p>
-</div>
-<p>Add udev rule to <code>/etc/udev/rules.d/</code> </p>
+<h1 id="ros2-project-from-development-to-deployment-part-2-using-github-actions-to-automatic-build-and-deploy">ROS2 project from development to deployment, Part 2: Using github actions to Automatic build and deploy</h1>
 <ul>
-<li>create udev rules file (put it in project root under <code>udev</code> folder)</li>
-<li>Add install script, this script <strong>update</strong> debian <code>rules</code> file after bloom generate</li>
-<li>Add step to github actions command</li>
+<li>rosdep</li>
+<li>colcon</li>
+<li>bloom</li>
+<li>fakeroot</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">udev rules</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># any udev rules file</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build package using github action</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Action</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">workflow_dispatch</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">build_pc_pkg_interface</span><span class="p">:</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pc</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">      </span><span class="nt">PROJECT_NAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pkg_interface</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rosdep</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">          </span><span class="no">export ROSDISTRO_INDEX_URL=file://`pwd`/index-v4.yaml \</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">          </span><span class="no">&amp;&amp; export ROS_DISTRO=humble \</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">          </span><span class="no">&amp;&amp; echo &quot;yaml file://`pwd`/rosdep/base.yaml&quot; &gt; /etc/ros/rosdep/sources.list.d/20-default.list \</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">          </span><span class="no">&amp;&amp; echo &quot;yaml file://`pwd`/rosdep/python.yaml&quot; &gt;&gt; /etc/ros/rosdep/sources.list.d/20-default.list \</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">          </span><span class="no">&amp;&amp; echo &quot;yaml file://`pwd`/rosdep/custom_rosdep.yaml&quot; &gt; /etc/ros/rosdep/sources.list.d/30-custom.list \</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">          </span><span class="no">&amp;&amp; rosdep update --rosdistro humble</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">colcon</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"> </span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">          </span><span class="no">colcon build --packages-up-to $PROJECT_NAME </span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bloom</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span><span class="w"> </span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">          </span><span class="no">export ROSDISTRO_INDEX_URL=file://`pwd`/index-v4.yaml \</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">          </span><span class="no">&amp;&amp; source /opt/ros/humble/setup.bash \</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">          </span><span class="no">&amp;&amp; source install/setup.bash \</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">          </span><span class="no">&amp;&amp; cd src/$PROJECT_NAME \</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">          </span><span class="no">&amp;&amp; bloom-generate rosdebian </span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fakeroot</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">          </span><span class="no">source install/setup.bash \</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">          </span><span class="no">&amp;&amp; cd src/$PROJECT_NAME \</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">          </span><span class="no">&amp;&amp; fakeroot debian/rules binary</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">post_bloom_script.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span>
-<span class="normal"><a href="#__codelineno-1-3">3</a></span>
-<span class="normal"><a href="#__codelineno-1-4">4</a></span>
-<span class="normal"><a href="#__codelineno-1-5">5</a></span>
-<span class="normal"><a href="#__codelineno-1-6">6</a></span>
-<span class="normal"><a href="#__codelineno-1-7">7</a></span>
-<span class="normal"><a href="#__codelineno-1-8">8</a></span>
-<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="ch">#!/bin/bash</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt;&gt; src/&lt;package_name&gt;/debian/rules</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="s">override_dh_install:</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="s">    mkdir -p \$(DEBIAN)/etc/udev/rules.d</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="s">    cp -r udev/* \$(DEBIAN)/etc/udev/rules.d</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="s">    dh_install</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="s">EOF</span>
-</code></pre></div></td></tr></table></div>
-<div class="admonition note">
-<p class="admonition-title">check the $(DEBIAN) path</p>
-<p>The <code>$(DEBIAN)</code> path is the path where the debian package is created. You can check it by running the following command:</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">TAB not space</p>
-<p>Make sure to use tab and not space in the <code>post_bloom_script.sh</code> file. You can check it using <code>cat -T</code> command.</p>
-</div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">github action step</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Add udev rules</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="no">./src/&lt;package_name&gt;/post_bloom_script.sh</span>
-</code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">TAB VSCode</p>
-<p>Config vscode to use tab and not spaces for shell script</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">set vscode to use tab and not spaces</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span>
-<span class="normal"><a href="#__codelineno-3-4">4</a></span>
-<span class="normal"><a href="#__codelineno-3-5">5</a></span>
-<span class="normal"><a href="#__codelineno-3-6">6</a></span>
-<span class="normal"><a href="#__codelineno-3-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="nt">&quot;[shellscript]&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">        </span><span class="nt">&quot;editor.insertSpaces&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">        </span><span class="nt">&quot;editor.tabSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">        </span><span class="nt">&quot;editor.detectIndentation&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">TAB check</p>
-<p>Using cat to check if file contains tab or space</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>cat<span class="w"> </span>-T<span class="w"> </span>&lt;file&gt;
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span>
-<span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span>
-<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="ch">#!/bin/bash</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="s">^Ia</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="s">^Ib</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="s">EOF</span>
-</code></pre></div></td></tr></table></div>
-</div>
 
 
 
