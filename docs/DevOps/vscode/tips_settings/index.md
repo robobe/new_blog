@@ -31,6 +31,7 @@ tags:
 
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Editor](#editor)
+- [Workbanch](#workbench)
 - [Terminal](#terminal)
 
 ## keyboard shortcuts
@@ -74,8 +75,23 @@ Add `key` to `keybindings.json` file
 
 ---
 
-
 ## Editor
+
+### Use tab instead of space
+Config `tab` and not `space` for shell script
+```json
+ "[shellscript]": {
+            "editor.insertSpaces": false,
+            "editor.tabSize": 4,
+            "editor.detectIndentation": false
+        },
+```
+
+When `editor.detectIndentation` false, VS Code ignores the file’s existing indentation and uses the user-defined settings (e.g., editor.tabSize, editor.insertSpaces).
+
+
+---
+## Workbench
 - [Mark active tab](#add-custom-color-to-active-tab)
 - [Tab focus mode](#tab-key-function)
 - [Preview mode](#preview-mode)

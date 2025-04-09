@@ -14,14 +14,13 @@
         </a>
     </div>
     <div class="grid-item">
-        <a href="docker_nvidia">
-        <img src="images/docker_nvidia.png" width="250" height="250">
-        <p>Nvidia</p>
+        <a href="docker_images">
+        <img src="images/docker_images.png" width="150" height="150">
+        <p>Images</p>
         </a>
     </div>
     
 </div>
-
 
 ## Posts 
 - [Running and Building ARM Docker Containers on x86](docker_build_arm.md)

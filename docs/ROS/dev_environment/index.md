@@ -31,6 +31,12 @@
         <p>GDB</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="ros_docker">
+        <img src="images/ros_dev.png" width="150" height="150">
+        <p>Docker</p>
+        </a>
+    </div>
 </div>
 
 ## Project Template

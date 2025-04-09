@@ -29,6 +29,7 @@ Launch system is used to start multiple nodes and configure their execution. The
     </div>
 
 </div>
+
 ## Minimal example
 ```python title="minimal launch file to run ros2 node"
 from launch import LaunchDescription
