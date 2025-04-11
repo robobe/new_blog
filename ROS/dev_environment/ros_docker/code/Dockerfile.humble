@@ -72,6 +72,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   openssh-client \
   python3-argcomplete \
   python3-pip \
+  python-is-python3 \
   tmux \
   tmuxp \
   vim \
@@ -100,18 +101,13 @@ RUN apt-get update && apt-get install -y sudo \
 
 
 
-ENV DEBIAN_FRONTEND=
 ENV AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=1
 
-###########################################
-#  Full image
-###########################################
-FROM dev AS full
 
-ENV DEBIAN_FRONTEND=noninteractive
 # Install the full release
 RUN apt-get update && apt-get install -y --no-install-recommends \
   ros-humble-ros-base \
+  ros-humble-rmw-cyclonedds-cpp \
   ros-dev-tools \
   python3-colcon-clean \
   ros-humble-ament-* \
@@ -123,3 +119,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends git-core bash-c
   && echo "if [ -f /opt/ros/${ROS_DISTRO}/setup.bash ]; then source /opt/ros/${ROS_DISTRO}/setup.bash; fi" >> /home/$USERNAME/.bashrc \
   && echo "if [ -f /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash ]; then source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash; fi" >> /home/$USERNAME/.bashrc \
   && rm -rf /var/lib/apt/lists/*
+
+  COPY .tmux.conf /etc/tmux.conf
