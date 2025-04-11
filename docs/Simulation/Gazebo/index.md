@@ -10,8 +10,8 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="tips_settings">
-        <img src="images/tips_and_settings.png" width="150" height="150">
-        <p>Tips / Settings</p>
+        <img src="/assets/images/vscode.png" width="150" height="150">
+        <p>VSCode dev</p>
         </a>
     </div>
     <div class="grid-item">
@@ -29,4 +29,5 @@ tags:
     
 </div>
 
+- [Run harmonic on docker](gz_harmonic_docker.md)
 - [ROS2 Bridge](ros_gazebo_bridge.md)

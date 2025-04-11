@@ -10,7 +10,7 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="rqt">
-        <img src="images/tips_and_settings.png" width="150" height="150">
+        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
         <p>rqt</p>
         </a>
     </div>

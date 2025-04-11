@@ -5,8 +5,10 @@ tags:
     - opencv
     - cuda
 ---
-
 # OpenCV with cuda support on jetson
+Build OpenCV with CUDA support on Jetson 
+Pack it using DEB for future use.
+
 
 Build scripts from [ Qengineering/Install-OpenCV-Jetson-Nano
 ](https://github.com/Qengineering/Install-OpenCV-Jetson-Nano)

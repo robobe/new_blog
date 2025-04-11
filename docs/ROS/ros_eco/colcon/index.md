@@ -8,13 +8,13 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="tips_settings">
-        <img src="images/tips_and_settings.png" width="150" height="150">
+        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
         <p>Tips / Settings</p>
         </a>
     </div>
     <div class="grid-item">
     <a href="ament">
-        <img src="images/tips_and_settings.png" width="150" height="150">
+        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
         <p>ament</p>
         </a>
     </div>

@@ -13,7 +13,10 @@
             </a>
     </div>
     <div class="grid-item">
-        <p>Block 3 Description</p>
+        <a href="slam">
+                <img src="images/slam.png"  width="150" height="150">
+                <p>SLAM</p>
+            </a>
     </div>
     <div class="grid-item">
          <a href="ardupilot">
@@ -28,4 +31,3 @@
         <p>Block 6 Description</p>
     </div>
 </div>
-
