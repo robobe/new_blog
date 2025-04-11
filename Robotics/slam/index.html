@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/DevOps/docker/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/slam/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Docker - Robots Inside</title>
+        <title>SLAM (Simultaneous Localization and Mapping) - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#docker" class="md-skip">
+        <a href="#slam-simultaneous-localization-and-mapping" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Docker
+              SLAM (Simultaneous Localization and Mapping)
             
           </span>
         </div>
@@ -247,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../Robotics/" class="md-tabs__link">
+      <a href="../" class="md-tabs__link">
         
   
     
@@ -298,7 +298,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../" class="md-tabs__link">
+      <a href="../../DevOps/" class="md-tabs__link">
         
   
     
@@ -459,7 +459,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Robotics/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -522,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../DevOps/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -605,18 +605,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#posts" class="md-nav__link">
+  <a href="#key-concepts-in-slam" class="md-nav__link">
     <span class="md-ellipsis">
-      Posts
+      Key Concepts in SLAM
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#to-read" class="md-nav__link">
+  <a href="#resources" class="md-nav__link">
     <span class="md-ellipsis">
-      To Read
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-claus-brenner-slam-lectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      - Claus Brenner SLAM lectures
     </span>
   </a>
   
@@ -636,49 +645,75 @@
                 
                   
 
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">localization</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">mapping</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">navigation</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">robotics</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">slam</span>
+      
+    
+  </nav>
+
 
   
   
 
 
-<h1 id="docker">Docker</h1>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="tips_settings">
-        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
-        <p>Tips / Settings</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href="docker_compose">
-        <img src="images/docker_compose.png" width="150" height="150">
-        <p>Docker Compose</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="docker_images">
-        <img src="images/docker_images.png" width="150" height="150">
-        <p>Images</p>
-        </a>
-    </div>
-
-</div>
-
-<h2 id="posts">Posts</h2>
+<h1 id="slam-simultaneous-localization-and-mapping">SLAM (Simultaneous Localization and Mapping)</h1>
+<p>SLAM (Simultaneous Localization and Mapping) is a technique used in robotics and computer vision to create a map of an unknown environment while simultaneously keeping track of the robot's location within that environment. It is a fundamental problem in robotics, particularly for autonomous vehicles, drones, and mobile robots.
+SLAM algorithms typically use sensor data (such as LiDAR, cameras, or IMU) to build a map of the environment and estimate the robot's position. The process involves two main components:
+1. <strong>Mapping</strong>: Creating a representation of the environment, which can be a 2D or 3D map, depending on the application.
+2. <strong>Localization</strong>: Determining the robot's position and orientation within the created map.</p>
+<h2 id="key-concepts-in-slam">Key Concepts in SLAM</h2>
 <ul>
-<li><a href="docker_build_arm/">Running and Building ARM Docker Containers on x86</a></li>
+<li><strong>Sensor Fusion</strong>: Combining data from multiple sensors to improve the accuracy and robustness of the SLAM system.</li>
+<li><strong>Feature Extraction</strong>: Identifying and extracting key features from the sensor data that can be used for mapping and localization.</li>
+<li><strong>Data Association</strong>: Matching observed features with previously mapped features to maintain consistency in the map and the robot's position.</li>
+<li><strong>Loop Closure</strong>: Recognizing when the robot has returned to a previously visited location, which helps to correct drift in the map and improve accuracy.</li>
+<li><strong>Graph-Based SLAM</strong>: A popular approach that represents the SLAM problem as a graph, where nodes represent poses (robot positions) and edges represent constraints (observations or measurements).</li>
+<li><strong>Particle Filters</strong>: A probabilistic approach to SLAM that uses a set of particles to represent the robot's belief about its position and the map.</li>
+<li><strong>Kalman Filters</strong>: A mathematical approach to estimate the state of a dynamic system, often used in SLAM for linear systems.</li>
+<li><strong>Extended Kalman Filter (EKF)</strong>: An extension of the Kalman filter that can handle non-linear systems, commonly used in SLAM.</li>
+<li><strong>Visual SLAM (V-SLAM)</strong>: A specific type of SLAM that uses visual data from cameras to perform mapping and localization.</li>
+<li><strong>LiDAR SLAM</strong>: A type of SLAM that uses LiDAR sensors to create high-resolution maps of the environment.</li>
 </ul>
 <hr />
-<h2 id="to-read">To Read</h2>
-<ul>
-<li><a href="https://datawookie.dev/blog/2021/11/shared-memory-docker/">Shared Memory &amp; Docker</a></li>
-</ul>
+<h2 id="resources">Resources</h2>
+<h2 id="-claus-brenner-slam-lectures">- <a href="https://www.youtube.com/playlist?list=PLpUPoM7Rgzi_7YWn14Va2FODh7LzADBSm">Claus Brenner SLAM lectures</a></h2>
 
 
 
 
 
 
+
+  
+  
 
 
 
