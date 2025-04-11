@@ -35,12 +35,29 @@ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 The purpose of this command is to enable the host system to run binaries compiled for different architectures (such as ARM) using QEMU. This is particularly useful for building and running ARM Docker containers on an x86 host.
 
 ## Usage
-```bash title="test"
+```Dockerfile title="Dockerfile"
 
-docker run --platform=linux/arm64/v8 --rm ubuntu:22.04 uname -m
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+CMD ["/bin/bash"]
 ```
 
+### Build and Run
+```bash title="Build"
+docker build --platform linux/arm64 -t ubuntu/22.04:arm64 .
+docker build --platform linux/amd64 -t ubuntu/22.04:amd64 .
+```
 
+```bash title="Run"
+docker run --rm -it --platform linux/arm64 ubuntu/22.04:arm64 uname -m
+docker run --rm -it --platform linux/amd64 ubuntu/22.04:amd64 uname -m
+```
+
+!!! note "buildX"
+    Use buildX to build multi-arch images with the same TAG work only if we push to a registry (Manifest)
+
+   
      
 --- 
 
