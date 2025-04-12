@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Simulation/Gazebo/gz_harmonic_docker/">
+        <link rel="canonical" href="https://robobe.github.io/Simulation/Gazebo/vscode/">
       
       
       
@@ -166,7 +166,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/robobe" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -376,7 +376,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/robobe" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -650,6 +650,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#run-the-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run the simulation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gz-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gz Transport
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resource" class="md-nav__link">
     <span class="md-ellipsis">
       Resource
@@ -698,6 +716,12 @@
         <span class="md-tag">harmonic</span>
       
     
+      
+      
+      
+        <span class="md-tag">vscode</span>
+      
+    
   </nav>
 
 
@@ -707,7 +731,8 @@
 
 <h1 id="run-gazebo-harmonic-on-docker">Run gazebo harmonic on docker</h1>
 <p>Build a docker container base on cuda runtime and ubuntu 22.04 to run Gazebo harmonic simulation.
-The docjerfile base on <a href="https://github.com/athackst/dockerfiles/blob/main/gz/harmonic-cuda.Dockerfile">Allison Thackston</a></p>
+The dockerfile base on <a href="https://github.com/athackst/dockerfiles/blob/main/gz/harmonic-cuda.Dockerfile">Allison Thackston</a></p>
+<p>Use vscode devcontainer to run the docker image. using docker compose. <a href="#use-vscode-and-docker">vscode devcontainer</a></p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li>Check nvidia version using <code>nvidia-smi</code></li>
@@ -924,57 +949,21 @@ The docjerfile base on <a href="https://github.com/athackst/dockerfiles/blob/mai
 <li>Using docker-compose</li>
 <li>Using devcontainer to run the docker compose</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">docker-compose.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span>
-<span class="normal"><a href="#__codelineno-4-21">21</a></span>
-<span class="normal"><a href="#__codelineno-4-22">22</a></span>
-<span class="normal"><a href="#__codelineno-4-23">23</a></span>
-<span class="normal"><a href="#__codelineno-4-24">24</a></span>
-<span class="normal"><a href="#__codelineno-4-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">services</span><span class="p">:</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">gazebo</span><span class="p">:</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gz:harmonic</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">    </span><span class="nt">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DISPLAY=${DISPLAY}</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">QT_X11_NO_MITSHM=1</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_VISIBLE_DEVICES=all</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_DRIVER_CAPABILITIES=all</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.:/workspace:cached</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.gz:/home/user/.gz:cached</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/.X11-unix:/tmp/.X11-unix:rw</span><span class="w"> </span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/dri:/dev/dri</span><span class="w"> </span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia0:/dev/nvidia0</span><span class="w"> </span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidiactl:/dev/nvidiactl</span><span class="w"> </span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia-modeset:/dev/nvidia-modeset</span><span class="w"> </span>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">          </span><span class="nt">devices</span><span class="p">:</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>├── .devcontainer
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>│   └── devcontainer.json
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>├── docker-compose.yaml
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>├── .gitignore
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>└── gz_tutorial
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>    └── worlds
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>        └── empty.world
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">devcontainer.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">docker-compose.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
@@ -987,21 +976,230 @@ The docjerfile base on <a href="https://github.com/athackst/dockerfiles/blob/mai
 <span class="normal"><a href="#__codelineno-5-11">11</a></span>
 <span class="normal"><a href="#__codelineno-5-12">12</a></span>
 <span class="normal"><a href="#__codelineno-5-13">13</a></span>
-<span class="normal"><a href="#__codelineno-5-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="p p-Indicator">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">    </span><span class="s">&quot;name&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gz_tutorial&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="s">&quot;dockerComposeFile&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;../docker-compose.yaml&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="s">&quot;service&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gazebo&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="s">&quot;shutdownAction&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;stopCompose&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="s">&quot;workspaceFolder&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;/workspace&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">    </span><span class="s">&quot;remoteUser&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">    </span><span class="s">&quot;customizations&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">      </span><span class="s">&quot;vscode&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">        </span><span class="s">&quot;extensions&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[],</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">      </span><span class="p p-Indicator">}</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">    </span><span class="p p-Indicator">}</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">  </span><span class="p p-Indicator">}</span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="nt">gazebo</span><span class="p">:</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gz:harmonic</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span><span class="nt">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gz</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DISPLAY=${DISPLAY}</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">QT_X11_NO_MITSHM=1</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_VISIBLE_DEVICES=all</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_DRIVER_CAPABILITIES=all</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TRANSPORT_IP=gazebo</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_DISCOVERY_SERVER=gazebo</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_PARTITION=my_simulation</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.:/workspace:cached</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.gz:/home/user/.gz:cached</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/.X11-unix:/tmp/.X11-unix:rw</span><span class="w"> </span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/dri:/dev/dri</span><span class="w"> </span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia0:/dev/nvidia0</span><span class="w"> </span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidiactl:/dev/nvidiactl</span><span class="w"> </span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia-modeset:/dev/nvidia-modeset</span><span class="w"> </span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a><span class="w">          </span><span class="nt">devices</span><span class="p">:</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
 </code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.devcontainer/devcontainer.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="p p-Indicator">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">    </span><span class="s">&quot;name&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gz_tutorial&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="s">&quot;dockerComposeFile&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;../docker-compose.yaml&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="s">&quot;service&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gazebo&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="s">&quot;shutdownAction&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;stopCompose&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">    </span><span class="s">&quot;workspaceFolder&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;/workspace&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">    </span><span class="s">&quot;remoteUser&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;user&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">    </span><span class="s">&quot;customizations&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">      </span><span class="s">&quot;vscode&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">        </span><span class="s">&quot;extensions&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">            </span><span class="s">&quot;ms-python.python&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">            </span><span class="s">&quot;ms-vscode.cpptools&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">            </span><span class="s">&quot;twxs.cmake&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">            </span><span class="s">&quot;redhat.vscode-xml&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">            </span><span class="s">&quot;redhat.vscode-yaml&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">            </span><span class="s">&quot;albert.tabout&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">            </span><span class="s">&quot;actboy168.tasks&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">            </span><span class="s">&quot;streetsidesoftware.code-spell-checker&quot;</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">        </span><span class="p p-Indicator">],</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">      </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">    </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">  </span><span class="p p-Indicator">}</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="run-the-simulation">Run the simulation</h2>
+<details>
+    <summary>minimal world</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span>
+<span class="normal"><a href="#__codelineno-7-32">32</a></span>
+<span class="normal"><a href="#__codelineno-7-33">33</a></span>
+<span class="normal"><a href="#__codelineno-7-34">34</a></span>
+<span class="normal"><a href="#__codelineno-7-35">35</a></span>
+<span class="normal"><a href="#__codelineno-7-36">36</a></span>
+<span class="normal"><a href="#__codelineno-7-37">37</a></span>
+<span class="normal"><a href="#__codelineno-7-38">38</a></span>
+<span class="normal"><a href="#__codelineno-7-39">39</a></span>
+<span class="normal"><a href="#__codelineno-7-40">40</a></span>
+<span class="normal"><a href="#__codelineno-7-41">41</a></span>
+<span class="normal"><a href="#__codelineno-7-42">42</a></span>
+<span class="normal"><a href="#__codelineno-7-43">43</a></span>
+<span class="normal"><a href="#__codelineno-7-44">44</a></span>
+<span class="normal"><a href="#__codelineno-7-45">45</a></span>
+<span class="normal"><a href="#__codelineno-7-46">46</a></span>
+<span class="normal"><a href="#__codelineno-7-47">47</a></span>
+<span class="normal"><a href="#__codelineno-7-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="cm">&lt;!-- https://github.com/gazebosim/docs/blob/master/harmonic/tutorials/sdf_worlds/world_demo.sdf --&gt;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="cm">&lt;!-- https://gazebosim.org/docs/harmonic/sdf_worlds/ --&gt;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="nt">&lt;sdf</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.8&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span><span class="nt">&lt;world</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;world_demo&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">    </span><span class="nt">&lt;physics</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;1ms&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;ignored&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">      </span><span class="nt">&lt;max_step_size&gt;</span>0.001<span class="nt">&lt;/max_step_size&gt;</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">      </span><span class="nt">&lt;real_time_factor&gt;</span>1.0<span class="nt">&lt;/real_time_factor&gt;</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">    </span><span class="nt">&lt;/physics&gt;</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">    </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">      </span><span class="na">filename=</span><span class="s">&quot;gz-sim-physics-system&quot;</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">      </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::Physics&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">    </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">      </span><span class="na">filename=</span><span class="s">&quot;gz-sim-user-commands-system&quot;</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">      </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::UserCommands&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">    </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">    </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">      </span><span class="na">filename=</span><span class="s">&quot;gz-sim-scene-broadcaster-system&quot;</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="w">      </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::SceneBroadcaster&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="w">    </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="w">    </span><span class="cm">&lt;!--light--&gt;</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="w">    </span><span class="nt">&lt;light</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;directional&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sun&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="w">      </span><span class="nt">&lt;cast_shadows&gt;</span>true<span class="nt">&lt;/cast_shadows&gt;</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="w">      </span><span class="nt">&lt;pose&gt;</span>0<span class="w"> </span>0<span class="w"> </span>10<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="nt">&lt;/pose&gt;</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a><span class="w">      </span><span class="nt">&lt;diffuse&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/diffuse&gt;</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a><span class="w">      </span><span class="nt">&lt;specular&gt;</span>0.2<span class="w"> </span>0.2<span class="w"> </span>0.2<span class="w"> </span>1<span class="nt">&lt;/specular&gt;</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a><span class="w">      </span><span class="nt">&lt;attenuation&gt;</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a><span class="w">        </span><span class="nt">&lt;range&gt;</span>1000<span class="nt">&lt;/range&gt;</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="w">        </span><span class="nt">&lt;constant&gt;</span>0.9<span class="nt">&lt;/constant&gt;</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a><span class="w">        </span><span class="nt">&lt;linear&gt;</span>0.01<span class="nt">&lt;/linear&gt;</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a><span class="w">        </span><span class="nt">&lt;quadratic&gt;</span>0.001<span class="nt">&lt;/quadratic&gt;</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a><span class="w">      </span><span class="nt">&lt;/attenuation&gt;</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a><span class="w">      </span><span class="nt">&lt;direction&gt;</span>-0.5<span class="w"> </span>0.1<span class="w"> </span>-0.9<span class="nt">&lt;/direction&gt;</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a><span class="w">    </span><span class="nt">&lt;/light&gt;</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a><span class="w">    </span><span class="nt">&lt;include&gt;</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38"></a><span class="w">        </span><span class="nt">&lt;name&gt;</span>Coke0<span class="nt">&lt;/name&gt;</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a><span class="w">        </span><span class="nt">&lt;pose&gt;</span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="nt">&lt;/pose&gt;</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40"></a><span class="w">        </span><span class="nt">&lt;uri&gt;</span>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Coke<span class="nt">&lt;/uri&gt;</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41"></a><span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42"></a><span class="w">    </span><span class="nt">&lt;include&gt;</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43"></a><span class="w">        </span><span class="nt">&lt;name&gt;</span>Coke1<span class="nt">&lt;/name&gt;</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44"></a><span class="w">        </span><span class="nt">&lt;pose&gt;</span>0<span class="w"> </span>0.1<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="nt">&lt;/pose&gt;</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45"></a><span class="w">        </span><span class="nt">&lt;uri&gt;</span>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Coke<span class="nt">&lt;/uri&gt;</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46"></a><span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47"></a><span class="w">  </span><span class="nt">&lt;/world&gt;</span>
+<a id="__codelineno-7-48" name="__codelineno-7-48"></a><span class="nt">&lt;/sdf&gt;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+</details>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># run the simulation</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>gz<span class="w"> </span>sim<span class="w"> </span>-r<span class="w"> </span>v4<span class="w"> </span>gz_tutorial/worlds/empty.world<span class="w"> </span>
+</code></pre></div></td></tr></table></div>
+<p><img alt="alt text" src="images/minimal_world.png" /></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gz topic</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>--list
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>gz<span class="w"> </span>topic<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>/clock
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1">#</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>sim<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">  </span>sec:<span class="w"> </span><span class="m">326</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">  </span>nsec:<span class="w"> </span><span class="m">476000000</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="o">}</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="gz-transport">Gz Transport</h2>
+<p>gz_transport is Gazebo's communication middleware, used for inter-process communication (IPC) between different Gazebo components — like sensors, plugins, UI, and even ROS bridges.</p>
+<ul>
+<li><strong>GZ_PARTITION</strong>: Isolates topic namespaces between different simulations</li>
+<li><strong>GZ_DISCOVERY_SERVER</strong>:  IP address of the main discovery server (usually the Gazebo server machine)</li>
+<li><strong>GZ_TRANSPORT_IP</strong>:  IP address the local process uses to advertise itself to others</li>
+</ul>
 <hr />
 <h2 id="resource">Resource</h2>
 <ul>
