@@ -41,4 +41,4 @@
 
 ## Project Template
 - [ros_gz_project_template](https://github.com/gazebosim/ros_gz_project_template/tree/main)
-- 
+- [jazzy harmonic bridge setup](tutorials/jazzy_harmonic_setup/index.md)

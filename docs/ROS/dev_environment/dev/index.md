@@ -23,8 +23,8 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="prod">
-        <p>TBD</p>
+        <a href="project_templates">
+        <p>projects template</p>
         </a>
     </div>
     
