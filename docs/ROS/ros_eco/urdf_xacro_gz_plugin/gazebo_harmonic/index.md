@@ -8,6 +8,27 @@ tags:
 ---
 
 # ROS2 Gazebo harmonic integration
+
+<div class="grid-container">
+     <div class="grid-item">
+            <a href="jazzy_bridge">
+            <img src="images/urdf.png"  width="150" height="150">
+            <p>Bridge</p></a>
+        </div>
+    <div class="grid-item">
+       <a href="jazzy_interface">
+            <img src="images/urdf.png"  width="150" height="150">
+            <p>Interface</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="jazzy_launch">
+            <img src="images/gazebo_classic.png"  width="150" height="150">
+            <p>Launch</p></a>
+    </div>
+   
+   </div>
+
+## Bridge
 The bridge allows you to connect ROS 2 topics with Gazebo Harmonic topics so you can:
 
 - Control simulation objects from ROS 2 (e.g., publish velocity commands).
@@ -25,7 +46,15 @@ The bridge allows you to connect ROS 2 topics with Gazebo Harmonic topics so you
     - **]** : a bridge from ROS to Gazebo.
 
 
-### Check
+### bridge yaml config
+[github](https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_bridge#example-5-configuring-the-bridge-via-yaml)
+
+
+```bash
+ros2 run ros_gz_bridge parameter_bridge --ros-args -p config_file:=$WORKSPACE/test/config/full.yaml
+```
+
+## Demo
 Simulate using bridge, send message from side to side
 (no need to run gz sim for this check)
 
@@ -62,5 +91,8 @@ ros2 topic pub /chatter std_msgs/msg/String "data: 'Hi'"
 gz topic -e -t /chatter
 ```
 
+---
 
-[ROS Bridge](ros_gazebo_bridge.md)
+### Resources
+- [Sensors services and interfaces]()
+- [ROS + Gazebo Sim demos](https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_sim_demos)

@@ -28,6 +28,14 @@ tags:
 ```
 
 <details>
+    <summary>.devcontainer/Dockerfile.jazzy</summary>
+
+```json
+--8<-- "docs/ROS/dev_environment/dev/project_templates/jazzy/code/Dockerfile.jazzy"
+```
+</details>
+
+<details>
     <summary>.devcontainer/devcontainer.json</summary>
 
 ```json

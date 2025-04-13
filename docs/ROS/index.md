@@ -37,6 +37,12 @@
         <p>ROS basic</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic" tooltip="">
+        <img src="images/gazebo_harmonic.png"  width="150" height="150">
+        <p>ROS and Gazebo harmonic</p>
+        </a>
+    </div>
 </div>
 
 ## Posts
