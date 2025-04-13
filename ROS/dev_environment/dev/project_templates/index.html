@@ -701,64 +701,264 @@
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a>└── src
 </code></pre></div></td></tr></table></div>
 <details>
-    <summary>.devcontainer/devcontainer.json</summary>
+    <summary>.devcontainer/Dockerfile.jazzy</summary>
 
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span>
-<span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span>
-<span class="normal"><a href="#__codelineno-1-13">13</a></span>
-<span class="normal"><a href="#__codelineno-1-14">14</a></span>
-<span class="normal"><a href="#__codelineno-1-15">15</a></span>
-<span class="normal"><a href="#__codelineno-1-16">16</a></span>
-<span class="normal"><a href="#__codelineno-1-17">17</a></span>
-<span class="normal"><a href="#__codelineno-1-18">18</a></span>
-<span class="normal"><a href="#__codelineno-1-19">19</a></span>
-<span class="normal"><a href="#__codelineno-1-20">20</a></span>
-<span class="normal"><a href="#__codelineno-1-21">21</a></span>
-<span class="normal"><a href="#__codelineno-1-22">22</a></span>
-<span class="normal"><a href="#__codelineno-1-23">23</a></span>
-<span class="normal"><a href="#__codelineno-1-24">24</a></span>
-<span class="normal"><a href="#__codelineno-1-25">25</a></span>
-<span class="normal"><a href="#__codelineno-1-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gz_tutorial&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;dockerComposeFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../docker-compose.yaml&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;service&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gazebo&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">&quot;shutdownAction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stopCompose&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="nt">&quot;workspaceFolder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/workspace&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">&quot;remoteUser&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">&quot;customizations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">      </span><span class="nt">&quot;vscode&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">        </span><span class="nt">&quot;extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">            </span><span class="s2">&quot;ms-python.python&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">            </span><span class="s2">&quot;ms-vscode.cpptools&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">            </span><span class="s2">&quot;twxs.cmake&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">            </span><span class="s2">&quot;redhat.vscode-xml&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">            </span><span class="s2">&quot;redhat.vscode-yaml&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">            </span><span class="s2">&quot;albert.tabout&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">            </span><span class="s2">&quot;actboy168.tasks&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">            </span><span class="s2">&quot;streetsidesoftware.code-spell-checker&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">            </span><span class="s2">&quot;mhutchie.git-graph&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">            </span><span class="s2">&quot;dlech.chmod&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">            </span><span class="s2">&quot;smilerobotics.urdf&quot;</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">        </span><span class="p">],</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">        </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">  </span><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-1-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-1-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-1-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-1-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-1-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-1-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-1-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-1-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-1-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-1-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-1-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-1-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-1-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-1-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-1-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-1-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-1-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-1-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-1-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-1-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-1-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-1-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-1-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-1-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-1-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-1-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-1-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-1-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-1-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-1-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-1-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-1-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-1-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-1-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-1-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-1-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-1-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-1-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-1-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-1-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-1-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-1-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-1-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-1-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-1-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-1-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-1-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-1-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-1-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-1-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-1-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-1-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-1-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-1-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-1-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-1-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-1-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-1-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-1-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-1-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-1-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-1-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-1-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-1-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-1-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-1-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-1-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-1-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-1-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-1-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-1-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-1-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-1-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-1-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-1-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-1-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-1-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-1-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-1-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-1-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-1-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-1-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-1-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-1-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-1-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-1-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-1-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-1-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-1-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-1-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-1-100">100</a></span>
+<span class="normal"><a href="#__codelineno-1-101">101</a></span>
+<span class="normal"><a href="#__codelineno-1-102">102</a></span>
+<span class="normal"><a href="#__codelineno-1-103">103</a></span>
+<span class="normal"><a href="#__codelineno-1-104">104</a></span>
+<span class="normal"><a href="#__codelineno-1-105">105</a></span>
+<span class="normal"><a href="#__codelineno-1-106">106</a></span>
+<span class="normal"><a href="#__codelineno-1-107">107</a></span>
+<span class="normal"><a href="#__codelineno-1-108">108</a></span>
+<span class="normal"><a href="#__codelineno-1-109">109</a></span>
+<span class="normal"><a href="#__codelineno-1-110">110</a></span>
+<span class="normal"><a href="#__codelineno-1-111">111</a></span>
+<span class="normal"><a href="#__codelineno-1-112">112</a></span>
+<span class="normal"><a href="#__codelineno-1-113">113</a></span>
+<span class="normal"><a href="#__codelineno-1-114">114</a></span>
+<span class="normal"><a href="#__codelineno-1-115">115</a></span>
+<span class="normal"><a href="#__codelineno-1-116">116</a></span>
+<span class="normal"><a href="#__codelineno-1-117">117</a></span>
+<span class="normal"><a href="#__codelineno-1-118">118</a></span>
+<span class="normal"><a href="#__codelineno-1-119">119</a></span>
+<span class="normal"><a href="#__codelineno-1-120">120</a></span>
+<span class="normal"><a href="#__codelineno-1-121">121</a></span>
+<span class="normal"><a href="#__codelineno-1-122">122</a></span>
+<span class="normal"><a href="#__codelineno-1-123">123</a></span>
+<span class="normal"><a href="#__codelineno-1-124">124</a></span>
+<span class="normal"><a href="#__codelineno-1-125">125</a></span>
+<span class="normal"><a href="#__codelineno-1-126">126</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="err">##############################################</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="err">#</span><span class="w"> </span><span class="err">base</span><span class="w"> </span><span class="err">o</span><span class="kc">n</span><span class="w"> </span><span class="err">allisio</span><span class="kc">n</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">ps</span><span class="p">:</span><span class="c1">//github.com/athackst/dockerfiles/blob/main/ros2/jazzy-cuda.Dockerfile</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="err">##############################################</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="err">###########################################</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="err">#</span><span class="w"> </span><span class="err">Base</span><span class="w"> </span><span class="err">image</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="err">###########################################</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="err">FROM</span><span class="w"> </span><span class="kc">n</span><span class="err">vidia/cuda</span><span class="p">:</span><span class="mf">12.6.2-</span><span class="err">cud</span><span class="kc">nn</span><span class="mi">-</span><span class="err">ru</span><span class="kc">nt</span><span class="err">ime</span><span class="mi">-</span><span class="err">ubu</span><span class="kc">ntu</span><span class="mf">24.04</span><span class="w"> </span><span class="err">AS</span><span class="w"> </span><span class="err">base</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="err">ENV</span><span class="w"> </span><span class="err">DEBIAN_FRONTEND=</span><span class="kc">n</span><span class="err">o</span><span class="kc">n</span><span class="err">i</span><span class="kc">ntera</span><span class="err">c</span><span class="kc">t</span><span class="err">ive</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="err">#</span><span class="w"> </span><span class="err">I</span><span class="kc">nstall</span><span class="w"> </span><span class="err">la</span><span class="kc">n</span><span class="err">guage</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="err">RUN</span><span class="w"> </span><span class="err">ap</span><span class="kc">t</span><span class="mi">-</span><span class="err">ge</span><span class="kc">t</span><span class="w"> </span><span class="err">upda</span><span class="kc">te</span><span class="w"> </span><span class="err">&amp;&amp;</span><span class="w"> </span><span class="err">ap</span><span class="kc">t</span><span class="mi">-</span><span class="err">ge</span><span class="kc">t</span><span class="w"> </span><span class="err">i</span><span class="kc">nstall</span><span class="w"> </span><span class="mi">-</span><span class="err">y</span><span class="w"> </span><span class="mi">--</span><span class="kc">n</span><span class="err">o</span><span class="mi">-</span><span class="err">i</span><span class="kc">nstall</span><span class="mi">-</span><span class="err">recomme</span><span class="kc">n</span><span class="err">ds</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">  </span><span class="err">locales</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">  </span><span class="err">&amp;&amp;</span><span class="w"> </span><span class="err">locale</span><span class="mi">-</span><span class="err">ge</span><span class="kc">n</span><span class="w"> </span><span class="err">e</span><span class="kc">n</span><span class="err">_US.UTF</span><span class="mi">-8</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">  </span><span class="err">&amp;&amp;</span><span class="w"> </span><span class="err">upda</span><span class="kc">te</span><span class="mi">-</span><span class="err">locale</span><span class="w"> </span><span class="err">LC_ALL=e</span><span class="kc">n</span><span class="err">_US.UTF</span><span class="mi">-8</span><span class="w"> </span><span class="err">LANG=e</span><span class="kc">n</span><span class="err">_US.UTF</span><span class="mi">-8</span><span class="w"> </span><span class="err">\</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">  </span><span class="err">&amp;&amp;</span><span class="w"> </span><span class="err">rm</span><span class="w"> </span><span class="mi">-</span><span class="err">r</span><span class="kc">f</span><span class="w"> </span><span class="err">/var/lib/ap</span><span class="kc">t</span><span class="err">/lis</span><span class="kc">ts</span><span class="err">/*</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="err">ENV LANG=en_US.UTF-8</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="err"># Install timezone</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="err">RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="err">  &amp;&amp; export DEBIAN_FRONTEND=noninteractive \</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="err">  &amp;&amp; apt-get update \</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="err">  &amp;&amp; apt-get install -y --no-install-recommends tzdata \</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="err">  &amp;&amp; dpkg-reconfigure --frontend noninteractive tzdata \</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="err">  &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="err">RUN apt-get update &amp;&amp; apt-get -y upgrade \</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="err">    &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="err"># Install common programs</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="err">RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="err">    curl \</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="err">    gnupg2 \</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a><span class="err">    lsb-release \</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="err">    sudo \</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="err">    software-properties-common \</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="err">    wget \</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="err">    &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="err"># Install ROS2</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="err">RUN sudo add-apt-repository universe \</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="err">  &amp;&amp; curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg \</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="err">  &amp;&amp; echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release &amp;&amp; echo $UBUNTU_CODENAME) main&quot; | sudo tee /etc/apt/sources.list.d/ros2.list &gt; /dev/null \</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="err">  &amp;&amp; apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a><span class="err">    ros-jazzy-ros-base \</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a><span class="err">    python3-argcomplete \</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a><span class="err">  &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49"></a>
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="err">################</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="err"># Expose the nvidia driver to allow opengl</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a><span class="err"># Dependencies for glvnd and X11.</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53"></a><span class="err">################</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54"></a><span class="err">RUN apt-get update \</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55"></a><span class="err"> &amp;&amp; apt-get install -y -qq --no-install-recommends \</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56"></a><span class="err">  libglvnd0 \</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57"></a><span class="err">  libgl1 \</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58"></a><span class="err">  libglx0 \</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59"></a><span class="err">  libegl1 \</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60"></a><span class="err">  libxext6 \</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="err">  libx11-6</span>
+<a id="__codelineno-1-62" name="__codelineno-1-62"></a>
+<a id="__codelineno-1-63" name="__codelineno-1-63"></a><span class="err"># Env vars for the nvidia-container-runtime.</span>
+<a id="__codelineno-1-64" name="__codelineno-1-64"></a><span class="err">ENV NVIDIA_VISIBLE_DEVICES=all</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65"></a><span class="err">ENV NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66"></a><span class="err">ENV QT_X11_NO_MITSHM=1</span>
+<a id="__codelineno-1-67" name="__codelineno-1-67"></a>
+<a id="__codelineno-1-68" name="__codelineno-1-68"></a><span class="err">ENV ROS_DISTRO=jazzy</span>
+<a id="__codelineno-1-69" name="__codelineno-1-69"></a><span class="err">ENV AMENT_PREFIX_PATH=/opt/ros/jazzy</span>
+<a id="__codelineno-1-70" name="__codelineno-1-70"></a><span class="err">ENV COLCON_PREFIX_PATH=/opt/ros/jazzy</span>
+<a id="__codelineno-1-71" name="__codelineno-1-71"></a><span class="err">ENV LD_LIBRARY_PATH=/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/lib</span>
+<a id="__codelineno-1-72" name="__codelineno-1-72"></a><span class="err">ENV PATH=/opt/ros/jazzy/bin:$PATH</span>
+<a id="__codelineno-1-73" name="__codelineno-1-73"></a><span class="err">ENV PYTHONPATH=/opt/ros/jazzy/local/lib/python3.12/dist-packages:/opt/ros/jazzy/lib/python3.12/site-packages</span>
+<a id="__codelineno-1-74" name="__codelineno-1-74"></a><span class="err">ENV ROS_PYTHON_VERSION=3</span>
+<a id="__codelineno-1-75" name="__codelineno-1-75"></a><span class="err">ENV ROS_VERSION=2</span>
+<a id="__codelineno-1-76" name="__codelineno-1-76"></a><span class="err">ENV ROS_AUTOMATIC_DISCOVERY_RANGE=SUBNET</span>
+<a id="__codelineno-1-77" name="__codelineno-1-77"></a>
+<a id="__codelineno-1-78" name="__codelineno-1-78"></a><span class="err">RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span>
+<a id="__codelineno-1-79" name="__codelineno-1-79"></a><span class="err">  bash-completion \</span>
+<a id="__codelineno-1-80" name="__codelineno-1-80"></a><span class="err">  build-essential \</span>
+<a id="__codelineno-1-81" name="__codelineno-1-81"></a><span class="err">  cmake \</span>
+<a id="__codelineno-1-82" name="__codelineno-1-82"></a><span class="err">  gdb \</span>
+<a id="__codelineno-1-83" name="__codelineno-1-83"></a><span class="err">  git \</span>
+<a id="__codelineno-1-84" name="__codelineno-1-84"></a><span class="err">  openssh-client \</span>
+<a id="__codelineno-1-85" name="__codelineno-1-85"></a><span class="err">  python3-argcomplete \</span>
+<a id="__codelineno-1-86" name="__codelineno-1-86"></a><span class="err">  python3-pip \</span>
+<a id="__codelineno-1-87" name="__codelineno-1-87"></a><span class="err">  ros-dev-tools \</span>
+<a id="__codelineno-1-88" name="__codelineno-1-88"></a><span class="err">  python3-colcon-clean \</span>
+<a id="__codelineno-1-89" name="__codelineno-1-89"></a><span class="err">  ros-jazzy-ament-* \</span>
+<a id="__codelineno-1-90" name="__codelineno-1-90"></a><span class="err">  vim \</span>
+<a id="__codelineno-1-91" name="__codelineno-1-91"></a><span class="err">  ros-jazzy-rmw-cyclonedds-cpp \</span>
+<a id="__codelineno-1-92" name="__codelineno-1-92"></a><span class="err">  ros-jazzy-ros-gz-bridge \</span>
+<a id="__codelineno-1-93" name="__codelineno-1-93"></a><span class="err">  ros-jazzy-ros-gz-image \</span>
+<a id="__codelineno-1-94" name="__codelineno-1-94"></a><span class="err">  &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+<a id="__codelineno-1-95" name="__codelineno-1-95"></a>
+<a id="__codelineno-1-96" name="__codelineno-1-96"></a><span class="err">RUN rosdep init || echo &quot;rosdep already initialized&quot;</span>
+<a id="__codelineno-1-97" name="__codelineno-1-97"></a>
+<a id="__codelineno-1-98" name="__codelineno-1-98"></a><span class="err">ARG USERNAME=user</span>
+<a id="__codelineno-1-99" name="__codelineno-1-99"></a><span class="err">ARG USER_UID=1000</span>
+<a id="__codelineno-1-100" name="__codelineno-1-100"></a><span class="err">ARG USER_GID=$USER_UID</span>
+<a id="__codelineno-1-101" name="__codelineno-1-101"></a>
+<a id="__codelineno-1-102" name="__codelineno-1-102"></a><span class="err"># Check if &quot;ubuntu&quot; user exists, delete it if it does, then create the desired user</span>
+<a id="__codelineno-1-103" name="__codelineno-1-103"></a><span class="err">RUN if getent passwd ubuntu &gt; /dev/null 2&gt;&amp;1; then \</span>
+<a id="__codelineno-1-104" name="__codelineno-1-104"></a><span class="err">        userdel -r ubuntu &amp;&amp; \</span>
+<a id="__codelineno-1-105" name="__codelineno-1-105"></a><span class="err">        echo &quot;Deleted existing ubuntu user&quot;; \</span>
+<a id="__codelineno-1-106" name="__codelineno-1-106"></a><span class="err">    fi &amp;&amp; \</span>
+<a id="__codelineno-1-107" name="__codelineno-1-107"></a><span class="err">    groupadd --gid $USER_GID $USERNAME &amp;&amp; \</span>
+<a id="__codelineno-1-108" name="__codelineno-1-108"></a><span class="err">    useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME &amp;&amp; \</span>
+<a id="__codelineno-1-109" name="__codelineno-1-109"></a><span class="err">    echo &quot;Created new user $USERNAME&quot;</span>
+<a id="__codelineno-1-110" name="__codelineno-1-110"></a>
+<a id="__codelineno-1-111" name="__codelineno-1-111"></a><span class="err"># Add sudo support for the non-root user</span>
+<a id="__codelineno-1-112" name="__codelineno-1-112"></a><span class="err">RUN apt-get update &amp;&amp; apt-get install -y sudo \</span>
+<a id="__codelineno-1-113" name="__codelineno-1-113"></a><span class="err">  &amp;&amp; echo $USERNAME ALL=\(root\) NOPASSWD:ALL &gt; /etc/sudoers.d/$USERNAME\</span>
+<a id="__codelineno-1-114" name="__codelineno-1-114"></a><span class="err">  &amp;&amp; chmod 0440 /etc/sudoers.d/$USERNAME \</span>
+<a id="__codelineno-1-115" name="__codelineno-1-115"></a><span class="err">  &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+<a id="__codelineno-1-116" name="__codelineno-1-116"></a>
+<a id="__codelineno-1-117" name="__codelineno-1-117"></a><span class="err"># Set up autocompletion for user</span>
+<a id="__codelineno-1-118" name="__codelineno-1-118"></a><span class="err">RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends git-core bash-completion \</span>
+<a id="__codelineno-1-119" name="__codelineno-1-119"></a><span class="err">  &amp;&amp; echo &quot;if [ -f /opt/ros/${ROS_DISTRO}/setup.bash ]; then source /opt/ros/${ROS_DISTRO}/setup.bash; fi&quot; &gt;&gt; /home/$USERNAME/.bashrc \</span>
+<a id="__codelineno-1-120" name="__codelineno-1-120"></a><span class="err">  &amp;&amp; echo &quot;if [ -f /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash ]; then source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash; fi&quot; &gt;&gt; /home/$USERNAME/.bashrc \</span>
+<a id="__codelineno-1-121" name="__codelineno-1-121"></a><span class="err">  &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
+<a id="__codelineno-1-122" name="__codelineno-1-122"></a>
+<a id="__codelineno-1-123" name="__codelineno-1-123"></a><span class="err">ENV DEBIAN_FRONTEND=</span>
+<a id="__codelineno-1-124" name="__codelineno-1-124"></a><span class="err">ENV AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=1</span>
+<a id="__codelineno-1-125" name="__codelineno-1-125"></a>
+<a id="__codelineno-1-126" name="__codelineno-1-126"></a><span class="err">COPY .tmux.conf /etc/tmux.conf</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
 <details>
-    <summary>docker-compose.yml</summary>
+    <summary>.devcontainer/devcontainer.json</summary>
 
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
@@ -785,36 +985,93 @@
 <span class="normal"><a href="#__codelineno-2-23">23</a></span>
 <span class="normal"><a href="#__codelineno-2-24">24</a></span>
 <span class="normal"><a href="#__codelineno-2-25">25</a></span>
-<span class="normal"><a href="#__codelineno-2-26">26</a></span>
-<span class="normal"><a href="#__codelineno-2-27">27</a></span>
-<span class="normal"><a href="#__codelineno-2-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="err">services</span><span class="p">:</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="err">ros</span><span class="p">:</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="err">image</span><span class="p">:</span><span class="w"> </span><span class="err">jazzy</span><span class="p">:</span><span class="err">base</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="err">user</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user:user&quot;</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="err">volumes</span><span class="p">:</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">.</span><span class="p">:</span><span class="err">/workspace</span><span class="p">:</span><span class="err">cached</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/</span><span class="kc">t</span><span class="err">mp/.X</span><span class="mi">11-</span><span class="err">u</span><span class="kc">n</span><span class="err">ix</span><span class="p">:</span><span class="err">/</span><span class="kc">t</span><span class="err">mp/.X</span><span class="mi">11-</span><span class="err">u</span><span class="kc">n</span><span class="err">ix</span><span class="p">:</span><span class="err">rw</span><span class="w"> </span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/dri</span><span class="p">:</span><span class="err">/dev/dri</span><span class="w"> </span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">0</span><span class="p">:</span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">0</span><span class="w"> </span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidiac</span><span class="kc">tl</span><span class="p">:</span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidiac</span><span class="kc">tl</span><span class="w"> </span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">-</span><span class="err">modese</span><span class="kc">t</span><span class="p">:</span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">-</span><span class="err">modese</span><span class="kc">t</span><span class="w"> </span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">    </span><span class="err">deploy</span><span class="p">:</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">      </span><span class="err">resources</span><span class="p">:</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">        </span><span class="err">reserva</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="p">:</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">          </span><span class="err">devices</span><span class="p">:</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">capabili</span><span class="kc">t</span><span class="err">ies</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">gpu</span><span class="p">]</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">    </span><span class="err">hos</span><span class="kc">tna</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">ros</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">    </span><span class="kc">net</span><span class="err">work_mode</span><span class="p">:</span><span class="w"> </span><span class="err">hos</span><span class="kc">t</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="err">s</span><span class="kc">t</span><span class="err">di</span><span class="kc">n</span><span class="err">_ope</span><span class="kc">n</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">    </span><span class="kc">tt</span><span class="err">y</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">    </span><span class="err">e</span><span class="kc">n</span><span class="err">viro</span><span class="kc">n</span><span class="err">me</span><span class="kc">nt</span><span class="p">:</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">DISPLAY=$</span><span class="p">{</span><span class="err">DISPLAY</span><span class="p">}</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">QT_X</span><span class="mi">11</span><span class="err">_NO_MITSHM=</span><span class="mi">1</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">GZ_TRANSPORT_IP=ros</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">GZ_DISCOVERY_SERVER=gazebo</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">GZ_PARTITION=my_simula</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">    </span><span class="err">devices</span><span class="p">:</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/dri</span><span class="p">:</span><span class="err">/dev/dri</span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gz_tutorial&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;dockerComposeFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../docker-compose.yaml&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">&quot;service&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gazebo&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="nt">&quot;shutdownAction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stopCompose&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="nt">&quot;workspaceFolder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/workspace&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="nt">&quot;remoteUser&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">&quot;customizations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">      </span><span class="nt">&quot;vscode&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">        </span><span class="nt">&quot;extensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">            </span><span class="s2">&quot;ms-python.python&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">            </span><span class="s2">&quot;ms-vscode.cpptools&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">            </span><span class="s2">&quot;twxs.cmake&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">            </span><span class="s2">&quot;redhat.vscode-xml&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">            </span><span class="s2">&quot;redhat.vscode-yaml&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">            </span><span class="s2">&quot;albert.tabout&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">            </span><span class="s2">&quot;actboy168.tasks&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">            </span><span class="s2">&quot;streetsidesoftware.code-spell-checker&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">            </span><span class="s2">&quot;mhutchie.git-graph&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">            </span><span class="s2">&quot;dlech.chmod&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">            </span><span class="s2">&quot;smilerobotics.urdf&quot;</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">        </span><span class="p">],</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">        </span><span class="nt">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">  </span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<details>
+    <summary>docker-compose.yml</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="err">services</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="err">ros</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="err">image</span><span class="p">:</span><span class="w"> </span><span class="err">jazzy</span><span class="p">:</span><span class="err">base</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="err">user</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user:user&quot;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="err">volumes</span><span class="p">:</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">.</span><span class="p">:</span><span class="err">/workspace</span><span class="p">:</span><span class="err">cached</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/</span><span class="kc">t</span><span class="err">mp/.X</span><span class="mi">11-</span><span class="err">u</span><span class="kc">n</span><span class="err">ix</span><span class="p">:</span><span class="err">/</span><span class="kc">t</span><span class="err">mp/.X</span><span class="mi">11-</span><span class="err">u</span><span class="kc">n</span><span class="err">ix</span><span class="p">:</span><span class="err">rw</span><span class="w"> </span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/dri</span><span class="p">:</span><span class="err">/dev/dri</span><span class="w"> </span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">0</span><span class="p">:</span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">0</span><span class="w"> </span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidiac</span><span class="kc">tl</span><span class="p">:</span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidiac</span><span class="kc">tl</span><span class="w"> </span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">-</span><span class="err">modese</span><span class="kc">t</span><span class="p">:</span><span class="err">/dev/</span><span class="kc">n</span><span class="err">vidia</span><span class="mi">-</span><span class="err">modese</span><span class="kc">t</span><span class="w"> </span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">    </span><span class="err">deploy</span><span class="p">:</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">      </span><span class="err">resources</span><span class="p">:</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">        </span><span class="err">reserva</span><span class="kc">t</span><span class="err">io</span><span class="kc">ns</span><span class="p">:</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">          </span><span class="err">devices</span><span class="p">:</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">            </span><span class="mi">-</span><span class="w"> </span><span class="err">capabili</span><span class="kc">t</span><span class="err">ies</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">gpu</span><span class="p">]</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">    </span><span class="err">hos</span><span class="kc">tna</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="err">ros</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">    </span><span class="kc">net</span><span class="err">work_mode</span><span class="p">:</span><span class="w"> </span><span class="err">hos</span><span class="kc">t</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">    </span><span class="err">s</span><span class="kc">t</span><span class="err">di</span><span class="kc">n</span><span class="err">_ope</span><span class="kc">n</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">    </span><span class="kc">tt</span><span class="err">y</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">    </span><span class="err">e</span><span class="kc">n</span><span class="err">viro</span><span class="kc">n</span><span class="err">me</span><span class="kc">nt</span><span class="p">:</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">DISPLAY=$</span><span class="p">{</span><span class="err">DISPLAY</span><span class="p">}</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">QT_X</span><span class="mi">11</span><span class="err">_NO_MITSHM=</span><span class="mi">1</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">GZ_TRANSPORT_IP=ros</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">GZ_DISCOVERY_SERVER=gazebo</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">GZ_PARTITION=my_simula</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">    </span><span class="err">devices</span><span class="p">:</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">      </span><span class="mi">-</span><span class="w"> </span><span class="err">/dev/dri</span><span class="p">:</span><span class="err">/dev/dri</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
