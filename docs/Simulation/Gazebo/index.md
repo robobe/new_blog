@@ -31,3 +31,22 @@ tags:
 
 - [ROS2 Bridge](/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/ros_gazebo_bridge.md)
 - [Sensors](sensors/index.md)
+
+## Environment Variables
+
+!!! tip "migration from ign"
+    IGNITION_GAZEBO -> GZ_SIM
+     
+
+| Name  | Description  |
+|---|---|
+| **SIM**  |   |
+| GZ_SIM_RESOURCE_PATH  |   |
+| GZ_SIM_SYSTEM_PLUGIN_PATH  |   |
+| **TRANSPORT**  |   |
+| GZ_TRANSPORT_IP  |   |
+| GZ_DISCOVERY_SERVER  |   |
+| GZ_PARTITION  |   |
+
+
+[](https://github.com/gazebo-tooling/release-tools/issues/734)

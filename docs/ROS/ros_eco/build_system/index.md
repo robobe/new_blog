@@ -1,20 +1,22 @@
 ---
 tags:
     - ros
+    - build system
     - colcon
+    - ament
 ---
-# Colcon
+# Build System
 
 <div class="grid-container">
     <div class="grid-item">
         <a href="tips_settings">
-        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
-        <p>Tips / Settings</p>
+        <img src="images/colcon.png" width="150" height="150">
+        <p>Colcon</p>
         </a>
     </div>
     <div class="grid-item">
     <a href="ament">
-        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
+        <img src="images/ament.png" width="150" height="150">
         <p>ament</p>
         </a>
     </div>
@@ -23,6 +25,8 @@ tags:
     </div>
     
 </div>
+
+[ROS: The build system](https://docs.ros.org/en/jazzy/Concepts/Advanced/About-Build-System.html)
 
 ## colcon-clean
 Extension for colcon to clean package workspaces

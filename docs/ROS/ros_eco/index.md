@@ -32,9 +32,9 @@ Ros packages and tools that are used in the ROS eco system.
                </a>
            </div>
     <div class="grid-item">
-           <a href="colcon">
+           <a href="build_system">
                <img src="images/colcon.png"  width="150" height="150">
-               <p>Colcon</p>
+               <p>Build System</p>
                </a>
            </div>
     <div class="grid-item">
