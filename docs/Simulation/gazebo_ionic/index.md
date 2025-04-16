@@ -15,9 +15,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href="sdf_format">
-        <img src="images/sdf_format.png" width="300" height="300">
-        <p>SDF Format</p>
+    <a href="gz_transport">
+        <img src="images/transport.png" width="150" height="150">
+        <p>gz transport</p>
         </a>
     </div>
     <div class="grid-item">

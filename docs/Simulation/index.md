@@ -8,7 +8,7 @@
         </div>
     <div class="grid-item">
        <a href="Gazebo">
-            <img src="images/gazebo_harminic.png"  width="150" height="150">
+            <img src="images/harmonic.png"  width="150" height="150" style="width: 150px; height: 160px;" >
             <p>Gazebo</p></a>
     </div>
     <!-- <div class="grid-item">
@@ -18,12 +18,10 @@
     </div> -->
     <div class="grid-item">
         <a href="gazebo_ionic">
-            <img src="images/ionic.png"  width="300" height="300">
-            <p>NVidia Isaac</p></a>
+            <img src="images/ionic.png"  width="150" height="150">
+            <p>Gazebo ionic</p></a>
     </div>
    </div>
-
-![alt text](image.png)
 ## Resources
 - [Gazebo meeting](https://vimeo.com/osrfoundation)
 
