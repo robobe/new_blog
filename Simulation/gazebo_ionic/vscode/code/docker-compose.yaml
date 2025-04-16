@@ -1,0 +1,30 @@
+
+services:
+  gazebo:
+    image: gz:ionic
+    network_mode: host
+    user: user
+    stdin_open: true
+    tty: true
+    hostname: gz
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - GZ_TRANSPORT_IP=gazebo
+      - GZ_DISCOVERY_SERVER=gazebo
+      - GZ_PARTITION=my_simulation
+    volumes:
+      - .:/workspace:cached
+      - ./.gz:/home/user/.gz:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw 
+      - /dev/dri:/dev/dri 
+      - /dev/nvidia0:/dev/nvidia0 
+      - /dev/nvidiactl:/dev/nvidiactl 
+      - /dev/nvidia-modeset:/dev/nvidia-modeset 
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]

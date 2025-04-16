@@ -729,7 +729,8 @@
 <span class="normal"><a href="#__codelineno-1-26">26</a></span>
 <span class="normal"><a href="#__codelineno-1-27">27</a></span>
 <span class="normal"><a href="#__codelineno-1-28">28</a></span>
-<span class="normal"><a href="#__codelineno-1-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.8</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.8</span><span class="p">)</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nb">project</span><span class="p">(</span><span class="s">pkg_interface</span><span class="p">)</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3"></a>
 <a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="nb">if</span><span class="p">(</span><span class="s">CMAKE_COMPILER_IS_GNUCXX</span><span class="w"> </span><span class="s">OR</span><span class="w"> </span><span class="s">CMAKE_CXX_COMPILER_ID</span><span class="w"> </span><span class="s">MATCHES</span><span class="w"> </span><span class="s2">&quot;Clang&quot;</span><span class="p">)</span>
@@ -739,26 +740,27 @@
 <a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c"># find dependencies</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 <a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="hll"><span class="nb">find_package</span><span class="p">(</span><span class="s">rosidl_default_generators</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-</span><a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="hll">
-</span><a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="hll"><span class="nb">set</span><span class="p">(</span><span class="s">MESSAGES</span>
-</span><a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="hll"><span class="w">  </span><span class="s2">&quot;msg/Demo.msg&quot;</span>
-</span><a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="hll"><span class="p">)</span>
-</span><a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="hll">
-</span><a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="hll"><span class="nb">set</span><span class="p">(</span><span class="s">SERVICES</span><span class="w"> </span>
-</span><a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="hll"><span class="w">  </span><span class="s2">&quot;srv/Demo.srv&quot;</span>
-</span><a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="hll"><span class="p">)</span>
-</span><a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="hll">
+</span><a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="hll"><span class="nb">find_package</span><span class="p">(</span><span class="s">basic_interface</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+</span><a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="hll">
+</span><a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="hll"><span class="nb">set</span><span class="p">(</span><span class="s">MESSAGES</span>
+</span><a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="hll"><span class="w">  </span><span class="s2">&quot;msg/Demo.msg&quot;</span>
+</span><a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="hll"><span class="p">)</span>
+</span><a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="hll">
+</span><a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="hll"><span class="nb">set</span><span class="p">(</span><span class="s">SERVICES</span><span class="w"> </span>
+</span><a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="hll"><span class="w">  </span><span class="s2">&quot;srv/Demo.srv&quot;</span>
+</span><a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="hll"><span class="p">)</span>
 </span><a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="hll">
-</span><a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="hll"><span class="nb">rosidl_generate_interfaces</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
-</span><a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="hll"><span class="w">  </span><span class="o">${</span><span class="nv">MESSAGES</span><span class="o">}</span>
-</span><a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="hll"><span class="w">  </span><span class="o">${</span><span class="nv">SERVICES</span><span class="o">}</span><span class="w"> </span>
-</span><a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="hll"><span class="p">)</span>
-</span><a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="hll">
+</span><a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="hll">
+</span><a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="hll"><span class="nb">rosidl_generate_interfaces</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
+</span><a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="hll"><span class="w">  </span><span class="o">${</span><span class="nv">MESSAGES</span><span class="o">}</span>
+</span><a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="hll"><span class="w">  </span><span class="o">${</span><span class="nv">SERVICES</span><span class="o">}</span><span class="w"> </span>
+</span><a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="hll"><span class="p">)</span>
 </span><a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="hll">
-</span><a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="hll"><span class="nb">ament_export_dependencies</span><span class="p">(</span><span class="s">rosidl_default_runtime</span><span class="p">)</span>
-</span><a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="hll">
-</span><a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="hll"><span class="nb">ament_package</span><span class="p">()</span>
-</span></code></pre></div></td></tr></table></div>
+</span><a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="hll">
+</span><a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="hll"><span class="nb">ament_export_dependencies</span><span class="p">(</span><span class="s">rosidl_default_runtime</span><span class="p">)</span>
+</span><a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="hll">
+</span><a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="nb">ament_package</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
 </details>
 
 <details>
@@ -782,7 +784,9 @@
 <span class="normal"><a href="#__codelineno-2-16">16</a></span>
 <span class="normal"><a href="#__codelineno-2-17">17</a></span>
 <span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="cp">&lt;?xml-model href=&quot;http://download.ros.org/schema/package_format3.xsd&quot; schematypens=&quot;http://www.w3.org/2001/XMLSchema&quot;?&gt;</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">&lt;package</span><span class="w"> </span><span class="na">format=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">&lt;name&gt;</span>pkg_interface<span class="nt">&lt;/name&gt;</span>
@@ -791,16 +795,18 @@
 <a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">  </span><span class="nt">&lt;maintainer</span><span class="w"> </span><span class="na">email=</span><span class="s">&quot;robo2020@gmail.com&quot;</span><span class="nt">&gt;</span>user<span class="nt">&lt;/maintainer&gt;</span>
 <a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">  </span><span class="nt">&lt;license&gt;</span>Apache-2.0<span class="nt">&lt;/license&gt;</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9"></a>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">  </span><span class="nt">&lt;buildtool_depend&gt;</span>ament_cmake<span class="nt">&lt;/buildtool_depend&gt;</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="hll"><span class="w">  </span><span class="nt">&lt;buildtool_depend&gt;</span>rosidl_default_generators<span class="nt">&lt;/buildtool_depend&gt;</span>
-</span><a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="hll"><span class="w">  </span><span class="nt">&lt;exec_depend&gt;</span>rosidl_default_runtime<span class="nt">&lt;/exec_depend&gt;</span>
-</span><a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="hll"><span class="w">  </span><span class="nt">&lt;member_of_group&gt;</span>rosidl_interface_packages<span class="nt">&lt;/member_of_group&gt;</span>
-</span><a id="__codelineno-2-15" name="__codelineno-2-15"></a>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">  </span><span class="nt">&lt;export&gt;</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">    </span><span class="nt">&lt;build_type&gt;</span>ament_cmake<span class="nt">&lt;/build_type&gt;</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">  </span><span class="nt">&lt;/export&gt;</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="nt">&lt;/package&gt;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">  </span><span class="nt">&lt;depend&gt;</span>basic_interface<span class="nt">&lt;/depend&gt;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">  </span><span class="nt">&lt;buildtool_depend&gt;</span>ament_cmake<span class="nt">&lt;/buildtool_depend&gt;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="hll">
+</span><a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="hll"><span class="w">  </span><span class="nt">&lt;buildtool_depend&gt;</span>rosidl_default_generators<span class="nt">&lt;/buildtool_depend&gt;</span>
+</span><a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="hll"><span class="w">  </span><span class="nt">&lt;exec_depend&gt;</span>rosidl_default_runtime<span class="nt">&lt;/exec_depend&gt;</span>
+</span><a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">  </span><span class="nt">&lt;member_of_group&gt;</span>rosidl_interface_packages<span class="nt">&lt;/member_of_group&gt;</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">  </span><span class="nt">&lt;export&gt;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="nt">&lt;build_type&gt;</span>ament_cmake<span class="nt">&lt;/build_type&gt;</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">  </span><span class="nt">&lt;/export&gt;</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="nt">&lt;/package&gt;</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
