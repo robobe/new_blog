@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/rviz_rqt/">
+        <link rel="canonical" href="https://robobe.github.io/Embedded/Jetson/tensorrt/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Rviz RQT and other ROS tools - Robots Inside</title>
+        <title>TensorRT - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rviz-rqt-and-other-ros-tools" class="md-skip">
+        <a href="#tensorrt" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Rviz RQT and other ROS tools
+              TensorRT
             
           </span>
         </div>
@@ -213,7 +213,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../ROS/" class="md-tabs__link">
         
   
     
@@ -281,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Embedded/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -417,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../ROS/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -501,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Embedded/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -598,6 +598,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -615,37 +632,31 @@
       
       
       
-        <span class="md-tag">plotjuggler</span>
+        <span class="md-tag">embedded</span>
       
     
       
       
       
-        <span class="md-tag">ros</span>
+        <span class="md-tag">jetson</span>
       
     
       
       
       
-        <span class="md-tag">rqt</span>
+        <span class="md-tag">nvidia</span>
       
     
       
       
       
-        <span class="md-tag">rviz</span>
+        <span class="md-tag">orin</span>
       
     
       
       
       
-        <span class="md-tag">tools</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">vsc</span>
+        <span class="md-tag">tensorrt</span>
       
     
   </nav>
@@ -655,33 +666,50 @@
   
 
 
-<h1 id="rviz-rqt-and-other-ros-tools">Rviz RQT and other ROS tools</h1>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="rqt">
-        <img src="images/ros_rqt.png" width="150" height="150">
-        <p>rqt</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href="rviz">
-        <img src="images/ros_rviz.png" width="150" height="150">
-        <p>rviz</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href="plotjuggler">
-        <img src="images/plotjuggler.png" width="150" height="150">
-        <p>plotjuggler</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="vsc_tool">
-            <img src="images/ros_vsc_tool.png" width="150" height="150">
-            <p>VSC</p>
-        </a>
-    </div>
-</div>
+<h1 id="tensorrt">TensorRT</h1>
+<h2 id="install">Install</h2>
+<p>Login to nvidia </p>
+<ul>
+<li>download local repo package</li>
+<li>install the package</li>
+<li>register the gpg key</li>
+<li>run <code>apt update</code></li>
+<li>
+<p>install <code>apt tensorrt</code></p>
+</li>
+<li>
+<p><a href="https://developer.nvidia.com/tensorrt/download/10x">Download from nvidia</a></p>
+</li>
+</ul>
+<p><img alt="alt text" src="../images/nvidia_tensorrt_download_page.png" /></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Install TensorRT</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>dpkg<span class="w"> </span>-i<span class="w"> </span>nv-tensorrt-local-repo-ubuntu2204-10.3.0-cuda-12.5_1.0-1_arm64.deb<span class="w"> </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>cp<span class="w"> </span>/var/nv-tensorrt-local-repo-ubuntu2204-10.3.0-cuda-12.5/nv-tensorrt-local-F9A70CFC-keyring.gpg<span class="w"> </span>/usr/share/keyrings/
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>apt<span class="w"> </span>update
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>apt<span class="w"> </span>install<span class="w"> </span>tensorrt
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="c1"># check</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>dpkg<span class="w"> </span>-l<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tensorrt
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorrt</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">trt</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">trt</span><span class="o">.</span><span class="n">Logger</span><span class="p">(</span><span class="n">trt</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="n">runtime</span> <span class="o">=</span> <span class="n">trt</span><span class="o">.</span><span class="n">Runtime</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;model.engine&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="n">engine</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">deserialize_cuda_engine</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+<p><img alt="" src="/assets/images/under_construction.png" /></p>
+<h1 id="todo-show-usage">TODO: show usage</h1>
 
 
 
