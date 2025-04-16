@@ -29,7 +29,8 @@ tags:
     
 </div>
 
-- [ROS2 Bridge](/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/ros_gazebo_bridge.md)
+- [Tutorials](tutorials/index.md)
+- [ROS2 Bridge](/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge)
 - [Sensors](sensors/index.md)
 
 ## Environment Variables

@@ -34,7 +34,6 @@ What, Why and basic verbs and concept
 - Node
 - Pub / Sub
 - Service
-- Action
 - Parameters
 
 ---
@@ -47,16 +46,37 @@ What, Why and basic verbs and concept
 ---
 
 # What to remember
+
 - ROS2 is a standard
-  - Don't invite the wheel
-- It's all about Nodes and messages
+  - Don't invite the wheel (reuse other works)
+- ROS2 is a way of thinking to solve robotics problems
+- ROS2 is a SDK
+
+---
+# Learn from others
+
+- [Autonomous, GPS-Denied Quadrotor Flight](https://youtu.be/6eeetSVHXPk)
+  
+---
+# DARPA
+![[YT](https://youtu.be/aTiBpWX5GV4)](image.png)
+
+[link](https://youtu.be/aTiBpWX5GV4)
 
 ---
 
-# DDS
-DDS (Data Distribution Service) is an open-standard connectivity framework for real-time systems
+# VRX
+![alt text](images/vrx.png)
 
-![](ros_dds.png)
+---
+# Eye on the prize. glance to the future
+- ROS Version
+- Simulation
+  - Gazebo version
+- Flight controller
+  - PX4 /ArduPilot
+
+[2024 ROS Metrics Report](https://cdck-file-uploads-us1.s3.dualstack.us-west-2.amazonaws.com/flex022/uploads/ros/original/3X/3/7/37c752346eb33f4f5ebde0c513b949b15adae453.pdf)
 
 ---
 
@@ -84,11 +104,7 @@ Topics: ROS2 topic is a way of communication between ROS2 nodes
 
 ![](Action-SingleActionClient.gif)
 
----
 
-# Demo
-
-![](simple_nodes_messages_demo.drawio.png)
 
 ---
 
@@ -107,7 +123,7 @@ RQT is a Qt-based framework for GUI development for ROS
 
 ---
 
-# Gazebo / Ignition
+# Gazebo
 
 ![](gazebo.png)
 

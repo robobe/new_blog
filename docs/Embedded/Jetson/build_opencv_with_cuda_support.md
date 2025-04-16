@@ -13,13 +13,12 @@ Pack it using DEB for future use.
 Build scripts from [ Qengineering/Install-OpenCV-Jetson-Nano
 ](https://github.com/Qengineering/Install-OpenCV-Jetson-Nano)
 
-```
+```bash
 >>> import cv2
 >>> cv2.__version__
 '4.10.0'
 >>> cv2.cuda.getCudaEnabledDeviceCount()
 1
->>> 
 ```
 
 ```bash
@@ -57,7 +56,10 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D BUILD_EXAMPLES=OFF \
 -D CMAKE_CXX_FLAGS="-march=native -mtune=native" \
 -D CMAKE_C_FLAGS="-march=native -mtune=native" \
--D CPACK_BINARY_DEB=ON  ..
+-D CPACK_BINARY_DEB=ON \
+-D CPACK_PACKAGE_VERSION=4.10.0 \
+-D CPACK_DEBIAN_PACKAGE_VERSION=4.10.0-1 \
+..
 ```
 
 !!! note "CUDA_ARCH_BIN, CUDA_ARCH_PTX"
@@ -65,10 +67,47 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 !!! note "DEB"
     The CPACK_BINARY_DEB option in OpenCV’s CMake configuration enables packaging OpenCV as a Debian (.deb) package using CPack.
 
-    `-D CPACK_BINARY_DEB=ON`
+    ```
+    -D CPACK_BINARY_DEB=ON
+    -D CPACK_PACKAGE_VERSION=4.10.0 
+    -D CPACK_DEBIAN_PACKAGE_VERSION=4.10.0-1
+    ```
 
     ```
     make package ..
     ```
 
      
+### Check installation
+
+```bash title="pull cuda runtime image"
+docker pull nvidia/cuda:12.6.0-runtime-ubuntu22.04
+```
+
+```bash title="run and share cv build folder"
+# from build folder
+docker run  --gpus all --runtime=nvidia \
+-it --rm --hostname test \
+-v `pwd`:/tmp/cv \
+nvidia/cuda:12.6.0-runtime-ubuntu22.04 /bin/bash
+
+```
+
+```bash title="install dependencies"
+apt update
+apt install cudnn9
+apt install python3
+apt install python3-numpy
+#
+#install all opencv debs
+cd /tmp/cv
+apt -i *.deb
+```
+
+```bash title="check cuda installation"
+>>> import cv2
+>>> cv2.__version__
+'4.10.0'
+>>> cv2.cuda.getCudaEnabledDeviceCount()
+1
+```

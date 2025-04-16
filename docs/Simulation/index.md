@@ -17,3 +17,8 @@
             <p>NVidia Isaac</p></a>
     </div>
    </div>
+
+
+## Resources
+- [Gazebo meeting](https://vimeo.com/osrfoundation)
+
