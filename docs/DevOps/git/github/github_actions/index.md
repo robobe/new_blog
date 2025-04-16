@@ -11,6 +11,5 @@ GitHub Actions is a powerful feature of GitHub that allows you to automate, cust
 
 - [Run github action locally using act](github_action_run_local.md)
 - [Custom action](github_action_using_custom_actions.md)
+- [Controlling and job execution](github_action_controlling_workflow_and_job_execution.md)
 
-## Resources 
-- [Github Actions CI/CD - Everything you need to know to get started](https://youtu.be/mFFXuXjVgkU)

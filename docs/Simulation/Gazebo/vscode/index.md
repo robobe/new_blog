@@ -107,7 +107,6 @@ gz:harmonic
 </details>
 
 
-</details>
 
 ```bash
 # run the simulation
