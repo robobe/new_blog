@@ -1,6 +1,6 @@
 ---
 tags:
-    - python
+  - python
 ---
 
 # Python
@@ -19,9 +19,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="remote_ssh">
-        
-        <p>TBD</p>
+       <a href="python">
+        <img src="images/python.png" width="150" height="150">
+        <p>python</p>
         </a>
     </div>
     

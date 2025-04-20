@@ -39,15 +39,15 @@ tags:
     <summary>.devcontainer/devcontainer.json</summary>
 
 ```json
---8<-- "docs/ROS/dev_environment/dev/project_templates/jazzy/code/.devcontainer.json"
+--8<-- "docs/ROS/dev_environment/dev/project_templates/jazzy/code/devcontainer.json"
 ```
 </details>
 
 
 <details>
-    <summary>docker-compose.yml</summary>
+    <summary>docker-compose.yaml</summary>
 
 ```json
---8<-- "docs/ROS/dev_environment/dev/project_templates/jazzy/code/docker-compose.yml"
+--8<-- "docs/ROS/dev_environment/dev/project_templates/jazzy/code/docker-compose.yaml"
 ```
 </details>

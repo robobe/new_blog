@@ -28,5 +28,13 @@ tags:
     
 </div>
 
+## Install
+Install RQT with default plugin
+
+```bash
+# source the ros folder before run the command
+sudo apt install ros-${ROS_DISTRO}-rqt ros-${ROS_DISTRO}-rqt-common-plugins
+```
+
 ## Pliugins
 - [RQt Image Overlay](https://rqt-image-overlay.readthedocs.io/en/latest/)
