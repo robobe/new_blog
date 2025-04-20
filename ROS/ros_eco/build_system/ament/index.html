@@ -640,6 +640,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check" class="md-nav__link">
+    <span class="md-ellipsis">
+      check
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -683,6 +698,18 @@
       
       
       
+        <span class="md-tag">dsv</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">hooks</span>
+      
+    
+      
+      
+      
         <span class="md-tag">ros</span>
       
     
@@ -714,10 +741,11 @@
 </ul>
 <h4 id="steps">Steps</h4>
 <ul>
-<li>Add the <code>hook</code> folder to your package</li>
+<li>Add the <code>hooks</code> folder to your package</li>
 <li>Add the <code>dsv.in</code> file to your package</li>
 <li>Add the <code>sh.in</code> file to your package</li>
 <li>Add the <code>ament_environment_hooks</code> to your <code>CMakeLists.txt</code> file</li>
+<li>Build, Source and check</li>
 </ul>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">ament_environment_hooks</span><span class="p">(</span><span class="s2">&quot;${CMAKE_CURRENT_SOURCE_DIR}/hooks/${PROJECT_NAME}.dsv.in&quot;</span><span class="p">)</span>
@@ -726,6 +754,13 @@
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ros_gz_example_description.dsv.in</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>prepend-non-duplicate<span class="p">;</span>GZ_SIM_RESOURCE_PATH<span class="p">;</span>share<span class="p">;</span>@CMAKE_INSTALL_PREFIX@/share
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ros_gz_example_description.sh.in</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ament_prepend_unique_value<span class="w"> </span>GZ_SIM_RESOURCE_PATH<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$AMENT_CURRENT_PREFIX</span><span class="s2">/share/@PROJECT_NAME@/models&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h5 id="check">check</h5>
+<ul>
+<li>Build</li>
+<li>source install folder</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$GZ_SIM_RESOURCE_PATH</span>
 </code></pre></div></td></tr></table></div>
 <hr />
 <ul>

@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge/camera/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge/lidar/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Camera - Robots Inside</title>
+        <title>LIDAR - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#camera" class="md-skip">
+        <a href="#lidar" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Camera
+              LIDAR
             
           </span>
         </div>
@@ -614,58 +614,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ros2" class="md-nav__link">
+  <a href="#ros" class="md-nav__link">
     <span class="md-ellipsis">
-      ROS2
+      ROS
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="ROS2">
+    <nav class="md-nav" aria-label="ROS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ros_gz_bridge" class="md-nav__link">
+  <a href="#cli" class="md-nav__link">
     <span class="md-ellipsis">
-      ros_gz_bridge
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="ros_gz_bridge">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#using-launch-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using launch file
+      cli
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ros_gz_image" class="md-nav__link">
+          <li class="md-nav__item">
+  <a href="#bridge-file" class="md-nav__link">
     <span class="md-ellipsis">
-      ros_gz_image
+      bridge file
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="ros_gz_image">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#rqt" class="md-nav__link">
+  <a href="#launch" class="md-nav__link">
     <span class="md-ellipsis">
-      rqt
+      launch
     </span>
   </a>
   
@@ -701,12 +680,6 @@
       
       
       
-        <span class="md-tag">camera</span>
-      
-    
-      
-      
-      
         <span class="md-tag">gazebo</span>
       
     
@@ -725,6 +698,12 @@
       
       
       
+        <span class="md-tag">lidar</span>
+      
+    
+      
+      
+      
         <span class="md-tag">ros</span>
       
     
@@ -735,7 +714,7 @@
   
 
 
-<h1 id="camera">Camera</h1>
+<h1 id="lidar">LIDAR</h1>
 <h2 id="gazebo">Gazebo</h2>
 <div class="admonition tip">
 <p class="admonition-title">Add sensor plugin to world</p>
@@ -750,7 +729,7 @@
 <a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nt">&lt;/plugin&gt;</span>
 </code></pre></div></td></tr></table></div>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">RGB Camera</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">sensor</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
@@ -769,127 +748,133 @@
 <span class="normal"><a href="#__codelineno-1-17">17</a></span>
 <span class="normal"><a href="#__codelineno-1-18">18</a></span>
 <span class="normal"><a href="#__codelineno-1-19">19</a></span>
-<span class="normal"><a href="#__codelineno-1-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">&lt;sensor</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;camera&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;camera&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span><span class="nt">&lt;pose&gt;</span><span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span><span class="nt">&lt;/pose&gt;</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">&lt;update_rate&gt;</span>10<span class="nt">&lt;/update_rate&gt;</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">&lt;camera&gt;</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span><span class="nt">&lt;camera_info_topic&gt;</span>camera/camera_info<span class="nt">&lt;/camera_info_topic&gt;</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span><span class="nt">&lt;horizontal_fov&gt;</span>1.089<span class="nt">&lt;/horizontal_fov&gt;</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">        </span><span class="nt">&lt;image&gt;</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">            </span><span class="nt">&lt;format&gt;</span>R8G8B8<span class="nt">&lt;/format&gt;</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">            </span><span class="nt">&lt;width&gt;</span>640<span class="nt">&lt;/width&gt;</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">            </span><span class="nt">&lt;height&gt;</span>480<span class="nt">&lt;/height&gt;</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">        </span><span class="nt">&lt;/image&gt;</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">        </span><span class="nt">&lt;clip&gt;</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">            </span><span class="nt">&lt;near&gt;</span>0.05<span class="nt">&lt;/near&gt;</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">            </span><span class="nt">&lt;far&gt;</span>8.0<span class="nt">&lt;/far&gt;</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">        </span><span class="nt">&lt;/clip&gt;</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="nt">&lt;/camera&gt;</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="nt">&lt;topic&gt;</span>camera/image_raw<span class="nt">&lt;/topic&gt;</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">    </span><span class="nt">&lt;gz_frame_id&gt;</span>camera_link_optical<span class="nt">&lt;/gz_frame_id&gt;</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="nt">&lt;/sensor&gt;</span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">&lt;sensor</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;gpu_lidar&#39;</span><span class="w"> </span><span class="na">type=</span><span class="s">&#39;gpu_lidar&#39;</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span><span class="nt">&lt;topic&gt;</span>lidar<span class="nt">&lt;/topic&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">&lt;update_rate&gt;</span>10<span class="nt">&lt;/update_rate&gt;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">&lt;lidar&gt;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">&lt;scan&gt;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span><span class="nt">&lt;horizontal&gt;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span><span class="nt">&lt;samples&gt;</span>640<span class="nt">&lt;/samples&gt;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">        </span><span class="nt">&lt;resolution&gt;</span>1<span class="nt">&lt;/resolution&gt;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">        </span><span class="nt">&lt;min_angle&gt;</span>-1.396263<span class="nt">&lt;/min_angle&gt;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">        </span><span class="nt">&lt;max_angle&gt;</span>1.396263<span class="nt">&lt;/max_angle&gt;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">        </span><span class="nt">&lt;/horizontal&gt;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">        </span><span class="nt">&lt;vertical&gt;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">        </span><span class="nt">&lt;samples&gt;</span>16<span class="nt">&lt;/samples&gt;</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">        </span><span class="nt">&lt;resolution&gt;</span>1<span class="nt">&lt;/resolution&gt;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">        </span><span class="nt">&lt;min_angle&gt;</span>-0.261799<span class="nt">&lt;/min_angle&gt;</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">        </span><span class="nt">&lt;max_angle&gt;</span>0.261799<span class="nt">&lt;/max_angle&gt;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">        </span><span class="nt">&lt;/vertical&gt;</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="nt">&lt;/scan&gt;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">    </span><span class="nt">&lt;range&gt;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">        </span><span class="nt">&lt;min&gt;</span>0.08<span class="nt">&lt;/min&gt;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">        </span><span class="nt">&lt;max&gt;</span>10.0<span class="nt">&lt;/max&gt;</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">        </span><span class="nt">&lt;resolution&gt;</span>0.01<span class="nt">&lt;/resolution&gt;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">    </span><span class="nt">&lt;/range&gt;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">    </span><span class="nt">&lt;/lidar&gt;</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">    </span><span class="nt">&lt;alwaysOn&gt;</span>1<span class="nt">&lt;/alwaysOn&gt;</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="nt">&lt;/sensor&gt;</span>
 </code></pre></div></td></tr></table></div>
-<p><a href="code/camera_world.sdf">download world</a></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gz</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>--echo<span class="w"> </span>-t<span class="w"> </span>/lidar
+</code></pre></div></td></tr></table></div>
+<p><img alt="alt text" src="images/gazebo_lidar_visual.png" /></p>
 <hr />
-<h2 id="ros2">ROS2</h2>
-<p><a href="https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_sim_demos#camera">check ros gz sim demo</a></p>
-<h3 id="ros_gz_bridge">ros_gz_bridge</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>/camera/image_raw@sensor_msgs/msg/Image@gz.msgs.Image
+<h2 id="ros">ROS</h2>
+<h3 id="cli">cli</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>/lidar@sensor_msgs/msg/LaserScan<span class="o">[</span>gz.msgs.LaserScan
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1">#</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="using-launch-file">Using launch file</h4>
-<ul>
-<li>load bridge config from yaml file</li>
-<li>control topic qos</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ros_gz_bridge launch file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-3-10">10</a></span>
-<span class="normal"><a href="#__codelineno-3-11">11</a></span>
-<span class="normal"><a href="#__codelineno-3-12">12</a></span>
-<span class="normal"><a href="#__codelineno-3-13">13</a></span>
-<span class="normal"><a href="#__codelineno-3-14">14</a></span>
-<span class="normal"><a href="#__codelineno-3-15">15</a></span>
-<span class="normal"><a href="#__codelineno-3-16">16</a></span>
-<span class="normal"><a href="#__codelineno-3-17">17</a></span>
-<span class="normal"><a href="#__codelineno-3-18">18</a></span>
-<span class="normal"><a href="#__codelineno-3-19">19</a></span>
-<span class="normal"><a href="#__codelineno-3-20">20</a></span>
-<span class="normal"><a href="#__codelineno-3-21">21</a></span>
-<span class="normal"><a href="#__codelineno-3-22">22</a></span>
-<span class="normal"><a href="#__codelineno-3-23">23</a></span>
-<span class="normal"><a href="#__codelineno-3-24">24</a></span>
-<span class="normal"><a href="#__codelineno-3-25">25</a></span>
-<span class="normal"><a href="#__codelineno-3-26">26</a></span>
-<span class="normal"><a href="#__codelineno-3-27">27</a></span>
-<span class="normal"><a href="#__codelineno-3-28">28</a></span>
-<span class="normal"><a href="#__codelineno-3-29">29</a></span>
-<span class="normal"><a href="#__codelineno-3-30">30</a></span>
-<span class="normal"><a href="#__codelineno-3-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="n">PACKAGE_NAME</span> <span class="o">=</span> <span class="s1">&#39;gz_tutorial&#39;</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">bridge_params</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PACKAGE_NAME</span><span class="p">),</span><span class="s1">&#39;config&#39;</span><span class="p">,</span><span class="s1">&#39;gz_bridge.yaml&#39;</span><span class="p">)</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">ros_gz_bridge</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_bridge&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;parameter_bridge&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a>            <span class="s1">&#39;--ros-args&#39;</span><span class="p">,</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a>            <span class="s1">&#39;-p&#39;</span><span class="p">,</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a>            <span class="sa">f</span><span class="s1">&#39;config_file:=&#39;</span><span class="p">,</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>            <span class="n">bridge_params</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="p">],</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23"></a>            <span class="p">{</span><span class="s1">&#39;use_sim_time&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24"></a>            <span class="p">{</span><span class="s1">&#39;qos_overrides./camera/image_raw.publisher.reliability&#39;</span><span class="p">:</span> <span class="s1">&#39;best_effort&#39;</span><span class="p">}</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="p">],</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="p">)</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27"></a>
-<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">ros_gz_bridge</span><span class="p">)</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a>
-<a id="__codelineno-3-30" name="__codelineno-3-30"></a>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a>    <span class="k">return</span> <span class="n">ld</span>
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gz_bridge.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<h3 id="bridge-file">bridge file</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
 <span class="normal"><a href="#__codelineno-4-2">2</a></span>
 <span class="normal"><a href="#__codelineno-4-3">3</a></span>
 <span class="normal"><a href="#__codelineno-4-4">4</a></span>
-<span class="normal"><a href="#__codelineno-4-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/camera/image_raw&quot;</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/camera/image_raw&quot;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sensor_msgs/msg/Image&quot;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gz.msgs.Image&quot;</span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/lidar&quot;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/lidar&quot;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sensor_msgs/msg/LaserScan&quot;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gz.msgs.LaserScan&quot;</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
 </code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">control image qos</p>
-<p>Add to parameters section</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="p">{</span><span class="err">&#39;qos_overrides./camera/image_raw.publisher.reliabili</span><span class="kc">t</span><span class="err">y&#39;</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;bes</span><span class="kc">t</span><span class="err">_e</span><span class="kc">ff</span><span class="err">or</span><span class="kc">t</span><span class="err">&#39;</span><span class="p">}</span>
+<h3 id="launch">launch</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">imu_bridge.launch.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="n">PKG_BRINGUP</span> <span class="o">=</span> <span class="s1">&#39;turtlebot_bringup&#39;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="n">BRIDGE_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;gz_bridge.yaml&quot;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="n">CONFIG_FOLDER</span> <span class="o">=</span> <span class="s2">&quot;config&quot;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>    <span class="n">bridge_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PKG_BRINGUP</span><span class="p">))</span> \
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>        <span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">CONFIG_FOLDER</span><span class="p">)</span> \
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>        <span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">BRIDGE_CONFIG</span><span class="p">)</span> \
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>        <span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="n">ros_gz_bridge</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;parameter_bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a>            <span class="s1">&#39;--ros-args&#39;</span><span class="p">,</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a>            <span class="s1">&#39;-p&#39;</span><span class="p">,</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a>            <span class="sa">f</span><span class="s2">&quot;config_file:=</span><span class="si">{</span><span class="n">bridge_file</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a>        <span class="p">],</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a>            <span class="p">{</span><span class="s1">&#39;use_sim_time&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a>            <span class="p">{</span><span class="s1">&#39;qos_overrides./imu.publisher.reliability&#39;</span><span class="p">:</span> <span class="s1">&#39;best_effort&#39;</span><span class="p">}</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a>        <span class="p">],</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a>    <span class="p">)</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">ros_gz_bridge</span><span class="p">)</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a>    <span class="k">return</span> <span class="n">ld</span>
 </code></pre></div></td></tr></table></div>
-</div>
-<hr />
-<h2 id="ros_gz_image">ros_gz_image</h2>
-<p>use <a href="http://wiki.ros.org/image_transport">image_transport</a></p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">image transport bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-jazzy-ros-gz-image
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_image<span class="w"> </span>image_bridge<span class="w"> </span>/camera/image_raw
-</code></pre></div></td></tr></table></div>
-<hr />
-<h3 id="rqt">rqt</h3>
-<p><img alt="alt text" src="images/ret_image_view.png" /></p>
 
 
 
