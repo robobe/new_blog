@@ -4,8 +4,9 @@ tags:
     - vscode
     - settings
     - extensions
+    - tasks
 ---
-# VSCode settings and extension for ROS
+# VSCode settings, extension and other configuration for ROS users
 
 ## VSCode extension
 
@@ -50,8 +51,53 @@ tags:
 "JaehyunShim.vscode-ros2"
 ```
 
+---
+
+## VSCode Tasks
+
+```json title="tasks.json"
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Colcon",
+            "type": "shell",
+            "command": "colcon build",
+            "problemMatcher": [],
+            "group": {
+                "isDefault": true,
+                "kind": "build"
+            }
+        }
+    ]
+}
+```
+
+---
 
 ## VSCode settings
+
+### Shell
+#### Run script for every new shell
+
+```json title="settings"
+"terminal.integrated.profiles.linux": {
+        "bash_with_ros": {
+            "path": "bash",
+            "icon": "terminal-bash",
+            "args": [
+                "--rcfile",
+                "${workspaceFolder}/bashrc"
+            ]
+        }
+    },
+"terminal.integrated.defaultProfile.linux": "bash_with_ros"
+```
+
+```bash title="bashrc"
+source install/setup.bash
+```
+
 ### Python
 
 **python.analysis.extraPaths**: The python.analysis.extraPaths setting in Visual Studio Code is used to specify additional directories that the Python language server (Pylance) should include when analyzing your code.

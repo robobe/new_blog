@@ -23,7 +23,9 @@ sudo apt install \
 <details>
     <summary>world with IMU</summary>
 
-enter content
+```xml
+--8<-- "docs/Simulation/Gazebo/sensors/code/imu_world.sdf"
+```
 </details>
 
 ```cpp title="read_imu.cpp"

@@ -26,6 +26,9 @@ tags:
     </div>
 </div>
 
+## Extensions
+[Open VSX Registry](https://open-vsx.org/)
+
 ## Video and posts
 
 ## ToDO: read
@@ -34,5 +37,6 @@ tags:
 ## copilot
 - [ Get to know GitHub Copilot in VS Code and be productive IMMEDIATELY ](https://youtu.be/jXp5D5ZnxGM)
 - [ What's new with Copilot Chat and VS Code - v1.84 ](https://youtu.be/HpzdGAGXFXE)
+- [VS Code Agent Mode Just Changed Everything](https://youtu.be/dutyOc_cAEU)
 
 

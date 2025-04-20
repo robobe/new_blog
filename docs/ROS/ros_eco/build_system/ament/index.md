@@ -3,6 +3,8 @@ tags:
     - ros
     - build
     - ament
+    - hooks
+    - dsv
 ---
 
 # ament
@@ -32,10 +34,11 @@ Setup gazebo environment variables
 - GZ_SIM_RESOURCE_PATH
 
 #### Steps
-- Add the `hook` folder to your package
+- Add the `hooks` folder to your package
 - Add the `dsv.in` file to your package
 - Add the `sh.in` file to your package
 - Add the `ament_environment_hooks` to your `CMakeLists.txt` file
+- Build, Source and check
 
 ```cmake title="CMakeLists.txt"
 ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/hooks/${PROJECT_NAME}.dsv.in")
@@ -48,6 +51,14 @@ prepend-non-duplicate;GZ_SIM_RESOURCE_PATH;share;@CMAKE_INSTALL_PREFIX@/share
 
 ```bash title="ros_gz_example_description.sh.in"
 ament_prepend_unique_value GZ_SIM_RESOURCE_PATH "$AMENT_CURRENT_PREFIX/share/@PROJECT_NAME@/models"
+```
+
+##### check
+- Build
+- source install folder
+
+```bash
+echo $GZ_SIM_RESOURCE_PATH
 ```
 
 ---

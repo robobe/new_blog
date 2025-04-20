@@ -22,6 +22,7 @@
 
 </div>
 
+
 The bridge allows you to connect ROS 2 topics with Gazebo Harmonic topics so you can:
 
 - Control simulation objects from ROS 2 (e.g., publish velocity commands).
@@ -40,7 +41,7 @@ The bridge allows you to connect ROS 2 topics with Gazebo Harmonic topics so you
 
 
 ### bridge yaml config
-[github](https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_bridge#example-5-configuring-the-bridge-via-yaml)
+[github config yaml and message type mapping table](https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_bridge#example-5-configuring-the-bridge-via-yaml){:target="_blank"}
 
 
 ```bash
