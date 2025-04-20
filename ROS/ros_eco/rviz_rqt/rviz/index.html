@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/rviz_rqt/rqt/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/rviz_rqt/rviz/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>RQT - Robots Inside</title>
+        <title>rviz2 - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rqt" class="md-skip">
+        <a href="#rviz2" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RQT
+              rviz2
             
           </span>
         </div>
@@ -607,16 +607,16 @@
         <li class="md-nav__item">
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
-      Install
+      install
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pliugins" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
-      Pliugins
+      usage
     </span>
   </a>
   
@@ -647,7 +647,7 @@
       
       
       
-        <span class="md-tag">rqt</span>
+        <span class="md-tag">rviz</span>
       
     
   </nav>
@@ -657,39 +657,82 @@
   
 
 
-<h1 id="rqt">RQT</h1>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="custom_plugins">
-            <img src="images/custom_rqt.png" width="150" height="150">
-            <p>Custom Plugin</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href="rviz">
-        <img src="images/rviz.png" width="150" height="150">
-        <p></p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href="plotjuggler">
-        <img src="images/plotjuggler.png" width="150" height="150">
-        <p></p>
-        </a>
-    </div>
-
-</div>
-
-<h2 id="install">Install</h2>
-<p>Install RQT with default plugin</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># source the ros folder before run the command</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="si">${</span><span class="nv">ROS_DISTRO</span><span class="si">}</span>-rqt<span class="w"> </span>ros-<span class="si">${</span><span class="nv">ROS_DISTRO</span><span class="si">}</span>-rqt-common-plugins
-</code></pre></div></td></tr></table></div>
-<h2 id="pliugins">Pliugins</h2>
+<h1 id="rviz2">rviz2</h1>
+<p>rviz2 is a visualization tool in ROS 2.</p>
+<p>It provides a 3D GUI to visualize:</p>
 <ul>
-<li><a href="https://rqt-image-overlay.readthedocs.io/en/latest/">RQt Image Overlay</a></li>
+<li>Robot models (URDF)</li>
+<li>Sensor data (e.g., LIDAR, cameras)</li>
+<li>TF transforms</li>
+<li>Path planning</li>
+<li>Maps and occupancy grids</li>
 </ul>
+<h2 id="install">install</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-jazzy-rviz2
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="si">${</span><span class="nv">ROS_DISTRO</span><span class="si">}</span>-rviz2
+</code></pre></div></td></tr></table></div>
+<h2 id="usage">usage</h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">load with config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># rviz2 -d /path/to/config</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">launch file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PathJoinSubstitution</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="n">PKG_BRINGUP</span> <span class="o">=</span> <span class="s2">&quot;turtlebot_bringup&quot;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="n">ld</span> <span class="o">=</span>  <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">config_file</span> <span class="o">=</span> <span class="n">PathJoinSubstitution</span><span class="p">([</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>        <span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PKG_BRINGUP</span><span class="p">),</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>        <span class="s1">&#39;config&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>        <span class="s1">&#39;config.rviz&#39;</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>    <span class="p">])</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="n">rviz_node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>        <span class="n">package</span><span class="o">=</span><span class="s1">&#39;rviz2&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>        <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;rviz2&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rviz2&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>        <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;-d&#39;</span><span class="p">,</span> <span class="n">config_file</span><span class="p">]</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="p">)</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">rviz_node</span><span class="p">)</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    <span class="k">return</span> <span class="n">ld</span>
+</code></pre></div></td></tr></table></div>
 
 
 
