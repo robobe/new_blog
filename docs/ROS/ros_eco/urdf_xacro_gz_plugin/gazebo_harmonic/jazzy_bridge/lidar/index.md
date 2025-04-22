@@ -9,6 +9,11 @@ tags:
 ---
 
 # LIDAR
+Bridge lidar system between gazebo to ros
+lidar sensor send two topics
+
+- /lidar (sensor_msgs/msg/LaserScan) use for 2D lidar
+- /lidar/points (sensor_msgs/msg/PointCloud2) use for 3D lidar
 
 ## Gazebo
 

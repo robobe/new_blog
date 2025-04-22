@@ -18,7 +18,7 @@ tags:
 </plugin>
 ```
 
-```xml tile="imu sensor"
+```xml title="imu sensor"
 <link>
     ...
     <sensor name="imu" type="imu">

@@ -87,21 +87,34 @@ docker pull nvidia/cuda:12.6.0-runtime-ubuntu22.04
 ```bash title="run and share cv build folder"
 # from build folder
 docker run  --gpus all --runtime=nvidia \
--it --rm --hostname test \
--v `pwd`:/tmp/cv \
-nvidia/cuda:12.6.0-runtime-ubuntu22.04 /bin/bash
+    -it --rm --hostname test \
+    -v `pwd`:/tmp/cv \
+    nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04  \
+    /bin/bash
 
 ```
 
+!!! warning "docker image"
+    We can start with docker that the cudnn is preinstall
+
+    ```bash
+    docker pull nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04
+    ```
+
+    ```bash
+    docker pull  nvidia/cuda:12.6.0-runtime-ubuntu22.04 /bin/bash
+    ```
+     
+
 ```bash title="install dependencies"
 apt update
-apt install cudnn9
+apt install cudnn9 # skip if use the preinstall cudnn
 apt install python3
 apt install python3-numpy
 #
 #install all opencv debs
 cd /tmp/cv
-apt -i *.deb
+apt install ./*.deb
 ```
 
 ```bash title="check cuda installation"

@@ -9,6 +9,7 @@ tags:
 ---
 
 # imu
+Bridge IMU sensor from gazebo to ros
 
 ## Gazebo
 

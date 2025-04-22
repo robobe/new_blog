@@ -9,6 +9,7 @@ tags:
 ---
 
 # Camera
+Bridge rgb camera between gazebo to ros
 
 ## Gazebo
 

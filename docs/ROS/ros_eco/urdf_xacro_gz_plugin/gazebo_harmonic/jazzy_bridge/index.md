@@ -22,6 +22,31 @@
 
 </div>
 
+<details>
+    <summary>more</summary>
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="diff-drive">
+            <img src="images/diff-drive.png"  width="150" height="150">
+            <p>Diff drive</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="joint_state_and_pose_publisher">
+            
+            <p>joint state and pose publisher</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="imu">
+        
+            </a>
+    </div>
+
+</div>
+</details>
+
 
 The bridge allows you to connect ROS 2 topics with Gazebo Harmonic topics so you can:
 
