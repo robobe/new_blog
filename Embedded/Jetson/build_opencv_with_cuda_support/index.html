@@ -773,37 +773,47 @@ Pack it using DEB for future use.</p>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
 <span class="normal"><a href="#__codelineno-5-3">3</a></span>
 <span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># from build folder</span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># from build folder</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2"></a>docker<span class="w"> </span>run<span class="w">  </span>--gpus<span class="w"> </span>all<span class="w"> </span>--runtime<span class="o">=</span>nvidia<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a>-it<span class="w"> </span>--rm<span class="w"> </span>--hostname<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a>-v<span class="w"> </span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/tmp/cv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a>nvidia/cuda:12.6.0-runtime-ubuntu22.04<span class="w"> </span>/bin/bash
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span>-it<span class="w"> </span>--rm<span class="w"> </span>--hostname<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span>-v<span class="w"> </span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>:/tmp/cv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span>nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04<span class="w">  </span><span class="se">\</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">    </span>/bin/bash
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install dependencies</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span>
-<span class="normal"><a href="#__codelineno-6-3">3</a></span>
-<span class="normal"><a href="#__codelineno-6-4">4</a></span>
-<span class="normal"><a href="#__codelineno-6-5">5</a></span>
-<span class="normal"><a href="#__codelineno-6-6">6</a></span>
-<span class="normal"><a href="#__codelineno-6-7">7</a></span>
-<span class="normal"><a href="#__codelineno-6-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>apt<span class="w"> </span>update
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>apt<span class="w"> </span>install<span class="w"> </span>cudnn9
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a>apt<span class="w"> </span>install<span class="w"> </span>python3
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a>apt<span class="w"> </span>install<span class="w"> </span>python3-numpy
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="c1">#</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="c1">#install all opencv debs</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="nb">cd</span><span class="w"> </span>/tmp/cv
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a>apt<span class="w"> </span>-i<span class="w"> </span>*.deb
+<div class="admonition warning">
+<p class="admonition-title">docker image</p>
+<p>We can start with docker that the cudnn is preinstall</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">check cuda installation</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span>
-<span class="normal"><a href="#__codelineno-7-3">3</a></span>
-<span class="normal"><a href="#__codelineno-7-4">4</a></span>
-<span class="normal"><a href="#__codelineno-7-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>&gt;&gt;&gt;<span class="w"> </span>import<span class="w"> </span>cv2
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>&gt;&gt;&gt;<span class="w"> </span>cv2.__version__
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="s1">&#39;4.10.0&#39;</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a>&gt;&gt;&gt;<span class="w"> </span>cv2.cuda.getCudaEnabledDeviceCount<span class="o">()</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="m">1</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>docker<span class="w"> </span>pull<span class="w">  </span>nvidia/cuda:12.6.0-runtime-ubuntu22.04<span class="w"> </span>/bin/bash
+</code></pre></div></td></tr></table></div>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install dependencies</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>apt<span class="w"> </span>update
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>apt<span class="w"> </span>install<span class="w"> </span>cudnn9<span class="w"> </span><span class="c1"># skip if use the preinstall cudnn</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>apt<span class="w"> </span>install<span class="w"> </span>python3
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>apt<span class="w"> </span>install<span class="w"> </span>python3-numpy
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="c1">#</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="c1">#install all opencv debs</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="nb">cd</span><span class="w"> </span>/tmp/cv
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>apt<span class="w"> </span>install<span class="w"> </span>./*.deb
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">check cuda installation</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>&gt;&gt;&gt;<span class="w"> </span>import<span class="w"> </span>cv2
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>&gt;&gt;&gt;<span class="w"> </span>cv2.__version__
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="s1">&#39;4.10.0&#39;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>&gt;&gt;&gt;<span class="w"> </span>cv2.cuda.getCudaEnabledDeviceCount<span class="o">()</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="m">1</span>
 </code></pre></div></td></tr></table></div>
 
 
