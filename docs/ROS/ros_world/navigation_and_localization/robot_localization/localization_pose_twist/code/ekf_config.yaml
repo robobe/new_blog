@@ -1,0 +1,34 @@
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: false
+
+    # Sensor topic names
+    twist0: odom_turtle/sensor/twist
+    pose0: pose_turtle/sensor/pose
+
+    # Configuration: which variables to fuse (15 booleans for each topic)
+    # x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az
+    twist0_config: [false, false, false,
+                       false, false, false,
+                       true,  true, false,
+                       false, false, true,
+                       false, false, false]
+
+    pose0_config: [true,  true,  false,
+                   false, false, true,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false]
+
+    # Frame settings
+    base_link_frame: base_link
+    odom_frame: odom
+    world_frame: odom  # or "map" if using GPS/AMCL
+    map_frame: map
+
+    # Output
+    publish_tf: true
+    publish_acceleration: false
+
+    # Frequency
+    frequency: 30.0
