@@ -1,0 +1,28 @@
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        joystick \
+    && rm -rf /var/lib/apt/lists/*
+
+
+
+RUN groupadd -g 107 input
+
+ARG USERNAME=user
+ARG UID=1000
+ARG GID=1000
+
+
+# add new sudo user
+RUN useradd -m $USERNAME && \
+    echo "$USERNAME:$USERNAME" | chpasswd && \
+    usermod --shell /bin/bash $USERNAME && \
+    usermod -aG sudo $USERNAME && \
+    usermod -aG input $USERNAME && \
+    usermod -aG dialout $USERNAME && \
+    mkdir /etc/sudoers.d && \
+    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
+    chmod 0440 /etc/sudoers.d/$USERNAME && \
+    usermod  --uid $UID $USERNAME && \
+    groupmod --gid $GID $USERNAME
+        
+CMD ["/bin/bash"]

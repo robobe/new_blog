@@ -53,6 +53,11 @@ The robot_localization state estimator nodes accept measurements from an arbitra
 Based on these measurements, the state estimators publish the filtered position, orientation and linear and angular velocity (nav_msgs/Odometry) on the **/odometry/filtered** topic and (if enabled) the filtered acceleration on the **/accel/filtered** topics.
 
 
+---
+
+## Demo
+The idea for the demo [The Ros Robot_localization package](https://kapernikov.com/the-ros-robot_localization-package/)
+
 
 ---
 

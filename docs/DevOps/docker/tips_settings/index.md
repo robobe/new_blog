@@ -26,8 +26,3 @@ PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\03
 
 ---
 
-### overlay2 folder
-```bash
-# TODO: check again
-docker builder prune
-```

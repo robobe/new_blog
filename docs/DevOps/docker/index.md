@@ -24,7 +24,7 @@
 
 ## Posts 
 - [Running and Building ARM Docker Containers on x86](docker_build_arm.md)
-
+- [Access Host Devices in Docker](docker_host_devices.md)
 ---
 
 ## To Read
