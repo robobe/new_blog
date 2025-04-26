@@ -43,7 +43,11 @@
         <p>ROS and Gazebo harmonic</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="ros2_messages" tooltip="">
+        <img src="images/ros2_messages.png"  width="150" height="150">
+        <p>ROS2 Messages</p>
+        </a>
+    </div>
 </div>
 
-## Posts
-- [ROS2 Custom interface](ros2_custom_interface.md)

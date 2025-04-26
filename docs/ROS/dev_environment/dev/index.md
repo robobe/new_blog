@@ -23,12 +23,15 @@ tags:
         </a>
     </div>
     <div class="grid-item">
+    <img src="images/dev_vscode_project_template.png" width="150" height="150">
         <a href="project_templates">
         <p>projects template</p>
         </a>
+        </img>
     </div>
     
 </div>
+
 
 ## Project Docker images 
 
