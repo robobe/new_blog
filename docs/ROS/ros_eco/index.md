@@ -17,7 +17,7 @@ Ros packages and tools that are used in the ROS eco system.
     </div>
     <div class="grid-item">
         <a href="packages">
-            <img src="images/ros2.png"   width="150" height="150">
+            <img src="images/ros_packages.png"   width="150" height="150">
             <p>ROS2 Packages</p>
         </a>
     </div>
@@ -33,7 +33,7 @@ Ros packages and tools that are used in the ROS eco system.
            </div>
     <div class="grid-item">
            <a href="build_system">
-               <img src="images/colcon.png"  width="150" height="150">
+               <img src="images/build_system.png"  width="150" height="150">
                <p>Build System</p>
                </a>
            </div>
@@ -45,4 +45,3 @@ Ros packages and tools that are used in the ROS eco system.
            </div>
 
 </div>
-
