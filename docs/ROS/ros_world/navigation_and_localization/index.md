@@ -11,9 +11,9 @@
             </a>
         </div>
         <div class="grid-item">
-             <a href="perception">
-                <img src="images/perception.png"  width="150" height="150">
-                <p>tbd</p>
+             <a href="nav2">
+                <img src="images/nav2.png"  width="150" height="150">
+                <p>NAV2</p>
             </a>
         </div>
     <div class="grid-item">

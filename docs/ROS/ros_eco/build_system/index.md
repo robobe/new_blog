@@ -21,11 +21,13 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <p>TBD</p>
+        <a href="rosdep_bloom">
+            <img src="images/bloom.png" width="150" height="150">
+            <p>bloom and rosdep</p>
+        </a>
     </div>
     
 </div>
-
 [ROS: The build system](https://docs.ros.org/en/jazzy/Concepts/Advanced/About-Build-System.html)
 
 ## colcon-clean

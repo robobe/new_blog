@@ -5,14 +5,8 @@ Ros packages and tools that are used in the ROS eco system.
 <div class="grid-container">
     <div class="grid-item">
         <a href="launch">
-            <img src="images/launch.png"  width="150" height="150">
+            <img src="images/ros_launch.png"  width="150" height="150">
             <p>ROS2 launch</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="rosdep_bloom">
-            <img src="images/ros2.png"   width="150" height="150">
-            <p>rosdep bloom</p>
         </a>
     </div>
     <div class="grid-item">
@@ -27,19 +21,19 @@ Ros packages and tools that are used in the ROS eco system.
 <div class="grid-container">
    <div class="grid-item">
            <a href="urdf_xacro_gz_plugin">
-               <img src="images/urdf_xacro.png"  width="150" height="150">
+               <img src="images/ros_urdf.png"  width="150" height="150">
                <p>URDF, XACRO and Gazebo</p>
                </a>
            </div>
     <div class="grid-item">
            <a href="build_system">
-               <img src="images/build_system.png"  width="150" height="150">
+               <img src="images/ros_build_system.png"  width="150" height="150">
                <p>Build System</p>
                </a>
            </div>
     <div class="grid-item">
            <a href="rviz_rqt">
-               <img src="images/rviz_rqt.png"  width="150" height="150">
+               <img src="images/ros_tools.png"  width="150" height="150">
                <p>rviz, rqt and other tools</p>
                </a>
            </div>
