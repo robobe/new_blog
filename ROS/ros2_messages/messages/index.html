@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/dev_environment/dev/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros2_messages/messages/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Using VSCode devcontainer and docker as dev environment - Robots Inside</title>
+        <title>ROS2 Messages - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#using-vscode-devcontainer-and-docker-as-dev-environment" class="md-skip">
+        <a href="#ros2-messages" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Using VSCode devcontainer and docker as dev environment
+              ROS2 Messages
             
           </span>
         </div>
@@ -605,46 +605,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#project-docker-images" class="md-nav__link">
+  <a href="#message-with-covariance" class="md-nav__link">
     <span class="md-ellipsis">
-      Project Docker images
+      Message with covariance
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Project Docker images">
+    <nav class="md-nav" aria-label="Message with covariance">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#common-ros-image" class="md-nav__link">
+  <a href="#demo-posewithcovariance" class="md-nav__link">
     <span class="md-ellipsis">
-      Common ROS image
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#project-runtime" class="md-nav__link">
-    <span class="md-ellipsis">
-      Project runtime
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#project-devbuild" class="md-nav__link">
-    <span class="md-ellipsis">
-      Project Dev/Build
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ongoing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ongoing
+      Demo: PoseWithCovariance
     </span>
   </a>
   
@@ -674,31 +647,31 @@
       
       
       
-        <span class="md-tag">dev environment</span>
+        <span class="md-tag">PoseWithCovariance</span>
       
     
       
       
       
-        <span class="md-tag">devcontainer</span>
+        <span class="md-tag">covariance</span>
       
     
       
       
       
-        <span class="md-tag">docker</span>
+        <span class="md-tag">message</span>
       
     
       
       
       
-        <span class="md-tag">ros</span>
+        <span class="md-tag">ros2</span>
       
     
       
       
       
-        <span class="md-tag">vscode</span>
+        <span class="md-tag">stamped</span>
       
     
   </nav>
@@ -708,53 +681,37 @@
   
 
 
-<h1 id="using-vscode-devcontainer-and-docker-as-dev-environment">Using VSCode devcontainer and docker as dev environment</h1>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="dev_container">
-        <img src="images/dev_container.png" width="150" height="150">
-        <p>devcontainer</p>
-        </a>
-    </div>
-    <div class="grid-item">
-     <a href="remote_ssh">
-        <img src="images/remote_ssh.png" width="150" height="150">
-        <p>remote</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <img src="images/dev_vscode_project_template.png" width="150" height="150">
-        <a href="project_templates">
-        <p>projects template</p>
-        </a>
-        </img>
-    </div>
-
-</div>
-
-<h2 id="project-docker-images">Project Docker images</h2>
-<p><img alt="" src="images/docker_dev_layers.drawio.png" /></p>
-<h3 id="common-ros-image">Common ROS image</h3>
-<p>Docker file base on <code>ubuntu</code> base image version depend on ROS version. 
-It can be base on <code>nvidia</code> cuda image.</p>
-<p>The image include <code>ros core</code> installation and common dev tools , it add none root user name <code>user</code> (id 1000)</p>
-<p>TBD: include gazebo in the image (current version include it)</p>
-<h3 id="project-runtime">Project runtime</h3>
-<p>Docker file base on <code>common_ros</code> image, it include all project dependencies <code>deb</code>,<code>python</code> and others.<br />
-It use for check project debian (deb) package installation.<br />
-The main propose it to be the docker image for Application/project production deployment.<br />
-TBD: use this image for CI/CD</p>
-<h3 id="project-devbuild">Project Dev/Build</h3>
-<p>Docker file base on <code>runtime</code> image, it include all other tool for development, test and build.
-Include ROS dev tools and other helper tools for day to day development.</p>
-<h3 id="ongoing">Ongoing</h3>
-<p>Dockerfile That use by <code>devcontainer</code> it lite Dockerfile for all things and ongoing installation.
-The idea is to move the ongoing installation and settings to the project runtime and dev images.
-Keep the <code>devcontainer</code> Dockerfile lite and fast to build.</p>
-<div class="admonition note">
-<p class="admonition-title">TBD</p>
-<p>Separate the <code>ros common</code> image to <code>OS</code> and <code>ROS Core</code> images.</p>
-</div>
+<h1 id="ros2-messages">ROS2 Messages</h1>
+<h2 id="message-with-covariance">Message with covariance</h2>
+<h3 id="demo-posewithcovariance">Demo: PoseWithCovariance</h3>
+<p>geometry_msgs/msg/PoseWithCovariance</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>geometry_msgs/msg/PoseWithCovariance
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Pose</li>
+<li>position (x,y,z)</li>
+<li>orientation (q)</li>
+<li>covariance (float64[36])</li>
+</ul>
+<p><strong>Covariance Matrix</strong> : A 6*6 matrix representing uncertainties and correlations for the 6 degree of freedom (DoF)
+    - x,y,z
+    - roll, pith, yaw</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">pose_covariance</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>    <span class="mf">0.0025</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="c1"># x</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0025</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>  <span class="c1"># y</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>   <span class="c1"># z</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>   <span class="c1"># roll</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>   <span class="c1"># pitch</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0001</span>  <span class="c1"># yaw</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
 
 
 
