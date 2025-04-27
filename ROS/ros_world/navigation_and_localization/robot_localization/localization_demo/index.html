@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_world/navigation_and_localization/robot_localization/localization_pose_twist/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros_world/navigation_and_localization/robot_localization/localization_demo/">
       
       
       
@@ -649,8 +649,17 @@
 
 
 <h1 id="robot-localization-using-pose-and-twist-messages">Robot localization using pose and twist messages</h1>
-<p>Demo using turtlesim</p>
-<h2 id="config">config</h2>
+<p>Using turtlesim read turtle odometry and create two sensors</p>
+<p>Botch sensors add random noise and set sensor covariance</p>
+<ul>
+<li>Position: publish PoseWithCovarianceStamped message</li>
+<li>Velocity: publish TwistWithCovarianceStamped message</li>
+</ul>
+<p>Run two robot_localization:</p>
+<ul>
+<li>odom -&gt; base_link (config/ekf_odom.yaml)</li>
+<li>map -&gt; odom (config/ekf_map.yaml)</li>
+</ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -670,54 +679,29 @@
 <span class="normal"><a href="#__codelineno-0-17">17</a></span>
 <span class="normal"><a href="#__codelineno-0-18">18</a></span>
 <span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span>
-<span class="normal"><a href="#__codelineno-0-23">23</a></span>
-<span class="normal"><a href="#__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#__codelineno-0-31">31</a></span>
-<span class="normal"><a href="#__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#__codelineno-0-33">33</a></span>
-<span class="normal"><a href="#__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">ekf_filter_node</span><span class="p">:</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">use_sim_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="c1"># Sensor topic names</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="nt">twist0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom_turtle/sensor/twist</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nt">pose0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pose_turtle/sensor/pose</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="c1"># Configuration: which variables to fuse (15 booleans for each topic)</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="c1"># x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nt">twist0_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">                       </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="nt">pose0_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">false</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="c1"># Frame settings</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="nt">base_link_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">base_link</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">    </span><span class="nt">odom_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="nt">world_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom</span><span class="w">  </span><span class="c1"># or &quot;map&quot; if using GPS/AMCL</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="nt">map_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">map</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="c1"># Output</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">    </span><span class="nt">publish_tf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">    </span><span class="nt">publish_acceleration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a>
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">    </span><span class="c1"># Frequency</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30.0</span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>turtlesim_loc
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├──<span class="w"> </span>CMakeLists.txt
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>├──<span class="w"> </span>config
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│<span class="w">   </span>├──<span class="w"> </span>ekf_map.yaml
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>│<span class="w">   </span>└──<span class="w"> </span>ekf_odom.yaml
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>├──<span class="w"> </span>launch
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│<span class="w">   </span>└──<span class="w"> </span>loc_sim.launch.py
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>├──<span class="w"> </span>package.xml
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>├──<span class="w"> </span>tmux
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>│<span class="w">   </span>└──<span class="w"> </span>sim.yaml
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>└──<span class="w"> </span>turtlesim_loc
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span>├──<span class="w"> </span>__init__.py
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span>├──<span class="w"> </span>pose_sim.py
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span>├──<span class="w"> </span>sensors
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span>│<span class="w">   </span>├──<span class="w"> </span>__init__.py
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span>│<span class="w">   </span>├──<span class="w"> </span>position.py
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span>│<span class="w">   </span>└──<span class="w"> </span>twist.py
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span>└──<span class="w"> </span>transforms
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">        </span>├──<span class="w"> </span>__init__.py
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">        </span>└──<span class="w"> </span>tf_visual.py
+</code></pre></div></td></tr></table></div>
+<h2 id="config">config</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>
 </code></pre></div></td></tr></table></div>
 
 

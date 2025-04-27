@@ -620,6 +620,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="How it's work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tf" class="md-nav__link">
+    <span class="md-ellipsis">
+      TF
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sensor flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -711,13 +735,30 @@
 <li><strong>geometry_msgs/TwistWithCovarianceStamped</strong>: linear and angular velocity</li>
 </ul>
 <p>Based on these measurements, the state estimators publish the filtered position, orientation and linear and angular velocity (nav_msgs/Odometry) on the <strong>/odometry/filtered</strong> topic and (if enabled) the filtered acceleration on the <strong>/accel/filtered</strong> topics.</p>
+<h3 id="tf">TF</h3>
+<p>robot_localization publish one of the tf's
+- odom -&gt; base_link
+- map -&gt; odom</p>
+<p>Usually we run two estimator</p>
+<ul>
+<li><strong>odom → base_link</strong> transform, which gets all continuous inputs</li>
+<li><strong>map → odom</strong> transform, which gets all (both continuous and non-continuous)</li>
+</ul>
+<h3 id="sensor-flow">Sensor flow</h3>
+<ul>
+<li><strong>continuous sensors</strong> send data in high rate and regularly like imu and wheel odometry (&gt;10hz)</li>
+<li><strong>none-continuous sensor</strong> send data in low rate like gps (&lt;10 hz) and can be expected non-regularly interval.</li>
+</ul>
+<p>This very important to the filter how much trust to put on <strong>prediction</strong> and how aggressively to <strong>correct</strong> on sensor update</p>
 <hr />
 <h2 id="demo">Demo</h2>
-<p>The idea for the demo <a href="https://kapernikov.com/the-ros-robot_localization-package/">The Ros Robot_localization package</a></p>
+<p>Use turtlesim to simulate robot_localization package usage<br />
+The idea for the demo <a href="https://kapernikov.com/the-ros-robot_localization-package/" target="_blank">The Ros Robot_localization package</a></p>
+<p><a href="localization_demo">Read more</a></p>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://kapernikov.com/the-ros-robot_localization-package/">The Ros Robot_localization package</a></li>
+<li><a href="https://kapernikov.com/the-ros-robot_localization-package/" target="_blank">The Ros Robot_localization package</a></li>
 </ul>
 
 
