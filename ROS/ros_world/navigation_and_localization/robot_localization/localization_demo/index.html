@@ -611,6 +611,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launch-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch demo
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -650,12 +665,12 @@
 
 <h1 id="robot-localization-using-pose-and-twist-messages">Robot localization using pose and twist messages</h1>
 <p>Using turtlesim read turtle odometry and create two sensors</p>
-<p>Botch sensors add random noise and set sensor covariance</p>
+<p>Both sensors add random noise and set sensor covariance</p>
 <ul>
 <li>Position: publish PoseWithCovarianceStamped message</li>
 <li>Velocity: publish TwistWithCovarianceStamped message</li>
 </ul>
-<p>Run two robot_localization:</p>
+<p>Run two robot_localization nodes:</p>
 <ul>
 <li>odom -&gt; base_link (config/ekf_odom.yaml)</li>
 <li>map -&gt; odom (config/ekf_map.yaml)</li>
@@ -701,7 +716,543 @@
 <a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">        </span>└──<span class="w"> </span>tf_visual.py
 </code></pre></div></td></tr></table></div>
 <h2 id="config">config</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>
+<details>
+    <summary>map -> odom estimator</summary>
+
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">ekf_filter_node</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">use_sim_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="c1"># Sensor topic names</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="nt">twist0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom_turtle/sensor/twist</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">pose0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pose_turtle/sensor/pose</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="c1"># Configuration: which variables to fuse (15 booleans for each topic)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="c1"># x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="nt">twist0_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">                       </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="nt">pose0_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">                   </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">    </span><span class="c1"># Frame settings</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">    </span><span class="nt">base_link_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">base_link</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">    </span><span class="nt">odom_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="nt">world_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">map</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">    </span><span class="nt">map_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">map</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">    </span><span class="c1"># Output</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="w">    </span><span class="nt">publish_tf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="w">    </span><span class="nt">publish_acceleration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">    </span><span class="c1"># Frequency</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30.0</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="w">    </span><span class="nt">two_d_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<details>
+    <summary>odom -> base_link estimator</summary>
+
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">ekf_filter_node</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">use_sim_time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="c1"># Sensor topic names</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="nt">twist0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom_turtle/sensor/twist</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="c1"># Configuration: which variables to fuse (15 booleans for each topic)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="c1"># x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="nt">twist0_config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">                       </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w">  </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">                       </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">false</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">    </span><span class="c1"># Frame settings</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">    </span><span class="nt">base_link_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">base_link</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="nt">odom_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">    </span><span class="nt">world_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">odom</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">    </span><span class="nt">map_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">map</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">    </span><span class="c1"># Output</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">    </span><span class="nt">publish_tf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="nt">publish_acceleration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">    </span><span class="c1"># Frequency</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">    </span><span class="nt">two_d_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<p>The two `robot_localization" publish TF</p>
+<ul>
+<li>map-&gt; odom</li>
+<li>odom -&gt; base_link</li>
+</ul>
+<p>We use the TF to draw/simulate the fuse turtle</p>
+<details>
+    <summary>fuse turtle visual</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-3-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-3-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-3-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-3-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-3-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-3-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-3-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-3-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-3-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-3-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-3-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-3-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-3-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-3-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-3-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-3-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-3-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-3-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-3-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-3-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-3-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-3-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-3-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-3-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-3-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-3-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-3-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-3-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-3-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-3-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-3-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-3-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-3-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-3-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-3-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-3-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-3-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-3-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-3-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-3-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-3-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-3-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-3-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-3-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-3-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-3-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-3-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-3-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-3-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-3-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-3-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-3-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-3-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-3-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-3-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-3-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-3-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-3-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-3-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-3-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-3-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-3-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-3-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-3-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-3-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-3-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-3-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-3-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-3-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-3-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-3-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-3-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-3-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-3-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-3-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-3-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-3-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-3-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-3-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-3-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-3-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-3-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-3-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-3-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-3-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-3-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-3-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-3-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-3-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-3-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-3-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-3-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-3-100">100</a></span>
+<span class="normal"><a href="#__codelineno-3-101">101</a></span>
+<span class="normal"><a href="#__codelineno-3-102">102</a></span>
+<span class="normal"><a href="#__codelineno-3-103">103</a></span>
+<span class="normal"><a href="#__codelineno-3-104">104</a></span>
+<span class="normal"><a href="#__codelineno-3-105">105</a></span>
+<span class="normal"><a href="#__codelineno-3-106">106</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1"># https://github.com/Kapernikov/ros_robot_localization_tutorial/blob/master/ros-ws/src/robot_localization_demo/src/transforms/transformation_visualization_node.cpp</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">turtlesim.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">Spawn</span><span class="p">,</span> <span class="n">SetPen</span><span class="p">,</span> <span class="n">TeleportAbsolute</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf2_ros</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformListener</span><span class="p">,</span> <span class="n">Buffer</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tf2_ros</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.time</span><span class="w"> </span><span class="kn">import</span> <span class="n">Time</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.duration</span><span class="w"> </span><span class="kn">import</span> <span class="n">Duration</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf2_geometry_msgs</span><span class="w"> </span><span class="kn">import</span> <span class="n">do_transform_pose</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pose</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="n">SRV_SPAWN</span> <span class="o">=</span> <span class="s2">&quot;/spawn&quot;</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="n">ROBOT_NAME</span> <span class="o">=</span> <span class="s2">&quot;filter_turtle&quot;</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="n">SRV_TELEPORT</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">ROBOT_NAME</span><span class="si">}</span><span class="s2">/teleport_absolute&quot;</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="k">class</span><span class="w"> </span><span class="nc">MyNode</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="n">node_name</span><span class="o">=</span><span class="s2">&quot;minimal&quot;</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__last_call</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__update_counter</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__spawn_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span><span class="n">Spawn</span><span class="p">,</span> <span class="n">SRV_SPAWN</span><span class="p">)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__spawn_client</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">timeout_sec</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Service not available. Retrying... &quot;</span><span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__spawn</span><span class="p">()</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">__teleport_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span><span class="n">TeleportAbsolute</span><span class="p">,</span> <span class="n">SRV_TELEPORT</span><span class="p">)</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__teleport_client</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">timeout_sec</span><span class="o">=</span><span class="mf">3.0</span><span class="p">):</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Service teleport not available. Retrying... &quot;</span><span class="p">)</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="c1"># Create a buffer and a listener</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span> <span class="o">=</span> <span class="n">Buffer</span><span class="p">()</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span> <span class="o">=</span> <span class="n">TransformListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="c1"># Timer to periodically lookup transform</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__timer_callback</span><span class="p">)</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__spawn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        <span class="n">request</span> <span class="o">=</span> <span class="n">Spawn</span><span class="o">.</span><span class="n">Request</span><span class="p">()</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>        <span class="n">request</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">ROBOT_NAME</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        <span class="n">request</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">5.55</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>        <span class="n">request</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">5.55</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>        <span class="n">future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__spawn_client</span><span class="o">.</span><span class="n">call_async</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>        <span class="n">rclpy</span><span class="o">.</span><span class="n">spin_until_future_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">)</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>        <span class="k">if</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Turtle spawned successfully: </span><span class="si">{</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to spawn turtle: </span><span class="si">{</span><span class="n">future</span><span class="o">.</span><span class="n">exception</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>        <span class="n">SRV_SET_PEN</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">ROBOT_NAME</span><span class="si">}</span><span class="s2">/set_pen&quot;</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>        <span class="n">set_pen_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_client</span><span class="p">(</span><span class="n">SetPen</span><span class="p">,</span> <span class="n">SRV_SET_PEN</span><span class="p">)</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="n">set_pen_client</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">timeout_sec</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Service set_pen not available. Retrying... &quot;</span><span class="p">)</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>        <span class="n">request</span> <span class="o">=</span> <span class="n">SetPen</span><span class="o">.</span><span class="n">Request</span><span class="p">()</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>        <span class="n">request</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>        <span class="n">request</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="mi">255</span> 
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>        <span class="n">request</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>        <span class="n">request</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">3</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a>        <span class="n">request</span><span class="o">.</span><span class="n">off</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a>        <span class="n">future</span> <span class="o">=</span> <span class="n">set_pen_client</span><span class="o">.</span><span class="n">call_async</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a>        <span class="n">rclpy</span><span class="o">.</span><span class="n">spin_until_future_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">)</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65"></a>        <span class="k">if</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-66" name="__codelineno-3-66"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Turtle &#39;set pen&#39; successfully: </span><span class="si">{</span><span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to &#39;set pen&#39; turtle: </span><span class="si">{</span><span class="n">future</span><span class="o">.</span><span class="n">exception</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69"></a>
+<a id="__codelineno-3-70" name="__codelineno-3-70"></a>
+<a id="__codelineno-3-71" name="__codelineno-3-71"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__timer_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-72" name="__codelineno-3-72"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73"></a>            <span class="n">trans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="o">.</span><span class="n">lookup_transform</span><span class="p">(</span>
+<a id="__codelineno-3-74" name="__codelineno-3-74"></a>                <span class="n">target_frame</span><span class="o">=</span><span class="s1">&#39;map&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-75" name="__codelineno-3-75"></a>                <span class="n">source_frame</span><span class="o">=</span><span class="s1">&#39;base_link&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-76" name="__codelineno-3-76"></a>                <span class="n">time</span><span class="o">=</span><span class="n">Time</span><span class="p">(),</span>  <span class="c1"># &quot;now&quot;</span>
+<a id="__codelineno-3-77" name="__codelineno-3-77"></a>                <span class="n">timeout</span><span class="o">=</span><span class="n">Duration</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<a id="__codelineno-3-78" name="__codelineno-3-78"></a>            <span class="p">)</span>
+<a id="__codelineno-3-79" name="__codelineno-3-79"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+<a id="__codelineno-3-80" name="__codelineno-3-80"></a>                <span class="sa">f</span><span class="s2">&quot;Transform: Translation = (</span><span class="si">{</span><span class="n">trans</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">trans</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">trans</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81"></a>            <span class="p">)</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82"></a>        <span class="k">except</span> <span class="p">(</span><span class="n">tf2_ros</span><span class="o">.</span><span class="n">LookupException</span><span class="p">,</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ConnectivityException</span><span class="p">,</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">ExtrapolationException</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-3-83" name="__codelineno-3-83"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Could not transform: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-84" name="__codelineno-3-84"></a>
+<a id="__codelineno-3-85" name="__codelineno-3-85"></a>
+<a id="__codelineno-3-86" name="__codelineno-3-86"></a>        <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">()</span>
+<a id="__codelineno-3-87" name="__codelineno-3-87"></a>        <span class="n">new_pose</span> <span class="o">=</span> <span class="n">do_transform_pose</span><span class="p">(</span><span class="n">pose</span><span class="p">,</span> <span class="n">trans</span><span class="p">)</span>
+<a id="__codelineno-3-88" name="__codelineno-3-88"></a>        <span class="n">request</span> <span class="o">=</span> <span class="n">TeleportAbsolute</span><span class="o">.</span><span class="n">Request</span><span class="p">()</span>
+<a id="__codelineno-3-89" name="__codelineno-3-89"></a>        <span class="n">request</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">new_pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
+<a id="__codelineno-3-90" name="__codelineno-3-90"></a>        <span class="n">request</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">new_pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
+<a id="__codelineno-3-91" name="__codelineno-3-91"></a>        <span class="n">request</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-3-92" name="__codelineno-3-92"></a>        <span class="n">future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__teleport_client</span><span class="o">.</span><span class="n">call_async</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<a id="__codelineno-3-93" name="__codelineno-3-93"></a>        <span class="n">future</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__teleport_response_handler</span><span class="p">)</span>
+<a id="__codelineno-3-94" name="__codelineno-3-94"></a>
+<a id="__codelineno-3-95" name="__codelineno-3-95"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__teleport_response_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">):</span>
+<a id="__codelineno-3-96" name="__codelineno-3-96"></a>        <span class="k">pass</span>
+<a id="__codelineno-3-97" name="__codelineno-3-97"></a>
+<a id="__codelineno-3-98" name="__codelineno-3-98"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-3-99" name="__codelineno-3-99"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+<a id="__codelineno-3-100" name="__codelineno-3-100"></a>    <span class="n">node</span> <span class="o">=</span> <span class="n">MyNode</span><span class="p">()</span>
+<a id="__codelineno-3-101" name="__codelineno-3-101"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-3-102" name="__codelineno-3-102"></a>    <span class="n">node</span><span class="o">.</span><span class="n">destroy_node</span><span class="p">()</span>
+<a id="__codelineno-3-103" name="__codelineno-3-103"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<a id="__codelineno-3-104" name="__codelineno-3-104"></a>
+<a id="__codelineno-3-105" name="__codelineno-3-105"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-3-106" name="__codelineno-3-106"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<h3 id="launch-demo">Launch demo</h3>
+<ul>
+<li>terminal 1: launch localization and all sensors</li>
+<li>terminal 2: run teleoop</li>
+<li>termianl 3: run fuse turtle visual</li>
+</ul>
+<details>
+    <summary>launch </summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span>
+<span class="normal"><a href="#__codelineno-4-44">44</a></span>
+<span class="normal"><a href="#__codelineno-4-45">45</a></span>
+<span class="normal"><a href="#__codelineno-4-46">46</a></span>
+<span class="normal"><a href="#__codelineno-4-47">47</a></span>
+<span class="normal"><a href="#__codelineno-4-48">48</a></span>
+<span class="normal"><a href="#__codelineno-4-49">49</a></span>
+<span class="normal"><a href="#__codelineno-4-50">50</a></span>
+<span class="normal"><a href="#__codelineno-4-51">51</a></span>
+<span class="normal"><a href="#__codelineno-4-52">52</a></span>
+<span class="normal"><a href="#__codelineno-4-53">53</a></span>
+<span class="normal"><a href="#__codelineno-4-54">54</a></span>
+<span class="normal"><a href="#__codelineno-4-55">55</a></span>
+<span class="normal"><a href="#__codelineno-4-56">56</a></span>
+<span class="normal"><a href="#__codelineno-4-57">57</a></span>
+<span class="normal"><a href="#__codelineno-4-58">58</a></span>
+<span class="normal"><a href="#__codelineno-4-59">59</a></span>
+<span class="normal"><a href="#__codelineno-4-60">60</a></span>
+<span class="normal"><a href="#__codelineno-4-61">61</a></span>
+<span class="normal"><a href="#__codelineno-4-62">62</a></span>
+<span class="normal"><a href="#__codelineno-4-63">63</a></span>
+<span class="normal"><a href="#__codelineno-4-64">64</a></span>
+<span class="normal"><a href="#__codelineno-4-65">65</a></span>
+<span class="normal"><a href="#__codelineno-4-66">66</a></span>
+<span class="normal"><a href="#__codelineno-4-67">67</a></span>
+<span class="normal"><a href="#__codelineno-4-68">68</a></span>
+<span class="normal"><a href="#__codelineno-4-69">69</a></span>
+<span class="normal"><a href="#__codelineno-4-70">70</a></span>
+<span class="normal"><a href="#__codelineno-4-71">71</a></span>
+<span class="normal"><a href="#__codelineno-4-72">72</a></span>
+<span class="normal"><a href="#__codelineno-4-73">73</a></span>
+<span class="normal"><a href="#__codelineno-4-74">74</a></span>
+<span class="normal"><a href="#__codelineno-4-75">75</a></span>
+<span class="normal"><a href="#__codelineno-4-76">76</a></span>
+<span class="normal"><a href="#__codelineno-4-77">77</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeclareLaunchArgument</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncludeLaunchDescription</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.launch_description_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchConfiguration</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PathJoinSubstitution</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="n">PKG</span> <span class="o">=</span> <span class="s2">&quot;turtlesim_loc&quot;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>    <span class="n">ekf_config_odom</span> <span class="o">=</span> <span class="n">PathJoinSubstitution</span><span class="p">([</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>        <span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PKG</span><span class="p">),</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a>        <span class="s1">&#39;config&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a>        <span class="s1">&#39;ekf_odom.yaml&#39;</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a>    <span class="p">])</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a>    <span class="n">ekf_config_map</span> <span class="o">=</span> <span class="n">PathJoinSubstitution</span><span class="p">([</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a>        <span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PKG</span><span class="p">),</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a>        <span class="s1">&#39;config&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a>        <span class="s1">&#39;ekf_map.yaml&#39;</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a>    <span class="p">])</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a>    <span class="n">turtle</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a>        <span class="n">package</span><span class="o">=</span><span class="s1">&#39;turtlesim&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a>        <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;turtlesim_node&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a>        <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a>    <span class="n">position_sensor_emulation</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a>        <span class="n">package</span><span class="o">=</span><span class="s1">&#39;turtlesim_loc&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a>        <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;position.py&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a>        <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a>    <span class="n">twist_sensor_emulation</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a>        <span class="n">package</span><span class="o">=</span><span class="s1">&#39;turtlesim_loc&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a>        <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;twist.py&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a>        <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a>
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a>    <span class="n">teleop</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a>        <span class="n">package</span><span class="o">=</span><span class="s1">&#39;turtlesim&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a>        <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;turtle_teleop_key&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47"></a>        <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48"></a>    <span class="c1"># ros2 run robot_localization ekf_node --ros-args --params-file /workspace/src/localiztion_demo/turtlesim_loc/config/ekf.yaml --log-level info</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49"></a>    <span class="n">ekf_node_odom</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50"></a>            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;robot_localization&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51"></a>            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;ekf_node&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52"></a>            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ekf_filter_node&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53"></a>            <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54"></a>            <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">ekf_config_odom</span><span class="p">],</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55"></a>            <span class="n">remappings</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-4-56" name="__codelineno-4-56"></a>                <span class="p">(</span><span class="s1">&#39;odometry/filtered&#39;</span><span class="p">,</span> <span class="s1">&#39;odometry/filtered_odom&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-57" name="__codelineno-4-57"></a>            <span class="p">]</span>
+<a id="__codelineno-4-58" name="__codelineno-4-58"></a>        <span class="p">)</span>
+<a id="__codelineno-4-59" name="__codelineno-4-59"></a>
+<a id="__codelineno-4-60" name="__codelineno-4-60"></a>    <span class="n">ekf_node_map</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-4-61" name="__codelineno-4-61"></a>            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;robot_localization&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-62" name="__codelineno-4-62"></a>            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;ekf_node&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-63" name="__codelineno-4-63"></a>            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ekf_filter_node&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-64" name="__codelineno-4-64"></a>            <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-65" name="__codelineno-4-65"></a>            <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">ekf_config_map</span><span class="p">],</span>
+<a id="__codelineno-4-66" name="__codelineno-4-66"></a>            <span class="n">remappings</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-4-67" name="__codelineno-4-67"></a>                <span class="p">(</span><span class="s1">&#39;odometry/filtered&#39;</span><span class="p">,</span> <span class="s1">&#39;odometry/filtered_map&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-68" name="__codelineno-4-68"></a>            <span class="p">]</span>
+<a id="__codelineno-4-69" name="__codelineno-4-69"></a>        <span class="p">)</span>
+<a id="__codelineno-4-70" name="__codelineno-4-70"></a>
+<a id="__codelineno-4-71" name="__codelineno-4-71"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">turtle</span><span class="p">)</span>
+<a id="__codelineno-4-72" name="__codelineno-4-72"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">position_sensor_emulation</span><span class="p">)</span>
+<a id="__codelineno-4-73" name="__codelineno-4-73"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">twist_sensor_emulation</span><span class="p">)</span>
+<a id="__codelineno-4-74" name="__codelineno-4-74"></a>    <span class="c1"># ld.add_action(teleop)</span>
+<a id="__codelineno-4-75" name="__codelineno-4-75"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">ekf_node_map</span><span class="p">)</span>
+<a id="__codelineno-4-76" name="__codelineno-4-76"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">ekf_node_odom</span><span class="p">)</span>
+<a id="__codelineno-4-77" name="__codelineno-4-77"></a>    <span class="k">return</span> <span class="n">ld</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 1</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 3</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>
 </code></pre></div></td></tr></table></div>
 
 

@@ -598,6 +598,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gpg-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      gpg keys
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -632,13 +649,76 @@
 
 
 <h1 id="aptly">Aptly</h1>
-<p>Aptly is a swiss army knife for Debian repository management.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>aptly
-</code></pre></div></td></tr></table></div>
+<p>Aptly is a swiss army knife for Debian repository management. <a href="aptly.info" target="_blank"></a></p>
+<div class="admonition note">
+<p class="admonition-title">install new version</p>
+<p><a href="https://www.aptly.info/download/">install new version 1.6.1</a></p>
+</div>
 <hr />
+<div class="grid-container">
+        <div class="grid-item">
+        <a href="aptly_custom_repository">
+            <img src="images/custom_repo.png" width="150" height="150">
+            <p>Create custom repository</p>
+             </a>
+        </div>
+    <div class="grid-item">
+        <a href="aptly_rest_api">
+            <img src="images/rest_api.png" width="150" height="150">
+            <p>Using Aptly with REST api</p>
+             </a>
+    </div>
+    <div class="grid-item">
+        <p>TBD</p>
+    </div>
+
+</div>
+
+<hr />
+<h2 id="gpg-keys">gpg keys</h2>
+<h1 id="todo-how-to-create-and-assign-key">TODO: how to create and assign key</h1>
+<h2 id="aptly-repository">Aptly Repository</h2>
+<p>An Aptly repository is a collection of .deb packages that you create and manage locally using Aptly. Think of it like a staging area — it's where you add, update, or remove packages.</p>
+<p>Repositories type</p>
 <ul>
-<li><a href="custom_repo/">Create custom repository</a></li>
+<li>local: custom repos.</li>
+<li>mirror: mirror official repos</li>
 </ul>
+<h2 id="aptly-snapshot">Aptly Snapshot</h2>
+<p>A snapshot is a frozen, read-only version of a repository (local or mirror) at a specific point in time. It’s like taking a picture of the repository.</p>
+<hr />
+<h2 id="serve">Serve</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>aptly serve
+</code></pre></div></td></tr></table></div>
+<h3 id="using-nginx">Using nginx</h3>
+<p>Nginx (pronounced "engine-x") is a high-performance web server</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>server {
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>    listen 80;
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>    server_name myrepo.example.com;
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>    root /home/user/.aptly/public;
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>    location / {
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>        autoindex on;
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>    }
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>}
+</code></pre></div></td></tr></table></div>
+<h3 id="add-to-sourceslist">Add to sources.list</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>deb http://myrepo.example.com/ jammy main
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a># Without sign key
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>deb [trusted=yes] http://myrepo.example.com/ jammy main
+</code></pre></div></td></tr></table></div>
 
 
 

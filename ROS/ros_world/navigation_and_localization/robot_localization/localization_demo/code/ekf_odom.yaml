@@ -1,0 +1,30 @@
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: false
+
+    # Sensor topic names
+    twist0: odom_turtle/sensor/twist
+    
+    # Configuration: which variables to fuse (15 booleans for each topic)
+    # x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az
+    twist0_config: [false, false, false,
+                       false, false, false,
+                       true,  true, false,
+                       false, false, true,
+                       false, false, false]
+
+
+    # Frame settings
+    base_link_frame: base_link
+    odom_frame: odom
+    world_frame: odom
+    map_frame: map
+
+    # Output
+    publish_tf: true
+    publish_acceleration: false
+
+    # Frequency
+    frequency: 10.0
+
+    two_d_mode: true

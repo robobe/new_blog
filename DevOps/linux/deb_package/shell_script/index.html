@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/DevOps/tools/aptly/custom_repo/">
+        <link rel="canonical" href="https://robobe.github.io/DevOps/linux/deb_package/shell_script/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>TO REVIEW AND TEST - Robots Inside</title>
+        <title>Shell script debian package - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#to-review-and-test" class="md-skip">
+        <a href="#shell-script-debian-package" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              TO REVIEW AND TEST
+              Shell script debian package
             
           </span>
         </div>
@@ -598,6 +598,65 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#debian-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      debian folder
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="debian folder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      changelog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control" class="md-nav__link">
+    <span class="md-ellipsis">
+      control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      rules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build" class="md-nav__link">
+    <span class="md-ellipsis">
+      build
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -615,19 +674,19 @@
       
       
       
-        <span class="md-tag">aptly</span>
+        <span class="md-tag">debian</span>
       
     
       
       
       
-        <span class="md-tag">local</span>
+        <span class="md-tag">dpkg-buildpackage</span>
       
     
       
       
       
-        <span class="md-tag">repo</span>
+        <span class="md-tag">shell</span>
       
     
   </nav>
@@ -637,84 +696,85 @@
   
 
 
-<h1 id="to-review-and-test">TO REVIEW AND TEST</h1>
-<h1 id="aptly-repo">aptly repo</h1>
-<p>Local repository is a collection of packages (most usually custom packages created internally). 
-Multiple versions of the same package could be added to the repository. In order to capture current repository state we use snapshot</p>
-<h2 id="repo">repo</h2>
-<h3 id="create">Create</h3>
-<p>Create local package repository. Repository would be empty when created, packages could be added to the repository from local files, copied or moved from another local repository or imported from the mirror.
-<a href="https://www.aptly.info/doc/aptly/repo/create/">more</a></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<h1 id="shell-script-debian-package">Shell script debian package</h1>
+<p>pack minimal shell script to <code>debian</code> package using <code>dpkg-buildpackage</code></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">my-tool</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>aptly<span class="w"> </span>-distribution<span class="o">=</span><span class="s2">&quot;jammy&quot;</span><span class="w"> </span>-architectures<span class="o">=</span><span class="s2">&quot;amd64&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>repo<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>create<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>my_repo
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="ch">#!/bin/sh</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello my-tool&quot;</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="list">List</h3>
-<p>Commands list displays list of all local package repositories.
-<a href="https://www.aptly.info/doc/aptly/repo/list/">more</a></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>aptly<span class="w"> </span>repo<span class="w"> </span>list
-</code></pre></div></td></tr></table></div>
-<h3 id="add">Add</h3>
-<p>Command adds packages to local repository from .deb
-<a href="https://www.aptly.info/doc/aptly/repo/add/">more</a></p>
-<p>From <code>deb</code> folder location</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>aptly<span class="w"> </span>repo<span class="w"> </span>add<span class="w"> </span>my_repo<span class="w"> </span>*deb
-</code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="snapshot">Snapshot</h2>
-<p>Snapshot is a fixed state of remote repository mirror or local repository.
-Internally snapshot is list of references to packages. </p>
-<p><a href="https://www.aptly.info/doc/aptly/snapshot/">more</a></p>
-<p>Creates snapshot from current state of local package repository. </p>
-<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>aptly<span class="w"> </span>snapshot<span class="w"> </span>create<span class="w"> </span>&lt;name&gt;<span class="w"> </span>from<span class="w"> </span>repo<span class="w"> </span>&lt;repo-name&gt;
-</code></pre></div></td></tr></table></div>
-- name: snapshot name
-- repo-name: local repository name</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
-<span class="normal"><a href="#__codelineno-4-2">2</a></span>
-<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>aptly<span class="w"> </span>snapshot<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>snap_my_repo<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>from<span class="w"> </span>repo<span class="w"> </span>my_repo
-</code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="publish">Publish</h2>
-<p>Publishes snapshot as repository to be consumed by apt. 
-<a href="https://www.aptly.info/doc/aptly/publish/snapshot/">more</a></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>aptly<span class="w"> </span>publish<span class="w"> </span>snapshot<span class="w"> </span>&lt;name&gt;<span class="w"> </span><span class="o">[</span>&lt;prefix&gt;<span class="o">]</span>
-</code></pre></div></td></tr></table></div>
+<h3 id="debian-folder">debian folder</h3>
+<p>Using <code>dpkg-buildpackage</code> debian folder must contain few files:</p>
 <ul>
-<li><strong>prefix</strong>: Add prefix to repo url</li>
-<li><strong>architectures</strong>: publish only selected arc from snapshot</li>
-<li><strong>distribution</strong>: distribution name to publish</li>
-<li><strong>skip-signing</strong>: don’t sign Release files with GPG</li>
+<li>rules</li>
+<li>changelog</li>
+<li>control</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">publish with prefix</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span>
-<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>aptly<span class="w"> </span>-architectures<span class="o">=</span><span class="s2">&quot;amd64&quot;</span><span class="w"> </span>-skip-signing<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>publish<span class="w"> </span>snapshot<span class="w"> </span>-architectures<span class="o">=</span><span class="s2">&quot;amd64&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a>snap_my_repo<span class="w"> </span><span class="nb">local</span>
+<h4 id="changelog">changelog</h4>
+<p><code>dch</code> command create and update changelog file
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>dch<span class="w"> </span>--create<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.1<span class="w"> </span>--package<span class="w"> </span>my-tool<span class="w"> </span><span class="s2">&quot;v 0.0.1&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>dch<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.1<span class="w"> </span><span class="s2">&quot;simple script&quot;</span>
+</code></pre></div></td></tr></table></div></p>
+<div class="admonition note version">
+<p class="admonition-title">Note</p>
+<p>Using <code>dch</code> command we update the version 
+<code>my-tool (0.0.2) UNRELEASED; urgency=medium</code></p>
+<p>This version use to set the debian version</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>dch<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.2<span class="w"> </span><span class="s2">&quot;simple script ver 2&quot;</span>
 </code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="serve">Serve</h2>
-<p>aptly can serve published repositories using its own embedded webserver.
-<a href="https://www.aptly.info/doc/aptly/serve/">more</a></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>aptly<span class="w"> </span>server
+<p><details>
+    <summary>changelog</summary></p>
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">changelog</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>my-tool<span class="w"> </span><span class="o">(</span><span class="m">0</span>.0.2<span class="o">)</span><span class="w"> </span>UNRELEASED<span class="p">;</span><span class="w"> </span><span class="nv">urgency</span><span class="o">=</span>medium
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>*<span class="w"> </span>version<span class="w"> </span><span class="m">0</span>.0.1
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>*<span class="w"> </span>simple<span class="w"> </span>script<span class="w"> </span>ver<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>--<span class="w"> </span>user<span class="w"> </span>&lt;user@lap&gt;<span class="w">  </span>Tue,<span class="w"> </span><span class="m">29</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">2025</span><span class="w"> </span><span class="m">21</span>:14:15<span class="w"> </span>+0300
 </code></pre></div></td></tr></table></div>
-<h3 id="sourcelist">source.list</h3>
-<ul>
-<li>Add this line to use by apt</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">line in source.list</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>deb<span class="w"> </span>http://lap2:8080/local/<span class="w"> </span>jammy<span class="w"> </span>main
+</details></p>
+</div>
+<h4 id="control">control</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>Source: my-tool
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>Section: utils
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>Priority: optional
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>Maintainer: Your Name &lt;you@example.com&gt;
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>Build-Depends: debhelper-compat (= 13)
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>Standards-Version: 4.6.2
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>Package: my-tool
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>Architecture: any
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>Depends: ${shlibs:Depends}, ${misc:Depends}
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>Description: My Tool – brief description
 </code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://www.unixmen.com/introducing-aptly-a-debian-repository-management-tool/">Introducing ‘Aptly’, A Debian Repository Management Tool</a></li>
-</ul>
+<h4 id="rules">rules</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>#!/usr/bin/make -f
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>%:
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>    dh $@
+</code></pre></div></td></tr></table></div>
+<h3 id="build">build</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>dpkg-buildpackage<span class="w"> </span>-us<span class="w"> </span>-uc
+</code></pre></div></td></tr></table></div>
 
 
 
