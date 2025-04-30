@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "upload deb to aptly",
+        "type": "shell",
+        "command": "curl",
+        "args": [
+          "-X",
+          "POST",
+          "-F",
+          "file=@${input:file_path}",
+          "http://localhost:8080/api/files/uploads"
+        ],
+        "problemMatcher": []
+      },
+      {
+        "label": "add/update files to repository",
+        "type": "shell",
+        "command": "curl",
+        "args": [
+          "-X",
+          "POST",
+          "http://localhost:8080/api/repos/${input:repo_name}/file/uploads"
+        ],
+        "problemMatcher": []
+      },
+      {
+        "label": "update publish",
+        "type": "shell",
+        "command": "curl",
+        "args": [
+          "-X",
+          "PUT",
+          "http://localhost:8080/api/publish//jammy",
+          "-H",
+          "Content-Type: application/json",
+          "--data",
+          "{\"ForceOverwrite\": true, \"Architectures\": [\"amd64\"],\"SourceKind\": \"local\",\"Sources\": [{\"Component\": \"main\",\"Name\": \"${REPO_NAME}\"}],\"Signing\": {\"Skip\": true}}"
+
+        ],
+        "problemMatcher": []
+      }
+    ],
+    "inputs": [
+      {
+          "id": "repo_name",
+          "default": "my-repo",
+          "type": "promptString",
+          "description": "my repository name"
+      },
+      {
+        "id": "file_path",
+        "type": "command",
+        "command": "extension.commandvariable.file.pickFile",
+        "args":{
+            "include": "**/*.deb"
+        }
+       
+      }
+    ]
+}

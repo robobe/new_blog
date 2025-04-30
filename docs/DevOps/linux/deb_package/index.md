@@ -6,6 +6,9 @@ tags:
     - ubuntu
 ---
 
+Create debian package for shell script, python project and other using debian tools  
+Create custom install wizard using debconf and postinst scripts
+
 <div class="grid-container">
         <div class="grid-item">
         <a href="debconf">
@@ -14,7 +17,10 @@ tags:
              </a>
         </div>
     <div class="grid-item">
-        <p>TBD</p>
+        <a href="shell_script">
+            <img src="images/" width="150" height="150">
+            <p>pack shell script</p>
+             </a>
     </div>
     <div class="grid-item">
         <p>TBD</p>

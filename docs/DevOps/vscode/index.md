@@ -8,8 +8,8 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="tips_settings">
-        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
-        <p>Tips / Settings</p>
+        <img src="images/settings.png" width="150" height="150">
+        <p>Settings</p>
         </a>
     </div>
     <div class="grid-item">
@@ -24,8 +24,14 @@ tags:
         <p>Remote ssh</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="extensions">
+        <img src="images/extensions.png" width="150" height="150">
+        <p>Extensions</p>
+        </a>
+    </div>
 </div>
-
+![alt text](image.png)
 ## Extensions
 [Open VSX Registry](https://open-vsx.org/)
 

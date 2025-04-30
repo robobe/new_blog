@@ -17,10 +17,12 @@ Create local package repository. Repository would be empty when created, package
 
 
 ```bash
-aptly -distribution="jammy" -architectures="amd64" \
+REPO_NAME="my-repo"
+
+aptly -distribution="jammy" -architectures="amd64" -comment="my repo desc" \
 repo \
 create \
-my_repo
+${REPO_NAME}
 ```
 
 ### List
