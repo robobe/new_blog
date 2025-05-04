@@ -6,8 +6,8 @@ tags:
 ---
 
 # Sensors
-- [Gazebo harmonic docs](https://gazebosim.org/docs/harmonic/sensors/)
-- [Gazebo sensor list](https://gazebosim.org/docs/harmonic/comparison/)
+- [Gazebo harmonic docs](https://gazebosim.org/docs/harmonic/sensors/){:target="_blank"}
+- [Gazebo sensor list](https://gazebosim.org/docs/harmonic/comparison/){:target="_blank"}
 
 ---
 

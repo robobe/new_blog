@@ -39,3 +39,14 @@ Remove all remote branches that no longer exist on the remote repository.
 ```bash
 git fetch --prune
 ```
+
+
+---
+
+## git sparse-checkout
+is a Git feature that allows you to partially clone a repository, downloading only specific folders or files instead of the entire project.
+
+```bash
+git clone --depth 1 --filter=blob:none --sparse <url>
+git sparse-checkout set <folders to download separate by space>
+```

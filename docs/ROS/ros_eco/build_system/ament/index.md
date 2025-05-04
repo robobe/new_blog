@@ -11,9 +11,11 @@ tags:
 
 ## ament_environment_hooks
 
-Using to manage the environment variables and more when we source the workspace.
+Using to manage the environment variables and more when we **source** the workspace.
 [Read more](https://github.com/gazebosim/ros_gz_project_template/blob/main/ros_gz_example_gazebo/hooks/README.md) and [more](https://docs.ros.org/en/jazzy/How-To-Guides/Ament-CMake-Documentation.html)
 
+- Set environment variable
+- Run custom script when the workspace is **sourced**
 
 The setup includes:
 
@@ -54,8 +56,8 @@ ament_prepend_unique_value GZ_SIM_RESOURCE_PATH "$AMENT_CURRENT_PREFIX/share/@PR
 ```
 
 ##### check
-- Build
-- source install folder
+- Build using colcon
+- **Source** install folder
 
 ```bash
 echo $GZ_SIM_RESOURCE_PATH
