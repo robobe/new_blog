@@ -16,7 +16,7 @@ tags:
 │   ├── Dockerfile.humble_dev
 │   ├── .tmux.conf
 |   └── Dockerfile
-├── docker-compose.yml
+├── docker-compose.yaml
 ├── readme.md
 └── src
 ```

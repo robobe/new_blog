@@ -26,7 +26,7 @@ source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 
 Set default option for `colcon` by create file `colcon_defaults.yaml` file at `workspace` directory.
 
-```yaml title="default.yaml"
+```yaml title="colcon_defaults.yaml"
 build:
   # Use symlink install to speed up builds
   symlink-install: true
