@@ -41,13 +41,13 @@ tags:
     <summary>Dockerfile ROS humble </summary>
 
 ```dockerfile
---8<-- "docs/ROS/dev_environment/ros_docker/code/Dockerfile.humble"
+--8<-- "docs/ROS/dev_environment/ros_docker/docker_images/code/Dockerfile.humble"
 ```
 </details>
 
 #### Downloads
 - [Dockerfile](code/Dockerfile.humble)
-- [tmux config](code/.tmux.conf)
+- [tmux config](code/tmux.conf)
 
 ```bash title="Build image"
 docker build -t humble:base -f Dockerfile.humble .

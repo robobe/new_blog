@@ -3,6 +3,7 @@ tags:
     - vscode
     - devcontainer
     - remote
+    - context
 ---
 
 # Run dev container on remote host
@@ -25,46 +26,40 @@ ssh-copy-id <user>r@<host>
 - install `Dev Containers` (ms-vscode-remote.remote-containers) extension
 
 
+## Config docker context
+Docker context defines the endpoint (i.e., the target Docker Engine) that the Docker CLI talks to. This allows you to easily switch between local Docker engines, remote Docker hosts
 
-<!--
 ## Create docker context for the remote host
 
 ```bash
-docker context create remote-host --docker "host=ssh://user@remote-host"
+docker context create <remote_name></remote_bane> --docker "host=ssh://user@remote-host"
 
 docker context create orin --docker "host=ssh://user@10.0.0.4"
 
-# check
 docker context ls
-# check remote docker
-docker ps
 ```
--->
 
-
-Set docker environment `.vscode/setting.json`
-
-```json
-{
-    "docker.environment": {
-        "DOCKER_HOST": "ssh://user@10.0.0.4"
-    }
-}
-```
 
 ---
 
-## Devcontainer
+## VSCode working with Devcontainer on Remote machine
+- Create folder on host and remote machine with the same path
+- Change to remote context from docker/containers extension
 
-!!! note
-    Create project folder on the **remote** machine
-    in the same location like the **local** machine
-    
-    for example
-    ```
-    /home/user/projects/vscode_remote_devcontainer
-    ```
 
+### Change docker context
+
+![](images/vscode_docker_context.png)
+
+### Create folders
+Create project folder on the **remote** machine
+in the same location like the **local** machine
+
+
+
+---
+
+### Demo
 
 ```json title="devcontainer.json"
 {
