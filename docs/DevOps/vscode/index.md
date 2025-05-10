@@ -30,8 +30,14 @@ tags:
         <p>Extensions</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="mcp">
+        <img src="images/mcp.png" width="150" height="150">
+        <p>MCP</p>
+        </a>
+    </div>
 </div>
-![alt text](image.png)
+
 ## Extensions
 [Open VSX Registry](https://open-vsx.org/)
 

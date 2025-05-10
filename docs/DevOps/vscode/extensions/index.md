@@ -6,41 +6,47 @@ tags:
 
 # VSCode Extensions
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="command_variable">
+        <img src="images/command_variable.png" width="150" height="150">
+        <p>Command Variable</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="dev_container">
+        <img src="images/dev_container.png" width="150" height="150">
+        <p>TBD</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="remote_ssh">
+        <img src="images/remote_ssh.png" width="150" height="150">
+        <p>TBD</p>
+        </a>
+    </div>
+   
+</div>
+
+## Download vsix link
 
 
-## Command Variable
-Extend vscode command variables to use in `tasks.json` and `launch.json`
-[marketplace](https://marketplace.visualstudio.com/items?itemName=rioj7.command-variable#file-content-yaml-property)
+```
+ https://marketplace.visualstudio.com/_apis/public/gallery/publishers/${publisher}/vsextensions/${extension}/${version}/vspackage
+```
 
-### file pick demo
-Open file select
-Can filter the file list to show using include and exclude arguments
-[more](https://marketplace.visualstudio.com/items?itemName=rioj7.command-variable#pick-file)
+### Demo
 
-```json title="tasks.json"
-{
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "echo select file",
-        "type": "shell",
-        "command": "echo",
-        "args": [
-          "${input:file_path}"
-        ],
-        "problemMatcher": []
-      }
-    ],
-    "inputs": [
-      {
-        "id": "file_path",
-        "type": "command",
-        "command": "extension.commandvariable.file.pickFile",
-        "args":{
-            "include": "**/control"
-        }
-       
-      }
-    ]
-}
+Download [ROS2 Topic Viewer](https://marketplace.visualstudio.com/items?itemName=AlessandroSofia.ros2-topic-viewer) and install offline
+
+- publisher: AlessandroSofia
+- extension: ros2-topic-viewer
+- Version: 0.1.3
+
+```bash
+wget https://marketplace.visualstudio.com/_apis/public/gallery/publishers/AlessandroSofia/vsextensions/ros2-topic-viewer/0.1.3/vspackage
+```
+
+```bash
+code --install-extension AlessandroSofia.ros2-topic-viewer-0.1.3.vsix
 ```
