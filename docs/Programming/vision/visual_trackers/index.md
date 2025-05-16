@@ -15,9 +15,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href=cpp>
+    <a href=siam_mask>
         <img src="images/cpp.png"   width="150" height="150">
-        <p>tbd</p>
+        <p>Siam Mask</p>
         </a>
     </div>
     <div class="grid-item">
