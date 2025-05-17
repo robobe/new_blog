@@ -19,8 +19,15 @@
         <p>Images</p>
         </a>
     </div>
-    
+    <div class="grid-item">
+        <a href="dockerfile_templates">
+        <img src="images/docker_snippets_and_templates.png" width="150" height="150">
+        <p>Dockerfile snippets and templates</p>
+        </a>
+    </div>
 </div>
+
+
 
 ## Posts 
 - [Running and Building ARM Docker Containers on x86](docker_build_arm.md)
