@@ -1,11 +1,13 @@
 ---
 tags:
-    - gst
     - gstreamer
     - streaming
+    - h265
+    - h264
 ---
 
 # GStreamer video stream pipe
+Using gstreamer to stream h264/h265 over network
 
 ## H265 cpu encoder
 
@@ -21,6 +23,7 @@ gst-launch-1.0 videotestsrc \
 | property  | description  | more ...  |
 |---|---|---|
 | config-interval  | Send VPS, SPS and PPS Insertion Interval in seconds (default 0)  | help decoder to interpret video stream |
+| key-int-max | defines the maximum interval between keyframes, keyframes: is a full image |
 
 
 ```bash
@@ -87,3 +90,37 @@ gst-launch-1.0 videotestsrc \
 ! rtph265pay config-interval=1 mtu=1400 \
 ! udpsink host=224.0.0.1 port=5000 sync=true
 ```
+
+---
+
+# H264
+
+```bash title="sender"
+gst-launch-1.0 videotestsrc is-live=true \
+! video/x-raw,width=640,height=480,framerate=20/1 \
+! videoconvert \
+! x264enc tune=zerolatency speed-preset=ultrafast bitrate=500 key-int-max=20 \
+! rtph264pay config-interval=1 pt=96 \
+! udpsink host=127.0.0.1 port=5000 sync=true
+
+```
+
+```bash title="receiver"
+gst-launch-1.0 udpsrc port=5000 caps="application/x-rtp, media=video, encoding-name=H264, payload=96" \
+! rtph264depay \
+! avdec_h264 \
+! videoconvert \
+! autovideosink sync=true
+```
+
+!!! tip "Fast sync between sender and receiver"
+    The idea H264/H265 is to send full frame in intervals and between the send partial changes
+
+    - I-frames: (keyframe) full image
+    - P-frames:
+    - B-frames:
+
+    x264 uses adaptive keyframe intervals, which can go very long without IDRs (especially for static syne)
+    The receiver wait for i-frame to sync and it can take 6-8 sec when we are in static sync
+    use key-int-max=20 force the encoder to send i-frame each 30 frames, in 20 fps rate it send full image every 1 sec.
+     

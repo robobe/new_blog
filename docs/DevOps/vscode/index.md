@@ -30,6 +30,12 @@ tags:
         <p>Extensions</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="copilot">
+        <img src="images/copilot.png" width="150" height="150">
+        <p>Copilot</p>
+        </a>
+    </div>
     <div class="grid-item">
         <a href="mcp">
         <img src="images/mcp.png" width="150" height="150">
@@ -45,10 +51,5 @@ tags:
 
 ## ToDO: read
 - [vscode profile](https://youtu.be/0bIU-5JkHr0)
-
-## copilot
-- [ Get to know GitHub Copilot in VS Code and be productive IMMEDIATELY ](https://youtu.be/jXp5D5ZnxGM)
-- [ What's new with Copilot Chat and VS Code - v1.84 ](https://youtu.be/HpzdGAGXFXE)
-- [VS Code Agent Mode Just Changed Everything](https://youtu.be/dutyOc_cAEU)
 
 

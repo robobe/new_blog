@@ -39,6 +39,7 @@ gst-launch-1.0 -v videotestsrc is-live=true \
 ! udpsink host=127.0.0.1 port=5000
 
 ```
+
 - **key-int-max=15**: Forces a keyframe every 15 frames (lower values reduce startup delay).
 - **tune=zerolatency**: Removes internal buffering.
 
@@ -54,7 +55,7 @@ gst-launch-1.0 -v udpsrc port=5000 \
     **key-int-max**=15: Forces a keyframe every 15 frames (lower values reduce startup delay).
      
 
-[tmuxp script to run the pipes](simple_mpeg_stream.yaml)
+[tmuxp script to run the pipes](code/simple_mpeg_stream.yaml)
 
 
 ---

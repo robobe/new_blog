@@ -6,11 +6,19 @@ tags:
 ---
 
 # ROS2_Control
+ros2_control is a framework for robot hardware abstraction and controller management 
+
+Hardware interface Abstracts real or simulated robot hardware and expose hardware functionality in a standard way:
+
+- state interface (read-only) feedback from hardware
+- command interface (Read/Write) : command to the hardware
+
 
 <div class="grid-container">
     <div class="grid-item">
-            <a href="navigation_and_localization">
-                <p>TBD</p>
+            <a href="tutorials">
+                <img src="images/ros2_control_tutorials.png"  width="150" height="150"/>
+                <p>ros2 control tutorials</p>
             </a>
         </div>
         <div class="grid-item">
