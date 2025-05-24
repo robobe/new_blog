@@ -656,13 +656,19 @@
       
       
       
-        <span class="md-tag">gst</span>
+        <span class="md-tag">gstreamer</span>
       
     
       
       
       
-        <span class="md-tag">gstreamer</span>
+        <span class="md-tag">h264</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">h265</span>
       
     
       
@@ -679,6 +685,7 @@
 
 
 <h1 id="gstreamer-video-stream-pipe">GStreamer video stream pipe</h1>
+<p>Using gstreamer to stream h264/h265 over network</p>
 <h2 id="h265-cpu-encoder">H265 cpu encoder</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
@@ -705,6 +712,11 @@
 <td>config-interval</td>
 <td>Send VPS, SPS and PPS Insertion Interval in seconds (default 0)</td>
 <td>help decoder to interpret video stream</td>
+</tr>
+<tr>
+<td>key-int-max</td>
+<td>defines the maximum interval between keyframes, keyframes: is a full image</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -800,6 +812,42 @@
 <a id="__codelineno-5-5" name="__codelineno-5-5"></a>!<span class="w"> </span>rtph265pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">1400</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-5-6" name="__codelineno-5-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">224</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
 </code></pre></div></td></tr></table></div>
+<hr />
+<h1 id="h264">H264</h1>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">sender</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span>
+<span class="normal"><a href="#__codelineno-6-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>is-live<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>!<span class="w"> </span>video/x-raw,width<span class="o">=</span><span class="m">640</span>,height<span class="o">=</span><span class="m">480</span>,framerate<span class="o">=</span><span class="m">20</span>/1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>!<span class="w"> </span>videoconvert<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>!<span class="w"> </span>x264enc<span class="w"> </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">500</span><span class="w"> </span>key-int-max<span class="o">=</span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>!<span class="w"> </span>rtph264pay<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">pt</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">receiver</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>gst-launch-1.0<span class="w"> </span>udpsrc<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5000</span><span class="w"> </span><span class="nv">caps</span><span class="o">=</span><span class="s2">&quot;application/x-rtp, media=video, encoding-name=H264, payload=96&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>!<span class="w"> </span>rtph264depay<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>!<span class="w"> </span>avdec_h264<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>!<span class="w"> </span>videoconvert<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>!<span class="w"> </span>autovideosink<span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">Fast sync between sender and receiver</p>
+<p>The idea H264/H265 is to send full frame in intervals and between the send partial changes</p>
+<ul>
+<li>I-frames: (keyframe) full image</li>
+<li>P-frames:</li>
+<li>B-frames:</li>
+</ul>
+<p>x264 uses adaptive keyframe intervals, which can go very long without IDRs (especially for static syne)
+The receiver wait for i-frame to sync and it can take 6-8 sec when we are in static sync
+use key-int-max=20 force the encoder to send i-frame each 30 frames, in 20 fps rate it send full image every 1 sec.</p>
+</div>
 
 
 
