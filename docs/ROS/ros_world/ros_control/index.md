@@ -49,7 +49,7 @@ Hardware interface expose hardware functionality in a standard way:
 - state interface (read-only) feedback from hardware
 - command interface (Read/Write) : command to the hardware
 
-![alt text](images/ros2_control.png)
+[ros2_control Concepts & Simulation](https://articulatedrobotics.xyz/tutorials/mobile-robot/applications/ros2_control-concepts/)
 
 ## Controller Manager
 

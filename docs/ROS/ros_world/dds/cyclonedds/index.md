@@ -34,6 +34,27 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
      
 ---
 
+<div class="grid-container">
+    <div class="grid-item">
+            <a href="tutorials">
+                <img src=""  width="150" height="150"/>
+                <p>configuration</p>
+            </a>
+        </div>
+        <div class="grid-item">
+             <a href="cyclonedds_tools">
+                <img src=""  width="150" height="150">
+                <p>tools</p>
+            </a>
+        </div>
+    <div class="grid-item">
+          <a href="cyclonedds_tips">
+                <img src=""  width="150" height="150">
+                <p>tips / best practice</p>
+            </a>
+    </div>
+</div>
+
 ## CycloneDDS protocols
 
 SSPDP and SEDP are the two core discovery protocols that enable nodes to find and communicate with each other automatically.

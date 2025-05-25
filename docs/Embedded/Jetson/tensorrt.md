@@ -11,7 +11,10 @@ tags:
 
 
 ## Install
-Login to nvidia 
+
+!!! tip 
+     To download tensorrt we must login to nvidia
+
 
 
 - download local repo package
@@ -50,4 +53,8 @@ with open("model.engine", "rb") as f:
 
 ![](/assets/images/under_construction.png)
 
-# TODO: show usage
+
+---
+
+## Reference
+[TensorRT In Docker](https://leimao.github.io/blog/Docker-TensorRT/)
