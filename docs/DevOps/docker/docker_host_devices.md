@@ -9,7 +9,7 @@ tags:
 
 # Access Host device in docker
 Connect and share hardware device with docker container
-
+Connect joystick, camera and serial device and share with docker container
 
 
 ## joystick

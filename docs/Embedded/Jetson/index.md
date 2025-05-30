@@ -29,4 +29,4 @@ tags:
 
 - [using gpio using python](nvidia_gpio_using_python.md)
 - [build opencv with cuda support](build_opencv_with_cuda_support.md)
-- [tensorrt](tensorrt.md)
+- [tensorrt](/Programming/vision/nvidia/tensorrt)

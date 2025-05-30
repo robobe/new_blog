@@ -30,3 +30,9 @@ Using NanoTracker v2
 - [nanotrack_head_v2](docs/Programming/vision/visual_trackers/nano_tracker/code/models/nanotrack_head_sim.onnx)
 - [Dockerfile](docs/Programming/vision/visual_trackers/nano_tracker/code/Dockerfile)
 
+
+---
+
+## Resource
+- [NanoTrack_TensorRT](https://github.com/SSSSSSL/NanoTrack_TensorRT): implement nano track using tensorrt
+

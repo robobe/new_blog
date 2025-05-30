@@ -36,7 +36,7 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 <div class="grid-container">
     <div class="grid-item">
-            <a href="tutorials">
+            <a href="cyclonedds_config">
                 <img src=""  width="150" height="150"/>
                 <p>configuration</p>
             </a>

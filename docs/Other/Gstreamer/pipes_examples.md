@@ -21,3 +21,12 @@ gst-launch-1.0 v4l2src device=/dev/video4 \
 ! video/x-raw,framerate=10/1 \
 ! fpsdisplaysink
 ```
+
+## Capture one image from camera
+
+```bash
+gst-launch-1.0 v4l2src device=/dev/video0 num-buffers=1 \
+! video/x-raw \
+! jpegenc \
+! filesink location=frame.jpg
+```

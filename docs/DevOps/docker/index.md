@@ -25,13 +25,18 @@
         <p>Dockerfile snippets and templates</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="docker_nvidia">
+        <img src="images/docker_nvidia.png" width="150" height="150">
+        <p>docker nvidia</p>
+        </a>
+    </div>
 </div>
-
 
 
 ## Posts 
 - [Running and Building ARM Docker Containers on x86](docker_build_arm.md)
-- [Access Host Devices in Docker](docker_host_devices.md)
+- [Access Host Devices in Docker](docker_host_devices.md): how to connect hardware peripheral and share with docker
 ---
 
 ## To Read
