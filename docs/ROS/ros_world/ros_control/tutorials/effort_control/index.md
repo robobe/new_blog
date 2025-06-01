@@ -11,73 +11,57 @@ tags:
 In ROS 2 Control, the **effort_controllers/JointGroupEffortController** is used to send effort (torque/force) commands to joints
 
 
-```xml title="ros2_control urdf"
-<ros2_control name="robot" type="system">
+## Gazebo simulation
+
+```xml title="xacro load gazebo control plugin and set ros2_control tag"
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+    <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <parameters>
+                $(find tutorial_bringup)/config/effort_controllers.yaml
+            </parameters>
+        </plugin>
+
+    </gazebo>
+    
+    <ros2_control name="robot" type="system">
         <hardware>
             <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>
 
         <joint name="first_joint">
             <command_interface name="effort">
-                <param name="min">-2.0</param>
-                <param name="max">2.0</param>
+                <param name="min">-10</param>
+                <param name="max">10</param>
             </command_interface>
 
             <state_interface name="position" />
+            <state_interface name="velocity" />
         </joint>
 
     </ros2_control>
+</robot>
 ```
 
-```yaml title="controllers.yaml"
-controller_manager:
-  ros__parameters:
-    update_rate: 10
 
-    joint_state_broadcaster:
-      type: joint_state_broadcaster/JointStateBroadcaster
+<details>
+    <summary>controllers yaml file</summary>
 
-    effort_controller:
-      type: effort_controllers/JointGroupEffortController
-
-effort_controller:
-  ros__parameters:
-    joints:
-      - first_joint
-
+```yaml
+--8<-- "docs/ROS/ros_world/ros_control/tutorials/effort_control/code/effort_controllers.yaml"
 ```
 
-!!! note "controller manager and gazebo"
-    The controller manager loaded by gazebo automatically
-    we need to bridge to gazebo clock using **ros_gz_bridge**
-     
+</details>
 
-```python title="clock bridge"
-gazebo_bridge = Node(
-        package="ros_gz_bridge",
-        executable="parameter_bridge",
-        name="parameter_bridge",
-        output="screen",
-        arguments=["/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock"],
-    )
+
+<details>
+    <summary>launch file</summary>
+
+```python
+--8<-- "docs/ROS/ros_world/ros_control/tutorials/effort_control/code/effort_control.launch.py"
 ```
 
-```python title="load controller"
-effort_control_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["effort_controller"],
-        output="screen",
-    )
-
-joint_state_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["joint_state_broadcaster"],
-        output="screen",
-    )
-
-```
+</details>
 
 ---
 

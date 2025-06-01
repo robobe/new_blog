@@ -36,7 +36,7 @@ tags:
     - Launch the controller manager
 
 
-```xml title="xacro loaf gazebo control plugin and set ros2_control tag"
+```xml title="xacro load gazebo control plugin and set ros2_control tag"
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
     <gazebo>
         <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">

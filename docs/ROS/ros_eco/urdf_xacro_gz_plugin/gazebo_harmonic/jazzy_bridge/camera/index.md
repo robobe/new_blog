@@ -27,6 +27,11 @@ Bridge rgb camera between gazebo to ros
 --8<-- "docs/Simulation/Gazebo/sensors/code/rgb_camera_sensor.xml"
 ```  
 
+!!! tip "urdf"
+    Don't forget to shroud with `<gazebo reference="link name"> ` tag
+
+
+     
 [download world](code/camera_world.sdf)
 
 ---
@@ -50,30 +55,20 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch_ros.actions import Node
+from ros_gz_bridge.actions import RosGzBridge
 
-PACKAGE_NAME = 'gz_tutorial'
+PACKAGE_NAME = 'tutorial_bringup'
 
 def generate_launch_description():
     ld = LaunchDescription()
 
     bridge_params = os.path.join(get_package_share_directory(PACKAGE_NAME),'config','gz_bridge.yaml')
-    ros_gz_bridge = Node(
-        package="ros_gz_bridge",
-        executable="parameter_bridge",
-        arguments=[
-            '--ros-args',
-            '-p',
-            f'config_file:=',
-            bridge_params
-        ],
-        parameters=[
-            {'use_sim_time': True},
-            {'qos_overrides./camera/image_raw.publisher.reliability': 'best_effort'}
-        ],
-    )
+    bridge = RosGzBridge(
+            bridge_name="bridge",
+            config_file=bridge_params,
+        )
 
-    ld.add_action(ros_gz_bridge)
+    ld.add_action(bridge)
 
 
     return ld
@@ -88,14 +83,14 @@ def generate_launch_description():
 
 ```
 
-!!! tip "control image qos"
+<!-- !!! tip "control image qos"
     Add to parameters section
 
     ```json
     {'qos_overrides./camera/image_raw.publisher.reliability': 'best_effort'}
     ```
      
-
+ -->
 
 
 
@@ -116,5 +111,9 @@ ros2 run ros_gz_image image_bridge /camera/image_raw
 ---
 
 ### rqt
+
+```bash
+ros2 run rqt_image_view rqt_image_view /camera/image_raw
+```
 
 ![alt text](images/ret_image_view.png)

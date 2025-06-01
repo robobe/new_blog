@@ -24,6 +24,8 @@ tags:
 ├── docker-compose.yml
 ├── .gitignore
 ├── README.md
+├── colcon_defaults.md
+├── env.sh
 └── src
 ```
 
@@ -51,3 +53,46 @@ tags:
 --8<-- "docs/ROS/dev_environment/dev/project_templates/jazzy/code/docker-compose.yaml"
 ```
 </details>
+
+
+### ros
+
+```yaml title="colcon_defaults.yaml"
+build:
+  # Use symlink install to speed up builds
+  symlink-install: true
+  # Set build type (e.g., Release or Debug)
+  cmake-args:
+    - "-DCMAKE_BUILD_TYPE=Release"
+
+test:
+  # Run tests in parallel
+  parallel-workers: 4
+
+# Additional settings for colcon test and other commands
+test-result:
+  verbose: true
+```
+
+### VSCode
+
+#### task.json
+
+```json 
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "colcon",
+        "detail": "Build all ros2 packages using colcon",
+        "type": "shell",
+        "command": "colcon build",
+        "problemMatcher": [],
+        "group": {
+            "kind": "build",
+            "isDefault": true
+        }
+      }
+    ]
+}
+```

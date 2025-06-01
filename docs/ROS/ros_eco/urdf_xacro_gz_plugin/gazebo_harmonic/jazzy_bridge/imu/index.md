@@ -32,6 +32,11 @@ Bridge IMU sensor from gazebo to ros
 </sensor>
 ```
 
+!!! tip "urdf"
+    Don't forget to shroud with `<gazebo reference="link name"> ` tag
+
+
+
 ```bash title="gz"
 gz topic --echo -t /imu
 ```
@@ -59,6 +64,8 @@ ros2 run ros_gz_bridge parameter_bridge /imu@sensor_msgs/msg/Imu[gz.msgs.IMU
 ```
 
 ### launch
+
+TODO: check this coda again
 
 ```python title="imu_bridge.launch.py"
 --8<-- "docs/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge/imu/code/imu_bridge.launch.py"

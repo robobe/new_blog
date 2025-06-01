@@ -17,7 +17,7 @@ tags:
         </div>
     <div class="grid-item">
        <a href="jazzy_interface">
-            <img src="images/urdf.png"  width="150" height="150">
+            <img src="images/ros_gz_interface.png"  width="150" height="150">
             <p>Interface</p></a>
     </div>
     <div class="grid-item">
