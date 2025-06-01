@@ -611,6 +611,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="ddsperf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-iperf3" class="md-nav__link">
+    <span class="md-ellipsis">
+      using iperf3
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -659,7 +674,114 @@
 </code></pre></div></td></tr></table></div>
 <h2 id="ddsperf">ddsperf</h2>
 <p>Measures primarily data throughput and latency of the cyclone-based applications within the network or within the same board,</p>
-<p><a href="https://cyclonedds.io/docs/cyclonedds/0.10.5/getting_started.html?highlight=ddsperf#testing-your-network-configuration">Benchmarking Tools for Cyclone</a></p>
+<p><a href="https://cyclonedds.io/docs/cyclonedds/latest/config/benchmarking.html">Benchmarking Tools</a></p>
+<div class="admonition tip network throughput">
+<p class="admonition-title">Tip</p>
+<p>Network throughput is a measure of how much data is successfully transferred from one point to another in a given period of time across a network. It's typically expressed in bits per second (bps)</p>
+</div>
+<div class="admonition tip network latency">
+<p class="admonition-title">Tip</p>
+<p>Latency is the time delay wheen the packet is send and when it is received.</p>
+<p>using <strong>ping</strong> whe measure to round trip latency for a packet </p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 1</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>ddsperf<span class="w"> </span>pub<span class="w"> </span>size<span class="w"> </span>1k<span class="w"> </span>1Hz
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ddsperf<span class="w"> </span>sub
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1">#</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="o">[</span><span class="m">15894</span><span class="o">]</span><span class="w"> </span><span class="m">1</span>.000<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">1</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">1</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="o">[</span><span class="m">15894</span><span class="o">]</span><span class="w"> </span><span class="m">2</span>.000<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">2</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">1</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="o">[</span><span class="m">15894</span><span class="o">]</span><span class="w"> </span><span class="m">3</span>.000<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">3</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">1</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="o">[</span><span class="m">15894</span><span class="o">]</span><span class="w"> </span><span class="m">4</span>.000<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">4</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">1</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.00<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="o">[</span><span class="m">15894</span><span class="o">]</span><span class="w"> </span><span class="m">4</span>.000<span class="w">  </span>rss:6.4MB<span class="w"> </span>vcsw:11<span class="w"> </span>ivcsw:0<span class="w"> </span>ddsperf:1%+0%
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>pid</strong></li>
+<li><strong>time</strong></li>
+<li><strong>size</strong> of the data involved in this test (For example, 1024 bytes, which is the “size 1k” defined in the pub command).</li>
+<li><strong>total</strong> packets received .</li>
+<li>The total packets <strong>lost</strong> (For example, 0).</li>
+<li><strong>delta</strong>: the packets received in a 1 second reporting </li>
+<li>The packets <strong>lost</strong> in a 1 second report period (For example, 0).</li>
+<li>The number of samples processed by the Sub application in 1s (unit KS/s is 1000 samples per second).</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">publisher</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ddsperf<span class="w"> </span>pub<span class="w"> </span>size<span class="w"> </span>1k<span class="w"> </span>10Hz
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>ddsperf<span class="w"> </span>sub
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span>participant<span class="w"> </span>ubuntu:15916:<span class="w"> </span>new<span class="w"> </span><span class="o">(</span>self<span class="o">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span>participant<span class="w"> </span>dev:5138:<span class="w"> </span>new
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span><span class="m">1</span>.001<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">10</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">10</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.08<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span><span class="m">2</span>.000<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">20</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">10</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.08<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.02<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span><span class="m">3</span>.000<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">30</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">10</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.08<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.02<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span><span class="m">4</span>.000<span class="w">  </span>size<span class="w"> </span><span class="m">1024</span><span class="w"> </span>total<span class="w"> </span><span class="m">40</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>delta<span class="w"> </span><span class="m">10</span><span class="w"> </span>lost<span class="w"> </span><span class="m">0</span><span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.08<span class="w"> </span>Mb/s<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00<span class="w"> </span>kS/s<span class="w"> </span><span class="m">0</span>.03<span class="w"> </span>Mb/s<span class="o">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span><span class="m">4</span>.000<span class="w">  </span>rss:6.5MB<span class="w"> </span>vcsw:28<span class="w"> </span>ivcsw:1<span class="w"> </span>ddsperf:0%+1%
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="o">[</span><span class="m">15916</span><span class="o">]</span><span class="w"> </span><span class="m">4</span>.000<span class="w">  </span>rss:6.5MB<span class="w"> </span>vcsw:28<span class="w"> </span>ivcsw:1<span class="w"> </span>ddsperf:0%+1%
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>rss: process memory usage</li>
+<li>vcsw: context switch (idle) </li>
+<li>ivcsw: context switch (block)</li>
+<li>ddsperf: cpu user space, cpu kernel space</li>
+</ul>
+<hr />
+<h3 id="using-iperf3">using iperf3</h3>
+<p>iperf (or more commonly iperf3) is a powerful network testing tool used to measure:</p>
+<ul>
+<li>Network throughput (bandwidth)</li>
+<li>Data transfer rate (in both directions)</li>
+<li>Packet loss (UDP mode)</li>
+<li>Jitter (UDP mode)</li>
+<li>Retransmissions (TCP mode)</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>iperf3
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">run server</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>iperf3<span class="w"> </span>-s
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">run client</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>iperf3<span class="w"> </span>-c<span class="w"> </span>&lt;server-ip&gt;
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="c1">#</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="c1"># send udp packet at 10Mbps</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>iperf3<span class="w"> </span>-c<span class="w"> </span><span class="m">192</span>.168.1.100<span class="w"> </span>-u<span class="w"> </span>-b<span class="w"> </span>10M
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Measure Throughput</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># run server</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1"># run client</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>iperf3<span class="w"> </span>-c<span class="w"> </span><span class="m">192</span>.168.1.100
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="c1"># result</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="o">[</span><span class="w"> </span>ID<span class="o">]</span><span class="w"> </span>Interval<span class="w">           </span>Transfer<span class="w">     </span>Bitrate<span class="w">         </span>Retr<span class="w">  </span>Cwnd
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">0</span>.00-1.00<span class="w">   </span>sec<span class="w">   </span><span class="m">113</span><span class="w"> </span>MBytes<span class="w">   </span><span class="m">952</span><span class="w"> </span>Mbits/sec<span class="w">    </span><span class="m">0</span><span class="w">    </span><span class="m">329</span><span class="w"> </span>KBytes<span class="w"> </span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Transfer: Total amount of data send during the duration</li>
+<li>Bitrate: average speed over the duration</li>
+</ul>
 
 
 

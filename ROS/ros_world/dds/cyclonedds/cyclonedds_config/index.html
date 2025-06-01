@@ -628,6 +628,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#shm" class="md-nav__link">
+    <span class="md-ellipsis">
+      SHM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#large-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Large message
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -684,6 +702,27 @@
 </div>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">usage</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CYCLONEDDS_URI</span><span class="o">=</span><span class="s2">&quot;file://</span><span class="nv">$HOME</span><span class="s2">/CycloneDDS/my-config.xml&quot;</span>
 </code></pre></div></td></tr></table></div>
+<div class="grid-container">
+    <div class="grid-item">
+            <a href="#reporting-and-tracing">
+                <img src=""  width="150" height="150"/>
+                <p>Tracing</p>
+            </a>
+        </div>
+        <div class="grid-item">
+             <a href="#shm">
+                <img src=""  width="150" height="150">
+                <p>shm</p>
+            </a>
+        </div>
+    <div class="grid-item">
+          <a href="cyclonedds_tips">
+                <img src=""  width="150" height="150">
+                <p>large messages</p>
+            </a>
+    </div>
+</div>
+
 <h2 id="reporting-and-tracing">Reporting and Tracing</h2>
 <p><a href="https://cyclonedds.io/docs/cyclonedds/latest/config/reporting-tracing.html">doc</a></p>
 <h3 id="demo-output-conf-to-log-file">Demo: output conf to log file</h3>
@@ -719,6 +758,79 @@
 <a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="nt">&lt;/Tracing&gt;</span>
 <a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">  </span><span class="nt">&lt;/Domain&gt;</span>
 <a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="shm">SHM</h2>
+<p><a href="https://github.com/ros2/rmw_cyclonedds/blob/humble/shared_memory_support.md">Using Shared Memory with ROS 2</a></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span>
+<span class="normal"><a href="#__codelineno-2-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://cdds.io/config&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/iceoryx/etc/cyclonedds.xsd&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;any&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span><span class="nt">&lt;SharedMemory&gt;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">            </span><span class="nt">&lt;Enable&gt;</span>true<span class="nt">&lt;/Enable&gt;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">            </span><span class="nt">&lt;LogLevel&gt;</span>info<span class="nt">&lt;/LogLevel&gt;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="nt">&lt;/SharedMemory&gt;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">&lt;/Domain&gt;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">run rudi</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>iox-roudi
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="large-message">Large message</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://cdds.io/config&quot;</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="w"> </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">Id=</span><span class="s">&quot;any&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="nt">&lt;General&gt;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">      </span><span class="nt">&lt;Interfaces&gt;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">        </span><span class="nt">&lt;NetworkInterface</span><span class="w"> </span><span class="na">autodetermine=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">priority=</span><span class="s">&quot;default&quot;</span><span class="w"> </span><span class="na">multicast=</span><span class="s">&quot;default&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">      </span><span class="nt">&lt;/Interfaces&gt;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">      </span><span class="nt">&lt;AllowMulticast&gt;</span>default<span class="nt">&lt;/AllowMulticast&gt;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">      </span><span class="nt">&lt;MaxMessageSize&gt;</span>65500B<span class="nt">&lt;/MaxMessageSize&gt;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">    </span><span class="nt">&lt;/General&gt;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">    </span><span class="nt">&lt;Internal&gt;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">      </span><span class="nt">&lt;SocketReceiveBufferSize</span><span class="w"> </span><span class="na">min=</span><span class="s">&quot;10MB&quot;</span><span class="nt">/&gt;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">      </span><span class="nt">&lt;Watermarks&gt;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">        </span><span class="nt">&lt;WhcHigh&gt;</span>500kB<span class="nt">&lt;/WhcHigh&gt;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">      </span><span class="nt">&lt;/Watermarks&gt;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">    </span><span class="nt">&lt;/Internal&gt;</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">  </span><span class="nt">&lt;/Domain&gt;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">/etc/sysctl.d/10-cyclone-max.conf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># IP fragmentation settings</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="na">net.ipv4.ipfrag_time</span><span class="o">=</span><span class="s">3</span><span class="w">  </span><span class="c1"># in seconds, default is 30 s</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="na">net.ipv4.ipfrag_high_thresh</span><span class="o">=</span><span class="s">134217728</span><span class="w">  </span><span class="c1"># 128 MiB, default is 256 KiB</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="c1"># Increase the maximum receive buffer size for network packets</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="na">net.core.rmem_max</span><span class="o">=</span><span class="s">2147483647</span><span class="w">  </span><span class="c1"># 2 GiB, default is 208 KiB</span>
 </code></pre></div></td></tr></table></div>
 
 

@@ -791,6 +791,10 @@
 <a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">    </span><span class="nt">&lt;gz_frame_id&gt;</span>camera_link_optical<span class="nt">&lt;/gz_frame_id&gt;</span>
 <a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="nt">&lt;/sensor&gt;</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">urdf</p>
+<p>Don't forget to shroud with <code>&lt;gazebo reference="link name"&gt;</code> tag</p>
+</div>
 <p><a href="code/camera_world.sdf">download world</a></p>
 <hr />
 <h2 id="ros2">ROS2</h2>
@@ -823,47 +827,27 @@
 <span class="normal"><a href="#__codelineno-3-18">18</a></span>
 <span class="normal"><a href="#__codelineno-3-19">19</a></span>
 <span class="normal"><a href="#__codelineno-3-20">20</a></span>
-<span class="normal"><a href="#__codelineno-3-21">21</a></span>
-<span class="normal"><a href="#__codelineno-3-22">22</a></span>
-<span class="normal"><a href="#__codelineno-3-23">23</a></span>
-<span class="normal"><a href="#__codelineno-3-24">24</a></span>
-<span class="normal"><a href="#__codelineno-3-25">25</a></span>
-<span class="normal"><a href="#__codelineno-3-26">26</a></span>
-<span class="normal"><a href="#__codelineno-3-27">27</a></span>
-<span class="normal"><a href="#__codelineno-3-28">28</a></span>
-<span class="normal"><a href="#__codelineno-3-29">29</a></span>
-<span class="normal"><a href="#__codelineno-3-30">30</a></span>
-<span class="normal"><a href="#__codelineno-3-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2"></a>
 <a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ros_gz_bridge.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">RosGzBridge</span>
 <a id="__codelineno-3-6" name="__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="n">PACKAGE_NAME</span> <span class="o">=</span> <span class="s1">&#39;gz_tutorial&#39;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="n">PACKAGE_NAME</span> <span class="o">=</span> <span class="s1">&#39;tutorial_bringup&#39;</span>
 <a id="__codelineno-3-8" name="__codelineno-3-8"></a>
 <a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
 <a id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
 <a id="__codelineno-3-11" name="__codelineno-3-11"></a>
 <a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">bridge_params</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PACKAGE_NAME</span><span class="p">),</span><span class="s1">&#39;config&#39;</span><span class="p">,</span><span class="s1">&#39;gz_bridge.yaml&#39;</span><span class="p">)</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">ros_gz_bridge</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_bridge&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;parameter_bridge&quot;</span><span class="p">,</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a>            <span class="s1">&#39;--ros-args&#39;</span><span class="p">,</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a>            <span class="s1">&#39;-p&#39;</span><span class="p">,</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a>            <span class="sa">f</span><span class="s1">&#39;config_file:=&#39;</span><span class="p">,</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>            <span class="n">bridge_params</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="p">],</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23"></a>            <span class="p">{</span><span class="s1">&#39;use_sim_time&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24"></a>            <span class="p">{</span><span class="s1">&#39;qos_overrides./camera/image_raw.publisher.reliability&#39;</span><span class="p">:</span> <span class="s1">&#39;best_effort&#39;</span><span class="p">}</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="p">],</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="p">)</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27"></a>
-<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">ros_gz_bridge</span><span class="p">)</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a>
-<a id="__codelineno-3-30" name="__codelineno-3-30"></a>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a>    <span class="k">return</span> <span class="n">ld</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">bridge</span> <span class="o">=</span> <span class="n">RosGzBridge</span><span class="p">(</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>            <span class="n">bridge_name</span><span class="o">=</span><span class="s2">&quot;bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>            <span class="n">config_file</span><span class="o">=</span><span class="n">bridge_params</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="p">)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">bridge</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    <span class="k">return</span> <span class="n">ld</span>
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gz_bridge.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
 <span class="normal"><a href="#__codelineno-4-2">2</a></span>
@@ -875,12 +859,14 @@
 <a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gz.msgs.Image&quot;</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
 </code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">control image qos</p>
-<p>Add to parameters section</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="p">{</span><span class="err">&#39;qos_overrides./camera/image_raw.publisher.reliabili</span><span class="kc">t</span><span class="err">y&#39;</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;bes</span><span class="kc">t</span><span class="err">_e</span><span class="kc">ff</span><span class="err">or</span><span class="kc">t</span><span class="err">&#39;</span><span class="p">}</span>
+<!-- !!! tip "control image qos"
+    Add to parameters section
+
+    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="p">{</span><span class="err">&#39;qos_overrides./camera/image_raw.publisher.reliabili</span><span class="kc">t</span><span class="err">y&#39;</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;bes</span><span class="kc">t</span><span class="err">_e</span><span class="kc">ff</span><span class="err">or</span><span class="kc">t</span><span class="err">&#39;</span><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-</div>
+
+ -->
+
 <hr />
 <h2 id="ros_gz_image">ros_gz_image</h2>
 <p>use <a href="http://wiki.ros.org/image_transport">image_transport</a></p>
@@ -890,6 +876,8 @@
 </code></pre></div></td></tr></table></div>
 <hr />
 <h3 id="rqt">rqt</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>rqt_image_view<span class="w"> </span>rqt_image_view<span class="w"> </span>/camera/image_raw
+</code></pre></div></td></tr></table></div>
 <p><img alt="alt text" src="images/ret_image_view.png" /></p>
 
 

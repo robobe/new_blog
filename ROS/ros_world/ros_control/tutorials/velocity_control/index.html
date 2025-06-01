@@ -598,6 +598,38 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gazebo-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gazebo simulation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gazebo simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -644,6 +676,310 @@
 
 
 <h1 id="ros2-control-velocity-control">ROS2 Control: velocity control</h1>
+<h2 id="gazebo-simulation">Gazebo simulation</h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">xacro loaf gazebo control plugin and set ros2_control tag</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">&lt;robot</span><span class="w"> </span><span class="na">xmlns:xacro=</span><span class="s">&quot;http://www.ros.org/wiki/xacro&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="nt">&lt;gazebo&gt;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">        </span><span class="nt">&lt;plugin</span><span class="w"> </span><span class="na">filename=</span><span class="s">&quot;gz_ros2_control-system&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;gz_ros2_control::GazeboSimROS2ControlPlugin&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">            </span><span class="nt">&lt;parameters&gt;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">                </span>$(find<span class="w"> </span>tutorial_bringup)/config/velocity_controllers.yaml
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">            </span><span class="nt">&lt;/parameters&gt;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nt">&lt;/gazebo&gt;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nt">&lt;ros2_control</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;robot&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;system&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">        </span><span class="nt">&lt;hardware&gt;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">            </span><span class="nt">&lt;plugin&gt;</span>gz_ros2_control/GazeboSimSystem<span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">        </span><span class="nt">&lt;/hardware&gt;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">        </span><span class="nt">&lt;joint</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;first_joint&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">            </span><span class="nt">&lt;command_interface</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;velocity&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">                </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;min&quot;</span><span class="nt">&gt;</span>-0.5<span class="nt">&lt;/param&gt;</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">                </span><span class="nt">&lt;param</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;max&quot;</span><span class="nt">&gt;</span>0.5<span class="nt">&lt;/param&gt;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">            </span><span class="nt">&lt;/command_interface&gt;</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">            </span><span class="nt">&lt;state_interface</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;position&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">            </span><span class="nt">&lt;state_interface</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;velocity&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">        </span><span class="nt">&lt;/joint&gt;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="nt">&lt;/ros2_control&gt;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="nt">&lt;/robot&gt;</span>
+</code></pre></div></td></tr></table></div>
+<details>
+    <summary>controllers yaml file</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">controller_manager</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">update_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="nt">joint_state_broadcaster</span><span class="p">:</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">joint_state_broadcaster/JointStateBroadcaster</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="nt">velocity_controller</span><span class="p">:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velocity_controllers/JointGroupVelocityController</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="nt">velocity_controller</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="nt">joints</span><span class="p">:</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">first_joint</span>
+</code></pre></div></td></tr></table></div>
+
+</details>
+
+<details>
+    <summary>launch file</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span>
+<span class="normal"><a href="#__codelineno-2-41">41</a></span>
+<span class="normal"><a href="#__codelineno-2-42">42</a></span>
+<span class="normal"><a href="#__codelineno-2-43">43</a></span>
+<span class="normal"><a href="#__codelineno-2-44">44</a></span>
+<span class="normal"><a href="#__codelineno-2-45">45</a></span>
+<span class="normal"><a href="#__codelineno-2-46">46</a></span>
+<span class="normal"><a href="#__codelineno-2-47">47</a></span>
+<span class="normal"><a href="#__codelineno-2-48">48</a></span>
+<span class="normal"><a href="#__codelineno-2-49">49</a></span>
+<span class="normal"><a href="#__codelineno-2-50">50</a></span>
+<span class="normal"><a href="#__codelineno-2-51">51</a></span>
+<span class="normal"><a href="#__codelineno-2-52">52</a></span>
+<span class="normal"><a href="#__codelineno-2-53">53</a></span>
+<span class="normal"><a href="#__codelineno-2-54">54</a></span>
+<span class="normal"><a href="#__codelineno-2-55">55</a></span>
+<span class="normal"><a href="#__codelineno-2-56">56</a></span>
+<span class="normal"><a href="#__codelineno-2-57">57</a></span>
+<span class="normal"><a href="#__codelineno-2-58">58</a></span>
+<span class="normal"><a href="#__codelineno-2-59">59</a></span>
+<span class="normal"><a href="#__codelineno-2-60">60</a></span>
+<span class="normal"><a href="#__codelineno-2-61">61</a></span>
+<span class="normal"><a href="#__codelineno-2-62">62</a></span>
+<span class="normal"><a href="#__codelineno-2-63">63</a></span>
+<span class="normal"><a href="#__codelineno-2-64">64</a></span>
+<span class="normal"><a href="#__codelineno-2-65">65</a></span>
+<span class="normal"><a href="#__codelineno-2-66">66</a></span>
+<span class="normal"><a href="#__codelineno-2-67">67</a></span>
+<span class="normal"><a href="#__codelineno-2-68">68</a></span>
+<span class="normal"><a href="#__codelineno-2-69">69</a></span>
+<span class="normal"><a href="#__codelineno-2-70">70</a></span>
+<span class="normal"><a href="#__codelineno-2-71">71</a></span>
+<span class="normal"><a href="#__codelineno-2-72">72</a></span>
+<span class="normal"><a href="#__codelineno-2-73">73</a></span>
+<span class="normal"><a href="#__codelineno-2-74">74</a></span>
+<span class="normal"><a href="#__codelineno-2-75">75</a></span>
+<span class="normal"><a href="#__codelineno-2-76">76</a></span>
+<span class="normal"><a href="#__codelineno-2-77">77</a></span>
+<span class="normal"><a href="#__codelineno-2-78">78</a></span>
+<span class="normal"><a href="#__codelineno-2-79">79</a></span>
+<span class="normal"><a href="#__codelineno-2-80">80</a></span>
+<span class="normal"><a href="#__codelineno-2-81">81</a></span>
+<span class="normal"><a href="#__codelineno-2-82">82</a></span>
+<span class="normal"><a href="#__codelineno-2-83">83</a></span>
+<span class="normal"><a href="#__codelineno-2-84">84</a></span>
+<span class="normal"><a href="#__codelineno-2-85">85</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncludeLaunchDescription</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">PathJoinSubstitution</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.launch_description_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">xacro</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">PKG_BRINGUP</span> <span class="o">=</span> <span class="s2">&quot;tutorial_bringup&quot;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="n">PKG_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;tutorial_description&quot;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">ROBOT</span> <span class="o">=</span> <span class="s2">&quot;robot.xacro&quot;</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="n">CONFIG</span> <span class="o">=</span> <span class="s2">&quot;config&quot;</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="n">URDF</span> <span class="o">=</span> <span class="s2">&quot;urdf&quot;</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="n">BRIDGE_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;gz_bridge.yaml&quot;</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>    <span class="n">pkg_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PKG_DESCRIPTION</span><span class="p">))</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>    <span class="n">xacro_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_path</span><span class="p">,</span> <span class="n">URDF</span><span class="p">,</span> <span class="n">ROBOT</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>    <span class="n">robot_description</span> <span class="o">=</span> <span class="n">xacro</span><span class="o">.</span><span class="n">process_file</span><span class="p">(</span><span class="n">xacro_file</span><span class="p">)</span><span class="o">.</span><span class="n">toxml</span><span class="p">()</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    <span class="n">node_robot_state_publisher</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;robot_state_publisher&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;robot_state_publisher&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;robot_description&quot;</span><span class="p">:</span> <span class="n">robot_description</span><span class="p">,</span> <span class="s2">&quot;use_sim_time&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}],</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>    <span class="p">)</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="n">gazebo</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>        <span class="n">PythonLaunchDescriptionSource</span><span class="p">(</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a>            <span class="p">[</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>                <span class="n">PathJoinSubstitution</span><span class="p">(</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>                    <span class="p">[</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>                        <span class="n">get_package_share_directory</span><span class="p">(</span><span class="s2">&quot;ros_gz_sim&quot;</span><span class="p">),</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>                        <span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a>                        <span class="s2">&quot;gz_sim.launch.py&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a>                    <span class="p">]</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a>                <span class="p">)</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a>            <span class="p">]</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a>        <span class="p">),</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a>        <span class="n">launch_arguments</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;gz_args&quot;</span><span class="p">,</span> <span class="s2">&quot; -r -v 3 my_world.sdf&quot;</span><span class="p">)],</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a>    <span class="p">)</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a>
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a>    <span class="n">gz_spawn_entity</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_sim&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;create&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50"></a>        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">,</span> <span class="s2">&quot;robot&quot;</span><span class="p">,</span> <span class="s2">&quot;-topic&quot;</span><span class="p">,</span> <span class="s2">&quot;/robot_description&quot;</span><span class="p">],</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52"></a>    <span class="p">)</span>
+<a id="__codelineno-2-53" name="__codelineno-2-53"></a>
+<a id="__codelineno-2-54" name="__codelineno-2-54"></a>
+<a id="__codelineno-2-55" name="__codelineno-2-55"></a>    <span class="n">joint_state_broadcaster_spawner</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-2-56" name="__codelineno-2-56"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;controller_manager&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-57" name="__codelineno-2-57"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;spawner&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;joint_state_broadcaster&quot;</span><span class="p">],</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59"></a>        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-60" name="__codelineno-2-60"></a>    <span class="p">)</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61"></a>
+<a id="__codelineno-2-62" name="__codelineno-2-62"></a>    <span class="n">control_spawner</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-2-63" name="__codelineno-2-63"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;controller_manager&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-64" name="__codelineno-2-64"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;spawner&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-65" name="__codelineno-2-65"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;velocity_controller&quot;</span><span class="p">],</span>
+<a id="__codelineno-2-66" name="__codelineno-2-66"></a>        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-67" name="__codelineno-2-67"></a>    <span class="p">)</span>
+<a id="__codelineno-2-68" name="__codelineno-2-68"></a>
+<a id="__codelineno-2-69" name="__codelineno-2-69"></a>    <span class="n">gazebo_bridge</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-2-70" name="__codelineno-2-70"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-71" name="__codelineno-2-71"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;parameter_bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-72" name="__codelineno-2-72"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;parameter_bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-73" name="__codelineno-2-73"></a>        <span class="n">output</span><span class="o">=</span><span class="s2">&quot;screen&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-74" name="__codelineno-2-74"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock&quot;</span><span class="p">],</span>
+<a id="__codelineno-2-75" name="__codelineno-2-75"></a>    <span class="p">)</span>
+<a id="__codelineno-2-76" name="__codelineno-2-76"></a>
+<a id="__codelineno-2-77" name="__codelineno-2-77"></a>
+<a id="__codelineno-2-78" name="__codelineno-2-78"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">node_robot_state_publisher</span><span class="p">)</span>
+<a id="__codelineno-2-79" name="__codelineno-2-79"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gazebo</span><span class="p">)</span>
+<a id="__codelineno-2-80" name="__codelineno-2-80"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gz_spawn_entity</span><span class="p">)</span>
+<a id="__codelineno-2-81" name="__codelineno-2-81"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gazebo_bridge</span><span class="p">)</span>
+<a id="__codelineno-2-82" name="__codelineno-2-82"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">control_spawner</span><span class="p">)</span>
+<a id="__codelineno-2-83" name="__codelineno-2-83"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">joint_state_broadcaster_spawner</span><span class="p">)</span>
+<a id="__codelineno-2-84" name="__codelineno-2-84"></a>
+<a id="__codelineno-2-85" name="__codelineno-2-85"></a>    <span class="k">return</span> <span class="n">ld</span>
+</code></pre></div></td></tr></table></div>
+
+</details>
+
+<h3 id="usage">usage</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">send command</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>-1<span class="w"> </span>/velocity_controller/commands<span class="w"> </span>std_msgs/msg/Float64MultiArray<span class="w"> </span><span class="s2">&quot;{ data: [1.0] }&quot;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/dynamic_joint_states
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="c1">#</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>header:
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>stamp:
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">    </span>sec:<span class="w"> </span><span class="m">85</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">    </span>nanosec:<span class="w"> </span><span class="m">799000000</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>frame_id:<span class="w"> </span><span class="s1">&#39;&#39;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>joint_names:
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>-<span class="w"> </span>first_joint
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>interface_values:
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>-<span class="w"> </span>interface_names:
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>-<span class="w"> </span>position
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>-<span class="w"> </span>velocity
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>values:
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>-<span class="w"> </span><span class="m">1</span>.00
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>-<span class="w"> </span><span class="m">0</span>
+</code></pre></div></td></tr></table></div>
 
 
 
