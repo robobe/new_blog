@@ -96,136 +96,102 @@ def generate_launch_description():
 
 - [match]()
 - [property]()
-- [arg](#arg)
+- [arg](xacro_arg_and_condition.md)
 - [include]()
-- [condition]()
+- [condition](xacro_arg_and_condition.md)
 - [macro]()
 - [loops]()
 
 
-### arg
-Simple `xacro` file that get argument from outside.  
-if no argument set it use the default.  
-Using `xacro` command to substitute xacro sentence
-
-```xml title="simple xacro"
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_name">
-    <xacro:arg name="name" default="default_bot"/>
-
-    <link name="$(arg name)">
-        
-    </link>
-  
-
-</robot>
-```
-
-```bash title="usage"
-# use default value
-xacro demo.urdf.xacro
-
-# set arg from cli
-xacro demo.urdf.xacro name:=turtle
-
-# convert to urdf file
-xacro demo.urdf.xacro name:=turtle > demo.urdf
-```
-
-#### launch file
-- Use python pathlib for path construct
-- Use xacro library
-- Check [condition](#condition) example for command and PathJoinSubstitution 
-
-```python
-from ament_index_python.packages import get_package_share_directory
-from launch import LaunchDescription
-from launch_ros.actions import Node
-import xacro
-from pathlib import Path
-
-PKG_DESCRIPTION = "turtlebot_description"
-URDF_XACRO_FILE = "demo.urdf.xacro"
-
-
-def generate_launch_description():
-    ld =  LaunchDescription()
-    
-    xacro_file = Path(
-        get_package_share_directory(PKG_DESCRIPTION)) \
-        .joinpath("urdf") \
-        .joinpath(URDF_XACRO_FILE) \
-        .as_posix()
-        
-
-    urdf = xacro.process_file(xacro_file, mappings={"name":"my_name"}).toxml()
-    params = {'robot_description': urdf, 'use_sim_time': True}
-    node_robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        output='screen',
-        parameters=[params]
-    )
-
-
-    ld.add_action(node_robot_state_publisher)
-    return ld
-
-```
-
-```bash title="usage"
-#-f outout topic full data
-ros2 topic echo /robot_description -f
-```
-
 ---
 
-### Condition
+## Recommend xacro layout
 
-```xml title="simple xacro with condition and argument"
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_name">
-    <xacro:arg name="use_control" default="false"/>
+- robot.urdf.xacro: main xacro file
+- gazebo.xacro: all gazebo stuff
+- control.xacro: ros2 control
+- materials.xacro
+- macros.xacro
+- inertial.xacro
 
-    <xacro:if value="$(arg use_control)">
-        <!-- ros2 control-->
-         <link name="ros2_control">
-            
-         </link>
-    </xacro:if>
-    <xacro:unless value="$(arg use_control)">
-        <!-- other plugin-->
-        <link name="ros2">
-            
-        </link>
-    </xacro:unless>
-  
 
+```xml title="robot.urdf.xacro"
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot">
+  <xacro:include filename="gazebo.xacro"/>
+  <xacro:include filename="control.xacro"/>
+
+  <xacro:property name="a" value="0.1" />
 </robot>
 ```
 
-#### usage
-Launch file with argument to control urdf parse (use ros2_control or not)
-using substitutions class :
+```xml title="gazebo.xacro"
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <gazebo reference="imu_link">
+        <sensor name="link2_imu" type="imu">
+            <always_on>1</always_on>
+            <update_rate>50</update_rate>
+            <visualize>true</visualize>
+            <topic>imu-control</topic>
+            <enable_metrics>true</enable_metrics>
+        </sensor>
+    </gazebo>
 
-- LaunchConfiguration
-- Command
-- PathJoinSubstitution
-
-<details>
-    <summary>launch file that set xacro argument</summary>
-
-```python
---8<-- "docs/ROS/ros_eco/urdf_xacro_gz_plugin/xacro/code/xacro_arg_condition.launch.py"
-```
-</details>
-
-```bash title="how to launch"
-# with
-ros2 launch turtlebot_bringup demo.launch.py use_ros2_control:=True
-# Without
-ros2 launch turtlebot_bringup demo.launch.py use_ros2_control:=False
+  
+</robot>
 ```
 
-```bash title="echo topic"
-# -f: output all topic data
-ros2 topic echo /robot_description -f
+!!! tip "<gazebo> tag"
+     
+
+```xml title="materials.xacro"
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.3 0.1 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 1 1"/>
+    </material>
+  
+</robot>
+```
+
+```xml title="inertial.xacro"
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="inertial_sphere" params="mass radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(2/5) * mass * (radius*radius)}" ixy="0.0" ixz="0.0"
+                    iyy="${(2/5) * mass * (radius*radius)}" iyz="0.0"
+                    izz="${(2/5) * mass * (radius*radius)}" />
+        </inertial>
+    </xacro:macro>  
+
+
+    <xacro:macro name="inertial_box" params="mass x y z *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (y*y+z*z)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (x*x+z*z)}" iyz="0.0"
+                    izz="${(1/12) * mass * (x*x+y*y)}" />
+        </inertial>
+    </xacro:macro>
+
+
+    <xacro:macro name="inertial_cylinder" params="mass length radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (3*radius*radius + length*length)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (3*radius*radius + length*length)}" iyz="0.0"
+                    izz="${(1/2) * mass * (radius*radius)}" />
+        </inertial>
+    </xacro:macro>
+</robot>
 ```
