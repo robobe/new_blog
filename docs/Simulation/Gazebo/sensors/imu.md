@@ -26,10 +26,14 @@ tags:
         <update_rate>50</update_rate>
         <visualize>true</visualize>
         <topic>imu</topic>
-        <enable_metrics>true</enable_metrics>
     </sensor>
 </link>
 ```
+
+## imu sensor
+[imu sensor](http://sdformat.org/spec?ver=1.12&elem=sensor#sensor_imu)
+
+---
 
 <details>
     <summary>world with imu</summary>

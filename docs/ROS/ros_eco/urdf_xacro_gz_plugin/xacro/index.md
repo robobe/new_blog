@@ -195,3 +195,8 @@ def generate_launch_description():
     </xacro:macro>
 </robot>
 ```
+
+---
+
+## Reference
+- [articulatedrobotics - Describing robots with URDF](https://articulatedrobotics.xyz/tutorials/ready-for-ros/urdf/)
