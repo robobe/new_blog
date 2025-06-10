@@ -1,0 +1,48 @@
+{
+    // See https://code.visualstudio.com/docs/editor/tasks for more information
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Debian Package",
+            "type": "shell",
+            "command": "fakeroot debian/rules binary",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "fakeroot debian/rules clean",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Update Changelog with dch",
+            "type": "shell",
+            "command": "dch --newversion ${input:changelogVersion} $(git log -1 --pretty=format:'* %s')",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "DEBEMAIL": "dev@example.com",
+                    "DEBFULLNAME": "dev com"
+                }
+            },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "changelogVersion",
+            "type": "promptString",
+            "description": "Enter the new version for dch"
+        }
+    ]
+}
