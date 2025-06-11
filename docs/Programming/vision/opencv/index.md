@@ -11,8 +11,10 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <img src="images/opencv_logo.png"   width="150" height="150">
-        <p>tbd</p>
+        <a href="cuda">
+            <img src="images/cuda.png"  width="150" height="150">
+            <p>CUDA</p>
+        </a>
     </div>
     <div class="grid-item">
         <img src="images/website.png"   width="150" height="150">
@@ -20,3 +22,4 @@ tags:
     </div>
 
 </div>
+![alt text](image.png)

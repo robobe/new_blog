@@ -22,7 +22,10 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-                <p>TBD</p>
+             <a href="vpi">
+        <img src="images/vpi.png" width="150" height="150">
+        <p>vpi </p>
+        </a>
     </div>
     
 </div>
