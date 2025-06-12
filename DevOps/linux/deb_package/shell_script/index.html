@@ -1,202 +1,111 @@
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
-      
-      
-        <meta name="author" content="robobe">
-      
-      
-        <link rel="canonical" href="https://robobe.github.io/DevOps/linux/deb_package/shell_script/">
-      
-      
-      
-      
-      <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.2">
-    
-    
-      
-        <title>Shell script debian package - Robots Inside</title>
-      
-    
-    
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.d7758b05.min.css">
-      
-        
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
-      
-      
+<!DOCTYPE html>
 
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-      <link rel="stylesheet" href="../../../../extra.css">
-    
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#shell-script-debian-package" class="md-skip">
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Guides, notes and useful stuff for learning robotics systems." name="description"/>
+<meta content="robobe" name="author"/>
+<link href="https://robobe.github.io/DevOps/linux/deb_package/shell_script/" rel="canonical"/>
+<link href="../../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.2" name="generator"/>
+<title>Shell script debian package - Robots Inside</title>
+<link href="../../../../assets/stylesheets/main.d7758b05.min.css" rel="stylesheet"/>
+<link href="../../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../../extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="indigo" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#shell-script-debian-package">
           Skip to content
         </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
+</div>
+<div data-md-component="announce">
+</div>
 <header class="md-header" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Robots Inside" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="Robots Inside">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
             Robots Inside
           </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
             
               Shell script debian package
             
           </span>
-        </div>
-      </div>
-    </div>
-    
-      
-    
-    
-    
-    
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
-            
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
-          </a>
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-        <div class="md-search__suggest" data-md-component="search-suggest"></div>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+<ol class="md-search-result__list" role="presentation"></ol>
 </div>
-    
-    
-      <div class="md-header__source">
-        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
-  </div>
-  <div class="md-source__repository">
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/robobe/new_blog" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-      </div>
-    
-  </nav>
-  
+</div>
+</nav>
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-            
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../.." class="md-tabs__link">
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../..">
         
   
     
@@ -204,16 +113,9 @@
   Home
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../../ROS/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../../ROS/">
         
   
     
@@ -221,16 +123,9 @@
   ROS
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../../Simulation/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../../Simulation/">
         
   
     
@@ -238,16 +133,9 @@
   Simulation
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../../Robotics/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../../Robotics/">
         
   
     
@@ -255,16 +143,9 @@
   Robotics
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../../Programming/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../../Programming/">
         
   
     
@@ -272,16 +153,9 @@
   Programming
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../../Embedded/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../../Embedded/">
         
   
     
@@ -289,16 +163,9 @@
   Embedded
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../">
         
   
     
@@ -306,16 +173,9 @@
   DevOps
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../../Other/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../../Other/">
         
   
     
@@ -323,16 +183,9 @@
   Other
 
       </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../../../projects/" class="md-tabs__link">
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../../../projects/">
         
   
     
@@ -340,484 +193,253 @@
   Projects
 
       </a>
-    </li>
-  
-
-      
-    </ul>
-  </div>
+</li>
+</ul>
+</div>
 </nav>
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
-  
-
-
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Robots Inside" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="Robots Inside">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
     Robots Inside
   </label>
-  
-    <div class="md-nav__source">
-      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
-  </div>
-  <div class="md-source__repository">
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/robobe/new_blog" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
     GitHub
   </div>
 </a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../..">
+<span class="md-ellipsis">
     Home
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../ROS/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../ROS/">
+<span class="md-ellipsis">
     ROS
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../Simulation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../Simulation/">
+<span class="md-ellipsis">
     Simulation
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../Robotics/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../Robotics/">
+<span class="md-ellipsis">
     Robotics
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../Programming/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../Programming/">
+<span class="md-ellipsis">
     Programming
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../Embedded/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../Embedded/">
+<span class="md-ellipsis">
     Embedded
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../">
+<span class="md-ellipsis">
     DevOps
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../Other/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../Other/">
+<span class="md-ellipsis">
     Other
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../projects/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../projects/">
+<span class="md-ellipsis">
     Projects
     
   </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-  </ul>
+</a>
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#debian-folder" class="md-nav__link">
-    <span class="md-ellipsis">
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debian-folder">
+<span class="md-ellipsis">
       debian folder
     </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="debian folder">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#my-toolinstall" class="md-nav__link">
-    <span class="md-ellipsis">
+</a>
+<nav aria-label="debian folder" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#my-toolinstall">
+<span class="md-ellipsis">
       my-tool.install
     </span>
-  </a>
-  
+</a>
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#changelog" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#changelog">
+<span class="md-ellipsis">
       changelog
     </span>
-  </a>
-  
+</a>
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#control" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#control">
+<span class="md-ellipsis">
       control
     </span>
-  </a>
-  
+</a>
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#rules" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rules">
+<span class="md-ellipsis">
       rules
     </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="rules">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#change-deb-output-path-debs-folder-must-be-exists" class="md-nav__link">
-    <span class="md-ellipsis">
+</a>
+<nav aria-label="rules" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#change-deb-output-path-debs-folder-must-be-exists">
+<span class="md-ellipsis">
       change deb output path (debs folder must be exists)
     </span>
-  </a>
-  
+</a>
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#set-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#set-permissions">
+<span class="md-ellipsis">
       set permissions
     </span>
-  </a>
-  
+</a>
 </li>
-        
-      </ul>
-    </nav>
-  
+</ul>
+</nav>
 </li>
-        
-      </ul>
-    </nav>
-  
+</ul>
+</nav>
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#build" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build">
+<span class="md-ellipsis">
       build
     </span>
-  </a>
-  
+</a>
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#clean" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#clean">
+<span class="md-ellipsis">
       clean
     </span>
-  </a>
-  
+</a>
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#vscode" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vscode">
+<span class="md-ellipsis">
       VSCode
     </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="VSCode">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tasksjson" class="md-nav__link">
-    <span class="md-ellipsis">
+</a>
+<nav aria-label="VSCode" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tasksjson">
+<span class="md-ellipsis">
       tasks.json
     </span>
-  </a>
-  
+</a>
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#settingjson" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#settingjson">
+<span class="md-ellipsis">
       setting.json
     </span>
-  </a>
-  
+</a>
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#git" class="md-nav__link">
-    <span class="md-ellipsis">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#git">
+<span class="md-ellipsis">
       Git
     </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Git">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#gitignore" class="md-nav__link">
-    <span class="md-ellipsis">
+</a>
+<nav aria-label="Git" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gitignore">
+<span class="md-ellipsis">
       .gitignore
     </span>
-  </a>
-  
+</a>
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-  <nav class="md-tags" >
-    
-      
-      
-      
-        <span class="md-tag">dch</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">deb package</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">debian</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">dpkg-buildpackage</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">fakeroot</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">rules</span>
-      
-    
-  </nav>
-
-
-  
-  
-
-
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<nav class="md-tags">
+<span class="md-tag">dch</span>
+<span class="md-tag">deb package</span>
+<span class="md-tag">debian</span>
+<span class="md-tag">dpkg-buildpackage</span>
+<span class="md-tag">fakeroot</span>
+<span class="md-tag">rules</span>
+</nav>
 <h1 id="shell-script-debian-package">Shell script debian package</h1>
 <p>pack minimal shell script to <code>debian</code> package using <code>fakeroot</code> / <code>dpkg-buildpackage</code></p>
 <div class="admonition note">
 <p class="admonition-title">fakeroot / dpkg-buildpackage</p>
-<p>When i use <code>dpkg-buildpackage</code> the build process end with error that for now i don't found a solution<br />
+<p>When i use <code>dpkg-buildpackage</code> the build process end with error that for now i don't found a solution<br/>
  the `fakeroot debian/rules binary run the build process without error</p>
 </div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -850,11 +472,11 @@
 <a id="__codelineno-0-14" name="__codelineno-0-14"></a>└── scripts
 <a id="__codelineno-0-15" name="__codelineno-0-15"></a>    └── my-tool.sh
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">scripts/my-tool</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">scripts/my-tool</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="ch">#!/bin/sh</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;hello my-tool&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"hello my-tool"</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="debian-folder">debian folder</h3>
 <p>Using <code>fakeroot</code>/<code>dpkg-buildpackage</code> debian folder must contain few files:</p>
@@ -866,7 +488,7 @@
 </ul>
 <h4 id="my-toolinstall">my-tool.install</h4>
 <p>Mapping file from project to filesystem location for example</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">debian/my-tool.install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>scripts/my-tools.sh /usr/local/bin
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">debian/my-tool.install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>scripts/my-tools.sh /usr/local/bin
 </code></pre></div></td></tr></table></div>
 <div class="admonition tip">
 <p class="admonition-title">external file</p>
@@ -877,19 +499,19 @@
 <h4 id="changelog">changelog</h4>
 <p><code>dch</code> command create and update changelog file
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
-<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>dch<span class="w"> </span>--create<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.1<span class="w"> </span>--package<span class="w"> </span>my-tool<span class="w"> </span><span class="s2">&quot;v 0.0.1&quot;</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>dch<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.1<span class="w"> </span><span class="s2">&quot;simple script&quot;</span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>dch<span class="w"> </span>--create<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.1<span class="w"> </span>--package<span class="w"> </span>my-tool<span class="w"> </span><span class="s2">"v 0.0.1"</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>dch<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.1<span class="w"> </span><span class="s2">"simple script"</span>
 </code></pre></div></td></tr></table></div></p>
 <div class="admonition note version">
 <p class="admonition-title">Note</p>
 <p>Using <code>dch</code> command we update the version 
 <code>my-tool (0.0.2) UNRELEASED; urgency=medium</code></p>
 <p>This version use to set the debian version</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>dch<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.2<span class="w"> </span><span class="s2">&quot;simple script ver 2&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>dch<span class="w"> </span>-v<span class="w"> </span><span class="m">0</span>.0.2<span class="w"> </span><span class="s2">"simple script ver 2"</span>
 </code></pre></div></td></tr></table></div>
 <p><details>
-    <summary>changelog</summary></p>
-<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">changelog</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<summary>changelog</summary></details></p>
+<p><div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">changelog</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
 <span class="normal"><a href="#__codelineno-6-2">2</a></span>
 <span class="normal"><a href="#__codelineno-6-3">3</a></span>
 <span class="normal"><a href="#__codelineno-6-4">4</a></span>
@@ -901,7 +523,7 @@
 <a id="__codelineno-6-5" name="__codelineno-6-5"></a>
 <a id="__codelineno-6-6" name="__codelineno-6-6"></a>--<span class="w"> </span>user<span class="w"> </span>&lt;user@lap&gt;<span class="w">  </span>Tue,<span class="w"> </span><span class="m">29</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">2025</span><span class="w"> </span><span class="m">21</span>:14:15<span class="w"> </span>+0300
 </code></pre></div></td></tr></table></div>
-</details></p>
+</p>
 </div>
 <h4 id="control">control</h4>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
@@ -959,7 +581,7 @@
 <a id="__codelineno-10-2" name="__codelineno-10-2"></a>    dh_fixperms
 <a id="__codelineno-10-3" name="__codelineno-10-3"></a>    chmod 777 debian/my-tool/usr/local/bin/demo.sh
 </code></pre></div></td></tr></table></div>
-<hr />
+<hr/>
 <h3 id="build">build</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
 <span class="normal"><a href="#__codelineno-11-2">2</a></span>
@@ -970,7 +592,7 @@
 <h3 id="clean">clean</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>fakeroot<span class="w"> </span>debian/rules<span class="w"> </span>clean
 </code></pre></div></td></tr></table></div>
-<hr />
+<hr/>
 <h2 id="vscode">VSCode</h2>
 <h3 id="tasksjson">tasks.json</h3>
 <ul>
@@ -979,8 +601,7 @@
 <li>update change log using <code>dch</code></li>
 </ul>
 <details>
-    <summary>tasks.json</summary>
-
+<summary>tasks.json</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
@@ -1030,55 +651,54 @@
 <span class="normal"><a href="#__codelineno-13-47">47</a></span>
 <span class="normal"><a href="#__codelineno-13-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="p">{</span>
 <a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="w">    </span><span class="c1">// See https://code.visualstudio.com/docs/editor/tasks for more information</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2.0.0&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="w">    </span><span class="nt">&quot;tasks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0"</span><span class="p">,</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="w">    </span><span class="nt">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="w">            </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Build Debian Package&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="w">            </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fakeroot debian/rules binary&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="w">            </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="w">                </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="w">            </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Build Debian Package"</span><span class="p">,</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shell"</span><span class="p">,</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="w">            </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fakeroot debian/rules binary"</span><span class="p">,</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="w">            </span><span class="nt">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="w">                </span><span class="nt">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span>
 <a id="__codelineno-13-11" name="__codelineno-13-11"></a><span class="w">            </span><span class="p">},</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="w">            </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="w">                </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-14" name="__codelineno-13-14"></a><span class="w">                </span><span class="nt">&quot;isDefault&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="w">            </span><span class="nt">"group"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="p">,</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14"></a><span class="w">                </span><span class="nt">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <a id="__codelineno-13-15" name="__codelineno-13-15"></a><span class="w">            </span><span class="p">},</span>
-<a id="__codelineno-13-16" name="__codelineno-13-16"></a><span class="w">            </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16"></a><span class="w">            </span><span class="nt">"problemMatcher"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
 <a id="__codelineno-13-17" name="__codelineno-13-17"></a><span class="w">        </span><span class="p">},</span>
 <a id="__codelineno-13-18" name="__codelineno-13-18"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-13-19" name="__codelineno-13-19"></a><span class="w">            </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Clean&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-20" name="__codelineno-13-20"></a><span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-21" name="__codelineno-13-21"></a><span class="w">            </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fakeroot debian/rules clean&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-22" name="__codelineno-13-22"></a><span class="w">            </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-13-23" name="__codelineno-13-23"></a><span class="w">                </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19"></a><span class="w">            </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Clean"</span><span class="p">,</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20"></a><span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shell"</span><span class="p">,</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21"></a><span class="w">            </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fakeroot debian/rules clean"</span><span class="p">,</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22"></a><span class="w">            </span><span class="nt">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-23" name="__codelineno-13-23"></a><span class="w">                </span><span class="nt">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span>
 <a id="__codelineno-13-24" name="__codelineno-13-24"></a><span class="w">            </span><span class="p">},</span>
-<a id="__codelineno-13-25" name="__codelineno-13-25"></a><span class="w">            </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-13-25" name="__codelineno-13-25"></a><span class="w">            </span><span class="nt">"problemMatcher"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
 <a id="__codelineno-13-26" name="__codelineno-13-26"></a><span class="w">        </span><span class="p">},</span>
 <a id="__codelineno-13-27" name="__codelineno-13-27"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-13-28" name="__codelineno-13-28"></a><span class="w">            </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Update Changelog with dch&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-29" name="__codelineno-13-29"></a><span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-30" name="__codelineno-13-30"></a><span class="w">            </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dch --newversion ${input:changelogVersion} $(git log -1 --pretty=format:&#39;* %s&#39;)&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-31" name="__codelineno-13-31"></a><span class="w">            </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-13-32" name="__codelineno-13-32"></a><span class="w">                </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-33" name="__codelineno-13-33"></a><span class="w">                </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-13-34" name="__codelineno-13-34"></a><span class="w">                    </span><span class="nt">&quot;DEBEMAIL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev@example.com&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-35" name="__codelineno-13-35"></a><span class="w">                    </span><span class="nt">&quot;DEBFULLNAME&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev com&quot;</span>
+<a id="__codelineno-13-28" name="__codelineno-13-28"></a><span class="w">            </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Update Changelog with dch"</span><span class="p">,</span>
+<a id="__codelineno-13-29" name="__codelineno-13-29"></a><span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shell"</span><span class="p">,</span>
+<a id="__codelineno-13-30" name="__codelineno-13-30"></a><span class="w">            </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dch --newversion ${input:changelogVersion} $(git log -1 --pretty=format:'* %s')"</span><span class="p">,</span>
+<a id="__codelineno-13-31" name="__codelineno-13-31"></a><span class="w">            </span><span class="nt">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-32" name="__codelineno-13-32"></a><span class="w">                </span><span class="nt">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="p">,</span>
+<a id="__codelineno-13-33" name="__codelineno-13-33"></a><span class="w">                </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-34" name="__codelineno-13-34"></a><span class="w">                    </span><span class="nt">"DEBEMAIL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev@example.com"</span><span class="p">,</span>
+<a id="__codelineno-13-35" name="__codelineno-13-35"></a><span class="w">                    </span><span class="nt">"DEBFULLNAME"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev com"</span>
 <a id="__codelineno-13-36" name="__codelineno-13-36"></a><span class="w">                </span><span class="p">}</span>
 <a id="__codelineno-13-37" name="__codelineno-13-37"></a><span class="w">            </span><span class="p">},</span>
-<a id="__codelineno-13-38" name="__codelineno-13-38"></a><span class="w">            </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-13-38" name="__codelineno-13-38"></a><span class="w">            </span><span class="nt">"problemMatcher"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
 <a id="__codelineno-13-39" name="__codelineno-13-39"></a><span class="w">        </span><span class="p">}</span>
 <a id="__codelineno-13-40" name="__codelineno-13-40"></a><span class="w">    </span><span class="p">],</span>
-<a id="__codelineno-13-41" name="__codelineno-13-41"></a><span class="w">    </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-13-41" name="__codelineno-13-41"></a><span class="w">    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <a id="__codelineno-13-42" name="__codelineno-13-42"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-13-43" name="__codelineno-13-43"></a><span class="w">            </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;changelogVersion&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-44" name="__codelineno-13-44"></a><span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;promptString&quot;</span><span class="p">,</span>
-<a id="__codelineno-13-45" name="__codelineno-13-45"></a><span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enter the new version for dch&quot;</span>
+<a id="__codelineno-13-43" name="__codelineno-13-43"></a><span class="w">            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"changelogVersion"</span><span class="p">,</span>
+<a id="__codelineno-13-44" name="__codelineno-13-44"></a><span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"promptString"</span><span class="p">,</span>
+<a id="__codelineno-13-45" name="__codelineno-13-45"></a><span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enter the new version for dch"</span>
 <a id="__codelineno-13-46" name="__codelineno-13-46"></a><span class="w">        </span><span class="p">}</span>
 <a id="__codelineno-13-47" name="__codelineno-13-47"></a><span class="w">    </span><span class="p">]</span>
 <a id="__codelineno-13-48" name="__codelineno-13-48"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 </details>
-
 <div class="admonition bug">
 <p>the demo use <code>git log -1 --pretty=format:'* %s')</code> as demo to get changes from last commit
 it's batter to get the commits from last tag using <code>git log v1.2.0..v1.3.0 --pretty=format:"* %s"</code></p>
@@ -1090,16 +710,15 @@ it's batter to get the commits from last tag using <code>git log v1.2.0..v1.3.0 
 <li>mark rule as shellscript if fail on autodetect</li>
 <li>check if associate it with makefile still the indention rule for shellscript working</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
 <span class="normal"><a href="#__codelineno-14-2">2</a></span>
-<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nt">&quot;files.associations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">    </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;makefile&quot;</span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nt">"files.associations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">    </span><span class="nt">"rules"</span><span class="p">:</span><span class="w"> </span><span class="s2">"makefile"</span>
 <a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 </div>
 <details>
-    <summary>settings.json</summary>
-
+<summary>settings.json</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
 <span class="normal"><a href="#__codelineno-15-2">2</a></span>
 <span class="normal"><a href="#__codelineno-15-3">3</a></span>
@@ -1107,22 +726,20 @@ it's batter to get the commits from last tag using <code>git log v1.2.0..v1.3.0 
 <span class="normal"><a href="#__codelineno-15-5">5</a></span>
 <span class="normal"><a href="#__codelineno-15-6">6</a></span>
 <span class="normal"><a href="#__codelineno-15-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="p">{</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">    </span><span class="nt">&quot;[shellscript]&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">        </span><span class="nt">&quot;editor.insertSpaces&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">        </span><span class="nt">&quot;editor.tabSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">        </span><span class="nt">&quot;editor.detectIndentation&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">    </span><span class="nt">"[shellscript]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">        </span><span class="nt">"editor.insertSpaces"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">        </span><span class="nt">"editor.tabSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">        </span><span class="nt">"editor.detectIndentation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
 <a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">    </span><span class="p">},</span>
 <a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-
 </details>
-
 <div class="admonition tip">
 <p class="admonition-title">using cat to check TAB indentation</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>cat<span class="w"> </span>-T<span class="w"> </span>&lt;file&gt;
 </code></pre></div></td></tr></table></div>
 </div>
-<hr />
+<hr/>
 <h3 id="git">Git</h3>
 <h4 id="gitignore">.gitignore</h4>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
@@ -1140,84 +757,42 @@ it's batter to get the commits from last tag using <code>git log v1.2.0..v1.3.0 
 <a id="__codelineno-17-7" name="__codelineno-17-7"></a>!debian/my-tool.install
 </code></pre></div></td></tr></table></div>
 <p>exclude file from ignore folder, for it to work we need to ignore files in folder and not the folder it self <code>debian/*</code> </p>
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-                
-              </article>
-            </div>
-          
-          
+</article>
+</div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
   Back to top
 </button>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
   
   
     Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
       Material for MkDocs
     </a>
-  
 </div>
-      
-        <div class="md-social">
-  
-    
-    
-    
-    
-    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-    </a>
-  
+<div class="md-social">
+<a class="md-social__link" href="../" rel="noopener" target="_blank" title="Back to parent">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</a>
 </div>
-      
-    </div>
-  </div>
+</div>
+</div>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    
-    
-    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
-    
-    
-      <script src="../../../../assets/javascripts/bundle.f13b1293.min.js"></script>
-      
-        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
-      
-        <script src="../../../../assets/mathjax.js"></script>
-      
-        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
-      
-    
-  </body>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../../../assets/javascripts/bundle.f13b1293.min.js"></script>
+<script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+<script src="../../../../assets/mathjax.js"></script>
+<script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -7,10 +7,10 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Guides, notes and useful stuff for learning robotics systems." name="description"/>
 <meta content="robobe" name="author"/>
-<link href="https://robobe.github.io/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge/diff-drive/" rel="canonical"/>
+<link href="https://robobe.github.io/ROS/ros_world/dds/cyclonedds/cyclonedds_config/unicast/" rel="canonical"/>
 <link href="../../../../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.2" name="generator"/>
-<title>DiffDrive - Robots Inside</title>
+<title>CycloneDDS unicast between machine - Robots Inside</title>
 <link href="../../../../../../assets/stylesheets/main.d7758b05.min.css" rel="stylesheet"/>
 <link href="../../../../../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#diffdrive">
+<a class="md-skip" href="#cyclonedds-unicast-between-machine">
           Skip to content
         </a>
 </div>
@@ -48,7 +48,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              DiffDrive
+              CycloneDDS unicast between machine
             
           </span>
 </div>
@@ -307,24 +307,17 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#gazebo">
+<a class="md-nav__link" href="#demo">
 <span class="md-ellipsis">
-      Gazebo
+      Demo
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#ros">
-<span class="md-ellipsis">
-      ROS
-    </span>
-</a>
-<nav aria-label="ROS" class="md-nav">
+<nav aria-label="Demo" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#bridge-file">
+<a class="md-nav__link" href="#usage">
 <span class="md-ellipsis">
-      bridge file
+      usage
     </span>
 </a>
 </li>
@@ -339,16 +332,15 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <nav class="md-tags">
-<span class="md-tag">bridge</span>
-<span class="md-tag">diff drive</span>
-<span class="md-tag">gazebo</span>
-<span class="md-tag">harmonic</span>
-<span class="md-tag">jazzy</span>
+<span class="md-tag">cyclonedds</span>
+<span class="md-tag">dds</span>
 <span class="md-tag">ros</span>
+<span class="md-tag">unicast</span>
 </nav>
-<h1 id="diffdrive">DiffDrive</h1>
-<h2 id="gazebo">Gazebo</h2>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">gazebo diff drive plugin</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<h1 id="cyclonedds-unicast-between-machine">CycloneDDS unicast between machine</h1>
+<p>Disable multicast discovery and allow unicast traffic between two machines</p>
+<h2 id="demo">Demo</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
@@ -358,42 +350,21 @@
 <span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-0-10">10</a></span>
-<span class="normal"><a href="#__codelineno-0-11">11</a></span>
-<span class="normal"><a href="#__codelineno-0-12">12</a></span>
-<span class="normal"><a href="#__codelineno-0-13">13</a></span>
-<span class="normal"><a href="#__codelineno-0-14">14</a></span>
-<span class="normal"><a href="#__codelineno-0-15">15</a></span>
-<span class="normal"><a href="#__codelineno-0-16">16</a></span>
-<span class="normal"><a href="#__codelineno-0-17">17</a></span>
-<span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">&lt;plugin</span><span class="w"> </span><span class="na">name=</span><span class="s">"gz::sim::systems::DiffDrive"</span><span class="w"> </span><span class="na">filename=</span><span class="s">"gz-sim-diff-drive-system"</span><span class="nt">&gt;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">&lt;left_joint&gt;</span>wheel_left_joint<span class="nt">&lt;/left_joint&gt;</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="nt">&lt;right_joint&gt;</span>wheel_right_joint<span class="nt">&lt;/right_joint&gt;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="nt">&lt;wheel_separation&gt;</span>${wheel_separation}<span class="nt">&lt;/wheel_separation&gt;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="nt">&lt;wheel_radius&gt;</span>0.033<span class="nt">&lt;/wheel_radius&gt;</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nt">&lt;max_linear_acceleration&gt;</span>0.33<span class="nt">&lt;/max_linear_acceleration&gt;</span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>graph TD
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    subgraph MachineA [Machine A]
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>        A1[eth0: 192.168.1.10]
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>        A2[eth1: 10.0.0.1]
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    end
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    subgraph MachineB [Machine B]
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>        B1[eth0: 10.0.0.4]
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>    end
 <a id="__codelineno-0-10" name="__codelineno-0-10"></a>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nt">&lt;topic&gt;</span>cmd_vel<span class="nt">&lt;/topic&gt;</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="nt">&lt;frame_id&gt;</span>odom<span class="nt">&lt;/frame_id&gt;</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="nt">&lt;child_frame_id&gt;</span>base_link<span class="nt">&lt;/child_frame_id&gt;</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="nt">&lt;odom_topic&gt;</span>odom<span class="nt">&lt;/odom_topic&gt;</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="nt">&lt;odom_publisher_frequency&gt;</span>30<span class="nt">&lt;/odom_publisher_frequency&gt;</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="nt">&lt;tf_topic&gt;</span>/tf<span class="nt">&lt;/tf_topic&gt;</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">  </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    A2 --- B1
 </code></pre></div></td></tr></table></div>
-<hr/>
-<h2 id="ros">ROS</h2>
-<h3 id="bridge-file">bridge file</h3>
-<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">bridge.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<details>
+<summary>Sender</summary>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">cyclondedds.xml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
@@ -409,30 +380,93 @@
 <span class="normal"><a href="#__codelineno-1-14">14</a></span>
 <span class="normal"><a href="#__codelineno-1-15">15</a></span>
 <span class="normal"><a href="#__codelineno-1-16">16</a></span>
-<span class="normal"><a href="#__codelineno-1-17">17</a></span>
-<span class="normal"><a href="#__codelineno-1-18">18</a></span>
-<span class="normal"><a href="#__codelineno-1-19">19</a></span>
-<span class="normal"><a href="#__codelineno-1-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># gz topic published by DiffDrive plugin</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">"odom"</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">"odom"</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">"nav_msgs/msg/Odometry"</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">"gz.msgs.Odometry"</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"https://cdds.io/config"</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="w"> </span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="na">xsi:schemaLocation=</span><span class="s">"https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd"</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">Id=</span><span class="s">"any"</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">&lt;General&gt;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">      </span><span class="nt">&lt;AllowMulticast&gt;</span>false<span class="nt">&lt;/AllowMulticast&gt;</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1"># gz topic published by DiffDrive plugin</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">"tf"</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">"tf"</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">"tf2_msgs/msg/TFMessage"</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">"gz.msgs.Pose_V"</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="c1"># gz topic subscribed to by DiffDrive plugin</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">"cmd_vel"</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">"cmd_vel"</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">"geometry_msgs/msg/Twist"</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">"gz.msgs.Twist"</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROS_TO_GZ</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">&lt;/General&gt;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="nt">&lt;Discovery&gt;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">      </span><span class="nt">&lt;ParticipantIndex&gt;</span>auto<span class="nt">&lt;/ParticipantIndex&gt;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">      </span><span class="nt">&lt;Peers&gt;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">        </span><span class="nt">&lt;Peer</span><span class="w"> </span><span class="na">Address=</span><span class="s">"10.0.0.4"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">        </span><span class="nt">&lt;Peer</span><span class="w"> </span><span class="na">Address=</span><span class="s">"127.0.0.1"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">      </span><span class="nt">&lt;/Peers&gt;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="nt">&lt;/Discovery&gt;</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">  </span><span class="nt">&lt;/Domain&gt;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
 </code></pre></div></td></tr></table></div>
+</details>
+<details>
+<summary>Receiver</summary>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">cyclondedds.xml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><span class="nt">&lt;CycloneDDS</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">"https://cdds.io/config"</span><span class="w"> </span><span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="w"> </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="na">xsi:schemaLocation=</span><span class="s">"https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd"</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">&lt;Domain</span><span class="w"> </span><span class="na">Id=</span><span class="s">"any"</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="nt">&lt;General&gt;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="nt">&lt;AllowMulticast&gt;</span>false<span class="nt">&lt;/AllowMulticast&gt;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="nt">&lt;/General&gt;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">&lt;Discovery&gt;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="nt">&lt;ParticipantIndex&gt;</span>auto<span class="nt">&lt;/ParticipantIndex&gt;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">      </span><span class="nt">&lt;Peers&gt;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">        </span><span class="nt">&lt;Peer</span><span class="w"> </span><span class="na">Address=</span><span class="s">"10.0.0.1"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">        </span><span class="nt">&lt;Peer</span><span class="w"> </span><span class="na">Address=</span><span class="s">"127.0.0.1"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">      </span><span class="nt">&lt;/Peers&gt;</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">    </span><span class="nt">&lt;/Discovery&gt;</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">  </span><span class="nt">&lt;/Domain&gt;</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="nt">&lt;/CycloneDDS&gt;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">peer localhost</p>
+<p><code>&lt;Peer Address="127.0.0.1" /&gt;</code></p>
+<p>This is essential because Cyclone DDS does not automatically assume loopback (127.0.0.1) unless you’re using multicast or explicitly list it.</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">env.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CYCLONEDDS_URI</span><span class="o">=</span>file://<span class="nv">$PWD</span>/cyclonedds.xml
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nb">source</span><span class="w"> </span>/opt/ros/humble/setup.bash
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">RMW_IMPLEMENTATION</span><span class="o">=</span>rmw_cyclonedds_cpp
+</code></pre></div></td></tr></table></div>
+<h3 id="usage">usage</h3>
+<p>We can run the pub/sub on both side</p>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">pub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">source</span><span class="w"> </span>env.sh
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>xxx<span class="w"> </span>std_msgs/String<span class="w"> </span><span class="s2">"data: hello world"</span><span class="w"> </span>-r<span class="w"> </span><span class="m">1</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th class="filename" colspan="2"><span class="filename">echo</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">source</span><span class="w"> </span>env.sh
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/xxx
+</code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">ros2 daemon</p>
+<p>The ROS2 daemon is a background process that:</p>
+<ul>
+<li>Caches discovered ROS nodes and topics</li>
+<li>Improves discovery performance</li>
+<li>Manages node name resolution</li>
+</ul>
+<p>Some time we need to restart for refresh discovery when using ROS commands</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>ros2 daemon stop &amp;&amp; ros2 daemon start
+</code></pre></div></td></tr></table></div>
+</div>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
