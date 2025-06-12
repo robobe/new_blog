@@ -24,6 +24,7 @@ theme:
     - search.suggest # display the likeliest completion for the last word
     - search.highlight # highlight all occurrences
     - search.share # show a share button of the current search
+    - content.code.mermaid
 
 nav:
   - Home: index.md
@@ -42,6 +43,7 @@ plugins:
     - tags
     - include_uri
     - file_nav_links
+    # - mermaid2
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -50,7 +52,12 @@ markdown_extensions:
       use_pygments: true  # Ensures syntax highlighting
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          # format: !!python/name:mermaid2.fence_mermaid_custom
+
   - pymdownx.snippets
   - pymdownx.arithmatex: # render math equations
       generic: true

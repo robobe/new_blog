@@ -63,3 +63,19 @@ docker run --rm -it \
 my_ubuntu:22.04 \
 ll /dev/ttyACM0
 ```
+
+---
+
+## Architecture condition
+
+```
+RUN ARCH=$(uname -m) && \
+    apt update && \
+    if [ "$ARCH" = "aarch64" ]; then \
+        apt install -y ./OpenCV-unknown-aarch64-*.deb; \
+    elif [ "$ARCH" = "x86_64" ]; then \
+        apt install -y ./OpenCV-unknown-x86_64-*.deb; \
+    else \
+        echo "Unsupported architecture: $ARCH"; exit 1; \
+    fi && \
+```

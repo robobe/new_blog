@@ -15,25 +15,37 @@ Control cyclonedds discovery, network and tracing settings using xml file
 
 
 ```bash title="usage"
-export CYCLONEDDS_URI="file://$HOME/CycloneDDS/my-config.xml"
+export CYCLONEDDS_URI="file://$HOME/cyclonedds.xml"
 ```
 
 <div class="grid-container">
+     <div class="grid-item">
+            <a href="unicast">
+                <p>unicast</p>
+            </a>
+        </div>
+        <div class="grid-item">
+             <a href="#">
+                <p>TBD</p>
+            </a>
+        </div>
+    <div class="grid-item">
+          <a href="">
+                <p>TBD</p>
+            </a>
+    </div>
     <div class="grid-item">
             <a href="#reporting-and-tracing">
-                <img src=""  width="150" height="150"/>
                 <p>Tracing</p>
             </a>
         </div>
         <div class="grid-item">
              <a href="#shm">
-                <img src=""  width="150" height="150">
                 <p>shm</p>
             </a>
         </div>
     <div class="grid-item">
           <a href="cyclonedds_tips">
-                <img src=""  width="150" height="150">
                 <p>large messages</p>
             </a>
     </div>

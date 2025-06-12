@@ -43,15 +43,33 @@ Using compose override to run nvidia docker on pc and jetson
     - Loads required GPU drivers and libraries into container's environment.
     - Makes nvidia-smi, CUDA, cuDNN, TensorRT available in the container.
 
+### Demo: using vscode devcontainer with docker compose
+- use `nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04` as a base image
+- use compose override to support pc and jetson running
+- check running using `nvidia-smi`
+
+```dockerfile
+FROM nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04
+
+```
+
 ```yaml title="docker-compose.yaml"
 services:
   dev:
-    image: your-gpu-app:latest
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
+    volumes:
+      - .:/workspace:cached
+    hostname: dev
+    network_mode: host
+    stdin_open: true
+    tty: true
 
 ```
 
@@ -65,17 +83,25 @@ services:
 
 ```
 
-```bash
-docker compose -f docker-compose.yml -f docker-compose.jetson.yml up
-```
+
 
 ### VScode devcontainer
 
 ```json
-"name": "trackers",
+{
+    "name": "opencv_cuda",
     "dockerComposeFile": [
       "../docker-compose.yaml",
       "../docker-compose.jetson.yaml"
     ],
     "service": "dev",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+      "vscode": {
+        "extensions": [],
+        "settings": {}
+      }
+    }
+  }
 ```
