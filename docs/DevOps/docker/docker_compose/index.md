@@ -19,6 +19,23 @@ docker compose -f docker-compose.yml up
 docker compose -f docker-compose.yml run <service_name> <command>
 ```
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="compose_tips_and_templates">
+        <img src="images/tips.png" width="150" height="150">
+        <p>gui</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="docker_compose">
+        <img src="images/docker_compose.png" width="150" height="150">
+        <p>TBD</p>
+        </a>
+    </div>
+    
+    
+</div>
+
 ---
 
 ## compose override
