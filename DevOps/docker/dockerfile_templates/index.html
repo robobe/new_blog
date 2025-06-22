@@ -692,6 +692,24 @@
 
 <h1 id="dockerfile-template-and-snippets">Dockerfile template and snippets</h1>
 <p>Dockerfile templates and snippets for various applications and services.</p>
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="#user">
+           <p>Non root user</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="#gstreamer">
+           <p>GStreamer snippet</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="#architecture-condition">
+           <p>Architecture condition</p>
+        </a>
+    </div>
+</div>
+
 <h2 id="user">User</h2>
 <p>Add user and install sudo support</p>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Dockerfile</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -774,6 +792,38 @@
 <a id="__codelineno-4-7" name="__codelineno-4-7"></a>    else \
 <a id="__codelineno-4-8" name="__codelineno-4-8"></a>        echo &quot;Unsupported architecture: $ARCH&quot;; exit 1; \
 <a id="__codelineno-4-9" name="__codelineno-4-9"></a>    fi &amp;&amp; \
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="gstreamer">GStreamer</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>--no-install-recommends<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">        </span>libgstreamer1.0-0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">        </span>gstreamer1.0-plugins-base<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">        </span>gstreamer1.0-plugins-good<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">        </span>gstreamer1.0-plugins-bad<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">        </span>gstreamer1.0-plugins-ugly<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">        </span>gstreamer1.0-tools<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">        </span>python3-gi<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">        </span>gir1.2-gstreamer-1.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">        </span>libgstreamer-plugins-base1.0-dev<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">        </span>gstreamer1.0-libav<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">        </span>gstreamer-1.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>clean<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
 </code></pre></div></td></tr></table></div>
 
 

@@ -613,6 +613,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#pack-to-debian" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pack to debian
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pack to debian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patch-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      patch files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -688,6 +712,76 @@ Use Docker to create build image</p>
 <a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span>-DCUDA_TOOLKIT_ROOT_DIR<span class="o">=</span>/usr/local/cuda<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span>-DCMAKE_INCLUDE_PATH<span class="o">=</span>/usr/include/opencv4/
 </code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="pack-to-debian">Pack to debian</h2>
+<h3 id="patch-files">patch files</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">patch_package.xml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1">#/bin/bash</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1"># comment libopencv-dev, python3-opencv</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s|^\([[:space:]]*\)&lt;depend&gt;libopencv-dev&lt;/depend&gt;|\1&lt;!-- &lt;depend&gt;libopencv-dev&lt;/depend&gt; --&gt;|&#39;</span><span class="w"> </span>package.xml
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s|^\([[:space:]]*\)&lt;depend&gt;python3-opencv&lt;/depend&gt;|\1&lt;!-- &lt;depend&gt;python3-opencv&lt;/depend&gt; --&gt;|&#39;</span><span class="w"> </span>package.xml
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">patch_rules.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nb">set</span><span class="w"> </span>-e
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c1"># remove current override_dh_shlibdeps</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;/^override_dh_shlibdeps:/,/^$/d&#39;</span><span class="w"> </span>/workspace/cv_bridge/debian/rules
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; &gt;&gt; debian/rules</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="s">override_dh_shlibdeps:</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="s">    dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="s">override_dh_builddeb:</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="s">    dh_builddeb --destdir=/workspace/debs</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="s">EOF</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[✅] Successfully patched debian/rules&quot;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">patch_compat</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39; &gt; debian/compat</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="s">10</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="s">EOF</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">add entry to changelog</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nv">DEBEMAIL</span><span class="o">=</span><span class="s2">&quot;you@example.com&quot;</span><span class="w"> </span><span class="nv">DEBFULLNAME</span><span class="o">=</span><span class="s2">&quot;Your Name&quot;</span><span class="w"> </span>dch<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span>--newversion<span class="w"> </span><span class="m">3</span>.2.1-1jammy-cv410<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span>--distribution<span class="w"> </span>jammy<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">  </span>--urgency<span class="w"> </span>high<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">  </span><span class="s2">&quot;build against opencv4.10&quot;</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">dch command</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>devscripts
+</code></pre></div></td></tr></table></div>
+</div>
 
 
 

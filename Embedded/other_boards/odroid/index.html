@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/geometric_control/">
+        <link rel="canonical" href="https://robobe.github.io/Embedded/other_boards/odroid/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Geometric Control of a Quadrotor UAV on SE(3) - Robots Inside</title>
+        <title>Odroid - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#geometric-control-of-a-quadrotor-uav-on-se3" class="md-skip">
+        <a href="#odroid" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Geometric Control of a Quadrotor UAV on SE(3)
+              Odroid
             
           </span>
         </div>
@@ -247,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../Robotics/" class="md-tabs__link">
         
   
     
@@ -281,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Embedded/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -459,7 +459,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../Robotics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -501,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Embedded/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -598,6 +598,47 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo-do-it-again" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo: do it again
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -615,25 +656,19 @@
       
       
       
-        <span class="md-tag">SE3</span>
+        <span class="md-tag">gpio</span>
       
     
       
       
       
-        <span class="md-tag">controller</span>
+        <span class="md-tag">gpiod</span>
       
     
       
       
       
-        <span class="md-tag">geometric</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">uav</span>
+        <span class="md-tag">odroid</span>
       
     
   </nav>
@@ -643,12 +678,116 @@
   
 
 
-<h1 id="geometric-control-of-a-quadrotor-uav-on-se3">Geometric Control of a Quadrotor UAV on SE(3)</h1>
+<h1 id="odroid">Odroid</h1>
+<p>An affordable, power-efficient, high-performance Single Board Computer that supports Android and Linux platforms.
+<a href="https://www.hardkernel.com/">more</a></p>
+<h2 id="install">Install</h2>
 <ul>
-<li><a href="https://github.com/fdcl-gwu/uav_geometric_control">geometric controller github</a></li>
-<li><a href="https://github.com/fdcl-gwu/uav_simulator/tree/main">uav simulator</a></li>
-<li><a href="https://github.com/KumarRobotics/kr_mav_control/tree/kash-ros2-humble-integration">kv_mav_control</a></li>
+<li><a href="https://systems-docs.readthedocs.io/en/latest/odroid-xu4.html#setup">docs</a></li>
+<li><a href="https://wiki.odroid.com/odroid-xu4/os_images/linux/ubuntu_5.4/ubuntu_5.4">Download os</a></li>
 </ul>
+<hr />
+<p><img alt="alt text" src="images/odroid_xu4.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">1.8 v</p>
+<p>All GPIO use 1.8 vdc for signaling
+Don't connect 3.3VDC or 5VDC</p>
+</div>
+<p><img alt="alt text" src="images/odroid_xu4_con10_pin_names.png" /></p>
+<p><img alt="alt text" src="images/odroid_xu4_con10.png" /></p>
+<h3 id="demo">Demo</h3>
+<p>Mapping gpio name to gpiod command</p>
+<p><strong>from the pinout table we locate ping 13 as GPX1.5</strong>
+using <code>/sys/kernel/debug/gpio</code> we look for gpx1 pins</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>cat<span class="w"> </span>/sys/kernel/debug/gpio<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gpx
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1">#</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>gpiochip1:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">8</span>-15,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx0:
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>gpiochip2:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">16</span>-23,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx1:
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>gpiochip3:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">24</span>-31,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx2:
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>gpiochip4:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">32</span>-39,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx3:
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gpioinfo on gpiochip2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo<span class="w"> </span>gpioinfo<span class="w"> </span>gpiochip2
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>gpiochip2<span class="w"> </span>-<span class="w"> </span><span class="m">8</span><span class="w"> </span>lines:
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">        </span>line<span class="w">   </span><span class="m">0</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">        </span>line<span class="w">   </span><span class="m">1</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span>line<span class="w">   </span><span class="m">2</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span>line<span class="w">   </span><span class="m">3</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">        </span>line<span class="w">   </span><span class="m">4</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">        </span>line<span class="w">   </span><span class="m">5</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">        </span>line<span class="w">   </span><span class="m">6</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">        </span>line<span class="w">   </span><span class="m">7</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">1.8 v</p>
+<p>All GPIO use 1.8 vdc for signaling
+Don't connect 3.3VDC or 5VDC</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gpioset</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># toggle line5 to high (1.8v)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>sudo<span class="w"> </span>gpioset<span class="w"> </span>gpiochip2<span class="w"> </span><span class="nv">5</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1"># toggle line5 to low</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>sudo<span class="w"> </span>gpioset<span class="w"> </span>gpiochip2<span class="w"> </span><span class="nv">5</span><span class="o">=</span><span class="m">0</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gpioinfo on gpiochip2 after the set command</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>sudo<span class="w"> </span>gpioinfo<span class="w"> </span>gpiochip2
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>gpiochip2<span class="w"> </span>-<span class="w"> </span><span class="m">8</span><span class="w"> </span>lines:
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">        </span>line<span class="w">   </span><span class="m">0</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">  </span>output<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">        </span>line<span class="w">   </span><span class="m">1</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">        </span>line<span class="w">   </span><span class="m">2</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">        </span>line<span class="w">   </span><span class="m">3</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">        </span>line<span class="w">   </span><span class="m">4</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">        </span>line<span class="w">   </span><span class="m">5</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">  </span>output<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">        </span>line<span class="w">   </span><span class="m">6</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">        </span>line<span class="w">   </span><span class="m">7</span>:<span class="w">      </span>unnamed<span class="w">       </span>unused<span class="w">   </span>input<span class="w">  </span>active-high<span class="w"> </span>
+</code></pre></div></td></tr></table></div>
+<h3 id="demo-do-it-again">Demo: do it again</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>cat<span class="w"> </span>/sys/kernel/debug/gpio<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gpx
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="c1">#</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>gpiochip1:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">8</span>-15,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx0:
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>gpiochip2:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">16</span>-23,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx1:
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>gpiochip3:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">24</span>-31,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx2:
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>gpiochip4:<span class="w"> </span>GPIOs<span class="w"> </span><span class="m">32</span>-39,<span class="w"> </span>parent:<span class="w"> </span>platform/13400000.pinctrl,<span class="w"> </span>gpx3:
+</code></pre></div></td></tr></table></div>
+<p><strong>from the pinout table we locate ping 19 as GPX2.6</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gpioset</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># toggle line5 to high (1.8v)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>sudo<span class="w"> </span>gpioset<span class="w"> </span>gpiochip3<span class="w"> </span><span class="nv">6</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="c1"># toggle line5 to low</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>sudo<span class="w"> </span>gpioset<span class="w"> </span>gpiochip3<span class="w"> </span><span class="nv">6</span><span class="o">=</span><span class="m">0</span>
+</code></pre></div></td></tr></table></div>
 
 
 
