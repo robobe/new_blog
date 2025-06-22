@@ -11,3 +11,8 @@
         <p>Math</p></a>
     </div>
 </div>
+
+
+## Resources
+- [Deep Learning with PyTorch Step-by-Step](https://github.com/GPrathap/PyTorchStepByStep)
+Official repository of my book: "Deep Learning with PyTorch Step-by-Step: A Beginner's Guide" 

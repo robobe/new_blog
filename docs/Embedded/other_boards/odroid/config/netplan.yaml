@@ -1,0 +1,21 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: false
+      dhcp6: false
+      addresses:
+      - 10.0.0.20/24
+      routes:
+      - to: default
+        via: 10.0.0.1
+      nameservers:
+       addresses: [8.8.8.8,8.8.4.4]
+  wifis:
+    wlan0:
+      dhcp4: yes
+      dhcp6: yes
+      access-points:
+        "<SSID>":
+          password: "<PASSWORD>"

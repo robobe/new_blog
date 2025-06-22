@@ -10,6 +10,23 @@ tags:
 # Dockerfile template and snippets
 Dockerfile templates and snippets for various applications and services.
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="#user">
+           <p>Non root user</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="#gstreamer">
+           <p>GStreamer snippet</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="#architecture-condition">
+           <p>Architecture condition</p>
+        </a>
+    </div>
+</div>
 
 ## User
 
@@ -78,4 +95,26 @@ RUN ARCH=$(uname -m) && \
     else \
         echo "Unsupported architecture: $ARCH"; exit 1; \
     fi && \
+```
+
+---
+
+## GStreamer
+
+```dockerfile
+RUN apt-get update \
+    && apt-get -y install --no-install-recommends \
+        libgstreamer1.0-0 \
+        gstreamer1.0-plugins-base \
+        gstreamer1.0-plugins-good \
+        gstreamer1.0-plugins-bad \
+        gstreamer1.0-plugins-ugly \
+        gstreamer1.0-tools \
+        python3-gi \
+        gir1.2-gstreamer-1.0 \
+        libgstreamer-plugins-base1.0-dev \
+        gstreamer1.0-libav \
+        gstreamer-1.0 \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
 ```
