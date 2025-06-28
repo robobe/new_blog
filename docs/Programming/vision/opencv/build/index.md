@@ -21,6 +21,14 @@ I use pre-built docker image from NVIDIA, `FROM nvidia/cuda:${CUDA}-cudnn-devel-
 --8<-- "docs/Programming/vision/opencv/build/code/Dockerfile"
 ```
 
+---
+
+## Github
+
+[my github with all the files](https://github.com/robobe/opencv_builder)
+
+---
+
 ### Build process
 
 - Download and extract opencv and opencv_contrib
@@ -88,9 +96,9 @@ make package ..
 
 **Downloads**
 
-  - [Dockerfile](docs/Programming/vision/opencv/build/code/Dockerfile)
-  - [.devcontainer.json](docs/Programming/vision/opencv/build/code/devcontainer.json)
-  - [build.sh](docs/Programming/vision/opencv/build/code/build.sh)
+  - [Dockerfile](code/Dockerfile)
+  - [.devcontainer.json](code/devcontainer.json)
+  - [build.sh](code/build.sh)
 
 ---
 

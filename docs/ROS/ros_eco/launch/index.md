@@ -3,7 +3,7 @@ tags:
   - ros
   - launch
 ---
-
+{{ page_folder_links() }}
 # ROS2 launch
 Launch system is used to start multiple nodes and configure their execution. The Python-based launch system (launch_ros) provides flexibility through Python scripts.
 

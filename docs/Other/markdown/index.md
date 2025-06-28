@@ -15,7 +15,6 @@ tags:
 | `**bold**`  | **bold**  |
 | `*italic*`  | *italic*  |
 | `~~strikethrough~~`  | ~~strikethrough~~  |
-
 | `$\LaTeX$`  | $\LaTeX$  |
 | `---`  | ---  |
 
