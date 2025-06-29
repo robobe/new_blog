@@ -22,7 +22,7 @@
     
     
       
-        <title>ACT - Robots Inside</title>
+        <title>Macro Rendering Error - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#act" class="md-skip">
+        <a href="#macro-rendering-error" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ACT
+              Macro Rendering Error
             
           </span>
         </div>
@@ -598,83 +598,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#actrc" class="md-nav__link">
-    <span class="md-ellipsis">
-      actrc
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pass-inputs-to-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pass inputs to workflow
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Pass inputs to workflow">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      Demo
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      usage
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#skip-job-and-step-using-input-ans-if-condition" class="md-nav__link">
-    <span class="md-ellipsis">
-      Skip job and step using input ans if condition
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#usage_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      usage
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#usage_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -714,151 +637,30 @@
   
 
 
-<h1 id="act">ACT</h1>
-<p><a href="https://nektosact.com/usage/index.html">user guide</a></p>
-<h2 id="actrc">actrc</h2>
-<p>command-line arguments for act so you don't have to type them every time.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">platform</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># ~/.actrc</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1"># set platforms</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>-P<span class="w"> </span>ubuntu-latest<span class="o">=</span>ubuntu:22.04
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>-P<span class="w"> </span>ubuntu-22.04<span class="o">=</span>node:16-bullseye-slim
-</code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">offline</p>
-<p>Set <code>--action-offline-mode</code> to run act in offline mode. This is useful when you want to run act without internet access or when you want to avoid downloading images from the internet.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">artrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>--action-offline-mode
-</code></pre></div></td></tr></table></div>
-</div>
-<hr />
-<h2 id="pass-inputs-to-workflow">Pass inputs to workflow</h2>
-<h3 id="demo">Demo</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span>
-<span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demos</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">inputs</span><span class="p">:</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">      </span><span class="nt">TITLE</span><span class="p">:</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;title</span><span class="nv"> </span><span class="s">arg&quot;</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">  </span><span class="nt">simple_input</span><span class="p">:</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo title</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;---&gt; ${{ github.event.inputs.TITLE }}&quot;</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="usage">usage</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>act<span class="w"> </span>-j<span class="w"> </span>simple_input<span class="w"> </span>--pull<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--input<span class="w"> </span><span class="nv">TITLE</span><span class="o">=</span><span class="s2">&quot;hello world&quot;</span>
-</code></pre></div></td></tr></table></div>
-<hr />
-<h3 id="skip-job-and-step-using-input-ans-if-condition">Skip job and step using input ans if condition</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">skip step</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demos</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="nt">inputs</span><span class="p">:</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">      </span><span class="nt">SKIP</span><span class="p">:</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">skip&quot;</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">  </span><span class="nt">simple_skip</span><span class="p">:</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">step1</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;---&gt; step 1&quot;</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">step2</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ github.event.inputs.SKIP != &#39;true&#39; }}</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;---&gt; step 2&quot;</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">step3</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;---&gt; step 3&quot;</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="usage_1">usage</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>act<span class="w"> </span>-j<span class="w"> </span>simple_skip<span class="w"> </span>--pull<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--input<span class="w"> </span><span class="nv">SKIP</span><span class="o">=</span><span class="nb">true</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a>act<span class="w"> </span>-j<span class="w"> </span>simple_skip<span class="w"> </span>--pull<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--input<span class="w"> </span><span class="nv">SKIP</span><span class="o">=</span><span class="nb">false</span>
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">skip job</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-6-10">10</a></span>
-<span class="normal"><a href="#__codelineno-6-11">11</a></span>
-<span class="normal"><a href="#__codelineno-6-12">12</a></span>
-<span class="normal"><a href="#__codelineno-6-13">13</a></span>
-<span class="normal"><a href="#__codelineno-6-14">14</a></span>
-<span class="normal"><a href="#__codelineno-6-15">15</a></span>
-<span class="normal"><a href="#__codelineno-6-16">16</a></span>
-<span class="normal"><a href="#__codelineno-6-17">17</a></span>
-<span class="normal"><a href="#__codelineno-6-18">18</a></span>
-<span class="normal"><a href="#__codelineno-6-19">19</a></span>
-<span class="normal"><a href="#__codelineno-6-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demos</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="nt">inputs</span><span class="p">:</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">      </span><span class="nt">SKIP</span><span class="p">:</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">skip&quot;</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">  </span><span class="nt">simple_skip</span><span class="p">:</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ github.event.inputs.SKIP != &#39;true&#39; }}</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13"></a>
-<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">step1</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;---&gt; step 1&quot;</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">step2</span>
-<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;---&gt; step 2&quot;</span>
-<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">step3</span>
-<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;---&gt; step 3&quot;</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="usage_2">usage</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>act<span class="w"> </span>-j<span class="w"> </span>simple_skip<span class="w"> </span>--pull<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--input<span class="w"> </span><span class="nv">SKIP</span><span class="o">=</span><span class="nb">true</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>act<span class="w"> </span>-j<span class="w"> </span>simple_skip<span class="w"> </span>--pull<span class="o">=</span><span class="nb">false</span><span class="w"> </span>--input<span class="w"> </span><span class="nv">SKIP</span><span class="o">=</span><span class="nb">false</span>
+<h1 id="macro-rendering-error"><em>Macro Rendering Error</em></h1>
+<p><em>File</em>: <code>DevOps/git/github/github_actions/act/act_inputs.md</code></p>
+<p><em>UndefinedError</em>: 'github' is undefined</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Traceback (most recent call last):
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/mkdocs_macros/plugin.py&quot;, line 688, in render
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    return md_template.render(**page_variables)
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/jinja2/environment.py&quot;, line 1295, in render
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    self.environment.handle_exception()
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/jinja2/environment.py&quot;, line 942, in handle_exception
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    raise rewrite_traceback_stack(source=source)
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>  File &quot;&lt;template&gt;&quot;, line 45, in top-level template code
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/jinja2/environment.py&quot;, line 490, in getattr
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    return getattr(obj, attribute)
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>jinja2.exceptions.UndefinedError: &#39;github&#39; is undefined
 </code></pre></div></td></tr></table></div>
 
 

@@ -22,7 +22,7 @@
     
     
       
-        <title>IMU - Robots Inside</title>
+        <title>Gazebo IMU Sensor - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#imu" class="md-skip">
+        <a href="#coordinate-system" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              IMU
+              Gazebo IMU Sensor
             
           </span>
         </div>
@@ -595,14 +595,39 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#coordinate-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coordinate system
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message" class="md-nav__link">
+    <span class="md-ellipsis">
+      message
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      usage
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#imu-sensor" class="md-nav__link">
@@ -660,7 +685,73 @@
   
 
 
-<h1 id="imu">IMU</h1>
+  <h1>Gazebo IMU Sensor</h1>
+
+<p><a href="/Simulation/">Simulation</a> / <a href="/Simulation/Gazebo/">Gazebo</a></p>
+<p>The Gazebo IMU sensor simulates an Inertial Measurement Unit (IMU), providing virtual measurements of:</p>
+<ul>
+<li>Angular velocity rad/s (gyroscope)</li>
+<li>Linear acceleration m/s<sup>2</sup> (accelerometer)</li>
+<li>Orientation (quaternion)</li>
+</ul>
+<h2 id="coordinate-system">Coordinate system</h2>
+<p>Gazebo use ENU and body (FLU) coordinate (REP-103)</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Frame</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orientation</td>
+<td>ENU (Global)</td>
+<td>Quaternion</td>
+</tr>
+<tr>
+<td>angular velocity</td>
+<td>FLU (Body)</td>
+<td>rad/s</td>
+</tr>
+<tr>
+<td>linear acceleration</td>
+<td>FLU (Body)</td>
+<td>rad/s<sup>2</sup></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">FLU</p>
+<p>Express in body frame</p>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>Forward</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>Left</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>Up</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="message">message</h2>
+<p><a href="https://github.com/gazebosim/gz-msgs/blob/gz-msgs11/proto/gz/msgs/imu.proto">imu protobuf message struct </a></p>
+<h2 id="usage">usage</h2>
 <ul>
 <li>Add imu plugin in to world scope</li>
 <li>Add Sensor to link</li>
@@ -909,6 +1000,7 @@
 <a id="__codelineno-2-105" name="__codelineno-2-105"></a><span class="w">  </span><span class="nt">&lt;/world&gt;</span>
 <a id="__codelineno-2-106" name="__codelineno-2-106"></a><span class="nt">&lt;/sdf&gt;</span>
 </code></pre></div></td></tr></table></div>
+
 </details>
 
 

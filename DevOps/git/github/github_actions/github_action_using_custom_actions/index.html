@@ -22,7 +22,7 @@
     
     
       
-        <title>Github actions using custom actions - Robots Inside</title>
+        <title>Macro Rendering Error - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#github-actions-using-custom-actions" class="md-skip">
+        <a href="#macro-rendering-error" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Github actions using custom actions
+              Macro Rendering Error
             
           </span>
         </div>
@@ -598,95 +598,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#runners" class="md-nav__link">
-    <span class="md-ellipsis">
-      Runners
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#composite-actions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Composite actions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Composite actions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simple-demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      Simple demo
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Simple demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#composite-with-args" class="md-nav__link">
-    <span class="md-ellipsis">
-      Composite with args
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#composite-with-outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Composite with outputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Composite with outputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#usage_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -732,219 +643,30 @@
   
 
 
-<h1 id="github-actions-using-custom-actions">Github actions using custom actions</h1>
-<hr />
-<h2 id="runners">Runners</h2>
-<ul>
-<li><a href="https://nektosact.com/usage/runners.html">Act runners</a></li>
-</ul>
-<p>There <code>actrc</code> file locate at <code>~/.config/act/actrc</code> for set the default runner in the file</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>-P<span class="w"> </span>ubuntu-latest<span class="o">=</span>ubuntu:22.04
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>-P<span class="w"> </span>ubuntu-22.04<span class="o">=</span>node:16-bullseye-slim
-</code></pre></div></td></tr></table></div>
-<h2 id="composite-actions">Composite actions</h2>
-<h3 id="simple-demo">Simple demo</h3>
-<p>Using <code>act</code> to run the demo locally:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span>
-<span class="normal"><a href="#__codelineno-1-3">3</a></span>
-<span class="normal"><a href="#__codelineno-1-4">4</a></span>
-<span class="normal"><a href="#__codelineno-1-5">5</a></span>
-<span class="normal"><a href="#__codelineno-1-6">6</a></span>
-<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>.github
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span>├──<span class="w"> </span>actions
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span>│<span class="w">   </span>└──<span class="w"> </span>my_action
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span>│<span class="w">       </span>└──<span class="w"> </span>action.yaml
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span>└──<span class="w"> </span>workflows
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span>├──<span class="w"> </span>demo.yml
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span>└──<span class="w"> </span>README.md
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">workflows/demo.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demos</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">workflow_dispatch</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello world</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;Hello from act!&quot;</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="hll"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">run my action</span>
-</span><a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="hll"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.github/actions/my_action</span>
-</span></code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">actions/my_action/action.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span>
-<span class="normal"><a href="#__codelineno-3-4">4</a></span>
-<span class="normal"><a href="#__codelineno-3-5">5</a></span>
-<span class="normal"><a href="#__codelineno-3-6">6</a></span>
-<span class="normal"><a href="#__codelineno-3-7">7</a></span>
-<span class="normal"><a href="#__codelineno-3-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my</span><span class="nv"> </span><span class="s">Action&quot;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;My</span><span class="nv"> </span><span class="s">Action&quot;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nt">runs</span><span class="p">:</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">using</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;composite&quot;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello composite</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;Hello from my composite act!&quot;</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="hll"><span class="w">      </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash</span>
-</span></code></pre></div></td></tr></table></div>
-<h4 id="usage">usage</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>act<span class="w"> </span>-j<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--bind<span class="w"> </span>--directory<span class="w"> </span>.<span class="w"> </span>--pull<span class="o">=</span><span class="nb">false</span>
-</code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">bind directory</p>
-<p>Using <code>--bind --directory .</code> to bind local directory to the container, it's need to find <code>actions</code> folder</p>
-</div>
-<hr />
-<h3 id="composite-with-args">Composite with args</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span>
-<span class="normal"><a href="#__codelineno-5-4">4</a></span>
-<span class="normal"><a href="#__codelineno-5-5">5</a></span>
-<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>.github
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">    </span>├──<span class="w"> </span>actions
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span>│<span class="w">   </span>└──<span class="w"> </span>action_with_args
-<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span>│<span class="w">       </span>└──<span class="w"> </span>action.yaml
-<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span>└──<span class="w"> </span>workflows
-<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">        </span>└──<span class="w"> </span>demo.yml
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">workflows/demo.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-6-10">10</a></span>
-<span class="normal"><a href="#__codelineno-6-11">11</a></span>
-<span class="normal"><a href="#__codelineno-6-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demos</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">workflow_dispatch</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello world</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;Hello from act!&quot;</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="hll"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">run my action</span>
-</span><a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="hll"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.github/actions/action_with_args</span>
-</span><a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="hll"><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-</span><a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="hll"><span class="w">          </span><span class="nt">arg1</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;value</span><span class="nv"> </span><span class="s">1&quot;</span>
-</span></code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">actions/action_with_args/action.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-7-10">10</a></span>
-<span class="normal"><a href="#__codelineno-7-11">11</a></span>
-<span class="normal"><a href="#__codelineno-7-12">12</a></span>
-<span class="normal"><a href="#__codelineno-7-13">13</a></span>
-<span class="normal"><a href="#__codelineno-7-14">14</a></span>
-<span class="normal"><a href="#__codelineno-7-15">15</a></span>
-<span class="normal"><a href="#__codelineno-7-16">16</a></span>
-<span class="normal"><a href="#__codelineno-7-17">17</a></span>
-<span class="normal"><a href="#__codelineno-7-18">18</a></span>
-<span class="normal"><a href="#__codelineno-7-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my</span><span class="nv"> </span><span class="s">Action</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">args&quot;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;My</span><span class="nv"> </span><span class="s">Action&quot;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="hll"><span class="nt">inputs</span><span class="p">:</span>
-</span><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="hll"><span class="w">  </span><span class="nt">arg1</span><span class="p">:</span>
-</span><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="hll"><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;arg1&quot;</span>
-</span><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="hll"><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</span><a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="hll"><span class="w">  </span><span class="nt">arg2</span><span class="p">:</span>
-</span><a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="hll"><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;arg2&quot;</span>
-</span><a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="hll"><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="hll"><span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;default</span><span class="nv"> </span><span class="s">value</span><span class="nv"> </span><span class="s">2&#39;</span>
-</span><a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="nt">runs</span><span class="p">:</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">  </span><span class="nt">using</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;composite&quot;</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">  </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">print arg1</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;echo</span><span class="nv"> </span><span class="s">&quot;print</span><span class="nv"> </span><span class="s">arg1</span><span class="nv"> </span><span class="s">value:</span><span class="nv"> </span><span class="s">${{</span><span class="nv"> </span><span class="s">inputs.arg1</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">&quot;&#39;</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="w">      </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">print arg2</span>
-<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;echo</span><span class="nv"> </span><span class="s">&quot;print</span><span class="nv"> </span><span class="s">arg2</span><span class="nv"> </span><span class="s">value:</span><span class="nv"> </span><span class="s">${{</span><span class="nv"> </span><span class="s">inputs.arg2</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">&quot;&#39;</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">      </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash</span>
-</code></pre></div></td></tr></table></div>
-<hr />
-<h3 id="composite-with-outputs">Composite with outputs</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
-<span class="normal"><a href="#__codelineno-8-2">2</a></span>
-<span class="normal"><a href="#__codelineno-8-3">3</a></span>
-<span class="normal"><a href="#__codelineno-8-4">4</a></span>
-<span class="normal"><a href="#__codelineno-8-5">5</a></span>
-<span class="normal"><a href="#__codelineno-8-6">6</a></span>
-<span class="normal"><a href="#__codelineno-8-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="sb">```</span>bash
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a>.github
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span>├──<span class="w"> </span>actions
-<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span>│<span class="w">   </span>└──<span class="w"> </span>action_output
-<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span>│<span class="w">       </span>└──<span class="w"> </span>action.yaml
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">    </span>└──<span class="w"> </span>workflows
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">        </span>└──<span class="w"> </span>demo.yml
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">workflows/demo.yml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-9-10">10</a></span>
-<span class="normal"><a href="#__codelineno-9-11">11</a></span>
-<span class="normal"><a href="#__codelineno-9-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demos</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">workflow_dispatch</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">call action that return output</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="hll"><span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">call_action</span>
-</span><a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.github/actions/action_output</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">use the output</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="hll"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;echo</span><span class="nv"> </span><span class="s">&quot;print</span><span class="nv"> </span><span class="s">output</span><span class="nv"> </span><span class="s">value:</span><span class="nv"> </span><span class="s">${{</span><span class="nv"> </span><span class="s">steps.call_action.outputs.my_output</span><span class="nv"> </span><span class="s">}}</span><span class="nv"> </span><span class="s">&quot;&#39;</span>
-</span><a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="w">        </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash</span>
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">actions/action_output/action.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-10-10">10</a></span>
-<span class="normal"><a href="#__codelineno-10-11">11</a></span>
-<span class="normal"><a href="#__codelineno-10-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my</span><span class="nv"> </span><span class="s">output</span><span class="nv"> </span><span class="s">demo&quot;</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;return</span><span class="nv"> </span><span class="s">output</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">action&quot;</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="hll"><span class="nt">outputs</span><span class="p">:</span>
-</span><a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="hll"><span class="w">  </span><span class="nt">my_output</span><span class="p">:</span>
-</span><a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my</span><span class="nv"> </span><span class="s">output&quot;</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="nt">runs</span><span class="p">:</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">  </span><span class="nt">using</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;composite&quot;</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">  </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">calc output</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="hll"><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;my_output=my output value from sub action&quot; &gt;&gt; $GITHUB_OUTPUT</span>
-</span><a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">      </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash</span>
-</code></pre></div></td></tr></table></div>
-<h4 id="usage_1">usage</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>act<span class="w"> </span>-j<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--bind<span class="w"> </span>--directory<span class="w"> </span>.<span class="w"> </span>--pull<span class="o">=</span><span class="nb">false</span>
+<h1 id="macro-rendering-error"><em>Macro Rendering Error</em></h1>
+<p><em>File</em>: <code>DevOps/git/github/github_actions/github_action_using_custom_actions.md</code></p>
+<p><em>UndefinedError</em>: 'inputs' is undefined</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Traceback (most recent call last):
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/mkdocs_macros/plugin.py&quot;, line 688, in render
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    return md_template.render(**page_variables)
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/jinja2/environment.py&quot;, line 1295, in render
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    self.environment.handle_exception()
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/jinja2/environment.py&quot;, line 942, in handle_exception
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    raise rewrite_traceback_stack(source=source)
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>  File &quot;&lt;template&gt;&quot;, line 113, in top-level template code
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>  File &quot;/home/user/projects/blog/venv/lib/python3.10/site-packages/jinja2/environment.py&quot;, line 490, in getattr
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    return getattr(obj, attribute)
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>jinja2.exceptions.UndefinedError: &#39;inputs&#39; is undefined
 </code></pre></div></td></tr></table></div>
 
 
