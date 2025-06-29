@@ -1,0 +1,20 @@
+{# 
+  This block generates folder links using Jinja syntax instead of Python code.
+  It assumes 'page.url' and 'page.file.src_path' are available in the context.
+#}
+{% set url = page.url.rstrip('/') %}
+{% set mk_path = page.file.src_path %}
+{% set path_parts = mk_path.split('/')[:-1] %}
+{% set current_url = "" %}
+{% set links = [] %}
+{% for part in path_parts %}
+  {% set current_url = current_url + '/' + part %}
+  {% set display_part = part.replace('_', ' ') %}
+  {% set _ = links.append('[' ~ display_part ~ '](' ~ current_url ~ '/)') %}
+{% endfor %}
+{{ links | join(' / ') }}
+
+{% if page.meta %}
+  <h1>{{ page.meta.tags }}</h1>
+{% endif %}
+<h1>world</h1>

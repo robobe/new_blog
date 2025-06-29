@@ -82,3 +82,4 @@ The idea for the demo [The Ros Robot_localization package](https://kapernikov.co
 
 ## Reference
 - [The Ros Robot_localization package](https://kapernikov.com/the-ros-robot_localization-package/){:target="_blank"}
+- [Sensor Fusion in ROS good resource](https://github.com/methylDragon/ros-sensor-fusion-tutorial){:target="_blank"}

@@ -1,4 +1,5 @@
 ---
+title: Gazebo ROS IMU Bridge
 tags:
     - ros
     - gazebo
@@ -7,8 +8,8 @@ tags:
     - harmonic
     - imu
 ---
+{{ page_folder_links() }}
 
-# imu
 Bridge IMU sensor from gazebo to ros
 
 ## Gazebo

@@ -1,11 +1,20 @@
 ---
+title: IMU Sensor
 tags:
     - imu
     - robotics
     - sensors
 ---
+{{ page_folder_links() }}
+<!-- # IMU Sensor -->
+An IMU sensor (Inertial Measurement Unit) is a device that measures a robot or object's motion and orientation using:
 
-# IMU
+| Sensor                    | Measures                             | Unit  |
+| ------------------------- | ------------------------------------ | ----- |
+| Accelerometer             | Linear acceleration                  | m/s²  |
+| Gyroscope                 | Angular velocity (rotational speed)  | rad/s |
+| Magnetometer *(optional)* | Magnetic field for heading (compass) | µT    |
+
 
 ## To read and watch
 

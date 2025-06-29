@@ -5,9 +5,13 @@ tags:
     - imu
     - imu_broadcaster
 ---
-
 # ROS2 Control imu broadcaster
 
+{{ page_folder_links() }}
+
+
+
+Use **ros2_control** to broadcast imu sensor
 
 ## Gazebo simulation
 

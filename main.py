@@ -15,7 +15,8 @@ def define_env(env):
         parts = []
         current_url = ""
         for part in folder_parts:
-            current_url += "/" + part.replace("_", " ")
-            parts.append(f"[{part}]({current_url}/)")
+            current_url += "/" + part
+            display_part = part.replace("_", " ")
+            parts.append(f"[{display_part}]({current_url}/)")
 
         return " / ".join(parts)

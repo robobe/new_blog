@@ -1,12 +1,14 @@
 ---
+title: Read IMU Data from Gazebo harmonic
 tags:
     - gazebo
     - gz_transport
     - gz_msgs
     - harmonic
 ---
+{{ page_folder_links() }}
 
-# Read IMU Data from Gazebo harmonic
+Read imu message from gazebo simulation using cpp
 
 ## prerequisites
 
