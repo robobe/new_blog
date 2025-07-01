@@ -27,3 +27,11 @@ tags:
     </div>
    
    </div>
+
+
+## Bridge clock from gazebo
+
+```bash title="/clock topic"
+ros2 run ros_gz_bridge parameter_bridge /clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock
+```
+

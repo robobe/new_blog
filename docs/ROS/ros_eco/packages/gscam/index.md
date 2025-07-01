@@ -15,7 +15,7 @@ ROS Package for broadcasting `gstreamer` video stream via ROS2 camera API, publi
     input gstreamer pipe can set by environment variable `GSCAM_CONFIG` or ros parameter `gscam_config`
      
 ```bash
-export GSCAM_CONFIG="videotestsrc ! video/x-raw,width=640,height=480,framrate=10/1 ! videoconvert"
+export GSCAM_CONFIG="videotestsrc ! video/x-raw,width=640,height=480,framerate=10/1 ! videoconvert"
 
 #
 ros2 run gscam gscam_node
@@ -36,7 +36,7 @@ Run with parameter `use_sensor_data_qos:=true` to publish as `best_effort` qos
 ```bash
 ros2 run gscam gscam_node --ros-args \
 -p use_sensor_data_qos:=true \
--p gscam_config:="videotestsrc pattern=basll ! video/x-raw,width=640,height=480,framrate=10/1 ! videoconvert"
+-p gscam_config:="videotestsrc pattern=basll ! video/x-raw,width=640,height=480,framerate=10/1 ! videoconvert"
 
 ```
      

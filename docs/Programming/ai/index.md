@@ -8,7 +8,12 @@
     <div class="grid-item">
         <a href="onnx">
         <img src="images/onnx.png"  width="150" height="150">
-        <p>Math</p></a>
+        <p>ONNX</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="tutorials">
+        <img src="images/tutorials.png"  width="150" height="150">
+        <p>Tutorials</p></a>
     </div>
 </div>
 
