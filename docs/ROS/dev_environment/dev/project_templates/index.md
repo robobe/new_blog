@@ -77,6 +77,13 @@ tags:
 
 ### ros
 
+```bash title="env.sh"
+source /home/ros/.bashrc
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+echo '🐢 Environment ready!'
+```
+
 ```yaml title="colcon_defaults.yaml"
 build:
   # Use symlink install to speed up builds
@@ -96,9 +103,9 @@ test-result:
 
 ### VSCode
 
-#### task.json
+#### tasks.json
 
-```json 
+```json title=".vscode/tasks.json"
 {
     "version": "2.0.0",
     "tasks": [
@@ -114,5 +121,30 @@ test-result:
         }
       }
     ]
+}
+```
+
+```json title=".vscode/settings.json"
+{
+    "terminal.integrated.profiles.linux": {
+      "bash": {
+          "path": "bash",
+          "icon": "terminal-bash",
+          "args": ["--rcfile", "env.sh"]
+      }
+  },
+   "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/install/**",
+        "/opt/ros/humble/lib/python3.10/site-packages/",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+
+    ],
+
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/install/**",
+        "/opt/ros/humble/lib/python3.10/site-packages/",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages/",
+    ]
+    
 }
 ```

@@ -1,4 +1,5 @@
 ---
+title: LIDAR
 tags:
     - ros
     - gazebo
@@ -6,9 +7,11 @@ tags:
     - jazzy
     - harmonic
     - lidar
+    - LaserScan
 ---
 
-# LIDAR
+{{ page_folder_links() }}
+
 Bridge lidar system between gazebo to ros
 lidar sensor send two topics
 

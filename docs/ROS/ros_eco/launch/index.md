@@ -4,6 +4,7 @@ tags:
   - launch
 ---
 {{ page_folder_links() }}
+
 # ROS2 launch
 Launch system is used to start multiple nodes and configure their execution. The Python-based launch system (launch_ros) provides flexibility through Python scripts.
 
@@ -25,6 +26,11 @@ Launch system is used to start multiple nodes and configure their execution. The
         <a href="launch_events_and_condition">
         <img src="images/launch_events_and_condition.png" width="150" height="150">
         <p>Events and condition</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="gazebo">
+        <p>Gazebo</p>
         </a>
     </div>
 

@@ -15,6 +15,12 @@ Ros packages and tools that are used in the ROS eco system.
             <p>ROS2 Packages</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="ros_bag">
+            <img src="images/ros_bag.png"   width="150" height="150">
+            <p>ROS2 Bag</p>
+        </a>
+    </div>
 </div>
 
 
