@@ -33,6 +33,11 @@ Launch system is used to start multiple nodes and configure their execution. The
         <p>Gazebo</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="rviz">
+        <p>Rviz</p>
+        </a>
+    </div>
 
 </div>
 

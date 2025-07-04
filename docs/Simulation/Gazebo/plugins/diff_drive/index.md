@@ -1,3 +1,18 @@
+---
+title: Gazebo differential driver
+tags:
+    - gazebo
+    - plugins
+    - diff drive
+---
+
+
+{{ page_folder_links() }}
+
+[source code](https://github.com/gazebosim/gz-sim/tree/gz-sim9/src/systems/diff_drive)
+
+### simple gazebo declaration
+```xml
 <plugin name="gz::sim::systems::DiffDrive" filename="gz-sim-diff-drive-system">
 
     <left_joint>wheel_left_joint</left_joint>
@@ -19,3 +34,10 @@
     <tf_topic>/tf</tf_topic>
 
   </plugin>
+```
+
+[moving robot tutorial](https://github.com/gazebosim/docs/blob/master/harmonic/moving_robot.md)
+
+```bash title="gz topic publish"
+gz topic -t "/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.0}"
+```

@@ -1,4 +1,5 @@
 ---
+title: Gazebo Plugins
 tags:
     - gazebo
     - harmonic
@@ -7,17 +8,24 @@ tags:
 
 # Gazebo plugins
 
-## diff drive
+[gazebo classic feature compression](https://gazebosim.org/docs/harmonic/comparison/)
 
-[source code](https://github.com/gazebosim/gz-sim/tree/gz-sim9/src/systems/diff_drive)
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="diff drive">
+        <p>Differential drive</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="pose_publisher">
+        <p>Pose Publisher</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="tbd">
+        <p>tbd</p>
+        </a>
+    </div>
+    
+</div>
 
-### simple gazebo declaration
-```xml
---8<-- "docs/Simulation/Gazebo/plugins/diff_drive.xml"
-```
-
-[moving robot tutorial](https://github.com/gazebosim/docs/blob/master/harmonic/moving_robot.md)
-
-```bash title="gz topic publish"
-gz topic -t "/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.0}"
-```
