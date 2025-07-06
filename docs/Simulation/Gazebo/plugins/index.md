@@ -22,10 +22,16 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="tbd">
-        <p>tbd</p>
+        <a href="odometry_publisher">
+        <p>Odometry Publisher</p>
         </a>
     </div>
     
 </div>
 
+
+Check gazebo API [gz::sim::systems Namespace](https://gazebosim.org/api/sim/8/namespacegz_1_1sim_1_1systems.html) for a list of system plugins
+
+
+## To-read
+- [Gazebo Sim (Harmonic) Plugins and Sensors for ROS2](https://medium.com/@alitekes1/gazebo-sim-plugin-and-sensors-for-acquire-data-from-simulation-environment-681d8e2ad853)
