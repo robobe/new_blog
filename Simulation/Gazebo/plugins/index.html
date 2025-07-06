@@ -22,7 +22,7 @@
     
     
       
-        <title>Gazebo plugins - Robots Inside</title>
+        <title>Gazebo Plugins - Robots Inside</title>
       
     
     
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gazebo plugins
+              Gazebo Plugins
             
           </span>
         </div>
@@ -605,26 +605,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#diff-drive" class="md-nav__link">
+  <a href="#to-read" class="md-nav__link">
     <span class="md-ellipsis">
-      diff drive
+      To-read
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="diff drive">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simple-gazebo-declaration" class="md-nav__link">
-    <span class="md-ellipsis">
-      simple gazebo declaration
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -670,54 +655,31 @@
 
 
 <h1 id="gazebo-plugins">Gazebo plugins</h1>
-<h2 id="diff-drive">diff drive</h2>
-<p><a href="https://github.com/gazebosim/gz-sim/tree/gz-sim9/src/systems/diff_drive">source code</a></p>
-<h3 id="simple-gazebo-declaration">simple gazebo declaration</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-0-10">10</a></span>
-<span class="normal"><a href="#__codelineno-0-11">11</a></span>
-<span class="normal"><a href="#__codelineno-0-12">12</a></span>
-<span class="normal"><a href="#__codelineno-0-13">13</a></span>
-<span class="normal"><a href="#__codelineno-0-14">14</a></span>
-<span class="normal"><a href="#__codelineno-0-15">15</a></span>
-<span class="normal"><a href="#__codelineno-0-16">16</a></span>
-<span class="normal"><a href="#__codelineno-0-17">17</a></span>
-<span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">&lt;plugin</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::DiffDrive&quot;</span><span class="w"> </span><span class="na">filename=</span><span class="s">&quot;gz-sim-diff-drive-system&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">&lt;left_joint&gt;</span>wheel_left_joint<span class="nt">&lt;/left_joint&gt;</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="nt">&lt;right_joint&gt;</span>wheel_right_joint<span class="nt">&lt;/right_joint&gt;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="nt">&lt;wheel_separation&gt;</span>${wheel_separation}<span class="nt">&lt;/wheel_separation&gt;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="nt">&lt;wheel_radius&gt;</span>0.033<span class="nt">&lt;/wheel_radius&gt;</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="nt">&lt;max_linear_acceleration&gt;</span>0.33<span class="nt">&lt;/max_linear_acceleration&gt;</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="nt">&lt;topic&gt;</span>cmd_vel<span class="nt">&lt;/topic&gt;</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="nt">&lt;frame_id&gt;</span>odom<span class="nt">&lt;/frame_id&gt;</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="nt">&lt;child_frame_id&gt;</span>base_link<span class="nt">&lt;/child_frame_id&gt;</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="nt">&lt;odom_topic&gt;</span>odom<span class="nt">&lt;/odom_topic&gt;</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="nt">&lt;odom_publisher_frequency&gt;</span>30<span class="nt">&lt;/odom_publisher_frequency&gt;</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="nt">&lt;tf_topic&gt;</span>/tf<span class="nt">&lt;/tf_topic&gt;</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">  </span><span class="nt">&lt;/plugin&gt;</span>
-</code></pre></div></td></tr></table></div>
-<p><a href="https://github.com/gazebosim/docs/blob/master/harmonic/moving_robot.md">moving robot tutorial</a></p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gz topic publish</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span><span class="s2">&quot;/cmd_vel&quot;</span><span class="w"> </span>-m<span class="w"> </span>gz.msgs.Twist<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;linear: {x: 0.5}, angular: {z: 0.0}&quot;</span>
-</code></pre></div></td></tr></table></div>
+<p><a href="https://gazebosim.org/docs/harmonic/comparison/">gazebo classic feature compression</a></p>
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="diff drive">
+        <p>Differential drive</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="pose_publisher">
+        <p>Pose Publisher</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="odometry_publisher">
+        <p>Odometry Publisher</p>
+        </a>
+    </div>
+
+</div>
+
+<p>Check gazebo API <a href="https://gazebosim.org/api/sim/8/namespacegz_1_1sim_1_1systems.html">gz::sim::systems Namespace</a> for a list of system plugins</p>
+<h2 id="to-read">To-read</h2>
+<ul>
+<li><a href="https://medium.com/@alitekes1/gazebo-sim-plugin-and-sensors-for-acquire-data-from-simulation-environment-681d8e2ad853">Gazebo Sim (Harmonic) Plugins and Sensors for ROS2</a></li>
+</ul>
 
 
 
