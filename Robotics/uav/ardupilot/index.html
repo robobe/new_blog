@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/px4/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/ardupilot/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>PX4 - Robots Inside</title>
+        <title>Ardupilot - Robots Inside</title>
       
     
     
@@ -73,11 +73,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#to-read-and-watch" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -108,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PX4
+              Ardupilot
             
           </span>
         </div>
@@ -596,41 +591,6 @@
   
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#to-read-and-watch" class="md-nav__link">
-    <span class="md-ellipsis">
-      TO-Read and watch
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#wayland" class="md-nav__link">
-    <span class="md-ellipsis">
-      wayland
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resource" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resource
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -648,7 +608,13 @@
       
       
       
-        <span class="md-tag">px4</span>
+        <span class="md-tag">apm</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">ardupilot</span>
       
     
   </nav>
@@ -658,45 +624,32 @@
   
 
 
-  <h1>PX4</h1>
+  <h1>Ardupilot</h1>
 
 <p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/uav/">uav</a></p>
-<h2 id="to-read-and-watch">TO-Read and watch</h2>
-<ul>
-<li><a href="https://github.com/Jaeyoung-Lim/mavros_controllers">mavros_controllers</a>: Controllers for controlling MAVs using the mavros package in OFFBOARD mode.</li>
-<li><a href="https://github.com/jianhengLiu/quad_controller_SE3">quad_controller_SE3</a>: quadrotor controller based on PX4/mavros and SE3 geometric control</li>
-<li><a href="https://github.com/Jaeyoung-Lim/px4-offboard">px4-offboard</a>: This repository contains a python examples for offboard control on ROS2 with PX4</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>make<span class="w"> </span>px4_sitl<span class="w"> </span>gz_x500_gimbal
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1">#</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nv">SIM_MODEL</span><span class="o">=</span>gz_x500<span class="w"> </span><span class="nv">GZ_IP</span><span class="o">=</span><span class="m">127</span>.0.0.1<span class="w"> </span>/home/user/git/PX4-Autopilot/build/px4_sitl_default/bin/px4
-</code></pre></div></td></tr></table></div>
-<h2 id="wayland">wayland</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>     QT_QPA_PLATFORM=xcb make px4_sitl gz_x500 
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span>
-<span class="normal"><a href="#__codelineno-2-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>| Command                  | Description                |
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>| ------------------------ | -------------------------- |
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>| `uorb top`               | List active uORB topics    |
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>| `uorb list`              | List all registered topics |
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>| `listener &lt;topic&gt;`       | Print current message      |
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>| `listener &lt;topic&gt; -r 10` | Print at 10 Hz             |
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>| `uorb status`            | Show uORB system stats     |
-</code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="resource">Resource</h2>
-<ul>
-<li><a href="https://github.com/SathanBERNARD/PX4-ROS2-Gazebo-Drone-Simulation-Template">PX4-ROS2-Gazebo Drone Simulation Template</a></li>
-<li><a href="https://github.com/juliordzcer/bebop_ros">bebop_ros</a></li>
-<li><a href="https://manuals.plus/m/c5faa3a33983c8a410d6e717cdc780e179ade9fa949bf9b1320512b1439a2004">Aerial vehicle gazebo</a></li>
-</ul>
+<div class="grid-container">
+ <div class="grid-item">
+        <a href="sitl">
+                <img src="images/apm_sitl_and_sim.png"  width="150" height="150">
+                <p>SITL and Simulation</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="">
+                <img src="images/px4.png"  width="150" height="150">
+                <p>tbd</p>
+            </a>
+    </div>
+    <div class="grid-item">
+        <a href="">
+                <img src="images/ardupilot.png"  width="150" height="150">
+                <p>tbd</p>
+            </a>
+    </div>
+    <div class="grid-item">
+        <a href="gcs">
+                <p>SYSID/GCS config </p></a>
+    </div>
+</div>
 
 
 
