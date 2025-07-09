@@ -1,3 +1,9 @@
+<style>
+    h1 {
+        visibility: hidden;
+    }
+</style>
+
 # ROS
 
 <div class="grid-container">

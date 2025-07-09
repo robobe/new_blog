@@ -23,9 +23,9 @@ tags:
             </a>
     </div>
     <div class="grid-item">
-        <a href="slam">
-                <img src="images/slam.png"  width="150" height="150">
-                <p>---</p>
+        <a href="ardupilot">
+                <img src="images/ardupilot.png"  width="150" height="150">
+                <p>Ardupilot</p>
             </a>
     </div>
     
