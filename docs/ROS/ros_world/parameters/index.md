@@ -1,18 +1,21 @@
 ---
+title: ROS2 Parameters
 tags:
     - ros2
     - parameters
 ---
+{{ page_folder_links() }}
 
-# ROS Parameters
+Using ROS2 parameter file from cli and launch file
+Use multiple parameters files to demonstrate parameter override
 
 ## parameter file
 
 ### Demo:
-Simple Node with multiple parameter file
-one of the file use wildcard as `node_name`
+Simple python Node with multiple parameters
 
-<details><summary>Post</summary>
+
+<details><summary>Node</summary>
 
 
 ```python
@@ -65,11 +68,15 @@ minimal:
     param2: 200
 ```
 
+!!! tip "wildcard"
+    The `params2.yaml` use wildcard as node name matching
+     
+
 ---
 
 #### usage
 
-!!! note wildcard
+!!! note "wildcard"
     Wildcards can be used for node names and namespaces.  
     - `*`  matches a single token delimited by slashes (/). 
     - `**` matches zero or more tokens delimited by slashes. 
@@ -90,12 +97,14 @@ minimal:
     ```
      
 ```bash title="use default params value declare in code"
+# run node without load any parameter file
 ros2 run ros_py param_demo.py 
 [INFO] [1740517785.377374134] [minimal]: P1: 1
 [INFO] [1740517785.377601145] [minimal]: P1: 2
 ```
 
-```bash title="load paras from file"
+```bash title="load params from file"
+# Run node with parameter file
 ros2 run ros_py param_demo.py --ros-args --params-file params1.yaml
 [INFO] [1740517874.809880531] [minimal]: P1: 10
 [INFO] [1740517874.810112715] [minimal]: P1: 20
@@ -105,7 +114,7 @@ ros2 run ros_py param_demo.py --ros-args --params-file params1.yaml
 !!! note "wildcard matching"
     params2.yaml has global match `/**`
      
-```bash
+```bash title="load params from multiple files"
 ros2 run ros_py param_demo.py \
 --ros-args \
 --params-file params1.yaml \
@@ -114,6 +123,69 @@ ros2 run ros_py param_demo.py \
 [INFO] [1740518709.533163666] [minimal]: P1: 200
 ```
 
+
+
+---
+
+### Load multi parameter file from launch file
+
+```python
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
+from pathlib import Path
+
+def generate_launch_description():
+
+    param_file = Path(get_package_share_directory('ros_py')).joinpath('config', 'param_demo.yaml')
+    param_file_arm = Path(get_package_share_directory('ros_py')).joinpath('config', 'param_demo.arm.yaml')
+
+    param_files = [param_file, param_file_arm]
+
+    return LaunchDescription([
+        Node(
+            package='ros_py',
+            executable='param_demo.py',
+            name='param_demo',
+            parameters=param_files,
+        )
+    ])
+```
+
+
+```python
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
+from pathlib import Path
+import os
+
+def generate_launch_description():
+
+    use_arm_config = os.environ.get('USE_ARM_CONFIG', 'false').lower() == 'true'
+    param_file = Path(get_package_share_directory('ros_py')).joinpath('config', 'param_demo.yaml')
+    param_file_arm = Path(get_package_share_directory('ros_py')).joinpath('config', 'param_demo.arm.yaml')
+
+    param_files = [param_file]
+    if use_arm_config:
+        param_files.append(param_file_arm)
+
+    return LaunchDescription([
+        Node(
+            package='ros_py',
+            executable='param_demo.py',
+            name='param_demo',
+            parameters=param_files,
+        )
+    ])
+```
+
+```bash title="usage"
+USE_ARM_CONFIG=true ros2 launch ros_py param_demo_simple.launch.py
+USE_ARM_CONFIG=false ros2 launch ros_py param_demo_simple.launch.py
+
+# or using export
+```
 
 ---
 

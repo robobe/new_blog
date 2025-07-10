@@ -1,13 +1,16 @@
 ---
+title: Ardupilot SITL with gazebo and mavros
 tags:
     - ardupilot
     - sitl
     - simulation
     - gazebo
+    - mavros
+    - harmonic
 ---
-
-
 {{ page_folder_links() }}
+
+Run Ardupilot SITL (ver 4.6.1) with mavros and gazebo simulation (harmonic)
 
 ## SITL
 - [Ardupilot firmware download](https://firmware.ardupilot.org/)
@@ -50,6 +53,9 @@ SIM_SONAR_SCALE 100   # Scaling for simulated range data
 RNGFND1_SCALING 1     # Optional: default scaling
 ```
 
+!!! note "INS_XXX"
+     Set INS_XXX for skip the accelerometer calibration 
+
 ---
 
 ## Mavros
@@ -81,15 +87,12 @@ gcs_url:=udp://@localhost:14550
 
 ## Gazebo (harmonic)
 
-clone [ardupilot_gazebo](https://github.com/ArduPilot/ardupilot_gazebo) into workspace, install dependencies run colcon build source and run 
+Clone [ardupilot_gazebo](https://github.com/ArduPilot/ardupilot_gazebo) into workspace, 
+- install dependencies 
+- build with colcon
+- source 
+- and run 
 
-```bash title="sitl"
-./arducopter --model JSON  -I0
-```
-
-```bash title="gazebo"
-gz sim -v4 -r iris_runway.sdf
-```
 
 
 ```bash title="dependencies"
@@ -101,7 +104,7 @@ sudo apt install libopencv-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-
 ![alt text](images/gazebo_harmonic.png)
 
 !!! tip "simulation RTF"
-    Usually fix after connect with mavros or other GCS to sitl
+    The simulation real time factor Usually fix after connect with mavros or other GCS to sitl
      
 
 ---
