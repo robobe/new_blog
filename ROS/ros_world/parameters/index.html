@@ -22,7 +22,7 @@
     
     
       
-        <title>ROS Parameters - Robots Inside</title>
+        <title>ROS2 Parameters - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ros-parameters" class="md-skip">
+        <a href="#parameter-file" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ROS Parameters
+              ROS2 Parameters
             
           </span>
         </div>
@@ -595,8 +595,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -662,6 +660,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#load-multi-parameter-file-from-launch-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Load multi parameter file from launch file
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -711,12 +718,15 @@
   
 
 
-<h1 id="ros-parameters">ROS Parameters</h1>
+  <h1>ROS2 Parameters</h1>
+
+<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_world/">ros world</a></p>
+<p>Using ROS2 parameter file from cli and launch file
+Use multiple parameters files to demonstrate parameter override</p>
 <h2 id="parameter-file">parameter file</h2>
 <h3 id="demo">Demo:</h3>
-<p>Simple Node with multiple parameter file
-one of the file use wildcard as <code>node_name</code></p>
-<details><summary>Post</summary>
+<p>Simple python Node with multiple parameters</p>
+<details><summary>Node</summary>
 
 
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -787,10 +797,14 @@ one of the file use wildcard as <code>node_name</code></p>
 <a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">param1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">param2</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">wildcard</p>
+<p>The <code>params2.yaml</code> use wildcard as node name matching</p>
+</div>
 <hr />
 <h4 id="usage">usage</h4>
-<div class="admonition note wildcard">
-<p class="admonition-title">Note</p>
+<div class="admonition note">
+<p class="admonition-title">wildcard</p>
 <p>Wildcards can be used for node names and namespaces.<br />
 - <code>*</code>  matches a single token delimited by slashes (/). 
 - <code>**</code> matches zero or more tokens delimited by slashes. 
@@ -820,22 +834,26 @@ one of the file use wildcard as <code>node_name</code></p>
 </div>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">use default params value declare in code</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
 <span class="normal"><a href="#__codelineno-4-2">2</a></span>
-<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_py<span class="w"> </span>param_demo.py<span class="w"> </span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517785</span>.377374134<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">1</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517785</span>.377601145<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">2</span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># run node without load any parameter file</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_py<span class="w"> </span>param_demo.py<span class="w"> </span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517785</span>.377374134<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517785</span>.377601145<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">2</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">load paras from file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">load params from file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
 <span class="normal"><a href="#__codelineno-5-2">2</a></span>
-<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_py<span class="w"> </span>param_demo.py<span class="w"> </span>--ros-args<span class="w"> </span>--params-file<span class="w"> </span>params1.yaml
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517874</span>.809880531<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">10</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517874</span>.810112715<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">20</span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Run node with parameter file</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_py<span class="w"> </span>param_demo.py<span class="w"> </span>--ros-args<span class="w"> </span>--params-file<span class="w"> </span>params1.yaml
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517874</span>.809880531<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">10</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740517874</span>.810112715<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">20</span>
 </code></pre></div></td></tr></table></div>
 <h5 id="load-multiple-params-file">load multiple params file</h5>
 <div class="admonition note">
 <p class="admonition-title">wildcard matching</p>
 <p>params2.yaml has global match <code>/**</code></p>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">load params from multiple files</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
 <span class="normal"><a href="#__codelineno-6-2">2</a></span>
 <span class="normal"><a href="#__codelineno-6-3">3</a></span>
 <span class="normal"><a href="#__codelineno-6-4">4</a></span>
@@ -846,6 +864,104 @@ one of the file use wildcard as <code>node_name</code></p>
 <a id="__codelineno-6-4" name="__codelineno-6-4"></a>--params-file<span class="w"> </span>params2.yaml
 <a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740518709</span>.532923265<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">100</span>
 <a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1740518709</span>.533163666<span class="o">]</span><span class="w"> </span><span class="o">[</span>minimal<span class="o">]</span>:<span class="w"> </span>P1:<span class="w"> </span><span class="m">200</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="load-multi-parameter-file-from-launch-file">Load multi parameter file from launch file</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    <span class="n">param_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;ros_py&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="s1">&#39;param_demo.yaml&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>    <span class="n">param_file_arm</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;ros_py&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="s1">&#39;param_demo.arm.yaml&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>    <span class="n">param_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">param_file</span><span class="p">,</span> <span class="n">param_file_arm</span><span class="p">]</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>        <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;ros_py&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;param_demo.py&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;param_demo&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>            <span class="n">parameters</span><span class="o">=</span><span class="n">param_files</span><span class="p">,</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a>        <span class="p">)</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>    <span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span>
+<span class="normal"><a href="#__codelineno-8-21">21</a></span>
+<span class="normal"><a href="#__codelineno-8-22">22</a></span>
+<span class="normal"><a href="#__codelineno-8-23">23</a></span>
+<span class="normal"><a href="#__codelineno-8-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="n">use_arm_config</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;USE_ARM_CONFIG&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>    <span class="n">param_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;ros_py&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="s1">&#39;param_demo.yaml&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>    <span class="n">param_file_arm</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="s1">&#39;ros_py&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="s1">&#39;param_demo.arm.yaml&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a>    <span class="n">param_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">param_file</span><span class="p">]</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a>    <span class="k">if</span> <span class="n">use_arm_config</span><span class="p">:</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a>        <span class="n">param_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param_file_arm</span><span class="p">)</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a>    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a>        <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a>            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;ros_py&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a>            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;param_demo.py&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21"></a>            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;param_demo&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22"></a>            <span class="n">parameters</span><span class="o">=</span><span class="n">param_files</span><span class="p">,</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23"></a>        <span class="p">)</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24"></a>    <span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">usage</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nv">USE_ARM_CONFIG</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>ros2<span class="w"> </span>launch<span class="w"> </span>ros_py<span class="w"> </span>param_demo_simple.launch.py
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nv">USE_ARM_CONFIG</span><span class="o">=</span><span class="nb">false</span><span class="w"> </span>ros2<span class="w"> </span>launch<span class="w"> </span>ros_py<span class="w"> </span>param_demo_simple.launch.py
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="c1"># or using export</span>
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="reference">Reference</h2>

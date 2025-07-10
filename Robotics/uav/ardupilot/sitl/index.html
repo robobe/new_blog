@@ -22,7 +22,7 @@
     
     
       
-        <title>Index - Robots Inside</title>
+        <title>Ardupilot SITL with gazebo and mavros - Robots Inside</title>
       
     
     
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Ardupilot SITL with gazebo and mavros
             
           </span>
         </div>
@@ -693,6 +693,18 @@
       
       
       
+        <span class="md-tag">harmonic</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">mavros</span>
+      
+    
+      
+      
+      
         <span class="md-tag">simulation</span>
       
     
@@ -709,9 +721,10 @@
   
 
 
-  <h1>Index</h1>
+  <h1>Ardupilot SITL with gazebo and mavros</h1>
 
 <p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/uav/">uav</a> / <a href="/Robotics/uav/ardupilot/">ardupilot</a></p>
+<p>Run Ardupilot SITL (ver 4.6.1) with mavros and gazebo simulation (harmonic)</p>
 <h2 id="sitl">SITL</h2>
 <ul>
 <li><a href="https://firmware.ardupilot.org/">Ardupilot firmware download</a></li>
@@ -770,6 +783,10 @@
 <a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="na">SIM_SONAR_SCALE 100   # Scaling for simulated range data</span>
 <a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="na">RNGFND1_SCALING 1     # Optional</span><span class="o">:</span><span class="w"> </span><span class="s">default scaling</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">INS_XXX</p>
+<p>Set INS_XXX for skip the accelerometer calibration </p>
+</div>
 <hr />
 <h2 id="mavros">Mavros</h2>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mavros docker snippet</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
@@ -808,52 +825,52 @@
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="gazebo-harmonic">Gazebo (harmonic)</h2>
-<p>clone <a href="https://github.com/ArduPilot/ardupilot_gazebo">ardupilot_gazebo</a> into workspace, install dependencies run colcon build source and run </p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">sitl</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>./arducopter<span class="w"> </span>--model<span class="w"> </span>JSON<span class="w">  </span>-I0
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gazebo</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>gz<span class="w"> </span>sim<span class="w"> </span>-v4<span class="w"> </span>-r<span class="w"> </span>iris_runway.sdf
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">dependencies</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span>
-<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libgz-sim8-dev<span class="w"> </span>rapidjson-dev
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libopencv-dev<span class="w"> </span>libgstreamer1.0-dev<span class="w"> </span>libgstreamer-plugins-base1.0-dev<span class="w"> </span>gstreamer1.0-plugins-bad<span class="w"> </span>gstreamer1.0-libav<span class="w"> </span>gstreamer1.0-gl
+<p>Clone <a href="https://github.com/ArduPilot/ardupilot_gazebo">ardupilot_gazebo</a> into workspace, 
+- install dependencies 
+- build with colcon
+- source 
+- and run </p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">dependencies</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libgz-sim8-dev<span class="w"> </span>rapidjson-dev
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libopencv-dev<span class="w"> </span>libgstreamer1.0-dev<span class="w"> </span>libgstreamer-plugins-base1.0-dev<span class="w"> </span>gstreamer1.0-plugins-bad<span class="w"> </span>gstreamer1.0-libav<span class="w"> </span>gstreamer1.0-gl
 </code></pre></div></td></tr></table></div>
 <p><img alt="alt text" src="images/gazebo_harmonic.png" /></p>
 <div class="admonition tip">
 <p class="admonition-title">simulation RTF</p>
-<p>Usually fix after connect with mavros or other GCS to sitl</p>
+<p>The simulation real time factor Usually fix after connect with mavros or other GCS to sitl</p>
 </div>
 <hr />
 <h2 id="usage">Usage</h2>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">copter-gz.param</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="na">FRAME_CLASS 1</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="na">FRAME_TYPE 1</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">copter-gz.param</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="na">FRAME_CLASS 1</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="na">FRAME_TYPE 1</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 1</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>./arducopter<span class="w"> </span>--model<span class="w"> </span>JSON<span class="w">  </span>--defaults<span class="w"> </span>copter-gz.param<span class="w"> </span>-I0
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 1</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>./arducopter<span class="w"> </span>--model<span class="w"> </span>JSON<span class="w">  </span>--defaults<span class="w"> </span>copter-gz.param<span class="w"> </span>-I0
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>gz<span class="w"> </span>sim<span class="w"> </span>-v4<span class="w"> </span>-r<span class="w"> </span>iris_runway.sdf
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>gz<span class="w"> </span>sim<span class="w"> </span>-v4<span class="w"> </span>-r<span class="w"> </span>iris_runway.sdf
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 3</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>apm.launch<span class="w"> </span>fcu_url:<span class="o">=</span>tcp://localhost:5760<span class="w"> </span>gcs_url:<span class="o">=</span>udp://@localhost:14550
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal 3</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>apm.launch<span class="w"> </span>fcu_url:<span class="o">=</span>tcp://localhost:5760<span class="w"> </span>gcs_url:<span class="o">=</span>udp://@localhost:14550
 </code></pre></div></td></tr></table></div>
 <h3 id="guide-arm-and-takeoff">Guide ARM and takeoff</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">set mode</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_mode<span class="w"> </span>mavros_msgs/srv/SetMode<span class="w"> </span><span class="s2">&quot;{base_mode: 0, custom_mode: &#39;GUIDED&#39;}&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">set mode</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_mode<span class="w"> </span>mavros_msgs/srv/SetMode<span class="w"> </span><span class="s2">&quot;{base_mode: 0, custom_mode: &#39;GUIDED&#39;}&quot;</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">arm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/cmd/arming<span class="w"> </span>mavros_msgs/srv/CommandBool<span class="w"> </span><span class="s2">&quot;{value: True}&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">arm</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/cmd/arming<span class="w"> </span>mavros_msgs/srv/CommandBool<span class="w"> </span><span class="s2">&quot;{value: True}&quot;</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">take off</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
-<span class="normal"><a href="#__codelineno-13-2">2</a></span>
-<span class="normal"><a href="#__codelineno-13-3">3</a></span>
-<span class="normal"><a href="#__codelineno-13-4">4</a></span>
-<span class="normal"><a href="#__codelineno-13-5">5</a></span>
-<span class="normal"><a href="#__codelineno-13-6">6</a></span>
-<span class="normal"><a href="#__codelineno-13-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="w"> </span>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/cmd/takeoff<span class="w"> </span>mavros_msgs/srv/CommandTOL<span class="w"> </span><span class="s2">&quot;{</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="s2">  min_pitch: 0.0,</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="s2">  yaw: 0.0,</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="s2">  latitude: 0.0,</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="s2">  longitude: 0.0,</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="s2">  altitude: 5.0</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="s2">}&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">take off</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span>
+<span class="normal"><a href="#__codelineno-11-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="w"> </span>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/cmd/takeoff<span class="w"> </span>mavros_msgs/srv/CommandTOL<span class="w"> </span><span class="s2">&quot;{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="s2">  min_pitch: 0.0,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="s2">  yaw: 0.0,</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="s2">  latitude: 0.0,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="s2">  longitude: 0.0,</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="s2">  altitude: 5.0</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="s2">}&quot;</span>
 </code></pre></div></td></tr></table></div>
 
 
