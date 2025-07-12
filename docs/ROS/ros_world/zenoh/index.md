@@ -30,8 +30,19 @@ tags:
         <p>ROS RMW</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="cpp_bindings">
+        <img src="images/cpp_bindings.png" width="150" height="150">
+        <p>ROS RMW</p>
+        </a>
+    </div>
 </div>
 
+---
+
+## Resource
+- [Zenoh Tutorial – Part I](https://youtu.be/xNJlDIkV2uo?list=PLZDEtJusUvAa91YlGT4ugsR3_heTa1RqS)
+  
 ---
 
 - [zenoh json5 configuration schema](https://github.com/eclipse-zenoh/zenoh/blob/main/DEFAULT_CONFIG.json5)
