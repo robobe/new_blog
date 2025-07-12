@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#clocktime-synchronisation" class="md-skip">
+        <a href="#system_time-2" class="md-skip">
           Skip to content
         </a>
       
@@ -595,14 +595,78 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#system_time-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      SYSTEM_TIME (2)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SYSTEM_TIME (2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#brd_rtc_types-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      BRD_RTC_TYPES parameter
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timesync-111" class="md-nav__link">
+    <span class="md-ellipsis">
+      TIMESYNC (111)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TIMESYNC (111)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sync-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sync sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pymavlink-code-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      pymavlink code example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mavros" class="md-nav__link">
+    <span class="md-ellipsis">
+      MAVROS
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
@@ -632,6 +696,12 @@
       
       
       
+        <span class="md-tag">brd_rtc_types</span>
+      
+    
+      
+      
+      
         <span class="md-tag">clock</span>
       
     
@@ -644,13 +714,31 @@
       
       
       
+        <span class="md-tag">mavros</span>
+      
+    
+      
+      
+      
         <span class="md-tag">ros</span>
       
     
       
       
       
+        <span class="md-tag">system_time</span>
+      
+    
+      
+      
+      
         <span class="md-tag">time</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">timesync</span>
       
     
   </nav>
@@ -660,7 +748,169 @@
   
 
 
-<h1 id="clocktime-synchronisation">Clock/Time Synchronisation</h1>
+  <h1>Clock/Time Synchronisation</h1>
+
+<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/packages/">packages</a> </p>
+<p>The flight controller and companion computer clocks can be synchronised using MAVLink’s SYSTEM_TIME and TIMESYNC messages. This is important so that each side can blend data from the other side into its EKF.</p>
+<ul>
+<li><a href="https://mavlink.io/en/messages/common.html#SYSTEM_TIME">SYSTEM_TIME</a></li>
+<li><a href="https://mavlink.io/en/messages/common.html#TIMESYNC">TIMESYNC</a></li>
+</ul>
+<h2 id="system_time-2">SYSTEM_TIME (2)</h2>
+<p>The system time is the time of the master clock. The message send both way and the master clock set by <code>BRD_RTC_TYPES</code> in ardupilot</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>time_unix_usec</code></td>
+<td><code>uint64_t</code></td>
+<td>Unix time in microseconds (UTC). 0 if unknown.</td>
+</tr>
+<tr>
+<td><code>time_boot_ms</code></td>
+<td><code>uint32_t</code></td>
+<td>Time since system boot in milliseconds. Starts at 0 on every system reset.</td>
+</tr>
+</tbody>
+</table>
+<p>Autopilots (e.g., PX4, ArduPilot) may set time_unix_usec based on GPS time once available .</p>
+<p>The message publish by the <strong>fcu</strong> if no gps the time_unix_usec are zero (1/1/1970)</p>
+<div class="admonition warning">
+<p class="admonition-title">TM: Wrong FCU time.</p>
+<p>if pixhawk has no time source like gps, and his unix data &lt; Sat Feb 14 02:31:30 MSK 2009 mavros not publish <code>SYSTEM_TIME</code> to topic <code>/mavros/time_reference</code> and we got <code>[WARN] [] [mavros.time]: TM: Wrong FCU time.</code></p>
+</div>
+<h3 id="brd_rtc_types-parameter">BRD_RTC_TYPES parameter</h3>
+<p>In Ardupilot we can control the time source using <a href="https://ardupilot.org/sub/docs/parameters.html#brd-rtc-types">BRD_RTC_TYPES</a> parameter</p>
+<p><img alt="alt text" src="../images/BRD_RTC_TYPES_param_qgc.png" /></p>
+<ul>
+<li>GPS (0): Time init from GPS</li>
+<li>MAVLINK_SYSTEM_TIME(1): for example mavros send system time implement from <a href="https://github.com/mavlink/mavros/blob/ros2/mavros/src/plugins/sys_time.cpp">sys_time plugin</a> the rate control by <code>system_time_rate</code> 0 disabled sending</li>
+<li>HW(2): Using external hardware like <code>DS3231</code> or <code>RV3028</code> there is no driver implementation, i <a href="https://discuss.ardupilot.org/t/unsupported-sensors-try-arduino-lua/86814">read</a> about LUA driver implementation</li>
+</ul>
+<hr />
+<h2 id="timesync-111">TIMESYNC (111)</h2>
+<p>The MAVLink TIMESYNC message is used to synchronize time between two systems — typically between a companion computer and an autopilot (FCU) like Pixhawk.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tc1</code></td>
+<td>Remote system’s time in <strong>microseconds</strong></td>
+</tr>
+<tr>
+<td><code>ts1</code></td>
+<td>Local system’s time in <strong>microseconds</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sync-sequence">Sync sequence</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Companion
+    participant FCU
+
+    Note right of Companion: Companion initiates timesync
+    Companion-&gt;&gt;FCU: TIMESYNC (tc1 = 0, ts1 = T_local_send)
+
+    Note right of FCU: FCU receives and replies with its own time
+    FCU--&gt;&gt;Companion: TIMESYNC (tc1 = T_fcu_now, ts1 = T_local_send)
+
+    Note right of Companion: Companion receives response
+    Note right of Companion: Computes RTT = T_local_recv - ts1
+    Note right of Companion: Computes offset = tc1 + RTT/2 - T_local_recv
+
+    Note over Companion, FCU: Repeat periodically to refine offset
+</code></pre>
+<h3 id="pymavlink-code-example">pymavlink code example</h3>
+<details>
+    <summary>demo code</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pymavlink</span><span class="w"> </span><span class="kn">import</span> <span class="n">mavutil</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Connect to MAVLink</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="c1"># master = mavutil.mavlink_connection(&#39;udp:localhost:14550&#39;)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="n">master</span> <span class="o">=</span> <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink_connection</span><span class="p">(</span><span class="s1">&#39;/dev/ttyACM0&#39;</span><span class="p">,</span> <span class="n">baud</span><span class="o">=</span><span class="mi">115200</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">current_time_us</span><span class="p">():</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return current time in microseconds&quot;&quot;&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1_000_000</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Waiting for heartbeat...&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="n">master</span><span class="o">.</span><span class="n">wait_heartbeat</span><span class="p">()</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Heartbeat received&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="c1"># Send initial TIMESYNC message to start sync loop (optional)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="n">master</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">timesync_send</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_time_us</span><span class="p">())</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="n">msg</span> <span class="o">=</span> <span class="n">master</span><span class="o">.</span><span class="n">recv_match</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;TIMESYNC&#39;</span><span class="p">,</span> <span class="n">blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="k">if</span> <span class="n">msg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No TIMESYNC message received&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>        <span class="k">continue</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received TIMESYNC: tc1=</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">tc1</span><span class="si">}</span><span class="s2">, ts1=</span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="n">ts1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">tc1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="c1"># Autopilot is requesting time sync — reply with our time</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="n">master</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">timesync_send</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_time_us</span><span class="p">())</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Responded with timesync&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>        <span class="c1"># Autopilot responded to our request, calculate offset</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>        <span class="n">now</span> <span class="o">=</span> <span class="n">current_time_us</span><span class="p">()</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>        <span class="n">rtt</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">msg</span><span class="o">.</span><span class="n">ts1</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>        <span class="n">offset</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">tc1</span> <span class="o">+</span> <span class="n">rtt</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">now</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RTT: </span><span class="si">{</span><span class="n">rtt</span><span class="si">}</span><span class="s2"> µs, Time offset estimate: </span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s2"> µs&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h2 id="mavros">MAVROS</h2>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
