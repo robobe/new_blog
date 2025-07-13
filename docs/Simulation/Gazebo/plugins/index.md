@@ -12,7 +12,7 @@ tags:
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="diff drive">
+        <a href="diff_drive">
         <p>Differential drive</p>
         </a>
     </div>
@@ -22,11 +22,14 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="odometry_publisher">
-        <p>Odometry Publisher</p>
+        <a href="odometry">
+        <p>Odometry</p>
         </a>
     </div>
-    
+         <a href="joint_state_publisher">
+        <p>Joint state</p>
+        </a>
+    </div>
 </div>
 
 

@@ -33,14 +33,12 @@
         </a>
     </div>
     <div class="grid-item">
-        <a href="joint_state_and_pose_publisher">
-            
-            <p>joint state and pose publisher</p>
+        <a href="joint_state">
+            <p>joint state</p>
         </a>
     </div>
     <div class="grid-item">
     <a href="imu">
-        
             </a>
     </div>
 

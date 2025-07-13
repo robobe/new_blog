@@ -21,6 +21,60 @@ Download deb's file from github release page
 
 ---
 
+Code from [Zenoh tutorial]()
+
+```cpp title="session"
+#include <zenoh.hxx>
+
+int main(){
+    zenoh:config c;
+    auto z = zenoh::expect<zenoh::Session>(zenoh::open(std::move(c)));
+
+
+    return 0;
+}
+```
+
+
+```cpp title="put"
+//primitive value
+z.put("my/expression", "value");
+```
+
+```cpp  title="publisher"
+auto p = zeno::expect(z.declare_publisher("my/expression"));
+p.put(my_data);
+```
+
+!!! note "zeno encoding"
+    - json
+    - png
+    - and more
+     
+todo:// 42:36
+
+
+```cpp title="subscriber"
+auto s = zenoh::expect<zenoh::Subscriber>(
+    z.declare_subscriber("key", callback)
+);
+```
+
+!!! tip "subscriber to multi"
+    "key/**"
+     
+
+### QoS
+todo: 44:47
+todo: 46:26 (opts)
+
+
+### Build
+
+todo: 47:33
+
+---
+
 ## Demo: pub / sub
 Pub Sub data using zenoh
 

@@ -30,7 +30,7 @@ Differential drive controller which can be attached to a model with any number o
     <frame_id>odom</frame_id>
     <child_frame_id>base_link</child_frame_id>
     <odom_topic>odom</odom_topic>
-    <odom_publisher_frequency>30</odom_publisher_frequency>
+    <odom_publish_frequency>30</odom_publish_frequency>
 
     <tf_topic>/tf</tf_topic>
 
