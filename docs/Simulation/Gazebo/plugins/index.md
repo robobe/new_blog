@@ -13,21 +13,22 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="diff_drive">
-        <p>Differential drive</p>
+            <p>Differential drive</p>
         </a>
     </div>
     <div class="grid-item">
-    <a href="pose_publisher">
-        <p>Pose Publisher</p>
+        <a href="pose_publisher">
+            <p>Pose Publisher</p>
         </a>
     </div>
     <div class="grid-item">
         <a href="odometry">
-        <p>Odometry</p>
+            <p>Odometry</p>
         </a>
     </div>
-         <a href="joint_state_publisher">
-        <p>Joint state</p>
+    <div class="grid-item">
+        <a href="joint_state">
+            <p>Joint state</p>
         </a>
     </div>
 </div>

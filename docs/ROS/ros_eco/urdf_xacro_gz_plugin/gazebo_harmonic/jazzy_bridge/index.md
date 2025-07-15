@@ -28,7 +28,6 @@
 <div class="grid-container">
     <div class="grid-item">
         <a href="diff-drive">
-            <img src="images/diff-drive.png"  width="150" height="150">
             <p>Diff drive</p>
         </a>
     </div>
@@ -38,8 +37,9 @@
         </a>
     </div>
     <div class="grid-item">
-    <a href="imu">
-            </a>
+        <a href="odometry">
+            <p>Odometry</p>
+        </a>
     </div>
 
 </div>
@@ -111,5 +111,5 @@ gz topic -e -t /chatter
 ---
 
 ### Resources
-- [Sensors services and interfaces]()
+- [ROS gazebo message type mapping](https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz_bridge)
 - [ROS + Gazebo Sim demos](https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_sim_demos)

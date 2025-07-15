@@ -8,8 +8,9 @@
         </a>
     </div>
     <div class="grid-item">
-        <img src="images/block2.png" alt="Block 2">
-        <p>Block 2 Description</p>
+        <a href="/Other/interview/pdf/interview.pdf">
+            <p>Robotic Interview for developer</p>
+        <a>
     </div>
     <div class="grid-item">
         <img src="images/block3.png" alt="Block 3">

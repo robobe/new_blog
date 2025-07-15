@@ -55,6 +55,16 @@ ROS_DOMAIN_ID=2 ROS_DISTRO=humble ./zenoh-bridge-ros2dds
 ROS_LOCALHOST_ONLY=1  ROS_DISTRO=humble ./zenoh-bridge-ros2dds
 ```
 
+!!! warning "using ROS_LOCALHOST_ONLY"
+    ROS humble with cyclone dds it work without multicast enabling 
+    (zenoh bridge has info message tokio-runt: selected interface "lo" is not multicast-capable: disabling multicast)
+
+    Enable multicast on `lo` using
+    
+    ```bash
+    sudo ip link set lo multicast on
+    ```
+     
 
 ### Local machine
 
@@ -75,7 +85,7 @@ ros2 topic echo /my_int32_topic
 ### autoconnect
 
 ```json5 title="autoconnect.json5"
---8<-- "docs/ROS/zenoh/ros_bridge/autoconnect.json5"
+--8<-- "docs/ROS/ros_world/zenoh/ros_bridge/code/autoconnect.json5"
 ```
 
 !!! warning multicast
@@ -138,7 +148,7 @@ Running Bridge with `--rest-http-port 8000` expose web interface to query bridge
 [zenoh config from github](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/blob/main/DEFAULT_CONFIG.json5)
 
 - [Allow/Deny topics](#allow-deny)
-- [MAx rate](#pub_max_frequencies)
+- [Max rate](#pub_max_frequencies)
 
 ### Allow /Deny
 
@@ -148,7 +158,7 @@ Running Bridge with `--rest-http-port 8000` expose web interface to query bridge
      
 
 ```json title="allow.json5"
---8<-- "docs/ROS/zenoh/ros_bridge/allow.json5"
+--8<-- "docs/ROS/ros_world/zenoh/ros_bridge/code/allow.json5"
 ```
 
 ```bash title="bridge log"
@@ -157,13 +167,15 @@ INFO tokio-runtime-worker ThreadId(04) zenoh_plugin_ros2dds::routes_mgr: Route P
 
 ```
 
+---
+
 ### pub_max_frequencies
 Config maximum publish rate for topic 
 
 
 
 ```json title="allow.json5"
---8<-- "docs/ROS/zenoh/ros_bridge/pub_feq.json5"
+--8<-- "docs/ROS/ros_world/zenoh/ros_bridge/code/pub_feq.json5"
 ```
 
 ```bash
