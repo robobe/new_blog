@@ -38,6 +38,11 @@ Launch system is used to start multiple nodes and configure their execution. The
         <p>Rviz</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="process">
+        <p>Process</p>
+        </a>
+    </div>
 
 </div>
 

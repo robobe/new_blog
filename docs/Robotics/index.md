@@ -25,7 +25,10 @@
             </a>
     </div>
     <div class="grid-item">
-        <p>Block 5 Description</p>
+        <a href="control">
+                <img src="images/control.png"  width="150" height="150">
+                <p>Control</p>
+            </a>
     </div>
     <div class="grid-item">
         <p>Block 6 Description</p>
