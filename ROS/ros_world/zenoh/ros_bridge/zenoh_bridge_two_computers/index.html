@@ -833,10 +833,18 @@ Config remote machine as another domain <code>ROS_DOMAIN_ID=2</code> or set it <
 <a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1"># OR</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nv">ROS_LOCALHOST_ONLY</span><span class="o">=</span><span class="m">1</span><span class="w">  </span><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble<span class="w"> </span>./zenoh-bridge-ros2dds
 </code></pre></div></td></tr></table></div>
-<h3 id="local-machine_1">Local machine</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">zenoh bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble<span class="w"> </span>./zenoh-bridge-ros2dds<span class="w"> </span>-e<span class="w"> </span>tcp/10.0.0.10:7447
+<div class="admonition warning">
+<p class="admonition-title">using ROS_LOCALHOST_ONLY</p>
+<p>ROS humble with cyclone dds it work without multicast enabling 
+(zenoh bridge has info message tokio-runt: selected interface "lo" is not multicast-capable: disabling multicast)</p>
+<p>Enable multicast on <code>lo</code> using</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lo<span class="w"> </span>multicast<span class="w"> </span>on
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">subscriber</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/my_int32_topic
+</div>
+<h3 id="local-machine_1">Local machine</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">zenoh bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble<span class="w"> </span>./zenoh-bridge-ros2dds<span class="w"> </span>-e<span class="w"> </span>tcp/10.0.0.10:7447
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">subscriber</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/my_int32_topic
 </code></pre></div></td></tr></table></div>
 <div class="admonition note">
 <p class="admonition-title">client bridge connect to remote bridge</p>
@@ -845,7 +853,23 @@ This means it's listening for incoming TCP connections by remote bridges or any 
 It does perform discovery via scouting over UDP multicast or gossip protocol, but doesn't auto-connect to anything.</p>
 </div>
 <h3 id="autoconnect">autoconnect</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">autoconnect.json5</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">autoconnect.json5</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span>
+<span class="normal"><a href="#__codelineno-7-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="nv">scouting</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">    </span><span class="nv">multicast</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">      </span><span class="nv">enabled</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">      </span><span class="nv">autoconnect</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">router</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;router&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w"> </span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">      </span><span class="nv">listen</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 <div class="admonition warning multicast">
 <p class="admonition-title">Warning</p>
@@ -853,14 +877,14 @@ It does perform discovery via scouting over UDP multicast or gossip protocol, bu
 don't work with environment variable <code>ROS_LOCALHOST_ONLY=1</code></p>
 </div>
 <h4 id="remote-machine_2">Remote machine</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">publisher</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nv">ROS_DOMAIN_ID</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">RMW_IMPLEMENTATION</span><span class="o">=</span>rmw_cyclonedds_cpp<span class="w"> </span>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/my_int32_topic<span class="w"> </span>std_msgs/msg/Int32<span class="w"> </span><span class="s2">&quot;{ data: 10 }&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">publisher</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nv">ROS_DOMAIN_ID</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">RMW_IMPLEMENTATION</span><span class="o">=</span>rmw_cyclonedds_cpp<span class="w"> </span>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/my_int32_topic<span class="w"> </span>std_msgs/msg/Int32<span class="w"> </span><span class="s2">&quot;{ data: 10 }&quot;</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">zenoh bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nv">ROS_DOMAIN_ID</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble<span class="w"> </span>./zenoh-bridge-ros2dds<span class="w"> </span>--config<span class="w"> </span>autoconnect.json5
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">zenoh bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nv">ROS_DOMAIN_ID</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble<span class="w"> </span>./zenoh-bridge-ros2dds<span class="w"> </span>--config<span class="w"> </span>autoconnect.json5
 </code></pre></div></td></tr></table></div>
 <h4 id="local-machine_2">Local machine</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">zenoh bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble<span class="w"> </span>./zenoh-bridge-ros2dds<span class="w"> </span>--config<span class="w"> </span>autoconnect.json5
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">zenoh bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nv">ROS_DISTRO</span><span class="o">=</span>humble<span class="w"> </span>./zenoh-bridge-ros2dds<span class="w"> </span>--config<span class="w"> </span>autoconnect.json5
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">subscriber</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/my_int32_topic
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">subscriber</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/my_int32_topic
 </code></pre></div></td></tr></table></div>
 <hr />
 <h3 id="bridge-admin">Bridge Admin</h3>
@@ -891,34 +915,34 @@ don't work with environment variable <code>ROS_LOCALHOST_ONLY=1</code></p>
 </tr>
 </tbody>
 </table>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">http://localhost:8001/@/*/ros2/node/**</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-11-10">10</a></span>
-<span class="normal"><a href="#__codelineno-11-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>@/e25ed72d391828f7b6fbf87c5ea6e947/ros2/node/01102f4fbeea030c1eaab469000001c1/_ros2cli_daemon_0_ee39487b11b244b5b78a51b784d6e0ea
-<a id="__codelineno-11-2" name="__codelineno-11-2"></a>    {&quot;action_clients&quot;:[],&quot;action_servers&quot;:[],&quot;publishers&quot;:[{&quot;name&quot;:&quot;/parameter_events&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/ParameterEvent&quot;},{&quot;name&quot;:&quot;/rosout&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/Log&quot;}],&quot;service_clients&quot;:[],&quot;service_servers&quot;:[],&quot;subscribers&quot;:[]}
-<a id="__codelineno-11-3" name="__codelineno-11-3"></a>@/e25ed72d391828f7b6fbf87c5ea6e947/ros2/node/01100c7dd6bcb38d4918646d000001c1/_ros2cli_1340499
-<a id="__codelineno-11-4" name="__codelineno-11-4"></a>    {&quot;action_clients&quot;:[],&quot;action_servers&quot;:[],&quot;publishers&quot;:[{&quot;name&quot;:&quot;/rosout&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/Log&quot;},{&quot;name&quot;:&quot;/parameter_events&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/ParameterEvent&quot;}],&quot;service_clients&quot;:[],&quot;service_servers&quot;:[],
-<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="hll">    &quot;subscribers&quot;:[{&quot;name&quot;:&quot;/my_int32_topic&quot;,&quot;type&quot;:&quot;std_msgs/msg/Int32&quot;}]}
-</span><a id="__codelineno-11-6" name="__codelineno-11-6"></a>@/5d61a72ea243edb2653eecef8632fee8/ros2/node/01100e33ce14108eacd1a16c000001c1/_ros2cli_4554
-<a id="__codelineno-11-7" name="__codelineno-11-7"></a>    {&quot;action_clients&quot;:[],&quot;action_servers&quot;:[],
-<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="hll">    &quot;publishers&quot;:[{&quot;name&quot;:&quot;/my_int32_topic&quot;,&quot;type&quot;:&quot;std_msgs/msg/Int32&quot;},
-</span><a id="__codelineno-11-9" name="__codelineno-11-9"></a>        {&quot;name&quot;:&quot;/rosout&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/Log&quot;},
-<a id="__codelineno-11-10" name="__codelineno-11-10"></a>        {&quot;name&quot;:&quot;/parameter_events&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/ParameterEvent&quot;}],
-<a id="__codelineno-11-11" name="__codelineno-11-11"></a>    &quot;service_clients&quot;:[],&quot;service_servers&quot;:[],&quot;subscribers&quot;:[]} 
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">http://localhost:8001/@/*/ros2/node/**</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>@/e25ed72d391828f7b6fbf87c5ea6e947/ros2/node/01102f4fbeea030c1eaab469000001c1/_ros2cli_daemon_0_ee39487b11b244b5b78a51b784d6e0ea
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>    {&quot;action_clients&quot;:[],&quot;action_servers&quot;:[],&quot;publishers&quot;:[{&quot;name&quot;:&quot;/parameter_events&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/ParameterEvent&quot;},{&quot;name&quot;:&quot;/rosout&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/Log&quot;}],&quot;service_clients&quot;:[],&quot;service_servers&quot;:[],&quot;subscribers&quot;:[]}
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>@/e25ed72d391828f7b6fbf87c5ea6e947/ros2/node/01100c7dd6bcb38d4918646d000001c1/_ros2cli_1340499
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>    {&quot;action_clients&quot;:[],&quot;action_servers&quot;:[],&quot;publishers&quot;:[{&quot;name&quot;:&quot;/rosout&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/Log&quot;},{&quot;name&quot;:&quot;/parameter_events&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/ParameterEvent&quot;}],&quot;service_clients&quot;:[],&quot;service_servers&quot;:[],
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="hll">    &quot;subscribers&quot;:[{&quot;name&quot;:&quot;/my_int32_topic&quot;,&quot;type&quot;:&quot;std_msgs/msg/Int32&quot;}]}
+</span><a id="__codelineno-12-6" name="__codelineno-12-6"></a>@/5d61a72ea243edb2653eecef8632fee8/ros2/node/01100e33ce14108eacd1a16c000001c1/_ros2cli_4554
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>    {&quot;action_clients&quot;:[],&quot;action_servers&quot;:[],
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="hll">    &quot;publishers&quot;:[{&quot;name&quot;:&quot;/my_int32_topic&quot;,&quot;type&quot;:&quot;std_msgs/msg/Int32&quot;},
+</span><a id="__codelineno-12-9" name="__codelineno-12-9"></a>        {&quot;name&quot;:&quot;/rosout&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/Log&quot;},
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>        {&quot;name&quot;:&quot;/parameter_events&quot;,&quot;type&quot;:&quot;rcl_interfaces/msg/ParameterEvent&quot;}],
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a>    &quot;service_clients&quot;:[],&quot;service_servers&quot;:[],&quot;subscribers&quot;:[]} 
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="config">Config</h2>
 <p><a href="https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/blob/main/DEFAULT_CONFIG.json5">zenoh config from github</a></p>
 <ul>
 <li><a href="#allow-deny">Allow/Deny topics</a></li>
-<li><a href="#pub_max_frequencies">MAx rate</a></li>
+<li><a href="#pub_max_frequencies">Max rate</a></li>
 </ul>
 <h3 id="allow-deny">Allow /Deny</h3>
 <div class="admonition tip">
@@ -926,25 +950,100 @@ don't work with environment variable <code>ROS_LOCALHOST_ONLY=1</code></p>
 <p>In the config we set Allow key <strong>or</strong> Deny key
 Both of them not work</p>
 </div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">allow.json5</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">allow.json5</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-13-10">10</a></span>
+<span class="normal"><a href="#__codelineno-13-11">11</a></span>
+<span class="normal"><a href="#__codelineno-13-12">12</a></span>
+<span class="normal"><a href="#__codelineno-13-13">13</a></span>
+<span class="normal"><a href="#__codelineno-13-14">14</a></span>
+<span class="normal"><a href="#__codelineno-13-15">15</a></span>
+<span class="normal"><a href="#__codelineno-13-16">16</a></span>
+<span class="normal"><a href="#__codelineno-13-17">17</a></span>
+<span class="normal"><a href="#__codelineno-13-18">18</a></span>
+<span class="normal"><a href="#__codelineno-13-19">19</a></span>
+<span class="normal"><a href="#__codelineno-13-20">20</a></span>
+<span class="normal"><a href="#__codelineno-13-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="w">  </span><span class="err">plugi</span><span class="kc">ns</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="err">ros</span><span class="mi">2</span><span class="err">dds</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="w">      </span><span class="err">pub_max_</span><span class="kc">fre</span><span class="err">que</span><span class="kc">n</span><span class="err">cies</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="w">        </span><span class="err">publishers</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;/my_int32_topic&quot;</span><span class="p">],</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="w">        </span><span class="err">subscribers</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="w">        </span><span class="err">service_servers</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="w">        </span><span class="err">service_clie</span><span class="kc">nts</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="w">        </span><span class="err">ac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">_servers</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="w">        </span><span class="err">ac</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span><span class="err">_clie</span><span class="kc">nts</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="w">    </span><span class="err">scou</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14"></a><span class="w">      </span><span class="err">mul</span><span class="kc">t</span><span class="err">icas</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15"></a><span class="w">        </span><span class="err">e</span><span class="kc">na</span><span class="err">bled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16"></a><span class="w">        </span><span class="err">au</span><span class="kc">t</span><span class="err">oco</span><span class="kc">nne</span><span class="err">c</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">rou</span><span class="kc">ter</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;router&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17"></a><span class="w">        </span><span class="err">lis</span><span class="kc">ten</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">bridge log</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
-<span class="normal"><a href="#__codelineno-13-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>INFO<span class="w"> </span>tokio-runtime-worker<span class="w"> </span>ThreadId<span class="o">(</span><span class="m">04</span><span class="o">)</span><span class="w"> </span>zenoh_plugin_ros2dds:<span class="w"> </span>Node<span class="w"> </span>/_ros2cli_5087<span class="w"> </span>declares<span class="w"> </span>Publisher<span class="w"> </span>/my_int32_topic:<span class="w"> </span>std_msgs/msg/Int32<span class="w"> </span>-<span class="w"> </span>Allowed
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a>INFO<span class="w"> </span>tokio-runtime-worker<span class="w"> </span>ThreadId<span class="o">(</span><span class="m">04</span><span class="o">)</span><span class="w"> </span>zenoh_plugin_ros2dds::routes_mgr:<span class="w"> </span>Route<span class="w"> </span>Publisher<span class="w"> </span><span class="o">(</span>ROS:/my_int32_topic<span class="w"> </span>-&gt;<span class="w"> </span>Zenoh:my_int32_topic<span class="o">)</span><span class="w"> </span>created
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">bridge log</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>INFO<span class="w"> </span>tokio-runtime-worker<span class="w"> </span>ThreadId<span class="o">(</span><span class="m">04</span><span class="o">)</span><span class="w"> </span>zenoh_plugin_ros2dds:<span class="w"> </span>Node<span class="w"> </span>/_ros2cli_5087<span class="w"> </span>declares<span class="w"> </span>Publisher<span class="w"> </span>/my_int32_topic:<span class="w"> </span>std_msgs/msg/Int32<span class="w"> </span>-<span class="w"> </span>Allowed
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>INFO<span class="w"> </span>tokio-runtime-worker<span class="w"> </span>ThreadId<span class="o">(</span><span class="m">04</span><span class="o">)</span><span class="w"> </span>zenoh_plugin_ros2dds::routes_mgr:<span class="w"> </span>Route<span class="w"> </span>Publisher<span class="w"> </span><span class="o">(</span>ROS:/my_int32_topic<span class="w"> </span>-&gt;<span class="w"> </span>Zenoh:my_int32_topic<span class="o">)</span><span class="w"> </span>created
 </code></pre></div></td></tr></table></div>
+<hr />
 <h3 id="pub_max_frequencies">pub_max_frequencies</h3>
 <p>Config maximum publish rate for topic </p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">allow.json5</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">allow.json5</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span>
+<span class="normal"><a href="#__codelineno-15-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">   </span><span class="err">plugi</span><span class="kc">ns</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">    </span><span class="err">ros</span><span class="mi">2</span><span class="err">dds</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">       </span><span class="err">pub_max_</span><span class="kc">fre</span><span class="err">que</span><span class="kc">n</span><span class="err">cies</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">        </span><span class="s2">&quot;/my_int32_topic=0.5&quot;</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">hz</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="w">     </span><span class="err">scou</span><span class="kc">t</span><span class="err">i</span><span class="kc">n</span><span class="err">g</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="w">    </span><span class="err">mul</span><span class="kc">t</span><span class="err">icas</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="w">      </span><span class="err">e</span><span class="kc">na</span><span class="err">bled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="w">      </span><span class="err">au</span><span class="kc">t</span><span class="err">oco</span><span class="kc">nne</span><span class="err">c</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">rou</span><span class="kc">ter</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;router&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w"> </span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="w">      </span><span class="err">lis</span><span class="kc">ten</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a><span class="p">}</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
-<span class="normal"><a href="#__codelineno-15-2">2</a></span>
-<span class="normal"><a href="#__codelineno-15-3">3</a></span>
-<span class="normal"><a href="#__codelineno-15-4">4</a></span>
-<span class="normal"><a href="#__codelineno-15-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>hz<span class="w"> </span>/my_int32_topic<span class="w"> </span>
-<a id="__codelineno-15-2" name="__codelineno-15-2"></a>average<span class="w"> </span>rate:<span class="w"> </span><span class="m">0</span>.500
-<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">    </span>min:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>max:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>std<span class="w"> </span>dev:<span class="w"> </span><span class="m">0</span>.00019s<span class="w"> </span>window:<span class="w"> </span><span class="m">2</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4"></a>average<span class="w"> </span>rate:<span class="w"> </span><span class="m">0</span>.500
-<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">    </span>min:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>max:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>std<span class="w"> </span>dev:<span class="w"> </span><span class="m">0</span>.00017s<span class="w"> </span>window:<span class="w"> </span><span class="m">3</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>hz<span class="w"> </span>/my_int32_topic<span class="w"> </span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>average<span class="w"> </span>rate:<span class="w"> </span><span class="m">0</span>.500
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">    </span>min:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>max:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>std<span class="w"> </span>dev:<span class="w"> </span><span class="m">0</span>.00019s<span class="w"> </span>window:<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>average<span class="w"> </span>rate:<span class="w"> </span><span class="m">0</span>.500
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="w">    </span>min:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>max:<span class="w"> </span><span class="m">2</span>.001s<span class="w"> </span>std<span class="w"> </span>dev:<span class="w"> </span><span class="m">0</span>.00017s<span class="w"> </span>window:<span class="w"> </span><span class="m">3</span>
 </code></pre></div></td></tr></table></div>
 
 

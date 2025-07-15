@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/packages/mavros/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/ardupilot/ekf3/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Mavros - Robots Inside</title>
+        <title>Ardupilot ekf3 - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#connections-url" class="md-skip">
+        <a href="#reference" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mavros
+              Ardupilot ekf3
             
           </span>
         </div>
@@ -213,7 +213,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../" class="md-tabs__link">
+      <a href="../../../../ROS/" class="md-tabs__link">
         
   
     
@@ -247,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../Robotics/" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         
   
     
@@ -417,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../" class="md-nav__link">
+      <a href="../../../../ROS/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -459,7 +459,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../Robotics/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -603,18 +603,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#connections-url" class="md-nav__link">
+  <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Connections url
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#plugins" class="md-nav__link">
-    <span class="md-ellipsis">
-      Plugins
+      Reference
     </span>
   </a>
   
@@ -645,19 +636,7 @@
       
       
       
-        <span class="md-tag">mavlink</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">mavros</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">ros</span>
+        <span class="md-tag">ekf3</span>
       
     
   </nav>
@@ -667,139 +646,62 @@
   
 
 
-  <h1>Mavros</h1>
+  <h1>Ardupilot ekf3</h1>
 
-<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/packages/">packages</a></p>
-<p>MAVLink extendable communication node for ROS2.</p>
-<h2 id="connections-url">Connections url</h2>
+<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/uav/">uav</a> / <a href="/Robotics/uav/ardupilot/">ardupilot</a></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>VISION_POSITION_ESTIMATE</code></th>
+<th><code>GLOBAL_VISION_POSITION_ESTIMATE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAVLink ID</td>
+<td><code>102</code></td>
+<td><code>101</code></td>
+</tr>
+<tr>
+<td>Frame of Reference</td>
+<td><strong>Local frame</strong> (e.g., body or map-local)</td>
+<td><strong>Global frame</strong> aligned to NED from origin</td>
+</tr>
+<tr>
+<td>Position Fields</td>
+<td><code>x, y, z</code> → <strong>meters</strong></td>
+<td><code>x, y, z</code> → <strong>meters</strong></td>
+</tr>
+<tr>
+<td>Orientation</td>
+<td><code>roll, pitch, yaw</code> in <strong>radians</strong></td>
+<td><code>roll, pitch, yaw</code> in <strong>radians</strong></td>
+</tr>
+<tr>
+<td>Origin Definition</td>
+<td>Arbitrary local frame</td>
+<td>Aligned to a global origin (NED or ENU)</td>
+</tr>
+<tr>
+<td>Units</td>
+<td>All in SI (meters, radians)</td>
+<td>All in SI (meters, radians)</td>
+</tr>
+<tr>
+<td>Usage</td>
+<td>VIO, MoCap in local environments</td>
+<td>Global alignment (with known origin)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="reference">Reference</h2>
 <ul>
-<li><strong>Serial</strong>: /path/to/serial/device[:baudrate]</li>
-<li><strong>Serial</strong>: serial:///path/to/serial/device[:baudrate][?ids=sysid,compid]</li>
-<li><strong>UDP</strong>: udp://[bind_host][:port]@[remote_host[:port]][/?ids=sysid,compid]</li>
-<li><strong>TCP</strong> client: tcp://[server_host][:port][/?ids=sysid,compid]</li>
+<li><a href="https://ardupilot.org/copter/docs/common-apm-navigation-extended-kalman-filter-overview.html">Extended Kalman Filter (EKF)</a></li>
+<li><a href="https://ardupilot.org/copter/docs/common-ek3-affinity-lane-switching.html">EKF3 Affinity and Lane Switching</a></li>
+<li><a href="https://ardupilot.org/copter/docs/common-ekf-sources.html">EKF Source Selection and Switching</a></li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ardupilot connection</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>apm.launch<span class="w"> </span>fcu_url:<span class="o">=</span>tcp://localhost:5760<span class="w"> </span>gcs_url:<span class="o">=</span>udp://@localhost:14550
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">using node.launch connect to APM SITL and control pluginlist and config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span>
-<span class="normal"><a href="#__codelineno-1-3">3</a></span>
-<span class="normal"><a href="#__codelineno-1-4">4</a></span>
-<span class="normal"><a href="#__codelineno-1-5">5</a></span>
-<span class="normal"><a href="#__codelineno-1-6">6</a></span>
-<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>node.launch<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>fcu_url:<span class="o">=</span>tcp://0.0.0.0:5760@<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>gcs_url:<span class="o">=</span>udp://@127.0.0.1:14560<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>tgt_system:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a>tgt_component:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a>pluginlists_yaml:<span class="o">=</span>plugins.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>config_yaml:<span class="o">=</span>config.yaml
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">using node.launch connect to APM HW and control pluginlist and config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span>
-<span class="normal"><a href="#__codelineno-2-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>node.launch<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>fcu_url:<span class="o">=</span>/dev/ttyACM1:115200<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>gcs_url:<span class="o">=</span>udp://@127.0.0.1:14560<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>tgt_system:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>tgt_component:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>pluginlists_yaml:<span class="o">=</span>/workspace/src/ardupilot_bringup/config/plugins.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>config_yaml:<span class="o">=</span>/workspace/src/ardupilot_bringup/config/config.yaml
-</code></pre></div></td></tr></table></div>
-<h2 id="plugins">Plugins</h2>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="sys_state">
-            <p>sys_state</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="sys_time">
-            <p>sys_time</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="terrain">
-            <p>terrain</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="distance_sensor">
-            <p>distance_sensor</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="ahrs2">
-            <p>ahrs2</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="home_position">
-            <p>home_position</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="setpoint_velocity">
-            <p>setpoint_velocity</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="local_position">
-            <p>local_position</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="vfr_hud">
-            <p>vfr_hud</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="gimbal_control">
-            <p>gimbal_control</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="setpoint_raw">
-            <p>setpoint_raw</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="setpoint_attitude">
-            <p>setpoint_attitude</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="param">
-            <p>param</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="global_position">
-            <p>global_position</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="imu">
-            <p>imu</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="do_set_mode">
-            <p>do_set_mode</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    </div>
-    <div class="grid-item">
-    </div>
-</div>
 
 
 
