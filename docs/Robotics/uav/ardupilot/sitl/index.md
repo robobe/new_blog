@@ -147,3 +147,9 @@ ros2 service call /mavros/cmd/arming mavros_msgs/srv/CommandBool "{value: True}"
   altitude: 5.0
 }"
 ```
+
+---
+
+## Reference
+- [Debugging with GDB using VSCode](https://ardupilot.org/dev/docs/debugging-with-gdb-using-vscode.html)
+- [ardupilot-devenv](https://marketplace.visualstudio.com/items?itemName=ardupilot-org.ardupilot-devenv#setting-up-sitl)

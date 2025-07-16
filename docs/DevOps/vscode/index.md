@@ -44,12 +44,17 @@ tags:
     </div>
 </div>
 
-## Extensions
-[Open VSX Registry](https://open-vsx.org/)
+
 
 ## Video and posts
+- [Code Customization 101: Supercharge VS Code with Profiles](https://youtu.be/QjvvqR9KyVo)
 
 ## ToDO: read
 - [vscode profile](https://youtu.be/0bIU-5JkHr0)
+
+---
+
+## Extensions
+[Open VSX Registry](https://open-vsx.org/)
 
 

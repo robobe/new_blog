@@ -13,8 +13,8 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href="">
-        <p>TBD</p>
+        <a href="images/github_cli.png">
+            <p>Git CLI</p>
         </a>
     </div>
     <div class="grid-item">
@@ -25,3 +25,5 @@ tags:
     </div>
     
 </div>
+
+![alt text](image.png)
