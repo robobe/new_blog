@@ -31,6 +31,9 @@
             </a>
     </div>
     <div class="grid-item">
-        <p>Block 6 Description</p>
+         <a href="control">
+                <img src="images/filters_and_estimators.png"  width="150" height="150">
+                <p>Filters and Estimators</p>
+            </a>
     </div>
 </div>

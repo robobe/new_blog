@@ -18,4 +18,14 @@ tags:
                 <p>MPC</p>
             </a>
     </div>
+    <div class="grid-item">
+        <a href="geometric_control">
+                <img src="images/geometric_control.png"  width="150" height="150">
+                <p>Geometric control</p>
+            </a>
+    </div>
 </div>
+---
+
+## Resource
+- [MATLAB Tech Talks: Explore the Control Systems Video Series](https://www.mathworks.com/videos/tech-talks/controls.html?s_eid=PSM_15028)

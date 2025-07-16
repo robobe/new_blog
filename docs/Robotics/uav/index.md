@@ -12,9 +12,9 @@ tags:
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="geometric_control">
-                <img src="images/control.png"  width="150" height="150">
-                <p>geometric control</p></a>
+        <a href="qgc">
+                <img src="images/qgc.png"  width="150" height="150">
+                <p>QGroundControl</p></a>
     </div>
     <div class="grid-item">
         <a href="px4">
