@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#reference" class="md-skip">
+        <a href="#sensor-affinity" class="md-skip">
           Skip to content
         </a>
       
@@ -603,6 +603,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#sensor-affinity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sensor affinity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mavlink-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mavlink estimation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       Reference
@@ -649,6 +667,43 @@
   <h1>Ardupilot ekf3</h1>
 
 <p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/uav/">uav</a> / <a href="/Robotics/uav/ardupilot/">ardupilot</a></p>
+<p>An Extended Kalman Filter (EKF) algorithm is used to estimate vehicle position, velocity and angular orientation based on rate gyroscopes, accelerometer, compass, GPS, airspeed and barometric pressure measurements.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>value</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EK3_ENABLE</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>AHRS_EKF_TYPE</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The EKF instantiates multiple instances of the filter called ‘lanes’. The primary lane is the one that provides state estimates, rest are updated in the background and available for switching to. The number of possible lanes is exactly equal to the number of IMUs enabled for use. Affinity is a way for the EKF lanes to use non-primary sensors within any running lane.</p>
+<h2 id="sensor-affinity">Sensor affinity</h2>
+<p>ArduPilot EKF3 allows you to assign specific sensors (e.g., IMUs, GPS, barometers) to particular EKF "lanes" (instances). Each EKF lane can run in parallel, using different sensor combinations for redundancy and robustness.</p>
+<hr />
+<h2 id="mavlink-estimation">Mavlink estimation</h2>
 <table>
 <thead>
 <tr>
@@ -701,6 +756,8 @@
 <li><a href="https://ardupilot.org/copter/docs/common-apm-navigation-extended-kalman-filter-overview.html">Extended Kalman Filter (EKF)</a></li>
 <li><a href="https://ardupilot.org/copter/docs/common-ek3-affinity-lane-switching.html">EKF3 Affinity and Lane Switching</a></li>
 <li><a href="https://ardupilot.org/copter/docs/common-ekf-sources.html">EKF Source Selection and Switching</a></li>
+<li><a href="https://discuss.ardupilot.org/t/gsoc-20-ekf3-affinity-and-lane-switching-merged/61320">EKF2 Affinity and Lane switching</a></li>
+<li><a href="https://ardupilot.org/dev/docs/mavlink-nongps-position-estimation.html">Non-GPS Position Estimation</a></li>
 </ul>
 
 

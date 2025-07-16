@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/geometric_control/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/qgc/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Geometric Control of a Quadrotor UAV on SE(3) - Robots Inside</title>
+        <title>QGroundControl - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#geometric-control-of-a-quadrotor-uav-on-se3" class="md-skip">
+        <a href="#customization" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Geometric Control of a Quadrotor UAV on SE(3)
+              QGroundControl
             
           </span>
         </div>
@@ -595,8 +595,38 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Customization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sending-custom-mavlink-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sending custom mavlink commands
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -615,25 +645,7 @@
       
       
       
-        <span class="md-tag">SE3</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">controller</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">geometric</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">uav</span>
+        <span class="md-tag">qgc</span>
       
     
   </nav>
@@ -643,14 +655,52 @@
   
 
 
-<h1 id="geometric-control-of-a-quadrotor-uav-on-se3">Geometric Control of a Quadrotor UAV on SE(3)</h1>
-<ul>
-<li><a href="https://github.com/fdcl-gwu/uav_geometric_control" target="_blank">geometric controller github</a></li>
-<li><a href="https://github.com/fdcl-gwu/uav_simulator/tree/main" target="_blank">uav simulator</a></li>
-<li><a href="https://github.com/KumarRobotics/kr_mav_control/tree/kash-ros2-humble-integration" target="_blank">kv_mav_control</a></li>
-<li><a href="https://github.com/uzh-rpg/rpg_quadrotor_control?tab=readme-ov-file" target="_blank">RPG Quadrotor Control</a></li>
-<li><a href="https://github.com/uzh-rpg/rpg_mpc" target="_blank">mpc</a></li>
-</ul>
+  <h1>QGroundControl</h1>
+
+<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/uav/">uav</a></p>
+<h2 id="customization">Customization</h2>
+<h3 id="sending-custom-mavlink-commands">Sending custom mavlink commands</h3>
+<p><a href="https://discuss.bluerobotics.com/t/sending-custom-mavlink-commands-with-qgc/17070">Sending custom mavlink commands</a></p>
+<p><img alt="alt text" src="images/custom_actions.png" /></p>
+<p><a href="https://docs.qgroundcontrol.com/master/en/qgc-user-guide/custom_actions/custom_actions.html#custom-actions-file">Custom Mavlink Action json file</a>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w">    </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;fileType&quot;</span><span class="p">:</span><span class="w">   </span><span class="s2">&quot;MavlinkActions&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="nt">&quot;actions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">            </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w">        </span><span class="s2">&quot;First Mavlink Command&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;This is the first command&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">            </span><span class="nt">&quot;mavCmd&quot;</span><span class="p">:</span><span class="w">       </span><span class="mi">10</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">            </span><span class="nt">&quot;compId&quot;</span><span class="p">:</span><span class="w">       </span><span class="mi">100</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">            </span><span class="nt">&quot;param1&quot;</span><span class="p">:</span><span class="w">       </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">            </span><span class="nt">&quot;param2&quot;</span><span class="p">:</span><span class="w">       </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">            </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w">        </span><span class="s2">&quot;Second Mavlink Command&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w">  </span><span class="s2">&quot;This is the second command&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">            </span><span class="nt">&quot;mavCmd&quot;</span><span class="p">:</span><span class="w">       </span><span class="mi">20</span><span class="p">,</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
 
 
 
