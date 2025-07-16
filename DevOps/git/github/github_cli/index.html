@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/ardupilot/ekf3/">
+        <link rel="canonical" href="https://robobe.github.io/DevOps/git/github/github_cli/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Ardupilot ekf3 - Robots Inside</title>
+        <title>Github cli - Robots Inside</title>
       
     
     
@@ -73,11 +73,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#ek3_imu_mask-and-ekf3-instance" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -108,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ardupilot ekf3
+              Github cli
             
           </span>
         </div>
@@ -247,7 +242,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../" class="md-tabs__link">
+      <a href="../../../../Robotics/" class="md-tabs__link">
         
   
     
@@ -298,7 +293,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../DevOps/" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         
   
     
@@ -459,7 +454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../" class="md-nav__link">
+      <a href="../../../../Robotics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -522,7 +517,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../DevOps/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -596,65 +591,6 @@
   
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#ek3_imu_mask-and-ekf3-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      EK3_IMU_MASK and EKF3 instance
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="EK3_IMU_MASK and EKF3 instance">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sensor-affinity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sensor affinity
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mavlink-estimation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mavlink estimation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reference
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -672,13 +608,13 @@
       
       
       
-        <span class="md-tag">ardupilot</span>
+        <span class="md-tag">cli</span>
       
     
       
       
       
-        <span class="md-tag">ekf3</span>
+        <span class="md-tag">github</span>
       
     
   </nav>
@@ -688,161 +624,12 @@
   
 
 
-  <h1>Ardupilot ekf3</h1>
+  <h1>Github cli</h1>
 
-<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/uav/">uav</a> / <a href="/Robotics/uav/ardupilot/">ardupilot</a></p>
-<p>An Extended Kalman Filter (EKF) algorithm is used to estimate vehicle position, velocity and angular orientation based on rate gyroscopes, accelerometer, compass, GPS, airspeed and barometric pressure measurements.</p>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>value</th>
-<th>Desc</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>EK3_ENABLE</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>AHRS_EKF_TYPE</td>
-<td>3</td>
-<td></td>
-</tr>
-<tr>
-<td>EK3_IMU_MASK</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>EK3_PRIMARY</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>EK3_ALT_M_NSE</td>
-<td></td>
-<td>Lower number reduces reliance on accelerometers, increases reliance on barometer.</td>
-</tr>
-<tr>
-<td>EK3_GPS_TYPE</td>
-<td></td>
-<td>Controls how GPS is used.</td>
-</tr>
-<tr>
-<td>EK3_YAW_M_NSE</td>
-<td></td>
-<td>Controls the weighting between GPS and Compass when calculating the heading</td>
-</tr>
-</tbody>
-</table>
-<p>The EKF instantiates multiple instances of the filter called ‘lanes’. The primary lane is the one that provides state estimates, rest are updated in the background and available for switching to. The number of possible lanes is exactly equal to the number of IMUs enabled for use. Affinity is a way for the EKF lanes to use non-primary sensors within any running lane.</p>
-<h3 id="ek3_imu_mask-and-ekf3-instance">EK3_IMU_MASK and EKF3 instance</h3>
-<p><a href="https://ardupilot.org/copter/docs/parameters.html#ek3-imu-mask-bitmask-of-active-imus">EK3_IMU_MASK</a> 1 byte bitmap of IMUs to use in EKF3. A separate instance of EKF3 will be started for each IMU selected.</p>
-<table>
-<thead>
-<tr>
-<th>Bit</th>
-<th>IMU</th>
-<th>Binary</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>Use IMU 1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>Use IMU 2</td>
-</tr>
-<tr>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>Use IMU 3</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Version 4.6 EKF deprecated parameters</p>
-</div>
-<h4 id="configuration">Configuration</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>EK3_IMU_MASK = 2
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>EK3_PRIMARY = 0   # Because only one EKF instance will run, and it&#39;s at index 0
+<p><a href="/DevOps/">DevOps</a> / <a href="/DevOps/git/">git</a> / <a href="/DevOps/git/github/">github</a></p>
+<p>Git CLI is GitHub’s official command line tool. It brings pull requests, issues, and other GitHub concepts to the terminal next to where you are already working with git and your code.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gh
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>EK3_IMU_MASK = 3 # IMU1 and IMU2 working and create two EKF instance
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>EK3_PRIMARY = 1   # To use the instance assigned to IMU2
-</code></pre></div></td></tr></table></div>
-<h2 id="sensor-affinity">Sensor affinity</h2>
-<p>ArduPilot EKF3 allows you to assign specific sensors (e.g., IMUs, GPS, barometers) to particular EKF "lanes" (instances). Each EKF lane can run in parallel, using different sensor combinations for redundancy and robustness.</p>
-<hr />
-<h2 id="mavlink-estimation">Mavlink estimation</h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><code>VISION_POSITION_ESTIMATE</code></th>
-<th><code>GLOBAL_VISION_POSITION_ESTIMATE</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MAVLink ID</td>
-<td><code>102</code></td>
-<td><code>101</code></td>
-</tr>
-<tr>
-<td>Frame of Reference</td>
-<td><strong>Local frame</strong> (e.g., body or map-local)</td>
-<td><strong>Global frame</strong> aligned to NED from origin</td>
-</tr>
-<tr>
-<td>Position Fields</td>
-<td><code>x, y, z</code> → <strong>meters</strong></td>
-<td><code>x, y, z</code> → <strong>meters</strong></td>
-</tr>
-<tr>
-<td>Orientation</td>
-<td><code>roll, pitch, yaw</code> in <strong>radians</strong></td>
-<td><code>roll, pitch, yaw</code> in <strong>radians</strong></td>
-</tr>
-<tr>
-<td>Origin Definition</td>
-<td>Arbitrary local frame</td>
-<td>Aligned to a global origin (NED or ENU)</td>
-</tr>
-<tr>
-<td>Units</td>
-<td>All in SI (meters, radians)</td>
-<td>All in SI (meters, radians)</td>
-</tr>
-<tr>
-<td>Usage</td>
-<td>VIO, MoCap in local environments</td>
-<td>Global alignment (with known origin)</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://ardupilot.org/copter/docs/common-apm-navigation-extended-kalman-filter-overview.html">Extended Kalman Filter (EKF)</a></li>
-<li><a href="https://ardupilot.org/copter/docs/common-ek3-affinity-lane-switching.html">EKF3 Affinity and Lane Switching</a></li>
-<li><a href="https://ardupilot.org/copter/docs/common-ekf-sources.html">EKF Source Selection and Switching</a></li>
-<li><a href="https://discuss.ardupilot.org/t/gsoc-20-ekf3-affinity-and-lane-switching-merged/61320">EKF2 Affinity and Lane switching</a></li>
-<li><a href="https://ardupilot.org/dev/docs/mavlink-nongps-position-estimation.html">Non-GPS Position Estimation</a></li>
-<li><a href="https://ardupilot.org/dev/docs/extended-kalman-filter.html#extended-kalman-filter">Extended Kalman Filter Navigation Overview and Tuning</a></li>
-</ul>
 
 
 
