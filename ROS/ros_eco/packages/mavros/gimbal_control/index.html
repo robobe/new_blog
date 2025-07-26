@@ -1,0 +1,1392 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/packages/mavros/gimbal_control/">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.2">
+    
+    
+      
+        <title>Index - Robots Inside</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.d7758b05.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mavlink-gimbal-protocol-v2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robots Inside
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../" class="md-tabs__link">
+        
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Simulation/" class="md-tabs__link">
+        
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Robotics/" class="md-tabs__link">
+        
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Programming/" class="md-tabs__link">
+        
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Embedded/" class="md-tabs__link">
+        
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../DevOps/" class="md-tabs__link">
+        
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Other/" class="md-tabs__link">
+        
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../projects/" class="md-tabs__link">
+        
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robots Inside
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Simulation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Robotics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Robotics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Programming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Programming
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Embedded/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embedded
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../DevOps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DevOps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Other/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Other
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../projects/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mavlink-gimbal-protocol-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      MAvlink (gimbal protocol v2)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MAvlink (gimbal protocol v2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gimbal_manager_set_attitude-282" class="md-nav__link">
+    <span class="md-ellipsis">
+      GIMBAL_MANAGER_SET_ATTITUDE (282)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ardupilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ardupilot
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ardupilot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#params" class="md-nav__link">
+    <span class="md-ellipsis">
+      Params
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gimbal-mode-vs-control-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gimbal Mode vs Control Mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera-centric-coordinate-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Camera centric coordinate system
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera centric coordinate system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Axis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotational-axes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rotational Axes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sitlflu-hardwarecamera-centric" class="md-nav__link">
+    <span class="md-ellipsis">
+      SITL(FLU) / HARDWARE(Camera-Centric)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      More terms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="More terms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nadir-and-zenith" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nadir and zenith
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mavros" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mavros
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gimbal_manager_set_attitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      GIMBAL_MANAGER_SET_ATTITUDE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-snippet-to-be-move-from-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code snippet to be move from here
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#this-is-the-code-i-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      This is the code i need
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">gimbal</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">mavros</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">ros</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Index</h1>
+
+<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/packages/">packages</a> / <a href="/ROS/ros_eco/packages/mavros/">mavros</a></p>
+<h2 id="mavlink-gimbal-protocol-v2">MAvlink (gimbal protocol v2)</h2>
+<p><a href="https://mavlink.io/en/services/gimbal_v2.html">The gimbal protocol</a>  allows MAVLink control over the attitude/orientation of cameras (or other sensors) mounted on the drone</p>
+<ul>
+<li>Gimbal Device: the actual gimbal device, hardware and software.</li>
+<li>Gimbal Manager: software to deconflict gimbal messages and commands from different sources, and to abstract the capabilities of the Gimbal Device from gimbal users.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GIMBAL_DEVICE_ATTITUDE_STATUS</td>
+<td>~/device/attitude_status</td>
+<td>Send out its attitude and status at a regular rate, e.g. 10 Hz This message is a meant as broadcast</td>
+</tr>
+<tr>
+<td>GIMBAL_MANAGER_STATUS</td>
+<td></td>
+<td>Current status about a high level gimbal manager. This message should be broadcast at a low regular rate (e.g. 5Hz).</td>
+</tr>
+<tr>
+<td>GIMBAL_DEVICE_INFORMATION</td>
+<td></td>
+<td>Information about a low level gimbal. This message should be requested by the gimbal manager or a ground station using MAV_CMD_REQUEST_MESSAGE.</td>
+</tr>
+<tr>
+<td>GIMBAL_MANAGER_INFORMATION</td>
+<td></td>
+<td>Information about a high level gimbal manager. This message should be requested by a ground station using <code>MAV_CMD_REQUEST_MESSAGE</code>.</td>
+</tr>
+<tr>
+<td>GIMBAL_DEVICE_SET_ATTITUDE</td>
+<td></td>
+<td>Low level message to control a gimbal device's attitude. This message is to be sent from the gimbal manager to the gimbal device component.</td>
+</tr>
+<tr>
+<td>GIMBAL_MANAGER_SET_ATTITUDE</td>
+<td></td>
+<td>High level message to control a gimbal's attitude.</td>
+</tr>
+<tr>
+<td>GIMBAL_MANAGER_SET_PITCHYAW</td>
+<td></td>
+<td>High level message to control a gimbal's pitch and yaw angles.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gimbal_manager_set_attitude-282">GIMBAL_MANAGER_SET_ATTITUDE (282)</h3>
+<p><a href="https://mavlink.io/en/messages/common.html#GIMBAL_MANAGER_SET_ATTITUDE">Mavlink</a></p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Type</th>
+<th>Units</th>
+<th>Values</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>target_system</td>
+<td>uint8_t</td>
+<td></td>
+<td></td>
+<td>System ID</td>
+</tr>
+<tr>
+<td>target_component</td>
+<td>uint8_t</td>
+<td></td>
+<td></td>
+<td>Component ID</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>uint32_t</td>
+<td></td>
+<td>GIMBAL_MANAGER_FLAGS</td>
+<td>High level gimbal manager flags to use.</td>
+</tr>
+<tr>
+<td>gimbal_device_id</td>
+<td>uint8_t</td>
+<td></td>
+<td></td>
+<td>Component ID of gimbal device to address (or 1–6 for non-MAVLink gimbal), 0 for all gimbal device components. Send command multiple times for more than one gimbal (but not all).</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Messages with same value are from the same source (instance).</td>
+</tr>
+<tr>
+<td>q</td>
+<td>float[4]</td>
+<td></td>
+<td></td>
+<td>Quaternion components: w, x, y, z. (1 0 0 0 is the null-rotation. The frame depends on whether the flag <code>GIMBAL_MANAGER_FLAGS_YAW_LOCK</code> is set)</td>
+</tr>
+<tr>
+<td>angular_velocity_x</td>
+<td>float</td>
+<td>rad/s</td>
+<td>invalid:NaN</td>
+<td>X component of angular velocity. Positive is rolling to the right. <code>NaN</code> means ignore.</td>
+</tr>
+<tr>
+<td>angular_velocity_y</td>
+<td>float</td>
+<td>rad/s</td>
+<td>invalid:NaN</td>
+<td>Y component of angular velocity. Positive is pitching up. <code>NaN</code> means ignore.</td>
+</tr>
+<tr>
+<td>angular_velocity_z</td>
+<td>float</td>
+<td>rad/s</td>
+<td>invalid:NaN</td>
+<td>Z component of angular velocity. Positive is yawing to the right. <code>NaN</code> means ignore.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ardupilot">Ardupilot</h2>
+<p><a href="https://ardupilot.org/dev/docs/mavlink-gimbal-mount.html">Control a Gimbal / Camera Mount</a></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Running SITL with GIMBAL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>./arducopter<span class="w"> </span>--model<span class="w"> </span>quad<span class="w"> </span>--speedup<span class="w"> </span><span class="m">1</span><span class="w"> </span>--slave<span class="w"> </span><span class="m">0</span><span class="w"> </span>--default<span class="w"> </span>default.param<span class="w"> </span>--sim-address<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span>-I0<span class="w"> </span>--gimbal
+</code></pre></div></td></tr></table></div>
+<h3 id="params">Params</h3>
+<p>Ardupilot support two gimbals </p>
+<table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>default/setting</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MNTx_ROLL_MAX/ MNTx_ROLL_MIN</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MNTx_PITCH_MAX/ MNTx_PITCH_MIN</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MNTx_YAW_MAX/ MNTx_YAW_MIN</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MNTx_RETRACT_X/Y/Z</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MNTx_NEUTRAL_X/Y/Z</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gimbal-mode-vs-control-mode">Gimbal Mode vs Control Mode</h3>
+<ul>
+<li><strong>Gimbal Mode</strong> = how the gimbal interprets the world (lock/follow/stabilize)</li>
+<li><strong>Control Mode</strong> = how you command it (MAVLink, RC, ROI, scripts)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>Stabilize</strong></th>
+<th><strong>Lock</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it does</td>
+<td>Cancels out drone motion (vibrations, tilt)</td>
+<td>Maintains a fixed orientation in world coordinates</td>
+</tr>
+<tr>
+<td>Frame reference</td>
+<td>Relative to <strong>vehicle</strong></td>
+<td>Relative to <strong>world</strong></td>
+</tr>
+<tr>
+<td>Example usage</td>
+<td>Keeps video stable while drone moves</td>
+<td>Keeps camera pointed north even if drone turns</td>
+</tr>
+<tr>
+<td>Input source</td>
+<td>Uses IMU/gyro feedback to cancel motion</td>
+<td>Uses attitude + world frame input (e.g., target quaternion)</td>
+</tr>
+<tr>
+<td>Updates?</td>
+<td>Still follows pilot commands / RC / MAVLink pitch</td>
+<td>Ignores movement unless new command is sent</td>
+</tr>
+<tr>
+<td>Use case</td>
+<td>Smooth footage</td>
+<td>Survey, inspection, target tracking</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div class="admonition tip">
+<p class="admonition-title">SITL</p>
+<p>ArduPilot uses the FLU frame for mount/gimbal orientation</p>
+<ul>
+<li>Pitch = -90° → camera pitches upward (toward +Z, up)</li>
+<li>Pitch = +90° → camera pitches downward (toward -Z, down)</li>
+</ul>
+</div>
+<h3 id="camera-centric-coordinate-system">Camera centric coordinate system</h3>
+<p><img alt="alt text" src="images/camera_centric_coordinate.png" /></p>
+<h4 id="axis">Axis</h4>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Direction (when facing forward through the lens)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>X</strong></td>
+<td>Right</td>
+</tr>
+<tr>
+<td><strong>Y</strong></td>
+<td>Down (often, or up in some variants)</td>
+</tr>
+<tr>
+<td><strong>Z</strong></td>
+<td>Forward (out of the lens)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="rotational-axes">Rotational Axes</h4>
+<table>
+<thead>
+<tr>
+<th>Rotation</th>
+<th>Around Axis</th>
+<th>Positive Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Yaw</strong></td>
+<td>Z</td>
+<td>Turn right (CW when viewed from above)</td>
+</tr>
+<tr>
+<td><strong>Pitch</strong></td>
+<td>X</td>
+<td>Tilt up</td>
+</tr>
+<tr>
+<td><strong>Roll</strong></td>
+<td>Y</td>
+<td>Tilt right</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sitlflu-hardwarecamera-centric">SITL(FLU) / HARDWARE(Camera-Centric)</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Camera-Centric</th>
+<th>FLU (Vehicle-Centric)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pitch +</td>
+<td>Camera tilts <strong>up</strong></td>
+<td>Vehicle nose tilts <strong>up</strong> (camera looks <strong>down</strong>)</td>
+</tr>
+<tr>
+<td>Used by</td>
+<td>Gimbal manufacturers, vision</td>
+<td>ArduPilot SITL, PX4 internals</td>
+</tr>
+<tr>
+<td>Orientation origin</td>
+<td>Camera lens</td>
+<td>Vehicle body center</td>
+</tr>
+<tr>
+<td>Application</td>
+<td>Imaging, targeting</td>
+<td>Navigation, control</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<ul>
+<li>GIMBAL_DEVICE_ATTITUDE_STATUS (3hz)</li>
+<li>GIMBAL_MANAGER_STATUS(1hz)</li>
+</ul>
+<hr />
+<h2 id="more-terms">More terms</h2>
+<h3 id="nadir-and-zenith">Nadir and zenith</h3>
+<p><img alt="alt text" src="images/nadir_and_zenith.png.png" /></p>
+<h2 id="mavros">Mavros</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a># add gimbal_control plugin
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>/mavros/**:
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>  ros__parameters:
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    plugin_denylist:
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>      # common
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>      - &#39;*&#39;
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    plugin_allowlist:
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>      - sys_time
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>      - sys_status
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>      - command
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>      - gimbal_control
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~/device/get_info</td>
+<td>GIMBAL_DEVICE_INFORMATION</td>
+<td></td>
+</tr>
+<tr>
+<td>~/manager/get_info</td>
+<td>command_long</td>
+<td>Trigger manager/info  <code>/mavros/gimbal_control/manager/info</code></td>
+</tr>
+<tr>
+<td>~/manager/configure</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>~/manager/pitchyaw</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>~/manager/set_roi</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>~/manager/camera_track</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="gimbal_manager_set_attitude">GIMBAL_MANAGER_SET_ATTITUDE</h2>
+<p>Mavlink <a href="https://mavlink.io/en/messages/common.html#GIMBAL_MANAGER_SET_ATTITUDE">GIMBAL_MANAGER_SET_ATTITUDE (282) </a> High level message to control a gimbal's attitude. This message is to be sent to the gimbal manager , rate can be ignore by sending NaN.</p>
+<hr />
+<h2 id="code-snippet-to-be-move-from-here">Code snippet to be move from here</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Image point (u, v), image size, and camera intrinsics (fx, fy, cx, cy)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">x_cam</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">cx</span><span class="p">)</span> <span class="o">/</span> <span class="n">fx</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="n">y_cam</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">cy</span><span class="p">)</span> <span class="o">/</span> <span class="n">fy</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">z_cam</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="c1"># 3D ray in camera frame</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">ray_camera</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x_cam</span><span class="p">,</span> <span class="n">y_cam</span><span class="p">,</span> <span class="n">z_cam</span><span class="p">])</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="n">ray_camera</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ray_camera</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="c1"># Convert to FLU/world frame (if needed)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">ray_world</span> <span class="o">=</span> <span class="n">camera_to_world</span> <span class="o">@</span> <span class="n">ray_camera</span>  <span class="c1"># If using TF or known pose</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">quat</span> <span class="o">=</span> <span class="n">look_at_quaternion</span><span class="p">(</span><span class="n">ray_world</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>import numpy as np
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>from scipy.spatial.transform import Rotation as R
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>def look_at_quaternion(forward_target, up=np.array([0, 0, 1])):
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    # Normalize direction
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    z = forward_target / np.linalg.norm(forward_target)
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    # Compute orthogonal axes
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    x = np.cross(up, z)
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>    if np.linalg.norm(x) &lt; 1e-5:
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>        # up and forward are aligned → default right vector
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>        x = np.array([1, 0, 0])
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    x /= np.linalg.norm(x)
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    y = np.cross(z, x)
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>    rot_matrix = np.vstack((x, y, z)).T  # FLU: forward=Z
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    return R.from_matrix(rot_matrix).as_quat()  # [x, y, z, w]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>you can interpolate quaternions with SLERP to smooth the motion
+</code></pre></div></td></tr></table></div>
+<h2 id="this-is-the-code-i-need">This is the code i need</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>from geometry_msgs.msg import Quaternion
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>from scipy.spatial.transform import Rotation as R
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>import numpy as np
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>def correct_gimbal_quaternion(q_current, u, v, cx, cy, fx, fy):
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>    # Calculate angular error
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>    dx = (u - cx) / fx
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    dy = (v - cy) / fy
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>    yaw_error = -dx
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>    pitch_error = -dy
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>    # Convert errors to rotation delta
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>    error_rot = R.from_euler(&#39;zy&#39;, [yaw_error, pitch_error])
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>    q_current_rot = R.from_quat(q_current)  # [x, y, z, w]
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a>    q_new = q_current_rot * error_rot
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    return q_new.as_quat()  # [x, y, z, w]
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.f13b1293.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
