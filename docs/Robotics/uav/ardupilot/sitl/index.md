@@ -12,6 +12,27 @@ tags:
 
 Run Ardupilot SITL (ver 4.6.1) with mavros and gazebo simulation (harmonic)
 
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="gimbal">
+            <img src="images/apm_sitl_and_gimbal.png"  width="150" height="150">
+            <p>Gimbal</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="ekf3">
+                <img src="images/ekf.png"  width="150" height="150">
+                <p>TBD</p>
+            </a>
+    </div>
+    <div class="grid-item">
+        <a href="">
+                <img src="images/ardupilot.png"  width="150" height="150">
+                <p>tbd</p>
+            </a>
+    </div>
+</div>
+
 ## SITL
 - [Ardupilot firmware download](https://firmware.ardupilot.org/)
 - [Download Copter 4.6.1 SITL ](https://firmware.ardupilot.org/Copter/stable-4.6.1/SITL_x86_64_linux_gnu/arducopter)

@@ -82,6 +82,9 @@ source /home/ros/.bashrc
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
 echo '🐢 Environment ready!'
+# bash key bindings
+# replace bringup with full bringup name
+bind '"\C-b": "ros2 launch <bringup>"'
 ```
 
 ```yaml title="colcon_defaults.yaml"

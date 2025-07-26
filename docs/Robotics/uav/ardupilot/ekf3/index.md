@@ -76,3 +76,4 @@ ArduPilot EKF3 allows you to assign specific sensors (e.g., IMUs, GPS, barometer
 - [EKF2 Affinity and Lane switching](https://discuss.ardupilot.org/t/gsoc-20-ekf3-affinity-and-lane-switching-merged/61320)
 - [Non-GPS Position Estimation](https://ardupilot.org/dev/docs/mavlink-nongps-position-estimation.html)
 - [Extended Kalman Filter Navigation Overview and Tuning](https://ardupilot.org/dev/docs/extended-kalman-filter.html#extended-kalman-filter)
+- [GPS / Non-GPS Transitions](https://ardupilot.org/plane/docs/common-non-gps-to-gps.html)

@@ -132,8 +132,14 @@ config_yaml:=/workspace/src/ardupilot_bringup/config/config.yaml
         </a>
     </div>
     <div class="grid-item">
+         <a href="command">
+            <p>command</p>
+        </a>
     </div>
     <div class="grid-item">
+        <a href="rc_io">
+            <p>rc_io</p>
+        </a>
     </div>
 </div>
 

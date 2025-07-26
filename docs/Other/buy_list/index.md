@@ -15,15 +15,19 @@ tags:
 | cpu  |   | i9-13900H  |   |
 | memory  | 32GB  |   |   |
 | gpu  | RTX 3050  |   |   |
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
-|   |   |   |   |
-
 
 [Asus Zenbook 14X OLED UX3404VC-M9025W](https://pcmaster.co.il/ux3404vc-m9025w?utm_source=chatgpt.com)
-vc - nvidia gpu
-M9025W - 
+
+
+| spec  | Asus UX6404  |   |   |
+|---|---|---|---|
+| cpu  |   | i9-13900H  |   |
+| memory  | 48GB  |   |   |
+| gpu  | RTX 4070  |   |   |
+| HD | 2T |
+
+[BuG](https://www.bug.co.il/brand/asus/color/black/zenbook/pro/14/ux6404vi/p1046w)
+[Asus](https://www.asus.com/il/laptops/for-creators/zenbook/zenbook-pro-14-oled-ux6404/)
 
 ### Alternative
 

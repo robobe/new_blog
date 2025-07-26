@@ -17,14 +17,14 @@ tags:
     </div>
     <div class="grid-item">
         <a href="ekf3">
-                <img src="images/ekf.png"  width="150" height="150">
+                <img src="images/ekf3.png"  width="150" height="150">
                 <p>EKF3</p>
             </a>
     </div>
     <div class="grid-item">
-        <a href="">
-                <img src="images/ardupilot.png"  width="150" height="150">
-                <p>tbd</p>
+        <a href="debug">
+                <img src="images/debug.png"  width="150" height="150">
+                <p>debug</p>
             </a>
     </div>
     <div class="grid-item">
