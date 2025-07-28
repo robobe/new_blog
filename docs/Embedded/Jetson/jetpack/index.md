@@ -34,3 +34,45 @@ it's map to Jetson linux 36.4.3
     https://developer.nvidia.com/embedded/jetson-linux-r3643
     ```
      
+
+---
+
+## Build custom rootfs
+
+![](docs/assets/images/under_construction.png)
+
+[Root file System](https://docs.nvidia.com/jetson/archives/r35.1/DeveloperGuide/text/SD/RootFileSystem.html)
+
+The minimal root file system is the basic root file system that is used for NVIDIA Jetson develop kits. This file system does not provide the GUI mode, and all manipulations can be completed only by using the SSH or UART console. The file system does not also provide an OEM configuration, so we recommend that you create a default user before you flash the device. Refer to l4t_create_default_user.sh in Skipping oem-config for more information.
+
+```bash
+sudo ./nv_build_samplefs.sh --abi aarch64 --distro ubuntu --flavor minimal --version jammy
+```
+
+!!! warning "fix l4t_create_default_user.sh"
+
+    function `show_eula()` replace if order
+
+    ```bash
+    if [ "${accept_license}" = true ]; then
+		return
+	fi
+	
+	if [ ! -f "${license_file}" ] && [ ! -f "${license_gz_file}" ]; then
+		echo "ERROR: Cannot find the Tegra software license agreement"
+		exit 1
+	fi
+    ```
+
+     
+```bash 
+sudo ./apply_binaries.sh
+```
+
+```bash
+sudo ./tools/l4t_create_default_user.sh -u user -p user -n prod --accept-license
+```
+
+```bash
+cp -a desktop_rootfs/boot/ minimum_rootfs/
+```

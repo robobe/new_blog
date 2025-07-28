@@ -47,8 +47,8 @@ config_yaml:=/workspace/src/ardupilot_bringup/config/config.yaml
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="sys_state">
-            <p>sys_state</p>
+        <a href="sys_status">
+            <p>sys_status</p>
         </a>
     </div>
     <div class="grid-item">
