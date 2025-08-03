@@ -139,13 +139,21 @@ for x in generate_values(5):
 
 # filter I
 
-- What the limit of alpha
-- What different between alpha=0.1 alpha=0.9
-
 ```python
 def ema_filter(current, previous, alpha=0.1):
     return alpha * current + (1 - alpha) * previous
+
+data = [1,2,3,4,5,6]
+p  = 0
+for c in data:
+    p= ema_filter(c, p)
 ```
+
+- What is the functionality this filter implement
+- What are the valid alpha that can be use for this functionally
+    - Choice two alpha values and explain 
+
+
 
 ---
 
@@ -165,19 +173,26 @@ I design the system only with `PD` control what the pros and cons
 # Robotics
 
 I have a differential-drive robot that needs to reach a goal position marked by a red dot.
+( the robot has no previous data about the obstacle in the room)
 
 ![alt text](bug0.png)
 
 - The robot know it's position on map x,y
 - The Robot know the target position x,y 
-- What sensor do I need to add to complete the short path?
+- The Robot algorithm need to find the shortest path to the target
+
+---
+
+- What sensor do I need to add to help the robot to reach the target ?
 - Describe the algorithm to implement in pseudocode.
+- Give me another set of sensors that can help solve the machine
 
 ---
 
 # Robotics II
 
-- What sensor do I need to add if the robot has no localization but needs to find the red box in the environment and stop near it?
+- What sensor do I need to add if the robot has no initialize position and no knowledge about the target location
+- The robot needs to find the red box in the environment and stop near it?
 
 ![alt text](red_box.png)
 
