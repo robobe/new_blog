@@ -766,14 +766,27 @@
 </ul>
 <hr />
 <h1 id="filter-i">filter I</h1>
-<ul>
-<li>What the limit of alpha</li>
-<li>What different between alpha=0.1 alpha=0.9</li>
-</ul>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">ema_filter</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">previous</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span>
+<span class="normal"><a href="#__codelineno-6-6">6</a></span>
+<span class="normal"><a href="#__codelineno-6-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">ema_filter</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">previous</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2"></a>    <span class="k">return</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">current</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">previous</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="n">p</span>  <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>    <span class="n">p</span><span class="o">=</span> <span class="n">ema_filter</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
+<ul>
+<li>What is the functionality this filter implement</li>
+<li>What are the valid alpha that can be use for this functionally<ul>
+<li>Choice two alpha values and explain </li>
+</ul>
+</li>
+</ul>
 <hr />
 <h1 id="control-i">Control I</h1>
 <p>I have a PID-controlled water heating system. 
@@ -783,18 +796,25 @@ The system has a large overshoot and takes a long time to stabilize. What tuning
 <p>I design the system only with <code>PD</code> control what the pros and cons</p>
 <hr />
 <h1 id="robotics">Robotics</h1>
-<p>I have a differential-drive robot that needs to reach a goal position marked by a red dot.</p>
+<p>I have a differential-drive robot that needs to reach a goal position marked by a red dot.
+( the robot has no previous data about the obstacle in the room)</p>
 <p><img alt="alt text" src="bug0.png" /></p>
 <ul>
 <li>The robot know it's position on map x,y</li>
 <li>The Robot know the target position x,y </li>
-<li>What sensor do I need to add to complete the short path?</li>
+<li>The Robot algorithm need to find the shortest path to the target</li>
+</ul>
+<hr />
+<ul>
+<li>What sensor do I need to add to help the robot to reach the target ?</li>
 <li>Describe the algorithm to implement in pseudocode.</li>
+<li>Give me another set of sensors that can help solve the machine</li>
 </ul>
 <hr />
 <h1 id="robotics-ii">Robotics II</h1>
 <ul>
-<li>What sensor do I need to add if the robot has no localization but needs to find the red box in the environment and stop near it?</li>
+<li>What sensor do I need to add if the robot has no initialize position and no knowledge about the target location</li>
+<li>The robot needs to find the red box in the environment and stop near it?</li>
 </ul>
 <p><img alt="alt text" src="red_box.png" /></p>
 <ul>

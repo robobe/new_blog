@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/packages/mavros/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros_world/ros_tf/tf_transformations/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Mavros - Robots Inside</title>
+        <title>tf_transformations library - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#connections-url" class="md-skip">
+        <a href="#quaternion-euler" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mavros
+              tf_transformations library
             
           </span>
         </div>
@@ -603,46 +603,61 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#connections-url" class="md-nav__link">
+  <a href="#quaternion-euler" class="md-nav__link">
     <span class="md-ellipsis">
-      Connections url
+      Quaternion &lt;-&gt; Euler
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mavlink-mav_frame" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mavlink MAV_FRAME
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enu-and-ned-coordinate-frame" class="md-nav__link">
-    <span class="md-ellipsis">
-      ENU and NED coordinate frame
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="ENU and NED coordinate frame">
+    <nav class="md-nav" aria-label="Quaternion <-> Euler">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ned" class="md-nav__link">
+  <a href="#rotation-axes" class="md-nav__link">
     <span class="md-ellipsis">
-      NED
+      Rotation Axes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rotation Axes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#static-extrinsic-rotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static (Extrinsic) Rotations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#enu" class="md-nav__link">
+  <a href="#rotating-intrinsic-rotations" class="md-nav__link">
     <span class="md-ellipsis">
-      ENU
+      Rotating (Intrinsic) Rotations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Conventions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quaternion_about_axis" class="md-nav__link">
+    <span class="md-ellipsis">
+      quaternion_about_axis
     </span>
   </a>
   
@@ -654,11 +669,26 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#plugins" class="md-nav__link">
+  <a href="#1-2-3-4-5-6-7-8import-tf_transformations-import-numpy-as-np-angle-npradians90-axis-1-0-0-x-axis-q-tf_transformationsquaternion_about_axisangle-axis-printquaternion-q" class="md-nav__link">
     <span class="md-ellipsis">
-      Plugins
+      1 2 3 4 5 6 7 8import tf_transformations import numpy as np angle = np.radians(90) axis = [1, 0, 0] # X axis q = tf_transformations.quaternion_about_axis(angle, axis) print(&quot;Quaternion:&quot;, q)
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="1 2 3 4 5 6 7 8import tf_transformations import numpy as np angle = np.radians(90) axis = [1, 0, 0] # X axis q = tf_transformations.quaternion_about_axis(angle, axis) print("Quaternion:", q)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -681,25 +711,19 @@
       
       
       
-        <span class="md-tag">ardupilot</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">mavlink</span>
-      
-    
-      
-      
-      
-        <span class="md-tag">mavros</span>
-      
-    
-      
-      
-      
         <span class="md-tag">ros</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">tf</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">tf_transformations</span>
       
     
   </nav>
@@ -709,193 +733,93 @@
   
 
 
-  <h1>Mavros</h1>
+  <h1>tf_transformations library</h1>
 
-<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/packages/">packages</a></p>
-<p>MAVLink extendable communication node for ROS2.</p>
-<h2 id="connections-url">Connections url</h2>
-<ul>
-<li><strong>Serial</strong>: /path/to/serial/device[:baudrate]</li>
-<li><strong>Serial</strong>: serial:///path/to/serial/device[:baudrate][?ids=sysid,compid]</li>
-<li><strong>UDP</strong>: udp://[bind_host][:port]@[remote_host[:port]][/?ids=sysid,compid]</li>
-<li><strong>TCP</strong> client: tcp://[server_host][:port][/?ids=sysid,compid]</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ardupilot connection</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>apm.launch<span class="w"> </span>fcu_url:<span class="o">=</span>tcp://localhost:5760<span class="w"> </span>gcs_url:<span class="o">=</span>udp://@localhost:14550
+<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_world/">ros world</a> / <a href="/ROS/ros_world/ros_tf/">ros tf</a></p>
+<p>tf_transformations is a Python utility library in ROS that provides functions for working with 3D rotations and transformations.
+converting between different orientation formats like <strong>Euler angles</strong>, <strong>quaternions</strong>, and <strong>transformation matrices</strong>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="nv">$ROS_DISTRO</span>-tf-transformations
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">using node.launch connect to APM SITL and control pluginlist and config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<h3 id="quaternion-euler">Quaternion &lt;-&gt; Euler</h3>
+<ul>
+<li>quaternion_from_euler</li>
+<li>euler_from_quaternion</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span>
 <span class="normal"><a href="#__codelineno-1-4">4</a></span>
 <span class="normal"><a href="#__codelineno-1-5">5</a></span>
 <span class="normal"><a href="#__codelineno-1-6">6</a></span>
-<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>node.launch<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>fcu_url:<span class="o">=</span>tcp://0.0.0.0:5760@<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>gcs_url:<span class="o">=</span>udp://@127.0.0.1:14560<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>tgt_system:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a>tgt_component:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a>pluginlists_yaml:<span class="o">=</span>plugins.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>config_yaml:<span class="o">=</span>config.yaml
+<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf_transformations</span><span class="w"> </span><span class="kn">import</span> <span class="n">quaternion_from_euler</span><span class="p">,</span> <span class="n">euler_from_quaternion</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># euler default axis rpy (&quot;sxyz&quot;)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="c1"># quaternion [x, y, z, w]</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">q</span> <span class="o">=</span> <span class="n">quaternion_from_euler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span> <span class="o">=</span> <span class="n">euler_from_quaternion</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">])</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">using node.launch connect to APM HW and control pluginlist and config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<h4 id="rotation-axes">Rotation Axes</h4>
+<p>Euler angles describe a 3D rotation as a sequence of three rotations around three orthogonal axes. 
+the axes parameter is 4 character string, defines the specific convention of Euler angles you are using.</p>
+<h5 id="static-extrinsic-rotations">Static (Extrinsic) Rotations</h5>
+<ul>
+<li><strong>Character</strong>: The axes string starts with <strong>'s'</strong>.</li>
+<li><strong>Description</strong>: Each rotation is performed about a <strong>fixed</strong>, global coordinate system's axes. The axes <strong>do not move</strong> with the object.</li>
+</ul>
+<h5 id="rotating-intrinsic-rotations">Rotating (Intrinsic) Rotations</h5>
+<ul>
+<li><strong>Character</strong>: The axes string starts with <strong>'r'</strong>.</li>
+<li><strong>Description</strong>: Each rotation is performed about the object's own moving coordinate system's axes. The axes change their orientation after each preceding rotation.</li>
+</ul>
+<h5 id="common-conventions">Common Conventions</h5>
+<p>Roll-Pith-Yaw (RPY)</p>
+<ul>
+<li>Roll: Rotation around the X-axis</li>
+<li>Pitch: Rotation around the Y-axis</li>
+<li>Yaw: Rotation around the Z-axis</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Extrinsic</th>
+<th style="text-align: center;">Rotating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><img alt="alt text" src="images/sxyz.png" /></td>
+<td style="text-align: center;"><img alt="alt text" src="images/rxyz.png" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">sxyz</td>
+<td style="text-align: center;">rxyz</td>
+</tr>
+<tr>
+<td style="text-align: center;">quaternion = quaternion_from_euler(yaw_rad, pitch_rad, roll_rad, axes='sxyz')</td>
+<td style="text-align: center;">quaternion = quaternion_from_euler(yaw_rad, pitch_rad, roll_rad, axes='rxyz')</td>
+</tr>
+</tbody>
+</table>
+<h4 id="quaternion_about_axis">quaternion_about_axis</h4>
+<p>This function creates a quaternion that represents a rotation around a single axis by a given angle.</p>
+<h2 id="1-2-3-4-5-6-7-8import-tf_transformations-import-numpy-as-np-angle-npradians90-axis-1-0-0-x-axis-q-tf_transformationsquaternion_about_axisangle-axis-printquaternion-q"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
 <span class="normal"><a href="#__codelineno-2-2">2</a></span>
 <span class="normal"><a href="#__codelineno-2-3">3</a></span>
 <span class="normal"><a href="#__codelineno-2-4">4</a></span>
 <span class="normal"><a href="#__codelineno-2-5">5</a></span>
 <span class="normal"><a href="#__codelineno-2-6">6</a></span>
-<span class="normal"><a href="#__codelineno-2-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>mavros<span class="w"> </span>node.launch<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>fcu_url:<span class="o">=</span>/dev/ttyACM1:115200<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>gcs_url:<span class="o">=</span>udp://@127.0.0.1:14560<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>tgt_system:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>tgt_component:<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>pluginlists_yaml:<span class="o">=</span>/workspace/src/ardupilot_bringup/config/plugins.yaml<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>config_yaml:<span class="o">=</span>/workspace/src/ardupilot_bringup/config/config.yaml
-</code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">message interval</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_message_interval<span class="w"> </span>mavros_msgs/srv/MessageInterval<span class="w"> </span><span class="s2">&quot;{message_id: 74, message_rate: 1.0}&quot;</span>
-</code></pre></div></td></tr></table></div>
-</div>
-<hr />
-<h2 id="mavlink-mav_frame">Mavlink MAV_FRAME</h2>
-<ul>
-<li><strong>GLOBAL</strong>: Global coordinate frame with WGS84 latitude/longitude and altitude positive over mean sea level (MSL) by default</li>
-<li><strong>RELATIVE_ALT</strong>: Altitude is relative to the vehicle <strong>home position</strong> rather than MSL.</li>
-<li><strong>TERRAIN_ALT</strong>: Altitude is relative to ground level rather than MSL.</li>
-<li>
-<p><strong>INT</strong>: Latitude/longitude (in degrees) are scaled by multiplying by 1E7.</p>
-</li>
-<li>
-<p><strong>LOCAL</strong>: Origin of local frame is fixed relative to earth.  origin of the vehicle position-estimator ("EKF").</p>
-</li>
-<li><strong>BODY</strong>: Origin of local frame travels with the vehicle. NOTE, "BODY" <strong>does NOT</strong> indicate alignment of frame axis with vehicle attitude.</li>
-</ul>
-<hr />
-<h2 id="enu-and-ned-coordinate-frame">ENU and NED coordinate frame</h2>
-<ul>
-<li>NED: North East Down</li>
-<li>ENU: East North Down (use by ROS)</li>
-</ul>
-<h3 id="ned">NED</h3>
-<p>This frame is widely used in aviation and maritime applications 
-- North (X-axis): Points towards true North.
-- East (Y-axis): Points towards East, perpendicular to the North axis.
-- Down (Z-axis): Points downwards, perpendicular to the North-East plane.</p>
-<h3 id="enu">ENU</h3>
-<p>This frame is commonly used in robotics and ROS</p>
-<ul>
-<li>East (X-axis): Points towards East.</li>
-<li>North (Y-axis): Points towards true North, perpendicular to the East axis.</li>
-<li>Up (Z-axis): Points upwards, perpendicular to the East-North plane.</li>
-</ul>
-<hr />
-<h2 id="plugins">Plugins</h2>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="sys_status">
-            <p>sys_status</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="sys_time">
-            <p>sys_time</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="terrain">
-            <p>terrain</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="distance_sensor">
-            <p>distance_sensor</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="ahrs2">
-            <p>ahrs2</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="home_position">
-            <p>home_position</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="setpoint_velocity">
-            <p>setpoint_velocity</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="local_position">
-            <p>local_position</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="vfr_hud">
-            <p>vfr_hud</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="gimbal_control">
-            <p>gimbal_control</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="setpoint_raw">
-            <p>setpoint_raw</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="setpoint_attitude">
-            <p>setpoint_attitude</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="param">
-            <p>param</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="global_position">
-            <p>global_position</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="imu">
-            <p>imu</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="do_set_mode">
-            <p>do_set_mode</p>
-        </a>
-    </div>
-    <div class="grid-item">
-         <a href="command">
-            <p>command</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="rc_io">
-            <p>rc_io</p>
-        </a>
-    </div>
-     <div class="grid-item">
-        <a href="altitude">
-            <p>altitude</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="vision_speed_estimation">
-            <p>vision_speed_estimation</p>
-        </a>
-    </div>
-</div>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tf_transformations</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">axis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># X axis</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">q</span> <span class="o">=</span> <span class="n">tf_transformations</span><span class="o">.</span><span class="n">quaternion_about_axis</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Quaternion:&quot;</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div></h2>
+<h3 id="_1"></h3>
 
 
 
