@@ -31,6 +31,11 @@ tags:
         <a href="gcs">
                 <p>SYSID/GCS config </p></a>
     </div>
+     <div class="grid-item">
+        <a href="optical_flow">
+            <p>Optical flow </p>
+        </a>
+    </div>
 </div>
 
 

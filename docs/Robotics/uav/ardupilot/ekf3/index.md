@@ -67,8 +67,28 @@ ArduPilot EKF3 allows you to assign specific sensors (e.g., IMUs, GPS, barometer
 | Usage              | VIO, MoCap in local environments          | Global alignment (with known origin)        |
 
 
+# TODO:Parse flag from command 193
+
 ---
 
+<div>
+    <div class="grid-item">
+        <a href="gps_no_gps">
+                <p>Switch ekf3 sources</p>
+            </a>
+    </div>
+    <div class="grid-item">
+        <a href="gcs">
+                <p></p></a>
+    </div>
+     <div class="grid-item">
+        <a href="optical_flow">
+            <p> </p>
+        </a>
+    </div>
+</div>
+
+---
 ## Reference
 - [Extended Kalman Filter (EKF)](https://ardupilot.org/copter/docs/common-apm-navigation-extended-kalman-filter-overview.html)
 - [EKF3 Affinity and Lane Switching](https://ardupilot.org/copter/docs/common-ek3-affinity-lane-switching.html)
