@@ -20,8 +20,8 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="">
-        <p>TBD</p>
+        <a href="learn_cpp">
+        <p>Zero to Hero</p>
         </a>
     </div>
     
