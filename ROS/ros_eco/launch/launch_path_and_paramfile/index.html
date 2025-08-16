@@ -613,6 +613,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#demo-launch-gz-ros-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demo: Launch gz ros bridge
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -628,6 +637,12 @@
                   
 
   <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">ParameterValue</span>
+      
     
       
       
@@ -811,6 +826,90 @@
 <a id="__codelineno-3-22" name="__codelineno-3-22"></a>    <span class="n">main</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 </details>
+
+<hr />
+<h2 id="demo-launch-gz-ros-bridge">Demo: Launch gz ros bridge</h2>
+<p>Launch gz bridge with yaml file that set from argument
+using: </p>
+<ul>
+<li>DeclareLaunchArgument</li>
+<li>LaunchConfiguration</li>
+<li>PathJoinSubstitution</li>
+<li>ParameterValue</li>
+</ul>
+<p>```python
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.substitutions import PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from launch_ros.parameter_descriptions import ParameterValue</p>
+<p>PKG_BRINGUP = 'ardupilot_bringup'
+BRIDGE_CONFIG = "bridge.yaml"
+CONFIG_FOLDER = "config"</p>
+<p>def generate_launch_description():
+    ld = LaunchDescription()</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code>config_file_arg = DeclareLaunchArgument(
+    &#39;config_file&#39;,
+    default_value=BRIDGE_CONFIG,
+    description=&#39;Name of the bridge config file&#39;
+)
+
+
+config_file = LaunchConfiguration(&#39;config_file&#39;)
+
+bridge_file = PathJoinSubstitution([
+    get_package_share_directory(PKG_BRINGUP),
+    CONFIG_FOLDER,
+    config_file
+])
+
+ros_gz_bridge = Node(
+    package=&quot;ros_gz_bridge&quot;,
+    executable=&quot;parameter_bridge&quot;,
+    parameters=[
+        {&#39;use_sim_time&#39;: True},
+        {&#39;config_file&#39;: ParameterValue(bridge_file, value_type=str)}
+    ],
+)
+
+ld.add_action(config_file_arg)
+ld.add_action(ros_gz_bridge)
+
+
+return ld
+```
+</code></pre></div></td></tr></table></div>
 
 
 
