@@ -24,6 +24,12 @@ tags:
         <p>python</p>
         </a>
     </div>
+    <div class="grid-item">
+       <a href="matplotlib">
+        <img src="images/matplotlib.png" width="150" height="150">
+        <p>python</p>
+        </a>
+    </div>
     
 </div>
 

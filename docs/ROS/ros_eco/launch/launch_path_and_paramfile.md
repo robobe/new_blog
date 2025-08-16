@@ -5,6 +5,7 @@ tags:
     - python
     - PathJoinSubstitution
     - parameters
+    - ParameterValue
 ---
 
 # PathJoinSubstitution and parameter config file
@@ -107,3 +108,62 @@ if __name__ == '__main__':
 ```
 </details>
 
+---
+
+## Demo: Launch gz ros bridge
+
+Launch gz bridge with yaml file that set from argument
+using: 
+
+- DeclareLaunchArgument
+- LaunchConfiguration
+- PathJoinSubstitution
+- ParameterValue
+
+
+```python
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.substitutions import PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from launch_ros.parameter_descriptions import ParameterValue
+
+PKG_BRINGUP = 'ardupilot_bringup'
+BRIDGE_CONFIG = "bridge.yaml"
+CONFIG_FOLDER = "config"
+
+def generate_launch_description():
+    ld = LaunchDescription()
+
+    config_file_arg = DeclareLaunchArgument(
+        'config_file',
+        default_value=BRIDGE_CONFIG,
+        description='Name of the bridge config file'
+    )
+    
+
+    config_file = LaunchConfiguration('config_file')
+
+    bridge_file = PathJoinSubstitution([
+        get_package_share_directory(PKG_BRINGUP),
+        CONFIG_FOLDER,
+        config_file
+    ])
+
+    ros_gz_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        parameters=[
+            {'use_sim_time': True},
+            {'config_file': ParameterValue(bridge_file, value_type=str)}
+        ],
+    )
+
+    ld.add_action(config_file_arg)
+    ld.add_action(ros_gz_bridge)
+
+
+    return ld
+    ```
