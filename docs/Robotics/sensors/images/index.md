@@ -7,8 +7,10 @@
                 <p>imu</p></a>
     </div>
     <div class="grid-item">
-        <img src="images/block2.png" alt="Block 2">
-        <p>Block 2 Description</p>
+        <a href="camera">
+            <img src="images/camera.png" alt="Block 2">
+            <p>Camera</p>
+        </a>
     </div>
     <div class="grid-item">
         <img src="images/block3.png" alt="Block 3">
@@ -32,3 +34,5 @@
 
 - [Encoder](encoder/index.md)
 - [GPIO - MCP23017](gpio/mcp23017_gpio_i2c_extension_interface.md)
+
+![alt text](image.png)

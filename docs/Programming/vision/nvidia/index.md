@@ -13,9 +13,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href=opencv>
-        <img src="images/opencv.png"   width="150" height="150">
-        <p>OpenCV</p>
+    <a href=vpi>
+        <img src="images/vpi.png"   width="150" height="150">
+        <p>VPI</p>
         </a>
     </div>
     <div class="grid-item">

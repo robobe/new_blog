@@ -12,11 +12,12 @@ u, v = 320, 240  # Pixel coordinates
 pitch_deg = 0  # Pitch angle in degrees
 # pitch_deg = 31  # Pitch angle in degrees
 C_world = np.array([0, 0, 10])  # Camera position in world coordinates
+focal_length = 800  # Focal length in pixels
 
 # Camera intrinsics
 K = np.array([
-    [CAMERA_WIDTH, 0, CX],
-    [0, CAMERA_HEIGHT, CY],
+    [focal_length, 0, CX],
+    [0, focal_length, CY],
     [0, 0, 1]
 ])
 
