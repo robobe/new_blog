@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Programming/vision/nvidia/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/sensors/camera/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Index - Robots Inside</title>
+        <title>Camera sensor - Robots Inside</title>
       
     
     
@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#focal-length-f_x-f_y" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -103,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Camera sensor
             
           </span>
         </div>
@@ -242,7 +247,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Robotics/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
     
@@ -259,7 +264,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../Programming/" class="md-tabs__link">
         
   
     
@@ -454,7 +459,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Robotics/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -475,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../Programming/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -591,6 +596,74 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#focal-length-f_x-f_y" class="md-nav__link">
+    <span class="md-ellipsis">
+      focal length $ f_{x}, f_{y}$
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#principal-point-c_x-c_y" class="md-nav__link">
+    <span class="md-ellipsis">
+      Principal Point $ c_{x}, c_{y}$
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intrinsic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Intrinsic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Intrinsic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      General
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fov-field-of-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      FOV (Field Of View)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -608,7 +681,13 @@
       
       
       
-        <span class="md-tag">nvidia</span>
+        <span class="md-tag">camera</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">sensor</span>
       
     
   </nav>
@@ -618,29 +697,39 @@
   
 
 
-  <h1>Index</h1>
+  <h1>Camera sensor</h1>
 
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="tensorrt">
-            <img src="images/tensorrt.png"  width="150" height="150">
-            <p>TensorRT</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href=vpi>
-        <img src="images/vpi.png"   width="150" height="150">
-        <p>VPI</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href=opencv>
-        <img src="images/nvidia.png"   width="150" height="150">
-        <p>nvidia</p>
-        </a>
-    </div>
-
-</div>
+<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/sensors/">sensors</a></p>
+<h2 id="focal-length-f_x-f_y">focal length $ f_{x}, f_{y}$</h2>
+<p>Focal length is the distance from the lens’s optical center (or principal point) to the image sensor when the subject is in focus. in true pinhole camera <span class="arithmatex">\(f_{x} = f_{y}\)</span></p>
+<p>$
+f_{x} = \frac{\frac{W}{2}}{tan(\frac{hfov}{2})}
+$</p>
+<p>$
+f_{y} = \frac{\frac{H}{2}}{tan(\frac{vfov}{2})}
+$</p>
+<h2 id="principal-point-c_x-c_y">Principal Point $ c_{x}, c_{y}$</h2>
+<p>pixel location where the optical axis hits the sensor. Often close to the image center, but not necessarily exactly , <span class="arithmatex">\(\frac{W}{2}, \frac{H}{2}\)</span></p>
+<h2 id="intrinsic">Intrinsic</h2>
+<p>Camera internal parameters</p>
+<h4 id="minimal">Minimal</h4>
+<p>$
+k=\begin{bmatrix}
+ f &amp; 0 &amp; c_{x} \
+ 0 &amp; f &amp; c_{y} \
+ 0 &amp; 0 &amp; 1 \
+\end{bmatrix}
+$</p>
+<h4 id="general">General</h4>
+<p>$
+k=\begin{bmatrix}
+ f_{x} &amp; s &amp; c_{x} \
+ 0 &amp; f_{y} &amp; c_{y} \
+ 0 &amp; 0 &amp; 1 \
+\end{bmatrix}
+$</p>
+<h2 id="fov-field-of-view">FOV (Field Of View)</h2>
+<p>The angular extent of the scene captured by the lens</p>
 
 
 

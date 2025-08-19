@@ -6,12 +6,12 @@ CAMERA_WIDTH  = 640
 CAMERA_HEIGHT = 480
 CX = CAMERA_WIDTH / 2
 CY = CAMERA_HEIGHT / 2
-
+F = 800  # Focal length in pixels
 # Intrinsics (your choice: fx=640, fy=480, cx=320, cy=240)
 K = np.array([
-    [CAMERA_WIDTH, 0,            CX],
-    [0,            CAMERA_HEIGHT, CY],
-    [0,            0,             1]
+    [F, 0,            CX],
+    [0, F,            CY],
+    [0, 0,             1]
 ], dtype=float)
 
 # Camera pose in WORLD: camera center and pitch (camera tilted down by +pitch)
