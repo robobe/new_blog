@@ -1,4 +1,5 @@
 ---
+title: Nvidia cv library
 tags:
     - nvidia
 ---
@@ -19,9 +20,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href=opencv>
-        <img src="images/nvidia.png"   width="150" height="150">
-        <p>nvidia</p>
+        <a href=profile>
+            <img src="images/profile.png"   width="150" height="150">
+            <p>Profile</p>
         </a>
     </div>
 

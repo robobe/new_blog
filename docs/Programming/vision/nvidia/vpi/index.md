@@ -13,15 +13,16 @@ Within VPI, the same algorithm is implemented in different backends, such as CPU
 [READ More](https://docs.nvidia.com/vpi/index.html)
 
 !!! note "nvidia"
-    PVA - Programmable Vision Accelerator 
-    VIC - Video Image Compositor 
-    OFA -  
+
+    - PVA: Programmable Vision Accelerator 
+    - VIC: Video Image Compositor 
+    - OFA:  
 
 
      
 ---
 
-## install
+## Install
 [nvidia documents](https://docs.nvidia.com/vpi/installation.html)
 
 !!! note "vpi installation location"
