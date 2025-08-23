@@ -14,9 +14,9 @@ Within VPI, the same algorithm is implemented in different backends, such as CPU
 
 !!! note "nvidia"
 
-    - PVA: Programmable Vision Accelerator 
+    - PVA: Programmable Vision Accelerator [more](https://developer.nvidia.com/embedded/pva)
     - VIC: Video Image Compositor 
-    - OFA:  
+    - OFA: Optical Flow Accelerator []() 
 
 
      

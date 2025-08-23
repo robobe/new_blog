@@ -30,3 +30,5 @@ tags:
 
 - [Mr P , Primarily python coding tutorials with a physics/math focus](https://www.youtube.com/@MrPSolver)
   - [How To Interpolate Data In Python](https://youtu.be/nGwg5MrbZxo?list=PLkdGijFCNuVnGxo-1fSNcdHh5gZc17oRM)
+- [ROB 101: Computational Linear Algebra](https://robotics.umich.edu/academics/courses/course-offerings/rob-101-fall-2020/)
+- [Probability Primer for Probabilistic Robotics (Cyrill Stachniss) ](https://www.youtube.com/watch?v=JS5ndD8ans4)

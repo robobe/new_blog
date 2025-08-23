@@ -8,7 +8,7 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="visual_trackers">
-            <img src="images/visual_trackers.png"  width="150" height="150">
+            <img src="images/visual_tracker.png"  width="150" height="150">
             <p>Visual Trackers</p>
         </a>
     </div>
@@ -22,6 +22,12 @@ tags:
     <a href=nvidia>
         <img src="images/nvidia.png"   width="150" height="150">
         <p>nvidia</p>
+        </a>
+    </div>
+     <div class="grid-item">
+    <a href=optical_flow>
+        <img src="images/of.png"   width="150" height="150">
+        <p>Optical Flow</p>
         </a>
     </div>
 
