@@ -27,7 +27,7 @@ tags:
     <div class="grid-item">
        <a href="matplotlib">
         <img src="images/matplotlib.png" width="150" height="150">
-        <p>python</p>
+        <p>matplotlib</p>
         </a>
     </div>
     
