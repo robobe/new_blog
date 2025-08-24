@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#demo" class="md-skip">
+        <a href="#todo" class="md-skip">
           Skip to content
         </a>
       
@@ -595,6 +595,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -618,14 +620,20 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo-cuda-with-pin-memory-and-stream" class="md-nav__link">
+    <nav class="md-nav" aria-label="Demo: Cuda">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
     <span class="md-ellipsis">
-      Demo: Cuda with pin memory and stream
+      API
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -695,7 +703,15 @@
 
 
 <p><a href="/Programming/">Programming</a> / <a href="/Programming/vision/">vision</a> / <a href="/Programming/vision/opencv/">opencv</a> / <a href="/Programming/vision/opencv/optical_flow/">optical flow</a></p>
+<h1 id="todo">TODO:</h1>
+<ul>
+<li>API</li>
+<li>understand error and it's usage</li>
+</ul>
 <h2 id="demo">Demo</h2>
+<ul>
+<li>Flow between two frames</li>
+</ul>
 <details>
     <summary>LK cpu version</summary>
 
@@ -890,6 +906,26 @@
 <li><code>cv2.cuda.createGoodFeaturesToTrackDetector</code></li>
 <li><code>cv2.cuda.SparsePyrLKOpticalFlow_create</code></li>
 </ul>
+<h3 id="api">API</h3>
+<details>
+    <summary>detect</summary>
+    d_pts = det.detect(d_gray, mask=None, stream=None)
+
+- d_gray: cv2.cuda_GpuMat, CV_8UC1, grayscale, non-empty.
+- mask (optional): cv2.cuda_GpuMat (CV_8U), same size; non-zero=allowed region.
+- stream (optional): cv2.cuda_Stream for async execution (some builds omit this param—if you get a TypeError, just drop it).
+- d_pts: cv2.cuda_GpuMat of shape (N, 1), type CV_32FC2 (each element is a corner (x, y) in float32).
+</details>
+
+<details>
+    <summary>calc</summary>
+    nextPts, status, err = flow.calc(prevImg, nextImg, prevPts, stream=None)
+
+- prevImg, nextImg: cv.cuda_GpuMat grayscale (CV_8UC1)
+- prevPts: cv.cuda_GpuMat of shape (N,1), type CV_32FC2 (points as (x,y))
+- returns: nextPts (N×1, CV_32FC2), status (N×1, CV_8U), err (N×1, CV_32F)
+</details>
+
 <details>
     <summary>LK cuda version</summary>
 
@@ -1337,6 +1373,356 @@
 <a id="__codelineno-2-94" name="__codelineno-2-94"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 <a id="__codelineno-2-95" name="__codelineno-2-95"></a>    <span class="c1"># create_test_sequence()</span>
 <a id="__codelineno-2-96" name="__codelineno-2-96"></a>    <span class="n">lucas_kanade_with_two_images</span><span class="p">(</span><span class="s2">&quot;test_frame1.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;test_frame2.jpg&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h1 id="demo-cuda-with-videoimage-sequence">Demo: Cuda with Video/Image sequence</h1>
+<ul>
+<li>upload new_point back to gpu for next iteration</li>
+</ul>
+<details>
+    <summary>Cuda version with Image sequence</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-3-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-3-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-3-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-3-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-3-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-3-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-3-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-3-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-3-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-3-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-3-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-3-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-3-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-3-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-3-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-3-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-3-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-3-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-3-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-3-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-3-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-3-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-3-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-3-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-3-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-3-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-3-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-3-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-3-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-3-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-3-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-3-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-3-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-3-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-3-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-3-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-3-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-3-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-3-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-3-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-3-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-3-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-3-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-3-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-3-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-3-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-3-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-3-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-3-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-3-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-3-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-3-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-3-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-3-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-3-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-3-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-3-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-3-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-3-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-3-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-3-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-3-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-3-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-3-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-3-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-3-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-3-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-3-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-3-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-3-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-3-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-3-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-3-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-3-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-3-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-3-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-3-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-3-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-3-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-3-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-3-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-3-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-3-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-3-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-3-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-3-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-3-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-3-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-3-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-3-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-3-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-3-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-3-100">100</a></span>
+<span class="normal"><a href="#__codelineno-3-101">101</a></span>
+<span class="normal"><a href="#__codelineno-3-102">102</a></span>
+<span class="normal"><a href="#__codelineno-3-103">103</a></span>
+<span class="normal"><a href="#__codelineno-3-104">104</a></span>
+<span class="normal"><a href="#__codelineno-3-105">105</a></span>
+<span class="normal"><a href="#__codelineno-3-106">106</a></span>
+<span class="normal"><a href="#__codelineno-3-107">107</a></span>
+<span class="normal"><a href="#__codelineno-3-108">108</a></span>
+<span class="normal"><a href="#__codelineno-3-109">109</a></span>
+<span class="normal"><a href="#__codelineno-3-110">110</a></span>
+<span class="normal"><a href="#__codelineno-3-111">111</a></span>
+<span class="normal"><a href="#__codelineno-3-112">112</a></span>
+<span class="normal"><a href="#__codelineno-3-113">113</a></span>
+<span class="normal"><a href="#__codelineno-3-114">114</a></span>
+<span class="normal"><a href="#__codelineno-3-115">115</a></span>
+<span class="normal"><a href="#__codelineno-3-116">116</a></span>
+<span class="normal"><a href="#__codelineno-3-117">117</a></span>
+<span class="normal"><a href="#__codelineno-3-118">118</a></span>
+<span class="normal"><a href="#__codelineno-3-119">119</a></span>
+<span class="normal"><a href="#__codelineno-3-120">120</a></span>
+<span class="normal"><a href="#__codelineno-3-121">121</a></span>
+<span class="normal"><a href="#__codelineno-3-122">122</a></span>
+<span class="normal"><a href="#__codelineno-3-123">123</a></span>
+<span class="normal"><a href="#__codelineno-3-124">124</a></span>
+<span class="normal"><a href="#__codelineno-3-125">125</a></span>
+<span class="normal"><a href="#__codelineno-3-126">126</a></span>
+<span class="normal"><a href="#__codelineno-3-127">127</a></span>
+<span class="normal"><a href="#__codelineno-3-128">128</a></span>
+<span class="normal"><a href="#__codelineno-3-129">129</a></span>
+<span class="normal"><a href="#__codelineno-3-130">130</a></span>
+<span class="normal"><a href="#__codelineno-3-131">131</a></span>
+<span class="normal"><a href="#__codelineno-3-132">132</a></span>
+<span class="normal"><a href="#__codelineno-3-133">133</a></span>
+<span class="normal"><a href="#__codelineno-3-134">134</a></span>
+<span class="normal"><a href="#__codelineno-3-135">135</a></span>
+<span class="normal"><a href="#__codelineno-3-136">136</a></span>
+<span class="normal"><a href="#__codelineno-3-137">137</a></span>
+<span class="normal"><a href="#__codelineno-3-138">138</a></span>
+<span class="normal"><a href="#__codelineno-3-139">139</a></span>
+<span class="normal"><a href="#__codelineno-3-140">140</a></span>
+<span class="normal"><a href="#__codelineno-3-141">141</a></span>
+<span class="normal"><a href="#__codelineno-3-142">142</a></span>
+<span class="normal"><a href="#__codelineno-3-143">143</a></span>
+<span class="normal"><a href="#__codelineno-3-144">144</a></span>
+<span class="normal"><a href="#__codelineno-3-145">145</a></span>
+<span class="normal"><a href="#__codelineno-3-146">146</a></span>
+<span class="normal"><a href="#__codelineno-3-147">147</a></span>
+<span class="normal"><a href="#__codelineno-3-148">148</a></span>
+<span class="normal"><a href="#__codelineno-3-149">149</a></span>
+<span class="normal"><a href="#__codelineno-3-150">150</a></span>
+<span class="normal"><a href="#__codelineno-3-151">151</a></span>
+<span class="normal"><a href="#__codelineno-3-152">152</a></span>
+<span class="normal"><a href="#__codelineno-3-153">153</a></span>
+<span class="normal"><a href="#__codelineno-3-154">154</a></span>
+<span class="normal"><a href="#__codelineno-3-155">155</a></span>
+<span class="normal"><a href="#__codelineno-3-156">156</a></span>
+<span class="normal"><a href="#__codelineno-3-157">157</a></span>
+<span class="normal"><a href="#__codelineno-3-158">158</a></span>
+<span class="normal"><a href="#__codelineno-3-159">159</a></span>
+<span class="normal"><a href="#__codelineno-3-160">160</a></span>
+<span class="normal"><a href="#__codelineno-3-161">161</a></span>
+<span class="normal"><a href="#__codelineno-3-162">162</a></span>
+<span class="normal"><a href="#__codelineno-3-163">163</a></span>
+<span class="normal"><a href="#__codelineno-3-164">164</a></span>
+<span class="normal"><a href="#__codelineno-3-165">165</a></span>
+<span class="normal"><a href="#__codelineno-3-166">166</a></span>
+<span class="normal"><a href="#__codelineno-3-167">167</a></span>
+<span class="normal"><a href="#__codelineno-3-168">168</a></span>
+<span class="normal"><a href="#__codelineno-3-169">169</a></span>
+<span class="normal"><a href="#__codelineno-3-170">170</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="sd">Generate synthetic image sequences for testing optical flow algorithms.</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="sd">Create motion on x axes</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="sd">Using cuda to run lucas kanade optical flow</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="sd">Using cuda pinned memory</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NamedTuple</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_test_sequence</span><span class="p">(</span><span class="n">num_frames</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>  <span class="n">motion_speed</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">480</span><span class="p">):</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="c1"># Initial positions</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="n">circle_start</span> <span class="o">=</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>    <span class="c1"># Circle starts at left</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="n">rect_start</span> <span class="o">=</span> <span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>      <span class="c1"># Rectangle starts at left</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    <span class="c1"># Object properties</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>    <span class="n">circle_radius</span> <span class="o">=</span> <span class="mi">30</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>    <span class="n">rect_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># width, height</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>    <span class="k">for</span> <span class="n">frame_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_frames</span><span class="p">):</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="c1"># Create black background</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>        <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>        <span class="c1"># Calculate current positions (moving right)</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>        <span class="n">circle_x</span> <span class="o">=</span> <span class="n">circle_start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">frame_idx</span> <span class="o">*</span> <span class="n">motion_speed</span><span class="p">)</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>        <span class="n">circle_y</span> <span class="o">=</span> <span class="n">circle_start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>        <span class="n">rect_x</span> <span class="o">=</span> <span class="n">rect_start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">frame_idx</span> <span class="o">*</span> <span class="n">motion_speed</span><span class="p">)</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="n">rect_y</span> <span class="o">=</span> <span class="n">rect_start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>        <span class="c1"># Wrap around if objects go off screen (optional)</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="n">circle_x</span> <span class="o">=</span> <span class="n">circle_x</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">circle_radius</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">circle_radius</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="n">rect_x</span> <span class="o">=</span> <span class="n">rect_x</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">rect_size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">rect_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>        <span class="c1"># Draw white circle</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>        <span class="k">if</span> <span class="o">-</span><span class="n">circle_radius</span> <span class="o">&lt;=</span> <span class="n">circle_x</span> <span class="o">&lt;=</span> <span class="n">width</span> <span class="o">+</span> <span class="n">circle_radius</span><span class="p">:</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>            <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">circle_x</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">circle_y</span><span class="p">)),</span> <span class="n">circle_radius</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        <span class="c1"># Draw green rectangle</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>        <span class="k">if</span> <span class="o">-</span><span class="n">rect_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">rect_x</span> <span class="o">&lt;=</span> <span class="n">width</span><span class="p">:</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>            <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> 
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>                        <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">rect_x</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_y</span><span class="p">)),</span> 
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>                        <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="n">rect_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> 
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>                        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>        <span class="c1"># Draw green rectangle</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>        <span class="k">if</span> <span class="o">-</span><span class="n">rect_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">rect_x</span> <span class="o">&lt;=</span> <span class="n">width</span><span class="p">:</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>            <span class="n">rect_y2</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="mi">200</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">frame_idx</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Add vertical oscillation</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>            <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> 
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>                        <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">rect_x</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_y2</span><span class="p">)),</span> 
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>                        <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="n">rect_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_y2</span> <span class="o">+</span> <span class="n">rect_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> 
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>                        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>        <span class="k">yield</span> <span class="n">img</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a><span class="k">class</span><span class="w"> </span><span class="nc">LKResult</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a>    <span class="n">good_new</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a>    <span class="n">good_old</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65"></a>
+<a id="__codelineno-3-66" name="__codelineno-3-66"></a><span class="k">class</span><span class="w"> </span><span class="nc">LK</span><span class="p">():</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_detector</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">createGoodFeaturesToTrackDetector</span><span class="p">(</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69"></a>            <span class="n">cv2</span><span class="o">.</span><span class="n">CV_8UC1</span><span class="p">,</span>
+<a id="__codelineno-3-70" name="__codelineno-3-70"></a>            <span class="n">maxCorners</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71"></a>            <span class="n">qualityLevel</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+<a id="__codelineno-3-72" name="__codelineno-3-72"></a>            <span class="n">minDistance</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73"></a>            <span class="n">blockSize</span><span class="o">=</span><span class="mi">7</span>
+<a id="__codelineno-3-74" name="__codelineno-3-74"></a>        <span class="p">)</span>
+<a id="__codelineno-3-75" name="__codelineno-3-75"></a>
+<a id="__codelineno-3-76" name="__codelineno-3-76"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lk</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">SparsePyrLKOpticalFlow_create</span><span class="p">(</span>
+<a id="__codelineno-3-77" name="__codelineno-3-77"></a>            <span class="n">winSize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> 
+<a id="__codelineno-3-78" name="__codelineno-3-78"></a>            <span class="n">maxLevel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-3-79" name="__codelineno-3-79"></a>            <span class="n">iters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
+<a id="__codelineno-3-80" name="__codelineno-3-80"></a>            <span class="n">useInitialFlow</span><span class="o">=</span><span class="kc">False</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81"></a>        <span class="p">)</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82"></a>
+<a id="__codelineno-3-83" name="__codelineno-3-83"></a>
+<a id="__codelineno-3-84" name="__codelineno-3-84"></a>        <span class="c1"># create pin memeory</span>
+<a id="__codelineno-3-85" name="__codelineno-3-85"></a>        <span class="n">PAGE_LOCKED</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-3-86" name="__codelineno-3-86"></a>        <span class="n">pinned_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">HostMem</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CV_8UC3</span><span class="p">,</span> <span class="n">PAGE_LOCKED</span><span class="p">)</span>
+<a id="__codelineno-3-87" name="__codelineno-3-87"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pin_image</span> <span class="o">=</span> <span class="n">pinned_img</span><span class="o">.</span><span class="n">createMatHeader</span><span class="p">()</span> 
+<a id="__codelineno-3-88" name="__codelineno-3-88"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; pinned memory for input image &quot;&quot;&quot;</span>
+<a id="__codelineno-3-89" name="__codelineno-3-89"></a>
+<a id="__codelineno-3-90" name="__codelineno-3-90"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">GpuMat</span><span class="p">()</span> 
+<a id="__codelineno-3-91" name="__codelineno-3-91"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; hold the current frame as GpuMat &quot;&quot;&quot;</span>
+<a id="__codelineno-3-92" name="__codelineno-3-92"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_prev_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">GpuMat</span><span class="p">()</span>
+<a id="__codelineno-3-93" name="__codelineno-3-93"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; hold previous frame as GpuMat &quot;&quot;&quot;</span>
+<a id="__codelineno-3-94" name="__codelineno-3-94"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">GpuMat</span><span class="p">()</span>
+<a id="__codelineno-3-95" name="__codelineno-3-95"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; hold previous points as GpuMat &quot;&quot;&quot;</span>
+<a id="__codelineno-3-96" name="__codelineno-3-96"></a>
+<a id="__codelineno-3-97" name="__codelineno-3-97"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">minmun_points_to_redetect</span> <span class="o">=</span> <span class="mi">2</span>
+<a id="__codelineno-3-98" name="__codelineno-3-98"></a>
+<a id="__codelineno-3-99" name="__codelineno-3-99"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">process_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LKResult</span><span class="p">:</span>
+<a id="__codelineno-3-100" name="__codelineno-3-100"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-101" name="__codelineno-3-101"></a><span class="sd">        Process a single frame for optical flow tracking.</span>
+<a id="__codelineno-3-102" name="__codelineno-3-102"></a><span class="sd">        upload the frame to GPU memory from pinned memory.</span>
+<a id="__codelineno-3-103" name="__codelineno-3-103"></a><span class="sd">        run detection if no points to track. (run on gpu)</span>
+<a id="__codelineno-3-104" name="__codelineno-3-104"></a><span class="sd">        run lk calculation. on gpu</span>
+<a id="__codelineno-3-105" name="__codelineno-3-105"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-3-106" name="__codelineno-3-106"></a>        <span class="n">p1_gpu</span><span class="p">:</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">GpuMat</span>
+<a id="__codelineno-3-107" name="__codelineno-3-107"></a>        <span class="n">status_gpu</span><span class="p">:</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">GpuMat</span>
+<a id="__codelineno-3-108" name="__codelineno-3-108"></a>        <span class="n">error_gpu</span><span class="p">:</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">GpuMat</span>
+<a id="__codelineno-3-109" name="__codelineno-3-109"></a>
+<a id="__codelineno-3-110" name="__codelineno-3-110"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pin_image</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">frame</span>
+<a id="__codelineno-3-111" name="__codelineno-3-111"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_img</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pin_image</span><span class="p">)</span>
+<a id="__codelineno-3-112" name="__codelineno-3-112"></a>        <span class="n">gpu_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gpu_img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<a id="__codelineno-3-113" name="__codelineno-3-113"></a>
+<a id="__codelineno-3-114" name="__codelineno-3-114"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+<a id="__codelineno-3-115" name="__codelineno-3-115"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpu_detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">gpu_gray</span><span class="p">)</span>
+<a id="__codelineno-3-116" name="__codelineno-3-116"></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+<a id="__codelineno-3-117" name="__codelineno-3-117"></a>                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No features detected.&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-118" name="__codelineno-3-118"></a>
+<a id="__codelineno-3-119" name="__codelineno-3-119"></a>            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;---- Initial points detected: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-120" name="__codelineno-3-120"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">gpu_prev_gray</span> <span class="o">=</span> <span class="n">gpu_gray</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+<a id="__codelineno-3-121" name="__codelineno-3-121"></a>
+<a id="__codelineno-3-122" name="__codelineno-3-122"></a>        <span class="c1"># Calculate optical flow</span>
+<a id="__codelineno-3-123" name="__codelineno-3-123"></a>        <span class="n">p1_gpu</span><span class="p">,</span> <span class="n">status_gpu</span><span class="p">,</span> <span class="n">error_gpu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lk</span><span class="o">.</span><span class="n">calc</span><span class="p">(</span>
+<a id="__codelineno-3-124" name="__codelineno-3-124"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">gpu_prev_gray</span><span class="p">,</span> 
+<a id="__codelineno-3-125" name="__codelineno-3-125"></a>            <span class="n">gpu_gray</span><span class="p">,</span>
+<a id="__codelineno-3-126" name="__codelineno-3-126"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span><span class="p">,</span>
+<a id="__codelineno-3-127" name="__codelineno-3-127"></a>            <span class="kc">None</span><span class="p">,)</span>
+<a id="__codelineno-3-128" name="__codelineno-3-128"></a>
+<a id="__codelineno-3-129" name="__codelineno-3-129"></a>        <span class="c1"># Download point from gpu for fautere filter and process</span>
+<a id="__codelineno-3-130" name="__codelineno-3-130"></a>        <span class="n">p0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span><span class="o">.</span><span class="n">download</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-3-131" name="__codelineno-3-131"></a>        <span class="n">p1</span> <span class="o">=</span> <span class="n">p1_gpu</span><span class="o">.</span><span class="n">download</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-3-132" name="__codelineno-3-132"></a>        <span class="n">status</span> <span class="o">=</span> <span class="n">status_gpu</span><span class="o">.</span><span class="n">download</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+<a id="__codelineno-3-133" name="__codelineno-3-133"></a>        <span class="n">error</span> <span class="o">=</span> <span class="n">error_gpu</span><span class="o">.</span><span class="n">download</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-134" name="__codelineno-3-134"></a>
+<a id="__codelineno-3-135" name="__codelineno-3-135"></a>        <span class="n">good_new</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">p1</span><span class="p">[</span><span class="n">status</span><span class="p">]</span>
+<a id="__codelineno-3-136" name="__codelineno-3-136"></a>        <span class="n">good_old</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">p0</span><span class="p">[</span><span class="n">status</span><span class="p">]</span>
+<a id="__codelineno-3-137" name="__codelineno-3-137"></a>
+<a id="__codelineno-3-138" name="__codelineno-3-138"></a>        <span class="c1"># upload new point back to gpu for the next iteration</span>
+<a id="__codelineno-3-139" name="__codelineno-3-139"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">good_new</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minmun_points_to_redetect</span><span class="p">:</span>
+<a id="__codelineno-3-140" name="__codelineno-3-140"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">good_new</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<a id="__codelineno-3-141" name="__codelineno-3-141"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-142" name="__codelineno-3-142"></a>            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No points to track, re-detecting.&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-143" name="__codelineno-3-143"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">p0_gpu</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">GpuMat</span><span class="p">()</span>
+<a id="__codelineno-3-144" name="__codelineno-3-144"></a>
+<a id="__codelineno-3-145" name="__codelineno-3-145"></a>
+<a id="__codelineno-3-146" name="__codelineno-3-146"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_prev_gray</span> <span class="o">=</span> <span class="n">gpu_gray</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+<a id="__codelineno-3-147" name="__codelineno-3-147"></a>
+<a id="__codelineno-3-148" name="__codelineno-3-148"></a>        <span class="k">return</span> <span class="n">LKResult</span><span class="p">(</span><span class="n">good_new</span><span class="o">=</span><span class="n">good_new</span><span class="p">,</span> <span class="n">good_old</span><span class="o">=</span><span class="n">good_old</span><span class="p">)</span>
+<a id="__codelineno-3-149" name="__codelineno-3-149"></a>
+<a id="__codelineno-3-150" name="__codelineno-3-150"></a>
+<a id="__codelineno-3-151" name="__codelineno-3-151"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-3-152" name="__codelineno-3-152"></a>    <span class="n">COLOR_NEW</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span> <span class="c1"># RED</span>
+<a id="__codelineno-3-153" name="__codelineno-3-153"></a>    <span class="n">COLOR_OLD</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># BLUE</span>
+<a id="__codelineno-3-154" name="__codelineno-3-154"></a>    <span class="n">new</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> 
+<a id="__codelineno-3-155" name="__codelineno-3-155"></a>    <span class="n">old</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+<a id="__codelineno-3-156" name="__codelineno-3-156"></a>
+<a id="__codelineno-3-157" name="__codelineno-3-157"></a>    <span class="n">lk</span> <span class="o">=</span> <span class="n">LK</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">)</span>
+<a id="__codelineno-3-158" name="__codelineno-3-158"></a>    <span class="n">images</span> <span class="o">=</span> <span class="n">create_test_sequence</span><span class="p">()</span>
+<a id="__codelineno-3-159" name="__codelineno-3-159"></a>    <span class="k">while</span> <span class="p">(</span><span class="n">frame</span> <span class="o">:=</span> <span class="nb">next</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-160" name="__codelineno-3-160"></a>        <span class="n">good_new</span><span class="p">,</span> <span class="n">good_old</span> <span class="o">=</span> <span class="n">lk</span><span class="o">.</span><span class="n">process_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+<a id="__codelineno-3-161" name="__codelineno-3-161"></a>
+<a id="__codelineno-3-162" name="__codelineno-3-162"></a>        <span class="k">for</span> <span class="n">new</span><span class="p">,</span> <span class="n">old</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">good_new</span><span class="p">,</span> <span class="n">good_old</span><span class="p">):</span>
+<a id="__codelineno-3-163" name="__codelineno-3-163"></a>            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<a id="__codelineno-3-164" name="__codelineno-3-164"></a>            <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<a id="__codelineno-3-165" name="__codelineno-3-165"></a>            <span class="c1"># cv2.arrowedLine(img, (c, d), (a, b), (0, 255, 255), 2, tipLength=0.3)</span>
+<a id="__codelineno-3-166" name="__codelineno-3-166"></a>            <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="n">COLOR_NEW</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-167" name="__codelineno-3-167"></a>            <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="n">COLOR_OLD</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-168" name="__codelineno-3-168"></a>        <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;LK Optical Flow CUDA&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+<a id="__codelineno-3-169" name="__codelineno-3-169"></a>        <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+<a id="__codelineno-3-170" name="__codelineno-3-170"></a>            <span class="k">break</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
