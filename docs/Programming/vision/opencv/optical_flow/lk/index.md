@@ -45,26 +45,38 @@ Create cuda version using pin memory for better performance [check opencv with c
 ### API
 <details>
     <summary>detect</summary>
-    d_pts = det.detect(d_gray, mask=None, stream=None)
 
-- d_gray: cv2.cuda_GpuMat, CV_8UC1, grayscale, non-empty.
-- mask (optional): cv2.cuda_GpuMat (CV_8U), same size; non-zero=allowed region.
-- stream (optional): cv2.cuda_Stream for async execution (some builds omit this param—if you get a TypeError, just drop it).
-- d_pts: cv2.cuda_GpuMat of shape (N, 1), type CV_32FC2 (each element is a corner (x, y) in float32).
+```python
+d_pts = det.detect(d_gray, mask=None, stream=None)
+```
+
+<ul>
+    <li><b>d_gray</b>: cv2.cuda_GpuMat, CV_8UC1, grayscale, non-empty.</li>
+    <li><b>mask</b> (optional): cv2.cuda_GpuMat (CV_8U), same size; non-zero = allowed region.</li>
+    <li><b>stream</b> (optional): cv2.cuda_Stream for async; if your build errors, omit it.</li>
+    <li><b>d_pts</b> (return): cv2.cuda_GpuMat (N×1, CV_32FC2), each is (x, y) float32.</li>
+  </ul>
+  
 </details>
 
 
 <details>
     <summary>calc</summary>
-    nextPts, status, err = flow.calc(prevImg, nextImg, prevPts, stream=None)
+```python
+nextPts, status, err = flow.calc(prevImg, nextImg, prevPts, stream=None)
+```
 
-- prevImg, nextImg: cv.cuda_GpuMat grayscale (CV_8UC1)
-- prevPts: cv.cuda_GpuMat of shape (N,1), type CV_32FC2 (points as (x,y))
-- returns: nextPts (N×1, CV_32FC2), status (N×1, CV_8U), err (N×1, CV_32F)
+
+<ul>
+    <li><b>prevImg, nextImg</b>: cv.cuda_GpuMat grayscale (CV_8UC1)<li>
+    <li><b>prevPts</b>: cv.cuda_GpuMat of shape (N,1), type CV_32FC2 (points as (x,y))<li>
+    <li><b>returns</b>: nextPts (N×1, CV_32FC2), status (N×1, CV_8U), err (N×1, CV_32F)<li>
+</ul>
+
 </details>
 
 
-
+### Code
 <details>
     <summary>LK cuda version</summary>
 

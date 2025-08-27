@@ -30,3 +30,8 @@ tags:
 ## Posts
 
 - [Cpp threading](cpp_threading.md)
+
+---
+
+## Courses
+- [Modern C++ Programming](https://federico-busato.github.io/Modern-CPP-Programming/)

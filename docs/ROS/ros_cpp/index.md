@@ -21,3 +21,63 @@
         </div>
     
 </div>
+
+---
+
+## Simple Node
+Simple cpp node with `CMakeLists.txt` 
+Using clang as compiler
+
+!!! tip "set clang using update-alternative"
+    ```bash
+    sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100
+    sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
+    ```
+     
+- using `fmt` library to better string format
+
+
+<details>
+    <summary>Simple node</summary>
+
+```cpp
+--8<-- "docs/ROS/ros_cpp/code/pub_demo.cpp"
+```
+</details>
+
+
+
+<details>
+    <summary>CMakeLists.txt</summary>
+
+```cmake
+--8<-- "docs/ROS/ros_cpp/code/CMakeLists.txt"
+```
+</details>
+
+<details>
+    <summary>VSCode c_cpp_properties.json</summary>
+
+```json
+--8<-- "docs/ROS/ros_cpp/code/c_cpp_properties.json"
+```
+</details>
+
+<div class="grid-container">
+    <div class="grid-item">
+            <a href="basic">
+                <p>More basic examples</p>
+            </a>
+        </div>
+        <div class="grid-item">
+            <a href="">
+                <p>---</p>
+            </a>
+        </div>
+        <div class="grid-item">
+            <a href="">
+                <p>---</p>
+            </a>
+        </div>
+    
+</div>

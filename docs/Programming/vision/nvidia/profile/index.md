@@ -1,5 +1,5 @@
 ---
-title: Nvidia 
+title: Nvidia nsight system
 tags:
     - nvidia
     - profile
@@ -9,6 +9,11 @@ tags:
 
 {{ page_folder_links() }}
 
+
+
+[Download NVIDIA Nsight Systems](https://developer.nvidia.com/nsight-systems/get-started)
+
+---
 Nvidia profiling tools
 
 

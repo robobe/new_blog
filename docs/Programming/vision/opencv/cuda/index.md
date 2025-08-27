@@ -47,6 +47,12 @@ using cv2.cuda.HostMem lets you allocate page-locked (pinned) memory in host RAM
     call .createMatHeader(), which returns a cv::Mat header that views into the same memory. (wrap the buffer)
     and return the buffer as ndarray
 
+
+---
+
+## Reference
+- [https://www.simonwenkel.com/notes/software_libraries/opencv/opencv-cuda-integration.html#opencv-cuda-intro](https://www.simonwenkel.com/notes/software_libraries/opencv/opencv-cuda-integration.html#opencv-cuda-intro)
+
 ---
 ## Build dev environment using vscode devcontainer
 - Using the post from [Build OpenCV 4.10 with cuda](/Programming/vision/opencv/build/)
