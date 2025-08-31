@@ -32,6 +32,8 @@ tags:
 - [System Identification and MPC Design using a Low-Cost Bi-Copter Hardware](https://youtu.be/DvDSkyDHb9o)
 
 ## Learn
+- [Differential Equations and Dynamical Systems](https://youtu.be/9fQkLQZe3u8?list=PLMrJAkhIeNNTYaOnVI3QpH7jgULnAmvPA)
+- [Control Bootcamp](https://www.youtube.com/watch?v=Pi7l8mMjYVE&list=PLMrJAkhIeNNR20Mz-VpzgfQs5zrYi085m&pp=iAQB0gcJCZECa94AFGB0)
 - [Master linear algebra: theory and implementation in code]()
 - [INTUITION MATTERS! Applied Calculus in Engineering: Complete]()
 - 
