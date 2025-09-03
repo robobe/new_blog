@@ -31,7 +31,7 @@
             </a>
     </div>
     <div class="grid-item">
-         <a href="control">
+         <a href="filter_and_estimator">
                 <img src="images/filters_and_estimators.png"  width="150" height="150">
                 <p>Filters and Estimators</p>
             </a>

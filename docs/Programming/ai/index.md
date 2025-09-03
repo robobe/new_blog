@@ -15,8 +15,12 @@
         <img src="images/tutorials.png"  width="150" height="150">
         <p>Tutorials</p></a>
     </div>
+     <div class="grid-item">
+        <a href="reinforcement_learning">
+        <img src="images/reinforcement_learning.png"  width="150" height="150">
+        <p>Reinforcement Learning</p></a>
+    </div>
 </div>
-
 
 ## Resources
 - [Deep Learning with PyTorch Step-by-Step](https://github.com/GPrathap/PyTorchStepByStep)

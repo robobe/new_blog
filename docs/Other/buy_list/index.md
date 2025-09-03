@@ -4,6 +4,10 @@ tags:
 ---
 
 # new laptop
+- [Asus ROG Zephyrus G14 (2025) GA403WR-QS096 ](https://ksp.co.il/web/item/384092)
+    - [config ubuntu 24.04](https://github.com/dariomncs/asus-ubuntu)
+
+---
 
 - [ASUS Zenbook 14X OLED (UX3404)](https://www.asus.com/laptops/for-home/zenbook/zenbook-14x-oled-ux3404/)
   - nvidia 3050

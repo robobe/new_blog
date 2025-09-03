@@ -71,6 +71,17 @@ This very important to the filter how much trust to put on **prediction** and ho
 
 ---
 
+### Covariance
+Covariance is the tendency for two variables to vary together, which is a way of being correlated!
+
+!!! note "Variance"
+     Variance measures how much a single variable (e.g., sensor noise in one axis) fluctuates around its mean.
+
+Covariance quantifies uncertainty and correlation in sensor measurements. In robotics, every sensor reading is accompanied by a covariance matrix, and estimators (like EKF-SLAM, robot_localization) use that matrix to optimally combine noisy sensor data.
+
+[more](covariance)
+
+---
 ## Demo
 
 Use turtlesim to simulate robot_localization package usage  
