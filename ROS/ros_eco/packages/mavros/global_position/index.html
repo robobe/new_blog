@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gps_global_origin" class="md-skip">
+        <a href="#topics" class="md-skip">
           Skip to content
         </a>
       
@@ -603,9 +603,60 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gps_global_origin" class="md-nav__link">
+  <a href="#topics" class="md-nav__link">
     <span class="md-ellipsis">
-      GPS_GLOBAL_ORIGIN
+      Topics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Topics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publisher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscribers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subscribers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mavlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mavlink
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Datum
     </span>
   </a>
   
@@ -660,92 +711,177 @@
 
   <h1>Mavros global position plugin</h1>
 
+<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/packages/">packages</a> / <a href="/ROS/ros_eco/packages/mavros/">mavros</a></p>
+<div class="admonition tip">
+<p class="admonition-title">ECEF Coordinate system</p>
+<p>Earth-Centered, Earth-Fixed</p>
+<ul>
+<li><strong>Origin</strong>: Earth center of mass</li>
+<li><strong>X-axis</strong>: </li>
+<li><strong>Y-axis</strong></li>
+<li><strong>Z-axis</strong>: Point to the north pole</li>
+<li><strong>latitude (ϕ)</strong>:</li>
+<li><strong>longitude (λ)</strong> 
+<img alt="alt text" src="images/ecef_coordinate.png" /></li>
+</ul>
+</div>
+<h2 id="topics">Topics</h2>
+<h3 id="publisher">Publisher</h3>
 <table>
 <thead>
 <tr>
-<th>Topic</th>
-<th>msg</th>
-<th>Mavlink</th>
-<th>Notes</th>
+<th>topic</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>~/raw/fix</td>
-<td></td>
-<td>GPS_RAW_INT</td>
-<td>The global position, as returned by the Global Positioning System</td>
-</tr>
-<tr>
-<td>~/raw/gps_vel</td>
-<td></td>
+<td>gp_lp_offset</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td>~/global</td>
-<td>NavSatFix</td>
-<td>GLOBAL_POSITION_INT</td>
-<td>The filtered global position</td>
-</tr>
-<tr>
-<td>~/local</td>
-<td>Odometry</td>
-<td>GLOBAL_POSITION_INT</td>
-<td></td>
-</tr>
-<tr>
-<td>~/rel_alt</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>~/compass_hdg</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>~/gp_origin</td>
-<td></td>
+<td>gp_origin</td>
 <td>GPS_GLOBAL_ORIGIN</td>
-<td>Publishes the GPS coordinates of the vehicle local origin (0,0,0) position. Emitted</td>
-</tr>
-<tr>
-<td>~/gp_lp_offset</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
-<td>~/raw/satellites</td>
-<td></td>
+<td>compass_hdg</td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td>~/set_gp_origin</td>
+<td>rel_alt</td>
 <td></td>
-<td>SET_GPS_GLOBAL_ORIGIN</td>
-<td>Sets the GPS coordinates of the vehicle local origin (0,0,0) position (DEPRECATED: replace by MAV_CMD_SET_GLOBAL_ORIGIN)</td>
+<td>altitude above home position</td>
+</tr>
+<tr>
+<td>local</td>
+<td>GLOBAL_POSITION_INT</td>
+<td>odometry</td>
+</tr>
+<tr>
+<td>global</td>
+<td>GLOBAL_POSITION_INT</td>
+<td>NavSetFix</td>
+</tr>
+<tr>
+<td>/raw/satellites</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>/raw/gps_vel</td>
+<td>GPS_RAW_INT</td>
+<td></td>
+</tr>
+<tr>
+<td>/raw/fix</td>
+<td>GPS_RAW_INT</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<h2 id="gps_global_origin">GPS_GLOBAL_ORIGIN</h2>
-<p>Check <a href="https://mavlink.io/en/messages/common.html#GPS_GLOBAL_ORIGIN">mavlink common</a>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span>
-<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="w">  </span>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_message_interval<span class="w"> </span>mavros_msgs/srv/MessageInterval<span class="w"> </span><span class="s2">&quot;{\&quot;message_id\&quot;: 49, \&quot;message_rate\&quot;: 2 }&quot;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="sb">```</span>
+<h3 id="subscribers">Subscribers</h3>
+<table>
+<thead>
+<tr>
+<th>topic</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>home_position/home</td>
+<td></td>
+</tr>
+<tr>
+<td>set_gp_origin</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="mavlink">Mavlink</h2>
+<table>
+<thead>
+<tr>
+<th>mavlink</th>
+<th>mavros topic(message)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GLOBAL_POSITION_INT (33)</td>
+<td></td>
+</tr>
+<tr>
+<td>GPS_GLOBAL_ORIGIN (49)</td>
+<td></td>
+</tr>
+<tr>
+<td>GPS_RAW_INT (24)</td>
+<td></td>
+</tr>
+<tr>
+<td>LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET (89)</td>
+<td>gp_lp_offset</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_1"></h2>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># GLOBAL_POSITION_INT</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_message_interval<span class="w"> </span>mavros_msgs/srv/MessageInterval<span class="w"> </span><span class="s2">&quot;{\&quot;message_id\&quot;: 33, \&quot;message_rate\&quot;: 2 }&quot;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="sb">```</span>bash<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="c1"># it take faw seconds until GPS fix</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/mavros/global_position/gp_origin
-</code></pre></div></td></tr></table></div></p>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1">#GPS_GLOBAL_ORIGIN</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_message_interval<span class="w"> </span>mavros_msgs/srv/MessageInterval<span class="w"> </span><span class="s2">&quot;{\&quot;message_id\&quot;: 49, \&quot;message_rate\&quot;: 2 }&quot;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="sb">```</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>---
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="c1">## Latitude, Longitude and Coordinate system</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>!<span class="o">[</span>alt<span class="w"> </span>text<span class="o">](</span>images/lat_lon.png<span class="o">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>**Latitude<span class="w"> </span><span class="o">(</span>ϕ<span class="o">)</span>**<span class="w"> </span>lines<span class="w"> </span>run<span class="w"> </span>east-west<span class="w"> </span>and<span class="w"> </span>are<span class="w"> </span>parallel<span class="w"> </span>to<span class="w"> </span>each<span class="w"> </span>other<span class="w"> </span>but<span class="w"> </span>measure<span class="w"> </span>north-north.<span class="w"> </span>So<span class="w"> </span><span class="k">if</span><span class="w"> </span>you<span class="w"> </span>go<span class="w"> </span>north,<span class="w"> </span>latitude<span class="w"> </span>values<span class="w"> </span>increase.<span class="w"> </span>Finally,<span class="w"> </span>latitude<span class="w"> </span>values<span class="w"> </span><span class="o">(</span>Y-values<span class="o">)</span><span class="w"> </span>range<span class="w"> </span>between<span class="w"> </span>-90<span class="w"> </span>and<span class="w"> </span>+90<span class="w"> </span>degrees.
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>**Longitude<span class="w"> </span><span class="o">(</span>λ<span class="o">)</span>**<span class="w"> </span>lines<span class="w"> </span>run<span class="w"> </span>north-south<span class="w"> </span>and<span class="w"> </span>measure<span class="w"> </span>east-west.<span class="w"> </span>They<span class="w"> </span>converge<span class="w"> </span>at<span class="w"> </span>the<span class="w"> </span>poles.<span class="w"> </span>And<span class="w"> </span>its<span class="w"> </span>X-coordinates<span class="w"> </span>are<span class="w"> </span>between<span class="w"> </span>-180<span class="w"> </span>and<span class="w"> </span>+180<span class="w"> </span>degrees.
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>!<span class="o">[</span>alt<span class="w"> </span>text<span class="o">](</span>images/ellipsoidal_coordinate_system.png<span class="o">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>---
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="c1">### Demo</span>
+</code></pre></div></td></tr></table></div>
+lat, lon
+Tel Aviv → (32.0853° N, 34.7818° E)
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
@@ -757,19 +893,151 @@
 <span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-1-10">10</a></span>
 <span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>ros2 service call /mavros/cmd/command_long mavros_msgs/srv/CommandLong &quot;{
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>  broadcast: false,
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>  command: 409,
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>  confirmation: 0,
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a>  param1: 0.0,
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a>  param2: 0.0,
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a>  param3: 0.0,
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a>  param4: 0.0,
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a>  param5: 32.461073,
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a>  param6: &lt;longitude&gt;,
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a>  param7: &lt;altitude&gt;
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a>}&quot;
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>!!! tip &quot;bearing_deg&quot;
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>    The bearing_deg is the direction of travel, measured in degrees clockwise from North:
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    0° → North
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    90° → East
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    180° → South
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    270° → West
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>#### Calc next point
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>```python title=&quot;calc next point using distance and bearing&quot;
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>from math import radians, degrees, sin, cos, atan2, asin
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>def move_point(lat, lon, distance_m, bearing_deg):
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>    R = 6371000  # Earth radius in meters
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>    lat1 = radians(lat)
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>    lon1 = radians(lon)
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>    bearing = radians(bearing_deg)
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>    lat2 = asin(sin(lat1) * cos(distance_m/R) +
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>                cos(lat1) * sin(distance_m/R) * cos(bearing))
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>    lon2 = lon1 + atan2(sin(bearing) * sin(distance_m/R) * cos(lat1),
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>                        cos(distance_m/R) - sin(lat1) * sin(lat2))
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>    return degrees(lat2), degrees(lon2)
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a># Example: move 500m east
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>lat, lon = 32.0853, 34.7818
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>new_lat, new_lon = move_point(lat, lon, 500, 90)
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>print(f&quot;Original: {lat:.6f}, {lon:.6f}&quot;)
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a>print(f&quot;New point: {new_lat:.6f}, {new_lon:.6f}&quot;)
+</code></pre></div></td></tr></table></div></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">calc distance and bearing between two points</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">radians</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan2</span><span class="p">,</span> <span class="n">degrees</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">haversine</span><span class="p">(</span><span class="n">coord1</span><span class="p">,</span> <span class="n">coord2</span><span class="p">):</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="c1"># Coordinates: (lat, lon)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="n">R</span> <span class="o">=</span> <span class="mf">6371.0</span>  <span class="c1"># Earth radius in kilometers</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">radians</span><span class="p">,</span> <span class="n">coord1</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">radians</span><span class="p">,</span> <span class="n">coord2</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="n">dlat</span> <span class="o">=</span> <span class="n">lat2</span> <span class="o">-</span> <span class="n">lat1</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="n">dlon</span> <span class="o">=</span> <span class="n">lon2</span> <span class="o">-</span> <span class="n">lon1</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">dlat</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">dlon</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">atan2</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">a</span><span class="p">))</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="k">return</span> <span class="n">R</span> <span class="o">*</span> <span class="n">c</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">bearing_between_points</span><span class="p">(</span><span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span><span class="p">):</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>    <span class="c1"># Convert to radians</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">radians</span><span class="p">,</span> <span class="p">[</span><span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span><span class="p">])</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>    <span class="n">dlon</span> <span class="o">=</span> <span class="n">lon2</span> <span class="o">-</span> <span class="n">lon1</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">dlon</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">-</span> <span class="n">sin</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">dlon</span><span class="p">)</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>    <span class="n">initial_bearing</span> <span class="o">=</span> <span class="n">atan2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    <span class="c1"># Convert from radians to degrees and normalize 0-360</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>    <span class="n">bearing</span> <span class="o">=</span> <span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">initial_bearing</span><span class="p">)</span> <span class="o">+</span> <span class="mi">360</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>    <span class="k">return</span> <span class="n">bearing</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="c1"># Example</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="n">origin</span> <span class="o">=</span> <span class="p">(</span><span class="mf">32.0853</span><span class="p">,</span> <span class="mf">34.7818</span><span class="p">)</span>   <span class="c1"># Tel Aviv</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="n">target</span> <span class="o">=</span> <span class="p">(</span><span class="mf">32.085300</span><span class="p">,</span> <span class="mf">34.787107</span><span class="p">)</span>   <span class="c1"># next point ~500m east</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distance: </span><span class="si">{</span><span class="n">haversine</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> km&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bearing (from north cw): </span><span class="si">{</span><span class="n">bearing_between_points</span><span class="p">(</span><span class="mf">32.0853</span><span class="p">,</span><span class="w"> </span><span class="mf">34.7818</span><span class="p">,</span><span class="w"> </span><span class="mf">32.085300</span><span class="p">,</span><span class="w"> </span><span class="mf">34.787107</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="datum">Datum</h2>
+<p>A datum in geodesy and mapping is a reference framework that defines the shape, size, and position of the coordinate system used to describe locations on Earth.</p>
+<p><strong>WGS84</strong> (World Geodetic System 1984) is one of the most important modern datums, is use by GPS navigation system.</p>
 
 
 

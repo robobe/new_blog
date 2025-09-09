@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#reference" class="md-skip">
+        <a href="#plugin" class="md-skip">
           Skip to content
         </a>
       
@@ -603,6 +603,72 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic-and-mavlink-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topic and Mavlink message
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config publisher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      Config subscriber
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       Reference
@@ -655,7 +721,154 @@
   <h1>Distance sensor</h1>
 
 <p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/packages/">packages</a> / <a href="/ROS/ros_eco/packages/mavros/">mavros</a></p>
+<h2 id="plugin">Plugin</h2>
+<p>mavros_extra <a href="">distance_sensor</a></p>
+<p>The plugin use as publisher for mavlink DISTANCE_SENSOR(132)
+And can be Subscriber and send range data into the FCU</p>
+<div class="admonition note">
+<p class="admonition-title">Rangefinder</p>
+<p>Ardupilot send mavlink message <a href="https://mavlink.io/en/messages/ardupilotmega.html#RANGEFINDER">Rangefinder (173)</a> There is a plugin in that handle this message mavros_extra.rangefinder</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_message_interval<span class="w"> </span>mavros_msgs/srv/MessageInterval<span class="w"> </span><span class="s2">&quot;{message_id: 173, message_rate: 1.0}&quot;</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<h2 id="topic-and-mavlink-message">Topic and Mavlink message</h2>
+<table>
+<thead>
+<tr>
+<th>mavlink</th>
+<th>mavros topic(message)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DISTANCE_SENSOR(132)</td>
+<td><strong>rangefinder</strong> (sensor_msgs/msg/Range)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Topic name</p>
+<p>The topic name set by the config param </p>
+<p><code>rangefinder_pub</code> is the topic name for sensor id 0</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">/**/distance_sensor</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">rangefinder_pub</span><span class="p">:</span><span class="w"> </span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+</code></pre></div></td></tr></table></div>
+</div>
 <hr />
+<h2 id="usage">usage</h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">set message interval</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/mavros/set_message_interval<span class="w"> </span>mavros_msgs/srv/MessageInterval<span class="w"> </span><span class="s2">&quot;{message_id: 132, message_rate: 1.0}&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="parameters">Parameters</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">para</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">/**/distance_sensor</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">ros__parameters</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="hll"><span class="w">      </span><span class="no">rangefinder_pub: </span>
+</span><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">        </span><span class="no">id: 0</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">        </span><span class="no">frame_id: &quot;lidar&quot;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">        </span><span class="no"># orientation: PITCH_270  # sended by FCU</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">        </span><span class="no">field_of_view: 0.0        # XXX TODO</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">        </span><span class="no">send_tf: false</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">        </span><span class="no">sensor_position: {x:  0.0, y:  0.0, z:  -0.1}</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="hll"><span class="w">      </span><span class="no">rangefinder_sub:</span>
+</span><a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">        </span><span class="no">subscriber: true</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">        </span><span class="no">id: 1</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">        </span><span class="no">orientation: PITCH_270  # only that orientation are supported by APM 3.4+</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li><strong>line 4</strong>: use as publisher topic name</li>
+<li><strong>line 11</strong>: use as subscriber topic name</li>
+</ol>
+<h4 id="config-publisher">Config publisher</h4>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>subscriber</td>
+<td>default(false)</td>
+</tr>
+<tr>
+<td>id</td>
+<td>sensor id</td>
+</tr>
+<tr>
+<td>frame_id</td>
+<td>use by message header <code>frame_id</code> and tf message</td>
+</tr>
+<tr>
+<td>field_of_view</td>
+<td>sensor info</td>
+</tr>
+<tr>
+<td>send_tf</td>
+<td>send data as tf default(false)</td>
+</tr>
+</tbody>
+</table>
+<p>| custom_orientation  |   |</p>
+<h4 id="config-subscriber">Config subscriber</h4>
+<table>
+<thead>
+<tr>
+<th>field</th>
+<th>usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>orientation</td>
+<td></td>
+</tr>
+<tr>
+<td>covariance</td>
+<td></td>
+</tr>
+<tr>
+<td>horizontal_fov_ratio</td>
+<td></td>
+</tr>
+<tr>
+<td>vertical_fov_ratio</td>
+<td></td>
+</tr>
+<tr>
+<td>sensor_position</td>
+<td></td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="https://ardupilot.org/copter/docs/common-rangefinder-setup.html">RangeFinders Setup Overview</a></li>

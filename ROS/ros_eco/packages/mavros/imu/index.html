@@ -723,6 +723,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#covariance-explain_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Covariance explain
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -777,8 +786,7 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">ATTITUDE_QUATERNION_COV(61)</p>
-<p>This message not use by mavros
-apm: Not support this message</p>
+<p>This message not use by mavros and Not support by ardupilot</p>
 </div>
 <table>
 <thead>
@@ -821,14 +829,16 @@ apm: Not support this message</p>
 <li><strong>~/data_raw</strong>: the topic publish/mapping selected mavlink message with priority <code>HIGHRES_IMU</code> or <code>SCALED_IMU</code> or <code>RAW_IMU</code> </li>
 </ul>
 <h4 id="message-priority-variables">Message priority variables</h4>
-<p><strong>has_hr_imu</strong> = set to true automaticlay if system send <code>HIGHRES_IMU</code> message, disabled handle/publish <code>RAW_IMU</code> and <code>SCALED_IMU</code> message.
-<strong>has_raw_imu</strong> = set to true automaticlay if system send <code>RAW_IMU</code> message;
-<strong>has_scaled_imu</strong> = set to true automaticlay if system send <code>SCALED_IMU</code> message, disabled handle/publish <code>RAW_IMU</code> message.
-<strong>has_att_quat</strong> : set to true automaticlay if system send <code>ATTITUDE_QUATERNION</code> message, disabled handle/publish <code>ATTITUDE</code> message.</p>
+<ul>
+<li><strong>has_hr_imu</strong> = set to true automaticlay if system send <code>HIGHRES_IMU</code> message, disabled handle/publish <code>RAW_IMU</code> and <code>SCALED_IMU</code> message.</li>
+<li><strong>has_raw_imu</strong> = set to true automaticlay if system send <code>RAW_IMU</code> message;</li>
+<li><strong>has_scaled_imu</strong> = set to true automaticlay if system send <code>SCALED_IMU</code> message, disabled handle/publish <code>RAW_IMU</code> message.</li>
+<li><strong>has_att_quat</strong> : set to true automaticlay if system send <code>ATTITUDE_QUATERNION</code> message, disabled handle/publish <code>ATTITUDE</code> message.</li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">data_raw" vs "data</p>
-<p>data_raw: Publish only gyro and accelerometer
-data: Publish Orientation and gyro</p>
+<p><strong>data_raw</strong>: Publish only gyro and accelerometer
+<strong>data</strong>: Publish Orientation and gyro</p>
 </div>
 <hr />
 <h2 id="ros-imu-msg">ROS Imu msg</h2>
@@ -983,7 +993,7 @@ data: Publish Orientation and gyro</p>
 <a id="__codelineno-2-49" name="__codelineno-2-49"></a>-<span class="w"> </span><span class="m">0</span>.0
 <a id="__codelineno-2-50" name="__codelineno-2-50"></a>-<span class="w"> </span><span class="m">8</span>.999999999999999e-08
 </code></pre></div></td></tr></table></div>
-<h3 id="covariance-explain">Covariance explain</h3>
+<h4 id="covariance-explain">Covariance explain</h4>
 <ul>
 <li><strong>orientation_covariance</strong>: default orientation_stdev is: 1.0</li>
 <li><strong>angular_velocity_covariance</strong>: default angular_velocity_stdev: 0.02*(pi/180)</li>
@@ -1103,6 +1113,7 @@ $$\sigma^2 = (0.00034906585)^2
 <a id="__codelineno-5-49" name="__codelineno-5-49"></a>-<span class="w"> </span><span class="m">8</span>.999999999999999e-08
 <a id="__codelineno-5-50" name="__codelineno-5-50"></a>---
 </code></pre></div></td></tr></table></div>
+<h3 id="covariance-explain_1">Covariance explain</h3>
 <ul>
 <li>orientation_covariance: -1 , <strong>no orientation sensor data</strong></li>
 <li>angular_velocity_covariance: like <code>data</code> message</li>
