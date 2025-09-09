@@ -45,3 +45,12 @@ Ros packages and tools that are used in the ROS eco system.
            </div>
 
 </div>
+
+<div class="grid-container">
+   <div class="grid-item">
+        <a href="ros_hardware">
+            <img src="images/ros_hardware.png"  width="150" height="150">
+            <p>ROS Hardware</p>
+            </a>
+    </div>
+</div>

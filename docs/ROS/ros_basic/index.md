@@ -29,5 +29,3 @@
     </div>
 
 </div>
-
-![alt text](image.png)

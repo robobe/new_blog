@@ -197,5 +197,15 @@ This frame is commonly used in robotics and ROS
             <p>vision_speed_estimation</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="rangefinder">
+            <p>RangeFinder</p>
+        </a>
+    </div>
 </div>
 
+
+---
+
+## Reference
+- [Mavros read the docs](https://docs.ros.org/en/jazzy/p/mavros/index.html)
