@@ -59,3 +59,8 @@ def generate_launch_description():
     return ld
 
 ```
+
+---
+
+## Resource
+- [ Visualizations in ROS with RViz](https://docs.m2stud.io/cs/ros_additional/06-L3-rviz/)

@@ -67,7 +67,7 @@ ros2 service call /mavros/set_message_interval mavros_msgs/srv/MessageInterval "
 
 #GPS_GLOBAL_ORIGIN
 ros2 service call /mavros/set_message_interval mavros_msgs/srv/MessageInterval "{\"message_id\": 49, \"message_rate\": 2 }"
-  ```
+```
 
 
 ---

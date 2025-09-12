@@ -39,6 +39,16 @@ Odometry is the process of estimating the robot's pose (position + orientation) 
 
 **map** frame is a fixed, global reference frame in ROS used for global localization — a known, non-drifting coordinate system representing the world.
 
+
+!!! note "How to get the map frame"
+    To create the map → odom transform, you need absolute/global measurements. robot_localization has a node for that:
+
+    - **navsat_transform_node** (GPS integration).
+    - absolute pose measurements (e.g. fiducial markers, AMCL, SLAM outputs).
+
+    When robot_localization gets absolute measurements, it computes the correction between your **drifting** odometry (odom) and the global reference (map).  
+    **That correction is then published as the map → odom transform.**
+     
 ---
 
 ## How it's work

@@ -88,8 +88,78 @@ This frame is commonly used in robotics and ROS
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="tf">
-            <p>tf</p>
+        <a href="altitude">
+            <p>altitude</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="command">
+            <p>command</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="distance_sensor">
+            <p>distance_sensor</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="do_set_mode">
+            <p>do_set_mode</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="gimbal_control">
+            <p>gimbal_control</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="global_position">
+            <p>global_position</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="home_position">
+            <p>home_position</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="imu">
+            <p>imu</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="local_position">
+            <p>local_position</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="param">
+            <p>param</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="rangefinder">
+            <p>RangeFinder</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="rc_io">
+            <p>rc_io</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="setpoint_attitude">
+            <p>setpoint_attitude</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="setpoint_raw">
+            <p>setpoint_raw</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="setpoint_velocity">
+            <p>setpoint_velocity</p>
         </a>
     </div>
     <div class="grid-item">
@@ -107,31 +177,9 @@ This frame is commonly used in robotics and ROS
             <p>terrain</p>
         </a>
     </div>
-    <!--  -->
     <div class="grid-item">
-        <a href="distance_sensor">
-            <p>distance_sensor</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="ahrs2">
-            <p>ahrs2</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="home_position">
-            <p>home_position</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="setpoint_velocity">
-            <p>setpoint_velocity</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="local_position">
-            <p>local_position</p>
+        <a href="tf">
+            <p>tf</p>
         </a>
     </div>
     <div class="grid-item">
@@ -139,70 +187,13 @@ This frame is commonly used in robotics and ROS
             <p>vfr_hud</p>
         </a>
     </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="gimbal_control">
-            <p>gimbal_control</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="setpoint_raw">
-            <p>setpoint_raw</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="setpoint_attitude">
-            <p>setpoint_attitude</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="param">
-            <p>param</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="global_position">
-            <p>global_position</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="imu">
-            <p>imu</p>
-        </a>
-    </div>
-    <!--  -->
-    <div class="grid-item">
-        <a href="do_set_mode">
-            <p>do_set_mode</p>
-        </a>
-    </div>
-    <div class="grid-item">
-         <a href="command">
-            <p>command</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="rc_io">
-            <p>rc_io</p>
-        </a>
-    </div>
-     <div class="grid-item">
-        <a href="altitude">
-            <p>altitude</p>
-        </a>
-    </div>
     <div class="grid-item">
         <a href="vision_speed_estimation">
             <p>vision_speed_estimation</p>
         </a>
     </div>
-    <div class="grid-item">
-        <a href="rangefinder">
-            <p>RangeFinder</p>
-        </a>
-    </div>
 </div>
+
 
 
 ---

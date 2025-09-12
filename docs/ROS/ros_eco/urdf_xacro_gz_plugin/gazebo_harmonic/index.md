@@ -29,6 +29,16 @@ tags:
    </div>
 
 
+## Launch
+
+```python title="gazebo.launch.py"
+--8<-- "docs/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/project_template/code/gazebo.launch.py"
+```
+
+---
+
+## Bridge
+
 ## Bridge clock from gazebo
 
 ```bash title="/clock topic"
