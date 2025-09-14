@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_world/navigation_and_localization/robot_localization/">
+        <link rel="canonical" href="https://robobe.github.io/Other/Gstreamer/gstreamer/compositor/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Robot localization - Robots Inside</title>
+        <title>Index - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#robot-localization" class="md-skip">
+        <a href="#dynamic-compositor" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Robot localization
+              Index
             
           </span>
         </div>
@@ -213,7 +213,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../" class="md-tabs__link">
+      <a href="../../../../ROS/" class="md-tabs__link">
         
   
     
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../Other/" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         
   
     
@@ -417,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../" class="md-nav__link">
+      <a href="../../../../ROS/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -543,7 +543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../Other/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -595,8 +595,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -605,69 +603,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#coordinate-systems" class="md-nav__link">
+  <a href="#dynamic-compositor" class="md-nav__link">
     <span class="md-ellipsis">
-      Coordinate systems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-its-work" class="md-nav__link">
-    <span class="md-ellipsis">
-      How it's work
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How it's work">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tf" class="md-nav__link">
-    <span class="md-ellipsis">
-      TF
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sensor-flow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sensor flow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#covariance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Covariance
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      Demo
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reference
+      Dynamic compositor
     </span>
   </a>
   
@@ -692,13 +630,13 @@
       
       
       
-        <span class="md-tag">localization</span>
+        <span class="md-tag">compositor</span>
       
     
       
       
       
-        <span class="md-tag">ros</span>
+        <span class="md-tag">gstreamer</span>
       
     
   </nav>
@@ -708,87 +646,39 @@
   
 
 
-<h1 id="robot-localization">Robot localization</h1>
-<p>The robot_localization package is a collection of non-linear state estimators for robots moving in 3D (or 2D) space. <a href="https://docs.ros.org/en/melodic/api/robot_localization/html/index.html">more</a>  </p>
-<p>Each of the state estimators can fuse an arbitrary number of sensors (IMUs, odometers, indoor localization systems, GPS receivers…) to track the 15 dimensional:</p>
-<ul>
-<li><strong>position</strong>: x, y, z</li>
-<li><strong>orientation</strong>: roll, pitch, yaw</li>
-<li><strong>linear velocity</strong>: vx, vy, vz</li>
-<li><strong>angular velocity</strong>:  roll_rate, pitch_rate, yaw_rate</li>
-<li><strong>linear acceleration</strong>: ax, ay, az</li>
-</ul>
-<h2 id="coordinate-systems">Coordinate systems</h2>
-<p>REP 105 <a href="http://www.ros.org/reps/rep-0105.html">Coordinate Frames for Mobile Platforms</a> which describe the coordinate system conventions used in ROS</p>
-<p>(earth) -&gt; map -&gt; odom -&gt; base_link</p>
-<p><strong>base_link</strong> is rigidly attached to the mobile robot’s base. The base_link frame can be attached in any arbitrary position or orientation, but REP 103 specifies the preferred orientation of the frame as X forward, Y left and Z up. (flu)</p>
-<p><strong>odom</strong> frame is a local, drifting coordinate system used to track the robot's position relative to its starting point.
-- It starts at (0, 0, 0) when the robot boots up.
-- It moves with the robot as it drives around.
-- It is smooth and continuous, meaning it never jumps — ideal for control.
-- But it can drift over time due to sensor inaccuracies (e.g., wheel slippage, IMU noise).</p>
-<p>Odometry is the process of estimating the robot's pose (position + orientation) by integrating motion over time.<br />
-<strong>odom -&gt; base_link</strong> transform (robot's motion relative to the start)</p>
-<div class="admonition tip">
-<p class="admonition-title">Dead Reckoning</p>
-<p>Dead reckoning is the process of estimating your current position based on a previous position and motion measurements (like speed and direction).</p>
-</div>
-<p><strong>map</strong> frame is a fixed, global reference frame in ROS used for global localization — a known, non-drifting coordinate system representing the world.</p>
-<div class="admonition note">
-<p class="admonition-title">How to get the map frame</p>
-<p>To create the map → odom transform, you need absolute/global measurements. robot_localization has a node for that:</p>
-<ul>
-<li><strong>navsat_transform_node</strong> (GPS integration).</li>
-<li>absolute pose measurements (e.g. fiducial markers, AMCL, SLAM outputs).</li>
-</ul>
-<p>When robot_localization gets absolute measurements, it computes the correction between your <strong>drifting</strong> odometry (odom) and the global reference (map).<br />
-<strong>That correction is then published as the map → odom transform.</strong></p>
-</div>
+  <h1>Index</h1>
+
+<p><a href="/Other/">Other</a> / <a href="/Other/Gstreamer/">Gstreamer</a> / <a href="/Other/Gstreamer/gstreamer/">gstreamer</a></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">simple pipe with compositor</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Simple GStreamer compositor with two videotestsrc side by side</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>gst-launch-1.0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span>compositor<span class="w"> </span><span class="nv">name</span><span class="o">=</span>comp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span>sink_0::xpos<span class="o">=</span><span class="m">0</span><span class="w"> </span>sink_0::ypos<span class="o">=</span><span class="m">0</span><span class="w"> </span>sink_0::width<span class="o">=</span><span class="m">320</span><span class="w"> </span>sink_0::height<span class="o">=</span><span class="m">240</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span>sink_1::xpos<span class="o">=</span><span class="m">320</span><span class="w"> </span>sink_1::ypos<span class="o">=</span><span class="m">0</span><span class="w"> </span>sink_1::width<span class="o">=</span><span class="m">320</span><span class="w"> </span>sink_1::height<span class="o">=</span><span class="m">240</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span>video/x-raw,width<span class="o">=</span><span class="m">640</span>,height<span class="o">=</span><span class="m">240</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span>videoconvert<span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span>autovideosink<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">  </span>videotestsrc<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="m">0</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span>video/x-raw,width<span class="o">=</span><span class="m">320</span>,height<span class="o">=</span><span class="m">240</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span>comp.sink_0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">  </span>videotestsrc<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span>video/x-raw,width<span class="o">=</span><span class="m">320</span>,height<span class="o">=</span><span class="m">240</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span>comp.sink_1
+</code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="how-its-work">How it's work</h2>
-<p>The robot_localization state estimator nodes accept measurements from an arbitrary number of pose-related sensors:</p>
-<ul>
-<li><strong>nav_msgs/Odometry</strong>: position, orientation, linear and angular velocity</li>
-<li><strong>sensor_msgs/Imu</strong>: orientation, angular velocity and linear acceleration</li>
-<li><strong>geometry_msgs/PoseWithCovarianceStamped</strong>: position and orientation</li>
-<li><strong>geometry_msgs/TwistWithCovarianceStamped</strong>: linear and angular velocity</li>
-</ul>
-<p>Based on these measurements, the state estimators publish the filtered position, orientation and linear and angular velocity (nav_msgs/Odometry) on the <strong>/odometry/filtered</strong> topic and (if enabled) the filtered acceleration on the <strong>/accel/filtered</strong> topics.</p>
-<h3 id="tf">TF</h3>
-<p>robot_localization publish one of the tf's
-- odom -&gt; base_link
-- map -&gt; odom</p>
-<p>Usually we run two estimator</p>
-<ul>
-<li><strong>odom → base_link</strong> transform, which gets all continuous inputs</li>
-<li><strong>map → odom</strong> transform, which gets all (both continuous and non-continuous)</li>
-</ul>
-<h3 id="sensor-flow">Sensor flow</h3>
-<ul>
-<li><strong>continuous sensors</strong> send data in high rate and regularly like imu and wheel odometry (&gt;10hz)</li>
-<li><strong>none-continuous sensor</strong> send data in low rate like gps (&lt;10 hz) and can be expected non-regularly interval.</li>
-</ul>
-<p>This very important to the filter how much trust to put on <strong>prediction</strong> and how aggressively to <strong>correct</strong> on sensor update</p>
-<hr />
-<h3 id="covariance">Covariance</h3>
-<p>Covariance is the tendency for two variables to vary together, which is a way of being correlated!</p>
-<div class="admonition note">
-<p class="admonition-title">Variance</p>
-<p>Variance measures how much a single variable (e.g., sensor noise in one axis) fluctuates around its mean.</p>
-</div>
-<p>Covariance quantifies uncertainty and correlation in sensor measurements. In robotics, every sensor reading is accompanied by a covariance matrix, and estimators (like EKF-SLAM, robot_localization) use that matrix to optimally combine noisy sensor data.</p>
-<p><a href="covariance">more</a></p>
-<hr />
-<h2 id="demo">Demo</h2>
-<p>Use turtlesim to simulate robot_localization package usage<br />
-The idea for the demo <a href="https://kapernikov.com/the-ros-robot_localization-package/" target="_blank">The Ros Robot_localization package</a></p>
-<p><a href="localization_demo">Read more</a></p>
-<hr />
-<h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://kapernikov.com/the-ros-robot_localization-package/" target="_blank">The Ros Robot_localization package</a></li>
-<li><a href="https://github.com/methylDragon/ros-sensor-fusion-tutorial" target="_blank">Sensor Fusion in ROS good resource</a></li>
-</ul>
+<h2 id="dynamic-compositor">Dynamic compositor</h2>
 
 
 
