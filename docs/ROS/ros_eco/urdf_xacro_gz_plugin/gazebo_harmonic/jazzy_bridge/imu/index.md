@@ -23,6 +23,9 @@ Bridge IMU sensor from gazebo to ros
     ```
 
 
+!!! tip "sdf imu"
+  [SDF specification](http://sdformat.org/spec?ver=1.12&elem=sensor#sensor_imu)
+     
 ```xml title="sensor"
 <sensor name="imu" type="imu">
     <always_on>1</always_on>
@@ -36,7 +39,21 @@ Bridge IMU sensor from gazebo to ros
 !!! tip "urdf"
     Don't forget to shroud with `<gazebo reference="link name"> ` tag
 
+    ```xml
+    <!-- link -->
+    <link name="imu_link"/>
 
+    <!-- plugin -->
+    <gazebo reference="imu_link">
+      <sensor name="imu" type="imu">
+        <always_on>1</always_on>
+        <update_rate>50</update_rate>
+        <visualize>true</visualize>
+        <topic>imu</topic>
+        <enable_metrics>true</enable_metrics>
+      </sensor>
+    </gazebo>
+    ```
 
 ```bash title="gz"
 gz topic --echo -t /imu
