@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+<title>ROS2 Trigger Service Client</title>
+<script>
+  // Connect to ROS bridge
+  var ros = new ROSLIB.Ros();
+  ros.connect('ws://localhost:9090');
+  ros.on('connection', function() {
+    console.log('Connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.log('Error connecting to websocket server: ', error);
+  });
+  ros.on('close', function() {
+    console.log('Connection to websocket server closed.');
+  });
+
+  // Create the service client
+  var triggerClient = new ROSLIB.Service({
+    ros: ros,
+    name: '/trigger_srv',
+    serviceType: 'std_srvs/Trigger'
+  });
+
+  function callTriggerService() {
+    var request = new ROSLIB.ServiceRequest({});
+    triggerClient.callService(request, function(result) {
+      document.getElementById('serviceResult').textContent =
+        'Success: ' + result.success + ', Message: ' + result.message;
+    }, function(error) {
+      document.getElementById('serviceResult').textContent =
+        'Service call failed: ' + error;
+    });
+  }
+</script>
+</head>
+<body>
+  <h2>ROS2 Trigger Service Client</h2>
+  <button onclick="callTriggerService()">Call Trigger Service</button>
+  <div id="serviceResult">Result will appear here.</div>
+</body>
+</html>

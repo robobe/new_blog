@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+<title>ROS2 Counter Subscriber</title>
+<script>
+  // Connect to ROS bridge
+  var ros = new ROSLIB.Ros();
+  ros.connect('ws://localhost:9090');
+  ros.on('connection', function() {
+    console.log('Connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.log('Error connecting to websocket server: ', error);
+  });
+  ros.on('close', function() {
+    console.log('Connection to websocket server closed.');
+  });
+
+  // Subscribe to the 'counter' topic
+  var counterListener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/counter',
+    messageType: 'std_msgs/Int32'
+  });
+
+  counterListener.subscribe(function(message) {
+    document.getElementById('counterValue').textContent = message.data;
+  });
+</script>
+</head>
+<body>
+  <h2>ROS2 Counter Subscriber</h2>
+  <label for="counterValue">Current counter value:</label>
+  <span id="counterValue">Waiting for data...</span>
+</body>
+</html>
