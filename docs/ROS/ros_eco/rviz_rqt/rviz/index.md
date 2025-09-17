@@ -1,9 +1,12 @@
 ---
+title: RVIZ2
 tags:
     - ros
     - rviz
 ---
-# rviz2
+
+{{ page_folder_links() }}
+
 rviz2 is a visualization tool in ROS 2.
 
 It provides a 3D GUI to visualize:
@@ -52,7 +55,8 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         output='screen',
-        arguments=['-d', config_file]
+        arguments=['-d', config_file],
+        parameters=[{'use_sim_time': True}]
     )
 
     ld.add_action(rviz_node)

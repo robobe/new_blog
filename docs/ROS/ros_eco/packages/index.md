@@ -35,7 +35,7 @@ Ros packages and tools that are used in the ROS eco system.
         </a>
     </div>
     <div class="grid-item">
-        <a href="maweb_bridgevros">
+        <a href="web_bridge">
             <img src="images/web_bridge.png"  width="150" height="150">
             <p>Web bridge</p>
         </a>

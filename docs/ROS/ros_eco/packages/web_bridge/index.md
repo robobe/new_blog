@@ -3,7 +3,6 @@ title: ROS2 web bridge
 tags:
     - web_bridge
     - rosbridge_suite
-    - 
 ---
 
 {{ page_folder_links() }}
@@ -140,7 +139,7 @@ The js subscribe using bridge
      ```
 
 <details>
-    <summary>simple publisher</summary>
+    <summary>simple service</summary>
 
 ```python
 --8<-- "docs/ROS/ros_eco/packages/web_bridge/code/simple_service.py"

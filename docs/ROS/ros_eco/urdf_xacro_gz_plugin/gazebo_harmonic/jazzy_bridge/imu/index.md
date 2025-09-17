@@ -33,6 +33,7 @@ Bridge IMU sensor from gazebo to ros
     <visualize>true</visualize>
     <topic>imu</topic>
     <enable_metrics>true</enable_metrics>
+    <gz_frame_id>imu_link</gz_frame_id>
 </sensor>
 ```
 
@@ -51,6 +52,7 @@ Bridge IMU sensor from gazebo to ros
         <visualize>true</visualize>
         <topic>imu</topic>
         <enable_metrics>true</enable_metrics>
+        <gz_frame_id>imu_link</gz_frame_id>
       </sensor>
     </gazebo>
     ```
@@ -88,3 +90,50 @@ TODO: check this coda again
 ```python title="imu_bridge.launch.py"
 --8<-- "docs/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge/imu/code/imu_bridge.launch.py"
 ```
+
+!!! tip "frame_id"
+    By default gazebo frame_id will be sensor link
+     
+
+    ```json
+    header {
+      stamp {
+        sec: 901
+        nsec: 340000000
+      }
+      data {
+        key: "frame_id"
+        value: "my_bot::base_footprint::imu"
+      }
+      data {
+        key: "seq"
+        value: "36688"
+      }
+    }
+    ```
+
+    this map to in ros message
+
+    ```yaml
+    header:
+      stamp:
+        sec: 61
+        nanosec: 220000000
+      frame_id: my_bot::base_footprint::imu
+    ```
+
+    using `<gz_frame_id>imu_link</gz_frame_id>` to control frame_id value
+
+
+    ```yaml
+    ros2 topic echo --once /imu --field header
+
+    #
+      stamp:
+        sec: 149
+        nanosec: 540000000
+      frame_id: imu_link
+    ```
+
+---
+
