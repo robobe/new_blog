@@ -22,7 +22,7 @@
     
     
       
-        <title>MCP - Robots Inside</title>
+        <title>VSCode MCP Server - Robots Inside</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mcp" class="md-skip">
+        <a href="#mcp-concept" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MCP
+              VSCode MCP Server
             
           </span>
         </div>
@@ -595,8 +595,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -605,27 +603,129 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#good-videos-and-posts" class="md-nav__link">
+  <a href="#mcp-concept" class="md-nav__link">
     <span class="md-ellipsis">
-      Good videos and posts
+      MCP Concept
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#must-watch" class="md-nav__link">
+  <a href="#simple-mcp-server-demo" class="md-nav__link">
     <span class="md-ellipsis">
-      Must watch
+      Simple MCP Server demo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple MCP Server demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#very-simple-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Very simple server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register-the-server-in-vscode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Register the server in vscode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-from-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage from copilot
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage from copilot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcptool" class="md-nav__link">
+    <span class="md-ellipsis">
+      @mcp.tool()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpprompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      @mcp.prompt()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpresource" class="md-nav__link">
+    <span class="md-ellipsis">
+      @mcp.resource()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-demos" class="md-nav__link">
+    <span class="md-ellipsis">
+      More Demos
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#must-read" class="md-nav__link">
+  <a href="#resources" class="md-nav__link">
     <span class="md-ellipsis">
-      Must Read
+      Resources
     </span>
   </a>
   
@@ -666,17 +766,211 @@
   
 
 
-<h1 id="mcp">MCP</h1>
-<h2 id="good-videos-and-posts">Good videos  and posts</h2>
+  <h1>VSCode MCP Server</h1>
+
+<p><a href="/DevOps/">DevOps</a> / <a href="/DevOps/vscode/">vscode</a></p>
+<p>MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems.</p>
+<h2 id="mcp-concept">MCP Concept</h2>
 <ul>
+<li><strong>Resources</strong>: File-like data that can be read by clients (like API responses or file contents)</li>
+<li><strong>Tools</strong>: Functions that can be called by the LLM (with user approval)</li>
+<li><strong>Prompts</strong>: Pre-written templates that help users accomplish specific tasks</li>
+</ul>
+<h2 id="simple-mcp-server-demo">Simple MCP Server demo</h2>
+<p>using python <a href="https://github.com/modelcontextprotocol/python-sdk">mcp library</a></p>
+<div class="admonition warning">
+<p class="admonition-title">uv</p>
+<p>Must of the example use <code>uv</code> the new package installer and runner
+I still use pip and the old virtual environment</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">using logging</p>
+<p>Using logging and not print</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<h3 id="logging">Logging</h3>
+<p>The logging from the mcp server mark is <code>warning</code> and from [server stderr] as source , is ok and not an <strong>error</strong> the mcp output to stderr we can show from the image below that the rest of the logging line describe to output from our mcp server</p>
+<p><img alt="alt text" src="images/vscode_mcp_output.png" /></p>
+<h3 id="install">Install</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>mcp<span class="o">[</span>cli<span class="o">]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>pip<span class="w"> </span>install<span class="w"> </span>trio<span class="w"> </span><span class="c1">#  friendly Python library for async concurrency and I/O</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="very-simple-server">Very simple server</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mcp.server.fastmcp</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastMCP</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(levelname)s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="c1"># Create an MCP server</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">mcp</span> <span class="o">=</span> <span class="n">FastMCP</span><span class="p">(</span><span class="s2">&quot;Demo&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;------- Starting MCP server -------&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="nd">@mcp</span><span class="o">.</span><span class="n">tool</span><span class="p">()</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Add two numbers together.&quot;&quot;&quot;</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="c1"># Prompt: greeting</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="nd">@mcp</span><span class="o">.</span><span class="n">prompt</span><span class="p">()</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a greeting prompt.&quot;&quot;&quot;</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Please write a short greeting for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="c1"># Resource: static greeting</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="nd">@mcp</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s2">&quot;hello://</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="k">def</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a static greeting resource.&quot;&quot;&quot;</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!&quot;</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a><span class="c1"># Entrypoint</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>    <span class="n">mcp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="register-the-server-in-vscode">Register the server in vscode</h3>
+<p>From <code>mcp.json</code> file we can manage the server: start, stop, show output(log) and more
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">mcp.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">        </span><span class="nt">&quot;demo-mcp&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">            </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.venv/bin/python&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">            </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">                </span><span class="s2">&quot;mcp_demo.py&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">                </span><span class="s2">&quot;stdio&quot;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">            </span><span class="p">],</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p>The <code>tools</code> relevant only from agent mode and can config using the tool icon</p>
+<p><img alt="alt text" src="images/agent_tools.png" /></p>
+<h3 id="manage">Manage</h3>
+<p>From vscode extensions tab</p>
+<p><img alt="alt text" src="images/vscode_mcp_server_extensions.png" /></p>
+<h3 id="usage-from-copilot">Usage from copilot</h3>
+<h4 id="mcptool">@mcp.tool()</h4>
+<ul>
+<li>Purpose: Expose a Python function as a structured action the client (Copilot Chat, Cursor, Windsurf, etc.) can call.</li>
+<li>Input/Output: JSON-serializable arguments and return values.</li>
+<li>Use case: Do something deterministic (math, file ops, API calls).</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">permission</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">agent mode</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>Use the add tool with a=2 and b=3
+</code></pre></div></td></tr></table></div>
+<p><img alt="alt text" src="images/tool.png" /></p>
+<h4 id="mcpprompt">@mcp.prompt()</h4>
+<ul>
+<li>Purpose: Expose a prompt template (reusable instruction).</li>
+<li>Input: Arguments you want to inject into the prompt string.</li>
+<li>Output: A text template that will be fed to the AI.</li>
+<li>Use case: Style instructions, boilerplate phrasing, workflows.</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>Use the greet prompt with name=&quot;Amir&quot;
+</code></pre></div></td></tr></table></div>
+<h4 id="mcpresource">@mcp.resource()</h4>
+<ul>
+<li>Purpose: Expose structured data sources the client can browse/fetch.</li>
+<li>Input: Usually a URI-like parameter (you define the pattern).</li>
+<li>Output: String or JSON content.</li>
+<li>Use case: Provide documents, snippets, templates, or data.</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>Fetch hello://Alice
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="more-demos">More Demos</h2>
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="generate_files">
+        <p>Generate files from templates</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="">
+        <p></p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="">
+        <p></p>
+        </a>
+    </div>
+</div>
+<hr />
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=Dklv1DkYgK8">MCP Servers for VS Code (Crash Course)</a></li>
 <li><a href="https://youtu.be/iS25RFups4A">Visual Studio code + CMP server getting started guid what why how</a></li>
-</ul>
-<h2 id="must-watch">Must watch</h2>
-<ul>
-<li>[Create MCP Servers from Python Code in 10.5 Minutes]|(https://youtu.be/2hwrxAbw-9Y)</li>
-</ul>
-<h2 id="must-read">Must Read</h2>
-<ul>
+<li><a href="https://youtu.be/2hwrxAbw-9Y">Create MCP Servers from Python Code in 10.5 Minutes</a></li>
 <li><a href="https://www.digitalocean.com/community/tutorials/mcp-server-python">MCP Server in Python — Everything I Wish I’d Known on Day One</a></li>
 </ul>
 
