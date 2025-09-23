@@ -34,5 +34,18 @@ tags:
                 <p>betaflight</p>
             </a>
     </div>
-    
-</div>![alt text](image.png)
+    <div class="grid-item">
+        <a href="fpv">
+                <img src="images/fpv.png"  width="150" height="150">
+                <p>FPV</p>
+            </a>
+    </div>
+</div>    
+
+## To read and watch
+- [Building a sub 250g Autonomous Drone with Ardupilot and ExpressLRS AirPort Telemetry](https://youtu.be/u_ArriXbrR0)
+    - [part list](https://www.thingiverse.com/thing:6699961)
+- [BETAFLIGHT Tutorial for Beginners!!! - Updated & Step by Step](https://youtu.be/If1DEpShDV8)
+
+- [fpv simulators](https://oscarliang.com/fpv-simulator/)
+- [expresslrs](https://www.expresslrs.org/)
