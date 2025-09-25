@@ -15,9 +15,9 @@ tags:
                 <p>Kalman Filter</p></a>
     </div>
     <div class="grid-item">
-        <a href="mpc">
-                <img src="images/mpc.png"  width="150" height="150">
-                <p>TBD</p>
+        <a href="filters">
+                <img src="images/filters.png"  width="150" height="150">
+                <p>Filters</p>
             </a>
     </div>
 </div>
