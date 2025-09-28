@@ -13,15 +13,15 @@ tags:
                 <p>linear algebra</p></a>
     </div>
     <div class="grid-item">
-        <a href="math">
-                <img src="images/robotics_math.png"  width="150" height="150">
-                <p>Math</p>
+        <a href="coordinate_system">
+                <img src="images/coordinate_system.png"  width="150" height="150">
+                <p>Coordinate systems</p>
             </a>
     </div>
     <div class="grid-item">
-        <a href="slam">
-                <img src="images/slam.png"  width="150" height="150">
-                <p>SLAM</p>
+        <a href="quaternion">
+        <img src="images/quaternion.png"  width="150" height="150">
+                <p>quaternion</p>
             </a>
     </div>
 </div>

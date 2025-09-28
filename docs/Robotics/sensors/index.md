@@ -18,8 +18,9 @@ tags:
             </a>
     </div>
     <div class="grid-item">
-        <a href="">
-                <p>--</p>
+        <a href="imu">
+        <img src="images/imu.png"  width="150" height="150">
+                <p>IMU</p>
             </a>
     </div>
     <div class="grid-item">
