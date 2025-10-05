@@ -612,6 +612,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#conjugate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conjugate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#slerp" class="md-nav__link">
     <span class="md-ellipsis">
       Slerp
@@ -633,6 +642,39 @@
   <a href="#multiple" class="md-nav__link">
     <span class="md-ellipsis">
       Multiple
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multiple">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#by-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      by vector
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#by-quaternion" class="md-nav__link">
+    <span class="md-ellipsis">
+      by quaternion
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
     </span>
   </a>
   
@@ -680,15 +722,212 @@
 <p><a href="https://youtu.be/1yoFjjJRnLY">Quaternions without math</a>
 <img alt="alt text" src="image.png" /></p>
 <h3 id="unit-quaternion">Unit quaternion</h3>
-<p>A unit quaternion used for representing 3D rotation</p>
+<p>A unit quaternion like unit vector is simply a vector with length (magnitude) equal to 1, but pointing in the same direction as the original vector.</p>
+<p>quaternion:
+<span class="arithmatex">\(<span class="arithmatex">\(q = w + xi + yj + zk\)</span>\)</span></p>
+<p>as a vector
+<span class="arithmatex">\(<span class="arithmatex">\(q = (w, x, y, z)\)</span>\)</span></p>
+<p>calc the <strong>norm</strong>
+<span class="arithmatex">\(<span class="arithmatex">\(\|q\| = \sqrt{w^2 + x^2 + y^2 + z^2}\)</span>\)</span></p>
+<p>calc <strong>unit quaternion</strong>
+<span class="arithmatex">\(<span class="arithmatex">\(q_{unit} = \frac{q}{\|q\|} = \left(\frac{w}{\|q\|}, \frac{x}{\|q\|}, \frac{y}{\|q\|}, \frac{z}{\|q\|}\right)\)</span>\)</span></p>
+<details>
+    <summary>code example</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">unit_quaternion</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>  <span class="c1"># q = [w, x, y, z]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="k">if</span> <span class="n">norm</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Zero quaternion cannot be normalized&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="k">return</span> <span class="n">q</span> <span class="o">/</span> <span class="n">norm</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="c1"># Example</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">q</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="n">q_unit</span> <span class="o">=</span> <span class="n">unit_quaternion</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unit quaternion:&quot;</span><span class="p">,</span> <span class="n">q_unit</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Norm:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">q_unit</span><span class="p">))</span>  <span class="c1"># should be 1</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h3 id="conjugate">Conjugate</h3>
+<p>A quaternion is:
+<span class="arithmatex">\(<span class="arithmatex">\(q = (x, y, z, w)\)</span>\)</span></p>
+<p>The conjugate is:
+<span class="arithmatex">\(<span class="arithmatex">\(q^* = (-x, -y, -z, w)\)</span>\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">flip the signs of x, y, z, keep w the same.</p>
+</div>
+<hr />
 <h3 id="slerp">Slerp</h3>
-<h3 id="inverse">Inverse</h3>
-<h3 id="multiple">Multiple</h3>
+<p><strong>S</strong>pherical <strong>L</strong>inear int<strong>ERP</strong>olation (SLERP) is a method to smoothly interpolate between two orientations (unit quaternions).
+- SLERP traces the shortest arc along that sphere between them</p>
+<div class="arithmatex">\[SLERP(q_0, q_1, t) = \frac{\sin((1-t)\theta)}{\sin(\theta)} q_0 + \frac{\sin(t\theta)}{\sin(\theta)} q_1\]</div>
 <ul>
-<li>by vector</li>
-<li>by quaternion</li>
+<li>At t=0 → result = q0</li>
+<li>At t=1 → result = q1</li>
+<li>At t=0.5 → halfway rotation between them.</li>
 </ul>
+<details>
+    <summary>Demo: using scipy</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rotation</span> <span class="k">as</span> <span class="n">R</span><span class="p">,</span> <span class="n">Slerp</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># Define two orientations (Euler angles in degrees)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="n">r0</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>     <span class="c1"># facing forward</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">r1</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>    <span class="c1"># rotate 90° around Y</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1"># Define key times and rotations</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="n">key_times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>              <span class="c1"># start=0, end=1</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="n">key_rots</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span><span class="p">])</span>  <span class="c1"># list of rotations</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="c1"># Create SLERP object</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="n">slerp</span> <span class="o">=</span> <span class="n">Slerp</span><span class="p">(</span><span class="n">key_times</span><span class="p">,</span> <span class="n">key_rots</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="c1"># Interpolation at multiple times</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>    <span class="c1"># t=0.0,0.25,0.5,0.75,1.0</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="n">interp_rots</span> <span class="o">=</span> <span class="n">slerp</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="c1"># Print quaternions</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Interpolated quaternions [x, y, z, w]:&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">interp_rots</span><span class="o">.</span><span class="n">as_quat</span><span class="p">():</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h3 id="inverse">Inverse</h3>
+<div class="admonition tip">
+<p class="admonition-title">unit quaternion</p>
+<p>If q is a unit quaternion (∥q∥=1), then the <strong>conjugate</strong> is also the <strong>inverse</strong>.</p>
+</div>
+<p>when not unit length</p>
+<div class="arithmatex">\[q^{-1} = \frac{q^*}{\|q\|^2}\]</div>
+<div class="arithmatex">\[q \cdot q^{-1} = 1\]</div>
+<hr />
+<h3 id="multiple">Multiple</h3>
+<h4 id="by-vector">by vector</h4>
+<div class="arithmatex">\[\mathbf{v}' = q \, \mathbf{v} \, q^{-1}\]</div>
+<p>we treat the vector as pure quaternion</p>
+<div class="arithmatex">\[\mathbf{v} = (v_x, v_y, v_z, 0)\]</div>
+<details>
+    <summary>Numpy Example</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">q_mult</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="n">q2</span><span class="p">):</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">,</span> <span class="n">w1</span> <span class="o">=</span> <span class="n">q1</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">,</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">q2</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>        <span class="n">w1</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">x1</span><span class="o">*</span><span class="n">w2</span> <span class="o">+</span> <span class="n">y1</span><span class="o">*</span><span class="n">z2</span> <span class="o">-</span> <span class="n">z1</span><span class="o">*</span><span class="n">y2</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="n">w1</span><span class="o">*</span><span class="n">y2</span> <span class="o">-</span> <span class="n">x1</span><span class="o">*</span><span class="n">z2</span> <span class="o">+</span> <span class="n">y1</span><span class="o">*</span><span class="n">w2</span> <span class="o">+</span> <span class="n">z1</span><span class="o">*</span><span class="n">x2</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>        <span class="n">w1</span><span class="o">*</span><span class="n">z2</span> <span class="o">+</span> <span class="n">x1</span><span class="o">*</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">z1</span><span class="o">*</span><span class="n">w2</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="n">w1</span><span class="o">*</span><span class="n">w2</span> <span class="o">-</span> <span class="n">x1</span><span class="o">*</span><span class="n">x2</span> <span class="o">-</span> <span class="n">y1</span><span class="o">*</span><span class="n">y2</span> <span class="o">-</span> <span class="n">z1</span><span class="o">*</span><span class="n">z2</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="p">])</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="k">def</span><span class="w"> </span><span class="nf">q_conjugate</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">q</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="mi">3</span><span class="p">]])</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="c1"># Rotation quaternion: 90° about Z</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="mi">2</span><span class="p">)])</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="c1"># Conjugate (inverse)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="n">q_conj</span> <span class="o">=</span> <span class="n">q_conjugate</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="c1"># Our vector (as pure quaternion)</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="c1"># Rotate vector: v&#39; = q * v * q^-1</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="n">v_rot</span> <span class="o">=</span> <span class="n">q_mult</span><span class="p">(</span><span class="n">q_mult</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">q_conj</span><span class="p">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original vector:&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rotated vector :&quot;</span><span class="p">,</span> <span class="n">v_rot</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<h4 id="by-quaternion">by quaternion</h4>
 <p>Quaternion multiplication is used to combine rotations in 3D space</p>
+<div class="arithmatex">\[q_1 = (w_1, x_1, y_1, z_1), \quad q_2 = (w_2, x_2, y_2, z_2)\]</div>
+<div class="arithmatex">\[q = q_2 \cdot q_1 = 
+\Big( 
+w_2 w_1 - x_2 x_1 - y_2 y_1 - z_2 z_1, \;
+w_2 x_1 + x_2 w_1 + y_2 z_1 - z_2 y_1, \;
+w_2 y_1 - x_2 z_1 + y_2 w_1 + z_2 x_1, \;
+w_2 z_1 + x_2 y_1 - y_2 x_1 + z_2 w_1
+\Big)\]</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<div class="arithmatex">\[q_2 q_1 \neq q_1 q_2\]</div>
+</div>
+<hr />
+<h2 id="reference">Reference</h2>
 <p><a href="https://youtu.be/jTgdKoQv738">watch again</a></p>
 
 

@@ -614,6 +614,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clock
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#demo" class="md-nav__link">
     <span class="md-ellipsis">
       Demo
@@ -743,6 +752,22 @@
 <p><a href="https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_bridge#example-5-configuring-the-bridge-via-yaml" target="_blank">github config yaml and message type mapping table</a></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span>config_file:<span class="o">=</span><span class="nv">$WORKSPACE</span>/test/config/full.yaml
 </code></pre></div></td></tr></table></div>
+<h2 id="clock">Clock</h2>
+<ul>
+<li>Gazebo publishes a simulation clock internally.</li>
+<li>To share it with ROS, you need a bridge between Gazebo’s <code>gz.msgs.Clock</code> and ROS 2’s <code>rosgraph_msgs/msg/Clock</code>.</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rosgraph_msgs/msg/Clock&quot;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gz.msgs.Clock&quot;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
+</code></pre></div></td></tr></table></div>
+<hr />
 <h2 id="demo">Demo</h2>
 <p>Simulate using bridge, send message from side to side
 (no need to run gz sim for this check)</p>
@@ -752,23 +777,23 @@
 <li>Pub from GZ echo in ROS</li>
 <li>Pub from ROS echo in GZ</li>
 </ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal1: bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>/chatter@std_msgs/msg/String@gz.msgs.StringMsg
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1">#</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1734974012</span>.615668960<span class="o">]</span><span class="w"> </span><span class="o">[</span>ros_gz_bridge<span class="o">]</span>:<span class="w"> </span>Creating<span class="w"> </span>GZ-&gt;ROS<span class="w"> </span>Bridge:<span class="w"> </span><span class="o">[</span>/chatter<span class="w"> </span><span class="o">(</span>gz.msgs.StringMsg<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>/chatter<span class="w"> </span><span class="o">(</span>std_msgs/msg/String<span class="o">)]</span><span class="w"> </span><span class="o">(</span>Lazy<span class="w"> </span><span class="m">0</span><span class="o">)</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1734974012</span>.616345817<span class="o">]</span><span class="w"> </span><span class="o">[</span>ros_gz_bridge<span class="o">]</span>:<span class="w"> </span>Creating<span class="w"> </span>ROS-&gt;GZ<span class="w"> </span>Bridge:<span class="w"> </span><span class="o">[</span>/chatter<span class="w"> </span><span class="o">(</span>std_msgs/msg/String<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>/chatter<span class="w"> </span><span class="o">(</span>gz.msgs.StringMsg<span class="o">)]</span><span class="w"> </span><span class="o">(</span>Lazy<span class="w"> </span><span class="m">0</span><span class="o">)</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal1: bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>/chatter@std_msgs/msg/String@gz.msgs.StringMsg
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1">#</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1734974012</span>.615668960<span class="o">]</span><span class="w"> </span><span class="o">[</span>ros_gz_bridge<span class="o">]</span>:<span class="w"> </span>Creating<span class="w"> </span>GZ-&gt;ROS<span class="w"> </span>Bridge:<span class="w"> </span><span class="o">[</span>/chatter<span class="w"> </span><span class="o">(</span>gz.msgs.StringMsg<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>/chatter<span class="w"> </span><span class="o">(</span>std_msgs/msg/String<span class="o">)]</span><span class="w"> </span><span class="o">(</span>Lazy<span class="w"> </span><span class="m">0</span><span class="o">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1734974012</span>.616345817<span class="o">]</span><span class="w"> </span><span class="o">[</span>ros_gz_bridge<span class="o">]</span>:<span class="w"> </span>Creating<span class="w"> </span>ROS-&gt;GZ<span class="w"> </span>Bridge:<span class="w"> </span><span class="o">[</span>/chatter<span class="w"> </span><span class="o">(</span>std_msgs/msg/String<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>/chatter<span class="w"> </span><span class="o">(</span>gz.msgs.StringMsg<span class="o">)]</span><span class="w"> </span><span class="o">(</span>Lazy<span class="w"> </span><span class="m">0</span><span class="o">)</span>
 </code></pre></div></td></tr></table></div>
 <h4 id="pub-data-from-gz-to-ros">pub data from gz to ros</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal2: ros subscribe</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/chatter
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal2: ros subscribe</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/chatter
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal3: gz pub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span>/chatter<span class="w"> </span>-m<span class="w"> </span>gz.msgs.StringMsg<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;data:&quot;Hello&quot;&#39;</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal3: gz pub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span>/chatter<span class="w"> </span>-m<span class="w"> </span>gz.msgs.StringMsg<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;data:&quot;Hello&quot;&#39;</span>
 </code></pre></div></td></tr></table></div>
 <h4 id="pub-data-from-ros-to-gz">pub data from ros to gz</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal2: ros pub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/chatter<span class="w"> </span>std_msgs/msg/String<span class="w"> </span><span class="s2">&quot;data: &#39;Hi&#39;&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal2: ros pub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/chatter<span class="w"> </span>std_msgs/msg/String<span class="w"> </span><span class="s2">&quot;data: &#39;Hi&#39;&quot;</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal3: gz sub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>/chatter
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal3: gz sub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>/chatter
 </code></pre></div></td></tr></table></div>
 <hr />
 <h3 id="resources">Resources</h3>

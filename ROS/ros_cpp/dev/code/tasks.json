@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "colcon build",
+      "type": "shell",
+      "command": "colcon",
+      "args": [
+        "build",
+        "--cmake-args",
+        "-DCMAKE_BUILD_TYPE=${input:buildType}"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "buildType",
+      "type": "pickString",
+      "description": "Select build type",
+      "options": [
+        "Debug",
+        "Release",
+        "RelWithDebInfo",
+        "MinSizeRel"
+      ],
+      "default": "Debug"
+    }
+  ]
+}
