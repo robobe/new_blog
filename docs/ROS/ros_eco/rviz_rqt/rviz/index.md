@@ -27,7 +27,10 @@ sudo apt install ros-${ROS_DISTRO}-rviz2
 ## usage
 
 ```bash title="load with config"
-# rviz2 -d /path/to/config
+rviz2 -d /path/to/config
+# config file  and parameters
+rviz2 -d /path/to/config --ros-args -p use_sim_time:=True
+
 ```
 
 ```python title="launch file"

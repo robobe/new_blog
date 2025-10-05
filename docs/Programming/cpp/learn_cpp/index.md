@@ -10,12 +10,12 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="oop">
-        <p>oop</p>
+        <p>OOP</p>
         </a>
     </div>
     <div class="grid-item">
-    <a href="cmake">
-        <p></p>
+    <a href="multithread">
+        <p>Multithreading</p>
         </a>
     </div>
     <div class="grid-item">

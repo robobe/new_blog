@@ -189,7 +189,7 @@ Publish `tf` in 10 HZ, (change robot orientation)
     <summary>tf resolver</summary>
 
 ```python
---8<-- "docs/ROS/ros_world/ros_tf/code/demo3_dynamic_tf_broadcaster.py"
+--8<-- "docs/ROS/ros_world/ros_tf/code/demo3_dynamic_reolver.py"
 ```
 </details>
 

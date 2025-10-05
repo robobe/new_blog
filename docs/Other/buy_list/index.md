@@ -6,7 +6,7 @@ tags:
 # new laptop
 - [Asus ROG Zephyrus G14 (2025) GA403WR-QS096 ](https://ksp.co.il/web/item/384092)
     - [config ubuntu 24.04](https://github.com/dariomncs/asus-ubuntu)
-
+- [bestbuy](https://www.bestbuy.com/site/searchpage.jsp?_dyncharset=UTF-8&browsedCategory=pcmcat287600050003&id=pcat17071&iht=n&ks=960&list=y&qp=graphicscardsv_facet%3DVideo%20Card~NVIDIA%20GeForce%20RTX%205070%20Ti%5Eparent_laptopscreensizesv_facet%3DScreen%20Size~14%22%20-%2015.9%22&sc=Global&st=categoryid%24pcmcat287600050003&type=page&usc=All%20Categories)
 
 [If You're About to Buy a Laptop, Watch This Firstdddd](https://youtu.be/mmCbIkqPmqI)
 

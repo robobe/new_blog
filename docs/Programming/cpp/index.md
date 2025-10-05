@@ -1,10 +1,11 @@
 ---
+title: C++
 tags:
     - cpp
     - vscode
 ---
 
-# CPP
+{{ page_folder_links() }}
 
 <div class="grid-container">
     <div class="grid-item">
@@ -14,9 +15,15 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href="cmake">
-        <img src="images/cmake.png" width="150" height="150">
-        <p>CMake</p>
+        <a href="cmake">
+            <img src="images/cmake.png" width="150" height="150">
+            <p>CMake</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="gtest">
+            <img src="images/gtest.png" width="150" height="150">
+            <p>gtest</p>
         </a>
     </div>
     <div class="grid-item">
@@ -27,9 +34,39 @@ tags:
     
 </div>
 
-## Posts
+---
 
-- [Cpp threading](cpp_threading.md)
+## Libraries
+
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="libraries/fmt/">
+        <p>fmt</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="">
+        <p>---</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="">
+        <p>---</p>
+        </a>
+    </div>
+    
+</div>
+
+---
+## Compilers
+
+| C++  | GCC  | Clang  | ubuntu  | Notes  |
+|---|---|---|---|---|
+| C++17  | 7  |  5 |   |   |
+| C++20  | 11  |  14 | 22.04  |   |
+| C++23  | 13  |  18 | 24.04  |   |
+
 
 ---
 

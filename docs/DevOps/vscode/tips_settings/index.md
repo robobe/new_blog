@@ -73,6 +73,12 @@ Add `key` to `keybindings.json` file
 
 - rcfile: specify an alternative initialization file (RC file) to source when starting a new bash session
 
+### Disabled auto suggest
+
+```json
+"terminal.integrated.suggest.enabled": false
+```
+
 ---
 
 ## Editor

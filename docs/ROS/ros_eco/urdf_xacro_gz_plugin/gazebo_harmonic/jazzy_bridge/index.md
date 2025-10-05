@@ -71,6 +71,23 @@ The bridge allows you to connect ROS 2 topics with Gazebo Harmonic topics so you
 ros2 run ros_gz_bridge parameter_bridge --ros-args -p config_file:=$WORKSPACE/test/config/full.yaml
 ```
 
+## Clock
+
+- Gazebo publishes a simulation clock internally.
+- To share it with ROS, you need a bridge between Gazebo’s `gz.msgs.Clock` and ROS 2’s `rosgraph_msgs/msg/Clock`.
+  
+
+```yaml
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+```
+
+
+---
+
 ## Demo
 Simulate using bridge, send message from side to side
 (no need to run gz sim for this check)

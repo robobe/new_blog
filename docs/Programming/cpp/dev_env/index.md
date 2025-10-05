@@ -8,6 +8,57 @@ tags:
 
 # VSCode CPP dev environment
 
+|   |   |
+|---|---|
+| ![alt text](images/c_cpp_extension.png)  | C/C++ IntelliSense, debugging, and code browsing.  |
+| ![alt text](images/cmake_tool_extension.png) | Interfacing with the build process  |
+
+
+## Build
+
+### Using CMake presets
+CMake Presets contain information how to:
+- configure, 
+- build, 
+- test 
+- package a project. 
+ 
+ 
+Preset information is stored in a JSON files:
+
+```json
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      // ...
+    }
+  ],
+  "buildPresets": [
+    {
+      // ...
+    }
+  ],
+  "testPresets": [
+    {
+      // ...
+    }
+  ]
+}
+```
+
+!!! tip ""
+     - CMake presets
+     - Kits and Variants
+
+---
+
+### Compilers
 ## Clang
 - Install clang version 19 support cpp-20
 - Config `update-alternative`
