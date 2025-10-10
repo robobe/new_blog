@@ -17,6 +17,17 @@ URDF is an xml file that describe the geometry of a robot. URDF is a tree struct
 </robot>
 ```
 
+!!! tip "View urdf/xacro quickly"
+    Using `urdf-tutorial` package
+    ```
+    sudo apt install ros-humble-urdf-tutorial
+    ```
+
+    ```bash title="usage"
+    ros2 launch urdf_tutorial display.launch.py model:=<urdf/xacro full path>
+    ```
+     
+
 ## Link
 The link element describes a rigid body with an **inertia**, **visual** features, and **collision** properties.
 

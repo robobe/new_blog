@@ -7,6 +7,153 @@ tags:
 # ONNX
 ONNX (Open Neural Network Exchange) is an open-source format for representing machine learning models, designed to enable interoperability between different deep learning frameworks
 
+---
+
+## Install on nvidia jetson with jetpack 6.2
+
+!!! warning "onnx version"
+    - The last package from [Jetson Zoo](https://www.elinux.org/Jetson_Zoo#ONNX_Runtime) is for jetpack 6.0
+    - I found the last version 1.23 [pypi.jetson-ai-lab.io](https://pypi.jetson-ai-lab.io/jp6/cu126/+f/e1e/9e3dc2f4d5551/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl) it's installed successfully 
+    - ~~I try version 1.20 from [ultralytics](https://github.com/ultralytics/assets/releases/download/v0.0.0/onnxruntime_gpu-1.20.0-cp310-cp310-linux_aarch64.whl) that installed and run without any issue~~
+
+!!! warning ""
+    many sites refer to nvidia url: https://pypi.jetson-ai-lab.dev/jp6/cu126
+
+    the `dev` part reploace by `io`
+    https://pypi.jetson-ai-lab.io/jp6/cu126
+     
+
+### Installed on docker
+Install onnxruntime-gpu on docker that run on jetson orin using vscode and devcontainer
+
+
+```
+.
+|-- .devcontainer
+|   |-- Dockerfile
+|   `-- devcontainer.json
+|-- .gitignore
+|-- .vscode
+|-- README.md
+|-- docker-compose.yaml
+|-- requirements.txt
+`-- scripts
+    `-- check.py
+```
+
+<details>
+    <summary>.devcontainer/devcontainer.json</summary>
+
+```json
+--8<-- "docs/Programming/ai/onnx/code/.devcontainer/devcontainer.json"
+```
+</details>
+
+<details>
+    <summary>.devcontainer/Dockerfile</summary>
+
+```dockerfile
+--8<-- "docs/Programming/ai/onnx/code/.devcontainer/Dockerfile"
+```
+</details>
+
+<details>
+    <summary>docker-compose.yaml</summary>
+
+```yaml
+--8<-- "docs/Programming/ai/onnx/code/docker-compose.yaml"
+```
+</details>
+
+<details>
+    <summary>requirements.txt</summary>
+
+```txt
+--8<-- "docs/Programming/ai/onnx/code/requirements.txt"
+```
+</details>
+
+
+### Run
+
+```python
+import onnxruntime as ort
+
+# Show all available providers on your machine
+print("Available providers:", ort.get_available_providers())
+print("ONNX Runtime version:", ort.__version__)
+print("Build info:", ort.get_device())
+
+```
+
+```
+Available providers: ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
+ONNX Runtime version: 1.20.0
+Build info: GPU
+```
+
+---
+
+## Demo: mnist
+
+[MNIST model home page](https://github.com/onnx/models/tree/main/validated/vision/classification/mnist)
+
+[mnist-8.onnx](https://github.com/onnx/models/raw/refs/heads/main/validated/vision/classification/mnist/model/mnist-8.onnx)     
+
+
+!!! warning ""
+    [W:onnxruntime:Default, device_discovery.cc:164 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:89 ReadFileContents Failed to open file: "/sys/class/drm/card1/device/vendor"
+
+    for known i don't found and reference that help resolve the issue
+     
+- work with onnxruntime-gpu version 1.23
+- need numpy <2 
+- images [zero](docs/Programming/ai/onnx/code/images/zero.png), [six](docs/Programming/ai/onnx/code/images/six_1.png)
+- model: [mnist-8.onnx](docs/Programming/ai/onnx/code/model/mnist-8.onnx)
+- try with the 3 providers
+  - on the docker side success only with the cpu (TODO)
+  - on the host all off them work
+```python
+import onnxruntime as ort
+import numpy as np
+import cv2
+# import matplotlib.pyplot as plt
+
+# --- Load ONNX model ---
+# "CPUExecutionProvider"
+# CUDAExecutionProvider
+# TensorrtExecutionProvider
+session = ort.InferenceSession("model/mnist-8.onnx", providers=["CUDAExecutionProvider"])
+
+# --- Load and preprocess an image (28×28 grayscale) ---
+# You can replace 'digit.png' with your own file.
+img = cv2.imread("images/six_1.png", cv2.IMREAD_GRAYSCALE)
+
+if img is None:
+    # fallback: create a synthetic "3"-like shape for demo
+    img = np.zeros((28, 28), np.uint8)
+    cv2.putText(img, "3", (4, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.9, 255, 2)
+
+# Normalize to [0,1]
+img = img.astype(np.float32) / 255.0
+
+# Reshape to NCHW = (1,1,28,28)
+img = img.reshape(1, 1, 28, 28)
+
+# --- Run inference ---
+input_name = session.get_inputs()[0].name
+output_name = session.get_outputs()[0].name
+
+pred = session.run([output_name], {input_name: img})[0]
+digit = int(np.argmax(pred))
+
+print(f"Predicted digit: {digit}")
+
+
+
+```
+---
+
 
 ## tutorials
 - [Unlocking the Power of ONNX: A Beginner’s Guide with Practical Examples by using 80–20 rule](https://medium.com/@syedhamzatahir1001/unlocking-the-power-of-onnx-a-beginners-guide-with-practical-examples-by-using-80-20-rule-bd57d8fb54c8)
