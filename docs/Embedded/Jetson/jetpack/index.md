@@ -9,6 +9,14 @@ tags:
 
 ## SDK Manager
 
+### Tips
+
+```bash title="install from cli"
+#from nvidia/nvidia_sdk/JetPack_6.2.1_Linux_JETSON_ORIN_NX_TARGETS/Linux_for_Tegra
+sudo ./nvsdkmanager_flash.sh --storage nvme0n1p1
+```
+
+---
 
 ```bash
 # TODO: check when and way to command relevant

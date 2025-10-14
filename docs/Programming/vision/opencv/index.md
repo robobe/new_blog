@@ -25,3 +25,22 @@ tags:
         </div>
 
 </div>
+
+---
+
+## CPP
+
+```bash title="install using apt"
+# install headers, shared library and cmake config files
+sudo apt install libopencv-dev
+```
+
+### Demo
+
+```cpp
+--8<-- "code/hello_cv.cpp"
+```
+
+```cpp
+--8<-- "code/CMakeLists.txt"
+```

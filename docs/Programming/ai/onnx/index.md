@@ -7,7 +7,26 @@ tags:
 # ONNX
 ONNX (Open Neural Network Exchange) is an open-source format for representing machine learning models, designed to enable interoperability between different deep learning frameworks
 
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="cpp">
+        <p>C++</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="onnx">
+        <p>---</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="---">
+        <p>---</p></a>
+    </div>
+     
+</div>
+
 ---
+
+# #TODO: move to it's on section
 
 ## Install on nvidia jetson with jetpack 6.2
 
@@ -108,8 +127,8 @@ Build info: GPU
      
 - work with onnxruntime-gpu version 1.23
 - need numpy <2 
-- images [zero](docs/Programming/ai/onnx/code/images/zero.png), [six](docs/Programming/ai/onnx/code/images/six_1.png)
-- model: [mnist-8.onnx](docs/Programming/ai/onnx/code/model/mnist-8.onnx)
+- images [zero](code/images/zero.png), [six](code/images/six_1.png)
+- model: [mnist-8.onnx](code/model/mnist-8.onnx)
 - try with the 3 providers
   - on the docker side success only with the cpu (TODO)
   - on the host all off them work

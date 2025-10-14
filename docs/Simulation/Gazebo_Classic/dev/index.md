@@ -51,6 +51,7 @@ cat /etc/docker/daemon.json
 
 ### Dev environment using docker
 
+```
 ├── CMakeLists.txt
 ├── .devcontainer
 │   ├── devcontainer.json
@@ -63,7 +64,7 @@ cat /etc/docker/daemon.json
 └── .vscode
     ├── c_cpp_properties.json
     └── settings.json
-
+```
 
 <details>
     <summary>Docker</summary>
