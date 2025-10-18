@@ -24,6 +24,12 @@ tags:
                 <p>Geometric control</p>
             </a>
     </div>
+    <div class="grid-item">
+        <a href="lqr">
+                <img src="images/lqr.png"  width="150" height="150">
+                <p>LQR</p>
+            </a>
+    </div>
 </div>
 ---
 
@@ -39,3 +45,6 @@ tags:
 - 
 - [Engineering Mechanics: Dynamics 1 (Intuition + Application)]()
 - [Applied Control Systems 1: autonomous cars: Math + PID + MPC]()
+
+## TO READ
+- [How To Derive the State Space Model for a Mobile Robot](https://automaticaddison.com/how-to-derive-the-state-space-model-for-a-mobile-robot/)

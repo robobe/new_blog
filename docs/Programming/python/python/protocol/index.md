@@ -44,10 +44,10 @@ make_it_talk(Cat())
 @runtime_checkable makes a protocol usable with isinstance() or issubclass() at runtime.
 
 ```python
---8<-- "code/without_decorate.py"
+--8<-- "docs/Programming/python/python/protocol/code/without_decorate.py"
 ```
 
 
 ```python
---8<-- "code/using_runtime_checkable.py"
+--8<-- "docs/Programming/python/python/protocol/code/using_runtime_checkable.py"
 ```

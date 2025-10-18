@@ -1,12 +1,12 @@
 ---
 tags:
-    - onnx
-    - ai
+  - onnx
+  - ai
 ---
 
 # ONNX
-ONNX (Open Neural Network Exchange) is an open-source format for representing machine learning models, designed to enable interoperability between different deep learning frameworks
 
+ONNX (Open Neural Network Exchange) is an open-source format for representing machine learning models, designed to enable interoperability between different deep learning frameworks
 
 <div class="grid-container">
     <div class="grid-item">
@@ -30,21 +30,18 @@ ONNX (Open Neural Network Exchange) is an open-source format for representing ma
 
 ## Install on nvidia jetson with jetpack 6.2
 
-!!! warning "onnx version"
-    - The last package from [Jetson Zoo](https://www.elinux.org/Jetson_Zoo#ONNX_Runtime) is for jetpack 6.0
-    - I found the last version 1.23 [pypi.jetson-ai-lab.io](https://pypi.jetson-ai-lab.io/jp6/cu126/+f/e1e/9e3dc2f4d5551/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl) it's installed successfully 
-    - ~~I try version 1.20 from [ultralytics](https://github.com/ultralytics/assets/releases/download/v0.0.0/onnxruntime_gpu-1.20.0-cp310-cp310-linux_aarch64.whl) that installed and run without any issue~~
+!!! warning "onnx version" - The last package from [Jetson Zoo](https://www.elinux.org/Jetson_Zoo#ONNX_Runtime) is for jetpack 6.0 - I found the last version 1.23 [pypi.jetson-ai-lab.io](https://pypi.jetson-ai-lab.io/jp6/cu126/+f/e1e/9e3dc2f4d5551/onnxruntime_gpu-1.23.0-cp310-cp310-linux_aarch64.whl) it's installed successfully
 
-!!! warning ""
-    many sites refer to nvidia url: https://pypi.jetson-ai-lab.dev/jp6/cu126
+!!! warning "pypi.jetson-ai-lab.io"
+many sites refer to nvidia url: https://pypi.jetson-ai-lab.dev/jp6/cu126, note to the **dev** suffix
 
     the `dev` part reploace by `io`
     https://pypi.jetson-ai-lab.io/jp6/cu126
-     
+
 
 ### Installed on docker
-Install onnxruntime-gpu on docker that run on jetson orin using vscode and devcontainer
 
+Install onnxruntime-gpu on docker that run on jetson orin using vscode and devcontainer
 
 ```
 .
@@ -60,12 +57,30 @@ Install onnxruntime-gpu on docker that run on jetson orin using vscode and devco
     `-- check.py
 ```
 
+!!! tip ""
+At last i update my host with the command `sudo apt install nvidia-jetpack`
+And use the docker image **nvcr.io/nvidia/l4t-jetpack:r36.4.0**
+find at [NGC Catalog](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-jetpack/)
+
+| Package | version | note |
+| ------- | ------- | ---- |
+| jetpack |  R36.4.3       |  cat /etc/nv_tegra_release     | 
+| cuda    |   2.6      |  nvcc --version     |
+| cudnn   |  9.3.0       |  `dpkg -l \| grep cudnn`     |
+| tensorrt  | 10.3.0.30        |  `dpkg -l \| grep tensorrt`    |
+| onnxruntime |  1.23.0       |  ```python3 -c "import onnxruntime as ort; print('ONNX Runtime version:', ort.__version__)```"     |
+
+---
+
+## Code
+
 <details>
     <summary>.devcontainer/devcontainer.json</summary>
 
 ```json
 --8<-- "docs/Programming/ai/onnx/code/.devcontainer/devcontainer.json"
 ```
+
 </details>
 
 <details>
@@ -74,6 +89,7 @@ Install onnxruntime-gpu on docker that run on jetson orin using vscode and devco
 ```dockerfile
 --8<-- "docs/Programming/ai/onnx/code/.devcontainer/Dockerfile"
 ```
+
 </details>
 
 <details>
@@ -82,6 +98,7 @@ Install onnxruntime-gpu on docker that run on jetson orin using vscode and devco
 ```yaml
 --8<-- "docs/Programming/ai/onnx/code/docker-compose.yaml"
 ```
+
 </details>
 
 <details>
@@ -90,13 +107,16 @@ Install onnxruntime-gpu on docker that run on jetson orin using vscode and devco
 ```txt
 --8<-- "docs/Programming/ai/onnx/code/requirements.txt"
 ```
-</details>
 
+</details>
 
 ### Run
 
 ```python
 import onnxruntime as ort
+
+ort.set_default_logger_severity(0)  # 0 = VERBOSE, 1 = INFO, 2 = WARNING, 3 = ERROR, 4 = FATAL
+
 
 # Show all available providers on your machine
 print("Available providers:", ort.get_available_providers())
@@ -117,26 +137,29 @@ Build info: GPU
 
 [MNIST model home page](https://github.com/onnx/models/tree/main/validated/vision/classification/mnist)
 
-[mnist-8.onnx](https://github.com/onnx/models/raw/refs/heads/main/validated/vision/classification/mnist/model/mnist-8.onnx)     
-
+[mnist-8.onnx](https://github.com/onnx/models/raw/refs/heads/main/validated/vision/classification/mnist/model/mnist-8.onnx)
 
 !!! warning ""
-    [W:onnxruntime:Default, device_discovery.cc:164 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:89 ReadFileContents Failed to open file: "/sys/class/drm/card1/device/vendor"
+[W:onnxruntime:Default, device_discovery.cc:164 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:89 ReadFileContents Failed to open file: "/sys/class/drm/card1/device/vendor"
 
     for known i don't found and reference that help resolve the issue
-     
+
+
 - work with onnxruntime-gpu version 1.23
-- need numpy <2 
+- need numpy <2
 - images [zero](code/images/zero.png), [six](code/images/six_1.png)
 - model: [mnist-8.onnx](code/model/mnist-8.onnx)
 - try with the 3 providers
   - on the docker side success only with the cpu (TODO)
   - on the host all off them work
+
 ```python
 import onnxruntime as ort
 import numpy as np
 import cv2
-# import matplotlib.pyplot as plt
+
+ort.set_default_logger_severity(0)  # 0 = VERBOSE, 1 = INFO, 2 = WARNING, 3 = ERROR, 4 = FATAL
+
 
 # --- Load ONNX model ---
 # "CPUExecutionProvider"
@@ -171,13 +194,15 @@ print(f"Predicted digit: {digit}")
 
 
 ```
+
 ---
 
-
 ## tutorials
+
 - [Unlocking the Power of ONNX: A Beginner’s Guide with Practical Examples by using 80–20 rule](https://medium.com/@syedhamzatahir1001/unlocking-the-power-of-onnx-a-beginners-guide-with-practical-examples-by-using-80-20-rule-bd57d8fb54c8)
 - [Unlocking the Power of ONNX: A Beginner’s Guide with Practical Examples by using 80–20 rule (Part-2)](https://medium.com/@syedhamzatahir1001/unlocking-the-power-of-onnx-a-beginners-guide-with-practical-examples-by-using-80-20-rule-pt-2-b799e5398d8a)
 
 ## References
+
 - [onnx tutorial](https://www.youtube.com/playlist?list=PLkz_y24mlSJZJx9sQJCyFZt50S4ji1PeR)
 - [ONNX Explained with Example | Quick ML Tutorial](https://www.youtube.com/watch?v=cZtXdMao7Ic)

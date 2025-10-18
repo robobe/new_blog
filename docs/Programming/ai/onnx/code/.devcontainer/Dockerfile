@@ -1,4 +1,5 @@
-FROM nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04
+# FROM nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04
+FROM nvcr.io/nvidia/l4t-jetpack:r36.4.0
 
 ARG USERNAME=user
 ARG USER_UID=1000

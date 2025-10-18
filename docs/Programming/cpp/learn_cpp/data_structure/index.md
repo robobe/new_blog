@@ -12,11 +12,12 @@ tags:
 
 | Category                   | STL Container                                            | Description                                          |
 | -------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
-| **Sequence containers**    | [`std::vector`](#stdvector), [`std::array`](#stdarray), `std::deque`, [`std::list`](#stdlist)   | Store ordered collections of elements                |
+| **Sequence containers**    | [`std::vector`](#stdvector), [`std::array`](#stdarray), [`std::deque`](#stddeque), [`std::list`](#stdlist)   | Store ordered collections of elements                |
 | **Associative containers** | `std::set`, `std::map`, `std::multiset`, `std::multimap` | Sorted data based on keys (balanced BST)             |
 | **Unordered containers**   | `std::unordered_map`, `std::unordered_set`               | Hash-table-based lookup                              |
 | **Adapters**               | `std::stack`, `std::queue`, `std::priority_queue`        | Provide restricted interfaces for specific use cases |
-| | std::tuple | hold different types of values together in a single object. |
+| | [std::tuple](#stdtuple) | hold different types of values together in a single object. |
+| | [std::pair](#stdpair) | hold different types of values together in a single object. |
 
 ---
 

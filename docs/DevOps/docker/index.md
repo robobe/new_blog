@@ -31,6 +31,12 @@
         <p>docker nvidia</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="docker_issues">
+        <img src="images/issue.png" width="150" height="150">
+        <p>Issues</p>
+        </a>
+    </div>
 </div>
 
 

@@ -79,3 +79,8 @@ Available providers:
   - CPUExecutionProvider
 Default device: GPU (CUDA)
 ```
+
+---
+
+## Reference
+- [Number recognition with MNIST in C++ ](https://onnxruntime.ai/docs/tutorials/mnist_cpp.html)

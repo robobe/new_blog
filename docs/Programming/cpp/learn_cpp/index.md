@@ -19,7 +19,7 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="learn_cpp">
+        <a href="data_structure">
         <p>Data Structure</p>
         </a>
     </div>
