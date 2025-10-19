@@ -26,11 +26,14 @@
             <img src="images/godot.png"  width="150" height="150">
             <p>Godot</p></a>
     </div>
+    <div class="grid-item">
+        <a href="other">
+            <img src="images/other.png"  width="150" height="150">
+            <p>Godot</p></a>
+    </div>
    </div>
 
 ## Resources
 - [best-of-robot-simulators](https://github.com/knmcguire/best-of-robot-simulators)
 - [Gazebo meeting](https://vimeo.com/osrfoundation)
 
-
-![alt text](image.png)

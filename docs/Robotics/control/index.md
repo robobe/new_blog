@@ -30,6 +30,12 @@ tags:
                 <p>LQR</p>
             </a>
     </div>
+    <div class="grid-item">
+        <a href="state_space_model">
+                <img src="images/state_space_model.png"  width="150" height="150">
+                <p>State Space Model</p>
+            </a>
+    </div>
 </div>
 ---
 
