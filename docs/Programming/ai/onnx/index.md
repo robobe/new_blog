@@ -110,6 +110,10 @@ find at [NGC Catalog](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-
 
 </details>
 
+
+!!! tip "python package location"
+     https://pypi.jetson-ai-lab.io/jp6/cu129
+
 ### Run
 
 ```python

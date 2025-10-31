@@ -27,9 +27,19 @@
             <p>Godot</p></a>
     </div>
     <div class="grid-item">
+        <a href="osg">
+            <img src="images/osg.png"  width="150" height="150">
+            <p>Open Scene Graph </p></a>
+    </div>
+    <div class="grid-item">
+        <a href="vsg">
+            <img src="images/vulkan_scene_graph.png"  width="150" height="150">
+            <p>Vulkan Scene Graph </p></a>
+    </div>
+    <div class="grid-item">
         <a href="other">
             <img src="images/other.png"  width="150" height="150">
-            <p>Godot</p></a>
+            <p>Others</p></a>
     </div>
    </div>
 
@@ -37,3 +47,4 @@
 - [best-of-robot-simulators](https://github.com/knmcguire/best-of-robot-simulators)
 - [Gazebo meeting](https://vimeo.com/osrfoundation)
 
+![alt text](image.png)

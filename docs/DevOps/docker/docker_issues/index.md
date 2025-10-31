@@ -23,3 +23,7 @@ TODO: understand more
 }
 
 ```
+
+```bash title="downgrade docker"
+sudo apt-get install -y docker-ce=5:27.5* docker-ce-cli=5:27.5* --allow-downgrades
+```
