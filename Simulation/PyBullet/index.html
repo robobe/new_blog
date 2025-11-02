@@ -622,37 +622,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#change-ground-texture" class="md-nav__link">
+  <a href="#demos-and" class="md-nav__link">
     <span class="md-ellipsis">
-      Change ground texture
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#camera" class="md-nav__link">
-    <span class="md-ellipsis">
-      Camera
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Camera">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#computeprojectionmatrixfov" class="md-nav__link">
-    <span class="md-ellipsis">
-      computeProjectionMatrixFOV
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#getcameraimage" class="md-nav__link">
-    <span class="md-ellipsis">
-      getCameraImage
+      Demos and ...
     </span>
   </a>
   
@@ -662,9 +634,13 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Projects
+    </span>
+  </a>
   
 </li>
       
@@ -713,6 +689,14 @@
 
 <p><a href="/Simulation/">Simulation</a></p>
 <p>Physics simulation for games, visual effects, robotics and reinforcement learning.</p>
+<div class="grid-container">
+     <div class="grid-item">
+            <a href="dev_env">
+            <img src="images/vscode.png"  width="150" height="150">
+            <p>VSCode dev env</p></a>
+        </div>
+</div>
+
 <h2 id="install">Install</h2>
 <p>Dowload git</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
@@ -765,243 +749,23 @@
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">force opengl run on nvidia</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nv">__NV_PRIME_RENDER_OFFLOAD</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">__GLX_VENDOR_LIBRARY_NAME</span><span class="o">=</span>nvidia<span class="w"> </span>python3<span class="w"> </span>hello.py
 </code></pre></div></td></tr></table></div>
 <hr />
-<h3 id="change-ground-texture">Change ground texture</h3>
-<p><a href="http://models.gazebosim.org/asphalt_plane/materials/textures/tarmac.png" target="_blank">tarmac.png</a></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-3-10">10</a></span>
-<span class="normal"><a href="#__codelineno-3-11">11</a></span>
-<span class="normal"><a href="#__codelineno-3-12">12</a></span>
-<span class="normal"><a href="#__codelineno-3-13">13</a></span>
-<span class="normal"><a href="#__codelineno-3-14">14</a></span>
-<span class="normal"><a href="#__codelineno-3-15">15</a></span>
-<span class="normal"><a href="#__codelineno-3-16">16</a></span>
-<span class="normal"><a href="#__codelineno-3-17">17</a></span>
-<span class="normal"><a href="#__codelineno-3-18">18</a></span>
-<span class="normal"><a href="#__codelineno-3-19">19</a></span>
-<span class="normal"><a href="#__codelineno-3-20">20</a></span>
-<span class="normal"><a href="#__codelineno-3-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">p</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet_data</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="c1"># Initialize PyBullet</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="n">physicsClient</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GUI</span><span class="p">)</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="n">p</span><span class="o">.</span><span class="n">setAdditionalSearchPath</span><span class="p">(</span><span class="n">pybullet_data</span><span class="o">.</span><span class="n">getDataPath</span><span class="p">())</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="c1"># Create ground plane</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="n">planeId</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="s2">&quot;plane.urdf&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="c1"># Add texture to the ground</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="n">textureId</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="s2">&quot;tarmac.png&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="n">planeId</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">textureUniqueId</span><span class="o">=</span><span class="n">textureId</span><span class="p">)</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="c1"># Set gravity and run simulation</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="n">p</span><span class="o">.</span><span class="n">setGravity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.81</span><span class="p">)</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">240.</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-<hr />
-<h3 id="camera">Camera</h3>
-<details>
-    <summary>camera</summary>
-
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-4-10">10</a></span>
-<span class="normal"><a href="#__codelineno-4-11">11</a></span>
-<span class="normal"><a href="#__codelineno-4-12">12</a></span>
-<span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span>
-<span class="normal"><a href="#__codelineno-4-15">15</a></span>
-<span class="normal"><a href="#__codelineno-4-16">16</a></span>
-<span class="normal"><a href="#__codelineno-4-17">17</a></span>
-<span class="normal"><a href="#__codelineno-4-18">18</a></span>
-<span class="normal"><a href="#__codelineno-4-19">19</a></span>
-<span class="normal"><a href="#__codelineno-4-20">20</a></span>
-<span class="normal"><a href="#__codelineno-4-21">21</a></span>
-<span class="normal"><a href="#__codelineno-4-22">22</a></span>
-<span class="normal"><a href="#__codelineno-4-23">23</a></span>
-<span class="normal"><a href="#__codelineno-4-24">24</a></span>
-<span class="normal"><a href="#__codelineno-4-25">25</a></span>
-<span class="normal"><a href="#__codelineno-4-26">26</a></span>
-<span class="normal"><a href="#__codelineno-4-27">27</a></span>
-<span class="normal"><a href="#__codelineno-4-28">28</a></span>
-<span class="normal"><a href="#__codelineno-4-29">29</a></span>
-<span class="normal"><a href="#__codelineno-4-30">30</a></span>
-<span class="normal"><a href="#__codelineno-4-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">p</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet_data</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="c1"># Initialize PyBullet</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="n">physicsClient</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GUI</span><span class="p">)</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="n">p</span><span class="o">.</span><span class="n">setAdditionalSearchPath</span><span class="p">(</span><span class="n">pybullet_data</span><span class="o">.</span><span class="n">getDataPath</span><span class="p">())</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="c1"># Create ground plane</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="n">planeId</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="s2">&quot;plane.urdf&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="c1"># Add texture to the ground</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="n">textureId</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="s2">&quot;tarmac.png&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="n">planeId</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">textureUniqueId</span><span class="o">=</span><span class="n">textureId</span><span class="p">)</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15"></a>
-<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="c1"># Set gravity and run simulation</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="n">p</span><span class="o">.</span><span class="n">setGravity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.81</span><span class="p">)</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18"></a>
-<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="n">camera_pos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>  <span class="c1"># Start at x=0, y=0, z=10m</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="n">velocity</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># 5 m/s in x-direction</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="n">fov</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">width</span><span class="o">/</span><span class="n">height</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">100.0</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="n">projection_matrix</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">computeProjectionMatrixFOV</span><span class="p">(</span><span class="n">fov</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span><span class="p">)</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="n">target_pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">camera_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">camera_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># Look downward</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25"></a>
-<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-4-27" name="__codelineno-4-27"></a>    <span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span>
-<a id="__codelineno-4-28" name="__codelineno-4-28"></a>    <span class="n">view_matrix</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">computeViewMatrix</span><span class="p">(</span><span class="n">camera_pos</span><span class="p">,</span> <span class="n">target_pos</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># Up vector: y-axis</span>
-<a id="__codelineno-4-29" name="__codelineno-4-29"></a>    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">getCameraImage</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">view_matrix</span><span class="p">,</span> <span class="n">projection_matrix</span><span class="p">,</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30"></a>                                    <span class="n">renderer</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">ER_BULLET_HARDWARE_OPENGL</span><span class="p">)</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">30.</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-</details>
-
-<h4 id="computeprojectionmatrixfov">computeProjectionMatrixFOV</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>projection_matrix = p.computeProjectionMatrixFOV(fov, aspect, near, far)
-</code></pre></div></td></tr></table></div>
-<p>Creates a projection matrix for a virtual camera using a perspective (field-of-view) projection.<br />
-<strong>Parameters</strong>:</p>
-<ul>
-<li>fov: Field of view in degrees (vertical angle).</li>
-<li>aspect: Aspect ratio (width/height).</li>
-<li>near: Near clipping plane distance.</li>
-<li>far: Far clipping plane distance.</li>
-</ul>
-<p><strong>Result</strong>:
-Returns a 4x4 matrix that transforms 3D points into 2D camera space, simulating a real camera lens.
-</details></p>
-<h4 id="getcameraimage">getCameraImage</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">getCameraImage</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">view_matrix</span><span class="p">,</span> <span class="n">projection_matrix</span><span class="p">,</span> <span class="n">renderer</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">ER_BULLET_HARDWARE_OPENGL</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-<p>Renders an image from the simulation as seen by the virtual camera.
-<strong>Parameters</strong>:</p>
-<ul>
-<li>width, height: Output image size.</li>
-<li>view_matrix: Defines the camera’s position and orientation (where it looks from and to).</li>
-<li>projection_matrix: Defines how the 3D scene is projected onto the 2D image (from computeProjectionMatrixFOV).</li>
-<li>renderer: Rendering backend (here, OpenGL).</li>
-</ul>
-<p><strong>Returns</strong>:
-A tuple containing image data, including the RGB image (rgb), depth, and segmentation masks.</p>
-<p><img alt="alt text" src="images/sim_camera.png" /></p>
-<details>
-    <summary>opencv view</summary>
-
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-7-10">10</a></span>
-<span class="normal"><a href="#__codelineno-7-11">11</a></span>
-<span class="normal"><a href="#__codelineno-7-12">12</a></span>
-<span class="normal"><a href="#__codelineno-7-13">13</a></span>
-<span class="normal"><a href="#__codelineno-7-14">14</a></span>
-<span class="normal"><a href="#__codelineno-7-15">15</a></span>
-<span class="normal"><a href="#__codelineno-7-16">16</a></span>
-<span class="normal"><a href="#__codelineno-7-17">17</a></span>
-<span class="normal"><a href="#__codelineno-7-18">18</a></span>
-<span class="normal"><a href="#__codelineno-7-19">19</a></span>
-<span class="normal"><a href="#__codelineno-7-20">20</a></span>
-<span class="normal"><a href="#__codelineno-7-21">21</a></span>
-<span class="normal"><a href="#__codelineno-7-22">22</a></span>
-<span class="normal"><a href="#__codelineno-7-23">23</a></span>
-<span class="normal"><a href="#__codelineno-7-24">24</a></span>
-<span class="normal"><a href="#__codelineno-7-25">25</a></span>
-<span class="normal"><a href="#__codelineno-7-26">26</a></span>
-<span class="normal"><a href="#__codelineno-7-27">27</a></span>
-<span class="normal"><a href="#__codelineno-7-28">28</a></span>
-<span class="normal"><a href="#__codelineno-7-29">29</a></span>
-<span class="normal"><a href="#__codelineno-7-30">30</a></span>
-<span class="normal"><a href="#__codelineno-7-31">31</a></span>
-<span class="normal"><a href="#__codelineno-7-32">32</a></span>
-<span class="normal"><a href="#__codelineno-7-33">33</a></span>
-<span class="normal"><a href="#__codelineno-7-34">34</a></span>
-<span class="normal"><a href="#__codelineno-7-35">35</a></span>
-<span class="normal"><a href="#__codelineno-7-36">36</a></span>
-<span class="normal"><a href="#__codelineno-7-37">37</a></span>
-<span class="normal"><a href="#__codelineno-7-38">38</a></span>
-<span class="normal"><a href="#__codelineno-7-39">39</a></span>
-<span class="normal"><a href="#__codelineno-7-40">40</a></span>
-<span class="normal"><a href="#__codelineno-7-41">41</a></span>
-<span class="normal"><a href="#__codelineno-7-42">42</a></span>
-<span class="normal"><a href="#__codelineno-7-43">43</a></span>
-<span class="normal"><a href="#__codelineno-7-44">44</a></span>
-<span class="normal"><a href="#__codelineno-7-45">45</a></span>
-<span class="normal"><a href="#__codelineno-7-46">46</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">p</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet_data</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a>
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1"># Initialize PyBullet</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="n">physicsClient</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GUI</span><span class="p">)</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="n">p</span><span class="o">.</span><span class="n">setAdditionalSearchPath</span><span class="p">(</span><span class="n">pybullet_data</span><span class="o">.</span><span class="n">getDataPath</span><span class="p">())</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10"></a>
-<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="c1"># Create ground plane</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="n">planeId</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="s2">&quot;plane.urdf&quot;</span><span class="p">)</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13"></a>
-<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="c1"># Add texture to the ground</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="n">textureId</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadTexture</span><span class="p">(</span><span class="s2">&quot;tarmac.png&quot;</span><span class="p">)</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="n">p</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="n">planeId</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">textureUniqueId</span><span class="o">=</span><span class="n">textureId</span><span class="p">)</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17"></a>
-<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="c1"># Set gravity and run simulation</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="n">p</span><span class="o">.</span><span class="n">setGravity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.81</span><span class="p">)</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20"></a>
-<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="n">camera_pos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>  <span class="c1"># Start at x=0, y=0, z=10m</span>
-<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="n">velocity</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># 5 m/s in x-direction</span>
-<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span>
-<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="n">fov</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">width</span><span class="o">/</span><span class="n">height</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">100.0</span>
-<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="n">projection_matrix</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">computeProjectionMatrixFOV</span><span class="p">(</span><span class="n">fov</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">near</span><span class="p">,</span> <span class="n">far</span><span class="p">)</span>
-<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="n">target_pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">camera_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">camera_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># Look downward</span>
-<a id="__codelineno-7-27" name="__codelineno-7-27"></a>
-<a id="__codelineno-7-28" name="__codelineno-7-28"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-7-29" name="__codelineno-7-29"></a>    <span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span>
-<a id="__codelineno-7-30" name="__codelineno-7-30"></a>    <span class="n">view_matrix</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">computeViewMatrix</span><span class="p">(</span><span class="n">camera_pos</span><span class="p">,</span> <span class="n">target_pos</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># Up vector: y-axis</span>
-<a id="__codelineno-7-31" name="__codelineno-7-31"></a>    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">getCameraImage</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">view_matrix</span><span class="p">,</span> <span class="n">projection_matrix</span><span class="p">,</span>
-<a id="__codelineno-7-32" name="__codelineno-7-32"></a>                                    <span class="n">renderer</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">ER_BULLET_HARDWARE_OPENGL</span><span class="p">)</span>
-<a id="__codelineno-7-33" name="__codelineno-7-33"></a>
-<a id="__codelineno-7-34" name="__codelineno-7-34"></a>    <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">))[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># Remove alpha channel</span>
-<a id="__codelineno-7-35" name="__codelineno-7-35"></a>    <span class="n">rgb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGBA2BGR</span><span class="p">)</span>
-<a id="__codelineno-7-36" name="__codelineno-7-36"></a>
-<a id="__codelineno-7-37" name="__codelineno-7-37"></a>    <span class="c1"># Write to video</span>
-<a id="__codelineno-7-38" name="__codelineno-7-38"></a>    <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Camera Feed&#39;</span><span class="p">,</span> <span class="n">rgb</span><span class="p">)</span>
-<a id="__codelineno-7-39" name="__codelineno-7-39"></a>    <span class="n">key</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-7-40" name="__codelineno-7-40"></a>
-<a id="__codelineno-7-41" name="__codelineno-7-41"></a>    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">):</span>
-<a id="__codelineno-7-42" name="__codelineno-7-42"></a>        <span class="k">break</span>
-<a id="__codelineno-7-43" name="__codelineno-7-43"></a>
-<a id="__codelineno-7-44" name="__codelineno-7-44"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">30.</span><span class="p">)</span>
-<a id="__codelineno-7-45" name="__codelineno-7-45"></a><span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
-<a id="__codelineno-7-46" name="__codelineno-7-46"></a><span class="n">p</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
-</code></pre></div></td></tr></table></div>
-</details>
+<h3 id="demos-and">Demos and ...</h3>
+<p><a href="https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA/edit?tab=t.0#heading=h.btdfuxtf2f72">PyBullet Quickstart Guide</a></p>
+<div class="grid-container">
+     <div class="grid-item">
+            <a href="tutorials/change_ground_texture.md">
+            <p>Ground Texture</p></a>
+        </div>
+    <div class="grid-item">
+       <a href="tutorials/camera.md">
+            <p>Camera</p></a>
+    </div>
+    <div class="grid-item">
+        <a href="dev_env">
+            <p>VSCode dev environment</p>
+        </a>
+    </div>
+</div>
 
 <hr />
 <ul>
@@ -1014,6 +778,16 @@ A tuple containing image data, including the RGB image (rgb), depth, and segment
 <li><a href="https://github.com/reflectrobotics/webinar/blob/master/robot.py">PyBullet Webinar 1</a></li>
 <li><a href="https://github.com/robofoundry/pybullet-imu-viz/tree/main">pybullet-imu-viz</a></li>
 <li><a href="https://github.com/assadollahi/pyBulletIntro">intor</a></li>
+<li><a href="https://towardsdatascience.com/how-to-control-a-robot-with-python/">How to Control a Robot with Python</a></li>
+<li><a href="https://youtu.be/KaiznOkKkdA"> PyBullet workshop for NTU students : Day-1 </a></li>
+<li><a href="https://youtu.be/9dTQoyXaIDI"> PyBullet workshop for NTU students : Day-2 </a></li>
+<li><a href="https://youtu.be/-DLLnG_XEiw"> PyBullet workshop for NTU students : Day-3 </a></li>
+</ul>
+<hr />
+<h2 id="projects">Projects</h2>
+<ul>
+<li><a href="https://github.com/yconst/balance-bot/tree/master">balance bot RL</a></li>
+<li><a href="https://github.com/nplan/gym-line-follower">Gym-Line-Follower</a></li>
 </ul>
 
 
