@@ -14,9 +14,15 @@
         </a>
     </div>
     <div class="grid-item">
+        <a href="rust">
+        <img src="images/rust.png" width="250" height="150">
+        <p>Rust</p>
+        </a>
+    </div>
+    <!--div class="grid-item">
         <img src="images/website.png"   width="150" height="150">
         <p>Web</p>
-    </div>
+    </div-->
     <div class="grid-item">
         <a href="ai">
             <img src="images/ai.png"  width="150" height="150">

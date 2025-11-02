@@ -21,6 +21,11 @@
             <img src="images/pybullet.png"  width="150" height="150">
             <p>PyBullet</p></a>
     </div>
+    <div class="grid-item">
+        <a href="webots">
+            <img src="images/webots.png"  width="150" height="150">
+            <p>webots</p></a>
+    </div>
      <div class="grid-item">
         <a href="godot">
             <img src="images/godot.png"  width="150" height="150">
@@ -46,5 +51,3 @@
 ## Resources
 - [best-of-robot-simulators](https://github.com/knmcguire/best-of-robot-simulators)
 - [Gazebo meeting](https://vimeo.com/osrfoundation)
-
-![alt text](image.png)
