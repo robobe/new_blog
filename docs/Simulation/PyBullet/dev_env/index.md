@@ -21,27 +21,27 @@ tags:
 ```
 
 <details>
-    <summary></summary>
+    <summary>.devcontainer/devcontainer.json</summary>
 
 ```json
---8<-- "code/.devcontainer/devcontainer.json"
+--8<-- "docs/Simulation/PyBullet/dev_env/code/.devcontainer/devcontainer.json"
 ```
 </details>
 
 
 <details>
-    <summary></summary>
+    <summary>.devcontainer/Dockerfile</summary>
 
 ```dockerfile
---8<-- "code/.devcontainer/Dockerfile"
+--8<-- "docs/Simulation/PyBullet/dev_env/code/.devcontainer/Dockerfile"
 ```
 </details>
 
 
 <details>
-    <summary></summary>
+    <summary>docker-compose.yml</summary>
 
 ```yaml
---8<-- "code/docker-compose.yml"
+--8<-- "docs/Simulation/PyBullet/dev_env/code/docker-compose.yml"
 ```
 </details>
