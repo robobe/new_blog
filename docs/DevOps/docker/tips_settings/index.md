@@ -26,6 +26,44 @@ PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\03
 
 ---
 
+### Mount tmpfs
+
+```bash
+docker run -it --rm  \
+--mount type=tmpfs,destination=/mnt/ramdisk,tmpfs-size=64m,tmpfs-mode=1777 \
+ubuntu:22.04 \
+/bin/bash
+```
+
+```bash title="check mount"
+df -h /mnt/ramdisk
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs            64M     0   64M   0% /mnt/ramdisk
+
+```
+
+#### using compose
+
+```yaml
+--8<-- "docs/DevOps/docker/tips_settings/code/tmpfs.yaml"
+```
+
+```bash title="run"
+docker compose -f tmpfs.yaml up -d
+```
+
+```bash title="shell"
+docker exec -it code-app-1 /bin/bash
+```
+
+```bash title="check mount"
+df -h /mnt/ramdisk
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs            64M     0   64M   0% /mnt/ramdisk
+```
+
+
+---
 
 ### Devices
 

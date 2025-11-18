@@ -18,13 +18,6 @@ Physics simulation for games, visual effects, robotics and reinforcement learnin
         </div>
 </div>
 
-## Install
-Dowload git
-
-```bash
-#run
-pip install -e .
-```
 
 ## Demo
 
@@ -58,6 +51,31 @@ while True:
 __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia python3 hello.py
 ```
 
+- pybullet_data provide many URDF examples.
+- `loadURDF` return integer that use to refer the robot in other pybullet commands/
+
+
+## Demo: Get Position and Orientation
+
+```python title="Position orientation and apply external force"
+import pybullet as p
+import pybullet_data
+import time
+
+# Connect to PyBullet with GUI
+p.connect(p.GUI, options="--opengl2 --egl")
+
+# Set search path to PyBullet’s default data
+p.setAdditionalSearchPath(pybullet_data.getDataPath())
+
+# Load a simple plane and a cube
+plane_id = p.loadURDF("plane.urdf")
+carId = p.loadURDF(“racecar/racecar.urdf”, basePosition=[0,0,0.2])
+position, orientation = p.getBasePositionAndOrientation(carId)
+for _ in range(100): 
+    p.stepSimulation()
+```
+
 ---
 
 ### Demos and ...
@@ -78,6 +96,12 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia python3 hello.py
             <p>VSCode dev environment</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="gui_control">
+            <p>GUI and TK inter</p>
+        </a>
+    </div>
+
 </div>
 
 
@@ -96,9 +120,12 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia python3 hello.py
 - [ PyBullet workshop for NTU students : Day-1 ](https://youtu.be/KaiznOkKkdA)
 - [ PyBullet workshop for NTU students : Day-2 ](https://youtu.be/9dTQoyXaIDI)
 - [ PyBullet workshop for NTU students : Day-3 ](https://youtu.be/-DLLnG_XEiw)
+- [Creating OpenAI Gym Environments with PyBullet (Part 1)](https://gerardmaggiolino.medium.com/creating-openai-gym-environments-with-pybullet-part-1-13895a622b24)
+- [Creating OpenAI Gym Environments with PyBullet (Part 2)](https://gerardmaggiolino.medium.com/creating-openai-gym-environments-with-pybullet-part-2-a1441b9a4d8e)
 ---
 
 ## Projects
 
 - [balance bot RL](https://github.com/yconst/balance-bot/tree/master)
 - [Gym-Line-Follower](https://github.com/nplan/gym-line-follower)
+- [pybullet cartpole](https://gitlab.cs.washington.edu/ym2552/bullet3/-/blob/6e4707df5fa1f9927109e89a7cd2a6d6a6ddd072/examples/pybullet/gym/pybullet_envs/bullet/cartpole_bullet.py)

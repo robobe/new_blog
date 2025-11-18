@@ -19,6 +19,11 @@ An IMU sensor (Inertial Measurement Unit) is a device that measures a robot or o
 - **9 DOF** IMU, adding a 3-axis magnetic compass.
 - **10 DOF** IMU, which adds a barometer for estimating the sensor’s altitude.
 
+
+
+
+---
+
 ## To read and watch
 - [complementary filter](https://www.luisllamas.es/en/measure-imu-tilt-arduino-complementary-filter/)
 - [madgwick_py: A Python implementation of Madgwick's IMU and AHRS algorithm.](https://github.com/morgil/madgwick_py?tab=readme-ov-file)

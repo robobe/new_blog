@@ -45,16 +45,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Create isolated environment
-RUN python3 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-RUN pip install --no-cache-dir \
-    pybullet \
-    numpy 
-    # opencv-python \
-    # gym \
-    # stable-baselines3 
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     mesa-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --break-system-packages --no-cache-dir -r /tmp/requirements.txt
+
+RUN apt-get update && apt-get install -y \
+    mesa-utils \
+    libgl1 \
+    libglvnd0 \
+    libglx-mesa0 \
+    libglu1-mesa \
+    libx11-6 \
+    libxext6 \
     && rm -rf /var/lib/apt/lists/*

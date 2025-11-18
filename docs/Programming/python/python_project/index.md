@@ -1,13 +1,17 @@
 ---
+title: Pack python project as debian package
 tags:
     - python
     - debian
-    - project
+    - deb
 ---
 
-# under construction
+To pack python as debian package i found two method that work
+- using `stdeb`
+- Build manual
 
-# From python project to debian package
+In both of the method i use `debuild` util
+
 
 Create Minimal python project and create debian package from it
 
@@ -72,7 +76,60 @@ myapp
 
 ---
 
-## Step2: Debian 
+## Step2: using stdeb
+
+```bash
+sudo apt install \
+    python3-stdeb \
+    fakeroot \
+    python3-all \
+    build-essential \
+    dh-python 
+```
+
+```bash
+python3 setup.py --command-packages=stdeb.command sdist_dsc
+```
+
+The command create `deb_dist` folder under application root
+
+copy `postinst` and other scripts from project debian to `deb_dist/<application name>` folder
+
+
+```bash
+cd deb_dist/<application name>
+```
+
+```bash title="build deb"
+debuild -us -uc -b
+```
+
+!!! tip "Check deb file"
+    using `dpkg -I` to get package info and the for script existing
+
+    ```
+     new Debian package, version 2.0.
+    size 2070 bytes: control archive=728 bytes.
+        210 bytes,    10 lines      control              
+        541 bytes,     6 lines      md5sums              
+        283 bytes,    12 lines   *  postinst             #!/bin/bash
+    Package: python3-myscript
+    Source: myscript
+    Version: 1.0-1
+    Architecture: all
+    ```
+
+
+    - `dpkg -e` to extract control script from deb file to target folder
+    - `dpkg -x` extract all deb files.
+
+
+     
+
+---
+
+## Step2a: Manual create Debian 
+## TODO: finish
 
 ```bash
 sudo apt install build-essential devscripts debhelper dh-python
