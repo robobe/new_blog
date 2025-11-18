@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#check-opengl-backend" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -591,6 +596,23 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#check-opengl-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check OpenGL backend
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -640,14 +662,16 @@
 <span class="normal"><a href="#__codelineno-0-5">5</a></span>
 <span class="normal"><a href="#__codelineno-0-6">6</a></span>
 <span class="normal"><a href="#__codelineno-0-7">7</a></span>
-<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>.
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>.
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── .devcontainer
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a>│   ├── devcontainer.json
 <a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   └── Dockerfile
 <a id="__codelineno-0-5" name="__codelineno-0-5"></a>├── docker-compose.yml
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a>├── README.md
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>└── .vscode
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    └── settings.json
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>├── requirements.txt
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>└── .vscode
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>    └── settings.json
 </code></pre></div></td></tr></table></div>
 <details>
     <summary>.devcontainer/devcontainer.json</summary>
@@ -686,7 +710,7 @@
 <span class="normal"><a href="#__codelineno-1-32">32</a></span>
 <span class="normal"><a href="#__codelineno-1-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="p">{</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PyBullet&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;dockerComposeFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../docker-compose.yml&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;dockerComposeFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../docker-compose.yaml&quot;</span><span class="p">,</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="nt">&quot;service&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev&quot;</span><span class="p">,</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">&quot;workspaceFolder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/workspace&quot;</span><span class="p">,</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="nt">&quot;shutdownAction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stopCompose&quot;</span><span class="p">,</span>
@@ -782,7 +806,12 @@
 <span class="normal"><a href="#__codelineno-2-57">57</a></span>
 <span class="normal"><a href="#__codelineno-2-58">58</a></span>
 <span class="normal"><a href="#__codelineno-2-59">59</a></span>
-<span class="normal"><a href="#__codelineno-2-60">60</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:24.04</span>
+<span class="normal"><a href="#__codelineno-2-60">60</a></span>
+<span class="normal"><a href="#__codelineno-2-61">61</a></span>
+<span class="normal"><a href="#__codelineno-2-62">62</a></span>
+<span class="normal"><a href="#__codelineno-2-63">63</a></span>
+<span class="normal"><a href="#__codelineno-2-64">64</a></span>
+<span class="normal"><a href="#__codelineno-2-65">65</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:24.04</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c"># Set environment variables</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive
@@ -829,19 +858,24 @@
 <a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
 <a id="__codelineno-2-46" name="__codelineno-2-46"></a>
 <a id="__codelineno-2-47" name="__codelineno-2-47"></a><span class="c"># 2. Create isolated environment</span>
-<a id="__codelineno-2-48" name="__codelineno-2-48"></a><span class="k">RUN</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>/opt/venv
-<a id="__codelineno-2-49" name="__codelineno-2-49"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/opt/venv/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
-<a id="__codelineno-2-50" name="__codelineno-2-50"></a>
-<a id="__codelineno-2-51" name="__codelineno-2-51"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-52" name="__codelineno-2-52"></a><span class="w">    </span>pybullet<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-53" name="__codelineno-2-53"></a><span class="w">    </span>numpy<span class="w"> </span>
-<a id="__codelineno-2-54" name="__codelineno-2-54"></a><span class="w">    </span><span class="c1"># opencv-python \</span>
-<a id="__codelineno-2-55" name="__codelineno-2-55"></a><span class="w">    </span><span class="c1"># gym \</span>
-<a id="__codelineno-2-56" name="__codelineno-2-56"></a><span class="w">    </span>#<span class="w"> </span>stable-baselines3<span class="w"> </span>
-<a id="__codelineno-2-57" name="__codelineno-2-57"></a>
-<a id="__codelineno-2-58" name="__codelineno-2-58"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-59" name="__codelineno-2-59"></a><span class="w">    </span>mesa-utils<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-60" name="__codelineno-2-60"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50"></a><span class="w">    </span>mesa-utils<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+<a id="__codelineno-2-52" name="__codelineno-2-52"></a>
+<a id="__codelineno-2-53" name="__codelineno-2-53"></a>
+<a id="__codelineno-2-54" name="__codelineno-2-54"></a><span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>/tmp/requirements.txt
+<a id="__codelineno-2-55" name="__codelineno-2-55"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--break-system-packages<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>/tmp/requirements.txt
+<a id="__codelineno-2-56" name="__codelineno-2-56"></a>
+<a id="__codelineno-2-57" name="__codelineno-2-57"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58"></a><span class="w">    </span>mesa-utils<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59"></a><span class="w">    </span>libgl1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-60" name="__codelineno-2-60"></a><span class="w">    </span>libglvnd0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61"></a><span class="w">    </span>libglx-mesa0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-62" name="__codelineno-2-62"></a><span class="w">    </span>libglu1-mesa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-63" name="__codelineno-2-63"></a><span class="w">    </span>libx11-6<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-64" name="__codelineno-2-64"></a><span class="w">    </span>libxext6<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-65" name="__codelineno-2-65"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
 </code></pre></div></td></tr></table></div>
 </details>
 
@@ -909,6 +943,131 @@
 <a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">              </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
 </code></pre></div></td></tr></table></div>
 </details>
+
+<details>
+    <summary>requirements.txt</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>pybullet
+</code></pre></div></td></tr></table></div>
+</details>
+
+<h2 id="check-opengl-backend">Check OpenGL backend</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>glxinfo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>vendor
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="c1">#</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>server<span class="w"> </span>glx<span class="w"> </span>vendor<span class="w"> </span>string:<span class="w"> </span>SGI
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>client<span class="w"> </span>glx<span class="w"> </span>vendor<span class="w"> </span>string:<span class="w"> </span>NVIDIA<span class="w"> </span>Corporation
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>OpenGL<span class="w"> </span>vendor<span class="w"> </span>string:<span class="w"> </span>NVIDIA<span class="w"> </span>Corporation
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>glxinfo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>renderer
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="c1">#</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>OpenGL<span class="w"> </span>renderer<span class="w"> </span>string:<span class="w"> </span>NVIDIA<span class="w"> </span>GeForce<span class="w"> </span>MX450/PCIe/SSE2
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">hello_bullet.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">p</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet_data</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="n">physicsClient</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GUI</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="n">p</span><span class="o">.</span><span class="n">setAdditionalSearchPath</span><span class="p">(</span><span class="n">pybullet_data</span><span class="o">.</span><span class="n">getDataPath</span><span class="p">())</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="c1"># Add gravity</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="n">p</span><span class="o">.</span><span class="n">setGravity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.8</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="n">plane_id</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="s2">&quot;plane.urdf&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="c1"># cube_id = p.loadURDF(&quot;urdf/self_balance.urdf&quot;, [0, 0, 1])</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="n">robot</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="s2">&quot;kuka_iiwa/model.urdf&quot;</span><span class="p">,</span> <span class="n">useFixedBase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="c1"># Run simulation loop</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a>    <span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">240.</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>python3<span class="w"> </span>hello_bullet.py
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="c1">#</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>pybullet<span class="w"> </span>build<span class="w"> </span>time:<span class="w"> </span>Nov<span class="w"> </span><span class="m">18</span><span class="w"> </span><span class="m">2025</span><span class="w"> </span><span class="m">13</span>:39:23
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>startThreads<span class="w"> </span>creating<span class="w"> </span><span class="m">1</span><span class="w"> </span>threads.
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>starting<span class="w"> </span>thread<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>started<span class="w"> </span>thread<span class="w"> </span><span class="m">0</span><span class="w"> </span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="nv">argc</span><span class="o">=</span><span class="m">2</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>argv<span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>--unused
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>argv<span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>--start_demo_name<span class="o">=</span>Physics<span class="w"> </span>Server
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>ExampleBrowserThreadFunc<span class="w"> </span>started
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>X11<span class="w"> </span>functions<span class="w"> </span>dynamically<span class="w"> </span>loaded<span class="w"> </span>using<span class="w"> </span>dlopen/dlsym<span class="w"> </span>OK!
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>X11<span class="w"> </span>functions<span class="w"> </span>dynamically<span class="w"> </span>loaded<span class="w"> </span>using<span class="w"> </span>dlopen/dlsym<span class="w"> </span>OK!
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>Creating<span class="w"> </span>context
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>Created<span class="w"> </span>GL<span class="w"> </span><span class="m">3</span>.3<span class="w"> </span>context
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>Direct<span class="w"> </span>GLX<span class="w"> </span>rendering<span class="w"> </span>context<span class="w"> </span>obtained
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>Making<span class="w"> </span>context<span class="w"> </span>current
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="nv">GL_VENDOR</span><span class="o">=</span>NVIDIA<span class="w"> </span>Corporation
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="nv">GL_RENDERER</span><span class="o">=</span>NVIDIA<span class="w"> </span>GeForce<span class="w"> </span>MX450/PCIe/SSE2
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="nv">GL_VERSION</span><span class="o">=</span><span class="m">3</span>.3.0<span class="w"> </span>NVIDIA<span class="w"> </span><span class="m">560</span>.35.03
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="nv">GL_SHADING_LANGUAGE_VERSION</span><span class="o">=</span><span class="m">3</span>.30<span class="w"> </span>NVIDIA<span class="w"> </span>via<span class="w"> </span>Cg<span class="w"> </span>compiler
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a>pthread_getconcurrency<span class="o">()=</span><span class="m">0</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="nv">Version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span>.3.0<span class="w"> </span>NVIDIA<span class="w"> </span><span class="m">560</span>.35.03
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="nv">Vendor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>NVIDIA<span class="w"> </span>Corporation
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="nv">Renderer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>NVIDIA<span class="w"> </span>GeForce<span class="w"> </span>MX450/PCIe/SSE2
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>b3Printf:<span class="w"> </span>Selected<span class="w"> </span>demo:<span class="w"> </span>Physics<span class="w"> </span>Server
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>startThreads<span class="w"> </span>creating<span class="w"> </span><span class="m">1</span><span class="w"> </span>threads.
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>starting<span class="w"> </span>thread<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>started<span class="w"> </span>thread<span class="w"> </span><span class="m">0</span><span class="w"> </span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a>MotionThreadFunc<span class="w"> </span>thread<span class="w"> </span>started
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a><span class="nv">ven</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>NVIDIA<span class="w"> </span>Corporation
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="nv">ven</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>NVIDIA<span class="w"> </span>Corporation
+</code></pre></div></td></tr></table></div>
 
 
 
