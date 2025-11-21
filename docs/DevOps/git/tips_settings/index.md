@@ -6,6 +6,25 @@ tags:
 
 # Git Tips and Settings
 
+- [Copy and list from another branch](#list-and-copy-file-from-another-branch)
+
+## list and copy file from another branch
+
+```bash title="list file from another branch"
+git ls-tree -r dev --name-only
+
+# list specific folder
+git ls-tree -r dev --name-only path/to/dir
+
+```
+
+```bash title="copy file from another branch"
+git restore --source dev file1 file2 dir/file3
+```
+
+---
+
+
 ## prompt
 Effective prompt with git branch name
 

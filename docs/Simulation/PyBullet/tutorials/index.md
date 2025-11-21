@@ -70,5 +70,9 @@ Total joints: 2
 
 ---
 
+### Joint command
+
+---
+
 ## Reference
 - [PyBullet workshop](https://github.com/Robotics-Club-IIT-BHU/Robotics-Club-x-NTU-MAERC-collab/tree/main)
