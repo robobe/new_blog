@@ -23,7 +23,7 @@ gz_transport is Gazebo's communication middleware, used for inter-process commun
 - **GZ_TRANSPORT_IP**:	IP address the local process uses to advertise itself to others
 
 ### jazzy
-- [Dockerfile](/docs/ROS/dev_environment/ros_docker/docker_images/code/Dockerfile.jazzy)
+
 - [docker-compose.yaml]()
 
 #### bridge configuration

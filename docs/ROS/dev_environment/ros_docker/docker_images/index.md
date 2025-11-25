@@ -68,9 +68,7 @@ docker build -t humble:base -f Dockerfile.humble .
 <details>
     <summary>Dockerfile ROS jazzy </summary>
 
-```dockerfile
---8<-- "docs/ROS/dev_environment/ros_docker/docker_images/code/Dockerfile.jazzy"
-```
+
 </details>
 
 !!! warning "cuda version"
