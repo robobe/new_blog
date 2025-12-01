@@ -10,13 +10,13 @@ gz_transport is Gazebo's communication middleware, used for inter-process commun
 
 
 ## gz_transport python bindings
-Python bindings for gz_transport read more [Python support](https://gazebosim.org/api/transport/14/python.html)
+Python bindings for gz_transport read more [Python support](https://gazebosim.org/api/transport/15/python.html)
 
 
 ```bash 
-sudo apt install python3-gz-transport14
+sudo apt install python3-gz-transport15
 # gazebo messages
-sudo apt install python3-gz-msgs11
+sudo apt install python3-gz-msgs12
 ```
 
 

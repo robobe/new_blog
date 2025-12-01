@@ -12,8 +12,8 @@
             <p>Gazebo Harmonic</p></a>
     </div>
     <div class="grid-item">
-        <a href="gazebo_ionic">
-            <img src="images/ionic.png"  width="150" height="150">
+        <a href="gazebo_jetty">
+            <img src="images/jetty.png"  width="150" height="150">
             <p>Gazebo ionic</p></a>
     </div>
      <div class="grid-item">

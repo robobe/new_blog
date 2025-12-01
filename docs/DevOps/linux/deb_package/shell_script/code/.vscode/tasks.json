@@ -3,8 +3,29 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "debian content",
+            "type": "shell",
+            "detail": "List the contents of the built debian package",
+            "command": "dpkg -c ${input:myVersions}",
+            "options": {
+                "cwd": "${workspaceFolder}/debs"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "debian control",
+            "type": "shell",
+            "detail": "view debian control",
+            "command": "dpkg -I ${input:myVersions}",
+            "options": {
+                "cwd": "${workspaceFolder}/debs"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Build Debian Package",
             "type": "shell",
+            "detail": "Build debian package",
             "command": "fakeroot debian/rules binary",
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -18,6 +39,7 @@
         {
             "label": "Clean",
             "type": "shell",
+            "detail": "Clean fakeroot output",
             "command": "fakeroot debian/rules clean",
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -43,6 +65,16 @@
             "id": "changelogVersion",
             "type": "promptString",
             "description": "Enter the new version for dch"
+        },
+        {
+            "id": "myVersions",
+            "type": "pickString",
+            "description": "Pick a version",
+            "options": [
+                "my-tools_0.0.1_all.deb",
+                "my-tools_0.0.2_all.deb",
+                "Option C"
+            ]
         }
     ]
 }
