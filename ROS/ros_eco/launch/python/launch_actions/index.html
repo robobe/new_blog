@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge/">
+        <link rel="canonical" href="https://robobe.github.io/ROS/ros_eco/launch/python/launch_actions/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Gazebo bridge - Robots Inside</title>
+        <title>Index - Robots Inside</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gazebo-bridge" class="md-skip">
+        <a href="#ros2-launch-actions" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Gazebo bridge
+              Index
             
           </span>
         </div>
@@ -682,74 +682,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#bridge-yaml-config" class="md-nav__link">
+  <a href="#node" class="md-nav__link">
     <span class="md-ellipsis">
       
-        bridge yaml config
+        Node
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#clock" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Clock
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Demo
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Demo">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pub-data-from-gz-to-ros" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        pub data from gz to ros
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pub-data-from-ros-to-gz" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        pub data from ros to gz
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Resources
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -768,134 +707,67 @@
                 
                   
 
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">actions</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">launch</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">node</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">ros</span>
+      
+    
+  </nav>
+
 
   
   
 
 
-<h1 id="gazebo-bridge">Gazebo bridge</h1>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="camera">
-            <img src="images/camera.png"  width="150" height="150">
-            <p>Camera</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="clock">
-            <img src="images/clock.png"   width="150" height="150">
-            <p>clock</p>
-        </a>
-    </div>
-    <div class="grid-item">
-    <a href="imu">
-        <img src="images/imu.png"  width="150" height="150">
-            <p>imu</p>
-            </a>
-    </div>
-
-</div>
-
-<details>
-    <summary>more</summary>
-
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="lidar">
-            <img src="images/lidar.png"   width="150" height="150">
-            <p>lidar</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="diff-drive">
-            <p>Diff drive</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="joint_state">
-            <p>joint state</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="odometry">
-            <p>Odometry</p>
-        </a>
-    </div>
-
-</div>
-</details>
-
-<p>The bridge allows you to connect ROS 2 topics with Gazebo Harmonic topics so you can:</p>
+<p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/launch/">launch</a> / <a href="/ROS/ros_eco/launch/python/">python</a></p>
+<h1 id="ros2-launch-actions">ROS2 Launch Actions</h1>
 <ul>
-<li>Control simulation objects from ROS 2 (e.g., publish velocity commands).</li>
-<li>Get data from simulation (e.g., sensor readings, /clock).</li>
-<li>Sync <strong>time</strong> between ROS 2 and Gazebo.</li>
+<li>Node (from launch_ros.actions): Launches a ROS 2 node.</li>
+<li>IncludeLaunchDescription: Embeds another launch file.</li>
+<li>ExecuteProcess: Runs a generic process.</li>
+<li>DeclareLaunchArgument: Defines launch arguments.</li>
 </ul>
-<div class="admonition tip parameter_bridge">
-<p class="admonition-title">Tip</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>parameter_bridge &lt;topic@ROS2_type@gz_type&gt;
-</code></pre></div></td></tr></table></div>
-</div>
-<div class="admonition tip sign between ros2 type to gz type">
-<p class="admonition-title">Tip</p>
+<h2 id="node">Node</h2>
 <ul>
-<li><strong>@</strong> : a bidirectional bridge, </li>
-<li><strong>[</strong> : a bridge from Gazebo to ROS,</li>
-<li><strong>]</strong> : a bridge from ROS to Gazebo.</li>
-</ul>
-</div>
-<h3 id="bridge-yaml-config">bridge yaml config</h3>
-<p><a href="https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_bridge#example-5-configuring-the-bridge-via-yaml" target="_blank">github config yaml and message type mapping table</a></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span>config_file:<span class="o">=</span><span class="nv">$WORKSPACE</span>/test/config/full.yaml
-</code></pre></div></td></tr></table></div>
-<h2 id="clock">Clock</h2>
-<ul>
-<li>Gazebo publishes a simulation clock internally.</li>
-<li>To share it with ROS, you need a bridge between Gazebo’s <code>gz.msgs.Clock</code> and ROS 2’s <code>rosgraph_msgs/msg/Clock</code>.</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rosgraph_msgs/msg/Clock&quot;</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gz.msgs.Clock&quot;</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
-</code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="demo">Demo</h2>
-<p>Simulate using bridge, send message from side to side
-(no need to run gz sim for this check)</p>
-<p>send string message from gz to ros and from ros to gz using cli</p>
-<ul>
-<li>Run bridge</li>
-<li>Pub from GZ echo in ROS</li>
-<li>Pub from ROS echo in GZ</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal1: bridge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span>
-<span class="normal"><a href="#__codelineno-3-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>/chatter@std_msgs/msg/String@gz.msgs.StringMsg
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="c1">#</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1734974012</span>.615668960<span class="o">]</span><span class="w"> </span><span class="o">[</span>ros_gz_bridge<span class="o">]</span>:<span class="w"> </span>Creating<span class="w"> </span>GZ-&gt;ROS<span class="w"> </span>Bridge:<span class="w"> </span><span class="o">[</span>/chatter<span class="w"> </span><span class="o">(</span>gz.msgs.StringMsg<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>/chatter<span class="w"> </span><span class="o">(</span>std_msgs/msg/String<span class="o">)]</span><span class="w"> </span><span class="o">(</span>Lazy<span class="w"> </span><span class="m">0</span><span class="o">)</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1734974012</span>.616345817<span class="o">]</span><span class="w"> </span><span class="o">[</span>ros_gz_bridge<span class="o">]</span>:<span class="w"> </span>Creating<span class="w"> </span>ROS-&gt;GZ<span class="w"> </span>Bridge:<span class="w"> </span><span class="o">[</span>/chatter<span class="w"> </span><span class="o">(</span>std_msgs/msg/String<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>/chatter<span class="w"> </span><span class="o">(</span>gz.msgs.StringMsg<span class="o">)]</span><span class="w"> </span><span class="o">(</span>Lazy<span class="w"> </span><span class="m">0</span><span class="o">)</span>
-</code></pre></div></td></tr></table></div>
-<h4 id="pub-data-from-gz-to-ros">pub data from gz to ros</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal2: ros subscribe</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/chatter
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal3: gz pub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span>/chatter<span class="w"> </span>-m<span class="w"> </span>gz.msgs.StringMsg<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;data:&quot;Hello&quot;&#39;</span>
-</code></pre></div></td></tr></table></div>
-<h4 id="pub-data-from-ros-to-gz">pub data from ros to gz</h4>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal2: ros pub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>/chatter<span class="w"> </span>std_msgs/msg/String<span class="w"> </span><span class="s2">&quot;data: &#39;Hi&#39;&quot;</span>
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Terminal3: gz sub</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>/chatter
-</code></pre></div></td></tr></table></div>
-<hr />
-<h3 id="resources">Resources</h3>
-<ul>
-<li><a href="https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz_bridge">ROS gazebo message type mapping</a></li>
-<li><a href="https://github.com/gazebosim/ros_gz/tree/jazzy/ros_gz_sim_demos">ROS + Gazebo Sim demos</a></li>
+<li>package: The ROS 2 package containing the node.</li>
+<li>executable: The name of the executable (e.g., script or binary).</li>
+<li>name: The name of the node instance (optional, overrides the default node name).</li>
+<li>parameters: A list or dict of parameters to pass to the node.</li>
+<li>arguments: Command-line arguments for the executable (non-ROS args).</li>
+<li>output='screen': Ensures logs are visible in the terminal</li>
+<li>respawn=True: Automatically restarts the node if it crashes.</li>
+<li>respawn_delay=5.0: Delay before respawning the node.</li>
+<li>namespace: Places the node in a ROS 2 namespace, prefixing its topics, services, and parameters.</li>
+<li>remappings: Renames topics or services the  node uses. list of tuples. <code>[('old_topic', 'new_topic')]</code></li>
+<li>additional_env: Sets environment variables for the node. Dictionary of key-value pairs.</li>
+<li>condition: Specifies a condition for launching the node. If the condition is not met, the node won't be launched.</li>
+<li>prefix: Adds a command prefix (e.g., gdb for debugging).</li>
+<li>emulate_tty: ??</li>
 </ul>
 
 
@@ -903,6 +775,9 @@
 
 
 
+
+  
+  
 
 
 
