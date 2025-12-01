@@ -18,7 +18,7 @@ Create custom install wizard using debconf and postinst scripts
         </div>
     <div class="grid-item">
         <a href="shell_script">
-            <img src="images/" width="150" height="150">
+            <img src="images/pack_shell" width="150" height="150">
             <p>pack shell script</p>
              </a>
     </div>
@@ -27,6 +27,8 @@ Create custom install wizard using debconf and postinst scripts
     </div>
 
 </div>
+
+![alt text](image.png)
 
 # Debian package
 

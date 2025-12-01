@@ -6,45 +6,42 @@ tags:
 {{ page_folder_links() }}
 
 # ROS2 launch
-Launch system is used to start multiple nodes and configure their execution. The Python-based launch system (launch_ros) provides flexibility through Python scripts.
+Launch system is used to start multiple nodes and configure their execution. The Python-based launch system (launch_ros) provides flexibility through Python scripts or YAML
 
 
 <div class="grid-container">
-        <div class="grid-item">
-        <a href="launch_actions">
-            <img src="images/launch_Actions.png" width="150" height="150">
-            <p>Actions</p>
+    <div class="grid-item">
+        <a href="python">
+            <img src="images/python.png" width="150" height="150">
+            <p>PYTHON</p>
              </a>
         </div>
     <div class="grid-item">
-        <a href="launch_substitute">
-        <img src="images/launch_substitute.png" width="150" height="150" >
-        <p>Substitute</p>
+        <a href="yaml">
+        <img src="images/yaml.png" width="150" height="150" >
+        <p>YAML</p>
         </a>
     </div>
-    <div class="grid-item">
-        <a href="launch_events_and_condition">
-        <img src="images/launch_events_and_condition.png" width="150" height="150">
-        <p>Events and condition</p>
-        </a>
-    </div>
-     <div class="grid-item">
-        <a href="gazebo">
-        <p>Gazebo</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="rviz">
-        <p>Rviz</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="process">
-        <p>Process</p>
-        </a>
-    </div>
+    
 
 </div>
+
+## Minimal YAML
+
+```yaml
+launch:
+
+- node:
+    pkg: demo_nodes_cpp
+    exec: talker
+
+- node:
+    pkg: demo_nodes_cpp
+    exec: listener
+```
+
+
+---
 
 ## Minimal example
 ```python title="minimal launch file to run ros2 node"

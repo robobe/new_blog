@@ -29,6 +29,18 @@ tags:
    </div>
 
 
+| Variable  | Desc  |
+|---|---|
+| GZ_SIM_RESOURCE_PATH  | Where gz sim looks for models, worlds, textures, media.  |
+| GZ_SIM_PLUGIN_PATH  | Where gz sim looks for shared libraries (.so) for system plugins, sensors, etc.  |
+|   |   |
+
+
+!!! Tip
+    Check dsv hook to set the variable
+
+    [gazebo project](project_template)
+
 ## Launch
 
 ```python title="gazebo.launch.py"

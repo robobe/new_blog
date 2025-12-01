@@ -2,10 +2,10 @@
 tags:
     - gazebo
     - gz
-    - ionic
+    - jetty
 ---
 
-# Gazebo IONIC
+# Gazebo JETTY
 
 <div class="grid-container">
     <div class="grid-item">

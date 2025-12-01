@@ -8,9 +8,9 @@
         </a>
     </div>
     <div class="grid-item">
-        <a href="lidar">
-            <img src="images/lidar.png"   width="150" height="150">
-            <p>lidar</p>
+        <a href="clock">
+            <img src="images/clock.png"   width="150" height="150">
+            <p>clock</p>
         </a>
     </div>
     <div class="grid-item">
@@ -26,6 +26,12 @@
     <summary>more</summary>
 
 <div class="grid-container">
+    <div class="grid-item">
+        <a href="lidar">
+            <img src="images/lidar.png"   width="150" height="150">
+            <p>lidar</p>
+        </a>
+    </div>
     <div class="grid-item">
         <a href="diff-drive">
             <p>Diff drive</p>

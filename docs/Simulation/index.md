@@ -21,6 +21,7 @@
             <img src="images/pybullet.png"  width="150" height="150">
             <p>PyBullet</p></a>
     </div>
+    <!--
     <div class="grid-item">
         <a href="webots">
             <img src="images/webots.png"  width="150" height="150">
@@ -46,6 +47,7 @@
             <img src="images/other.png"  width="150" height="150">
             <p>Others</p></a>
     </div>
+    -->
    </div>
 
 ## Resources
