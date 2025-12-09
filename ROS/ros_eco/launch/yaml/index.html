@@ -752,21 +752,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rviz" class="md-nav__link">
+  <a href="#include" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Rviz
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gazebo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Gazebo
+        Include
       
     </span>
   </a>
@@ -822,15 +811,32 @@
 
 <p><a href="/ROS/">ROS</a> / <a href="/ROS/ros_eco/">ros eco</a> / <a href="/ROS/ros_eco/launch/">launch</a></p>
 <ul>
+<li><a href="#"></a></li>
 <li><a href="#minimal">Minimal</a></li>
 <li><a href="#let">let</a></li>
 <li><a href="#argument">Argument</a></li>
 <li><a href="#basic">basic</a></li>
 <li><a href="#with-default">with default</a></li>
 <li><a href="#with-multiple-choice">with multiple choice</a></li>
-<li><a href="#rviz">Rviz</a></li>
-<li><a href="#gazebo">Gazebo</a></li>
+<li><a href="#include">Include</a></li>
 </ul>
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="param_file">
+            <p>With parameter file</p>
+             </a>
+        </div>
+    <div class="grid-item">
+        <a href="rviz">
+        <p>rviz</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="gazebo">
+        <p>gazebo</p>
+        </a>
+    </div>
+</div>
 <hr />
 <h2 id="minimal">Minimal</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
@@ -952,68 +958,32 @@
 <a id="__codelineno-7-4" name="__codelineno-7-4"></a>ros2<span class="w"> </span>launch<span class="w"> </span>yaml_launch<span class="w"> </span>arg_example_default.launch.yaml<span class="w"> </span>arg_with_choices:<span class="o">=</span>choice_20
 </code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="rviz">Rviz</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-8-10">10</a></span>
-<span class="normal"><a href="#__codelineno-8-11">11</a></span>
-<span class="normal"><a href="#__codelineno-8-12">12</a></span>
-<span class="normal"><a href="#__codelineno-8-13">13</a></span>
-<span class="normal"><a href="#__codelineno-8-14">14</a></span>
-<span class="normal"><a href="#__codelineno-8-15">15</a></span>
-<span class="normal"><a href="#__codelineno-8-16">16</a></span>
-<span class="normal"><a href="#__codelineno-8-17">17</a></span>
-<span class="normal"><a href="#__codelineno-8-18">18</a></span>
-<span class="normal"><a href="#__codelineno-8-19">19</a></span>
-<span class="normal"><a href="#__codelineno-8-20">20</a></span>
-<span class="normal"><a href="#__codelineno-8-21">21</a></span>
-<span class="normal"><a href="#__codelineno-8-22">22</a></span>
-<span class="normal"><a href="#__codelineno-8-23">23</a></span>
-<span class="normal"><a href="#__codelineno-8-24">24</a></span>
-<span class="normal"><a href="#__codelineno-8-25">25</a></span>
-<span class="normal"><a href="#__codelineno-8-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nt">launch</span><span class="p">:</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">arg</span><span class="p">:</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rviz_config_file&quot;</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(find-pkg-share</span><span class="nv"> </span><span class="s">bumperbot_bringup)/config/rviz.rviz&quot;</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">arg</span><span class="p">:</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_description_file&quot;</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(find-pkg-share</span><span class="nv"> </span><span class="s">bumperbot_description)/urdf/bumperbot.urdf.xacro&quot;</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rviz2</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rviz2</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rviz2</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">      </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">screen</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">          </span><span class="s">&quot;-d</span><span class="nv"> </span><span class="s">$(var</span><span class="nv"> </span><span class="s">rviz_config_file)&quot;</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_state_publisher&quot;</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_state_publisher&quot;</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_state_publisher&quot;</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="w">      </span><span class="nt">param</span><span class="p">:</span>
-<a id="__codelineno-8-20" name="__codelineno-8-20"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_description&quot;</span>
-<a id="__codelineno-8-21" name="__codelineno-8-21"></a><span class="w">          </span><span class="nt">value </span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(command</span><span class="nv"> </span><span class="s">&#39;$(find-exec</span><span class="nv"> </span><span class="s">xacro)</span><span class="nv"> </span><span class="s">$(var</span><span class="nv"> </span><span class="s">robot_description_file)&#39;)&quot;</span>
-<a id="__codelineno-8-22" name="__codelineno-8-22"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span>
-<a id="__codelineno-8-23" name="__codelineno-8-23"></a><span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;joint_state_publisher_gui&quot;</span>
-<a id="__codelineno-8-24" name="__codelineno-8-24"></a><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;joint_state_publisher_gui&quot;</span>
-<a id="__codelineno-8-25" name="__codelineno-8-25"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;joint_state_publisher_gui&quot;</span>
-<a id="__codelineno-8-26" name="__codelineno-8-26"></a><span class="w">      </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">screen</span>
+<h2 id="include">Include</h2>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">launch/include.launch.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nt">launch</span><span class="p">:</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">include</span><span class="p">:</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">      </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(find-pkg-share</span><span class="nv"> </span><span class="s">yaml_launch)/launch/arg_example.launch.yaml&quot;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">      </span><span class="nt">arg</span><span class="p">:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;simple_arg&quot;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;data</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">include&quot;</span>
 </code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="gazebo">Gazebo</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">launch/arg_example.launch.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
 <span class="normal"><a href="#__codelineno-9-2">2</a></span>
 <span class="normal"><a href="#__codelineno-9-3">3</a></span>
-<span class="normal"><a href="#__codelineno-9-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">launch</span><span class="p">:</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">executable</span><span class="p">:</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="w">    </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gz sim -v 4 -r empty.sdf</span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">launch</span><span class="p">:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">arg</span><span class="p">:</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple_arg</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">executable</span><span class="p">:</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">    </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo $(var simple_arg)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">    </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">screen</span>
 </code></pre></div></td></tr></table></div>
 
 
