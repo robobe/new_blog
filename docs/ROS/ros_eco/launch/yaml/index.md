@@ -8,15 +8,33 @@ tags:
 
 {{ page_folder_links() }}
 
+- [](#)
 - [Minimal](#minimal)
 - [let](#let)
 - [Argument](#argument)
   - [basic](#basic)
   - [with default](#with-default)
   - [with multiple choice](#with-multiple-choice)
-- [Rviz](#rviz)
-- [Gazebo](#gazebo)
+- [Include](#include)
 
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="param_file">
+            <p>With parameter file</p>
+             </a>
+        </div>
+    <div class="grid-item">
+        <a href="rviz">
+        <p>rviz</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="gazebo">
+        <p>gazebo</p>
+        </a>
+    </div>
+</div>
 ---
 
 ## Minimal
@@ -116,46 +134,26 @@ ros2 launch yaml_launch arg_example_default.launch.yaml arg_with_choices:=choice
 ros2 launch yaml_launch arg_example_default.launch.yaml arg_with_choices:=choice_20
 ```
 
+
 ---
 
-## Rviz
+## Include
 
-```yaml
+```yaml title="launch/include.launch.yaml"
 launch:
-  - arg:
-      name: "rviz_config_file"
-      default: "$(find-pkg-share bumperbot_bringup)/config/rviz.rviz"
-  - arg:
-      name: "robot_description_file"
-      default: "$(find-pkg-share bumperbot_description)/urdf/bumperbot.urdf.xacro"
-  - node:
-      pkg: rviz2
-      exec: rviz2
-      name: rviz2
-      output: screen
-      args:
-          "-d $(var rviz_config_file)"
-  - node:
-      pkg: "robot_state_publisher"
-      exec: "robot_state_publisher"
-      name: "robot_state_publisher"
-      param:
-        - name: "robot_description"
-          value : "$(command '$(find-exec xacro) $(var robot_description_file)')"
-  - node:
-      pkg: "joint_state_publisher_gui"
-      exec: "joint_state_publisher_gui"
-      name: "joint_state_publisher_gui"
-      output: screen
+  - include:
+      file: "$(find-pkg-share yaml_launch)/launch/arg_example.launch.yaml"
+      arg:
+        - name: "simple_arg"
+          value: "data from include"
 ```
 
----
-## Gazebo
-
-```yaml
+```yaml title="launch/arg_example.launch.yaml"
 launch:
-
+- arg:
+    name: simple_arg
+  
 - executable:
-    cmd: gz sim -v 4 -r empty.sdf
-
+    cmd: echo $(var simple_arg)
+    output: screen
 ```

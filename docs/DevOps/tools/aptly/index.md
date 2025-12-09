@@ -28,11 +28,14 @@ Aptly is a swiss army knife for Debian repository management. [](aptly.info){:ta
              </a>
     </div>
     <div class="grid-item">
-        <p>TBD</p>
+        <a href="aptly_mirror">
+            <img src="images/mirror.png" width="150" height="150">
+            <p>Using Aptly to create mirror for selected packages</p>
+             </a>
     </div>
 
 </div>
-
+![alt text](mirror.png)
 ---
 
 ## gpg keys
