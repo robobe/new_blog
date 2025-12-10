@@ -56,6 +56,20 @@ tags:
 </details>
 
 
+## pyi
+
+[pybulley.pyi download](code/pybullet.pyi)
+copy the `pyi` file to library location
+
+```bash
+>>> import pybullet
+pybullet build time: Dec  8 2025 19:55:19
+>>> pybullet.__file__
+'/usr/local/lib/python3.12/dist-packages/pybullet.cpython-312-x86_64-linux-gnu.so'
+```
+
+---
+
 ## Check OpenGL backend
 
 ```bash

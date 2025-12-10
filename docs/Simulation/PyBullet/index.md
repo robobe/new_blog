@@ -19,6 +19,12 @@ Physics simulation for games, visual effects, robotics and reinforcement learnin
 </div>
 
 
+
+!!! tip
+    install pyi for intellisense
+    [pybulley.pyi download](code/pybullet.pyi)
+
+
 ## Demo
 
 ```python title="hello.py"
@@ -83,6 +89,10 @@ for _ in range(100):
 [PyBullet Quickstart Guide](https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA/edit?tab=t.0#heading=h.btdfuxtf2f72)
 
 <div class="grid-container">
+ <div class="grid-item">
+            <a href="tutorials/loadURDF.md">
+            <p>loadURDF</p></a>
+        </div>
      <div class="grid-item">
             <a href="tutorials/change_ground_texture.md">
             <p>Ground Texture</p></a>
