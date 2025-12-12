@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#robot-state-publisher" class="md-skip">
+        <a href="#install" class="md-skip">
           Skip to content
         </a>
       
@@ -672,8 +672,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -682,10 +680,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#collision" class="md-nav__link">
+  <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Collision
+        Install
       
     </span>
   </a>
@@ -693,41 +691,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gazebo-fortress" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Gazebo fortress
+        usage
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Gazebo fortress">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#launch-gazebo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Launch gazebo
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#spawn-robot-from-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Spawn robot from file
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -776,49 +746,74 @@
   
 
 
-<h1 id="robot-state-publisher">robot state publisher</h1>
+  <h1>robot state publisher</h1>
+
+<p>The robot_state_publisher node takes a robot’s URDF model and joint positions and computes the full set of TF transforms between all robot links.</p>
 <p><img alt="" src="../images/robot_state_publisher.drawio.png" /></p>
+<h2 id="install">Install</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo apt install ros-${ROS_DISTRO}-xacro
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo apt install ros-${ROS_DISTRO}-joint-state-publisher-gui
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="si">${</span><span class="nv">ROS_DISTRO</span><span class="si">}</span>-robot-state-publisher
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1"># joint state gui</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="si">${</span><span class="nv">ROS_DISTRO</span><span class="si">}</span>-joint-state-publisher-gui
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># parse xacro files and convert to urdf</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-<span class="si">${</span><span class="nv">ROS_DISTRO</span><span class="si">}</span>-xacro
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal1</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># don&#39;t forget to the quat when set the robot_description parameter</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>ros2<span class="w"> </span>run<span class="w"> </span>robot_state_publisher<span class="w"> </span>robot_state_publisher<span class="w"> </span>--ros-args<span class="w"> </span>-p<span class="w"> </span>robot_description:<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>xacro<span class="w"> </span>urdf/my_robot.urdf<span class="k">)</span><span class="s2">&quot;</span>
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal2</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>joint_state_publisher_gui<span class="w"> </span>joint_state_publisher_gui<span class="w"> </span>
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">terminal3</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>rqt_graph
-</code></pre></div></td></tr></table></div>
-<p><img alt="alt text" src="../images/rqt_graph.png" /></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
-<span class="normal"><a href="#__codelineno-4-2">2</a></span>
-<span class="normal"><a href="#__codelineno-4-3">3</a></span>
-<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>install(
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a>    DIRECTORY urdf
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a>    DESTINATION share/${PROJECT_NAME}/
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a>)
-</code></pre></div></td></tr></table></div>
-<h2 id="collision">Collision</h2>
-<div class="admonition tip">
-<p>Check collision with RVIZ</p>
-</div>
-<hr />
-<h2 id="gazebo-fortress">Gazebo fortress</h2>
-<p><a href="https://gazebosim.org/docs/fortress/migrating_gazebo_classic_ros2_packages/">Migrating ROS 2 packages that use Gazebo Classic</a></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ros-humble-ros-gz-sim
-</code></pre></div></td></tr></table></div>
-<h3 id="launch-gazebo">Launch gazebo</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">launch gazebo</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>ros2<span class="w"> </span>launch<span class="w"> </span>ros_gz_sim<span class="w"> </span>gz_sim.launch.py
-</code></pre></div></td></tr></table></div>
-<h3 id="spawn-robot-from-file">Spawn robot from file</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span>
-<span class="normal"><a href="#__codelineno-7-3">3</a></span>
-<span class="normal"><a href="#__codelineno-7-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># convert xacro file to urdf</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>xacro<span class="w"> </span>my_robot.urdf.xacro<span class="w"> </span>&gt;<span class="w"> </span>my_robot.urdf
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="c1">#</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_sim<span class="w"> </span>create<span class="w"> </span>-name<span class="w"> </span>xxx<span class="w"> </span>-file<span class="w"> </span>src/gz_tutorial_description/urdf/my_robot2.urdf
+<h2 id="usage">usage</h2>
+<p>launch robot-state-publisher, joint_state_publisher_gui and rviz</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">launch</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">arg</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rviz_config_file&quot;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(find-pkg-share</span><span class="nv"> </span><span class="s">bumperbot_bringup)/config/rviz.rviz&quot;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">arg</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_description_file&quot;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(find-pkg-share</span><span class="nv"> </span><span class="s">bumperbot_description)/urdf/bumperbot.urdf.xacro&quot;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rviz2</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rviz2</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rviz2</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">      </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">screen</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">          </span><span class="s">&quot;-d</span><span class="nv"> </span><span class="s">$(var</span><span class="nv"> </span><span class="s">rviz_config_file)&quot;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_state_publisher&quot;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_state_publisher&quot;</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_state_publisher&quot;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">      </span><span class="nt">param</span><span class="p">:</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;robot_description&quot;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">          </span><span class="nt">value </span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(command</span><span class="nv"> </span><span class="s">&#39;$(find-exec</span><span class="nv"> </span><span class="s">xacro)</span><span class="nv"> </span><span class="s">$(var</span><span class="nv"> </span><span class="s">robot_description_file)&#39;)&quot;</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;joint_state_publisher_gui&quot;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;joint_state_publisher_gui&quot;</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;joint_state_publisher_gui&quot;</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">      </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">screen</span>
 </code></pre></div></td></tr></table></div>
 
 
