@@ -35,6 +35,8 @@ Extension for colcon to clean package workspaces
 
 ```bash
 sudo apt install python3-colcon-clean
+# ubuntu 24.04
+pip install colcon-clean
 ```
 
 ```bash title="Usage"

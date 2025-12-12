@@ -90,15 +90,15 @@ for _ in range(100):
 
 <div class="grid-container">
  <div class="grid-item">
-            <a href="tutorials/loadURDF.md">
+            <a href="tutorials/loadurdf">
             <p>loadURDF</p></a>
         </div>
      <div class="grid-item">
-            <a href="tutorials/change_ground_texture.md">
-            <p>Ground Texture</p></a>
+            <a href="tutorials/links_and_joints">
+            <p>Links and Joints</p></a>
         </div>
     <div class="grid-item">
-       <a href="tutorials/camera.md">
+       <a href="tutorials/camera">
             <p>Camera</p></a>
     </div>
     <div class="grid-item">
@@ -124,7 +124,7 @@ for _ in range(100):
 - [PyBullet and Control Algorithms Workshop - La Robo Liga Event ](https://www.youtube.com/watch?v=RkHvUSGgw6Q)
 - [Quick start guide](https://raw.githubusercontent.com/bulletphysics/bullet3/master/docs/pybullet_quickstartguide.pdf)
 - [PyBullet Webinar 1](https://github.com/reflectrobotics/webinar/blob/master/robot.py)
-- [pybullet-imu-viz](https://github.com/robofoundry/pybullet-imu-viz/tree/main)
+
 - [intor](https://github.com/assadollahi/pyBulletIntro)
 - [How to Control a Robot with Python](https://towardsdatascience.com/how-to-control-a-robot-with-python/)
 - [ PyBullet workshop for NTU students : Day-1 ](https://youtu.be/KaiznOkKkdA)

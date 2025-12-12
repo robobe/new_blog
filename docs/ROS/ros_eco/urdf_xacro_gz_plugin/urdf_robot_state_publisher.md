@@ -1,72 +1,57 @@
 ---
+title: robot state publisher
 tags:
     - urdf
     - ros
     - robot_state_publisher
 ---
 
-# robot state publisher
+The robot_state_publisher node takes a robot’s URDF model and joint positions and computes the full set of TF transforms between all robot links.
+
 
 ![](images/robot_state_publisher.drawio.png)
 
 
-```
-sudo apt install ros-${ROS_DISTRO}-xacro
+## Install
+```bash
+sudo apt install ros-${ROS_DISTRO}-robot-state-publisher
+# joint state gui
 sudo apt install ros-${ROS_DISTRO}-joint-state-publisher-gui
+# parse xacro files and convert to urdf
+sudo apt install ros-${ROS_DISTRO}-xacro
 
 ```
 
 
-```bash title="terminal1"
-# don't forget to the quat when set the robot_description parameter
-ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro urdf/my_robot.urdf)"
-```
+## usage
 
-```bash title="terminal2"
-ros2 run joint_state_publisher_gui joint_state_publisher_gui 
+launch robot-state-publisher, joint_state_publisher_gui and rviz
 
-```
-
-```bash title="terminal3"
-rqt_graph
-```
-
-![alt text](images/rqt_graph.png)
-
-
-```
-install(
-    DIRECTORY urdf
-    DESTINATION share/${PROJECT_NAME}/
-)
-```
-
-## Collision
-
-!!! tip ""
-    Check collision with RVIZ
-     
-
----
-
-## Gazebo fortress
-[Migrating ROS 2 packages that use Gazebo Classic](https://gazebosim.org/docs/fortress/migrating_gazebo_classic_ros2_packages/)
-
-```bash
-sudo apt install ros-humble-ros-gz-sim
-```
-
-### Launch gazebo
-
-```bash title="launch gazebo"
-ros2 launch ros_gz_sim gz_sim.launch.py
-```
-
-### Spawn robot from file
-```bash
-# convert xacro file to urdf
-xacro my_robot.urdf.xacro > my_robot.urdf
-#
-ros2 run ros_gz_sim create -name xxx -file src/gz_tutorial_description/urdf/my_robot2.urdf
-
+```yaml
+launch:
+  - arg:
+      name: "rviz_config_file"
+      default: "$(find-pkg-share bumperbot_bringup)/config/rviz.rviz"
+  - arg:
+      name: "robot_description_file"
+      default: "$(find-pkg-share bumperbot_description)/urdf/bumperbot.urdf.xacro"
+  - node:
+      pkg: rviz2
+      exec: rviz2
+      name: rviz2
+      output: screen
+      args:
+          "-d $(var rviz_config_file)"
+  - node:
+      pkg: "robot_state_publisher"
+      exec: "robot_state_publisher"
+      name: "robot_state_publisher"
+      param:
+        - name: "robot_description"
+          value : "$(command '$(find-exec xacro) $(var robot_description_file)')"
+  - node:
+      pkg: "joint_state_publisher_gui"
+      exec: "joint_state_publisher_gui"
+      name: "joint_state_publisher_gui"
+      output: screen
 ```

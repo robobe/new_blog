@@ -28,7 +28,6 @@
 <div class="grid-container">
     <div class="grid-item">
         <a href="lidar">
-            <img src="images/lidar.png"   width="150" height="150">
             <p>lidar</p>
         </a>
     </div>
@@ -45,6 +44,11 @@
     <div class="grid-item">
         <a href="odometry">
             <p>Odometry</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="gps">
+            <p>NavSat/GPS</p>
         </a>
     </div>
 

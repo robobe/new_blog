@@ -10,7 +10,7 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="vscode">
-        <img src="/assets/images/vscode.png" width="150" height="150">
+        <img src="images/vscode.png" width="150" height="150">
         <p>VSCode dev</p>
         </a>
     </div>
@@ -26,7 +26,12 @@ tags:
         <p>Custom plugins</p>
         </a>
     </div>
-    
+     <div class="grid-item">
+        <a href="gazebo_worlds">
+        <img src="images/world.png" width="150" height="150">
+        <p>Gazebo Worlds</p>
+        </a>
+    </div>
 </div>
 
 - [Tutorials](tutorials/index.md)
