@@ -690,6 +690,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Launch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        YAML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -838,7 +866,8 @@
 <p><a href="project_template">gazebo project</a></p>
 </div>
 <h2 id="launch">Launch</h2>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gazebo.launch.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<h3 id="yaml">YAML</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
@@ -853,140 +882,173 @@
 <span class="normal"><a href="#__codelineno-0-13">13</a></span>
 <span class="normal"><a href="#__codelineno-0-14">14</a></span>
 <span class="normal"><a href="#__codelineno-0-15">15</a></span>
-<span class="normal"><a href="#__codelineno-0-16">16</a></span>
-<span class="normal"><a href="#__codelineno-0-17">17</a></span>
-<span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span>
-<span class="normal"><a href="#__codelineno-0-23">23</a></span>
-<span class="normal"><a href="#__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncludeLaunchDescription</span><span class="p">,</span> <span class="n">TimerAction</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.launch_description_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">WORLD_NAME</span><span class="o">=</span><span class="s2">&quot;world.sdf&quot;</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="n">ROS_GZ_PKG</span> <span class="o">=</span> <span class="s2">&quot;ros_gz_sim&quot;</span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">launch</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">arg</span><span class="p">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bridge_config_file&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$(find-pkg-share</span><span class="nv"> </span><span class="s">bumperbot_bringup)/config/bridge.yaml&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="c1">#gazebo simulation</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">executable</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">      </span><span class="nt">cmd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gz sim -v 4 -r world.sdf</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="n">gz_args</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a>        <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>        <span class="s2">&quot;-v1&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>        <span class="n">WORLD_NAME</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="p">])</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="n">gazebo</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a>                <span class="n">PythonLaunchDescriptionSource</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>                    <span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">ROS_GZ_PKG</span><span class="p">),</span> <span class="s1">&#39;launch&#39;</span><span class="p">,</span> <span class="s1">&#39;gz_sim.launch.py&#39;</span><span class="p">)]),</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a>                    <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a>                        <span class="s1">&#39;gz_args&#39;</span><span class="p">:</span> <span class="n">gz_args</span><span class="p">,</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a>                        <span class="s2">&quot;on_exit_shutdown&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a>             <span class="p">)</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gazebo</span><span class="p">)</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="k">return</span> <span class="n">ld</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="c1">#ros-gz bridge</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">node</span><span class="p">:</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">      </span><span class="nt">pkg</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ros_gz_bridge&quot;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">      </span><span class="nt">exec</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;parameter_bridge&quot;</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">      </span><span class="nt">output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">screen</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">          </span><span class="s">&quot;--ros-args</span><span class="nv"> </span><span class="s">-p</span><span class="nv"> </span><span class="s">config_file:=$(var</span><span class="nv"> </span><span class="s">bridge_config_file)&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="python">Python</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gazebo.launch.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncludeLaunchDescription</span><span class="p">,</span> <span class="n">TimerAction</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.launch_description_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">PythonLaunchDescriptionSource</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="n">WORLD_NAME</span><span class="o">=</span><span class="s2">&quot;world.sdf&quot;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="n">ROS_GZ_PKG</span> <span class="o">=</span> <span class="s2">&quot;ros_gz_sim&quot;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>    <span class="n">gz_args</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>        <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="s2">&quot;-v1&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="n">WORLD_NAME</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>    <span class="p">])</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>    <span class="n">gazebo</span> <span class="o">=</span> <span class="n">IncludeLaunchDescription</span><span class="p">(</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>                <span class="n">PythonLaunchDescriptionSource</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>                    <span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">ROS_GZ_PKG</span><span class="p">),</span> <span class="s1">&#39;launch&#39;</span><span class="p">,</span> <span class="s1">&#39;gz_sim.launch.py&#39;</span><span class="p">)]),</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>                    <span class="n">launch_arguments</span><span class="o">=</span><span class="p">{</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>                        <span class="s1">&#39;gz_args&#39;</span><span class="p">:</span> <span class="n">gz_args</span><span class="p">,</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>                        <span class="s2">&quot;on_exit_shutdown&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>             <span class="p">)</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">gazebo</span><span class="p">)</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>    <span class="k">return</span> <span class="n">ld</span>
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="bridge">Bridge</h2>
 <h2 id="bridge-clock-from-gazebo">Bridge clock from gazebo</h2>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">/clock topic</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>/clock@rosgraph_msgs/msg/Clock<span class="o">[</span>gz.msgs.Clock
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">/clock topic</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>ros2<span class="w"> </span>run<span class="w"> </span>ros_gz_bridge<span class="w"> </span>parameter_bridge<span class="w"> </span>/clock@rosgraph_msgs/msg/Clock<span class="o">[</span>gz.msgs.Clock
 </code></pre></div></td></tr></table></div>
 <h3 id="using-launch-file">Using launch file</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">launch/bridge.launch.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span>
-<span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span>
-<span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span>
-<span class="normal"><a href="#__codelineno-2-20">20</a></span>
-<span class="normal"><a href="#__codelineno-2-21">21</a></span>
-<span class="normal"><a href="#__codelineno-2-22">22</a></span>
-<span class="normal"><a href="#__codelineno-2-23">23</a></span>
-<span class="normal"><a href="#__codelineno-2-24">24</a></span>
-<span class="normal"><a href="#__codelineno-2-25">25</a></span>
-<span class="normal"><a href="#__codelineno-2-26">26</a></span>
-<span class="normal"><a href="#__codelineno-2-27">27</a></span>
-<span class="normal"><a href="#__codelineno-2-28">28</a></span>
-<span class="normal"><a href="#__codelineno-2-29">29</a></span>
-<span class="normal"><a href="#__codelineno-2-30">30</a></span>
-<span class="normal"><a href="#__codelineno-2-31">31</a></span>
-<span class="normal"><a href="#__codelineno-2-32">32</a></span>
-<span class="normal"><a href="#__codelineno-2-33">33</a></span>
-<span class="normal"><a href="#__codelineno-2-34">34</a></span>
-<span class="normal"><a href="#__codelineno-2-35">35</a></span>
-<span class="normal"><a href="#__codelineno-2-36">36</a></span>
-<span class="normal"><a href="#__codelineno-2-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="n">PKG_BRINGUP</span> <span class="o">=</span> <span class="s1">&#39;robot_loc_bringup&#39;</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">BRIDGE_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;bridge.yaml&quot;</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="n">CONFIG_FOLDER</span> <span class="o">=</span> <span class="s2">&quot;config&quot;</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="n">bridge_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PKG_BRINGUP</span><span class="p">))</span> \
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a>        <span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">CONFIG_FOLDER</span><span class="p">)</span> \
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a>        <span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">BRIDGE_CONFIG</span><span class="p">)</span> \
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a>        <span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="n">ros_gz_bridge</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_bridge&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;parameter_bridge&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a>            <span class="s1">&#39;--ros-args&#39;</span><span class="p">,</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a>            <span class="s1">&#39;-p&#39;</span><span class="p">,</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a>            <span class="sa">f</span><span class="s2">&quot;config_file:=</span><span class="si">{</span><span class="n">bridge_file</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a>        <span class="p">],</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a>            <span class="p">{</span><span class="s1">&#39;use_sim_time&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a>            <span class="p">{</span><span class="s1">&#39;qos_overrides./imu.publisher.reliability&#39;</span><span class="p">:</span> <span class="s1">&#39;best_effort&#39;</span><span class="p">}</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a>        <span class="p">],</span>
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="p">)</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a>
-<a id="__codelineno-2-34" name="__codelineno-2-34"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">ros_gz_bridge</span><span class="p">)</span>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a>
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a>
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a>    <span class="k">return</span> <span class="n">ld</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">launch/bridge.launch.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ament_index_python.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_package_share_directory</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="n">PKG_BRINGUP</span> <span class="o">=</span> <span class="s1">&#39;robot_loc_bringup&#39;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="n">BRIDGE_CONFIG</span> <span class="o">=</span> <span class="s2">&quot;bridge.yaml&quot;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="n">CONFIG_FOLDER</span> <span class="o">=</span> <span class="s2">&quot;config&quot;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>    <span class="n">bridge_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">get_package_share_directory</span><span class="p">(</span><span class="n">PKG_BRINGUP</span><span class="p">))</span> \
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">CONFIG_FOLDER</span><span class="p">)</span> \
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>        <span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">BRIDGE_CONFIG</span><span class="p">)</span> \
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>        <span class="o">.</span><span class="n">as_posix</span><span class="p">()</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">ros_gz_bridge</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="n">package</span><span class="o">=</span><span class="s2">&quot;ros_gz_bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="n">executable</span><span class="o">=</span><span class="s2">&quot;parameter_bridge&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>        <span class="n">arguments</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>            <span class="s1">&#39;--ros-args&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>            <span class="s1">&#39;-p&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>            <span class="sa">f</span><span class="s2">&quot;config_file:=</span><span class="si">{</span><span class="n">bridge_file</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>        <span class="p">],</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>        <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>            <span class="p">{</span><span class="s1">&#39;use_sim_time&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>            <span class="p">{</span><span class="s1">&#39;qos_overrides./imu.publisher.reliability&#39;</span><span class="p">:</span> <span class="s1">&#39;best_effort&#39;</span><span class="p">}</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>        <span class="p">],</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>    <span class="p">)</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">ros_gz_bridge</span><span class="p">)</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>    <span class="k">return</span> <span class="n">ld</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">config/bridge.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span>
-<span class="normal"><a href="#__codelineno-3-4">4</a></span>
-<span class="normal"><a href="#__codelineno-3-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rosgraph_msgs/msg/Clock&quot;</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gz.msgs.Clock&quot;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">config/bridge.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">ros_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">gz_topic_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/clock&quot;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nt">ros_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rosgraph_msgs/msg/Clock&quot;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">gz_type_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gz.msgs.Clock&quot;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="nt">direction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TO_ROS</span>
 </code></pre></div></td></tr></table></div>
 
 
