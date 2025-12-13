@@ -16,6 +16,11 @@ Physics simulation for games, visual effects, robotics and reinforcement learnin
             <img src="images/vscode.png"  width="150" height="150">
             <p>VSCode dev env</p></a>
         </div>
+        <div class="grid-item">
+            <a href="gymnasium">
+            <img src="images/gymnasium.png"  width="150" height="150">
+            <p>Gymnasium</p></a>
+        </div>
 </div>
 
 

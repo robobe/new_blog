@@ -51,6 +51,11 @@
             <p>NavSat/GPS</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="PosePublisher">
+            <p>PosePublisher</p>
+        </a>
+    </div>
 
 </div>
 </details>

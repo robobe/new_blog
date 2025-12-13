@@ -43,6 +43,28 @@ tags:
 
 ## Launch
 
+### YAML
+
+```yaml
+launch:
+  - arg:
+      name: "bridge_config_file"
+      default: "$(find-pkg-share bumperbot_bringup)/config/bridge.yaml"
+
+    #gazebo simulation
+  - executable:
+      cmd: gz sim -v 4 -r world.sdf
+
+    #ros-gz bridge
+  - node:
+      pkg: "ros_gz_bridge"
+      exec: "parameter_bridge"
+      output: screen
+      args:
+          "--ros-args -p config_file:=$(var bridge_config_file)"
+```
+
+### Python
 ```python title="gazebo.launch.py"
 --8<-- "docs/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/project_template/code/gazebo.launch.py"
 ```

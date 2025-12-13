@@ -23,5 +23,6 @@
 </div>
 
 ## Resources
+- [Neural Networks From Scratch](https://www.youtube.com/playlist?list=PL1u-h-YIOL0u7R6dg_d5O5M9HUj0SFjHE)
 - [Deep Learning with PyTorch Step-by-Step](https://github.com/GPrathap/PyTorchStepByStep)
 Official repository of my book: "Deep Learning with PyTorch Step-by-Step: A Beginner's Guide" 

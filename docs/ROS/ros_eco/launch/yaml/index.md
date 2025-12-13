@@ -10,6 +10,7 @@ tags:
 
 - [](#)
 - [Minimal](#minimal)
+- [parameters](#parameters)
 - [let](#let)
 - [Argument](#argument)
   - [basic](#basic)
@@ -51,6 +52,25 @@ launch:
     exec: listener
 ```
 
+---
+
+## parameters
+
+```yaml
+launch:
+  - node:
+      pkg: "ros_gz_image"
+      exec: "image_bridge"
+      output: screen
+      args:
+          "/camera/image"
+      param:
+          - name: use_sim_time
+            value : true
+          - name: camera.image.compressed.jpeg_quality          
+            value: 75
+      
+```
 ---
 
 ## let

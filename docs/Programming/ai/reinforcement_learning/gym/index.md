@@ -10,6 +10,12 @@ tags:
 
 {{ page_folder_links() }}
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="custom_environment">
+        <p>Custom Env</p></a>
+    </div>
+</div>
 
 ## Gymnasium main concepts
 - **Observation Space**: Set of possible state that agent can observe in the environment
