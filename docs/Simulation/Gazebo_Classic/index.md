@@ -8,7 +8,7 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="tips_settings">
-        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
+        <img src="images/tips_and_settings.png" width="150" height="150">
         <p>Tips / Settings</p>
         </a>
     </div>

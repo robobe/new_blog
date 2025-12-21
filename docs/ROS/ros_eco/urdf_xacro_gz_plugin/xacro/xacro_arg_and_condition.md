@@ -12,124 +12,117 @@ Simple `xacro` file that get argument from outside.
 if no argument set it use the default.  
 Using `xacro` command to substitute xacro sentence
 
-```xml title="simple xacro"
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_name">
-    <xacro:arg name="name" default="default_bot"/>
-
-    <link name="$(arg name)">
-        
-    </link>
-  
-
+```xml title="simple.xacro"
+<?xml version="1.0"?>
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+     <xacro:arg name="banner" default="default banner"/>
+    <tag>$(arg banner)</tag>
 </robot>
 ```
 
 ```bash title="usage"
 # use default value
-xacro demo.urdf.xacro
+xacro simple.xacro
 
 # set arg from cli
-xacro demo.urdf.xacro name:=turtle
+xacro simple.xacro banner:=hello
 
-# convert to urdf file
-xacro demo.urdf.xacro name:=turtle > demo.urdf
 ```
 
 #### launch file
-- Use python pathlib for path construct
-- Use xacro library
-- Check [condition](#condition) example for command and PathJoinSubstitution 
 
-```python
-from ament_index_python.packages import get_package_share_directory
-from launch import LaunchDescription
-from launch_ros.actions import Node
-import xacro
-from pathlib import Path
+##### yaml
 
-PKG_DESCRIPTION = "turtlebot_description"
-URDF_XACRO_FILE = "demo.urdf.xacro"
+```yaml
+launch:
+  - arg:
+      name: "robot_description_file"
+      default: "$(find-pkg-share my_robot_description)/urdf/test.xacro"
+  - arg:
+      name: banner
+      default: hello world
 
-
-def generate_launch_description():
-    ld =  LaunchDescription()
-    
-    xacro_file = Path(
-        get_package_share_directory(PKG_DESCRIPTION)) \
-        .joinpath("urdf") \
-        .joinpath(URDF_XACRO_FILE) \
-        .as_posix()
-        
-
-    urdf = xacro.process_file(xacro_file, mappings={"name":"my_name"}).toxml()
-    params = {'robot_description': urdf, 'use_sim_time': True}
-    node_robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        output='screen',
-        parameters=[params]
-    )
-
-
-    ld.add_action(node_robot_state_publisher)
-    return ld
-
+  #xacro
+  - executable:
+      cmd: "xacro $(var robot_description_file) banner:=$(var banner)"
+      output: screen
 ```
 
-```bash title="usage"
-#-f outout topic full data
-ros2 topic echo /robot_description -f
-```
+
 
 ---
 
 ## Condition
 
 ```xml title="simple xacro with condition and argument"
+<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_name">
-    <xacro:arg name="use_control" default="false"/>
-
-    <xacro:if value="$(arg use_control)">
-        <!-- ros2 control-->
-         <link name="ros2_control">
-            
-         </link>
+    <xacro:arg name="use_ros2_control" default="false" />
+    <xacro:if value="$(arg use_ros2_control)">
+        control
     </xacro:if>
-    <xacro:unless value="$(arg use_control)">
-        <!-- other plugin-->
-        <link name="ros2">
-            
-        </link>
+    <xacro:unless value="$(arg use_ros2_control)">
+        simple
     </xacro:unless>
-  
-
 </robot>
 ```
 
 #### usage
-Launch file with argument to control urdf parse (use ros2_control or not)
-using substitutions class :
+#### launch
 
-- LaunchConfiguration
-- Command
-- PathJoinSubstitution
+```yaml
+launch:
+  - arg:
+      name: "robot_description_file"
+      default: "$(find-pkg-share my_robot_description)/urdf/test.xacro"
+  - arg:
+      name: use_control
+      default: "false"
 
-<details>
-    <summary>launch file that set xacro argument</summary>
-
-```python
---8<-- "docs/ROS/ros_eco/urdf_xacro_gz_plugin/xacro/code/xacro_arg_condition.launch.py"
-```
-</details>
-
-```bash title="how to launch"
-# with
-ros2 launch turtlebot_bringup demo.launch.py use_ros2_control:=True
-# Without
-ros2 launch turtlebot_bringup demo.launch.py use_ros2_control:=False
+  #xacro
+  - executable:
+      cmd: "xacro $(var robot_description_file) use_ros2_control:=$(var use_control)"
+      output: screen
 ```
 
-```bash title="echo topic"
-# -f: output all topic data
-ros2 topic echo /robot_description -f
+#### usage
+
+```bash
+#default
+ros2 launch my_robot_bringup test.launch.yaml
+# False
+ros2 launch my_robot_bringup test.launch.yaml use_control:=false
+# True
+ros2 launch my_robot_bringup test.launch.yaml use_control:=false
+```
+
+---
+
+## Demo: more conditions
+Use expression to evaluate condition
+
+```xml title="test.xacro"
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_name">
+    <xacro:arg name="xxx" default="2" />
+    <xacro:property name="xxx_value" value="$(arg xxx)" /> 
+
+    arg: $(arg xxx) , property: ${xxx_value} 
+    
+    <xacro:if value="${'$(arg xxx)' == '1'}">
+        arg condition 1
+    </xacro:if>
+
+    <xacro:if value="${xxx_value == 1}">
+        property condition 1
+    </xacro:if>
+
+</robot>
+```
+
+### usage
+
+```bash
+xacro test.xacro xxx:=1
+xacro test.xacro xxx:=2
 ```

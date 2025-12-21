@@ -10,6 +10,7 @@ tags:
 
 - [](#)
 - [Minimal](#minimal)
+  - [remap topic](#remap-topic)
 - [parameters](#parameters)
 - [let](#let)
 - [Argument](#argument)
@@ -39,6 +40,8 @@ tags:
 ---
 
 ## Minimal
+Launch two nodes
+
 
 ```yaml
 launch:
@@ -50,6 +53,26 @@ launch:
 - node:
     pkg: demo_nodes_cpp
     exec: listener
+```
+
+### remap topic
+```yaml title="remapping topic"
+launch:
+
+  - node:
+      pkg: demo_nodes_cpp
+      exec: talker
+      remap:
+        - from: chatter
+          to: my_topic
+
+  - node:
+      pkg: demo_nodes_cpp
+      exec: listener
+      remap:
+        - from: chatter
+          to: my_topic
+
 ```
 
 ---

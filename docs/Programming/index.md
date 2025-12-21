@@ -35,10 +35,9 @@
         <p>Vision</p>
         </a>
     </div>
-    <div class="grid-item">
-        <a href="qml">
-        <img src="images/qml.png" width="250" height="150">
-        <p>QML</p>
-        </a>
-    </div>
+    
 </div>
+
+---
+
+- [Configuration files](configure_files)

@@ -11,7 +11,7 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="gym">
-        <img src="images/gym.png"  width="150" height="150">
+        <img src="images/gymnasium.png"  width="150" height="150">
         <p>GYM</p></a>
     </div>
 </div>
