@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/DevOps/vscode/remote_ssh/">
+        <link rel="canonical" href="https://robobe.github.io/Embedded/RPI/ssh_vscode_remote/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Index - Robots Inside</title>
+        <title>Using vscode remote on RPI - Robots Inside</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tips" class="md-skip">
+        <a href="#login-using-ssh-key" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Using vscode remote on RPI
             
           </span>
         </div>
@@ -297,7 +297,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Embedded/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
   
@@ -316,7 +316,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../DevOps/" class="md-tabs__link">
         
   
   
@@ -554,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Embedded/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -581,7 +581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../DevOps/" class="md-nav__link">
         
   
   
@@ -680,22 +680,122 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tips" class="md-nav__link">
+  <a href="#login-using-ssh-key" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tips
+        Login using SSH key
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Tips">
+    <nav class="md-nav" aria-label="Login using SSH key">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#add-x11-support" class="md-nav__link">
+  <a href="#create-key" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Add x11 support
+        Create key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copy-key-to-remote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copy key to remote
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vscode-remote-ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VSCode Remote-SSH
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VSCode Remote-SSH">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-ssh-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote-ssh usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Remote-ssh usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-new-remote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add new remote
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#edit-ssh-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edit ssh config
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tip-change-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tip: Change prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vscode-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VSCode project
       
     </span>
   </a>
@@ -728,7 +828,21 @@
       
       
       
+        <span class="md-tag">raspberry</span>
+      
+    
+      
+      
+      
+      
         <span class="md-tag">remote</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">rpi</span>
       
     
       
@@ -745,13 +859,6 @@
         <span class="md-tag">vscode</span>
       
     
-      
-      
-      
-      
-        <span class="md-tag">vscode-server</span>
-      
-    
   </nav>
 
 
@@ -759,23 +866,96 @@
   
 
 
-  <h1>Index</h1>
+  <h1>Using vscode remote on RPI</h1>
 
 <p>The Remote - SSH extension lets you use any remote machine with a SSH server as your development environment.</p>
-<p><a href="docs/Embedded/RPI/ssh_vscode_remote">Check vscode remote and raspberry pi</a></p>
-<h2 id="tips">Tips</h2>
-<h3 id="add-x11-support">Add x11 support</h3>
-<p>Add ForwardX11 and ForwardX11Trusted to user <code>.ssh/config</code> file</p>
+<h2 id="login-using-ssh-key">Login using SSH key</h2>
+<h3 id="create-key">Create key</h3>
+<p>Create ssh key (private/public)
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Host 10.0.0.4
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>  HostName 10.0.0.4
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>  User user
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>  ForwardX11 yes
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>  ForwardX11Trusted yes
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># ssh-keygen -t ed25519 -C &quot;your_email@example.com&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;dev@dev.com&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Type enter for empty passphrase</span>
+</code></pre></div></td></tr></table></div></p>
+<div class="admonition tip passphrase">
+<p class="admonition-title">Tip</p>
+<p>For simplicity (less secure) create key without passphrase</p>
+</div>
+<h3 id="copy-key-to-remote">Copy key to remote</h3>
+<p>Copy the public key to remote machine</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># ssh-copy-id user@remote</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>ssh-copy-id<span class="w"> </span>user@pi
 </code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">ssh-agent</p>
+<p>If the private key has passphrase we need to type it every time we start ssh session.
+ssh-agent keep the private key after we type the passphrase once</p>
+</div>
+<hr />
+<h2 id="vscode-remote-ssh">VSCode Remote-SSH</h2>
+<p>The Remote - SSH extension lets you use any remote machine with a SSH server as your development environment. <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">install and more</a></p>
+<hr />
+<h3 id="remote-ssh-usage">Remote-ssh usage</h3>
+<h4 id="add-new-remote">Add new remote</h4>
+<p><img alt="alt text" src="images/add_new_remote.png" /></p>
+<h4 id="connect">Connect</h4>
+<p><img alt="alt text" src="images/connect_remote.png" /></p>
+<h4 id="edit-ssh-config">Edit ssh config</h4>
+<p>Edit remote name and other settings</p>
+<p><img alt="alt text" src="images/edit_ssh_config_file.png" /></p>
+<ul>
+<li>Change remote name</li>
+<li>Add x11 settings</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>Host pi
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>    HostName 192.168.1.50
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>    User pi
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    ForwardX11 yes
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    ForwardX11Trusted yes
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    # Port 2222
+</code></pre></div></td></tr></table></div>
+<h3 id="tip-change-prompt">Tip: Change prompt</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Add to .bashrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SSH_CONNECTION</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$EUID</span><span class="s2">&quot;</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">        </span><span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;🍓\[\e[1;41m\][ROOT SSH \u@\h]\[\e[0m\] \w # &#39;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="k">else</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">        </span><span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;🍓\[\e[1;31m\][SSH \u@\h]\[\e[0m\] \w \$ &#39;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="k">fi</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="k">fi</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="vscode-project">VSCode project</h3>
+<p>All the file <strong>exists</strong> on the remote machine</p>
+<p>use <code>extensions.json</code> file to control with extension will installed on the remote</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;recommendations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="s2">&quot;ms-python.python&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">    </span><span class="s2">&quot;ms-vscode.cpptools&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">    </span><span class="s2">&quot;ms-vscode.cmake-tools&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p><img alt="alt text" src="images/install_recommendations.png" /></p>
 
 
 
