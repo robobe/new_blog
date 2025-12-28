@@ -15,6 +15,25 @@ sudo apt-get install gstreamer1.0-tools gstreamer1.0-python3
 
 ```
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="app_src">
+        <p>app src</p>
+        </a>
+    </div>
+    <div class="grid-item">
+    <a href="app_sink">
+        <p>app sink</p>
+        </a>
+    </div>
+    <div class="grid-item">
+         <!-- <a href="python_bindings"> -->
+        <p>TBD</p>
+        <!-- </a> -->
+    </div>
+    
+</div>
+
 ## Simple usage
 
 ```python
@@ -38,10 +57,3 @@ loop.run()
 
 ---
 
-## AppSrc
-
-todo: explain the code
-
-```python
---8<-- "docs/Other/Gstreamer/python_bindings/gst_appsrc_example.py"
-```

@@ -39,3 +39,8 @@ tags:
 
 ### Git tools
 [GitKraken](https://www.gitkraken.com/download)
+
+---
+
+## Reference
+- [10 Git Commands Every Developer Should Master](https://medium.com/@ranjan.monisha233/10-git-commands-every-developer-should-master-and-why-a84584c72cac)
