@@ -193,3 +193,31 @@ gst-launch-1.0 \
   ! autovideosink
 
 ```
+
+---
+
+## Demo
+
+```
+gst-launch-1.0 \
+  videotestsrc is-live=true do-timestamp=true \
+  ! video/x-raw,width=640,height=480,framerate=30/1 \
+  ! timeoverlay font-desc="Sans, 24" halignment=left valignment=top shaded-background=true \
+  ! videoconvert \
+  ! nvh264enc preset=low-latency-hq rc-mode=cbr bitrate=2000 \
+  ! h264parse \
+  ! rtph264pay pt=96 config-interval=1 \
+  ! udpsink host=127.0.0.1 port=5000
+
+```
+
+```
+gst-launch-1.0 \
+  udpsrc port=5000 caps="application/x-rtp,media=video,encoding-name=H264,payload=96" \
+  ! rtpjitterbuffer latency=50 \
+  ! rtph264depay \
+  ! h264parse \
+  ! avdec_h264 \
+  ! videoconvert \
+  ! fpsdisplaysink
+```

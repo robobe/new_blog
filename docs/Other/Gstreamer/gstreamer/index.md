@@ -23,6 +23,20 @@ tags:
             <p>selector</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="cario">
+            <p>cario</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="text">
+            <p>text</p>
+        </a>
+    </div>
 </div>
 
+---
+
+## Resource
+- [intel deep learning streamer](https://dlstreamer.github.io/get_started/get_started_index.html)
 
