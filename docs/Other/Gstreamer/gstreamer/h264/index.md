@@ -91,9 +91,39 @@ gst-launch-1.0 \
 
 ```
 
+#### Receiver 
+
+!!! warning "leggy decoding"
+    On my machine the cpu decoder `avdec_h264` work better then `vaapih264dec`
+    
+```bash
+gst-launch-1.0 \
+  udpsrc port=5000 caps="application/x-rtp,media=video,encoding-name=H264,payload=96" \
+  ! rtph264depay \
+  ! h264parse \
+  ! vaapih264dec \
+  ! videoconvert \
+  ! autovideosink
+
+```
+
+```bash title="with jitter"
+gst-launch-1.0 \
+  udpsrc port=5000 caps="application/x-rtp,media=video,encoding-name=H264,payload=96" \
+  ! rtpjitterbuffer latency=100 drop-on-latency=true \
+  ! rtph264depay \
+  ! h264parse \
+  ! vaapih264dec \
+  ! videoconvert \
+  ! autovideosink
+
+```
+
 ---
 
-### Using nvidia
+### Using nvidia (NVDEC)
+- nvh264enc
+- nvh264dec
 
 !!! info "jetson"
     NVIDIA Jetson hardware using `nvv4l2h264enc` element
@@ -117,7 +147,49 @@ gst-launch-1.0 \
 
 ```
 
+#### Receiver
+
+```bash
+gst-launch-1.0 \
+  udpsrc port=5000 caps="application/x-rtp,media=video,encoding-name=H264,payload=96" \
+  ! rtph264depay \
+  ! h264parse \
+  ! nvh264dec \
+  ! videoconvert \
+  ! autovideosink
+
+```
+
 ---
 
-TODO: Add jetson pipe
-TOSO: check nvidia decoders if exists
+TODO: check jetson pipe
+
+### Jetson
+
+```
+gst-launch-1.0 \
+  videotestsrc is-live=true do-timestamp=true \
+  ! video/x-raw,width=1280,height=720,framerate=30/1 \
+  ! nvvidconv \
+  ! nvv4l2h264enc insert-sps-pps=true iframeinterval=30 bitrate=2000000 \
+  ! h264parse \
+  ! rtph264pay pt=96 config-interval=1 \
+  ! udpsink host=127.0.0.1 port=5000
+
+```
+
+- insert-sps-pps=true    # required for streaming
+- iframeinterval=30     # one keyframe per second @30fps
+- bitrate=2000000       # 2 Mbps (adjust as needed)
+
+```
+gst-launch-1.0 \
+  udpsrc port=5000 caps="application/x-rtp,media=video,encoding-name=H264,payload=96" \
+  ! rtpjitterbuffer latency=50 \
+  ! rtph264depay \
+  ! h264parse \
+  ! nvv4l2decoder \
+  ! nvvidconv \
+  ! autovideosink
+
+```
