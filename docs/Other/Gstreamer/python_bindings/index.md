@@ -45,14 +45,18 @@ from gi.repository import Gst, GLib
 Gst.init(None)
 
 # Create a GStreamer pipeline
-pipeline = Gst.parse_launch("videotestsrc ! videoconvert ! autovideosink")
+PIPELINE = "videotestsrc ! videoconvert ! autovideosink"
+pipeline = Gst.parse_launch()
 
 # Start playing the video
 pipeline.set_state(Gst.State.PLAYING)
 
 # Creates a main loop to keep the program running.
 loop = GLib.MainLoop()
-loop.run()
+try:
+    loop.run()
+except KeyboardInterrupt:
+    pass
 ```
 
 ---

@@ -9,6 +9,16 @@ tags:
 
 <div class="grid-container">
  <div class="grid-item">
+        <a href="debug_and_trace">
+            <p>gstreamer debug and trace</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="clock">
+            <p>gstreamer clock</p>
+        </a>
+    </div>
+ <div class="grid-item">
         <a href="h264">
             <p>h264</p>
         </a>
@@ -34,6 +44,10 @@ tags:
         </a>
     </div>
 </div>
+
+---
+
+
 
 ---
 

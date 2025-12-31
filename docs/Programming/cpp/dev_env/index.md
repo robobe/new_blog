@@ -17,6 +17,8 @@ tags:
 ## Build
 
 ### Using CMake presets
+CMake Presets are a standardized, version-controlled way to define build configurations (compiler, build dir, flags, generator, cache vars) so everyone builds the project the same way — from CLI or IDE.
+
 CMake Presets contain information how to:
 - configure, 
 - build, 
@@ -52,9 +54,119 @@ Preset information is stored in a JSON files:
 }
 ```
 
-!!! tip ""
-     - CMake presets
-     - Kits and Variants
+#### Preset Types
+
+1️⃣ Configure presets
+
+Define how CMake configures the project
+
+```json
+"configurePresets": [
+  {
+    "name": "debug",
+    "generator": "Ninja",
+    "binaryDir": "build/debug",
+    "cacheVariables": {
+      "CMAKE_BUILD_TYPE": "Debug"
+    }
+  }
+]
+```
+
+Equivalent to:
+
+```bash
+cmake -S . -B build/debug -DCMAKE_BUILD_TYPE=Debug
+```
+
+```bash title="run from cli"
+#cmake --preset <preset name>
+cmake --preset debug
+```
+
+2️⃣ Build presets
+
+Define how to build after configuration
+
+```json
+"buildPresets": [
+  {
+    "name": "debug",
+    "configurePreset": "debug"
+  }
+]
+```
+
+Equivalent to:
+
+```bash
+cmake --build build/debug
+```
+
+```bash
+#cmake --build --preset <preset name>
+cmake --build --preset debug
+```
+
+#### VSCode
+
+```json
+{
+  "cmake.useCMakePresets": "always"
+}
+```
+
+---
+
+### Demo: cmake presets with debug and release
+
+```json
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "debug",
+      "generator": "Ninja",
+      "binaryDir": "build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "generator": "Ninja",
+      "binaryDir": "build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    }
+  ]
+}
+
+```
+
+VSCode preset commnads
+
+- cmake: Configure
+- cmake: Build
+- cmake: Clean
+- cmake: select configure preset
+- cmake: select build preset
 
 ---
 

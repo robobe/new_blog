@@ -41,3 +41,12 @@ g++ -I/usr/include demo.cpp -o demo
 ```cpp
 --8<-- "docs/Programming/cpp/libraries/msgpack/code/pack_struct.cpp"
 ```
+
+!!! tip "MSGPACK_DEFINE vs MSGPACK_DEFINE_MAP"
+    MSGPACK_DEFINE and MSGPACK_DEFINE_MAP are macros that generate serialization / deserialization code for your struct or class — but they encode the data in different MessagePack formats.
+
+    - MSGPACK_DEFINE → array-based encoding
+    - MSGPACK_DEFINE_MAP → map-based encoding
+
+    When sending message between cross language like cpp-python it best to use **MSGPACK_DEFINE_MAP**
+    
