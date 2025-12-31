@@ -913,6 +913,15 @@
 <a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">MSGPACK_DEFINE vs MSGPACK_DEFINE_MAP</p>
+<p>MSGPACK_DEFINE and MSGPACK_DEFINE_MAP are macros that generate serialization / deserialization code for your struct or class — but they encode the data in different MessagePack formats.</p>
+<ul>
+<li>MSGPACK_DEFINE → array-based encoding</li>
+<li>MSGPACK_DEFINE_MAP → map-based encoding</li>
+</ul>
+<p>When sending message between cross language like cpp-python it best to use <strong>MSGPACK_DEFINE_MAP</strong></p>
+</div>
 
 
 

@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Other/Gstreamer/gstreamer/">
+        <link rel="canonical" href="https://robobe.github.io/Other/Gstreamer/c_bindings/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>GStreamer pipes - Robots Inside</title>
+        <title>Gstreamer c/cpp bindings - Robots Inside</title>
       
     
     
@@ -75,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#gstreamer" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -110,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              GStreamer pipes
+              Gstreamer c/cpp bindings
             
           </span>
         </div>
@@ -672,27 +667,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#resource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Resource
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -713,7 +687,7 @@
       
       
       
-        <span class="md-tag">compositor</span>
+        <span class="md-tag">bindings</span>
       
     
       
@@ -730,51 +704,206 @@
   
 
 
-<h1 id="gstreamer">Gstreamer</h1>
-<div class="grid-container">
- <div class="grid-item">
-        <a href="debug_and_trace">
-            <p>gstreamer debug and trace</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="clock">
-            <p>gstreamer clock</p>
-        </a>
-    </div>
- <div class="grid-item">
-        <a href="h264">
-            <p>h264</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="compositor">
-            <p>compositor</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="selector">
-            <p>selector</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="cario">
-            <p>cario</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="text">
-            <p>text</p>
-        </a>
-    </div>
-</div>
+  <h1>Gstreamer c/cpp bindings</h1>
 
-<hr />
-<hr />
-<h2 id="resource">Resource</h2>
-<ul>
-<li><a href="https://dlstreamer.github.io/get_started/get_started_index.html">intel deep learning streamer</a></li>
-</ul>
+<p>```bash titlle="install dependencies"
+sudo apt install -y \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#__codelineno-0-62">62</a></span>
+<span class="normal"><a href="#__codelineno-0-63">63</a></span>
+<span class="normal"><a href="#__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#__codelineno-0-66">66</a></span>
+<span class="normal"><a href="#__codelineno-0-67">67</a></span>
+<span class="normal"><a href="#__codelineno-0-68">68</a></span>
+<span class="normal"><a href="#__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#__codelineno-0-70">70</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>```c
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>#include &lt;gst/gst.h&gt;
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>#include &lt;glib.h&gt;
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>#include &lt;iostream&gt;
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>static void on_error(
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    GstBus *bus,
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    GstMessage *msg,
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>    gpointer user_data)
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>{
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    GMainLoop *loop = static_cast&lt;GMainLoop *&gt;(user_data);
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>    GError *err = nullptr;
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    gchar *debug = nullptr;
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    gst_message_parse_error(msg, &amp;err, &amp;debug);
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    std::cerr &lt;&lt; &quot;ERROR: &quot; &lt;&lt; err-&gt;message &lt;&lt; std::endl;
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    if (debug)
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>        std::cerr &lt;&lt; &quot;Debug info: &quot; &lt;&lt; debug &lt;&lt; std::endl;
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    g_error_free(err);
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    g_free(debug);
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    g_main_loop_quit(loop);
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>}
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>static void on_eos(
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    GstBus *bus,
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    GstMessage *msg,
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    gpointer user_data)
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>{
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    GMainLoop *loop = static_cast&lt;GMainLoop *&gt;(user_data);
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    std::cout &lt;&lt; &quot;EOS&quot; &lt;&lt; std::endl;
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    g_main_loop_quit(loop);
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>}
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>int main(int argc, char *argv[])
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>{
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    gst_init(&amp;argc, &amp;argv);
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>    GMainLoop *loop = g_main_loop_new(nullptr, FALSE);
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>    GstElement *pipeline =
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>        gst_parse_launch(&quot;videotestsrc ! autovideosink&quot;, nullptr);
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>    GstBus *bus = gst_element_get_bus(pipeline);
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>    /* Attach bus to GLib signals (no manual polling) */
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>    gst_bus_add_signal_watch(bus);
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>    g_signal_connect(
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>        bus, &quot;message::error&quot;,
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>        G_CALLBACK(on_error), loop);
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>    g_signal_connect(
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>        bus, &quot;message::eos&quot;,
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>        G_CALLBACK(on_eos), loop);
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>
+<a id="__codelineno-0-59" name="__codelineno-0-59"></a>    gst_object_unref(bus);
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>    gst_element_set_state(pipeline, GST_STATE_PLAYING);
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a>    g_main_loop_run(loop);
+<a id="__codelineno-0-64" name="__codelineno-0-64"></a>
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a>    gst_element_set_state(pipeline, GST_STATE_NULL);
+<a id="__codelineno-0-66" name="__codelineno-0-66"></a>    gst_object_unref(pipeline);
+<a id="__codelineno-0-67" name="__codelineno-0-67"></a>    g_main_loop_unref(loop);
+<a id="__codelineno-0-68" name="__codelineno-0-68"></a>
+<a id="__codelineno-0-69" name="__codelineno-0-69"></a>    return 0;
+<a id="__codelineno-0-70" name="__codelineno-0-70"></a>}
+</code></pre></div></td></tr></table></div></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">cmake_minimum_required</span><span class="p">(</span><span class="n">VERSION</span><span class="w"> </span><span class="mf">3.16</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">project</span><span class="p">(</span><span class="n">gstreamer_cpp_example</span><span class="w"> </span><span class="n">LANGUAGES</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">CXX</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="mi">17</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_STANDARD_REQUIRED</span><span class="w"> </span><span class="n">ON</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="cp"># Find GStreamer</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="n">find_package</span><span class="p">(</span><span class="n">PkgConfig</span><span class="w"> </span><span class="n">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="n">pkg_check_modules</span><span class="p">(</span><span class="n">GST</span><span class="w"> </span><span class="n">REQUIRED</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="n">gstreamer</span><span class="mf">-1.0</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="n">gstreamer</span><span class="o">-</span><span class="n">base</span><span class="mf">-1.0</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="n">add_executable</span><span class="p">(</span><span class="n">gst_example</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">cpp</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="n">target_include_directories</span><span class="p">(</span><span class="n">gst_example</span><span class="w"> </span><span class="n">PRIVATE</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="n">$</span><span class="p">{</span><span class="n">GST_INCLUDE_DIRS</span><span class="p">}</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="p">)</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="n">target_link_libraries</span><span class="p">(</span><span class="n">gst_example</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">    </span><span class="n">$</span><span class="p">{</span><span class="n">GST_LIBRARIES</span><span class="p">}</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="p">)</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="cp"># Needed on some systems</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="n">target_compile_options</span><span class="p">(</span><span class="n">gst_example</span><span class="w"> </span><span class="n">PRIVATE</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="n">$</span><span class="p">{</span><span class="n">GST_CFLAGS_OTHER</span><span class="p">}</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
 
 
 
