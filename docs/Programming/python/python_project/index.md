@@ -37,16 +37,21 @@ This tells Python which tools to use when running `pip install` or `python -m bu
 `setuptools` is the classic standard and widely use
 
 other build tools
+
 - Poetry
 - Hatch
 - flit
 
-#### python build
+---
+
+### python build
+**How to turn your source code into an installable package**
 
 ```
 pip install build
+```
 
-# usage
+```bash title="usage"
 python -m build
 
 # create wheel in `dist` folder
@@ -56,6 +61,7 @@ python -m build
 !!! tip
     use `--no-isolation` flag to disabled creating isolated virtual environment during build
 
+---
 
 ### project metadata (PEP 621)
 The [project] section in pyproject.toml that describes your Python package:
@@ -103,8 +109,8 @@ Docs = "https://coolapp.readthedocs.io"
 coolapp = "my_package:main"
 ```
 
-- [project.optional-dependencies]: install optional package `pip install my_package[dev]`
-- [project.scripts]: entry point/CLI command run `coolapp` to run application after install
+- **[project.optional-dependencies]**: install optional package `pip install my_package[dev]`
+- **[project.scripts]**: entry point/CLI command run `coolapp` to run application after install
 
 ---
 
@@ -125,4 +131,71 @@ coolapp = "my_package:main"
 | stdeb             | ⚠️              | ⭐⭐⭐   | ⚠️             | Python-only   |
 
 ## dpkg-deb
-[github](https://github.com/robobe/python_project)
+Using `dpkg-deb` util to create debian package from python project (wrap the **whl** file create by `python3 -m build`)
+
+
+### Demo
+[demo code ](https://github.com/robobe/python_project/tree/build_deb){:target="_blank"}
+My basic idea is create project DEBIAN folder the include all the file that i need to pack include the **whl** file that create using `python -m build`
+
+- Create root folder named `python3-<project-name>`
+- Create DEBIAN folder
+- Add **control** file under DEBIAN folder
+- Using `python -m build --outdir` to place the dir under the **project debian** folder (dist sub folder)
+- Add `postinst` and `postrm` to install the `whl` file when we install the package
+- Set execte permission to `postinst` and `postrm` and `644` to `control` file
+- Create `debs` folder under project root for deb output
+- Run `dpkg-deb python3-<project-name> debs` 
+- Check the debian using `dpkg -I` and `dpkg -c`
+
+
+#### Project
+
+```
+├── pyproject.toml
+├── python3-python-project
+│   ├── DEBIAN
+│   │   ├── control
+│   │   ├── postinst
+│   │   └── postrm
+│   ├── dist
+│   │   ├── my_package-0.0.1-py3-none-any.whl
+│   │   └── my_package-0.0.1.tar.gz
+├── python_project
+│   ├── app.py
+│   └── __init__.py
+└── README.md
+
+```
+
+
+```title="control"
+Package: python3-python-project
+Version: 1.0.0
+Section: python
+Priority: optional
+Architecture: all
+Depends: python3, python3-pip
+Maintainer: Your Name <you@email.com>
+Description: My Python project packaged as a Debian package
+```
+
+```bash title="postint"
+#!/bin/sh
+set -e
+
+pip3 install --no-deps /dist/my_package-0.0.1-py3-none-any.whl
+
+echo "Installation complete."
+
+exit 0
+```
+
+```bash title="postrm"
+#!/bin/sh
+set -e
+
+echo "Removing Python package..."
+
+exit 0
+```
