@@ -25,7 +25,7 @@
     
     
       
-        <title>ZMQ - Robots Inside</title>
+        <title>Python zmq basic - Robots Inside</title>
       
     
     
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ZMQ
+              Python zmq basic
             
           </span>
         </div>
@@ -675,6 +675,64 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#inproc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inproc
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ipc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ipc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tcp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30-31-32-33-34-35-36-37-38-39-40-41-42import-zmq-import-time-import-multiprocessing-as-mp-endpoint-tcp1270015555-def-publisher-ctx-zmqcontext-type-ignoreattr-defined-pub-ctxsocketzmqpub-type-ignoreattr-defined-pubbindendpoint-timesleep02-allow-subscribers-to-connect-pubsend_multipartbtopic-bhello-timesleep01-pubclose-ctxterm-def-subscriber-ctx-zmqcontext-type-ignoreattr-defined-sub-ctxsocketzmqsub-type-ignoreattr-defined-subconnectendpoint-subsetsockoptzmqsubscribe-btopic-type-ignoreattr-defined-printsubrecv_multipart-subclose-ctxterm-if-__name__-__main__-mpset_start_methodspawn-forcetrue-p_sub-mpprocesstargetsubscriber-p_pub-mpprocesstargetpublisher-p_substart-timesleep01-sub-first-important-p_pubstart-p_pubjoin-p_subjoin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42import zmq import time import multiprocessing as mp ENDPOINT = &quot;tcp://127.0.0.1:5555&quot; def publisher(): ctx = zmq.Context() # type: ignore[attr-defined] pub = ctx.socket(zmq.PUB) # type: ignore[attr-defined] pub.bind(ENDPOINT) time.sleep(0.2) # allow subscribers to connect pub.send_multipart([b&quot;topic&quot;, b&quot;hello&quot;]) time.sleep(0.1) pub.close() ctx.term() def subscriber(): ctx = zmq.Context() # type: ignore[attr-defined] sub = ctx.socket(zmq.SUB) # type: ignore[attr-defined] sub.connect(ENDPOINT) sub.setsockopt(zmq.SUBSCRIBE, b&quot;topic&quot;) # type: ignore[attr-defined] print(sub.recv_multipart()) sub.close() ctx.term() if __name__ == &quot;__main__&quot;: mp.set_start_method(&quot;spawn&quot;, force=True) p_sub = mp.Process(target=subscriber) p_pub = mp.Process(target=publisher) p_sub.start() time.sleep(0.1) # SUB first (important) p_pub.start() p_pub.join() p_sub.join()
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -712,10 +770,373 @@
 
 
 <h1 id="zmq">ZMQ</h1>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Transport</th>
+<th>Performance</th>
+<th>Complexity</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#inproc">Same process</a></td>
+<td><code>inproc://</code></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐</td>
+<td>✅ Best</td>
+</tr>
+<tr>
+<td><a href="#ipc">Same machine</a></td>
+<td><code>ipc://</code></td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+<td>✅ Best</td>
+</tr>
+<tr>
+<td><a href="#tcp">Network</a></td>
+<td><code>tcp://</code></td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐</td>
+<td>✅ Best</td>
+</tr>
+<tr>
+<td>Any</td>
+<td>shm</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>❌ Avoid</td>
+</tr>
+</tbody>
+</table>
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="request_response">
+        <p>Request / Response</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="push_poll">
+        <p>Push / Poll</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="pub_sub">
+        <p>Pub / Sub</p>
+        </a>
+    </div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Direction</th>
+<th>Fan-out</th>
+<th>Reliable</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ/REP</td>
+<td>1↔1</td>
+<td>❌</td>
+<td>✅</td>
+<td>RPC</td>
+</tr>
+<tr>
+<td>PUB/SUB</td>
+<td>1→N</td>
+<td>✅</td>
+<td>❌</td>
+<td>Events, streaming</td>
+</tr>
+<tr>
+<td>PUSH/PULL</td>
+<td>1→N</td>
+<td>❌</td>
+<td>✅</td>
+<td>Work queues</td>
+</tr>
+<tr>
+<td>DEALER/ROUTER</td>
+<td>N↔N</td>
+<td>✅</td>
+<td>✅</td>
+<td>Async services</td>
+</tr>
+<tr>
+<td>XPUB/XSUB</td>
+<td>1→N</td>
+<td>✅</td>
+<td>❌</td>
+<td>Brokers</td>
+</tr>
+<tr>
+<td><a href="pair">PAIR</a></td>
+<td>1↔1</td>
+<td>❌</td>
+<td>✅</td>
+<td>Simple pipes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="zmq_and_shm">
+        <p>ZMQ with shm</p>
+        </a>
+    </div>
+</div>
+
+<h2 id="inproc">inproc</h2>
+<p>Communication in same process</p>
+<div class="admonition info">
+<p class="admonition-title">share the same context</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">zmq</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">ctx</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span> <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">publisher</span><span class="p">():</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">pub</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">PUB</span><span class="p">)</span> <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;inproc://events&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># allow subscribers to connect</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">send_multipart</span><span class="p">([</span><span class="sa">b</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">])</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="k">def</span><span class="w"> </span><span class="nf">subscriber</span><span class="p">():</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="n">sub</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span> <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;inproc://events&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;topic&quot;</span><span class="p">)</span> <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">())</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="n">t1</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">subscriber</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="n">t2</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">publisher</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="n">t1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="n">t2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="n">t1</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="n">t2</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="ipc">ipc</h2>
+<p>Same machine different process</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">zmq</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">SOCKET_PATH</span> <span class="o">=</span> <span class="s2">&quot;/tmp/events.ipc&quot;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">publisher</span><span class="p">():</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>    <span class="c1"># Clean stale socket</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">SOCKET_PATH</span><span class="p">):</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">SOCKET_PATH</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="n">ctx</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>    <span class="n">pub</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">PUB</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ipc://</span><span class="si">{</span><span class="n">SOCKET_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># allow subscribers to connect</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">send_multipart</span><span class="p">([</span><span class="sa">b</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">])</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">term</span><span class="p">()</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">subscriber</span><span class="p">():</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>    <span class="n">ctx</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>    <span class="n">sub</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ipc://</span><span class="si">{</span><span class="n">SOCKET_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;topic&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">())</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">term</span><span class="p">()</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>    <span class="n">mp</span><span class="o">.</span><span class="n">set_start_method</span><span class="p">(</span><span class="s2">&quot;spawn&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># safe default</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">subscriber</span><span class="p">)</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>    <span class="n">p_pub</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">publisher</span><span class="p">)</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>    <span class="n">p_sub</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>   <span class="c1"># ensure SUB starts first</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a>    <span class="n">p_pub</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a>    <span class="n">p_pub</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a>    <span class="n">p_sub</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="tcp">tcp</h3>
+<h2 id="1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30-31-32-33-34-35-36-37-38-39-40-41-42import-zmq-import-time-import-multiprocessing-as-mp-endpoint-tcp1270015555-def-publisher-ctx-zmqcontext-type-ignoreattr-defined-pub-ctxsocketzmqpub-type-ignoreattr-defined-pubbindendpoint-timesleep02-allow-subscribers-to-connect-pubsend_multipartbtopic-bhello-timesleep01-pubclose-ctxterm-def-subscriber-ctx-zmqcontext-type-ignoreattr-defined-sub-ctxsocketzmqsub-type-ignoreattr-defined-subconnectendpoint-subsetsockoptzmqsubscribe-btopic-type-ignoreattr-defined-printsubrecv_multipart-subclose-ctxterm-if-__name__-__main__-mpset_start_methodspawn-forcetrue-p_sub-mpprocesstargetsubscriber-p_pub-mpprocesstargetpublisher-p_substart-timesleep01-sub-first-important-p_pubstart-p_pubjoin-p_subjoin"><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span>
+<span class="normal"><a href="#__codelineno-2-41">41</a></span>
+<span class="normal"><a href="#__codelineno-2-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">zmq</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">ENDPOINT</span> <span class="o">=</span> <span class="s2">&quot;tcp://127.0.0.1:5555&quot;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">publisher</span><span class="p">():</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="n">ctx</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>    <span class="n">pub</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">PUB</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># allow subscribers to connect</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">send_multipart</span><span class="p">([</span><span class="sa">b</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">])</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="n">pub</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">term</span><span class="p">()</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">subscriber</span><span class="p">():</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="n">ctx</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>    <span class="n">sub</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ENDPOINT</span><span class="p">)</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">SUBSCRIBE</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;topic&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">())</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>    <span class="n">sub</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">term</span><span class="p">()</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="n">mp</span><span class="o">.</span><span class="n">set_start_method</span><span class="p">(</span><span class="s2">&quot;spawn&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a>    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">subscriber</span><span class="p">)</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>    <span class="n">p_pub</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">publisher</span><span class="p">)</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>    <span class="n">p_sub</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># SUB first (important)</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a>    <span class="n">p_pub</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a>
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a>    <span class="n">p_pub</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a>    <span class="n">p_sub</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div></h2>
 <ul>
 <li><a href="zmq_req_rep/">zmq_req_rep</a></li>
 <li><a href="zmq_req_rep_ipc/">zmq_req_rep using ipc</a></li>
-<li>[pub sub with dataclass and msgpack][pub_sub_msgpack.md]</li>
+<li><a href="pub_sub_msgpack/">pub sub with dataclass and msgpack</a></li>
 </ul>
 
 

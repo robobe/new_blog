@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Programming/python/python_project/">
+        <link rel="canonical" href="https://robobe.github.io/DevOps/linux/encryption/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Pack python project as wheel and debian package - Robots Inside</title>
+        <title>Linux encryption utils - Robots Inside</title>
       
     
     
@@ -75,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#build-system" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -110,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Pack python project as wheel and debian package
+              Linux encryption utils
             
           </span>
         </div>
@@ -278,7 +273,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../Programming/" class="md-tabs__link">
         
   
   
@@ -316,7 +311,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../DevOps/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
   
@@ -527,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../Programming/" class="md-nav__link">
         
   
   
@@ -581,7 +576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../DevOps/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -673,97 +668,6 @@
   
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#build-system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        build-system
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#python-build" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        python build
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-metadata-pep-621" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        project metadata (PEP 621)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="project metadata (PEP 621)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#version" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        version
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        dependencies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#more-project-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        more project settings
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#from-wheel-to-deb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        From wheel to deb
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -783,21 +687,14 @@
       
       
       
-        <span class="md-tag">debian</span>
+        <span class="md-tag">encryption</span>
       
     
       
       
       
       
-        <span class="md-tag">pyproject.toml</span>
-      
-    
-      
-      
-      
-      
-        <span class="md-tag">python</span>
+        <span class="md-tag">linux</span>
       
     
   </nav>
@@ -807,172 +704,15 @@
   
 
 
-<p><strong>pyproject.toml</strong> is a standardized file (PEP 518, PEP 621) used to configure Python packaging, building, and tools.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span>
-<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>my_package/
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── pyproject.toml
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>├── README.md
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>└── my_package/
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    ├── __init__.py
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    └── main.py
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">[build-system]</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;setuptools&gt;=61&quot;</span><span class="p">]</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;setuptools.build_meta&quot;</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="k">[project]</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;myproject&quot;</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.8&quot;</span>
-</code></pre></div></td></tr></table></div>
-<h3 id="build-system">build-system</h3>
-<p>Defines how your project is built.
-This tells Python which tools to use when running <code>pip install</code> or <code>python -m build</code>.
-<code>setuptools</code> is the classic standard and widely use</p>
-<p>other build tools</p>
-<ul>
-<li>Poetry</li>
-<li>Hatch</li>
-<li>flit</li>
-</ul>
-<hr />
-<h3 id="python-build">python build</h3>
-<p><strong>How to turn your source code into an installable package</strong></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>pip install build
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">usage</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
-<span class="normal"><a href="#__codelineno-3-2">2</a></span>
-<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>build
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c1"># create wheel in `dist` folder</span>
-</code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>use <code>--no-isolation</code> flag to disabled creating isolated virtual environment during build</p>
-</div>
-<hr />
-<h3 id="project-metadata-pep-621">project metadata (PEP 621)</h3>
-<p>The [project] section in pyproject.toml that describes your Python package:</p>
-<ul>
-<li>name</li>
-<li>version</li>
-<li>dependencies</li>
-<li>dependencies</li>
-<li>entry points</li>
-<li>requires-python</li>
-<li>and more</li>
-</ul>
-<h4 id="version">version</h4>
-<p>Set manual
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>version = &quot;0.1.0&quot;
-</code></pre></div></td></tr></table></div></p>
-<p>or dynamic using  tools like <code>setuptools-scm</code>.
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>dynamic = [&quot;version&quot;]
-</code></pre></div></td></tr></table></div></p>
-<h4 id="dependencies">dependencies</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span>
-<span class="normal"><a href="#__codelineno-6-3">3</a></span>
-<span class="normal"><a href="#__codelineno-6-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">    </span><span class="s2">&quot;requests&gt;=2.28&quot;</span><span class="p">,</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="s2">&quot;numpy&quot;</span><span class="p">,</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="p">]</span>
-</code></pre></div></td></tr></table></div>
-<h4 id="more-project-settings">more project settings</h4>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span>
-<span class="normal"><a href="#__codelineno-7-3">3</a></span>
-<span class="normal"><a href="#__codelineno-7-4">4</a></span>
-<span class="normal"><a href="#__codelineno-7-5">5</a></span>
-<span class="normal"><a href="#__codelineno-7-6">6</a></span>
-<span class="normal"><a href="#__codelineno-7-7">7</a></span>
-<span class="normal"><a href="#__codelineno-7-8">8</a></span>
-<span class="normal"><a href="#__codelineno-7-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">[project.optional-dependencies]</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pytest&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;flake8&quot;</span><span class="p">]</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="k">[project.urls]</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="n">Homepage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://github.com/alice/coolapp&quot;</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="n">Docs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;https://coolapp.readthedocs.io&quot;</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a>
-<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="k">[project.scripts]</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="n">coolapp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_package:main&quot;</span>
-</code></pre></div></td></tr></table></div>
-<ul>
-<li><strong>[project.optional-dependencies]</strong>: install optional package <code>pip install my_package[dev]</code></li>
-<li><strong>[project.scripts]</strong>: entry point/CLI command run <code>coolapp</code> to run application after install</li>
-</ul>
-<hr />
-<p><a href="https://medium.com/@codebyteexplorer/build-your-first-python-package-with-pyproject-toml-19e2119edbca">Build Your First Python Package with pyproject.toml</a></p>
-<hr />
-<h1 id="from-wheel-to-deb">From wheel to deb</h1>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Uses <code>.install</code></th>
-<th>Easy</th>
-<th>Policy-correct</th>
-<th>Best for</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>dpkg-deb</td>
-<td>❌</td>
-<td>⭐⭐⭐⭐</td>
-<td>❌</td>
-<td>quick hacks</td>
-</tr>
-<tr>
-<td>dpkg-buildpackage</td>
-<td>✅</td>
-<td>⭐⭐</td>
-<td>✅</td>
-<td>real Debian</td>
-</tr>
-<tr>
-<td>debuild</td>
-<td>✅</td>
-<td>⭐⭐</td>
-<td>✅</td>
-<td>same as above</td>
-</tr>
-<tr>
-<td>stdeb</td>
-<td>⚠️</td>
-<td>⭐⭐⭐</td>
-<td>⚠️</td>
-<td>Python-only</td>
-</tr>
-</tbody>
-</table>
+  <h1>Linux encryption utils</h1>
+
 <div class="grid-container">
-    <div class="grid-item">
-        <a href="debuild">
-        <p>From source to debain using debuild</p>
-        </a>
+        <div class="grid-item">
+        <a href="luks_on_loopdevice">
+            <p>LUKS on loopdevice</p>
+             </a>
+        </div>
     </div>
-    <div class="grid-item">
-        <a href="dpkg-deb">
-        <p>From source to debain using dpkg-deb</p>
-        </a>
-    </div>
-</div>
 
 
 
