@@ -38,7 +38,7 @@ tags:
 | REQ/REP       | 1↔1       | ❌       | ✅        | RPC               |
 | PUB/SUB       | 1→N       | ✅       | ❌        | Events, streaming |
 | PUSH/PULL     | 1→N       | ❌       | ✅        | Work queues       |
-| DEALER/ROUTER | N↔N       | ✅       | ✅        | Async services    |
+| [DEALER/ROUTER](dealer) | N↔N       | ✅       | ✅        | Async services    |
 | XPUB/XSUB     | 1→N       | ✅       | ❌        | Brokers           |
 | [PAIR](pair)          | 1↔1       | ❌       | ✅        | Simple pipes      |
 
@@ -89,7 +89,9 @@ t2.join()
 
 ---
 
+
 ## ipc
+
 Same machine different process
 
 ```python
@@ -144,7 +146,7 @@ if __name__ == "__main__":
 
 ---
 
-### tcp
+## tcp
 
 ```python
 import zmq
@@ -190,6 +192,7 @@ if __name__ == "__main__":
     p_pub.join()
     p_sub.join()
 ```
+
 ---
 
 - [zmq_req_rep](zmq_req_rep.md)

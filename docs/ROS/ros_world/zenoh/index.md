@@ -1,9 +1,23 @@
 ---
+title: Zenoh networking
 tags:
     - zenoh
 ---
 
-# Zenoh
+Zenoh networking is a unified data-centric communication protocol
+A unified data-centric communication protocol is a networking model where:
+
+Applications communicate by sharing data, not by talking to specific endpoints — and the same protocol supports multiple communication patterns.
+
+### Unified
+A single protocol supports:
+- **Publish / Subscribe** → streaming data
+- **Request / Reply (Query)** → asking for data or computation
+- **Storage / Replay** → retrieving past data
+
+![alt text](images/zenoh_topolgy.png)
+
+[TO READ](https://medium.com/@kelj/zenoh-a-protocol-that-should-be-on-your-radar-72befa697411)
 
 <div class="grid-container">
     <div class="grid-item">
@@ -33,7 +47,7 @@ tags:
     <div class="grid-item">
         <a href="cpp_bindings">
         <img src="images/cpp_bindings.png" width="150" height="150">
-        <p>ROS RMW</p>
+        <p>CPP bindings</p>
         </a>
     </div>
 </div>
