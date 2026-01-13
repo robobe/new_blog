@@ -159,7 +159,7 @@ print(get_args(annot))    # (float, 'deg', 'imu')
 ---
 
 ### Demo
-
+Using `dataclass` and annotation to build `struct` fmt dynamic from dataclass fields
 
 ```python
 from dataclasses import dataclass
@@ -200,4 +200,79 @@ def struct_format(cls, endian="<"):
 fmt = struct_format(Packet)
 print(fmt)  # "<hIf16s"
 
+```
+
+```python title="code"
+from dataclasses import dataclass, astuple
+from typing import Annotated
+from typing import get_type_hints, get_origin, get_args
+import struct
+from functools import cache
+
+@dataclass
+class Packet:
+    a: Annotated[int, "h"]   # int16
+    b: Annotated[int, "I"]   # uint32
+    c: Annotated[float, "f"] # float32
+    # name: Annotated[str, "16s"]
+
+    
+    @classmethod
+    @cache
+    def struct_format(cls, endian="<") -> str:
+        """
+        Docstring for struct_format
+        
+        :param cls: Class to generate format for
+        :param endian: Endianness of the struct format
+        """
+        hints = get_type_hints(cls, include_extras=True)
+        fmt = endian
+
+        for name in cls.__dataclass_fields__:
+            t = hints[name]
+
+            if get_origin(t) is Annotated:
+                _, fmt_char, *_ = get_args(t)
+                fmt += fmt_char
+            else:
+                raise TypeError(f"Field {name} missing struct annotation")
+
+        return fmt
+    
+    def pack(self, endian="<") -> bytes:
+        """
+        Return data packed as bytes
+        
+        :param endian: Endianness of the struct format
+        :return: Descriptionreturn buffer as bytes
+        :rtype: bytes
+        """
+        fmt = self.struct_format(endian)
+        return struct.pack(fmt, *astuple(self))
+    
+    @classmethod
+    def from_bytes(cls, data: bytes, endian: str="<") -> "Packet":
+        """
+        convert bytes to class instance
+
+        :param cls: Class to generate format for
+        :param data: buffer to unpack
+        :type data: bytes
+        :param endian: Endianness of the struct format
+        """
+        fmt = cls.struct_format(endian)
+        unpacked_data = struct.unpack(fmt, data)
+        return cls(*unpacked_data)
+
+
+# usage
+packet = Packet(a=1, b=42, c=3.14)
+#pack
+buffer = packet.pack()
+# print(Packet.struct_format.cache_info())
+
+#unpack
+unpacked_data = Packet.from_bytes(buffer)
+print(unpacked_data)
 ```

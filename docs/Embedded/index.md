@@ -27,7 +27,7 @@
             <p>RPi</p>
         </a>
     </div>
-    <div class="grid-item">
+    <!-- <div class="grid-item">
         <a href="tiny_ml">
             <img src="images/tiny_ml.png"  width="150" height="150">
             <p>TinyML</p>
@@ -38,11 +38,17 @@
             <img src="images/other_boards.png"  width="150" height="150">
             <p>Other embedded boards</p>
         </a>
-    </div>
+    </div> -->
     <div class="grid-item">
         <a href="micro_python">
             <img src="images/micro_python.png"  width="150" height="150">
             <p>micro python</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="hardware">
+            <img src="images/hardware.png"  width="150" height="150">
+            <p>Hardware</p>
         </a>
     </div>
 </div>

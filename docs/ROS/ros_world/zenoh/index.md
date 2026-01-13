@@ -11,6 +11,7 @@ Applications communicate by sharing data, not by talking to specific endpoints �
 
 ### Unified
 A single protocol supports:
+
 - **Publish / Subscribe** → streaming data
 - **Request / Reply (Query)** → asking for data or computation
 - **Storage / Replay** → retrieving past data
