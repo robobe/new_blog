@@ -691,6 +691,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#demo-minimal-pubsub-using-python-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: Minimal pub/sub using python binding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#resource" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -756,7 +767,87 @@ A unified data-centric communication protocol is a networking model where:</p>
 <li><strong>Storage / Replay</strong> → retrieving past data</li>
 </ul>
 <p><img alt="alt text" src="images/zenoh_topolgy.png" /></p>
-<p><a href="https://medium.com/@kelj/zenoh-a-protocol-that-should-be-on-your-radar-72befa697411">TO READ</a></p>
+<h3 id="demo-minimal-pubsub-using-python-binding">Demo: Minimal pub/sub using python binding</h3>
+<p>minimal Pub/Sub example the zenoh default config, </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">zenoh</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">zenoh</span><span class="o">.</span><span class="n">init_log_from_env_or</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">KEY_EXPRESSION</span> <span class="o">=</span> <span class="s2">&quot;demo/example&quot;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">publisher</span><span class="p">():</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="n">config</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">Config</span><span class="p">()</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="n">pub</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">declare_publisher</span><span class="p">(</span><span class="n">KEY_EXPRESSION</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>        <span class="n">pub</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s1">&#39;Hello, Zenoh!&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">subscriber</span><span class="p">():</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="n">config</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">Config</span><span class="p">()</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>    <span class="n">session</span> <span class="o">=</span> <span class="n">zenoh</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="n">sub</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">declare_subscriber</span><span class="p">(</span><span class="n">KEY_EXPRESSION</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">sample</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received: </span><span class="si">{</span><span class="n">sample</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>    <span class="n">pub_process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">publisher</span><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="n">sub_process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">subscriber</span><span class="p">)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    <span class="n">pub_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    <span class="n">sub_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="n">pub_process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="n">sub_process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<p><code>bash output
+zenoh::net::runtime: Using ZID: 5c878ff12d11c0d9330259f34cd29fac
+zenoh::net::runtime: Using ZID: 42209fd2b31a654f83739cebf2e2b000
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/[fe80::b022:f1eb:e86:2654]:37185
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/[fe80::b022:f1eb:e86:2654]:45353
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/10.100.102.15:37185
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/10.100.102.15:45353
+zenoh::net::runtime::orchestrator: zenohd listening scout messages on 224.0.0.224:7446
+zenoh::net::runtime::orchestrator: zenohd listening scout messages on 224.0.0.224:7446</code></p>
+<ul>
+<li>each of the zenoh process listen to multicast on ``</li>
+<li>the transport between the peer node base on tcp</li>
+<li></li>
+</ul>
+<hr />
 <div class="grid-container">
     <div class="grid-item">
         <a href="ros_bridge">
@@ -794,6 +885,7 @@ A unified data-centric communication protocol is a networking model where:</p>
 <h2 id="resource">Resource</h2>
 <ul>
 <li><a href="https://youtu.be/xNJlDIkV2uo?list=PLZDEtJusUvAa91YlGT4ugsR3_heTa1RqS">Zenoh Tutorial – Part I</a></li>
+<li><a href="https://medium.com/@kelj/zenoh-a-protocol-that-should-be-on-your-radar-72befa697411">TO READ</a></li>
 </ul>
 <hr />
 <ul>
