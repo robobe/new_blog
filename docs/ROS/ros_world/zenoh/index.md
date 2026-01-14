@@ -18,7 +18,61 @@ A single protocol supports:
 
 ![alt text](images/zenoh_topolgy.png)
 
-[TO READ](https://medium.com/@kelj/zenoh-a-protocol-that-should-be-on-your-radar-72befa697411)
+
+### Demo: Minimal pub/sub using python binding
+minimal Pub/Sub example the zenoh default config, 
+
+```python
+import zenoh
+import time
+import multiprocessing
+
+zenoh.init_log_from_env_or("DEBUG")
+
+KEY_EXPRESSION = "demo/example"
+
+def publisher():
+    config = zenoh.Config()
+    session = zenoh.open(config)
+    pub = session.declare_publisher(KEY_EXPRESSION)
+    while True:
+        pub.put('Hello, Zenoh!')
+        time.sleep(1)
+
+def subscriber():
+    config = zenoh.Config()
+    session = zenoh.open(config)
+    sub = session.declare_subscriber(KEY_EXPRESSION, lambda sample: print(f'Received: {sample.payload.to_string()}'))
+    while True:
+        time.sleep(1)
+
+if __name__ == '__main__':
+    pub_process = multiprocessing.Process(target=publisher)
+    sub_process = multiprocessing.Process(target=subscriber)
+
+    pub_process.start()
+    sub_process.start()
+
+    pub_process.join()
+    sub_process.join()
+```
+
+```bash output
+zenoh::net::runtime: Using ZID: 5c878ff12d11c0d9330259f34cd29fac
+zenoh::net::runtime: Using ZID: 42209fd2b31a654f83739cebf2e2b000
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/[fe80::b022:f1eb:e86:2654]:37185
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/[fe80::b022:f1eb:e86:2654]:45353
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/10.100.102.15:37185
+zenoh::net::runtime::orchestrator: Zenoh can be reached at: tcp/10.100.102.15:45353
+zenoh::net::runtime::orchestrator: zenohd listening scout messages on 224.0.0.224:7446
+zenoh::net::runtime::orchestrator: zenohd listening scout messages on 224.0.0.224:7446
+```
+
+-  each of the zenoh process listen to multicast on ``
+-  the transport between the peer node base on tcp
+-  
+
+---
 
 <div class="grid-container">
     <div class="grid-item">
@@ -57,6 +111,7 @@ A single protocol supports:
 
 ## Resource
 - [Zenoh Tutorial – Part I](https://youtu.be/xNJlDIkV2uo?list=PLZDEtJusUvAa91YlGT4ugsR3_heTa1RqS)
+- [TO READ](https://medium.com/@kelj/zenoh-a-protocol-that-should-be-on-your-radar-72befa697411)
   
 ---
 
