@@ -16,21 +16,22 @@ tags:
 
 
 <div class="grid-container">
+ <div class="grid-item">
+        <a href="pub_sub">
+        <p>Pub / Sub</p>
+        </a>
+    </div>
     <div class="grid-item">
         <a href="request_response">
         <p>Request / Response</p>
         </a>
     </div>
      <div class="grid-item">
-        <a href="push_poll">
-        <p>Push / Poll</p>
+        <a href="serialization">
+        <p>Serialization</p>
         </a>
     </div>
-     <div class="grid-item">
-        <a href="pub_sub">
-        <p>Pub / Sub</p>
-        </a>
-    </div>
+    
 </div>
 
 | Pattern       | Direction | Fan-out | Reliable | Typical use       |
@@ -48,6 +49,11 @@ tags:
     <div class="grid-item">
         <a href="zmq_and_shm">
         <p>ZMQ with shm</p>
+        </a>
+    </div>
+        <div class="grid-item">
+        <a href="serialization">
+        <p>Serialization and Zero copy</p>
         </a>
     </div>
 </div>

@@ -1,10 +1,19 @@
 ---
+title: ZMQ Req / Rep pattern
 tags:
-    - python
     - zmq
-    - msgpack
+    - python
+    - request
+    - replay
 ---
-# Client/Server Req/Rep zmq pattern with msgpack
+
+REQ/REP is ZeroMQ’s synchronous request–reply pattern. like **RPC**
+
+- REQ (client) → sends a request
+- REP (server) → processes it and sends exactly one reply
+
+
+# Demo: Client/Server Req/Rep zmq pattern with msgpack
 
 Synchronous messaging pattern where one side (the Requester) sends a request, and the other side (the Replier) sends a response.
 
@@ -116,7 +125,7 @@ if __name__ == "__main__":
     <summary>code</summary>
 
 ```python
---8<-- "docs/Programming/python/zmq/rcvtimeo.py"
+--8<-- "docs/Programming/python/zmq/request_response/code/rcvtimeo.py"
 ```
 </details>
 
@@ -129,6 +138,6 @@ if __name__ == "__main__":
     <summary>code</summary>
 
 ```python
---8<-- "docs/Programming/python/zmq/poller.py"
+--8<-- "docs/Programming/python/zmq/request_response/code/poller.py"
 ```
 </details>

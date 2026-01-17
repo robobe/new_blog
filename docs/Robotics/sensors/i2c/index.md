@@ -1,4 +1,5 @@
 ---
+title: Using CP2112 to connect i2c device over USB
 tags:
     - i2c
     - cp2112
