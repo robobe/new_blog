@@ -15,13 +15,39 @@ In MAVLink, every message is tagged with two identifiers so the network knows wh
             <p>pymavlink</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="network_tools">
+            <p>wireshark and network debug tools</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="mavlink_router">
+            <p>mavlink-router</p>
+        </a>
+    </div>
 </div>
+
+---
+
+## Mavlink
+MAVLink has been deployed in a number of versions:
+
+- MAVLink 1: **0xFE**
+- MAVLink 2: **0xFD**
+
+![alt text](images/mavlink_v2_frame.png)
+[more](https://mavlink.io/en/guide/serialization.html)
+
+
+---
+
 
 ## SYSID (System ID)
 A number that identifies the vehicle/system. (1-255)
 Distinguishes different vehicles on the same MAVLink network (Vehicle ID)
 
 Examples:
+
 - Drone #1 → SYSID = 1
 - Drone #2 → SYSID = 2
 - Simulator (SITL) → often SYSID = 1 (configurable)
