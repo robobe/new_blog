@@ -4,8 +4,24 @@ tags:
     - airsim
     - simulator
 ---
+AirSim is a simulator for drones, cars and more, built on Unreal Engine
+Microsoft AirSim was officially archived by Microsoft in 2022. it continue and fork by other i clone [ProjectAirSim](https://github.com/iamaisim/ProjectAirSim) by IAMAISIM
+
+Project AirSim consists of three main layers:
+
+- **Project AirSim Sim Libs** - Base infrastructure for defining a generic robot structure and simulation scene tick loop
+- **Project AirSim Plugin** - Host package (currently an Unreal Plugin) that builds on the sim libs to connect external components (controller, physics, rendering) at runtime that are specific to each configured robot-type scenario (ex. quadrotor drones)
+- **Project AirSim Client Library** - End-user library to enable API calls to interact with the robot and simulation over a network connection
+
+## Usage
+### Pre-build environment
+I just want to download and run a Project AirSim environment and drive it with some Python code.
+
+The python project airsim client locate at `client/python/projectairsim/`
 
 
+    
+    
 ## Dev
 - Dockerfile to install python dependencies 
 - Install prebuild binary
