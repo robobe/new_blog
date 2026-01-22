@@ -24,7 +24,7 @@ tags:
     <div class="grid-item">
         <a href="mavlink">
                 <img src="images/mavlink.png"  width="150" height="150">
-                <p>debug</p>
+                <p>mavlink</p>
             </a>
     </div>
     <div class="grid-item">
