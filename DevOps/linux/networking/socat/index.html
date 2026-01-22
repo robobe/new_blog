@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/mavlink/mavlink_router/">
+        <link rel="canonical" href="https://robobe.github.io/DevOps/linux/networking/socat/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Mavlink router - Robots Inside</title>
+        <title>SOCAT - Robots Inside</title>
       
     
     
@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#demo" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -105,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mavlink router
+              SOCAT
             
           </span>
         </div>
@@ -254,7 +259,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../" class="md-tabs__link">
+      <a href="../../../../Robotics/" class="md-tabs__link">
         
   
   
@@ -311,7 +316,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../DevOps/" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         
   
   
@@ -495,7 +500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../" class="md-nav__link">
+      <a href="../../../../Robotics/" class="md-nav__link">
         
   
   
@@ -576,7 +581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../DevOps/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   
@@ -668,6 +673,75 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#udp-2-serial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        udp 2 serial
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="udp 2 serial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#udp-listener" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Udp listener
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-clients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        multiple clients
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-2-serial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TCP 2 serial
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -687,14 +761,21 @@
       
       
       
-        <span class="md-tag">mavlink</span>
+        <span class="md-tag">network</span>
       
     
       
       
       
       
-        <span class="md-tag">router</span>
+        <span class="md-tag">socat</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">tools</span>
       
     
   </nav>
@@ -704,10 +785,101 @@
   
 
 
-  <h1>Mavlink router</h1>
+  <h1>SOCAT</h1>
 
-<p><a href="https://github.com/mavlink-router/mavlink-router">github</a></p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">route SITL to udp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>./mavlink-routerd-glibc-x86_64<span class="w"> </span>-e<span class="w"> </span><span class="m">127</span>.0.0.1:14550<span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:5760
+<p><strong>socat</strong> = SOcket CAT
+A general-purpose tool for connecting two data streams (network, serial, files, pipes, PTYs, etc.).</p>
+<h3 id="demo">Demo</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">keyboard->udp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>socat<span class="w"> </span>STDIO,raw,echo<span class="o">=</span><span class="m">0</span><span class="w"> </span>UDP:127.0.0.1:7000
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">udp->screen</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>socat<span class="w"> </span>UDP4-LISTEN:7000,reuseaddr<span class="w"> </span>STDOUT
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="udp-2-serial">udp 2 serial</h3>
+<ul>
+<li>UDP-LISTEN = convenience wrapper</li>
+<li>UDP-RECVFROM = raw UDP socket with source tracking</li>
+</ul>
+<h4 id="udp-listener">Udp listener</h4>
+<p>Any UDP packet sent to host IP will be forwarded to the serial device.
+The <strong>sender’s</strong> address is remembered so responses can be sent back.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>socat<span class="w"> </span>-d<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span>UDP4-LISTEN:14550,reuseaddr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span>FILE:/dev/ttyUSB0,b115200,raw,echo<span class="o">=</span><span class="m">0</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>reuseaddr</strong>
+Allows rebinding to the same port
+Useful if:</li>
+<li>the program crashed</li>
+<li>
+<p>you restart quickly</p>
+</li>
+<li>
+<p><strong>raw</strong>
+Disables all terminal processing:</p>
+</li>
+<li>
+<p>No newline translation</p>
+</li>
+<li>No character filtering</li>
+<li>No flow control</li>
+<li>
+<p>Binary-safe</p>
+</li>
+<li>
+<p><strong>echo=0</strong>
+Disable echo, Prevents characters sent to the serial port from being echoed back</p>
+</li>
+</ul>
+<hr />
+<h4 id="multiple-clients">multiple clients</h4>
+<ul>
+<li>One serial port multiple udp clients</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">fork</p>
+<p>fork open multiple process that write and read against the serial process</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">echo server</p>
+<p>I use usb2uart and connect the TX with RX</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>socat<span class="w"> </span>-d<span class="w"> </span>-d<span class="w">   </span>UDP4-RECVFROM:14550,fork<span class="w">   </span>FILE:/dev/ttyUSB0,b115200,raw,echo<span class="o">=</span><span class="m">0</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">test</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># using nc as client</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="c1"># can open multiple nc client</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>nc<span class="w"> </span>-u<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="m">14550</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>UDP4-RECVFROM:14550</strong><ul>
+<li>Create a UDP IPv4 socket</li>
+<li>Bind to local port 14550</li>
+<li>Receive datagrams from any remote host/port</li>
+<li>Reply packets go back to the source of the last received datagram</li>
+</ul>
+</li>
+<li><strong>fork</strong> 
+For each new incoming peer, socat:
+fork()s a child process
+The child handles data forwarding
+The parent keeps listening
+For <strong>UDP</strong>, it works per sender address (IP:port), not per connection.</li>
+</ul>
+<hr />
+<h3 id="tcp-2-serial">TCP 2 serial</h3>
+<p>Not working for multiple connection</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>socat<span class="w"> </span>-d<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span>TCP4-LISTEN:14550,reuseaddr,fork<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span>FILE:/dev/ttyUSB0,b115200,raw,echo<span class="o">=</span><span class="m">0</span>
 </code></pre></div></td></tr></table></div>
 
 
