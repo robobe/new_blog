@@ -797,9 +797,24 @@ A general-purpose tool for connecting two data streams (network, serial, files, 
 <hr />
 <h3 id="udp-2-serial">udp 2 serial</h3>
 <ul>
-<li>UDP-LISTEN = convenience wrapper</li>
-<li>UDP-RECVFROM = raw UDP socket with source tracking</li>
+<li><strong>UDP-LISTEN</strong> = Connected UDP socket</li>
+<li><strong>UDP-RECVFROM</strong> = Unconnected UDP socket - raw UDP socket with source tracking</li>
 </ul>
+<div class="admonition tip">
+<p><strong>Connected UDP socket (UDP-LISTEN)</strong>
+- You call connect() on a UDP socket
+- Kernel remembers one peer
+You can:
+    - send() (no address needed)
+    - recv() (only from that peer)
+- Replies automatically go to that peer</p>
+<p><strong>Unconnected UDP socket (UDP-RECVFROM)</strong>
+- You call bind() only
+- You must:
+    - recvfrom() (get source address)
+    - sendto() (specify destination)
+- Can talk to many peers</p>
+</div>
 <h4 id="udp-listener">Udp listener</h4>
 <p>Any UDP packet sent to host IP will be forwarded to the serial device.
 The <strong>sender’s</strong> address is remembered so responses can be sent back.</p>
