@@ -838,7 +838,9 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a>└── worlds
 <a id="__codelineno-0-7" name="__codelineno-0-7"></a>        └── empty.world
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">docker-compose.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<details>
+<summary>Dockerfile</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
@@ -870,48 +872,147 @@
 <span class="normal"><a href="#__codelineno-1-30">30</a></span>
 <span class="normal"><a href="#__codelineno-1-31">31</a></span>
 <span class="normal"><a href="#__codelineno-1-32">32</a></span>
-<span class="normal"><a href="#__codelineno-1-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">services</span><span class="p">:</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">gazebo</span><span class="p">:</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.devcontainer/Dockerfile</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gz</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DISPLAY=${DISPLAY}</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">QT_X11_NO_MITSHM=1</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_VISIBLE_DEVICES=all</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_DRIVER_CAPABILITIES=all</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__NV_PRIME_RENDER_OFFLOAD=1</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__GLX_VENDOR_LIBRARY_NAME=nvidia</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TRANSPORT_IP=gazebo</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_DISCOVERY_SERVER=gazebo</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_PARTITION=my_simulation</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.:/workspace:cached</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.gz:/home/user/.gz:rw</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/.X11-unix:/tmp/.X11-unix:rw</span><span class="w"> </span>
-<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/dri:/dev/dri</span><span class="w"> </span>
-<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia0:/dev/nvidia0</span><span class="w"> </span>
-<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidiactl:/dev/nvidiactl</span><span class="w"> </span>
-<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia-modeset:/dev/nvidia-modeset</span><span class="w"> </span>
-<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
-<a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<a id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">          </span><span class="nt">devices</span><span class="p">:</span>
-<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span>
+<span class="normal"><a href="#__codelineno-1-54">54</a></span>
+<span class="normal"><a href="#__codelineno-1-55">55</a></span>
+<span class="normal"><a href="#__codelineno-1-56">56</a></span>
+<span class="normal"><a href="#__codelineno-1-57">57</a></span>
+<span class="normal"><a href="#__codelineno-1-58">58</a></span>
+<span class="normal"><a href="#__codelineno-1-59">59</a></span>
+<span class="normal"><a href="#__codelineno-1-60">60</a></span>
+<span class="normal"><a href="#__codelineno-1-61">61</a></span>
+<span class="normal"><a href="#__codelineno-1-62">62</a></span>
+<span class="normal"><a href="#__codelineno-1-63">63</a></span>
+<span class="normal"><a href="#__codelineno-1-64">64</a></span>
+<span class="normal"><a href="#__codelineno-1-65">65</a></span>
+<span class="normal"><a href="#__codelineno-1-66">66</a></span>
+<span class="normal"><a href="#__codelineno-1-67">67</a></span>
+<span class="normal"><a href="#__codelineno-1-68">68</a></span>
+<span class="normal"><a href="#__codelineno-1-69">69</a></span>
+<span class="normal"><a href="#__codelineno-1-70">70</a></span>
+<span class="normal"><a href="#__codelineno-1-71">71</a></span>
+<span class="normal"><a href="#__codelineno-1-72">72</a></span>
+<span class="normal"><a href="#__codelineno-1-73">73</a></span>
+<span class="normal"><a href="#__codelineno-1-74">74</a></span>
+<span class="normal"><a href="#__codelineno-1-75">75</a></span>
+<span class="normal"><a href="#__codelineno-1-76">76</a></span>
+<span class="normal"><a href="#__codelineno-1-77">77</a></span>
+<span class="normal"><a href="#__codelineno-1-78">78</a></span>
+<span class="normal"><a href="#__codelineno-1-79">79</a></span>
+<span class="normal"><a href="#__codelineno-1-80">80</a></span>
+<span class="normal"><a href="#__codelineno-1-81">81</a></span>
+<span class="normal"><a href="#__codelineno-1-82">82</a></span>
+<span class="normal"><a href="#__codelineno-1-83">83</a></span>
+<span class="normal"><a href="#__codelineno-1-84">84</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>FROM ubuntu:22.04 as base
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a># Avoid warnings by switching to noninteractive
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>ENV DEBIAN_FRONTEND=noninteractive
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a># Install language
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>  locales \
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>  &amp;&amp; locale-gen en_US.UTF-8 \
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>  &amp;&amp; update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>  &amp;&amp; rm -rf /var/lib/apt/lists/*
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>ENV LANG=en_US.UTF-8
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a># Install timezone
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>  &amp;&amp; export DEBIAN_FRONTEND=noninteractive \
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>  &amp;&amp; apt-get update \
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>  &amp;&amp; apt-get install -y --no-install-recommends tzdata \
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>  &amp;&amp; dpkg-reconfigure --frontend noninteractive tzdata \
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>  &amp;&amp; rm -rf /var/lib/apt/lists/*
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a># install packages
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>RUN apt-get update &amp;&amp; apt-get install -q -y \
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>    curl \
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>    gnupg \
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>    lsb-release \
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>    python3-argcomplete \
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>    sudo \
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>    wget \
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>  &amp;&amp; wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>  &amp;&amp; echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main&quot; | tee /etc/apt/sources.list.d/gazebo-stable.list &gt; /dev/null \
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>  &amp;&amp; apt-get update &amp;&amp; apt-get install -y -q \
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>    gz-harmonic \
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>  &amp;&amp; rm -rf /var/lib/apt/lists/*
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>################
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a># Expose the nvidia driver to allow opengl
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a># Dependencies for glvnd and X11.
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>################
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>RUN apt-get update \
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a> &amp;&amp; apt-get install -y -qq --no-install-recommends \
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>  libglvnd0 \
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a>  libgl1 \
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a>  libglx0 \
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a>  libegl1 \
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a>  libxext6 \
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a>  libx11-6 \
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a>&amp;&amp; rm -rf /var/lib/apt/lists/*
+<a id="__codelineno-1-49" name="__codelineno-1-49"></a>
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a># Env vars for the nvidia-container-runtime.
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a>ENV NVIDIA_VISIBLE_DEVICES=all
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a>ENV NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute
+<a id="__codelineno-1-53" name="__codelineno-1-53"></a>ENV QT_X11_NO_MITSHM=1
+<a id="__codelineno-1-54" name="__codelineno-1-54"></a>
+<a id="__codelineno-1-55" name="__codelineno-1-55"></a>ARG USERNAME=user
+<a id="__codelineno-1-56" name="__codelineno-1-56"></a>ARG USER_UID=1000
+<a id="__codelineno-1-57" name="__codelineno-1-57"></a>ARG USER_GID=$USER_UID
+<a id="__codelineno-1-58" name="__codelineno-1-58"></a>
+<a id="__codelineno-1-59" name="__codelineno-1-59"></a># Check if &quot;ubuntu&quot; user exists, delete it if it does, then create the desired user
+<a id="__codelineno-1-60" name="__codelineno-1-60"></a>RUN if getent passwd ubuntu &gt; /dev/null 2&gt;&amp;1; then \
+<a id="__codelineno-1-61" name="__codelineno-1-61"></a>        userdel -r ubuntu &amp;&amp; \
+<a id="__codelineno-1-62" name="__codelineno-1-62"></a>        echo &quot;Deleted existing ubuntu user&quot;; \
+<a id="__codelineno-1-63" name="__codelineno-1-63"></a>    fi &amp;&amp; \
+<a id="__codelineno-1-64" name="__codelineno-1-64"></a>    groupadd --gid $USER_GID $USERNAME &amp;&amp; \
+<a id="__codelineno-1-65" name="__codelineno-1-65"></a>    useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME &amp;&amp; \
+<a id="__codelineno-1-66" name="__codelineno-1-66"></a>    echo &quot;Created new user $USERNAME&quot;
+<a id="__codelineno-1-67" name="__codelineno-1-67"></a>
+<a id="__codelineno-1-68" name="__codelineno-1-68"></a># Add sudo support for the non-root user
+<a id="__codelineno-1-69" name="__codelineno-1-69"></a>RUN apt-get update &amp;&amp; apt-get install -y sudo \
+<a id="__codelineno-1-70" name="__codelineno-1-70"></a>  &amp;&amp; echo $USERNAME ALL=\(root\) NOPASSWD:ALL &gt; /etc/sudoers.d/$USERNAME\
+<a id="__codelineno-1-71" name="__codelineno-1-71"></a>  &amp;&amp; chmod 0440 /etc/sudoers.d/$USERNAME \
+<a id="__codelineno-1-72" name="__codelineno-1-72"></a>  &amp;&amp; rm -rf /var/lib/apt/lists/*
+<a id="__codelineno-1-73" name="__codelineno-1-73"></a>
+<a id="__codelineno-1-74" name="__codelineno-1-74"></a>RUN apt-get update \
+<a id="__codelineno-1-75" name="__codelineno-1-75"></a> &amp;&amp; apt-get install -y -qq --no-install-recommends \
+<a id="__codelineno-1-76" name="__codelineno-1-76"></a>  vim \
+<a id="__codelineno-1-77" name="__codelineno-1-77"></a>  build-essential \
+<a id="__codelineno-1-78" name="__codelineno-1-78"></a>  git \
+<a id="__codelineno-1-79" name="__codelineno-1-79"></a>  openssh-client \
+<a id="__codelineno-1-80" name="__codelineno-1-80"></a>  ca-certificates \
+<a id="__codelineno-1-81" name="__codelineno-1-81"></a>  cmake \
+<a id="__codelineno-1-82" name="__codelineno-1-82"></a>&amp;&amp; rm -rf /var/lib/apt/lists/*
+<a id="__codelineno-1-83" name="__codelineno-1-83"></a>
+<a id="__codelineno-1-84" name="__codelineno-1-84"></a>CMD [&quot;bash&quot;]
 </code></pre></div></td></tr></table></div>
-<div class="admonition tip">
-<p class="admonition-title">nvidia glx</p>
-<ul>
-<li>__NV_PRIME_RENDER_OFFLOAD=1</li>
-<li>__GLX_VENDOR_LIBRARY_NAME=nvidia</li>
-</ul>
-</div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.devcontainer/devcontainer.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+</details>
+
+<details>
+<summary>docker-compose</summary>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">docker-compose.yaml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
@@ -932,35 +1033,61 @@
 <span class="normal"><a href="#__codelineno-2-19">19</a></span>
 <span class="normal"><a href="#__codelineno-2-20">20</a></span>
 <span class="normal"><a href="#__codelineno-2-21">21</a></span>
-<span class="normal"><a href="#__codelineno-2-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p p-Indicator">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">    </span><span class="s">&quot;name&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gz_harmonic&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="s">&quot;dockerComposeFile&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;../docker-compose.yaml&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="s">&quot;service&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gazebo&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="s">&quot;shutdownAction&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;stopCompose&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="s">&quot;workspaceFolder&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;/workspace&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="s">&quot;customizations&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">      </span><span class="s">&quot;vscode&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">        </span><span class="s">&quot;extensions&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">            </span><span class="s">&quot;ms-python.python&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">            </span><span class="s">&quot;ms-vscode.cpptools&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">            </span><span class="s">&quot;redhat.vscode-xml&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">            </span><span class="s">&quot;redhat.vscode-yaml&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">            </span><span class="s">&quot;albert.tabout&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">            </span><span class="s">&quot;actboy168.tasks&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">            </span><span class="s">&quot;streetsidesoftware.code-spell-checker&quot;</span><span class="p p-Indicator">,</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">            </span><span class="s">&quot;ms-vscode.cmake-tools&quot;</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">        </span><span class="p p-Indicator">],</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">      </span><span class="p p-Indicator">}</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">    </span><span class="p p-Indicator">}</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">  </span><span class="p p-Indicator">}</span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">gazebo</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.devcontainer/Dockerfile</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="nt">network_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="nt">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gz</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DISPLAY=${DISPLAY}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">QT_X11_NO_MITSHM=1</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_VISIBLE_DEVICES=all</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA_DRIVER_CAPABILITIES=all</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__NV_PRIME_RENDER_OFFLOAD=1</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__GLX_VENDOR_LIBRARY_NAME=nvidia</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_TRANSPORT_IP=gazebo</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_DISCOVERY_SERVER=gazebo</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GZ_PARTITION=my_simulation</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.:/workspace:cached</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./.gz:/home/user/.gz:rw</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/.X11-unix:/tmp/.X11-unix:rw</span><span class="w"> </span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/dri:/dev/dri</span><span class="w"> </span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia0:/dev/nvidia0</span><span class="w"> </span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidiactl:/dev/nvidiactl</span><span class="w"> </span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/dev/nvidia-modeset:/dev/nvidia-modeset</span><span class="w"> </span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a><span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="w">          </span><span class="nt">devices</span><span class="p">:</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">capabilities</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpu</span><span class="p p-Indicator">]</span>
 </code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="run-the-simulation">Run the simulation</h2>
-<details>
-    <summary>minimal world</summary>
+</details>
 
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<div class="admonition tip">
+<p class="admonition-title">nvidia glx</p>
+<ul>
+<li>__NV_PRIME_RENDER_OFFLOAD=1</li>
+<li>__GLX_VENDOR_LIBRARY_NAME=nvidia</li>
+</ul>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.devcontainer/devcontainer.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
@@ -981,118 +1108,35 @@
 <span class="normal"><a href="#__codelineno-3-19">19</a></span>
 <span class="normal"><a href="#__codelineno-3-20">20</a></span>
 <span class="normal"><a href="#__codelineno-3-21">21</a></span>
-<span class="normal"><a href="#__codelineno-3-22">22</a></span>
-<span class="normal"><a href="#__codelineno-3-23">23</a></span>
-<span class="normal"><a href="#__codelineno-3-24">24</a></span>
-<span class="normal"><a href="#__codelineno-3-25">25</a></span>
-<span class="normal"><a href="#__codelineno-3-26">26</a></span>
-<span class="normal"><a href="#__codelineno-3-27">27</a></span>
-<span class="normal"><a href="#__codelineno-3-28">28</a></span>
-<span class="normal"><a href="#__codelineno-3-29">29</a></span>
-<span class="normal"><a href="#__codelineno-3-30">30</a></span>
-<span class="normal"><a href="#__codelineno-3-31">31</a></span>
-<span class="normal"><a href="#__codelineno-3-32">32</a></span>
-<span class="normal"><a href="#__codelineno-3-33">33</a></span>
-<span class="normal"><a href="#__codelineno-3-34">34</a></span>
-<span class="normal"><a href="#__codelineno-3-35">35</a></span>
-<span class="normal"><a href="#__codelineno-3-36">36</a></span>
-<span class="normal"><a href="#__codelineno-3-37">37</a></span>
-<span class="normal"><a href="#__codelineno-3-38">38</a></span>
-<span class="normal"><a href="#__codelineno-3-39">39</a></span>
-<span class="normal"><a href="#__codelineno-3-40">40</a></span>
-<span class="normal"><a href="#__codelineno-3-41">41</a></span>
-<span class="normal"><a href="#__codelineno-3-42">42</a></span>
-<span class="normal"><a href="#__codelineno-3-43">43</a></span>
-<span class="normal"><a href="#__codelineno-3-44">44</a></span>
-<span class="normal"><a href="#__codelineno-3-45">45</a></span>
-<span class="normal"><a href="#__codelineno-3-46">46</a></span>
-<span class="normal"><a href="#__codelineno-3-47">47</a></span>
-<span class="normal"><a href="#__codelineno-3-48">48</a></span>
-<span class="normal"><a href="#__codelineno-3-49">49</a></span>
-<span class="normal"><a href="#__codelineno-3-50">50</a></span>
-<span class="normal"><a href="#__codelineno-3-51">51</a></span>
-<span class="normal"><a href="#__codelineno-3-52">52</a></span>
-<span class="normal"><a href="#__codelineno-3-53">53</a></span>
-<span class="normal"><a href="#__codelineno-3-54">54</a></span>
-<span class="normal"><a href="#__codelineno-3-55">55</a></span>
-<span class="normal"><a href="#__codelineno-3-56">56</a></span>
-<span class="normal"><a href="#__codelineno-3-57">57</a></span>
-<span class="normal"><a href="#__codelineno-3-58">58</a></span>
-<span class="normal"><a href="#__codelineno-3-59">59</a></span>
-<span class="normal"><a href="#__codelineno-3-60">60</a></span>
-<span class="normal"><a href="#__codelineno-3-61">61</a></span>
-<span class="normal"><a href="#__codelineno-3-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">&lt;sdf</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.8&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="nt">&lt;world</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;world_demo&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">        </span><span class="nt">&lt;physics</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;1ms&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;ignored&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">            </span><span class="nt">&lt;max_step_size&gt;</span>0.001<span class="nt">&lt;/max_step_size&gt;</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">            </span><span class="nt">&lt;real_time_factor&gt;</span>1.0<span class="nt">&lt;/real_time_factor&gt;</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">        </span><span class="nt">&lt;/physics&gt;</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">        </span><span class="nt">&lt;plugin</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">            </span><span class="na">filename=</span><span class="s">&quot;gz-sim-physics-system&quot;</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">            </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::Physics&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">        </span><span class="nt">&lt;plugin</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">            </span><span class="na">filename=</span><span class="s">&quot;gz-sim-user-commands-system&quot;</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">            </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::UserCommands&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">        </span><span class="nt">&lt;plugin</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">            </span><span class="na">filename=</span><span class="s">&quot;gz-sim-scene-broadcaster-system&quot;</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">            </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::SceneBroadcaster&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">        </span><span class="cm">&lt;!--light--&gt;</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">        </span><span class="nt">&lt;light</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;directional&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sun&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">            </span><span class="nt">&lt;cast_shadows&gt;</span>true<span class="nt">&lt;/cast_shadows&gt;</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">            </span><span class="nt">&lt;pose&gt;</span>0<span class="w"> </span>0<span class="w"> </span>10<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="nt">&lt;/pose&gt;</span>
-<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">            </span><span class="nt">&lt;diffuse&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/diffuse&gt;</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">            </span><span class="nt">&lt;specular&gt;</span>0.2<span class="w"> </span>0.2<span class="w"> </span>0.2<span class="w"> </span>1<span class="nt">&lt;/specular&gt;</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">            </span><span class="nt">&lt;attenuation&gt;</span>
-<a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">                </span><span class="nt">&lt;range&gt;</span>1000<span class="nt">&lt;/range&gt;</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">                </span><span class="nt">&lt;constant&gt;</span>0.9<span class="nt">&lt;/constant&gt;</span>
-<a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">                </span><span class="nt">&lt;linear&gt;</span>0.01<span class="nt">&lt;/linear&gt;</span>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="w">                </span><span class="nt">&lt;quadratic&gt;</span>0.001<span class="nt">&lt;/quadratic&gt;</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">            </span><span class="nt">&lt;/attenuation&gt;</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">            </span><span class="nt">&lt;direction&gt;</span>-0.5<span class="w"> </span>0.1<span class="w"> </span>-0.9<span class="nt">&lt;/direction&gt;</span>
-<a id="__codelineno-3-34" name="__codelineno-3-34"></a><span class="w">        </span><span class="nt">&lt;/light&gt;</span>
-<a id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">        </span><span class="nt">&lt;model</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ground_plane&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36"></a><span class="w">            </span><span class="nt">&lt;static&gt;</span>true<span class="nt">&lt;/static&gt;</span>
-<a id="__codelineno-3-37" name="__codelineno-3-37"></a><span class="w">            </span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;link&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-38" name="__codelineno-3-38"></a><span class="w">                </span><span class="nt">&lt;collision</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;collision&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-39" name="__codelineno-3-39"></a><span class="w">                    </span><span class="nt">&lt;geometry&gt;</span>
-<a id="__codelineno-3-40" name="__codelineno-3-40"></a><span class="w">                        </span><span class="nt">&lt;plane&gt;</span>
-<a id="__codelineno-3-41" name="__codelineno-3-41"></a><span class="w">                            </span><span class="nt">&lt;normal&gt;</span>0<span class="w"> </span>0<span class="w"> </span>1<span class="nt">&lt;/normal&gt;</span>
-<a id="__codelineno-3-42" name="__codelineno-3-42"></a><span class="w">                            </span><span class="nt">&lt;size&gt;</span>100<span class="w"> </span>100<span class="nt">&lt;/size&gt;</span>
-<a id="__codelineno-3-43" name="__codelineno-3-43"></a><span class="w">                        </span><span class="nt">&lt;/plane&gt;</span>
-<a id="__codelineno-3-44" name="__codelineno-3-44"></a><span class="w">                    </span><span class="nt">&lt;/geometry&gt;</span>
-<a id="__codelineno-3-45" name="__codelineno-3-45"></a><span class="w">                </span><span class="nt">&lt;/collision&gt;</span>
-<a id="__codelineno-3-46" name="__codelineno-3-46"></a><span class="w">                </span><span class="nt">&lt;visual</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;visual&quot;</span><span class="nt">&gt;</span>
-<a id="__codelineno-3-47" name="__codelineno-3-47"></a><span class="w">                    </span><span class="nt">&lt;geometry&gt;</span>
-<a id="__codelineno-3-48" name="__codelineno-3-48"></a><span class="w">                        </span><span class="nt">&lt;plane&gt;</span>
-<a id="__codelineno-3-49" name="__codelineno-3-49"></a><span class="w">                            </span><span class="nt">&lt;normal&gt;</span>0<span class="w"> </span>0<span class="w"> </span>1<span class="nt">&lt;/normal&gt;</span>
-<a id="__codelineno-3-50" name="__codelineno-3-50"></a><span class="w">                            </span><span class="nt">&lt;size&gt;</span>100<span class="w"> </span>100<span class="nt">&lt;/size&gt;</span>
-<a id="__codelineno-3-51" name="__codelineno-3-51"></a><span class="w">                        </span><span class="nt">&lt;/plane&gt;</span>
-<a id="__codelineno-3-52" name="__codelineno-3-52"></a><span class="w">                    </span><span class="nt">&lt;/geometry&gt;</span>
-<a id="__codelineno-3-53" name="__codelineno-3-53"></a><span class="w">                    </span><span class="nt">&lt;material&gt;</span>
-<a id="__codelineno-3-54" name="__codelineno-3-54"></a><span class="w">                        </span><span class="nt">&lt;ambient&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/ambient&gt;</span>
-<a id="__codelineno-3-55" name="__codelineno-3-55"></a><span class="w">                        </span><span class="nt">&lt;diffuse&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/diffuse&gt;</span>
-<a id="__codelineno-3-56" name="__codelineno-3-56"></a><span class="w">                        </span><span class="nt">&lt;specular&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/specular&gt;</span>
-<a id="__codelineno-3-57" name="__codelineno-3-57"></a><span class="w">                    </span><span class="nt">&lt;/material&gt;</span>
-<a id="__codelineno-3-58" name="__codelineno-3-58"></a><span class="w">                </span><span class="nt">&lt;/visual&gt;</span>
-<a id="__codelineno-3-59" name="__codelineno-3-59"></a><span class="w">            </span><span class="nt">&lt;/link&gt;</span>
-<a id="__codelineno-3-60" name="__codelineno-3-60"></a><span class="w">        </span><span class="nt">&lt;/model&gt;</span>
-<a id="__codelineno-3-61" name="__codelineno-3-61"></a><span class="w">    </span><span class="nt">&lt;/world&gt;</span>
-<a id="__codelineno-3-62" name="__codelineno-3-62"></a><span class="nt">&lt;/sdf&gt;</span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="p p-Indicator">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="s">&quot;name&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gz_harmonic&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="s">&quot;dockerComposeFile&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;../docker-compose.yaml&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">    </span><span class="s">&quot;service&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;gazebo&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="s">&quot;shutdownAction&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;stopCompose&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="s">&quot;workspaceFolder&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;/workspace&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="s">&quot;customizations&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">      </span><span class="s">&quot;vscode&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">        </span><span class="s">&quot;extensions&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">            </span><span class="s">&quot;ms-python.python&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">            </span><span class="s">&quot;ms-vscode.cpptools&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">            </span><span class="s">&quot;redhat.vscode-xml&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">            </span><span class="s">&quot;redhat.vscode-yaml&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">            </span><span class="s">&quot;albert.tabout&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">            </span><span class="s">&quot;actboy168.tasks&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">            </span><span class="s">&quot;streetsidesoftware.code-spell-checker&quot;</span><span class="p p-Indicator">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">            </span><span class="s">&quot;ms-vscode.cmake-tools&quot;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">        </span><span class="p p-Indicator">],</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">      </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="w">    </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">  </span><span class="p p-Indicator">}</span>
 </code></pre></div></td></tr></table></div>
-</details>
+<hr />
+<h2 id="run-the-simulation">Run the simulation</h2>
+<details>
+    <summary>minimal world</summary>
 
-<h3 id="environment-helper-file">Environment helper file</h3>
-<ul>
-<li>Change prompt</li>
-<li>Set Environment variables</li>
-<li>Add keyboard shortcuts</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">env.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
@@ -1105,42 +1149,174 @@
 <span class="normal"><a href="#__codelineno-4-11">11</a></span>
 <span class="normal"><a href="#__codelineno-4-12">12</a></span>
 <span class="normal"><a href="#__codelineno-4-13">13</a></span>
-<span class="normal"><a href="#__codelineno-4-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GZ_SIM_RESOURCE_PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/models:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/worlds:<span class="nv">$GZ_SIM_RESOURCE_PATH</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GZ_SIM_SYSTEM_PLUGIN_PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/bin:<span class="nv">$GZ_SIM_SYSTEM_PLUGIN_PATH</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;🤖 Environment ready!&#39;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="c1"># bash key bindings</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="c1"># replace bringup with full bringup name</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="nb">bind</span><span class="w"> </span><span class="s1">&#39;&quot;\C-b&quot;: &quot;gz sim -v 4 -r mini.world&quot;&#39;</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7"></a>
-<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="c1"># Function to get git branch</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9"></a>parse_git_branch<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">    </span>git<span class="w"> </span>branch<span class="w"> </span><span class="m">2</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;/^[^*]/d&#39;</span><span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/* \(.*\)/[\1]/&#39;</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="o">}</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12"></a>
-<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="c1"># Custom PS1 with turtle icon and git branch</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;🤖 \[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]\$ &quot;</span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span>
+<span class="normal"><a href="#__codelineno-4-44">44</a></span>
+<span class="normal"><a href="#__codelineno-4-45">45</a></span>
+<span class="normal"><a href="#__codelineno-4-46">46</a></span>
+<span class="normal"><a href="#__codelineno-4-47">47</a></span>
+<span class="normal"><a href="#__codelineno-4-48">48</a></span>
+<span class="normal"><a href="#__codelineno-4-49">49</a></span>
+<span class="normal"><a href="#__codelineno-4-50">50</a></span>
+<span class="normal"><a href="#__codelineno-4-51">51</a></span>
+<span class="normal"><a href="#__codelineno-4-52">52</a></span>
+<span class="normal"><a href="#__codelineno-4-53">53</a></span>
+<span class="normal"><a href="#__codelineno-4-54">54</a></span>
+<span class="normal"><a href="#__codelineno-4-55">55</a></span>
+<span class="normal"><a href="#__codelineno-4-56">56</a></span>
+<span class="normal"><a href="#__codelineno-4-57">57</a></span>
+<span class="normal"><a href="#__codelineno-4-58">58</a></span>
+<span class="normal"><a href="#__codelineno-4-59">59</a></span>
+<span class="normal"><a href="#__codelineno-4-60">60</a></span>
+<span class="normal"><a href="#__codelineno-4-61">61</a></span>
+<span class="normal"><a href="#__codelineno-4-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">&lt;sdf</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.8&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">    </span><span class="nt">&lt;world</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;world_demo&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">        </span><span class="nt">&lt;physics</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;1ms&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;ignored&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">            </span><span class="nt">&lt;max_step_size&gt;</span>0.001<span class="nt">&lt;/max_step_size&gt;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">            </span><span class="nt">&lt;real_time_factor&gt;</span>1.0<span class="nt">&lt;/real_time_factor&gt;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">        </span><span class="nt">&lt;/physics&gt;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">        </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">            </span><span class="na">filename=</span><span class="s">&quot;gz-sim-physics-system&quot;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">            </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::Physics&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">        </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">            </span><span class="na">filename=</span><span class="s">&quot;gz-sim-user-commands-system&quot;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">            </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::UserCommands&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">        </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">            </span><span class="na">filename=</span><span class="s">&quot;gz-sim-scene-broadcaster-system&quot;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">            </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::SceneBroadcaster&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">        </span><span class="cm">&lt;!--light--&gt;</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">        </span><span class="nt">&lt;light</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;directional&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sun&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">            </span><span class="nt">&lt;cast_shadows&gt;</span>true<span class="nt">&lt;/cast_shadows&gt;</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">            </span><span class="nt">&lt;pose&gt;</span>0<span class="w"> </span>0<span class="w"> </span>10<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="nt">&lt;/pose&gt;</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">            </span><span class="nt">&lt;diffuse&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/diffuse&gt;</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a><span class="w">            </span><span class="nt">&lt;specular&gt;</span>0.2<span class="w"> </span>0.2<span class="w"> </span>0.2<span class="w"> </span>1<span class="nt">&lt;/specular&gt;</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">            </span><span class="nt">&lt;attenuation&gt;</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="w">                </span><span class="nt">&lt;range&gt;</span>1000<span class="nt">&lt;/range&gt;</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="w">                </span><span class="nt">&lt;constant&gt;</span>0.9<span class="nt">&lt;/constant&gt;</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">                </span><span class="nt">&lt;linear&gt;</span>0.01<span class="nt">&lt;/linear&gt;</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">                </span><span class="nt">&lt;quadratic&gt;</span>0.001<span class="nt">&lt;/quadratic&gt;</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="w">            </span><span class="nt">&lt;/attenuation&gt;</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="w">            </span><span class="nt">&lt;direction&gt;</span>-0.5<span class="w"> </span>0.1<span class="w"> </span>-0.9<span class="nt">&lt;/direction&gt;</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a><span class="w">        </span><span class="nt">&lt;/light&gt;</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">        </span><span class="nt">&lt;model</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ground_plane&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">            </span><span class="nt">&lt;static&gt;</span>true<span class="nt">&lt;/static&gt;</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a><span class="w">            </span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;link&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a><span class="w">                </span><span class="nt">&lt;collision</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;collision&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a><span class="w">                    </span><span class="nt">&lt;geometry&gt;</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a><span class="w">                        </span><span class="nt">&lt;plane&gt;</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a><span class="w">                            </span><span class="nt">&lt;normal&gt;</span>0<span class="w"> </span>0<span class="w"> </span>1<span class="nt">&lt;/normal&gt;</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a><span class="w">                            </span><span class="nt">&lt;size&gt;</span>100<span class="w"> </span>100<span class="nt">&lt;/size&gt;</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a><span class="w">                        </span><span class="nt">&lt;/plane&gt;</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a><span class="w">                    </span><span class="nt">&lt;/geometry&gt;</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a><span class="w">                </span><span class="nt">&lt;/collision&gt;</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a><span class="w">                </span><span class="nt">&lt;visual</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;visual&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47"></a><span class="w">                    </span><span class="nt">&lt;geometry&gt;</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48"></a><span class="w">                        </span><span class="nt">&lt;plane&gt;</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49"></a><span class="w">                            </span><span class="nt">&lt;normal&gt;</span>0<span class="w"> </span>0<span class="w"> </span>1<span class="nt">&lt;/normal&gt;</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50"></a><span class="w">                            </span><span class="nt">&lt;size&gt;</span>100<span class="w"> </span>100<span class="nt">&lt;/size&gt;</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51"></a><span class="w">                        </span><span class="nt">&lt;/plane&gt;</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52"></a><span class="w">                    </span><span class="nt">&lt;/geometry&gt;</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53"></a><span class="w">                    </span><span class="nt">&lt;material&gt;</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54"></a><span class="w">                        </span><span class="nt">&lt;ambient&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/ambient&gt;</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55"></a><span class="w">                        </span><span class="nt">&lt;diffuse&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/diffuse&gt;</span>
+<a id="__codelineno-4-56" name="__codelineno-4-56"></a><span class="w">                        </span><span class="nt">&lt;specular&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/specular&gt;</span>
+<a id="__codelineno-4-57" name="__codelineno-4-57"></a><span class="w">                    </span><span class="nt">&lt;/material&gt;</span>
+<a id="__codelineno-4-58" name="__codelineno-4-58"></a><span class="w">                </span><span class="nt">&lt;/visual&gt;</span>
+<a id="__codelineno-4-59" name="__codelineno-4-59"></a><span class="w">            </span><span class="nt">&lt;/link&gt;</span>
+<a id="__codelineno-4-60" name="__codelineno-4-60"></a><span class="w">        </span><span class="nt">&lt;/model&gt;</span>
+<a id="__codelineno-4-61" name="__codelineno-4-61"></a><span class="w">    </span><span class="nt">&lt;/world&gt;</span>
+<a id="__codelineno-4-62" name="__codelineno-4-62"></a><span class="nt">&lt;/sdf&gt;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<h3 id="environment-helper-file">Environment helper file</h3>
+<ul>
+<li>Change prompt</li>
+<li>Set Environment variables</li>
+<li>Add keyboard shortcuts</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">env.sh</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GZ_SIM_RESOURCE_PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/models:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/worlds:<span class="nv">$GZ_SIM_RESOURCE_PATH</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GZ_SIM_SYSTEM_PLUGIN_PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/bin:<span class="nv">$GZ_SIM_SYSTEM_PLUGIN_PATH</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;🤖 Environment ready!&#39;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="c1"># bash key bindings</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="c1"># replace bringup with full bringup name</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="nb">bind</span><span class="w"> </span><span class="s1">&#39;&quot;\C-b&quot;: &quot;gz sim -v 4 -r mini.world&quot;&#39;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="c1"># Function to get git branch</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>parse_git_branch<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span>git<span class="w"> </span>branch<span class="w"> </span><span class="m">2</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;/^[^*]/d&#39;</span><span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/* \(.*\)/[\1]/&#39;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="o">}</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="c1"># Custom PS1 with turtle icon and git branch</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;🤖 \[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]\$ &quot;</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="usage">Usage</h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
-<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># run the simulation</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2"></a>gz<span class="w"> </span>sim<span class="w"> </span>-r<span class="w"> </span>v<span class="w"> </span><span class="m">4</span><span class="w"> </span>gz_tutorial/worlds/mini.world<span class="w"> </span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># run the simulation</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>gz<span class="w"> </span>sim<span class="w"> </span>-r<span class="w"> </span>v<span class="w"> </span><span class="m">4</span><span class="w"> </span>gz_tutorial/worlds/mini.world<span class="w"> </span>
 </code></pre></div></td></tr></table></div>
 <p><img alt="alt text" src="images/minimal_world.png" /></p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gz topic</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span>
-<span class="normal"><a href="#__codelineno-6-3">3</a></span>
-<span class="normal"><a href="#__codelineno-6-4">4</a></span>
-<span class="normal"><a href="#__codelineno-6-5">5</a></span>
-<span class="normal"><a href="#__codelineno-6-6">6</a></span>
-<span class="normal"><a href="#__codelineno-6-7">7</a></span>
-<span class="normal"><a href="#__codelineno-6-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>--list
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>gz<span class="w"> </span>topic<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>/clock
-<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="c1">#</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4"></a>
-<a id="__codelineno-6-5" name="__codelineno-6-5"></a>sim<span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">  </span>sec:<span class="w"> </span><span class="m">326</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">  </span>nsec:<span class="w"> </span><span class="m">476000000</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="o">}</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gz topic</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>--list
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>gz<span class="w"> </span>topic<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>/clock
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="c1">#</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>sim<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">  </span>sec:<span class="w"> </span><span class="m">326</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">  </span>nsec:<span class="w"> </span><span class="m">476000000</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="o">}</span>
 </code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="gz-transport">Gz Transport</h2>
