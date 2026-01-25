@@ -21,8 +21,25 @@ socat UDP4-LISTEN:7000,reuseaddr STDOUT
 ---
 
 ### udp 2 serial
-- UDP-LISTEN = convenience wrapper
-- UDP-RECVFROM = raw UDP socket with source tracking
+- **UDP-LISTEN** = Connected UDP socket
+- **UDP-RECVFROM** = Unconnected UDP socket - raw UDP socket with source tracking
+
+!!! tip ""
+    **Connected UDP socket (UDP-LISTEN)**
+    - You call connect() on a UDP socket
+    - Kernel remembers one peer
+    You can:
+        - send() (no address needed)
+        - recv() (only from that peer)
+    - Replies automatically go to that peer
+
+    **Unconnected UDP socket (UDP-RECVFROM)**
+    - You call bind() only
+    - You must:
+        - recvfrom() (get source address)
+        - sendto() (specify destination)
+    - Can talk to many peers
+
 
 #### Udp listener
 Any UDP packet sent to host IP will be forwarded to the serial device.

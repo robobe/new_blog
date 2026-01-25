@@ -30,4 +30,4 @@ tags:
 
 ## Posts
 
-- [configure netplan and netowokd](network_netplan.md)
+- [configure netplan and networkd](network_netplan.md)

@@ -1,9 +1,9 @@
 ---
+title: Sensors
 tags:
     - sensors
 ---
 
-{{ page_folder_links() }}
 
 <div class="grid-container">
     <div class="grid-item">
@@ -38,4 +38,4 @@ tags:
                 <p>--</p>
             </a>
     </div>
-</div>![alt text](image.png)
+</div>

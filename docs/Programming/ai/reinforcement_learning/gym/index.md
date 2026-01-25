@@ -24,18 +24,7 @@ tags:
 - **Wrapper**: A tool in GYM that allow modify an environment behavior without changing its code, for example and time constrain and action masking
 - Benchmark: Help to compare between different RL algorithm
 
-```mermaid
-graph TD
 
-    S[State/Observation\ns_t] --> A[Agent]
-    A -->|Select Action a_t| ENV[Environment]
-    ENV -->|Reward r_t| A
-    ENV -->|Next Observation s_{t+1}| A
-
-    style S fill:#d9eaff,stroke:#0052a3,stroke-width:1.5px
-    style A fill:#c7ffd9,stroke:#007a3d,stroke-width:1.5px
-    style ENV fill:#ffe2bc,stroke:#cc7a00,stroke-width:1.5px
-```
 
 ## Observation space
 What information the environment gives the agent

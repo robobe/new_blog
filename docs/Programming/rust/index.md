@@ -26,6 +26,8 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 - **rustup**: toolchain manager
 - **rustc**: compiler
 - **cargo**: build & package manager
+- **crate**: smallest compilation unit in Rust (lib/bin)
+- **crates.io**: rust's official package registry
 
 ```bash title="load rust into shell"
 source ~/.cargo/env

@@ -46,4 +46,10 @@
 
 ---
 
-- [Configuration files](configure_files)
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="configure_files">
+            <p>Configuration files</p>
+        </a>
+    </div>
+</div>

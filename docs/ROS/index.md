@@ -8,7 +8,7 @@
 
 <div class="grid-container">
     <div class="grid-item tooltip">
-        <span class="tooltiptext">Custom styled tooltip</span>
+        <span class="tooltiptext">ROS2 python tips</span>
             <a href="python">
                 <img src="images/ros_python.png"  width="150" height="150">
                 <p>Python</p>
@@ -18,6 +18,12 @@
             <a href="ros_cpp">
                 <img src="images/ros_cpp.png"   width="150" height="150">
                 <p>C/CPP</p>
+            </a>
+        </div>
+         <div class="grid-item">
+            <a href="ros_rust">
+                <img src="images/ros_rust.png"   width="150" height="150">
+                <p>Rust</p>
             </a>
         </div>
     <div class="grid-item tooltip">

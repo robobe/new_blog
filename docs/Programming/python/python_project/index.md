@@ -76,15 +76,44 @@ The [project] section in pyproject.toml that describes your Python package:
 
 #### version
 
-Set manual
+##### manual
+
 ```
 version = "0.1.0"
 ```
 
-or dynamic using  tools like `setuptools-scm`.
-```
+##### dynamic
+Get version from git tag
+using  tools like `setuptools-scm`.
+
+```ini title="pyproject.toml"
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+
+[project]
 dynamic = ["version"]
+
+[tool.setuptools_scm]
 ```
+
+!!! warning ""
+    if there any checkout file the version include `dev` as suffix
+
+#### usage
+
+```python title="__init__"
+from importlib.metadata import version
+
+__version__ = version("my_package")
+```
+
+```python
+import python_project
+
+print(python_project.__version__)
+```
+
+---
 
 #### dependencies
 
