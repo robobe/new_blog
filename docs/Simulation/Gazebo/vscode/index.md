@@ -1,75 +1,17 @@
 ---
+title: Use gazebo harmonic with vscode devcontainer
 tags:
     - gazebo
     - gz
     - harmonic
     - docker
     - vscode
+    - devcontainer
 ---
 
-# Run gazebo harmonic on docker
-Build a docker container base on cuda runtime and ubuntu 22.04 to run Gazebo harmonic simulation.
-The dockerfile base on [Allison Thackston](https://github.com/athackst/dockerfiles/blob/main/gz/harmonic-cuda.Dockerfile)
-
-Use vscode devcontainer to run the docker image. using docker compose. [vscode devcontainer](#use-vscode-and-docker)
-
-## Prerequisites
-- Check nvidia version using `nvidia-smi`
-- Pull the cuda runtime
-- Install nvidia-container-toolkit [more](/DevOps/docker/docker_images/docker_nvidia/)
 
 
-```bash title="pull cuda runtime"
-# my current cuda version is 12.4
-docker pull nvidia/cuda:12.4.0-runtime-ubuntu22.04
-docker run --gps all -it --rm  nvidia/cuda:12.4.0-runtime-ubuntu22.04 /bin/bash
-# from docker 
-nvida-smi
-```
 
-## Dockerfile
-
-<details>
-    <summary>Docker file</summary>
-
-```dockerfile
---8<-- "docs/Simulation/Gazebo/vscode/code/Dockerfile"
-```
-</details>
-
-!!! note "Docker environment variables"
-
-    - **QT_X11_NO_MITSHM=1** is used to disable the MIT-SHM extension for X11, which can cause issues with some applications running in Docker containers.
-    - **NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute** is used to specify the capabilities of the NVIDIA driver that should be exposed to the container. This is important for GPU-accelerated applications.
-    - **NVIDIA_VISIBLE_DEVICES=all** is used to make all NVIDIA GPUs visible to the container. This is important for GPU-accelerated applications that need access to the GPU.
-
-## Build the image
-
-```bash
-docker build -t gz:harmonic .
-```
-
-## Run the image
-
-```bash
-xhost +local:docker
-
-docker run --gpus all -it --rm \
---name gz \
---hostname gz \
---user user \
---network host \
---env="QT_X11_NO_MITSHM=1"  \
---env="DISPLAY"  \
--v /tmp/.X11-unix:/tmp/.X11-unix:rw \
--v /dev/dri:/dev/dri \
--v /dev/nvidia0:/dev/nvidia0 \
--v /dev/nvidiactl:/dev/nvidiactl \
--v /dev/nvidia-modeset:/dev/nvidia-modeset \
-gz:harmonic
-```
-
----
 
 ## Use VSCode and docker
 - Using docker-compose
@@ -77,11 +19,11 @@ gz:harmonic
 
 ```
 ├── .devcontainer
+│   ├── Dockerfile
 │   └── devcontainer.json
 ├── docker-compose.yaml
 ├── .gitignore
-└── gz_tutorial
-    └── worlds
+└── worlds
         └── empty.world
 
 ```
@@ -89,6 +31,11 @@ gz:harmonic
 ```yaml title="docker-compose.yaml"
 --8<-- "docs/Simulation/Gazebo/vscode/code/docker-compose.yaml"
 ```
+
+!!! tip "nvidia glx"
+    - __NV_PRIME_RENDER_OFFLOAD=1
+    - __GLX_VENDOR_LIBRARY_NAME=nvidia
+    
 
 ```yaml title=".devcontainer/devcontainer.json"
 --8<-- "docs/Simulation/Gazebo/vscode/code/devcontainer.json"
@@ -107,10 +54,35 @@ gz:harmonic
 </details>
 
 
+### Environment helper file
+- Change prompt
+- Set Environment variables
+- Add keyboard shortcuts
+
+
+```bash title="env.sh"
+
+export GZ_SIM_RESOURCE_PATH=$(pwd)/models:$(pwd)/worlds:$GZ_SIM_RESOURCE_PATH
+export GZ_SIM_SYSTEM_PLUGIN_PATH=$(pwd)/bin:$GZ_SIM_SYSTEM_PLUGIN_PATH
+echo '🤖 Environment ready!'
+# bash key bindings
+# replace bringup with full bringup name
+bind '"\C-b": "gz sim -v 4 -r mini.world"'
+
+# Function to get git branch
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+}
+
+# Custom PS1 with turtle icon and git branch
+export PS1="🤖 \[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]\$ "
+```
+
+### Usage
 
 ```bash
 # run the simulation
-gz sim -r v4 gz_tutorial/worlds/empty.world 
+gz sim -r v 4 gz_tutorial/worlds/mini.world 
 ```
 
 ![alt text](images/minimal_world.png)

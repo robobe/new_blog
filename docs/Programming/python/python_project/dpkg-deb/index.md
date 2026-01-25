@@ -7,7 +7,15 @@ tags:
 ---
 
 ## dpkg-deb
+Is a low-level debian tool it turn a filesystem tree into debian package
+
+
 Using `dpkg-deb` util to create debian package from python project (wrap the **whl** file create by `python3 -m build`)
+
+!!! tip "todo"
+  extract the whl file into the debain filesystem and the pack , 
+  remove the pip install from posinst
+    
 
 
 ### Demo

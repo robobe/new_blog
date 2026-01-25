@@ -26,9 +26,10 @@ tags:
         <p>Custom plugins</p>
         </a>
     </div>
+</div>
+<div>
      <div class="grid-item">
         <a href="gazebo_worlds">
-        <img src="images/world.png" width="150" height="150">
         <p>Gazebo Worlds</p>
         </a>
     </div>

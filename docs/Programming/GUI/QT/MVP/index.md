@@ -89,6 +89,7 @@ class GreetingPresenter(QObject):
         self.view.set_greeting(self.model.greeting())
 
 ```
+
 ---
 
 ## Reference

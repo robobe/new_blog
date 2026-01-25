@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.4.0-runtime-ubuntu22.04 AS base
+FROM ubuntu:22.04 as base
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -44,7 +44,8 @@ RUN apt-get update \
   libglx0 \
   libegl1 \
   libxext6 \
-  libx11-6
+  libx11-6 \
+&& rm -rf /var/lib/apt/lists/*
 
 # Env vars for the nvidia-container-runtime.
 ENV NVIDIA_VISIBLE_DEVICES=all
@@ -69,5 +70,15 @@ RUN apt-get update && apt-get install -y sudo \
   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
   && chmod 0440 /etc/sudoers.d/$USERNAME \
   && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update \
+ && apt-get install -y -qq --no-install-recommends \
+  vim \
+  build-essential \
+  git \
+  openssh-client \
+  ca-certificates \
+  cmake \
+&& rm -rf /var/lib/apt/lists/*
 
 CMD ["bash"]
