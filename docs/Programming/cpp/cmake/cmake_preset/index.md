@@ -45,11 +45,12 @@ CMake presets by creating a file named `CMakePresets.json` in your **project roo
 | `"packagePresets"` _(optional)_ | `cpack --preset`         | How to create installers (support cmake>3.24)   |
 
 !!! note "version field"
-version: 2 → CMake ≥ 3.20
-version: 3 → CMake ≥ 3.21
-version: 4 → CMake ≥ 3.23
-version: 5 → CMake ≥ 3.24
-version: 6 → CMake ≥ 3.25
+
+    - version: 2 → CMake ≥ 3.20
+    - version: 3 → CMake ≥ 3.21
+    - version: 4 → CMake ≥ 3.23
+    - version: 5 → CMake ≥ 3.24
+    - version: 6 → CMake ≥ 3.25
 
     ubuntu 22.04 default cmake : 3.22.1
     ubuntu 24.04 default cmake : 3.28.3
@@ -127,6 +128,24 @@ cmake --preset <name>
 --- 
 
 ## Demo
+
+
+### VSCode tips
+- Install [cmake tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+- Config extension to use presets
+
+```json title=".vscode/settings.json"
+"cmake.useCMakePresets": "always"
+```
+
+- Run:
+  -  cmake: configure
+  -  cmake: build
+  -  cmake: install
+
+![alt text](images/cmake_tools_presets.png)
+
+
 
 ```
 .
@@ -234,4 +253,5 @@ ctest --preset test-debug
 ---
 
 ## Reference
-[cmake-preset](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html)
+- [cmake-preset](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html)
+- [about CMake Presets](https://martin-fieber.de/blog/cmake-presets/)

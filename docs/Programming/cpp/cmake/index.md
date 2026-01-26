@@ -14,10 +14,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-    <a href="gtest">
-                    <img src="images/gtest.png"  width="150" height="150">
-                    <p>gtest</p>
-                </a>
+        <a href="gtest">
+            <p>gtest</p>
+        </a>
     </div>
     <div class="grid-item">
         <a href="">

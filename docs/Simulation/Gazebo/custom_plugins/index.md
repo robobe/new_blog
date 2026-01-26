@@ -7,8 +7,193 @@ tags:
 
 # Gazebo harmonic custom plugin
 
+[gazebo examples](https://github.com/gazebosim/gz-sim/tree/gz-sim10/examples)
+
 ![](../../../assets/images/under_construction.png)
 
+
+```
+Plugin library loaded
+      |
+      v
++------------------------------+
+|  Constructor (C++ object)    |
++------------------------------+
+      |
+      v
++---------------------------------------------------+
+| Configure()  [ISystemConfigure]                   |
+| - runs ONCE when plugin is attached/loaded        |
+| - read/write EntityComponentManager (ECM)         |
+| - parse SDF params, create components, cache IDs  |
++---------------------------------------------------+
+      |
+      v
+      Simulation loop (every tick / iteration)
+      |
+      v
++---------------------------------------------------+
+| PreUpdate()  [ISystemPreUpdate]                   |
+| - runs EVERY tick, BEFORE physics step            |
+| - read/write ECM                                 |
+| - apply commands (forces, joint targets, etc.)    |
++---------------------------------------------------+
+      |
+      v
++---------------------------------------------------+
+| Update()     [ISystemUpdate] (optional)           |
+| - runs EVERY tick, during the "update" phase      |
+| - read/write ECM                                 |
+| - typically physics/stepping related systems      |
++---------------------------------------------------+
+      |
+      v
++---------------------------------------------------+
+| PostUpdate() [ISystemPostUpdate]                  |
+| - runs EVERY tick, AFTER physics step             |
+| - READ-ONLY ECM (important!)                      |
+| - publish state, compute observations/feedback    |
++---------------------------------------------------+
+      |
+      v
+(loop back to PreUpdate for next tick)
+      |
+      v
++---------------------------------------------------+
+| Reset()      [ISystemReset] (optional)            |
+| - runs when the sim/model/plugin is reset         |
+| - clear integrators, counters, internal state     |
++---------------------------------------------------+
+      |
+      v
++------------------------------+
+| Destructor (plugin unloaded) |
++------------------------------+
+
+```
+
+### Rule of thumb
+- Control / write to world: **PreUpdate()**
+- Observe / publish state: **PostUpdate()**
+- One-time setup: **Configure()**
+- Clear internal state: **Reset()**
+
+---
+
+## ECM (Entity Component Manager)
+
+Instead of objects with C++ classes (like Classic Gazebo), Gazebo Sim uses an **Entity–Component–System** (ECS) architecture.
+
+- **Entity** = integer ID
+- **Component** = data attached to entity
+- **System (plugin)** = logic that reads/writes components
+
+
+### Entity
+An Entity is just an ID (no methods, no class).
+
+Examples of entities:
+
+- World
+- Model
+- Link
+- Joint
+- Sensor
+
+### Components
+Components are typed data blobs attached to entities.
+
+| Component      | Meaning                |
+| -------------- | ---------------------- |
+| Pose           | Position + orientation |
+| LinearVelocity | Velocity               |
+| JointPosition  | Joint angle            |
+| Name           | Entity name            |
+| ParentEntity   | Parent in tree         |
+| Link           | Marks entity as a link |
+
+
+### System
+
+A System (plugin) reads/writes components via the ECM.
+
+### Simple demo:
+- Read Model pose
+- Get entity in configure method
+- Read entity pose component every simulation step
+
+```cpp
+#include <gz/plugin/Register.hh>
+#include <gz/sim/System.hh>
+#include <gz/sim/components/Pose.hh>
+#include <gz/common/Console.hh>
+#include <gz/sim/Entity.hh>
+
+using namespace gz;
+using namespace sim;
+
+class SimpleECM :
+  public gz::sim::System,
+  public gz::sim::ISystemConfigure,
+  public gz::sim::ISystemPreUpdate
+{
+public:
+  void Configure(const gz::sim::Entity &entity,
+                 const std::shared_ptr<const sdf::Element> &,
+                 gz::sim::EntityComponentManager &,
+                 gz::sim::EventManager &) override
+  {
+    modelEntity = entity;
+    gzmsg << "Plugin attached to " << entity << "\n";
+  }
+
+  void PreUpdate(const gz::sim::UpdateInfo &,
+                 gz::sim::EntityComponentManager &ecm) override
+  {
+    
+    // Read pose component from ecm for entity modelEntity
+    auto poseComp = ecm.Component<gz::sim::components::Pose>(modelEntity);
+    if (!poseComp) return;
+
+    auto pose = poseComp->Data();
+    gzmsg << "-----> Z = " << pose.Pos().Z() << "\n";
+  }
+
+private:
+  gz::sim::Entity modelEntity{kNullEntity};
+};
+
+GZ_ADD_PLUGIN(SimpleECM, gz::sim::System,
+              SimpleECM::ISystemConfigure,
+              SimpleECM::ISystemPreUpdate)
+
+GZ_ADD_PLUGIN_ALIAS(SimpleECM,
+                    "gz::sim::systems::SimpleECM")
+
+```
+
+---
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="pub_sub">
+        <p>Pub/Sub</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="imu_sensor">
+        <p>imu</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="debugging">
+        <p>Debugging</p>
+        </a>
+    </div>
+</div>
+
+
+---
 
 ```
 ├── .devcontainer

@@ -28,9 +28,19 @@ tags:
 
 ```
 
+<details>
+<summary>Dockerfile</summary>
+```
+--8<-- "docs/Simulation/Gazebo/vscode/code/Dockerfile"
+```
+</details>
+
+<details>
+<summary>docker-compose</summary>
 ```yaml title="docker-compose.yaml"
 --8<-- "docs/Simulation/Gazebo/vscode/code/docker-compose.yaml"
 ```
+</details>
 
 !!! tip "nvidia glx"
     - __NV_PRIME_RENDER_OFFLOAD=1
