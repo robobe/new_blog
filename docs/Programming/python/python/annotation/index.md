@@ -59,6 +59,22 @@ def get_data() -> int | None
 
 ```
 
+!!! tip "TYPE_CHECKING"
+    TYPE_CHECKING is a boolean constant:
+
+    - **False** at runtime
+    - **True** only when a type checker runs (mypy, pyright, pylance, etc.)
+
+    ```python
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        from mymodule import BigClass
+
+    ```
+    - Type checker: ✅ sees BigClass
+    - Runtime: ❌ import is skipped
+
 ---
 
 
@@ -152,6 +168,7 @@ event -= on_str
 event.fire("world")  # nothing happens
 
 ```
+
 ---
 
 ## callable
@@ -172,6 +189,7 @@ def foo(data: int) -> str:
 print(func(foo))
 
 ```
+
 ---
 
 ## cast

@@ -19,8 +19,13 @@ Run Ardupilot SITL (ver 4.6.1) with mavros and gazebo simulation (harmonic)
             <p>Gimbal</p></a>
     </div>
     <div class="grid-item">
-        <a href="pymavlink">
-                <p>pymavlink</p>
+        <a href="simulation">
+            <p>JSON Simulation Format</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="">
+                <p>---</p>
             </a>
     </div>
 </div>

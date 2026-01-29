@@ -58,3 +58,7 @@
 ## Resources
 - [best-of-robot-simulators](https://github.com/knmcguire/best-of-robot-simulators)
 - [Gazebo meeting](https://vimeo.com/osrfoundation)
+- [Simulation Landscape in Aerial Robotics - Kimberly McGuire](https://youtu.be/zGxuXFUkEnk)
+    - [Aerial Robotic Landscape](https://ros-aerial.github.io/aerial_robotic_landscape/)
+    - [Survey of Simulators for Aerial Robots](https://arxiv.org/pdf/2311.02296)
+- [The Role of Robotics Simulators for Unmanned Aerial Vehicles - ICRA 2023 workshop](https://youtu.be/MjqBZOVEL4c)
