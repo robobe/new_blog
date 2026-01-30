@@ -18,7 +18,9 @@ tags:
   - [with default](#with-default)
   - [with multiple choice](#with-multiple-choice)
 - [Include](#include)
+- [set\_env / unset\_env](#set_env--unset_env)
 
+---
 
 <div class="grid-container">
     <div class="grid-item">
@@ -34,6 +36,11 @@ tags:
     <div class="grid-item">
         <a href="gazebo">
         <p>gazebo</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="gazebo_classic">
+        <p>gazebo classic</p>
         </a>
     </div>
 </div>
@@ -199,4 +206,16 @@ launch:
 - executable:
     cmd: echo $(var simple_arg)
     output: screen
+```
+
+---
+
+## set_env / unset_env
+
+Sets an environment variable
+
+```yaml
+- set_env:
+      name: GAZEBO_RESOURCE_PATH
+      value: "$(env GAZEBO_RESOURCE_PATH):$(find-pkg-share robot_gazebo)/worlds"
 ```

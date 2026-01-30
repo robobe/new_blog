@@ -111,8 +111,63 @@ Config.__dataclass_fields__["port"].metadata
 # return metadata as dictionary 
 ```
 
+---
+
+### slots
+__slots__ makes Python objects faster and smaller by replacing per-instance dictionaries with a fixed, preallocated memory layout.
+
+```python
+from dataclasses import dataclass
+
+@dataclass(slots=True)
+class Point:
+    x: float
+    y: float
+```
+
+What you get:
+- No __dict__
+- Lower memory usage
+- Faster attribute access
+- No accidental attributes
 
 
+```python
+dataclass(frozen=True, slots=True)
+class Pose:
+    x: float
+    y: float
+    theta: float
+```
+
+### frozen
+Make objects immutable so their state cannot change after creation.
+
+```python
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Point:
+    x: int
+    y: int
+```
+
+**frozen=True** turns a dataclass into a value object: created once, never modified.
+
+
+!!! warning ""
+    It does not make contained objects immutable
+
+    ```python
+    @dataclass(frozen=True)
+    class Bad:
+        items: list[int]
+
+    b = Bad([1, 2])
+    b.items.append(3)   # ✅ allowed (list is mutable!)
+    ```
+
+    
 ---
 
 ## Annotation
