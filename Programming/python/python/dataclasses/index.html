@@ -752,6 +752,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        slots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frozen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        frozen
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -957,39 +979,99 @@ Use default_factory for:
 <a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="c1"># return metadata as dictionary </span>
 </code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="annotation">Annotation</h2>
+<h3 id="slots">slots</h3>
+<p><strong>slots</strong> makes Python objects faster and smaller by replacing per-instance dictionaries with a fixed, preallocated memory layout.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
 <span class="normal"><a href="#__codelineno-8-2">2</a></span>
 <span class="normal"><a href="#__codelineno-8-3">3</a></span>
 <span class="normal"><a href="#__codelineno-8-4">4</a></span>
 <span class="normal"><a href="#__codelineno-8-5">5</a></span>
-<span class="normal"><a href="#__codelineno-8-6">6</a></span>
-<span class="normal"><a href="#__codelineno-8-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="nd">@dataclass</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">Sensor</span><span class="p">:</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a>    <span class="n">angle</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;deg&quot;</span><span class="p">,</span> <span class="s2">&quot;imu_angle&quot;</span><span class="p">]</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a>    <span class="n">data</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;deg&quot;</span><span class="p">,</span> <span class="s2">&quot;other data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="extract-parts-of-annotated">Extract parts of Annotated</h3>
+<p>What you get:
+- No <strong>dict</strong>
+- Lower memory usage
+- Faster attribute access
+- No accidental attributes</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
 <span class="normal"><a href="#__codelineno-9-2">2</a></span>
 <span class="normal"><a href="#__codelineno-9-3">3</a></span>
 <span class="normal"><a href="#__codelineno-9-4">4</a></span>
-<span class="normal"><a href="#__codelineno-9-5">5</a></span>
-<span class="normal"><a href="#__codelineno-9-6">6</a></span>
-<span class="normal"><a href="#__codelineno-9-7">7</a></span>
-<span class="normal"><a href="#__codelineno-9-8">8</a></span>
-<span class="normal"><a href="#__codelineno-9-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_origin</span><span class="p">,</span> <span class="n">get_args</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_type_hints</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a>
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">Sensor</span><span class="p">,</span> <span class="n">include_extras</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="n">annot</span> <span class="o">=</span> <span class="n">hints</span><span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a>
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">get_origin</span><span class="p">(</span><span class="n">annot</span><span class="p">))</span>  <span class="c1"># Annotated</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">get_args</span><span class="p">(</span><span class="n">annot</span><span class="p">))</span>    <span class="c1"># (float, &#39;deg&#39;, &#39;imu&#39;)</span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">Pose</span><span class="p">:</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="frozen">frozen</h3>
+<p>Make objects immutable so their state cannot change after creation.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">Point</span><span class="p">:</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>    <span class="n">x</span><span class="p">:</span> <span class="nb">int</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>    <span class="n">y</span><span class="p">:</span> <span class="nb">int</span>
+</code></pre></div></td></tr></table></div>
+<p><strong>frozen=True</strong> turns a dataclass into a value object: created once, never modified.</p>
+<div class="admonition warning">
+<p>It does not make contained objects immutable</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">Bad</span><span class="p">:</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>    <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="n">b</span> <span class="o">=</span> <span class="n">Bad</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="n">b</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>   <span class="c1"># ✅ allowed (list is mutable!)</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<hr />
+<h2 id="annotation">Annotation</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span>
+<span class="normal"><a href="#__codelineno-12-6">6</a></span>
+<span class="normal"><a href="#__codelineno-12-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">Sensor</span><span class="p">:</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>    <span class="n">angle</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;deg&quot;</span><span class="p">,</span> <span class="s2">&quot;imu_angle&quot;</span><span class="p">]</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>    <span class="n">data</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;deg&quot;</span><span class="p">,</span> <span class="s2">&quot;other data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="extract-parts-of-annotated">Extract parts of Annotated</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span>
+<span class="normal"><a href="#__codelineno-13-7">7</a></span>
+<span class="normal"><a href="#__codelineno-13-8">8</a></span>
+<span class="normal"><a href="#__codelineno-13-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_origin</span><span class="p">,</span> <span class="n">get_args</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_type_hints</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">Sensor</span><span class="p">,</span> <span class="n">include_extras</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="n">annot</span> <span class="o">=</span> <span class="n">hints</span><span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">get_origin</span><span class="p">(</span><span class="n">annot</span><span class="p">))</span>  <span class="c1"># Annotated</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">get_args</span><span class="p">(</span><span class="n">annot</span><span class="p">))</span>    <span class="c1"># (float, &#39;deg&#39;, &#39;imu&#39;)</span>
 </code></pre></div></td></tr></table></div>
 <h3 id="field-vs-annotated-when-to-use-which">field() vs Annotated — when to use which?</h3>
 <table>
@@ -1025,205 +1107,205 @@ Use default_factory for:
 <hr />
 <h3 id="demo">Demo</h3>
 <p>Using <code>dataclass</code> and annotation to build <code>struct</code> fmt dynamic from dataclass fields</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
-<span class="normal"><a href="#__codelineno-10-2">2</a></span>
-<span class="normal"><a href="#__codelineno-10-3">3</a></span>
-<span class="normal"><a href="#__codelineno-10-4">4</a></span>
-<span class="normal"><a href="#__codelineno-10-5">5</a></span>
-<span class="normal"><a href="#__codelineno-10-6">6</a></span>
-<span class="normal"><a href="#__codelineno-10-7">7</a></span>
-<span class="normal"><a href="#__codelineno-10-8">8</a></span>
-<span class="normal"><a href="#__codelineno-10-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nd">@dataclass</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">Packet</span><span class="p">:</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6"></a>    <span class="n">a</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">]</span>   <span class="c1"># int16</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7"></a>    <span class="n">b</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">]</span>   <span class="c1"># uint32</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8"></a>    <span class="n">c</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="c1"># float32</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9"></a>    <span class="n">name</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;16s&quot;</span><span class="p">]</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">6</a></span>
+<span class="normal"><a href="#__codelineno-14-7">7</a></span>
+<span class="normal"><a href="#__codelineno-14-8">8</a></span>
+<span class="normal"><a href="#__codelineno-14-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">Packet</span><span class="p">:</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a>    <span class="n">a</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">]</span>   <span class="c1"># int16</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a>    <span class="n">b</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">]</span>   <span class="c1"># uint32</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a>    <span class="n">c</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="c1"># float32</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a>    <span class="n">name</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;16s&quot;</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-11-10">10</a></span>
-<span class="normal"><a href="#__codelineno-11-11">11</a></span>
-<span class="normal"><a href="#__codelineno-11-12">12</a></span>
-<span class="normal"><a href="#__codelineno-11-13">13</a></span>
-<span class="normal"><a href="#__codelineno-11-14">14</a></span>
-<span class="normal"><a href="#__codelineno-11-15">15</a></span>
-<span class="normal"><a href="#__codelineno-11-16">16</a></span>
-<span class="normal"><a href="#__codelineno-11-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_type_hints</span><span class="p">,</span> <span class="n">get_origin</span><span class="p">,</span> <span class="n">get_args</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3"></a>
-<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">struct_format</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">):</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5"></a>    <span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">include_extras</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6"></a>    <span class="n">fmt</span> <span class="o">=</span> <span class="n">endian</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7"></a>
-<a id="__codelineno-11-8" name="__codelineno-11-8"></a>    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">hints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10"></a>
-<a id="__codelineno-11-11" name="__codelineno-11-11"></a>        <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Annotated</span><span class="p">:</span>
-<a id="__codelineno-11-12" name="__codelineno-11-12"></a>            <span class="n">_</span><span class="p">,</span> <span class="n">fmt_char</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-<a id="__codelineno-11-13" name="__codelineno-11-13"></a>            <span class="n">fmt</span> <span class="o">+=</span> <span class="n">fmt_char</span>
-<a id="__codelineno-11-14" name="__codelineno-11-14"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-11-15" name="__codelineno-11-15"></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> missing struct annotation&quot;</span><span class="p">)</span>
-<a id="__codelineno-11-16" name="__codelineno-11-16"></a>
-<a id="__codelineno-11-17" name="__codelineno-11-17"></a>    <span class="k">return</span> <span class="n">fmt</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_type_hints</span><span class="p">,</span> <span class="n">get_origin</span><span class="p">,</span> <span class="n">get_args</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">struct_format</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">):</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>    <span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">include_extras</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>    <span class="n">fmt</span> <span class="o">=</span> <span class="n">endian</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a>    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">hints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a>        <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Annotated</span><span class="p">:</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a>            <span class="n">_</span><span class="p">,</span> <span class="n">fmt_char</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a>            <span class="n">fmt</span> <span class="o">+=</span> <span class="n">fmt_char</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> missing struct annotation&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a>    <span class="k">return</span> <span class="n">fmt</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
-<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">fmt</span> <span class="o">=</span> <span class="n">struct_format</span><span class="p">(</span><span class="n">Packet</span><span class="p">)</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>  <span class="c1"># &quot;&lt;hIf16s&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="n">fmt</span> <span class="o">=</span> <span class="n">struct_format</span><span class="p">(</span><span class="n">Packet</span><span class="p">)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>  <span class="c1"># &quot;&lt;hIf16s&quot;</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">code</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-13-10">10</a></span>
-<span class="normal"><a href="#__codelineno-13-11">11</a></span>
-<span class="normal"><a href="#__codelineno-13-12">12</a></span>
-<span class="normal"><a href="#__codelineno-13-13">13</a></span>
-<span class="normal"><a href="#__codelineno-13-14">14</a></span>
-<span class="normal"><a href="#__codelineno-13-15">15</a></span>
-<span class="normal"><a href="#__codelineno-13-16">16</a></span>
-<span class="normal"><a href="#__codelineno-13-17">17</a></span>
-<span class="normal"><a href="#__codelineno-13-18">18</a></span>
-<span class="normal"><a href="#__codelineno-13-19">19</a></span>
-<span class="normal"><a href="#__codelineno-13-20">20</a></span>
-<span class="normal"><a href="#__codelineno-13-21">21</a></span>
-<span class="normal"><a href="#__codelineno-13-22">22</a></span>
-<span class="normal"><a href="#__codelineno-13-23">23</a></span>
-<span class="normal"><a href="#__codelineno-13-24">24</a></span>
-<span class="normal"><a href="#__codelineno-13-25">25</a></span>
-<span class="normal"><a href="#__codelineno-13-26">26</a></span>
-<span class="normal"><a href="#__codelineno-13-27">27</a></span>
-<span class="normal"><a href="#__codelineno-13-28">28</a></span>
-<span class="normal"><a href="#__codelineno-13-29">29</a></span>
-<span class="normal"><a href="#__codelineno-13-30">30</a></span>
-<span class="normal"><a href="#__codelineno-13-31">31</a></span>
-<span class="normal"><a href="#__codelineno-13-32">32</a></span>
-<span class="normal"><a href="#__codelineno-13-33">33</a></span>
-<span class="normal"><a href="#__codelineno-13-34">34</a></span>
-<span class="normal"><a href="#__codelineno-13-35">35</a></span>
-<span class="normal"><a href="#__codelineno-13-36">36</a></span>
-<span class="normal"><a href="#__codelineno-13-37">37</a></span>
-<span class="normal"><a href="#__codelineno-13-38">38</a></span>
-<span class="normal"><a href="#__codelineno-13-39">39</a></span>
-<span class="normal"><a href="#__codelineno-13-40">40</a></span>
-<span class="normal"><a href="#__codelineno-13-41">41</a></span>
-<span class="normal"><a href="#__codelineno-13-42">42</a></span>
-<span class="normal"><a href="#__codelineno-13-43">43</a></span>
-<span class="normal"><a href="#__codelineno-13-44">44</a></span>
-<span class="normal"><a href="#__codelineno-13-45">45</a></span>
-<span class="normal"><a href="#__codelineno-13-46">46</a></span>
-<span class="normal"><a href="#__codelineno-13-47">47</a></span>
-<span class="normal"><a href="#__codelineno-13-48">48</a></span>
-<span class="normal"><a href="#__codelineno-13-49">49</a></span>
-<span class="normal"><a href="#__codelineno-13-50">50</a></span>
-<span class="normal"><a href="#__codelineno-13-51">51</a></span>
-<span class="normal"><a href="#__codelineno-13-52">52</a></span>
-<span class="normal"><a href="#__codelineno-13-53">53</a></span>
-<span class="normal"><a href="#__codelineno-13-54">54</a></span>
-<span class="normal"><a href="#__codelineno-13-55">55</a></span>
-<span class="normal"><a href="#__codelineno-13-56">56</a></span>
-<span class="normal"><a href="#__codelineno-13-57">57</a></span>
-<span class="normal"><a href="#__codelineno-13-58">58</a></span>
-<span class="normal"><a href="#__codelineno-13-59">59</a></span>
-<span class="normal"><a href="#__codelineno-13-60">60</a></span>
-<span class="normal"><a href="#__codelineno-13-61">61</a></span>
-<span class="normal"><a href="#__codelineno-13-62">62</a></span>
-<span class="normal"><a href="#__codelineno-13-63">63</a></span>
-<span class="normal"><a href="#__codelineno-13-64">64</a></span>
-<span class="normal"><a href="#__codelineno-13-65">65</a></span>
-<span class="normal"><a href="#__codelineno-13-66">66</a></span>
-<span class="normal"><a href="#__codelineno-13-67">67</a></span>
-<span class="normal"><a href="#__codelineno-13-68">68</a></span>
-<span class="normal"><a href="#__codelineno-13-69">69</a></span>
-<span class="normal"><a href="#__codelineno-13-70">70</a></span>
-<span class="normal"><a href="#__codelineno-13-71">71</a></span>
-<span class="normal"><a href="#__codelineno-13-72">72</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">astuple</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_type_hints</span><span class="p">,</span> <span class="n">get_origin</span><span class="p">,</span> <span class="n">get_args</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6"></a>
-<a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="nd">@dataclass</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">Packet</span><span class="p">:</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9"></a>    <span class="n">a</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">]</span>   <span class="c1"># int16</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10"></a>    <span class="n">b</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">]</span>   <span class="c1"># uint32</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11"></a>    <span class="n">c</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="c1"># float32</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12"></a>    <span class="c1"># name: Annotated[str, &quot;16s&quot;]</span>
-<a id="__codelineno-13-13" name="__codelineno-13-13"></a>
-<a id="__codelineno-13-14" name="__codelineno-13-14"></a>
-<a id="__codelineno-13-15" name="__codelineno-13-15"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-13-16" name="__codelineno-13-16"></a>    <span class="nd">@cache</span>
-<a id="__codelineno-13-17" name="__codelineno-13-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">struct_format</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-13-18" name="__codelineno-13-18"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<a id="__codelineno-13-19" name="__codelineno-13-19"></a><span class="sd">        Docstring for struct_format</span>
-<a id="__codelineno-13-20" name="__codelineno-13-20"></a>
-<a id="__codelineno-13-21" name="__codelineno-13-21"></a><span class="sd">        :param cls: Class to generate format for</span>
-<a id="__codelineno-13-22" name="__codelineno-13-22"></a><span class="sd">        :param endian: Endianness of the struct format</span>
-<a id="__codelineno-13-23" name="__codelineno-13-23"></a><span class="sd">        &quot;&quot;&quot;</span>
-<a id="__codelineno-13-24" name="__codelineno-13-24"></a>        <span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">include_extras</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-13-25" name="__codelineno-13-25"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="n">endian</span>
-<a id="__codelineno-13-26" name="__codelineno-13-26"></a>
-<a id="__codelineno-13-27" name="__codelineno-13-27"></a>        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
-<a id="__codelineno-13-28" name="__codelineno-13-28"></a>            <span class="n">t</span> <span class="o">=</span> <span class="n">hints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-<a id="__codelineno-13-29" name="__codelineno-13-29"></a>
-<a id="__codelineno-13-30" name="__codelineno-13-30"></a>            <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Annotated</span><span class="p">:</span>
-<a id="__codelineno-13-31" name="__codelineno-13-31"></a>                <span class="n">_</span><span class="p">,</span> <span class="n">fmt_char</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-<a id="__codelineno-13-32" name="__codelineno-13-32"></a>                <span class="n">fmt</span> <span class="o">+=</span> <span class="n">fmt_char</span>
-<a id="__codelineno-13-33" name="__codelineno-13-33"></a>            <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-13-34" name="__codelineno-13-34"></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> missing struct annotation&quot;</span><span class="p">)</span>
-<a id="__codelineno-13-35" name="__codelineno-13-35"></a>
-<a id="__codelineno-13-36" name="__codelineno-13-36"></a>        <span class="k">return</span> <span class="n">fmt</span>
-<a id="__codelineno-13-37" name="__codelineno-13-37"></a>
-<a id="__codelineno-13-38" name="__codelineno-13-38"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">pack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<a id="__codelineno-13-39" name="__codelineno-13-39"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<a id="__codelineno-13-40" name="__codelineno-13-40"></a><span class="sd">        Return data packed as bytes</span>
-<a id="__codelineno-13-41" name="__codelineno-13-41"></a>
-<a id="__codelineno-13-42" name="__codelineno-13-42"></a><span class="sd">        :param endian: Endianness of the struct format</span>
-<a id="__codelineno-13-43" name="__codelineno-13-43"></a><span class="sd">        :return: Descriptionreturn buffer as bytes</span>
-<a id="__codelineno-13-44" name="__codelineno-13-44"></a><span class="sd">        :rtype: bytes</span>
-<a id="__codelineno-13-45" name="__codelineno-13-45"></a><span class="sd">        &quot;&quot;&quot;</span>
-<a id="__codelineno-13-46" name="__codelineno-13-46"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">struct_format</span><span class="p">(</span><span class="n">endian</span><span class="p">)</span>
-<a id="__codelineno-13-47" name="__codelineno-13-47"></a>        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="o">*</span><span class="n">astuple</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-<a id="__codelineno-13-48" name="__codelineno-13-48"></a>
-<a id="__codelineno-13-49" name="__codelineno-13-49"></a>    <span class="nd">@classmethod</span>
-<a id="__codelineno-13-50" name="__codelineno-13-50"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">from_bytes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">endian</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Packet&quot;</span><span class="p">:</span>
-<a id="__codelineno-13-51" name="__codelineno-13-51"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<a id="__codelineno-13-52" name="__codelineno-13-52"></a><span class="sd">        convert bytes to class instance</span>
-<a id="__codelineno-13-53" name="__codelineno-13-53"></a>
-<a id="__codelineno-13-54" name="__codelineno-13-54"></a><span class="sd">        :param cls: Class to generate format for</span>
-<a id="__codelineno-13-55" name="__codelineno-13-55"></a><span class="sd">        :param data: buffer to unpack</span>
-<a id="__codelineno-13-56" name="__codelineno-13-56"></a><span class="sd">        :type data: bytes</span>
-<a id="__codelineno-13-57" name="__codelineno-13-57"></a><span class="sd">        :param endian: Endianness of the struct format</span>
-<a id="__codelineno-13-58" name="__codelineno-13-58"></a><span class="sd">        &quot;&quot;&quot;</span>
-<a id="__codelineno-13-59" name="__codelineno-13-59"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">struct_format</span><span class="p">(</span><span class="n">endian</span><span class="p">)</span>
-<a id="__codelineno-13-60" name="__codelineno-13-60"></a>        <span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<a id="__codelineno-13-61" name="__codelineno-13-61"></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">unpacked_data</span><span class="p">)</span>
-<a id="__codelineno-13-62" name="__codelineno-13-62"></a>
-<a id="__codelineno-13-63" name="__codelineno-13-63"></a>
-<a id="__codelineno-13-64" name="__codelineno-13-64"></a><span class="c1"># usage</span>
-<a id="__codelineno-13-65" name="__codelineno-13-65"></a><span class="n">packet</span> <span class="o">=</span> <span class="n">Packet</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">3.14</span><span class="p">)</span>
-<a id="__codelineno-13-66" name="__codelineno-13-66"></a><span class="c1">#pack</span>
-<a id="__codelineno-13-67" name="__codelineno-13-67"></a><span class="n">buffer</span> <span class="o">=</span> <span class="n">packet</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
-<a id="__codelineno-13-68" name="__codelineno-13-68"></a><span class="c1"># print(Packet.struct_format.cache_info())</span>
-<a id="__codelineno-13-69" name="__codelineno-13-69"></a>
-<a id="__codelineno-13-70" name="__codelineno-13-70"></a><span class="c1">#unpack</span>
-<a id="__codelineno-13-71" name="__codelineno-13-71"></a><span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">Packet</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
-<a id="__codelineno-13-72" name="__codelineno-13-72"></a><span class="nb">print</span><span class="p">(</span><span class="n">unpacked_data</span><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">code</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span>
+<span class="normal"><a href="#__codelineno-17-11">11</a></span>
+<span class="normal"><a href="#__codelineno-17-12">12</a></span>
+<span class="normal"><a href="#__codelineno-17-13">13</a></span>
+<span class="normal"><a href="#__codelineno-17-14">14</a></span>
+<span class="normal"><a href="#__codelineno-17-15">15</a></span>
+<span class="normal"><a href="#__codelineno-17-16">16</a></span>
+<span class="normal"><a href="#__codelineno-17-17">17</a></span>
+<span class="normal"><a href="#__codelineno-17-18">18</a></span>
+<span class="normal"><a href="#__codelineno-17-19">19</a></span>
+<span class="normal"><a href="#__codelineno-17-20">20</a></span>
+<span class="normal"><a href="#__codelineno-17-21">21</a></span>
+<span class="normal"><a href="#__codelineno-17-22">22</a></span>
+<span class="normal"><a href="#__codelineno-17-23">23</a></span>
+<span class="normal"><a href="#__codelineno-17-24">24</a></span>
+<span class="normal"><a href="#__codelineno-17-25">25</a></span>
+<span class="normal"><a href="#__codelineno-17-26">26</a></span>
+<span class="normal"><a href="#__codelineno-17-27">27</a></span>
+<span class="normal"><a href="#__codelineno-17-28">28</a></span>
+<span class="normal"><a href="#__codelineno-17-29">29</a></span>
+<span class="normal"><a href="#__codelineno-17-30">30</a></span>
+<span class="normal"><a href="#__codelineno-17-31">31</a></span>
+<span class="normal"><a href="#__codelineno-17-32">32</a></span>
+<span class="normal"><a href="#__codelineno-17-33">33</a></span>
+<span class="normal"><a href="#__codelineno-17-34">34</a></span>
+<span class="normal"><a href="#__codelineno-17-35">35</a></span>
+<span class="normal"><a href="#__codelineno-17-36">36</a></span>
+<span class="normal"><a href="#__codelineno-17-37">37</a></span>
+<span class="normal"><a href="#__codelineno-17-38">38</a></span>
+<span class="normal"><a href="#__codelineno-17-39">39</a></span>
+<span class="normal"><a href="#__codelineno-17-40">40</a></span>
+<span class="normal"><a href="#__codelineno-17-41">41</a></span>
+<span class="normal"><a href="#__codelineno-17-42">42</a></span>
+<span class="normal"><a href="#__codelineno-17-43">43</a></span>
+<span class="normal"><a href="#__codelineno-17-44">44</a></span>
+<span class="normal"><a href="#__codelineno-17-45">45</a></span>
+<span class="normal"><a href="#__codelineno-17-46">46</a></span>
+<span class="normal"><a href="#__codelineno-17-47">47</a></span>
+<span class="normal"><a href="#__codelineno-17-48">48</a></span>
+<span class="normal"><a href="#__codelineno-17-49">49</a></span>
+<span class="normal"><a href="#__codelineno-17-50">50</a></span>
+<span class="normal"><a href="#__codelineno-17-51">51</a></span>
+<span class="normal"><a href="#__codelineno-17-52">52</a></span>
+<span class="normal"><a href="#__codelineno-17-53">53</a></span>
+<span class="normal"><a href="#__codelineno-17-54">54</a></span>
+<span class="normal"><a href="#__codelineno-17-55">55</a></span>
+<span class="normal"><a href="#__codelineno-17-56">56</a></span>
+<span class="normal"><a href="#__codelineno-17-57">57</a></span>
+<span class="normal"><a href="#__codelineno-17-58">58</a></span>
+<span class="normal"><a href="#__codelineno-17-59">59</a></span>
+<span class="normal"><a href="#__codelineno-17-60">60</a></span>
+<span class="normal"><a href="#__codelineno-17-61">61</a></span>
+<span class="normal"><a href="#__codelineno-17-62">62</a></span>
+<span class="normal"><a href="#__codelineno-17-63">63</a></span>
+<span class="normal"><a href="#__codelineno-17-64">64</a></span>
+<span class="normal"><a href="#__codelineno-17-65">65</a></span>
+<span class="normal"><a href="#__codelineno-17-66">66</a></span>
+<span class="normal"><a href="#__codelineno-17-67">67</a></span>
+<span class="normal"><a href="#__codelineno-17-68">68</a></span>
+<span class="normal"><a href="#__codelineno-17-69">69</a></span>
+<span class="normal"><a href="#__codelineno-17-70">70</a></span>
+<span class="normal"><a href="#__codelineno-17-71">71</a></span>
+<span class="normal"><a href="#__codelineno-17-72">72</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">astuple</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_type_hints</span><span class="p">,</span> <span class="n">get_origin</span><span class="p">,</span> <span class="n">get_args</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">Packet</span><span class="p">:</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9"></a>    <span class="n">a</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">]</span>   <span class="c1"># int16</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10"></a>    <span class="n">b</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">]</span>   <span class="c1"># uint32</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11"></a>    <span class="n">c</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="c1"># float32</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12"></a>    <span class="c1"># name: Annotated[str, &quot;16s&quot;]</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13"></a>
+<a id="__codelineno-17-14" name="__codelineno-17-14"></a>
+<a id="__codelineno-17-15" name="__codelineno-17-15"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16"></a>    <span class="nd">@cache</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">struct_format</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19"></a><span class="sd">        Docstring for struct_format</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20"></a>
+<a id="__codelineno-17-21" name="__codelineno-17-21"></a><span class="sd">        :param cls: Class to generate format for</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22"></a><span class="sd">        :param endian: Endianness of the struct format</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24"></a>        <span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">include_extras</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="n">endian</span>
+<a id="__codelineno-17-26" name="__codelineno-17-26"></a>
+<a id="__codelineno-17-27" name="__codelineno-17-27"></a>        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">:</span>
+<a id="__codelineno-17-28" name="__codelineno-17-28"></a>            <span class="n">t</span> <span class="o">=</span> <span class="n">hints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<a id="__codelineno-17-29" name="__codelineno-17-29"></a>
+<a id="__codelineno-17-30" name="__codelineno-17-30"></a>            <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Annotated</span><span class="p">:</span>
+<a id="__codelineno-17-31" name="__codelineno-17-31"></a>                <span class="n">_</span><span class="p">,</span> <span class="n">fmt_char</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-17-32" name="__codelineno-17-32"></a>                <span class="n">fmt</span> <span class="o">+=</span> <span class="n">fmt_char</span>
+<a id="__codelineno-17-33" name="__codelineno-17-33"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-17-34" name="__codelineno-17-34"></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> missing struct annotation&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-35" name="__codelineno-17-35"></a>
+<a id="__codelineno-17-36" name="__codelineno-17-36"></a>        <span class="k">return</span> <span class="n">fmt</span>
+<a id="__codelineno-17-37" name="__codelineno-17-37"></a>
+<a id="__codelineno-17-38" name="__codelineno-17-38"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">pack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-17-39" name="__codelineno-17-39"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-17-40" name="__codelineno-17-40"></a><span class="sd">        Return data packed as bytes</span>
+<a id="__codelineno-17-41" name="__codelineno-17-41"></a>
+<a id="__codelineno-17-42" name="__codelineno-17-42"></a><span class="sd">        :param endian: Endianness of the struct format</span>
+<a id="__codelineno-17-43" name="__codelineno-17-43"></a><span class="sd">        :return: Descriptionreturn buffer as bytes</span>
+<a id="__codelineno-17-44" name="__codelineno-17-44"></a><span class="sd">        :rtype: bytes</span>
+<a id="__codelineno-17-45" name="__codelineno-17-45"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-17-46" name="__codelineno-17-46"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">struct_format</span><span class="p">(</span><span class="n">endian</span><span class="p">)</span>
+<a id="__codelineno-17-47" name="__codelineno-17-47"></a>        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="o">*</span><span class="n">astuple</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+<a id="__codelineno-17-48" name="__codelineno-17-48"></a>
+<a id="__codelineno-17-49" name="__codelineno-17-49"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-17-50" name="__codelineno-17-50"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">from_bytes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">endian</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Packet&quot;</span><span class="p">:</span>
+<a id="__codelineno-17-51" name="__codelineno-17-51"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-17-52" name="__codelineno-17-52"></a><span class="sd">        convert bytes to class instance</span>
+<a id="__codelineno-17-53" name="__codelineno-17-53"></a>
+<a id="__codelineno-17-54" name="__codelineno-17-54"></a><span class="sd">        :param cls: Class to generate format for</span>
+<a id="__codelineno-17-55" name="__codelineno-17-55"></a><span class="sd">        :param data: buffer to unpack</span>
+<a id="__codelineno-17-56" name="__codelineno-17-56"></a><span class="sd">        :type data: bytes</span>
+<a id="__codelineno-17-57" name="__codelineno-17-57"></a><span class="sd">        :param endian: Endianness of the struct format</span>
+<a id="__codelineno-17-58" name="__codelineno-17-58"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-17-59" name="__codelineno-17-59"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">struct_format</span><span class="p">(</span><span class="n">endian</span><span class="p">)</span>
+<a id="__codelineno-17-60" name="__codelineno-17-60"></a>        <span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-17-61" name="__codelineno-17-61"></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">unpacked_data</span><span class="p">)</span>
+<a id="__codelineno-17-62" name="__codelineno-17-62"></a>
+<a id="__codelineno-17-63" name="__codelineno-17-63"></a>
+<a id="__codelineno-17-64" name="__codelineno-17-64"></a><span class="c1"># usage</span>
+<a id="__codelineno-17-65" name="__codelineno-17-65"></a><span class="n">packet</span> <span class="o">=</span> <span class="n">Packet</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">3.14</span><span class="p">)</span>
+<a id="__codelineno-17-66" name="__codelineno-17-66"></a><span class="c1">#pack</span>
+<a id="__codelineno-17-67" name="__codelineno-17-67"></a><span class="n">buffer</span> <span class="o">=</span> <span class="n">packet</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<a id="__codelineno-17-68" name="__codelineno-17-68"></a><span class="c1"># print(Packet.struct_format.cache_info())</span>
+<a id="__codelineno-17-69" name="__codelineno-17-69"></a>
+<a id="__codelineno-17-70" name="__codelineno-17-70"></a><span class="c1">#unpack</span>
+<a id="__codelineno-17-71" name="__codelineno-17-71"></a><span class="n">unpacked_data</span> <span class="o">=</span> <span class="n">Packet</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+<a id="__codelineno-17-72" name="__codelineno-17-72"></a><span class="nb">print</span><span class="p">(</span><span class="n">unpacked_data</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 
 
