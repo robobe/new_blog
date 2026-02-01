@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#to-read-and-watch" class="md-skip">
+        <a href="#accelerometer" class="md-skip">
           Skip to content
         </a>
       
@@ -680,6 +680,67 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#accelerometer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accelerometer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gyroscope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gyroscope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gyroscope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        basic idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gyro-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gyro drift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#orientation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orientation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#to-read-and-watch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -737,7 +798,6 @@
 
   <h1>IMU Sensor</h1>
 
-<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/sensors/">sensors</a></p>
 <!-- # IMU Sensor -->
 <p>An IMU sensor (Inertial Measurement Unit) is a device that measures a robot or object's motion and orientation using:</p>
 <table>
@@ -771,10 +831,122 @@
 <li><strong>9 DOF</strong> IMU, adding a 3-axis magnetic compass.</li>
 <li><strong>10 DOF</strong> IMU, which adds a barometer for estimating the sensor’s altitude.</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Rotation</th>
+<th>Meaning</th>
+<th>Greek symbol</th>
+<th>Axis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Roll</strong></td>
+<td>rotation about <strong>X</strong></td>
+<td><strong><span class="arithmatex">\(\phi\)</span>  (phi)</strong></td>
+<td>X</td>
+</tr>
+<tr>
+<td><strong>Pitch</strong></td>
+<td>rotation about <strong>Y</strong></td>
+<td><strong><span class="arithmatex">\(\theta\)</span>  (theta)</strong></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><strong>Yaw</strong></td>
+<td>rotation about <strong>Z</strong></td>
+<td><strong><span class="arithmatex">\(\psi\)</span>  (psi)</strong></td>
+<td>Z</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="accelerometer">Accelerometer</h2>
+<p>An accelerometer is a sensor that measures acceleration — how fast something speeds up, slows down, or changes direction — along one or more axes.
+- It cannot distinguish gravity from acceleration during motion
+- It cannot measure change in yaw (z axis) Yaw is rotation around the gravity axis, and an accelerometer <strong>only measures gravity—so</strong> yaw doesn’t change what it sees
+- At rest the accelerometer measures gravity, not “zero”.
+- Tilt it: gravity is <strong>split across axes</strong>
+- tilt angles : pitch and roll</p>
+<p><img alt="alt text" src="images/accelerometer_orination.png" /></p>
+<p><img alt="alt text" src="images/right_hand_rule.png" /></p>
+<hr />
+<div class="arithmatex">\[\phi = \text{atan2}(a_y, a_z)$$
+$$\theta = \text{atan2}(-a_x, \sqrt{a_y^2 + a_z^2})\]</div>
+<ul>
+<li><span class="arithmatex">\(\phi\)</span> → roll</li>
+<li><span class="arithmatex">\(\theta\)</span> → pitch</li>
+<li><span class="arithmatex">\(\psi\)</span> → yaw (not observable from accel)</li>
+</ul>
+<hr />
+<h2 id="gyroscope">Gyroscope</h2>
+<p>Gyro read angular velocity (red/sec) meaning "how fast am i rotation <strong>right now</strong> around each axis", to get orientation we <strong>integrate</strong> over time</p>
+<h4 id="basic-idea">basic idea</h4>
+<div class="arithmatex">\[\text{roll}(t) = \text{roll}(t-\Delta t) + \omega_x \cdot \Delta t\]</div>
+<hr />
+<h3 id="gyro-drift">Gyro drift</h3>
+<p>Gyro have <strong>bias</strong></p>
+<div class="arithmatex">\[\omega_{measured} = \omega_{true} + b + noise\]</div>
+<p>for example</p>
+<ul>
+<li>Bias = 0.05°/s</li>
+<li>After 60s → 3° error</li>
+<li>After 10 min → 30° error</li>
+</ul>
+<hr />
+<h2 id="orientation">Orientation</h2>
+<table>
+<thead>
+<tr>
+<th>Sensor</th>
+<th>What it measures</th>
+<th>Orientation info you get</th>
+<th>Absolute reference</th>
+<th>Main strengths</th>
+<th>Main limitations</th>
+<th>Typical role in fusion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Accelerometer</strong></td>
+<td>Linear acceleration + gravity</td>
+<td><strong>Roll &amp; Pitch</strong> (tilt)</td>
+<td>✅ Yes (gravity)</td>
+<td>No drift, simple, stable when still</td>
+<td>Fails during motion, noisy, <strong>no yaw</strong></td>
+<td>Long-term tilt correction</td>
+</tr>
+<tr>
+<td><strong>Gyroscope</strong></td>
+<td>Angular velocity (°/s)</td>
+<td><strong>Roll, Pitch, Yaw</strong> (via integration)</td>
+<td>❌ No</td>
+<td>Smooth, fast response, works in motion</td>
+<td>Drift due to bias, needs integration</td>
+<td>Short-term orientation propagation</td>
+</tr>
+<tr>
+<td><strong>Magnetometer</strong></td>
+<td>Earth magnetic field</td>
+<td><strong>Yaw (heading)</strong></td>
+<td>✅ Yes (north)</td>
+<td>Fixes yaw drift, global heading</td>
+<td>Disturbed by metal/electric fields</td>
+<td>Long-term yaw correction</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="to-read-and-watch">To read and watch</h2>
 <ul>
-<li><a href="https://www.luisllamas.es/en/measure-imu-tilt-arduino-complementary-filter/">complementary filter</a></li>
+<li>
+<p><a href="https://www.patreon.com/posts/complementary-to-63103835"></a></p>
+</li>
+<li>
+<p><a href="https://www.luisllamas.es/en/measure-imu-tilt-arduino-complementary-filter/">complementary filter</a></p>
+</li>
 <li><a href="https://github.com/morgil/madgwick_py?tab=readme-ov-file">madgwick_py: A Python implementation of Madgwick's IMU and AHRS algorithm.</a></li>
 <li><a href="https://x-io.co.uk/open-source-imu-and-ahrs-algorithms/">madgwick algorithm</a></li>
 <li><a href="https://www.youtube.com/watch?v=Os6V1lnUPZo">Kalman Filter for 6DOF IMU Implementation</a></li>
