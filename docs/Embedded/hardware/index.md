@@ -12,4 +12,9 @@ tags:
             <p>I2C MCP23017</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="i2c_cp2112">
+            <p>USB I2C adapter</p>
+        </a>
+    </div>
 </div>

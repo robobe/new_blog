@@ -40,6 +40,15 @@
 └── src
 ```
 
+### VSCode files
+
+<details>
+<summary>Summary</summary>
+```
+--8<-- "path/to/file.md"
+```
+</details>
+
 <details>
 <summary>colcon_defaults</summary>
 
