@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#demos" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -668,6 +673,42 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#demos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-example-of-launch-life-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: Example of launch life cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -733,6 +774,10 @@
         <p>Events and condition</p>
         </a>
     </div>
+</div>
+
+<h2 id="demos">Demos</h2>
+<div class="grid-container">
      <div class="grid-item">
         <a href="gazebo">
         <p>Gazebo</p>
@@ -750,6 +795,176 @@
     </div>
 
 </div>
+
+<hr />
+<p>A Python launch file is not a script.
+It is a description factory that build <strong>declarative event graph</strong></p>
+<ol>
+<li>imports your launch file</li>
+<li>calls generate_launch_description()</li>
+<li>builds a graph of actions</li>
+<li>executes that graph asynchronously</li>
+</ol>
+<p>Anything that happens before step 3 is configuration time.
+Anything that happens after is launch runtime.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Python import
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>   ↓
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>generate_launch_description()
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>   ↓
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>LaunchDescription created
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>   ↓
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>--------------------------------
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>Runtime starts
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>   ↓
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>Actions executed
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>   ↓
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>Nodes/processes run
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>   ↓
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>Events handled
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>   ↓
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>Shutdown
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="demo-example-of-launch-life-cycle">Demo: Example of launch life cycle</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeclareLaunchArgument</span><span class="p">,</span> <span class="n">LogInfo</span><span class="p">,</span> <span class="n">RegisterEventHandler</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchConfiguration</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch_ros.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.event_handlers</span><span class="w"> </span><span class="kn">import</span> <span class="n">OnProcessExit</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    <span class="c1"># ---- Substitution ----</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>    <span class="n">node_name_arg</span> <span class="o">=</span> <span class="n">DeclareLaunchArgument</span><span class="p">(</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>        <span class="s1">&#39;node_name&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>        <span class="n">default_value</span><span class="o">=</span><span class="s1">&#39;my_talker&#39;</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>    <span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>    <span class="n">node_name</span> <span class="o">=</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s1">&#39;node_name&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>        <span class="n">package</span><span class="o">=</span><span class="s1">&#39;demo_nodes_cpp&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>        <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;talker&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>        <span class="n">name</span><span class="o">=</span><span class="n">node_name</span><span class="p">,</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>        <span class="n">output</span><span class="o">=</span><span class="s1">&#39;screen&#39;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>    <span class="p">)</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>    <span class="c1"># ---- Runtime logging ----</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">node_name_arg</span><span class="p">)</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">LogInfo</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Launching node: &#39;</span><span class="p">,</span> <span class="n">node_name</span><span class="p">]))</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>    <span class="c1"># ---- Event handler ----</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>        <span class="n">RegisterEventHandler</span><span class="p">(</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>            <span class="n">OnProcessExit</span><span class="p">(</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>                <span class="n">target_action</span><span class="o">=</span><span class="n">node</span><span class="p">,</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>                <span class="n">on_exit</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>                    <span class="n">LogInfo</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Node exited: &#39;</span><span class="p">,</span> <span class="n">node_name</span><span class="p">])</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>                <span class="p">]</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>            <span class="p">)</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a>        <span class="p">)</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>    <span class="p">)</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>    <span class="k">return</span> <span class="n">ld</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Python code → describe</li>
+<li>Actions → do</li>
+<li>Substitutions → resolve at runtime</li>
+<li>Event handlers → react</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Node</code></td>
+<td>An <strong>action</strong> that starts a ROS process</td>
+</tr>
+<tr>
+<td><code>LaunchConfiguration</code></td>
+<td>A <strong>runtime placeholder</strong></td>
+</tr>
+<tr>
+<td><code>DeclareLaunchArgument</code></td>
+<td>Makes a substitution configurable</td>
+</tr>
+<tr>
+<td><code>LogInfo</code></td>
+<td>Runtime logging action</td>
+</tr>
+<tr>
+<td><code>OnProcessExit</code></td>
+<td>Event emitted by launch</td>
+</tr>
+<tr>
+<td><code>RegisterEventHandler</code></td>
+<td>Reaction to an event</td>
+</tr>
+</tbody>
+</table>
 
 
 

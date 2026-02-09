@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ros2-launch-substitute" class="md-skip">
+        <a href="#simple-demo" class="md-skip">
           Skip to content
         </a>
       
@@ -672,8 +672,25 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simple-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -718,16 +735,106 @@
   
 
 
-<h1 id="ros2-launch-substitute">ROS2 Launch Substitute</h1>
-<p>Substitutions are used — they allow you to compute or insert values dynamically during the launch process.</p>
+  <h1>ROS2 Launch Substitute</h1>
+
+<p>A Launch Substitution is a promise for a value that will only be known at launch runtime, not when the Python file is evaluated.</p>
+<p>Substitutions are only meaningful in places where launch will resolve them later, such as:</p>
 <ul>
-<li>LaunchConfiguration</li>
-<li>PathJoinSubstitution</li>
-<li>FindPackageShare</li>
-<li>EnvironmentVariable</li>
-<li>TextSubstitution</li>
-<li>Command</li>
+<li>node name</li>
+<li>parameters</li>
+<li>remappings</li>
+<li>log messages</li>
+<li>conditions</li>
+<li>command arguments</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>Substitution</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(<code>LaunchConfiguration</code>)(/ROS/ros_eco/launch/python/launch_argument/)</td>
+<td>Value from launch arguments</td>
+</tr>
+<tr>
+<td><code>EnvironmentVariable</code></td>
+<td>Value from env at runtime</td>
+</tr>
+<tr>
+<td><code>PathJoinSubstitution</code></td>
+<td>Build paths safely</td>
+</tr>
+<tr>
+<td><code>TextSubstitution</code></td>
+<td>Literal text</td>
+</tr>
+<tr>
+<td><code>Command</code></td>
+<td>Run a command and capture output</td>
+</tr>
+<tr>
+<td><code>FindPackageShare</code></td>
+<td>Locate package at runtime</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="simple-demo">Simple Demo</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">Node</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">package</span><span class="o">=</span><span class="s1">&#39;demo_nodes_cpp&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;talker&#39;</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">name</span><span class="o">=</span><span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s1">&#39;node_name&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">log substitute</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchDescription</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.actions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeclareLaunchArgument</span><span class="p">,</span> <span class="n">LogInfo</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">launch.substitutions</span><span class="w"> </span><span class="kn">import</span> <span class="n">LaunchConfiguration</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_launch_description</span><span class="p">():</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="n">ld</span> <span class="o">=</span> <span class="n">LaunchDescription</span><span class="p">()</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>        <span class="n">DeclareLaunchArgument</span><span class="p">(</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>            <span class="s1">&#39;robot_name&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>            <span class="n">default_value</span><span class="o">=</span><span class="s1">&#39;atlas&#39;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>        <span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>    <span class="n">ld</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="n">LogInfo</span><span class="p">(</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>            <span class="n">msg</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Robot name is: &#39;</span><span class="p">,</span> <span class="n">LaunchConfiguration</span><span class="p">(</span><span class="s1">&#39;robot_name&#39;</span><span class="p">)]</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>        <span class="p">)</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>    <span class="p">)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>    <span class="k">return</span> <span class="n">ld</span>
+</code></pre></div></td></tr></table></div>
 
 
 
