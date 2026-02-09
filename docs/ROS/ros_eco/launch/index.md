@@ -6,7 +6,8 @@ tags:
 {{ page_folder_links() }}
 
 # ROS2 launch
-Launch system is used to start multiple nodes and configure their execution. The Python-based launch system (launch_ros) provides flexibility through Python scripts or YAML
+The ROS 2 launch system is a declarative orchestration engine.
+You don’t run code — you describe a system: which processes should exist, how they’re configured, and how they relate to each other. The launch system then executes and supervises that description, reacting to events (start, exit, failure) at runtime.
 
 
 <div class="grid-container">

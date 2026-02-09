@@ -11,7 +11,7 @@ tags:
 - Node (from launch_ros.actions): Launches a ROS 2 node.
 - IncludeLaunchDescription: Embeds another launch file.
 - ExecuteProcess: Runs a generic process.
-- DeclareLaunchArgument: Defines launch arguments.
+- [DeclareLaunchArgument](/ROS/ros_eco/launch/python/launch_argument): Defines launch arguments.
     
 ## Node
 

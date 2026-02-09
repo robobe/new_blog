@@ -31,7 +31,7 @@ tags:
 
 ## Demos
 
-<div>
+<div class="grid-container">
      <div class="grid-item">
         <a href="gazebo">
         <p>Gazebo</p>
@@ -55,12 +55,11 @@ tags:
 A Python launch file is not a script.
 It is a description factory that build **declarative event graph**
 
-ROS 2:
 
 1. imports your launch file
-1. calls generate_launch_description()
-1. builds a graph of actions
-1. executes that graph asynchronously
+2. calls generate_launch_description()
+3. builds a graph of actions
+4. executes that graph asynchronously
 
 Anything that happens before step 3 is configuration time.
 Anything that happens after is launch runtime.
@@ -86,6 +85,9 @@ Shutdown
 
 ```
 
+---
+
+### Demo: Example of launch life cycle
 
 ```python
 from launch import LaunchDescription

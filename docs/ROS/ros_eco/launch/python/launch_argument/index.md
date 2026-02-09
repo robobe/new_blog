@@ -1,4 +1,5 @@
 ---
+title: DeclareLaunchArgument and LaunchConfiguration
 tags:
     - ros2
     - launch
@@ -7,15 +8,66 @@ tags:
     - LaunchConfiguration
 ---
 
-# DeclareLaunchArgument and LaunchConfiguration
+**DeclareLaunchArgument** defines an argument,  
+**LaunchConfiguration** reads its value later (substitution).
+
+They do different jobs and live at different phases of the launch lifecycle.
+
+ROS 2 launch as two phases
+
+1️⃣ Declaration phase (setup / contract)
+
+“These are the inputs this launch file accepts”
+
+This is where DeclareLaunchArgument lives.
+
+2️⃣ Execution phase (runtime / resolution)
+
+“What value does this argument have right now?”
+
+This is where LaunchConfiguration lives.
+
+
+---
 
 ## DeclareLaunchArgument
 Defines an argument (a variable) that can be passed to a launch file via  **CLI** , each argument can have default value.
 
+```python
+DeclareLaunchArgument(
+    'use_sim_time',
+    default_value='false',
+    description='Use simulation time'
+)
+```
+
+- Registers **use_sim_time** as a valid launch argument
+- Sets a default value
+- Makes it visible to:
+    - ros2 launch ... --show-args
+    - CLI validation
+
+Other launch files that include this one
+
+---
 
 ## LaunchConfiguration
-LaunchConfiguration represents the value of a launch argument at **runtime**. It acts as a placeholder or reference to an argument declared with DeclareLaunchArgument
+LaunchConfiguration represents the value of a launch argument at **runtime**. It acts as a **placeholder** or reference to an argument declared with DeclareLaunchArgument
 
+```python
+LaunchConfiguration('use_sim_time')
+```
+
+- Creates a placeholder
+
+Says:
+
+“At runtime, fetch the value of **use_sim_time** from the launch context”
+This is why it’s called a substitution.
+
+---
+
+### Demo
 
 ```python title="launch_argument_demo.launch.py"
 from launch import LaunchDescription
