@@ -18,7 +18,7 @@ It is an XML format that describes:
 !!! tip "Robot = Links + Joints"
     
 
-
+![alt text](images/urdf-link.png)
 ---
 
 ```xml
@@ -91,7 +91,7 @@ A joint defines:
 !!! info 
     The joint defines the **child link frame**.
 
-![alt text](images/urdf-joint.png.png)
+![alt text](images/urdf-joint.png)
 
 
 joint types: 
@@ -105,8 +105,8 @@ joint types:
 
 !!! tip "Joint does TWO things"
     
-- Places child frame relative to parent
-- Allows motion of child frame relative to parent
+    - Places child frame relative to parent
+    - Allows motion of child frame relative to parent
 
 
 ### Limits
