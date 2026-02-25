@@ -785,6 +785,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#typealias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypeAlias
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NewType
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -961,6 +983,11 @@
         <p>Cast</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="#TypeAlias">
+        <p>TypeAlias</p>
+        </a>
+    </div>
 </div>
 
 <h2 id="generic">generic</h2>
@@ -1074,6 +1101,41 @@
 <a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="n">my_variable</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">TargetType</span><span class="p">,</span> <span class="n">source_variable</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Just remember, <code>typing.cast</code> doesn't actually change the <strong>underlying</strong> value of your variable – it just tells the type checker how to interpret it. So, if you try to do something that doesn't make sense for the target type, you'll still get an error at runtime.</p>
+<hr />
+<h2 id="typealias">TypeAlias</h2>
+<p>TypeAlias is used to explicitly declare:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeAlias</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="n">Vector3</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="newtype">NewType</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NewType</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="n">UserId</span> <span class="o">=</span> <span class="n">NewType</span><span class="p">(</span><span class="s2">&quot;UserId&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TypeAlias</th>
+<th>NewType</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Creates new runtime type?</td>
+<td>❌ No</td>
+<td>✅ Yes (type-check level)</td>
+</tr>
+<tr>
+<td>Just renaming a type?</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
