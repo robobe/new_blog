@@ -62,3 +62,20 @@ logger.add(
 !!! tip "rotation pattern"
     There is more pattern check documentation
     
+---
+
+## Config
+
+Configuration pattern to config loguru when using Production / Test environment
+
+### Environment variable
+
+```python
+import os, sys
+from loguru import logger
+
+logger.remove()
+level = os.getenv("LOG_LEVEL", "INFO")
+logger.add(sys.stdout, level=level)
+logger.add("logs/app.log", level=level, rotation="10 MB", retention="14 days")
+```

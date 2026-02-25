@@ -80,7 +80,7 @@ NOT Support Automatically
 
 <details>
 <summary>Demo code</summary>
-```
---8<-- "code/custom.py"
+```python
+--8<-- "docs/Programming/python/python/libraries/msgpack/code/custom.py"
 ```
 </details>
