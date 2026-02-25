@@ -118,6 +118,11 @@ line-length = 88
         <p>Cast</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="#TypeAlias">
+        <p>TypeAlias</p>
+        </a>
+    </div>
 </div>
 
 
@@ -203,6 +208,32 @@ my_variable = cast(TargetType, source_variable)
 
 
 Just remember, `typing.cast` doesn't actually change the **underlying** value of your variable – it just tells the type checker how to interpret it. So, if you try to do something that doesn't make sense for the target type, you'll still get an error at runtime.
+
+---
+
+## TypeAlias
+TypeAlias is used to explicitly declare:
+
+```python
+from typing import TypeAlias
+
+Vector3: TypeAlias = tuple[float, float, float]
+
+```
+
+## NewType
+
+```python
+from typing import NewType
+UserId = NewType("UserId", int)
+```
+
+
+| Feature                   | TypeAlias | NewType                  |
+| ------------------------- | --------- | ------------------------ |
+| Creates new runtime type? | ❌ No      | ✅ Yes (type-check level) |
+| Just renaming a type?     | ✅ Yes     | ❌ No                     |
+
 
 ---
 

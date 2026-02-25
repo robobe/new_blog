@@ -170,6 +170,27 @@ class Point:
     
 ---
 
+## ClassVar
+
+```python
+from dataclasses import dataclass
+from typing import ClassVar
+
+@dataclass
+class Pose:
+    x: float
+    y: float
+    z: float
+
+    TYPE_TAG: ClassVar[str] = "Pose"
+```
+
+- TYPE_TAG is NOT part of the dataclass fields
+- Not in __init__
+- Not in __repr__
+- Not in equality comparison
+
+
 ## Annotation
 
 ```python

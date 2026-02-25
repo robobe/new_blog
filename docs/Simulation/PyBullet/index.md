@@ -98,10 +98,16 @@ for _ in range(100):
             <a href="tutorials/loadurdf">
             <p>loadURDF</p></a>
         </div>
-     <div class="grid-item">
-            <a href="tutorials/links_and_joints">
-            <p>Links and Joints</p></a>
-        </div>
+    <div class="grid-item">
+        <a href="tutorials/links_and_joints">
+            <p>Links and Joints</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="tutorials/control">
+            <p>Control / Motors</p>
+        </a>
+    </div>
     <div class="grid-item">
        <a href="tutorials/camera">
             <p>Camera</p></a>

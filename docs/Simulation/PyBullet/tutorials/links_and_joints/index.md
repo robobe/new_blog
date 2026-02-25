@@ -1,5 +1,5 @@
 ---
-title: PyBullet tutorials: Links and joints
+title: PyBullet tutorials -  Links and joints
 tags:
     - pybullet
     - getNumJoints

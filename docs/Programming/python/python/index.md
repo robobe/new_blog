@@ -1,4 +1,5 @@
 ---
+title: Python core and libraries
 tags:
     - python
 ---
@@ -17,6 +18,21 @@ tags:
      <div class="grid-item">
         <a href="dataclasses">
         <p>Dataclass</p>
+        </a>
+    </div>
+</div>
+
+---
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="libraries/log_guru">
+        <p>log guru</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="libraries/msgpack">
+        <p>msgpack</p>
         </a>
     </div>
 </div>

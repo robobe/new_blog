@@ -60,6 +60,8 @@
     -->
    </div>
 
+   ![alt text](urdf.png)
+
 ## Resources
 - [best-of-robot-simulators](https://github.com/knmcguire/best-of-robot-simulators)
 - [Gazebo meeting](https://vimeo.com/osrfoundation)
