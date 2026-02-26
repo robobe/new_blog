@@ -5,6 +5,11 @@ tags:
 ---
 
 <div class="grid-container">
+     <div class="grid-item">
+        <a href="zen_and_beyond">
+        <p>Zen and Beyond</p>
+        </a>
+    </div>
     <div class="grid-item">
         <a href="protocol">
         <p>Protocols</p>
