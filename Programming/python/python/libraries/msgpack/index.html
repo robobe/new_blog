@@ -915,61 +915,61 @@
 <span class="normal"><a href="#__codelineno-3-52">52</a></span>
 <span class="normal"><a href="#__codelineno-3-53">53</a></span>
 <span class="normal"><a href="#__codelineno-3-54">54</a></span>
-<span class="normal"><a href="#__codelineno-3-55">55</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>import msgpack
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>from dataclasses import dataclass
-<a id="__codelineno-3-3" name="__codelineno-3-3"></a>from typing import Any, ClassVar
+<span class="normal"><a href="#__codelineno-3-55">55</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">msgpack</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4"></a>
-<a id="__codelineno-3-5" name="__codelineno-3-5"></a>@dataclass
-<a id="__codelineno-3-6" name="__codelineno-3-6"></a>class Pose:
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    x: float
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    y: float
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    z: float
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">Pose</span><span class="p">:</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    <span class="n">z</span><span class="p">:</span> <span class="nb">float</span>
 <a id="__codelineno-3-10" name="__codelineno-3-10"></a>
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    TYPE_TAG: ClassVar[str] = &quot;Pose&quot;
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    VERSION: ClassVar[int] = 1
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">TYPE_TAG</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Pose&quot;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">VERSION</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 <a id="__codelineno-3-13" name="__codelineno-3-13"></a>
-<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    def to_msgpack(self) -&gt; list:
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        # msgpack-friendly representation
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        return [self.TYPE_TAG, self.VERSION, self.x, self.y, self.z]
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_msgpack</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="c1"># msgpack-friendly representation</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TYPE_TAG</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">VERSION</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">]</span>
 <a id="__codelineno-3-17" name="__codelineno-3-17"></a>
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    @classmethod
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    def from_msgpack(cls, obj: Any) -&gt; &quot;Pose&quot;:
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        # decode from msgpack-friendly representation
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        if not (isinstance(obj, list) and len(obj) == 5 and obj[0] == cls.TYPE_TAG):
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a>            raise TypeError(f&quot;Not a {cls.TYPE_TAG} msgpack object: {obj!r}&quot;)
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="nd">@classmethod</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">from_msgpack</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Pose&quot;</span><span class="p">:</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="c1"># decode from msgpack-friendly representation</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">cls</span><span class="o">.</span><span class="n">TYPE_TAG</span><span class="p">):</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not a </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">TYPE_TAG</span><span class="si">}</span><span class="s2"> msgpack object: </span><span class="si">{</span><span class="n">obj</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 <a id="__codelineno-3-23" name="__codelineno-3-23"></a>
-<a id="__codelineno-3-24" name="__codelineno-3-24"></a>        version = obj[1]
-<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        if version != cls.VERSION:
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a>            raise ValueError(f&quot;Unsupported {cls.TYPE_TAG} version: {version}&quot;)
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>        <span class="n">version</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">VERSION</span><span class="p">:</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">TYPE_TAG</span><span class="si">}</span><span class="s2"> version: </span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <a id="__codelineno-3-27" name="__codelineno-3-27"></a>
-<a id="__codelineno-3-28" name="__codelineno-3-28"></a>        x, y, z = obj[2], obj[3], obj[4]
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a>        return cls(float(x), float(y), float(z))
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">obj</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">obj</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
 <a id="__codelineno-3-30" name="__codelineno-3-30"></a>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a>    @staticmethod
-<a id="__codelineno-3-32" name="__codelineno-3-32"></a>    def msgpack_default(obj: Any) -&gt; Any:
-<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        # hook for msgpack.packb(default=...)
-<a id="__codelineno-3-34" name="__codelineno-3-34"></a>        if isinstance(obj, Pose):
-<a id="__codelineno-3-35" name="__codelineno-3-35"></a>            return obj.to_msgpack()
-<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        raise TypeError(f&quot;Cannot serialize type: {type(obj)!r}&quot;)
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>    <span class="nd">@staticmethod</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">msgpack_default</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="c1"># hook for msgpack.packb(default=...)</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Pose</span><span class="p">):</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_msgpack</span><span class="p">()</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot serialize type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 <a id="__codelineno-3-37" name="__codelineno-3-37"></a>
-<a id="__codelineno-3-38" name="__codelineno-3-38"></a>    @staticmethod
-<a id="__codelineno-3-39" name="__codelineno-3-39"></a>    def decode_any(obj: Any) -&gt; Any:
-<a id="__codelineno-3-40" name="__codelineno-3-40"></a>        # safe helper: only converts if it matches, otherwise returns as-is
-<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        if isinstance(obj, list) and len(obj) == 5 and obj[0] == Pose.TYPE_TAG:
-<a id="__codelineno-3-42" name="__codelineno-3-42"></a>            return Pose.from_msgpack(obj)
-<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        return obj
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>    <span class="nd">@staticmethod</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decode_any</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>        <span class="c1"># safe helper: only converts if it matches, otherwise returns as-is</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">Pose</span><span class="o">.</span><span class="n">TYPE_TAG</span><span class="p">:</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>            <span class="k">return</span> <span class="n">Pose</span><span class="o">.</span><span class="n">from_msgpack</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        <span class="k">return</span> <span class="n">obj</span>
 <a id="__codelineno-3-44" name="__codelineno-3-44"></a>
 <a id="__codelineno-3-45" name="__codelineno-3-45"></a>
-<a id="__codelineno-3-46" name="__codelineno-3-46"></a># ---- usage ----
-<a id="__codelineno-3-47" name="__codelineno-3-47"></a>pose = Pose(1.0, 2.0, 3.0)
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a><span class="c1"># ---- usage ----</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a><span class="n">pose</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span>
 <a id="__codelineno-3-48" name="__codelineno-3-48"></a>
-<a id="__codelineno-3-49" name="__codelineno-3-49"></a>packed = msgpack.packb(pose, default=Pose.msgpack_default, use_bin_type=True)
-<a id="__codelineno-3-50" name="__codelineno-3-50"></a>raw = msgpack.unpackb(packed, raw=False)
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a><span class="n">packed</span> <span class="o">=</span> <span class="n">msgpack</span><span class="o">.</span><span class="n">packb</span><span class="p">(</span><span class="n">pose</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Pose</span><span class="o">.</span><span class="n">msgpack_default</span><span class="p">,</span> <span class="n">use_bin_type</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a><span class="n">raw</span> <span class="o">=</span> <span class="n">msgpack</span><span class="o">.</span><span class="n">unpackb</span><span class="p">(</span><span class="n">packed</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <a id="__codelineno-3-51" name="__codelineno-3-51"></a>
-<a id="__codelineno-3-52" name="__codelineno-3-52"></a>pose_obj = Pose.decode_any(raw)
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a><span class="n">pose_obj</span> <span class="o">=</span> <span class="n">Pose</span><span class="o">.</span><span class="n">decode_any</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
 <a id="__codelineno-3-53" name="__codelineno-3-53"></a>
-<a id="__codelineno-3-54" name="__codelineno-3-54"></a>print(pose_obj)
-<a id="__codelineno-3-55" name="__codelineno-3-55"></a>print(type(pose_obj))
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a><span class="nb">print</span><span class="p">(</span><span class="n">pose_obj</span><span class="p">)</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pose_obj</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
