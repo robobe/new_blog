@@ -172,87 +172,245 @@ VSCode preset commnads
 
 ### Compilers
 ## Clang
-- Install clang version 19 support cpp-20
-- Config `update-alternative`
-- Install clang libstd
+
+| Ubuntu Version | Default Clang | Default GCC | Default C++ Standard Usable  |
+| -------------- | ------------- | ----------- | ---------------------------- |
+| 22.04 (Jammy)  | 14            | 11          | C++20 (usable)               |
+| 24.04 (Noble)  | 18            | 13          | C++20 / C++23 (good support) |
 
 
-```bash title="install"
-wget https://apt.llvm.org/llvm.sh
-chmod +x llvm.sh
-sudo ./llvm.sh 19
-#
-sudo apt install libstdc++-12-dev
-# work after fix update-alternatives
-clang++ --version
+```bash
+sudo apt install -y  \
+  clang     \
+  clangd \
+  lldb \
+  lld \
+  cmake \
+  ninja-build \
+  build-essential \
+  pkg-config
 
 ```
+| Tool            | Purpose                     |
+| --------------- | --------------------------- |
+| clang           | Compiler                    |
+| clangd          | IDE integration             |
+| lldb            | Debugger                    |
+| lld             | Fast linker                 |
+| cmake           | Build system                |
+| ninja           | Fast build backend          |
+| build-essential | System headers + base tools |
+| pkg-config      | Library detection           |
 
-
-```bash title="config clang using update alternative"
-# sudo update-alternatives --install <symlink> <name> <path-to-binary> <priority>
-sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-19 100
-sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-19 100
-
-sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-14 50
-sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-149 50
-
-# switch
-sudo update-alternatives --config clang
-sudo update-alternatives --config clang++
-```
 
 ---
 
-## VSCode
+### Clangd
 
-### c_cpp
+Language Server Protocol (LSP) server for C++.
+Provides:
 
-```json title="c_cpp_properties.json"
+- Autocomplete
+- Jump to definition
+- Error diagnostics
+- Refactoring
+
+#### VSCode
+
+##### Install clangd ext.
+install [clangd by LLVM](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
+  
+!!! tip "don't forget"
+    To install `clangd` binary
+
+    ```bash
+    sudo apt install clangd
+    ```
+    
+Disabled microsoft intellisense 
+
+```json
+"C_Cpp.intelliSenseEngine": "disabled"
+```
+
+##### compile_command.json
+It is a database of exact compiler commands used to build every .cpp file in your project.
+
+**The ground truth of how your project is compiled.**
+
+Generate `compile_command.json`
+
+```bash
+cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+```
+
+- Include paths
+- Defines
+- Compiler flags
+- C++ standard version
+
+Without this file → clangd guesses → incorrect IntelliSense.
+
+```json title=".vscode/settings.json"
+"clangd.arguments": [
+        "--compile-commands-dir=build"
+    ]
+```
+
+##### Using LLDB
+Install [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb)
+
+using it with `launch.json"
+
+```json title=".vscode/launch.json"
 {
-    "configurations": [
-        {
-            "name": "Clang",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "${default}"
-            ],
-            "defines": [],
-            "compilerPath": "/usr/bin/clang++",
-            "cStandard": "c17",
-            "cppStandard": "c++20",
-            "intelliSenseMode": "linux-clang-x64"
-        }
-    ],
-    "version": 4
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug with LLDB",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/debug/my_app",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false
+    }
+  ]
+}
+---
+
+#### VSCode project
+- using clang
+- using cmake
+- using cmake presets
+
+VSCode ext.
+- clangd
+- CodeLLDB
+- cmake tools
+
+```c title="CMakeLists.txt"
+cmake_minimum_required(VERSION 3.22)
+
+project(MyApp VERSION 1.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_executable(my_app
+    src/main.cpp
+)
+```
+
+```json title=".vscode/settings.json"
+{
+    "cmake.useCMakePresets": "always",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "clangd.arguments": [
+        "--compile-commands-dir=build"
+    ]
 }
 ```
 
-### Tasks
-- Add task that build current file using `clang` compiler
+```json title=".vscode/launch.json"
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug with LLDB",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/debug/my_app",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false
+    }
+  ]
+}
+```
 
-
-```json title="tasks.json"
+```json title=".vscode/task/json"
 {
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build with clang",
+      "label": "CMake: Configure (debug preset)",
       "type": "shell",
-      "command": "clang++",
-      "args": [
-        "-std=c++20",
-        "${file}",
-        "-o",
-        "${fileDirname}/${fileBasenameNoExtension}"
-      ],
+      "command": "cmake --preset debug",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: Build (debug preset)",
+      "type": "shell",
+      "command": "cmake --build --preset debug",
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": [
-        "$gcc"
-      ]
+      "dependsOn": "CMake: Configure (debug preset)",
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "CMake: Configure (release preset)",
+      "type": "shell",
+      "command": "cmake --preset release",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: Build (release preset)",
+      "type": "shell",
+      "command": "cmake --build --preset release",
+      "group": "build",
+      "dependsOn": "CMake: Configure (release preset)",
+      "problemMatcher": "$gcc"
+    }
+  ]
+}
+
+```
+
+
+```json title="CMakePresets.json"
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
     }
   ]
 }
