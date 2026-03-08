@@ -691,22 +691,44 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#demo-mass-on-a-frictionless-surface" class="md-nav__link">
+  <a href="#demo-mass-on-a-spring-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Demo: Mass on a frictionless surface
+        Demo: mass on a spring system
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Demo: Mass on a frictionless surface">
+    <nav class="md-nav" aria-label="Demo: mass on a spring system">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#define-the-state" class="md-nav__link">
+  <a href="#named-variables" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Define the state
+        Named variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rewrite-the-equation-related-to-x_1-x_2-u_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rewrite the equation related to \(x_1, x_2, u_1\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rewrite-as-a-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rewrite as a matrix
       
     </span>
   </a>
@@ -715,6 +737,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output
+      
+    </span>
+  </a>
   
 </li>
       
@@ -769,38 +802,125 @@
 
   <h1>State Space Model</h1>
 
-<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/control/">control</a></p>
+<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/control/">control</a>
+A State Space Model is linear representation of dynamic system,</p>
 <p><a href="https://youtu.be/g9G8b7FxEHc">Good Video - Intro to Control - 6.1 State-Space Model Basics </a></p>
 <div class="arithmatex">\[\dot{x} = A x + B u\]</div>
 <p>Where:</p>
 <ul>
-<li>x = state vector (what describes the system right now)</li>
-<li>u = control input (what you apply)</li>
+<li>x = state vector (what describes the system right now) (<span class="arithmatex">\(R^{n}\)</span>)</li>
+<li>u = control input (what you apply) (<span class="arithmatex">\(R^{m}\)</span>)</li>
 <li><span class="arithmatex">\(\dot{x}\)</span> = how the state is changing</li>
-<li>A = system (physics) matrix</li>
-<li>B = input (control) matrix</li>
+<li>A = system (physics) matrix (<span class="arithmatex">\(R^{n*n}\)</span>)</li>
+<li>B = input (control) matrix (<span class="arithmatex">\(R^{n*m}\)</span>)</li>
 </ul>
 <h3 id="a-matrix">A matrix</h3>
 <p>It describes the natural physics of the system.</p>
 <p><strong>A tells how the system changes by itself, without any control input.</strong></p>
 <hr />
-<h2 id="demo-mass-on-a-frictionless-surface">Demo: Mass on a frictionless surface</h2>
-<p>Physics equation</p>
-<p><span class="arithmatex">\(<span class="arithmatex">\(m \ddot{x} = u\)</span>\)</span> (f=ma)</p>
-<h3 id="define-the-state">Define the state</h3>
-<div class="arithmatex">\[x_1 = x \quad \text{(position)}$$
-$$x_2 = \dot{x} \quad \text{(velocity)}\]</div>
-<p>The state vector is:
-<span class="arithmatex">\(<span class="arithmatex">\(x =
+<h2 id="demo-mass-on-a-spring-system">Demo: mass on a spring system</h2>
+<div class="arithmatex">\[
+u(t) - kx(t)-b\dot{x}(t) = m\ddot{x}(t)
+\]</div>
+<ul>
+<li>u(t) : Input force</li>
+<li>kx(t): Spring force</li>
+<li>%b\dot{x}: frication</li>
+<li><span class="arithmatex">\(m\ddot{x}(t)\)</span>: ma</li>
+</ul>
+<h3 id="named-variables">Named variables</h3>
+<p><span class="arithmatex">\(x(t) = x_{1}\)</span>
+<span class="arithmatex">\(\dot{x}(t) = x_{2} = \dot{x_1}\)</span> 
+<span class="arithmatex">\(u(t) = u_1\)</span></p>
+<div class="arithmatex">\[
+u_1 - kx_1 - bx_2 = m\dot{x_2}
+\]</div>
+<p>find dynamic</p>
+<p><span class="arithmatex">\(\dot{x_1}= ?\)</span>
+<span class="arithmatex">\(\dot{x_2}= ?\)</span></p>
+<p><span class="arithmatex">\(\dot{x_1} = x_2\)</span>
+<span class="arithmatex">\(\dot{x_2} = \frac{1}{m}u_1 - \frac{k}{m}x_1 - \frac{b}{m}x_2\)</span></p>
+<h3 id="rewrite-the-equation-related-to-x_1-x_2-u_1">rewrite the equation related to <span class="arithmatex">\(x_1, x_2, u_1\)</span></h3>
+<p><span class="arithmatex">\(\dot{x_1} = 0x_1 + 1x_2 + 0u_1\)</span>
+<span class="arithmatex">\(\dot{x_2} = -\frac{k}{m}x_1 - \frac{b}{m}x_2 + \frac{1}{m}u_1\)</span></p>
+<h3 id="rewrite-as-a-matrix">rewrite as a matrix</h3>
+<div class="arithmatex">\[
 \begin{bmatrix}
-x \\
-\dot{x}
-\end{bmatrix}\)</span>\)</span></p>
+\dot{x_1} \\
+\dot{x_2}
+\end{bmatrix}
+=\begin{bmatrix}
+0 &amp; 1 \\
+-\frac{k}{m} &amp; -\frac{b}{m}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}
++
+\begin{bmatrix}
+0 \\
+\frac{1}{m}
+\end{bmatrix}
+u_1
+\]</div>
+<div class="arithmatex">\[\dot{x} =
+\begin{bmatrix}
+0 &amp; 1 \\
+-\frac{k}{m} &amp; -\frac{b}{m}
+\end{bmatrix}
+x
++
+\begin{bmatrix}
+0 \\
+\frac{1}{m}
+\end{bmatrix}
+u\]</div>
+<div class="arithmatex">\[\dot{x} = A x + B u\]</div>
+<h2 id="output">Output</h2>
+<p>How is the ouput (x) depend and the system state and control input</p>
+<p>in the example we want to find change in distance <span class="arithmatex">\(x(t)\)</span></p>
+<ul>
+<li><span class="arithmatex">\(y = x_1 = x(t)\)</span></li>
+</ul>
+<p><span class="arithmatex">\(y = Cx + Du\)</span></p>
+<div class="arithmatex">\[
+y = 1x_1 + 0x_2 + 0u_1
+\]</div>
+<div class="arithmatex">\[y =
+\begin{bmatrix}
+1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}
++
+\begin{bmatrix}
+0
+\end{bmatrix}
+u_1\]</div>
+<p>for example if we want to look at the system if the velocity is the output <span class="arithmatex">\(y = \dot(x) = x_2\)</span></p>
+<div class="arithmatex">\[
+y = 0x_1 + 1x_2 + 0u_1
+\]</div>
+<div class="arithmatex">\[y =
+\begin{bmatrix}
+0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}
++
+\begin{bmatrix}
+0
+\end{bmatrix}
+u_1\]</div>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="https://youtu.be/hpeKrMG-WP0">Introduction to State-Space Equations | State Space, Part 1</a></li>
-<li><a href="https://abbhicse.medium.com/how-to-derive-a-state-space-model-for-a-mobile-robot-f19db53ffb30">How To Derive A State Space Model For A Mobile Robot</a></li>
 </ul>
 
 
