@@ -1,4 +1,5 @@
 ---
+title: Zero to hero, learn cpp
 tags:
     - cpp
     - learn
@@ -16,6 +17,11 @@ tags:
     <div class="grid-item">
     <a href="multithread">
         <p>Multithreading</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="Smart Pointers">
+        <p>Smart Pointers</p>
         </a>
     </div>
     <div class="grid-item">

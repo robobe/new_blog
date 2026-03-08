@@ -38,7 +38,7 @@ Add 3 topics
 | odom_frame  |   |   |
 | xyz_offset  |   |   |
 | rpy_offset  |   |   |
-| gaussian_noise  |   |   |
+| gaussian_noise  | It only adds noise to the velocity (twist) part of the odometry message.  |   |
 | robot_base_frame  |   |   |
 | odom_publish_frequency  |   |   |
 | odom_topic  |   |   |

@@ -9,6 +9,8 @@ tags:
 
 {{ page_folder_links() }}
 
+[Special Topics - The Kalman Filter (1 of 55) What is a Kalman Filter?](https://youtu.be/CaCcOwJPytQ)
+
 ---
 
 ## Reference
