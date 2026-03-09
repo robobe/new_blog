@@ -688,6 +688,90 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Accelerometer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-calc-pitch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: calc pitch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo: calc pitch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extract-pitch-angle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extract pitch angle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-general-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        more general formula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo-calc-roll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: calc roll
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo: calc roll">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        roll
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-general-formula_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        more general formula
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -863,21 +947,86 @@
 </table>
 <hr />
 <h2 id="accelerometer">Accelerometer</h2>
-<p>An accelerometer is a sensor that measures acceleration — how fast something speeds up, slows down, or changes direction — along one or more axes.
-- It cannot distinguish gravity from acceleration during motion
-- It cannot measure change in yaw (z axis) Yaw is rotation around the gravity axis, and an accelerometer <strong>only measures gravity—so</strong> yaw doesn’t change what it sees
-- At rest the accelerometer measures gravity, not “zero”.
-- Tilt it: gravity is <strong>split across axes</strong>
-- tilt angles : pitch and roll</p>
+<p>An accelerometer is a sensor that measures acceleration — how fast something speeds up, slows down, or changes direction — along one or more axes.</p>
+<ul>
+<li>It cannot distinguish gravity from acceleration during motion</li>
+<li>It cannot measure change in yaw (z axis) Yaw is rotation around the gravity axis, and an accelerometer <strong>only measures gravity—so</strong> yaw doesn’t change what it sees</li>
+<li>At rest the accelerometer measures gravity, not “zero”.</li>
+<li>Tilt it: gravity is <strong>split across axes</strong></li>
+<li>tilt angles : pitch and roll</li>
+</ul>
 <p><img alt="alt text" src="images/accelerometer_orination.png" /></p>
 <p><img alt="alt text" src="images/right_hand_rule.png" /></p>
 <hr />
-<div class="arithmatex">\[\phi = \text{atan2}(a_y, a_z)$$
-$$\theta = \text{atan2}(-a_x, \sqrt{a_y^2 + a_z^2})\]</div>
+<div class="arithmatex">\[\phi = \text{atan2}(a_y, a_z)\]</div>
+<div class="arithmatex">\[\theta = \text{atan2}(-a_x, \sqrt{a_y^2 + a_z^2})\]</div>
 <ul>
 <li><span class="arithmatex">\(\phi\)</span> → roll</li>
 <li><span class="arithmatex">\(\theta\)</span> → pitch</li>
 <li><span class="arithmatex">\(\psi\)</span> → yaw (not observable from accel)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Rotation</th>
+<th>Gravity moves in</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Roll</td>
+<td>YZ plane</td>
+<td><code>atan2(ay, az)</code></td>
+</tr>
+<tr>
+<td>Pitch</td>
+<td>XZ plane</td>
+<td><code>atan2(-ax, √(ay²+az²))</code></td>
+</tr>
+<tr>
+<td>Yaw</td>
+<td>no change</td>
+<td>not measurable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="demo-calc-pitch">Demo: calc pitch</h3>
+<p><img alt="pitch drawing" src="images/pitch_drawing.png" /></p>
+<div class="arithmatex">\[a_x = g \sin(\theta)\]</div>
+<div class="arithmatex">\[a_z = g \cos(\theta)\]</div>
+<h4 id="extract-pitch-angle">Extract pitch angle</h4>
+<p>from </p>
+<div class="arithmatex">\[a_x = g \sin(\theta)\]</div>
+<p>divide both by <code>g</code></p>
+<div class="arithmatex">\[\frac{a_x}{g} = \sin(\theta)\]</div>
+<p>inverse sine</p>
+<div class="arithmatex">\[\theta = \sin^{-1}\left(\frac{a_x}{g}\right)\]</div>
+<h4 id="more-general-formula">more general formula</h4>
+<ul>
+<li>roll != 0
+<span class="arithmatex">\(<span class="arithmatex">\(\theta = atan2(-a_x,\sqrt{a_y^2 + a_z^2})\)</span>\)</span></li>
+</ul>
+<h3 id="demo-calc-roll">Demo: calc roll</h3>
+<ul>
+<li>gravity changes only in the Y–Z plane</li>
+</ul>
+<p><img alt="alt text" src="images/pitch_roll_triangle.png" /></p>
+<div class="arithmatex">\[A_z = 1g \cdot \cos(\phi)\]</div>
+<div class="arithmatex">\[A_y = 1g \cdot \sin(\phi)\]</div>
+<h4 id="roll">roll</h4>
+<div class="arithmatex">\[Ay_{out} = 1g \sin(\phi)\]</div>
+<p>divide by <code>g</code></p>
+<div class="arithmatex">\[\sin(\phi) = \frac{Ay_{out}}{1g}\]</div>
+<p>inverse sin</p>
+<div class="arithmatex">\[\phi = \sin^{-1}\left(\frac{Ay_{out}}{1g}\right)\]</div>
+<h4 id="more-general-formula_1">more general formula</h4>
+<div class="arithmatex">\[\phi = atan2(Ay, Az)\]</div>
+<p>because it handles:</p>
+<ul>
+<li>sign correctly</li>
+<li>angles beyond ±90°</li>
+<li>numerical stability.</li>
 </ul>
 <hr />
 <h2 id="gyroscope">Gyroscope</h2>
