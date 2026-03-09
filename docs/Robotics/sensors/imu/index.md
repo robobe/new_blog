@@ -29,6 +29,7 @@ An IMU sensor (Inertial Measurement Unit) is a device that measures a robot or o
 
 ## Accelerometer
 An accelerometer is a sensor that measures acceleration — how fast something speeds up, slows down, or changes direction — along one or more axes.
+
 - It cannot distinguish gravity from acceleration during motion
 - It cannot measure change in yaw (z axis) Yaw is rotation around the gravity axis, and an accelerometer **only measures gravity—so** yaw doesn’t change what it sees
 - At rest the accelerometer measures gravity, not “zero”.
@@ -44,12 +45,80 @@ An accelerometer is a sensor that measures acceleration — how fast something s
 ---
 
 $$\phi = \text{atan2}(a_y, a_z)$$
+
 $$\theta = \text{atan2}(-a_x, \sqrt{a_y^2 + a_z^2})$$
 
 - $\phi$ → roll
 - $\theta$ → pitch
 - $\psi$ → yaw (not observable from accel)
 
+
+| Rotation | Gravity moves in | Formula                  |
+| -------- | ---------------- | ------------------------ |
+| Roll     | YZ plane         | `atan2(ay, az)`          |
+| Pitch    | XZ plane         | `atan2(-ax, √(ay²+az²))` |
+| Yaw      | no change        | not measurable           |
+
+
+### Demo: calc pitch 
+
+![pitch drawing](images/pitch_drawing.png)
+
+$$a_x = g \sin(\theta)$$
+
+$$a_z = g \cos(\theta)$$
+
+#### Extract pitch angle
+from 
+
+$$a_x = g \sin(\theta)$$
+
+divide both by `g`
+
+$$\frac{a_x}{g} = \sin(\theta)$$
+
+inverse sine
+
+$$\theta = \sin^{-1}\left(\frac{a_x}{g}\right)$$
+
+#### more general formula
+
+- roll != 0
+$$\theta = atan2(-a_x,\sqrt{a_y^2 + a_z^2})$$
+
+
+### Demo: calc roll
+- gravity changes only in the Y–Z plane
+
+
+![alt text](images/pitch_roll_triangle.png)
+
+$$A_z = 1g \cdot \cos(\phi)$$
+
+$$A_y = 1g \cdot \sin(\phi)$$
+
+#### roll
+
+$$Ay_{out} = 1g \sin(\phi)$$
+
+divide by `g`
+
+$$\sin(\phi) = \frac{Ay_{out}}{1g}$$
+
+inverse sin
+
+$$\phi = \sin^{-1}\left(\frac{Ay_{out}}{1g}\right)$$
+
+
+#### more general formula
+
+$$\phi = atan2(Ay, Az)$$
+
+because it handles:
+
+- sign correctly
+- angles beyond ±90°
+- numerical stability.
 
 ---
 
