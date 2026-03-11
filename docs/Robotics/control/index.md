@@ -7,6 +7,7 @@ tags:
 {{ page_folder_links() }}
 
 ## Course
+- [Brian Douglas](https://engineeringmedia.com/)
 - [Course: Introduction to Control (Engineering with Prof. Kim)](https://youtube.com/playlist?list=PLmK1EnKxphikZ4mmCz2NccSnHZb7v1wV-&si=IvlEF6JeK7zvaB7w)
 
 <div class="grid-container">

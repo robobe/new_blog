@@ -84,8 +84,10 @@ $$\theta = \sin^{-1}\left(\frac{a_x}{g}\right)$$
 #### more general formula
 
 - roll != 0
+
 $$\theta = atan2(-a_x,\sqrt{a_y^2 + a_z^2})$$
 
+---
 
 ### Demo: calc roll
 - gravity changes only in the Y–Z plane

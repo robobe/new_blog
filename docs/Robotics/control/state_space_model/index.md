@@ -36,14 +36,14 @@ $$
 
 - u(t) : Input force
 - kx(t): Spring force
-- %b\dot{x}: frication
+- $b\dot{x}$: frication
 - $m\ddot{x}(t)$: ma
 
 ### Named variables
 
-$x(t) = x_{1}$
-$\dot{x}(t) = x_{2} = \dot{x_1}$ 
-$u(t) = u_1$
+- $x(t) = x_{1}$
+- $\dot{x}(t) = x_{2} = \dot{x_1}$
+- $u(t) = u_1$
 
 $$
 u_1 - kx_1 - bx_2 = m\dot{x_2}
@@ -51,16 +51,19 @@ $$
 
 find dynamic
 
-$\dot{x_1}= ?$
-$\dot{x_2}= ?$
+- $\dot{x_1}= ?$
+- $\dot{x_2}= ?$
 
 
 $\dot{x_1} = x_2$
+
 $\dot{x_2} = \frac{1}{m}u_1 - \frac{k}{m}x_1 - \frac{b}{m}x_2$
 
-### rewrite the equation related to $x_1, x_2, u_1$
+### rewrite the equation 
+related to $x_1, x_2, u_1$
 
 $\dot{x_1} = 0x_1 + 1x_2 + 0u_1$
+
 $\dot{x_2} = -\frac{k}{m}x_1 - \frac{b}{m}x_2 + \frac{1}{m}u_1$
 
 ### rewrite as a matrix

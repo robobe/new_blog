@@ -4,6 +4,22 @@ tags:
     - python
 ---
 
+## Programming
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="design_patterns/">
+        <p>Design patterns</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="">
+        <p>---</p>
+        </a>
+    </div>
+</div>
+## Python
+
 <div class="grid-container">
      <div class="grid-item">
         <a href="zen_and_beyond">
@@ -28,6 +44,8 @@ tags:
 </div>
 
 ---
+
+## libraries
 
 <div class="grid-container">
     <div class="grid-item">
