@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#reference" class="md-skip">
+        <a href="#video-56" class="md-skip">
           Skip to content
         </a>
       
@@ -680,6 +680,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#video-56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video 5/6
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Video 5/6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -737,11 +765,169 @@
 
   <h1>Kalman filter</h1>
 
-<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/filter_and_estimator/">filter and estimator</a></p>
-<p><a href="https://youtu.be/CaCcOwJPytQ">Special Topics - The Kalman Filter (1 of 55) What is a Kalman Filter?</a></p>
+<p>Kalman filter is an iterative mathematical process that use a set of equations and consecutive data input to quickly estimate the true value, position velocity etc of the object being measured when the measures values contains unpredicted or random error , uncertainty or variation <a href="https://youtu.be/CaCcOwJPytQ">Michel Van biezen</a></p>
+<p><a href="https://youtube.com/playlist?list=PLX2gX-ftPVXU3oUFNATxGXY90AULiqnWT&amp;si=lGjt-xsTlZQi77o2">Special Topics - The Kalman Filter (1 of 55) What is a Kalman Filter?</a></p>
+<hr />
+<h2 id="video-56">Video 5/6</h2>
+<p><a href="https://youtu.be/SIQJaqYVtuE?list=PLX2gX-ftPVXU3oUFNATxGXY90AULiqnWT">A Simple Example of the Kalman Filter</a></p>
+<div class="arithmatex">\[
+KG = \frac{E_{est}}{E_{est}+E_{meas}}
+\]</div>
+<div class="arithmatex">\[
+EST_t=EST_{t-1} + KG[MEAS-EST_{t-1}]
+\]</div>
+<div class="arithmatex">\[
+E_{est_t}=[1-KG](E_{est_{t-1}})
+\]</div>
+<h3 id="demo">Demo:</h3>
+<ul>
+<li>true temperature = 72</li>
+<li>init estimate = 68</li>
+<li>init <span class="arithmatex">\(E_{est}\)</span> = 2</li>
+<li>init measurement = 75</li>
+<li>error in measurement =4</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>MEA</th>
+<th><span class="arithmatex">\(E_{MEA}\)</span></th>
+<th>EST</th>
+<th><span class="arithmatex">\(E_{est_{t-1}}\)</span></th>
+<th>KG</th>
+<th><span class="arithmatex">\(E_{est_t}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>t-1</td>
+<td></td>
+<td>4</td>
+<td>68</td>
+<td>2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>t</td>
+<td>75</td>
+<td>4</td>
+<td>70.33</td>
+<td></td>
+<td>0.33</td>
+<td>1.33</td>
+</tr>
+<tr>
+<td>t+1</td>
+<td>71</td>
+<td>4</td>
+<td>70.50</td>
+<td></td>
+<td>0.25</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>t+2</td>
+<td>70</td>
+<td>4</td>
+<td>70.40</td>
+<td></td>
+<td>0.20</td>
+<td>0.80</td>
+</tr>
+<tr>
+<td>t+3</td>
+<td>74</td>
+<td>4</td>
+<td>71</td>
+<td></td>
+<td>0.17</td>
+<td>0.66</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="1d" src="images/kalman_1d.png.png" /></p>
+<details>
+<summary>kalman 1d</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>import numpy as np
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>import matplotlib.pyplot as plt
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>true_value = 72
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>error_meas = 4
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>init_estimate = 68
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>error_estimate = 2
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>measurements = [75, 71, 70, 74]
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>estimates = []
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>for measurement in measurements:
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    # Kalman Gain
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    kalman_gain = error_estimate / (error_estimate + error_meas)
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    # Update estimate with measurement
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    estimate = init_estimate + kalman_gain * (measurement - init_estimate)
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    # Update error estimate
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    error_estimate = (1 - kalman_gain) * error_estimate
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    print(f&quot;Measurement: {measurement}, Estimate: {estimate:.2f}, Error Estimate: {error_estimate:.2f}&quot;)
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    # Prepare for next iteration
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    init_estimate = estimate
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    estimates.append(estimate)
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a># Plotting
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>plt.figure(figsize=(10, 5))
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>plt.plot(measurements, label=&#39;Measurements&#39;, marker=&#39;o&#39;)
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>plt.plot(estimates, label=&#39;Kalman Estimates&#39;, marker=&#39;x&#39;)
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>plt.axhline(true_value, color=&#39;r&#39;, linestyle=&#39;--&#39;, label=&#39;True Value&#39;)
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>plt.title(&#39;Kalman Filter 1D Estimation&#39;)
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>plt.xlabel(&#39;Measurement Index&#39;)
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>plt.ylabel(&#39;Value&#39;)
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>plt.legend()
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>plt.grid()
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>plt.show()
+</code></pre></div></td></tr></table></div>
+</details>
+
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
+<li><a href="https://www.youtube.com/playlist?list=PLgG0XDQqJckmfolmM8y0GFS8l3x_r2p_S">hummingbird - kalman filter</a></li>
 <li><a href="https://youtu.be/mwn8xhgNpFY?list=PLn8PRpmsu08pzi6EMiYnR-076Mh-q3tWr">Why Use Kalman Filters? | Understanding Kalman Filters, Part 1</a></li>
 </ul>
 
