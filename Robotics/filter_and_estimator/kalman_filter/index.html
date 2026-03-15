@@ -708,6 +708,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#video-7-multi-dimension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video 7- (multi dimension)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -847,7 +858,7 @@ E_{est_t}=[1-KG](E_{est_{t-1}})
 </tr>
 </tbody>
 </table>
-<p><img alt="1d" src="images/kalman_1d.png.png" /></p>
+<p><img alt="1d" src="images/kalman_1d.png" /></p>
 <details>
 <summary>kalman 1d</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -885,45 +896,50 @@ E_{est_t}=[1-KG](E_{est_{t-1}})
 <span class="normal"><a href="#__codelineno-0-33">33</a></span>
 <span class="normal"><a href="#__codelineno-0-34">34</a></span>
 <span class="normal"><a href="#__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#__codelineno-0-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>import numpy as np
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>import matplotlib.pyplot as plt
+<span class="normal"><a href="#__codelineno-0-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>true_value = 72
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>error_meas = 4
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>init_estimate = 68
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>error_estimate = 2
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>measurements = [75, 71, 70, 74]
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>estimates = []
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a>for measurement in measurements:
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    # Kalman Gain
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    kalman_gain = error_estimate / (error_estimate + error_meas)
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">true_value</span> <span class="o">=</span> <span class="mi">72</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">error_meas</span> <span class="o">=</span> <span class="mi">4</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="n">init_estimate</span> <span class="o">=</span> <span class="mi">68</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">error_estimate</span> <span class="o">=</span> <span class="mi">2</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="n">measurements</span> <span class="o">=</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">74</span><span class="p">]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="n">estimates</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="c1"># Kalman Gain</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="n">kalman_gain</span> <span class="o">=</span> <span class="n">error_estimate</span> <span class="o">/</span> <span class="p">(</span><span class="n">error_estimate</span> <span class="o">+</span> <span class="n">error_meas</span><span class="p">)</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    # Update estimate with measurement
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    estimate = init_estimate + kalman_gain * (measurement - init_estimate)
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="c1"># Update estimate with measurement</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    <span class="n">estimate</span> <span class="o">=</span> <span class="n">init_estimate</span> <span class="o">+</span> <span class="n">kalman_gain</span> <span class="o">*</span> <span class="p">(</span><span class="n">measurement</span> <span class="o">-</span> <span class="n">init_estimate</span><span class="p">)</span>
 <a id="__codelineno-0-16" name="__codelineno-0-16"></a>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    # Update error estimate
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    error_estimate = (1 - kalman_gain) * error_estimate
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="c1"># Update error estimate</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="n">error_estimate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kalman_gain</span><span class="p">)</span> <span class="o">*</span> <span class="n">error_estimate</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    print(f&quot;Measurement: {measurement}, Estimate: {estimate:.2f}, Error Estimate: {error_estimate:.2f}&quot;)
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Measurement: </span><span class="si">{</span><span class="n">measurement</span><span class="si">}</span><span class="s2">, Estimate: </span><span class="si">{</span><span class="n">estimate</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Error Estimate: </span><span class="si">{</span><span class="n">error_estimate</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <a id="__codelineno-0-21" name="__codelineno-0-21"></a>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    # Prepare for next iteration
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    init_estimate = estimate
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    estimates.append(estimate)
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="c1"># Prepare for next iteration</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    <span class="n">init_estimate</span> <span class="o">=</span> <span class="n">estimate</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    <span class="n">estimates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estimate</span><span class="p">)</span>
 <a id="__codelineno-0-25" name="__codelineno-0-25"></a>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a># Plotting
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>plt.figure(figsize=(10, 5))
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>plt.plot(measurements, label=&#39;Measurements&#39;, marker=&#39;o&#39;)
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a>plt.plot(estimates, label=&#39;Kalman Estimates&#39;, marker=&#39;x&#39;)
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a>plt.axhline(true_value, color=&#39;r&#39;, linestyle=&#39;--&#39;, label=&#39;True Value&#39;)
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a>plt.title(&#39;Kalman Filter 1D Estimation&#39;)
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a>plt.xlabel(&#39;Measurement Index&#39;)
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a>plt.ylabel(&#39;Value&#39;)
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a>plt.legend()
-<a id="__codelineno-0-35" name="__codelineno-0-35"></a>plt.grid()
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a>plt.show()
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="c1"># Plotting</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">measurements</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Measurements&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimates</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Kalman Estimates&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">true_value</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Value&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Kalman Filter 1D Estimation&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Measurement Index&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
+<hr />
+<h2 id="video-7-multi-dimension">Video 7- (multi dimension)</h2>
+<ul>
+<li><a href="https://youtu.be/-cD7WkbAIL0?list=PLX2gX-ftPVXU3oUFNATxGXY90AULiqnWT">video 7 - multi dimension 1</a></li>
+</ul>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
