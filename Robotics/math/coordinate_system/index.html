@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#taitbryan" class="md-skip">
+        <a href="#2d-rotation" class="md-skip">
           Skip to content
         </a>
       
@@ -680,6 +680,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2d-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2D Rotation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2D Rotation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matrix-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix form
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#taitbryan" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -687,6 +726,73 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3d-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D rotation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3D rotation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotation-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotation matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#right-hand-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right hand rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Right hand rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#right-hand-grip-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right hand grip rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -799,27 +905,76 @@
   <h1>Coordinate systems</h1>
 
 <p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/math/">math</a></p>
-<h2 id="taitbryan">Tait–Bryan</h2>
-<p>Tait–Bryan angles are a way to describe orientation in 3D space using three rotations about three different axes.</p>
-<p><img alt="alt text" src="images/rpy.png" /></p>
-<ul>
-<li>Roll (φ) → rotation about the X-axis</li>
-<li>Pitch (θ) → rotation about the Y-axis</li>
-<li>Yaw (ψ) → rotation about the Z-axis</li>
-</ul>
-<h2 id="intrinsic-and-extrinsic">Intrinsic and Extrinsic</h2>
-<ul>
-<li><strong>Intrinsic:</strong> The rotation relative to current <strong>body</strong> axes , it's use in robotics and ROS</li>
-<li><strong>Extrinsic:</strong> The rotation always relative to the fixed <strong>world</strong> axes</li>
-</ul>
-<h3 id="intrinsic">Intrinsic</h3>
-<p>rotations are about the body axes.</p>
+<h2 id="2d-rotation">2D Rotation</h2>
+<p><a href="https://articulatedrobotics.xyz/tutorials/coordinate-transforms/rotation-matrices-2d">articulate robotics 2D rotation</a></p>
+<p><img alt="2d_rotation" src="images/2d_rotation.png" /></p>
+<p><img alt="alt text" src="images/2d_rotation_full.png" /></p>
 <div class="arithmatex">\[
-R_{\text{intrinsic}} = R_z(\text{yaw}) \cdot R_y(\text{pitch}) \cdot R_x(\text{roll})
+\begin{bmatrix}
+x_1 \\
+y_1
+\end{bmatrix}=
+\begin{bmatrix}
+h\cos\phi  \\
+h\sin\phi 
+\end{bmatrix}
 \]</div>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x_2 \\
+y_2
+\end{bmatrix}=
+\begin{bmatrix}
+h\cos(\phi + \theta)  \\
+h\sin(\phi + \theta) 
+\end{bmatrix}
+\]</div>
+<p>using Trigonometric identity</p>
+<div class="arithmatex">\[
+\cos(a+b)=\cos a\cos b-\sin a\sin b
+\]</div>
+<div class="arithmatex">\[
+\sin(a+b)=\sin a\cos b+\cos a\sin b
+\]</div>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x_2 \\
+y_2
+\end{bmatrix}=
+\begin{bmatrix}
+h\cos \phi\cos \theta-h\sin \phi\sin \theta  \\
+h\sin \phi\cos \theta+h\cos \phi\sin \theta 
+\end{bmatrix}
+\]</div>
+<p>substitute x1, y1</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x_2 \\
+y_2
+\end{bmatrix}=
+\begin{bmatrix}
+x_1\cos\theta &amp; -y_1\sin\theta \\
+x_1\sin\theta &amp; y_1\cos\theta
+\end{bmatrix}
+\]</div>
+<h3 id="matrix-form">Matrix form</h3>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x_2 \\
+y_2
+\end{bmatrix}=
+\begin{bmatrix}
+\cos\theta &amp; -\sin\theta \\
+\sin\theta &amp; \cos\theta
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+y_1
+\end{bmatrix}
+\]</div>
+<h3 id="demo">Demo</h3>
 <details>
-    <summary>code</summary>
-
+<summary>Python demo code using numpy</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -845,95 +1000,129 @@ R_{\text{intrinsic}} = R_z(\text{yaw}) \cdot R_y(\text{pitch}) \cdot R_x(\text{r
 <span class="normal"><a href="#__codelineno-0-23">23</a></span>
 <span class="normal"><a href="#__codelineno-0-24">24</a></span>
 <span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#__codelineno-0-31">31</a></span>
-<span class="normal"><a href="#__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#__codelineno-0-33">33</a></span>
-<span class="normal"><a href="#__codelineno-0-34">34</a></span>
-<span class="normal"><a href="#__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#__codelineno-0-36">36</a></span>
-<span class="normal"><a href="#__codelineno-0-37">37</a></span>
-<span class="normal"><a href="#__codelineno-0-38">38</a></span>
-<span class="normal"><a href="#__codelineno-0-39">39</a></span>
-<span class="normal"><a href="#__codelineno-0-40">40</a></span>
-<span class="normal"><a href="#__codelineno-0-41">41</a></span>
-<span class="normal"><a href="#__codelineno-0-42">42</a></span>
-<span class="normal"><a href="#__codelineno-0-43">43</a></span>
-<span class="normal"><a href="#__codelineno-0-44">44</a></span>
-<span class="normal"><a href="#__codelineno-0-45">45</a></span>
-<span class="normal"><a href="#__codelineno-0-46">46</a></span>
-<span class="normal"><a href="#__codelineno-0-47">47</a></span>
-<span class="normal"><a href="#__codelineno-0-48">48</a></span>
-<span class="normal"><a href="#__codelineno-0-49">49</a></span>
-<span class="normal"><a href="#__codelineno-0-50">50</a></span>
-<span class="normal"><a href="#__codelineno-0-51">51</a></span>
-<span class="normal"><a href="#__codelineno-0-52">52</a></span>
-<span class="normal"><a href="#__codelineno-0-53">53</a></span>
-<span class="normal"><a href="#__codelineno-0-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># --- Rotation Matrices ---</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">Rx</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">Ry</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>                     <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">Rz</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>                     <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="c1"># --- Plot Function ---</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_axes</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    <span class="n">x_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    <span class="n">y_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a>    <span class="n">z_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">y_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">z_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35"></a>
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="c1"># --- Angles ---</span>
-<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="n">roll</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="n">pitch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
-<a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="n">yaw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
-<a id="__codelineno-0-40" name="__codelineno-0-40"></a>
-<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="c1"># --- Intrinsic sequence ---</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="n">R0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-0-43" name="__codelineno-0-43"></a><span class="n">R1</span> <span class="o">=</span> <span class="n">R0</span> <span class="o">@</span> <span class="n">Rx</span><span class="p">(</span><span class="n">roll</span><span class="p">)</span>      <span class="c1"># roll about body X</span>
-<a id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="n">R2</span> <span class="o">=</span> <span class="n">R1</span> <span class="o">@</span> <span class="n">Ry</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>     <span class="c1"># then pitch about new Y</span>
-<a id="__codelineno-0-45" name="__codelineno-0-45"></a><span class="n">R3</span> <span class="o">=</span> <span class="n">R2</span> <span class="o">@</span> <span class="n">Rz</span><span class="p">(</span><span class="n">yaw</span><span class="p">)</span>       <span class="c1"># then yaw about new Z</span>
-<a id="__codelineno-0-46" name="__codelineno-0-46"></a>
-<a id="__codelineno-0-47" name="__codelineno-0-47"></a><span class="c1"># --- Plot ---</span>
-<a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<a id="__codelineno-0-49" name="__codelineno-0-49"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 1: Rest&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-50" name="__codelineno-0-50"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R1</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 2: Roll 90° (body X)&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-51" name="__codelineno-0-51"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R2</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 3: + Pitch 45° (body Y)&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R3</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 4: + Yaw 180° (body Z)&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-53" name="__codelineno-0-53"></a><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<a id="__codelineno-0-54" name="__codelineno-0-54"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="p">])</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="n">v_rot</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">v</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">v_rot</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">v_rot</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">v_rot</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
-<p><img alt="alt text" src="images/intrinsic.png" /></p>
-<h3 id="extrinsic">Extrinsic</h3>
-<p>rotations are about the fixed world axes.</p>
-<div class="arithmatex">\[R_{\text{extrinsic}} = R_x(\text{roll}) \cdot R_y(\text{pitch}) \cdot R_z(\text{yaw})\]</div>
+<hr />
+<h2 id="taitbryan">Tait–Bryan</h2>
+<p>Tait–Bryan angles are a way to describe orientation in 3D space using three rotations about three different axes.</p>
+<div class="admonition info">
+<p class="admonition-title">euler</p>
+<p>Roll–Pitch–Yaw angles are specifically called Tait–Bryan angles, which are a special case of Euler angles.</p>
+</div>
+<p><img alt="alt text" src="images/rpy.png" /></p>
+<ul>
+<li>Roll (φ) → rotation about the X-axis</li>
+<li>Pitch (θ) → rotation about the Y-axis</li>
+<li>Yaw (ψ) → rotation about the Z-axis</li>
+</ul>
+<h2 id="3d-rotation">3D rotation</h2>
+<p><a href="https://articulatedrobotics.xyz/tutorials/coordinate-transforms/rotations-3d">articulate robotics 2D rotation</a></p>
+<p>A common convention in robotics and aerospace is the ZYX order:</p>
+<div class="arithmatex">\[
+R = R_z(\psi)\,R_y(\theta)\,R_x(\phi)
+\]</div>
+<p>This means:</p>
+<ul>
+<li>rotate around X (roll)</li>
+<li>then around Y (pitch)</li>
+<li>then around Z (yaw)</li>
+</ul>
+<h3 id="how-to-use">How to use</h3>
+<p>If you have a vector in the <strong>body frame</strong></p>
+<div class="arithmatex">\[v =
+\begin{bmatrix}
+x \\
+y \\
+z
+\end{bmatrix}\]</div>
+<p>you rotate it to the <strong>world frame</strong> by</p>
+<div class="arithmatex">\[v' = R v\]</div>
+<hr />
+<h3 id="rotation-matrix">Rotation matrix</h3>
+<p><strong>ROLL (X - axis)</strong></p>
+<div class="arithmatex">\[
+R_x(\phi)=
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; \cos\phi &amp; -\sin\phi \\
+0 &amp; \sin\phi &amp; \cos\phi
+\end{bmatrix}
+\]</div>
+<p><strong>PITCH (Y - axis)</strong></p>
+<div class="arithmatex">\[R_y(\theta)=
+\begin{bmatrix}
+\cos\theta &amp; 0 &amp; \sin\theta \\
+0 &amp; 1 &amp; 0 \\
+-\sin\theta &amp; 0 &amp; \cos\theta
+\end{bmatrix}\]</div>
+<p><strong>YAW (Z - axis)</strong></p>
+<div class="arithmatex">\[R_z(\psi)=
+\begin{bmatrix}
+\cos\psi &amp; -\sin\psi &amp; 0 \\
+\sin\psi &amp; \cos\psi &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}\]</div>
+<hr />
+<h2 id="right-hand-rule">Right hand rule</h2>
+<ul>
+<li>x axis: red</li>
+<li>y axis: green</li>
+<li>z axis: blue</li>
+</ul>
+<figure>
+  <img src="images/right_hand_rule.png" width="400">
+  <figcaption>
+    © articulated robotics
+  </figcaption>
+</figure>
+
+<h3 id="right-hand-grip-rule">Right hand grip rule</h3>
+<p>the rule tells us what direction a positive rotation around an axis goes.</p>
+<figure>
+  <img src="images/right_hand_grip_rule.png" width="400">
+  <figcaption>
+    © articulated robotics
+  </figcaption>
+</figure>
+
+<hr />
+<h2 id="intrinsic-and-extrinsic">Intrinsic and Extrinsic</h2>
+<ul>
+<li><strong>Intrinsic:</strong> The rotation relative to current <strong>body</strong> axes , it's use in robotics and ROS</li>
+<li><strong>Extrinsic:</strong> The rotation always relative to the fixed <strong>world</strong> axes</li>
+</ul>
+<h3 id="intrinsic">Intrinsic</h3>
+<p>rotations are about the body axes.</p>
+<div class="arithmatex">\[
+R_{\text{intrinsic}} = R_z(\text{yaw}) \cdot R_y(\text{pitch}) \cdot R_x(\text{roll})
+\]</div>
 <details>
     <summary>code</summary>
 
@@ -1030,30 +1219,27 @@ R_{\text{intrinsic}} = R_z(\text{yaw}) \cdot R_y(\text{pitch}) \cdot R_x(\text{r
 <a id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="n">pitch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
 <a id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="n">yaw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
 <a id="__codelineno-1-40" name="__codelineno-1-40"></a>
-<a id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="c1"># --- Extrinsic sequence ---</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="c1"># --- Intrinsic sequence ---</span>
 <a id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="n">R0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="n">R1</span> <span class="o">=</span> <span class="n">Rx</span><span class="p">(</span><span class="n">roll</span><span class="p">)</span> <span class="o">@</span> <span class="n">R0</span>      <span class="c1"># roll about world X</span>
-<a id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="n">R2</span> <span class="o">=</span> <span class="n">Ry</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="o">@</span> <span class="n">R1</span>     <span class="c1"># then pitch about world Y</span>
-<a id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="n">R3</span> <span class="o">=</span> <span class="n">Rz</span><span class="p">(</span><span class="n">yaw</span><span class="p">)</span> <span class="o">@</span> <span class="n">R2</span>       <span class="c1"># then yaw about world Z</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="n">R1</span> <span class="o">=</span> <span class="n">R0</span> <span class="o">@</span> <span class="n">Rx</span><span class="p">(</span><span class="n">roll</span><span class="p">)</span>      <span class="c1"># roll about body X</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="n">R2</span> <span class="o">=</span> <span class="n">R1</span> <span class="o">@</span> <span class="n">Ry</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>     <span class="c1"># then pitch about new Y</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="n">R3</span> <span class="o">=</span> <span class="n">R2</span> <span class="o">@</span> <span class="n">Rz</span><span class="p">(</span><span class="n">yaw</span><span class="p">)</span>       <span class="c1"># then yaw about new Z</span>
 <a id="__codelineno-1-46" name="__codelineno-1-46"></a>
 <a id="__codelineno-1-47" name="__codelineno-1-47"></a><span class="c1"># --- Plot ---</span>
 <a id="__codelineno-1-48" name="__codelineno-1-48"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <a id="__codelineno-1-49" name="__codelineno-1-49"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 1: Rest&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R1</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 2: Roll 90° (world X)&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R2</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 3: + Pitch 45° (world Y)&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-52" name="__codelineno-1-52"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R3</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 4: + Yaw 180° (world Z)&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R1</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 2: Roll 90° (body X)&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R2</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 3: + Pitch 45° (body Y)&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R3</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 4: + Yaw 180° (body Z)&quot;</span><span class="p">)</span>
 <a id="__codelineno-1-53" name="__codelineno-1-53"></a><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <a id="__codelineno-1-54" name="__codelineno-1-54"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
-<p><img alt="alt text" src="images/exrinsic.png" /></p>
-<hr />
-<h2 id="rotate-using-scipy">Rotate using scipy</h2>
-<ul>
-<li>Lowercase ("xyz") = intrinsic (body-fixed).</li>
-<li>Uppercase ("XYZ") = extrinsic (world-fixed).</li>
-</ul>
+<p><img alt="alt text" src="images/intrinsic.png" /></p>
+<h3 id="extrinsic">Extrinsic</h3>
+<p>rotations are about the fixed world axes.</p>
+<div class="arithmatex">\[R_{\text{extrinsic}} = R_x(\text{roll}) \cdot R_y(\text{pitch}) \cdot R_z(\text{yaw})\]</div>
 <details>
     <summary>code</summary>
 
@@ -1110,98 +1296,218 @@ R_{\text{intrinsic}} = R_z(\text{yaw}) \cdot R_y(\text{pitch}) \cdot R_x(\text{r
 <span class="normal"><a href="#__codelineno-2-51">51</a></span>
 <span class="normal"><a href="#__codelineno-2-52">52</a></span>
 <span class="normal"><a href="#__codelineno-2-53">53</a></span>
-<span class="normal"><a href="#__codelineno-2-54">54</a></span>
-<span class="normal"><a href="#__codelineno-2-55">55</a></span>
-<span class="normal"><a href="#__codelineno-2-56">56</a></span>
-<span class="normal"><a href="#__codelineno-2-57">57</a></span>
-<span class="normal"><a href="#__codelineno-2-58">58</a></span>
-<span class="normal"><a href="#__codelineno-2-59">59</a></span>
-<span class="normal"><a href="#__codelineno-2-60">60</a></span>
-<span class="normal"><a href="#__codelineno-2-61">61</a></span>
-<span class="normal"><a href="#__codelineno-2-62">62</a></span>
-<span class="normal"><a href="#__codelineno-2-63">63</a></span>
-<span class="normal"><a href="#__codelineno-2-64">64</a></span>
-<span class="normal"><a href="#__codelineno-2-65">65</a></span>
-<span class="normal"><a href="#__codelineno-2-66">66</a></span>
-<span class="normal"><a href="#__codelineno-2-67">67</a></span>
-<span class="normal"><a href="#__codelineno-2-68">68</a></span>
-<span class="normal"><a href="#__codelineno-2-69">69</a></span>
-<span class="normal"><a href="#__codelineno-2-70">70</a></span>
-<span class="normal"><a href="#__codelineno-2-71">71</a></span>
-<span class="normal"><a href="#__codelineno-2-72">72</a></span>
-<span class="normal"><a href="#__codelineno-2-73">73</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="normal"><a href="#__codelineno-2-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rotation</span> <span class="k">as</span> <span class="n">R</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="c1"># --- Angles (degrees) ---</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">180</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="c1"># --- Intrinsic rotation (body axes: roll -&gt; pitch -&gt; yaw) ---</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="n">rot_intrinsic</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;zyx&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">yaw</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">roll</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="n">zyx_intrinsic</span> <span class="o">=</span> <span class="n">rot_intrinsic</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="n">rot_intrinsic2</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;xyz&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">xyz_intrinsic</span> <span class="o">=</span> <span class="n">rot_intrinsic2</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># --- Rotation Matrices ---</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">Rx</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">Ry</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>                     <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
 <a id="__codelineno-2-14" name="__codelineno-2-14"></a>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="c1"># --- Extrinsic rotation (world axes: roll -&gt; pitch -&gt; yaw) ---</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="n">rot_extrinsic</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;ZYX&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">yaw</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">roll</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="n">ZYX_extrinsic</span> <span class="o">=</span> <span class="n">rot_extrinsic</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="n">rot_extrinsic2</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;XYZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="n">XYZ_extrinsic</span> <span class="o">=</span> <span class="n">rot_extrinsic2</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="c1"># --- Helper plot function ---</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_axes</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    <span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    <span class="n">x_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="n">y_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a>    <span class="n">z_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">y_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">z_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a>
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-38" name="__codelineno-2-38"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-39" name="__codelineno-2-39"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-<a id="__codelineno-2-40" name="__codelineno-2-40"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<a id="__codelineno-2-41" name="__codelineno-2-41"></a>
-<a id="__codelineno-2-42" name="__codelineno-2-42"></a><span class="c1"># --- Plot both ---</span>
-<a id="__codelineno-2-43" name="__codelineno-2-43"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<a id="__codelineno-2-44" name="__codelineno-2-44"></a>
-<a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="c1"># Vector</span>
-<a id="__codelineno-2-46" name="__codelineno-2-46"></a><span class="n">R0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-2-47" name="__codelineno-2-47"></a>
-<a id="__codelineno-2-48" name="__codelineno-2-48"></a><span class="c1"># Rotate vector</span>
-<a id="__codelineno-2-49" name="__codelineno-2-49"></a><span class="n">v_intrinsic</span> <span class="o">=</span> <span class="n">zyx_intrinsic</span> <span class="o">@</span> <span class="n">R0</span>
-<a id="__codelineno-2-50" name="__codelineno-2-50"></a><span class="n">v_extrinsic</span> <span class="o">=</span> <span class="n">ZYX_extrinsic</span> <span class="o">@</span> <span class="n">R0</span>
-<a id="__codelineno-2-51" name="__codelineno-2-51"></a>
-<a id="__codelineno-2-52" name="__codelineno-2-52"></a><span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-53" name="__codelineno-2-53"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">v_intrinsic</span><span class="p">,</span> <span class="n">ax1</span><span class="p">,</span> <span class="s2">&quot;zyx (body frame)&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-54" name="__codelineno-2-54"></a><span class="n">ax1</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span> 
-<a id="__codelineno-2-55" name="__codelineno-2-55"></a>
-<a id="__codelineno-2-56" name="__codelineno-2-56"></a><span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-57" name="__codelineno-2-57"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">xyz_intrinsic</span><span class="p">,</span> <span class="n">ax1</span><span class="p">,</span> <span class="s2">&quot;xyz&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-58" name="__codelineno-2-58"></a><span class="n">ax1</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span> 
-<a id="__codelineno-2-59" name="__codelineno-2-59"></a>
-<a id="__codelineno-2-60" name="__codelineno-2-60"></a><span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-61" name="__codelineno-2-61"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">v_extrinsic</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="s2">&quot;ZYX&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-62" name="__codelineno-2-62"></a><span class="n">ax2</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
-<a id="__codelineno-2-63" name="__codelineno-2-63"></a>
-<a id="__codelineno-2-64" name="__codelineno-2-64"></a><span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-65" name="__codelineno-2-65"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">XYZ_extrinsic</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="s2">&quot;XYZ ()&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-66" name="__codelineno-2-66"></a><span class="n">ax2</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
-<a id="__codelineno-2-67" name="__codelineno-2-67"></a><span class="c1"># plt.tight_layout()</span>
-<a id="__codelineno-2-68" name="__codelineno-2-68"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<a id="__codelineno-2-69" name="__codelineno-2-69"></a>
-<a id="__codelineno-2-70" name="__codelineno-2-70"></a><span class="c1"># --- Print matrices ---</span>
-<a id="__codelineno-2-71" name="__codelineno-2-71"></a><span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-2-72" name="__codelineno-2-72"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intrinsic Rotation Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">zyx_intrinsic</span><span class="p">)</span>
-<a id="__codelineno-2-73" name="__codelineno-2-73"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extrinsic Rotation Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ZYX_extrinsic</span><span class="p">)</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">Rz</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>                     <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="c1"># --- Plot Function ---</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_axes</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>    <span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>    <span class="n">x_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    <span class="n">y_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    <span class="n">z_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">y_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">z_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a><span class="c1"># --- Angles ---</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a><span class="n">roll</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a><span class="n">pitch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a><span class="n">yaw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a>
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a><span class="c1"># --- Extrinsic sequence ---</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a><span class="n">R0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a><span class="n">R1</span> <span class="o">=</span> <span class="n">Rx</span><span class="p">(</span><span class="n">roll</span><span class="p">)</span> <span class="o">@</span> <span class="n">R0</span>      <span class="c1"># roll about world X</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a><span class="n">R2</span> <span class="o">=</span> <span class="n">Ry</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="o">@</span> <span class="n">R1</span>     <span class="c1"># then pitch about world Y</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="n">R3</span> <span class="o">=</span> <span class="n">Rz</span><span class="p">(</span><span class="n">yaw</span><span class="p">)</span> <span class="o">@</span> <span class="n">R2</span>       <span class="c1"># then yaw about world Z</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a>
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a><span class="c1"># --- Plot ---</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 1: Rest&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R1</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 2: Roll 90° (world X)&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R2</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 3: + Pitch 45° (world Y)&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">R3</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">),</span> <span class="s2">&quot;Step 4: + Yaw 180° (world Z)&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-53" name="__codelineno-2-53"></a><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<a id="__codelineno-2-54" name="__codelineno-2-54"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<p><img alt="alt text" src="images/exrinsic.png" /></p>
+<hr />
+<h2 id="rotate-using-scipy">Rotate using scipy</h2>
+<ul>
+<li>Lowercase ("xyz") = intrinsic (body-fixed).</li>
+<li>Uppercase ("XYZ") = extrinsic (world-fixed).</li>
+</ul>
+<details>
+    <summary>code</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span>
+<span class="normal"><a href="#__codelineno-3-50">50</a></span>
+<span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span>
+<span class="normal"><a href="#__codelineno-3-53">53</a></span>
+<span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span>
+<span class="normal"><a href="#__codelineno-3-62">62</a></span>
+<span class="normal"><a href="#__codelineno-3-63">63</a></span>
+<span class="normal"><a href="#__codelineno-3-64">64</a></span>
+<span class="normal"><a href="#__codelineno-3-65">65</a></span>
+<span class="normal"><a href="#__codelineno-3-66">66</a></span>
+<span class="normal"><a href="#__codelineno-3-67">67</a></span>
+<span class="normal"><a href="#__codelineno-3-68">68</a></span>
+<span class="normal"><a href="#__codelineno-3-69">69</a></span>
+<span class="normal"><a href="#__codelineno-3-70">70</a></span>
+<span class="normal"><a href="#__codelineno-3-71">71</a></span>
+<span class="normal"><a href="#__codelineno-3-72">72</a></span>
+<span class="normal"><a href="#__codelineno-3-73">73</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rotation</span> <span class="k">as</span> <span class="n">R</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="c1"># --- Angles (degrees) ---</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">180</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="c1"># --- Intrinsic rotation (body axes: roll -&gt; pitch -&gt; yaw) ---</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="n">rot_intrinsic</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;zyx&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">yaw</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">roll</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="n">zyx_intrinsic</span> <span class="o">=</span> <span class="n">rot_intrinsic</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="n">rot_intrinsic2</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;xyz&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="n">xyz_intrinsic</span> <span class="o">=</span> <span class="n">rot_intrinsic2</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="c1"># --- Extrinsic rotation (world axes: roll -&gt; pitch -&gt; yaw) ---</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="n">rot_extrinsic</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;ZYX&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">yaw</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">roll</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="n">ZYX_extrinsic</span> <span class="o">=</span> <span class="n">rot_extrinsic</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="n">rot_extrinsic2</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">from_euler</span><span class="p">(</span><span class="s2">&quot;XYZ&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">],</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="n">XYZ_extrinsic</span> <span class="o">=</span> <span class="n">rot_extrinsic2</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="c1"># --- Helper plot function ---</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_axes</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>    <span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>    <span class="n">x_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="n">y_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>    <span class="n">z_axis</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">y_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">z_axis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a><span class="c1"># --- Plot both ---</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a><span class="c1"># Vector</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a><span class="n">R0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a><span class="c1"># Rotate vector</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a><span class="n">v_intrinsic</span> <span class="o">=</span> <span class="n">zyx_intrinsic</span> <span class="o">@</span> <span class="n">R0</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a><span class="n">v_extrinsic</span> <span class="o">=</span> <span class="n">ZYX_extrinsic</span> <span class="o">@</span> <span class="n">R0</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a><span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">v_intrinsic</span><span class="p">,</span> <span class="n">ax1</span><span class="p">,</span> <span class="s2">&quot;zyx (body frame)&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a><span class="n">ax1</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span> 
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a><span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">xyz_intrinsic</span><span class="p">,</span> <span class="n">ax1</span><span class="p">,</span> <span class="s2">&quot;xyz&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a><span class="n">ax1</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span> 
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a><span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">v_extrinsic</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="s2">&quot;ZYX&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a><span class="n">ax2</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a><span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65"></a><span class="n">plot_axes</span><span class="p">(</span><span class="n">XYZ_extrinsic</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="s2">&quot;XYZ ()&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-66" name="__codelineno-3-66"></a><span class="n">ax2</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67"></a><span class="c1"># plt.tight_layout()</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69"></a>
+<a id="__codelineno-3-70" name="__codelineno-3-70"></a><span class="c1"># --- Print matrices ---</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71"></a><span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-3-72" name="__codelineno-3-72"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intrinsic Rotation Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">zyx_intrinsic</span><span class="p">)</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extrinsic Rotation Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ZYX_extrinsic</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
