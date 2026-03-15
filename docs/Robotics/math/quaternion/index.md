@@ -8,9 +8,10 @@ tags:
 
 Quaternions are an alternate way to describe **orientation** or **rotations** in 3D space using an ordered set of four numbers. They have the ability to uniquely describe any three-dimensional rotation about an arbitrary axis and do not suffer from gimbal lock
 
+- [Video:  How to Use Quaternions ](https://youtu.be/bKd2lPjl92c)
+- [Video: Quaternions without math](https://youtu.be/1yoFjjJRnLY)
 
-[Quaternions without math](https://youtu.be/1yoFjjJRnLY)
-![alt text](image.png)
+![quaternion](images/quaternion.png)
 
 
 ### Unit quaternion
@@ -33,7 +34,7 @@ $$q_{unit} = \frac{q}{\|q\|} = \left(\frac{w}{\|q\|}, \frac{x}{\|q\|}, \frac{y}{
     <summary>code example</summary>
 
 ```python
---8<-- "docs/Robotics/math/quaterniion/code/unit_quaternion.py"
+--8<-- "docs/Robotics/math/quaternion/code/unit_quaternion.py"
 ```
 </details>
 
@@ -43,10 +44,16 @@ $$q_{unit} = \frac{q}{\|q\|} = \left(\frac{w}{\|q\|}, \frac{x}{\|q\|}, \frac{y}{
 
 ### Conjugate
 A quaternion is:
-$$q = (x, y, z, w)$$
+
+$$
+q = (x, y, z, w)
+$$
 
 The conjugate is:
-$$q^* = (-x, -y, -z, w)$$
+
+$$
+q^* = (-x, -y, -z, w)
+$$
 
 !!! note "flip the signs of x, y, z, keep w the same."
      
@@ -67,7 +74,7 @@ $$SLERP(q_0, q_1, t) = \frac{\sin((1-t)\theta)}{\sin(\theta)} q_0 + \frac{\sin(t
     <summary>Demo: using scipy</summary>
 
 ```python
---8<-- "docs/Robotics/math/quaterniion/code/slerp.py"
+--8<-- "docs/Robotics/math/quaternion/code/slerp.py"
 ```
 </details>
 
@@ -103,7 +110,7 @@ $$\mathbf{v} = (v_x, v_y, v_z, 0)$$
     <summary>Numpy Example</summary>
 
 ```python
---8<-- "docs/Robotics/math/quaterniion/code/multiple.py"
+--8<-- "docs/Robotics/math/quaternion/code/multiple.py"
 ```
 </details>
 

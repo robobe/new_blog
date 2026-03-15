@@ -26,7 +26,10 @@ Tait–Bryan angles are a way to describe orientation in 3D space using three ro
 
 ### Intrinsic
 rotations are about the body axes.
-$$R_{\text{intrinsic}} = R_z(\text{yaw}) \cdot R_y(\text{pitch}) \cdot R_x(\text{roll})$$
+
+$$
+R_{\text{intrinsic}} = R_z(\text{yaw}) \cdot R_y(\text{pitch}) \cdot R_x(\text{roll})
+$$
 
 <details>
     <summary>code</summary>

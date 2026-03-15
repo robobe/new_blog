@@ -49,15 +49,20 @@ $$
 | t+3  | 74  | 4 | 71     |    | 0.17  | 0.66  |
 
 
-![1d](images/kalman_1d.png.png)
+![1d](images/kalman_1d.png)
 
 <details>
 <summary>kalman 1d</summary>
-```
+```python
 --8<-- "docs/Robotics/filter_and_estimator/kalman_filter/code/kalman_1d.py"
 ```
 </details>
 
+---
+
+## Video 7- (multi dimension)
+
+- [video 7 - multi dimension 1](https://youtu.be/-cD7WkbAIL0?list=PLX2gX-ftPVXU3oUFNATxGXY90AULiqnWT)
 
 ---
 

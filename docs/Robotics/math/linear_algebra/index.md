@@ -68,3 +68,8 @@ The dot product between two unit vectors is the **cosine** of the **angle** betw
 angle_in_radians = acos( a.dot(b) )
 # a and b are unit vector
 ```
+
+---
+
+## Cross product
+[3Blue1Brown - cross product](https://youtu.be/eu6i7WJeinw)
