@@ -101,6 +101,18 @@ accy_line, = ax_acc.plot([], [], label="acc_y")
 accz_line, = ax_acc.plot([], [], label="acc_z")
 ax_acc.legend()
 
+ax_vel = fig.add_subplot(2, 2, 3)
+ax_vel.set_title("Velocity State")
+ax_vel.axis("off")
+vel_text = ax_vel.text(
+    0.05, 0.95, "",
+    transform=ax_vel.transAxes,
+    va="top",
+    ha="left",
+    fontsize=12,
+    family="monospace",
+)
+
 ax_gyro = fig.add_subplot(2, 2, 4)
 ax_gyro.set_title("Gyroscope (measured)")
 ax_gyro.set_xlabel("time [s]")
@@ -124,10 +136,11 @@ def init():
     gyrox_line.set_data([], [])
     gyroy_line.set_data([], [])
     gyroz_line.set_data([], [])
+    vel_text.set_text("")
     return (
         path_line, vehicle_point, heading_line,
         accx_line, accy_line, accz_line,
-        gyrox_line, gyroy_line, gyroz_line
+        gyrox_line, gyroy_line, gyroz_line, vel_text
     )
 
 def update(frame):
@@ -152,10 +165,18 @@ def update(frame):
     gyroy_line.set_data(tt, gyro_meas_hist[:frame + 1, 1])
     gyroz_line.set_data(tt, gyro_meas_hist[:frame + 1, 2])
 
+    vx = v * math.cos(th)
+    vy = v * math.sin(th)
+    vel_text.set_text(
+        f"v_x      = {vx:6.3f} m/s\n"
+        f"v_y      = {vy:6.3f} m/s\n"
+        f"yaw_rate = {omega:6.3f} rad/s"
+    )
+
     return (
         path_line, vehicle_point, heading_line,
         accx_line, accy_line, accz_line,
-        gyrox_line, gyroy_line, gyroz_line
+        gyrox_line, gyroy_line, gyroz_line, vel_text
     )
 
 ani = FuncAnimation(
