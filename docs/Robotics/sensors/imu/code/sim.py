@@ -70,6 +70,39 @@ theta_hist = np.array(theta_hist)
 acc_meas_hist = np.array(acc_meas_hist)
 gyro_meas_hist = np.array(gyro_meas_hist)
 
+# Recover planar velocity from IMU by:
+# 1. removing known bias,
+# 2. integrating yaw rate,
+# 3. rotating body acceleration into the world frame,
+# 4. removing gravity,
+# 5. integrating acceleration to velocity.
+# The initial velocity must be known from another source.
+yaw_rate_imu_hist = gyro_meas_hist[:, 2] - gyro_bias[2]
+theta_imu_hist = np.zeros_like(t_hist)
+vx_imu_hist = np.zeros_like(t_hist)
+vy_imu_hist = np.zeros_like(t_hist)
+vz_imu_hist = np.zeros_like(t_hist)
+
+vx_imu_hist[0] = v
+
+for k in range(1, len(t_hist)):
+    yaw_rate = yaw_rate_imu_hist[k - 1]
+    theta_imu_hist[k] = theta_imu_hist[k - 1] + yaw_rate * dt
+
+    acc_body = acc_meas_hist[k - 1] - acc_bias
+    c = math.cos(theta_imu_hist[k - 1])
+    s = math.sin(theta_imu_hist[k - 1])
+    rot_body_to_world = np.array([
+        [c, -s, 0.0],
+        [s,  c, 0.0],
+        [0.0, 0.0, 1.0],
+    ])
+    acc_world = rot_body_to_world @ acc_body + np.array([0.0, 0.0, g])
+
+    vx_imu_hist[k] = vx_imu_hist[k - 1] + acc_world[0] * dt
+    vy_imu_hist[k] = vy_imu_hist[k - 1] + acc_world[1] * dt
+    vz_imu_hist[k] = vz_imu_hist[k - 1] + acc_world[2] * dt
+
 fig = plt.figure(figsize=(12, 8))
 
 ax_path = fig.add_subplot(2, 2, 1)
@@ -102,7 +135,7 @@ accz_line, = ax_acc.plot([], [], label="acc_z")
 ax_acc.legend()
 
 ax_vel = fig.add_subplot(2, 2, 3)
-ax_vel.set_title("Velocity State")
+ax_vel.set_title("Velocity: IMU vs Ground Truth")
 ax_vel.axis("off")
 vel_text = ax_vel.text(
     0.05, 0.95, "",
@@ -165,12 +198,16 @@ def update(frame):
     gyroy_line.set_data(tt, gyro_meas_hist[:frame + 1, 1])
     gyroz_line.set_data(tt, gyro_meas_hist[:frame + 1, 2])
 
-    vx = v * math.cos(th)
-    vy = v * math.sin(th)
+    vx_imu = vx_imu_hist[frame]
+    vy_imu = vy_imu_hist[frame]
+    yaw_rate_imu = yaw_rate_imu_hist[frame]
+    vx_gt = v * math.cos(th)
+    vy_gt = v * math.sin(th)
     vel_text.set_text(
-        f"v_x      = {vx:6.3f} m/s\n"
-        f"v_y      = {vy:6.3f} m/s\n"
-        f"yaw_rate = {omega:6.3f} rad/s"
+        f"{'':10s} IMU      GT\n"
+        f"v_x      = {vx_imu:6.3f}  {vx_gt:6.3f} m/s\n"
+        f"v_y      = {vy_imu:6.3f}  {vy_gt:6.3f} m/s\n"
+        f"yaw_rate = {yaw_rate_imu:6.3f}  {omega:6.3f} rad/s"
     )
 
     return (
