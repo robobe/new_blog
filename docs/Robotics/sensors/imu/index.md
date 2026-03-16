@@ -155,6 +155,34 @@ for example
 | **Magnetometer**  | Earth magnetic field          | **Yaw (heading)**                      | ✅ Yes (north)      | Fixes yaw drift, global heading        | Disturbed by metal/electric fields     | Long-term yaw correction           |
 
 
+### Orientation pipeline
+
+!!! tip "mpu6050"
+    IMU mems that include only accelerometer , gyroscope and temp sensor
+
+    ax, ay, az   → acceleration
+    gx, gy, gz   → angular velocity
+    temp         → temperature
+    
+```
+MPU6050
+   │
+   ├── accelerometer (gravity direction)
+   ├── gyroscope (angular rate)
+   │
+   ▼
+fusion algorithm
+   │
+   ├── complementary filter
+   ├── Madgwick filter
+   ├── Mahony filter
+   └── Kalman filter
+   │
+   ▼
+orientation
+(roll, pitch, yaw) or quaternion
+```
+
 ---
 
 ## To read and watch

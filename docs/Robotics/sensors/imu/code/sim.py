@@ -69,6 +69,8 @@ y_hist = np.array(y_hist)
 theta_hist = np.array(theta_hist)
 acc_meas_hist = np.array(acc_meas_hist)
 gyro_meas_hist = np.array(gyro_meas_hist)
+vx_gt_hist = v * np.cos(theta_hist)
+vy_gt_hist = v * np.sin(theta_hist)
 
 # Recover planar velocity from IMU by:
 # 1. removing known bias,
@@ -103,9 +105,9 @@ for k in range(1, len(t_hist)):
     vy_imu_hist[k] = vy_imu_hist[k - 1] + acc_world[1] * dt
     vz_imu_hist[k] = vz_imu_hist[k - 1] + acc_world[2] * dt
 
-fig = plt.figure(figsize=(12, 8))
+fig = plt.figure(figsize=(12, 10))
 
-ax_path = fig.add_subplot(2, 2, 1)
+ax_path = fig.add_subplot(3, 2, 1)
 ax_path.set_title("Ground Truth Circle Motion")
 ax_path.set_xlabel("x [m]")
 ax_path.set_ylabel("y [m]")
@@ -121,7 +123,7 @@ vehicle_point, = ax_path.plot([], [], "ro", label="Vehicle")
 heading_line, = ax_path.plot([], [], "r-", linewidth=2, label="Heading")
 ax_path.legend()
 
-ax_acc = fig.add_subplot(2, 2, 2)
+ax_acc = fig.add_subplot(3, 2, 2)
 ax_acc.set_title("Accelerometer (measured)")
 ax_acc.set_xlabel("time [s]")
 ax_acc.set_ylabel("m/s²")
@@ -134,7 +136,7 @@ accy_line, = ax_acc.plot([], [], label="acc_y")
 accz_line, = ax_acc.plot([], [], label="acc_z")
 ax_acc.legend()
 
-ax_vel = fig.add_subplot(2, 2, 3)
+ax_vel = fig.add_subplot(3, 2, 3)
 ax_vel.set_title("Velocity: IMU vs Ground Truth")
 ax_vel.axis("off")
 vel_text = ax_vel.text(
@@ -146,7 +148,23 @@ vel_text = ax_vel.text(
     family="monospace",
 )
 
-ax_gyro = fig.add_subplot(2, 2, 4)
+ax_vel_plot = fig.add_subplot(3, 2, 4)
+ax_vel_plot.set_title("Linear Velocity")
+ax_vel_plot.set_xlabel("time [s]")
+ax_vel_plot.set_ylabel("m/s")
+ax_vel_plot.grid(True)
+ax_vel_plot.set_xlim(t_hist[0], t_hist[-1])
+vel_plot_min = min(vx_imu_hist.min(), vy_imu_hist.min(), vx_gt_hist.min(), vy_gt_hist.min())
+vel_plot_max = max(vx_imu_hist.max(), vy_imu_hist.max(), vx_gt_hist.max(), vy_gt_hist.max())
+ax_vel_plot.set_ylim(vel_plot_min - 0.2, vel_plot_max + 0.2)
+
+vx_gt_line, = ax_vel_plot.plot([], [], label="v_x gt")
+vy_gt_line, = ax_vel_plot.plot([], [], label="v_y gt")
+vx_imu_line, = ax_vel_plot.plot([], [], "--", label="v_x imu")
+vy_imu_line, = ax_vel_plot.plot([], [], "--", label="v_y imu")
+ax_vel_plot.legend()
+
+ax_gyro = fig.add_subplot(3, 2, (5, 6))
 ax_gyro.set_title("Gyroscope (measured)")
 ax_gyro.set_xlabel("time [s]")
 ax_gyro.set_ylabel("rad/s")
@@ -169,11 +187,17 @@ def init():
     gyrox_line.set_data([], [])
     gyroy_line.set_data([], [])
     gyroz_line.set_data([], [])
+    vx_gt_line.set_data([], [])
+    vy_gt_line.set_data([], [])
+    vx_imu_line.set_data([], [])
+    vy_imu_line.set_data([], [])
     vel_text.set_text("")
     return (
         path_line, vehicle_point, heading_line,
         accx_line, accy_line, accz_line,
-        gyrox_line, gyroy_line, gyroz_line, vel_text
+        gyrox_line, gyroy_line, gyroz_line,
+        vx_gt_line, vy_gt_line, vx_imu_line, vy_imu_line,
+        vel_text
     )
 
 def update(frame):
@@ -197,12 +221,16 @@ def update(frame):
     gyrox_line.set_data(tt, gyro_meas_hist[:frame + 1, 0])
     gyroy_line.set_data(tt, gyro_meas_hist[:frame + 1, 1])
     gyroz_line.set_data(tt, gyro_meas_hist[:frame + 1, 2])
+    vx_gt_line.set_data(tt, vx_gt_hist[:frame + 1])
+    vy_gt_line.set_data(tt, vy_gt_hist[:frame + 1])
+    vx_imu_line.set_data(tt, vx_imu_hist[:frame + 1])
+    vy_imu_line.set_data(tt, vy_imu_hist[:frame + 1])
 
     vx_imu = vx_imu_hist[frame]
     vy_imu = vy_imu_hist[frame]
     yaw_rate_imu = yaw_rate_imu_hist[frame]
-    vx_gt = v * math.cos(th)
-    vy_gt = v * math.sin(th)
+    vx_gt = vx_gt_hist[frame]
+    vy_gt = vy_gt_hist[frame]
     vel_text.set_text(
         f"{'':10s} IMU      GT\n"
         f"v_x      = {vx_imu:6.3f}  {vx_gt:6.3f} m/s\n"
@@ -213,7 +241,9 @@ def update(frame):
     return (
         path_line, vehicle_point, heading_line,
         accx_line, accy_line, accz_line,
-        gyrox_line, gyroy_line, gyroz_line, vel_text
+        gyrox_line, gyroy_line, gyroz_line,
+        vx_gt_line, vy_gt_line, vx_imu_line, vy_imu_line,
+        vel_text
     )
 
 ani = FuncAnimation(
