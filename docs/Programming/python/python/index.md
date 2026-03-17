@@ -27,6 +27,11 @@ tags:
         </a>
     </div>
     <div class="grid-item">
+        <a href="python">
+        <p>Language Highlights</p>
+        </a>
+    </div>
+    <div class="grid-item">
         <a href="protocol">
         <p>Protocols</p>
         </a>
