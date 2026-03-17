@@ -744,16 +744,28 @@
 <p>Sensor fusion: Combining tow or more data source in a way that generates a better understanding of the system <a href="https://youtu.be/6qV3YjFppuc?list=PLn8PRpmsu08ryYoBpEKzoMOveSTyS-h4a&amp;t=46">Understanding sensor fusion and tracking</a></p>
 <p>Sensor fusion to estimate orientation
 <strong>AHRS</strong>: Attitude and Heading Reference System</p>
-<p>To describe orientation we need <strong>reference frame</strong> and specify the rotation in some way:
-- Euler angel : Roll, Pitch, Yaw
-- DCM: Direction Cosine Matrix
-- Quaternion</p>
+<p>To describe orientation we need <strong>reference frame</strong> and specify the rotation in some way:</p>
+<ul>
+<li>Euler angel : Roll, Pitch, Yaw</li>
+<li>DCM: Direction Cosine Matrix</li>
+<li>Quaternion</li>
+</ul>
 <h3 id="dead-reckoning">Dead reckoning</h3>
-<p><a href="https://youtu.be/0rlvvYgmTvI?t=763">video explain</a>
-- need to know initial orientation
-- sensor aren't perfect
-  - bias
-  - noise</p>
+<p>Dead reckoning is a <strong>navigation method</strong> where you estimate your current position by starting from a known position and integrating motion over time.</p>
+<p><a href="https://youtu.be/0rlvvYgmTvI?t=763">video explain</a></p>
+<p>Dead reckoning uses this information:</p>
+<ul>
+<li>initial position</li>
+<li>velocity (or distance traveled)</li>
+<li>direction (orientation)</li>
+</ul>
+<p>Then it updates the position step by step.</p>
+<div class="arithmatex">\[
+x_{k+1} = x_k + v_x \, dt
+$$
+$$
+y_{k+1} = y_k + v_y \, dt
+\]</div>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
