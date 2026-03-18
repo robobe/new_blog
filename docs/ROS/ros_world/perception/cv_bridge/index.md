@@ -1,24 +1,24 @@
 ---
+title: CV Bridge
 tags:
     - cv_bridge
     - ros
     - opencv
 ---
-## cv bridge
 
 <div class="grid-container">
     <div class="grid-item">
-            <a href="cv_bridge_build">
-                <img src="images/build.png"  width="150" height="150">
-                <p>Build</p>
-            </a>
-        </div>
-        <div class="grid-item">
-             <a href="">
-                <!-- <img src="images/quaternion.png"  width="150" height="150"> -->
-                <p>TBD</p>
-            </a>
-        </div>
+        <a href="cv_bridge_build">
+            <img src="images/build.png"  width="150" height="150">
+            <p>Build</p>
+        </a>
+    </div>
+    <div class="grid-item">
+            <a href="">
+            <!-- <img src="images/quaternion.png"  width="150" height="150"> -->
+            <p>TBD</p>
+        </a>
+    </div>
     <div class="grid-item">
           <a href="">
                 <!-- <img src="images/quaternion.png"  width="150" height="150"> -->

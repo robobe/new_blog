@@ -320,6 +320,55 @@ Short syntax similar to list comprehension
 9
 ```
 
+#### Generator pipeline
+
+- `send()`
+- `close()`
+A generator pipeline is a chain of generators where data flows lazily through multiple processing steps, making code efficient, modular, and memory-friendly.
+
+```
+data → generator1 → generator2 → generator3 → result
+```
+
+<details>
+<summary>pipeline demo</summary>
+```
+--8<-- "docs/Programming/python/python/python/code/gen_pipeline_demo.py"
+```
+</details>
+
+##### send
+
+```python
+def accumulator():
+    total = 0
+    while True:
+        value = yield total
+        total += value
+
+acc = accumulator()
+print(next(acc))  # Start the generator, prints 0
+print(acc.send(5))  # Send 5, prints 5
+print(acc.send(10))  # Send 10, prints 15
+```
+
+##### close
+
+```python
+def my_generator():
+    try:
+        while True:
+            yield "running"
+    finally:
+        print("cleanup on close")
+
+
+gen = my_generator()
+print(next(gen))  # "running"
+print(next(gen))  # "running"
+gen.close()  # This will trigger the cleanup code in the generator
+```
+
 ---
 
 ## Closure
@@ -339,7 +388,16 @@ f = outer()
 f()
 ```
 
-##TODO
-__closure__
-__closure__[0].cell_contents
-how closure work ?
+---
+
+### How it work
+python save reference to the outer variable in `__closure__' attribute
+it's tuple that it's item point to variable
+
+```python
+print(func.__closure__)
+# outer variable data
+print(func.__closure__[0].cell_contents)
+```
+
+

@@ -14,19 +14,27 @@ tags:
                 <img src="images/vscode.png"  width="150" height="150">
                 <p>VSCode dev environment</p>
         </a>
-                   </div>
-        <div class="grid-item">
-            <a href="pluginlib">
-                <img src="images/ros_pluginlib.png"  width="150" height="150">
-                <p>Pluginlib</p>
-            </a>
-        </div>
-        <div class="grid-item">
+    </div>
+</div>
+
+---
+<div>
+    <div class="grid-item">
+        <a href="pluginlib">
+            <p>Pluginlib</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="loaned_message">
+            <p>Loaned Message</p>
+        </a>
+    </div>
+        <!-- <div class="grid-item">
             <a href="cmake_tips">
                 <img src="images/cmake.png"  width="150" height="150">
                 <p>cmake tips</p>
             </a>
-        </div>
+        </div> -->
     
 </div>
 
