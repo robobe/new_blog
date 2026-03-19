@@ -740,6 +740,62 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#inverse-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inverse matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inverse matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inverse-22-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inverse 2*2 Matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inverse 2*2 Matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-determinate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check determinate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverse-33-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inverse 3*3 matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -834,6 +890,51 @@ The dot product takes two vectors and returns a scalar:</p>
 <hr />
 <h2 id="cross-product">Cross product</h2>
 <p><a href="https://youtu.be/eu6i7WJeinw">3Blue1Brown - cross product</a></p>
+<hr />
+<h2 id="inverse-matrix">Inverse matrix</h2>
+<h3 id="inverse-22-matrix">Inverse 2*2 Matrix</h3>
+<p><a href="https://youtu.be/aiBgjz5xbyg">Inverse of a 2*2 Matrix</a></p>
+<div class="arithmatex">\[A =
+\begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix}\]</div>
+<h4 id="check-determinate">Check determinate</h4>
+<div class="arithmatex">\[
+\det(A) = ad - bc
+\]</div>
+<p>Inverse (if determinate != 0)</p>
+<div class="arithmatex">\[
+A^{-1} = \frac{1}{ad - bc}
+\begin{bmatrix}
+d &amp; -b \\
+-c &amp; a
+\end{bmatrix}
+\]</div>
+<h3 id="inverse-33-matrix">Inverse 3*3 matrix</h3>
+<p><a href="https://youtu.be/Fg7_mv3izR0">Inverse of a 3*3 Matrix</a></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="p">])</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="n">A_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A inverse:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">A_inv</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
 
 
 

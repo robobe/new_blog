@@ -682,22 +682,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#intrinsic-matrix" class="md-nav__link">
+  <a href="#project-3d-point-to-image-plane" class="md-nav__link">
     <span class="md-ellipsis">
       
-        intrinsic matrix
+        Project 3D point to image plane
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="intrinsic matrix">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert-world-point-in-camera-coordinate-system-x_c-y_c-z_c-to-uv-image-plane-using-intrinsic-matrix-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convert World point in camera coordinate system (\(X_c, Y_c, Z_c\)) to (u,v) image plane using intrinsic matrix K
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Convert World point in camera coordinate system (\(X_c, Y_c, Z_c\)) to (u,v) image plane using intrinsic matrix K">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#camera-pose-in-world-coordinate" class="md-nav__link">
+  <a href="#matrix-multiplication" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Camera Pose in world Coordinate
+        Matrix multiplication
       
     </span>
   </a>
@@ -705,10 +716,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#invert-the-pose" class="md-nav__link">
+  <a href="#convert-homogeneous-coordinate-to-pixel-coordinate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Invert the Pose
+        Convert homogeneous coordinate to pixel coordinate
       
     </span>
   </a>
@@ -716,10 +727,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#apply-the-transformation" class="md-nav__link">
+  <a href="#homogeneous-image-coordinate" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Apply the Transformation
+        Homogeneous image coordinate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
       
     </span>
   </a>
@@ -728,6 +750,123 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-from-pixel-camera-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: from pixel -&gt; camera -&gt; world
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo: from pixel -&gt; camera -&gt; world">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pixel-camera-coordinate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pixel -&gt; Camera coordinate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pixel -&gt; Camera coordinate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#then" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Then
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverse-k-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        inverse K matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-inverse-with-homogeneous-p-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple inverse with homogeneous P vector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point-in-camera-coordinate-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Point in camera coordinate system
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#camera-to-world-coordinate-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera to World coordinate system
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera to World coordinate system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#then_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        then
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-using-ros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: Using ROS
+      
+    </span>
+  </a>
   
 </li>
       
@@ -798,48 +937,440 @@
     </div>
 </div>
 
-<p><img alt="alt text" src="images/camera_frame.png" /></p>
-<p><img alt="alt text" src="images/coordinate_system.png" /></p>
-<p><span class="arithmatex">\( R_{\mathbf{C}\leftarrow\mathbf{G}} =
-\begin{bmatrix}
-0 &amp; -1 &amp; 0\\
-0 &amp; 0 &amp; -1\\
-1 &amp; 0 &amp; 0
-\end{bmatrix} \)</span></p>
-<h2 id="intrinsic-matrix">intrinsic matrix</h2>
-<p>The intrinsic matrix <strong>K</strong> converts normalized camera coordinates (xn,yn) (where xn=X/Z,  yn=Y/Zxn​=X/Z,yn​=Y/Z) into pixel coordinates (u,v):</p>
 <hr />
-<p><strong>World frame</strong>: a global fixed reference (e.g., origin at some arbitrary place in the scene).
-<strong>Camera frame</strong>: origin is at the camera center, axes aligned with the camera’s orientation.</p>
-<p><img alt="alt text" src="image.png" /></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Pcamera​=Rcw​⋅Pworld​+tcw
+<p><a href="https://learnopencv.com/geometry-of-image-formation/">must read before : Image Geometry</a></p>
+<h2 id="project-3d-point-to-image-plane">Project 3D point to image plane</h2>
+<p><img alt="camera_plane" src="images/camera_coordinate_systems.png" /></p>
+<h2 id="convert-world-point-in-camera-coordinate-system-x_c-y_c-z_c-to-uv-image-plane-using-intrinsic-matrix-k">Convert World point in camera coordinate system (<span class="arithmatex">\(X_c, Y_c, Z_c\)</span>) to (u,v) image plane using intrinsic matrix K</h2>
+<div class="arithmatex">\[
+K =
+\begin{bmatrix}
+f_x &amp; 0 &amp; c_x \\
+0 &amp; f_y &amp; c_y \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]</div>
+<p>3D point in camera frame</p>
+<div class="arithmatex">\[
+\mathbf{P} =
+\begin{bmatrix}
+X \\
+Y \\
+Z
+\end{bmatrix}
+\]</div>
+<h4 id="matrix-multiplication">Matrix multiplication</h4>
+<div class="arithmatex">\[
+K \mathbf{P} =
+\begin{bmatrix}
+f_x &amp; 0 &amp; c_x \\
+0 &amp; f_y &amp; c_y \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+X \\
+Y \\
+Z
+\end{bmatrix}
+=\begin{bmatrix}
+f_x X + c_x Z \\
+f_y Y + c_y Z \\
+Z
+\end{bmatrix}
+\]</div>
+<p>Homogeneous image coordinate</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+\tilde{u} \\
+\tilde{v} \\
+\tilde{w}
+\end{bmatrix}
+=\begin{bmatrix}
+f_x X + c_x Z \\
+f_y Y + c_y Z \\
+Z
+\end{bmatrix}
+\]</div>
+<h4 id="convert-homogeneous-coordinate-to-pixel-coordinate">Convert homogeneous coordinate to pixel coordinate</h4>
+<p>The matrix multiplication gives a scaled form of the pixel location, and the scale is removed by dividing by the third component.</p>
+<div class="arithmatex">\[
+u = \frac{\tilde{u}}{\tilde{w}}, \qquad v = \frac{\tilde{v}}{\tilde{w}}
+\]</div>
+<p>since <span class="arithmatex">\(\tilde{w} = Z\)</span></p>
+<div class="arithmatex">\[
+u = \frac{f_x X + c_x Z}{Z} = \frac{f_x X}{Z} + c_x
+\]</div>
+<div class="arithmatex">\[
+v = \frac{f_y Y + c_y Z}{Z} = \frac{f_y Y}{Z} + c_y
+\]</div>
+<hr />
+<h3 id="homogeneous-image-coordinate">Homogeneous image coordinate</h3>
+<p>Instead of representing a pixel as <strong>(u,v)</strong>
+We represent it as a <strong>3D vector</strong></p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+u \\
+v \\
+1
+\end{bmatrix}
+\]</div>
+<hr />
+<h3 id="demo">Demo</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="p">[</span><span class="mf">600.0</span><span class="p">,</span>   <span class="mf">0.0</span><span class="p">,</span> <span class="mf">320.0</span><span class="p">],</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="p">[</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">600.0</span><span class="p">,</span> <span class="mf">240.0</span><span class="p">],</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="p">[</span>  <span class="mf">0.0</span><span class="p">,</span>   <span class="mf">0.0</span><span class="p">,</span>   <span class="mf">1.0</span><span class="p">]</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="p">])</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>  <span class="c1"># X, Y, Z in camera frame</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">p_h</span> <span class="o">=</span> <span class="n">K</span> <span class="o">@</span> <span class="n">P</span>   <span class="c1"># homogeneous image coordinates</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="n">u</span> <span class="o">=</span> <span class="n">p_h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">p_h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="n">v</span> <span class="o">=</span> <span class="n">p_h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">p_h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;homogeneous:&quot;</span><span class="p">,</span> <span class="n">p_h</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pixel:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="camera-pose-in-world-coordinate">Camera Pose in world Coordinate</h3>
-<p>Suppose we know the camera pose in the world frame as:</p>
-<p>Rwc: rotation from camera to world (3<em>3 rotation matrix)
-twc: translation camera origin position in world coordinates (3</em>1 translation vector)</p>
-<h3 id="invert-the-pose">Invert the Pose</h3>
-<p>We want world → camera, so we take the inverse of the camera pose:</p>
-<p>$
-R_{cw} = R_{wc}^T
-$</p>
-<p>because rotation matrices are orthogonal: <span class="arithmatex">\(R^{-1}=R^{T}\)</span></p>
-<h3 id="apply-the-transformation">Apply the Transformation</h3>
-<p>Given a point in world coordinate $\mathbf{P}_w = \begin{bmatrix} X_w \ Y_w \ Z_w \end{bmatrix}
-$</p>
-<p><strong>Translate</strong>: subtract the camera’s world position</p>
-<div class="admonition translate word to camera">
-<p class="admonition-title">Translate</p>
-<p>negative camera to world <span class="arithmatex">\(- t_{wc}\)</span></p>
-</div>
-<p>$
-P_{\text{shifted}} = P_{w} - t_{wc}
-$</p>
-<p><strong>Rotate</strong>: apply the inverse rotation to align axes with camera frame</p>
-<p>The point in camera frame</p>
-<p>$
-P_c = R_{wc}^T \cdot P_{\text{shifted}}
-$</p>
+<hr />
+<hr />
+<h2 id="demo-from-pixel-camera-world">Demo: from pixel -&gt; camera -&gt; world</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>(u, v) + depth Z
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>        ↓
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>camera intrinsics (K⁻¹)
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>        ↓
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>3D point in camera frame
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>        ↓
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>extrinsic (R, t)
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>        ↓
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>3D point in world frame
+</code></pre></div></td></tr></table></div>
+<h3 id="pixel-camera-coordinate">Pixel -&gt; Camera coordinate</h3>
+<p>pixel (u,v) as homogeneous</p>
+<div class="arithmatex">\[
+\mathbf{p} =
+\begin{bmatrix}
+u \\
+v \\
+1
+\end{bmatrix}
+\]</div>
+<h4 id="then">Then</h4>
+<div class="arithmatex">\[
+\mathbf{P}_{cam} = Z \cdot K^{-1} \mathbf{p}
+\]</div>
+<h4 id="inverse-k-matrix">inverse K matrix</h4>
+<div class="arithmatex">\[
+K^{-1} =
+\begin{bmatrix}
+1/f_x &amp; 0 &amp; -c_x/f_x \\
+0 &amp; 1/f_y &amp; -c_y/f_y \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}\]</div>
+<h4 id="multiple-inverse-with-homogeneous-p-vector">Multiple inverse with homogeneous P vector</h4>
+<div class="arithmatex">\[
+K^{-1} p =
+\begin{bmatrix}
+(u-c_x)/f_x \\
+(v-c_y)/f_y \\
+1
+\end{bmatrix}
+\]</div>
+<h4 id="point-in-camera-coordinate-system">Point in camera coordinate system</h4>
+<div class="arithmatex">\[
+P_{cam} = Z K^{-1} p
+\]</div>
+<div class="arithmatex">\[
+P_{cam} = 
+\begin{bmatrix}
+X_c \\
+Y_c \\
+Z_c
+\end{bmatrix} =
+\begin{bmatrix}
+(u-c_x)Z/f_x \\
+(v-c_y)Z/f_y \\
+Z
+\end{bmatrix}
+\]</div>
+<h4 id="camera-to-world-coordinate-system">Camera to World coordinate system</h4>
+<div class="arithmatex">\[
+T =
+\begin{bmatrix}
+R &amp; t \\
+0 &amp; 1
+\end{bmatrix}
+\]</div>
+<h5 id="then_1">then</h5>
+<div class="arithmatex">\[
+\mathbf{P}_{world} = R \cdot \mathbf{P}_{cam} + t
+\]</div>
+<hr />
+<h2 id="demo-using-ros">Demo: Using ROS</h2>
+<p>To get a world 3D point from image pixel, you need:</p>
+<ul>
+<li>u, v</li>
+<li>camera intrinsics: fx, fy, cx, cy</li>
+<li>depth Z</li>
+<li>TF from camera_optical_frame to world</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">tf tree</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>world
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w"> </span>└──<span class="w"> </span>base_link
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">      </span>└──<span class="w"> </span>camera_link
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">           </span>└──<span class="w"> </span>camera_optical_frame
+</code></pre></div></td></tr></table></div>
+<details>
+<summary>ROS Node using camera_info and TF </summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-3-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-3-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-3-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-3-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-3-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-3-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-3-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-3-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-3-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-3-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-3-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-3-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-3-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-3-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-3-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-3-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-3-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-3-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-3-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-3-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-3-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-3-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-3-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-3-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-3-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-3-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-3-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-3-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-3-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-3-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-3-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-3-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-3-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-3-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-3-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-3-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-3-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-3-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-3-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-3-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-3-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-3-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-3-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-3-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-3-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-3-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-3-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-3-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-3-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-3-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-3-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-3-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-3-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-3-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-3-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-3-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-3-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-3-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-3-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-3-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-3-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-3-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-3-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-3-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-3-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-3-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-3-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-3-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-3-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-3-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-3-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-3-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-3-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-3-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-3-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-3-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-3-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-3-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-3-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-3-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-3-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-3-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-3-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-3-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-3-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-3-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-3-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-3-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-3-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-3-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-3-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-3-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-3-100">100</a></span>
+<span class="normal"><a href="#__codelineno-3-101">101</a></span>
+<span class="normal"><a href="#__codelineno-3-102">102</a></span>
+<span class="normal"><a href="#__codelineno-3-103">103</a></span>
+<span class="normal"><a href="#__codelineno-3-104">104</a></span>
+<span class="normal"><a href="#__codelineno-3-105">105</a></span>
+<span class="normal"><a href="#__codelineno-3-106">106</a></span>
+<span class="normal"><a href="#__codelineno-3-107">107</a></span>
+<span class="normal"><a href="#__codelineno-3-108">108</a></span>
+<span class="normal"><a href="#__codelineno-3-109">109</a></span>
+<span class="normal"><a href="#__codelineno-3-110">110</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">CameraInfo</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">geometry_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">PointStamped</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf2_ros</span><span class="w"> </span><span class="kn">import</span> <span class="n">Buffer</span><span class="p">,</span> <span class="n">TransformListener</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tf2_geometry_msgs.tf2_geometry_msgs</span><span class="w"> </span><span class="kn">import</span> <span class="n">do_transform_point</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="k">class</span><span class="w"> </span><span class="nc">PixelToWorldFixedDepth</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;pixel_to_world_fixed_depth&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>        <span class="c1"># Parameters</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">declare_parameter</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="mi">320</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">declare_parameter</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="mi">240</span><span class="p">)</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">declare_parameter</span><span class="p">(</span><span class="s2">&quot;fixed_depth_m&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">declare_parameter</span><span class="p">(</span><span class="s2">&quot;camera_frame&quot;</span><span class="p">,</span> <span class="s2">&quot;camera_optical_frame&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">declare_parameter</span><span class="p">(</span><span class="s2">&quot;world_frame&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fixed_depth_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="s2">&quot;fixed_depth_m&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">camera_frame</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="s2">&quot;camera_frame&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">world_frame</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="s2">&quot;world_frame&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>        <span class="c1"># Camera intrinsics</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fx</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fy</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cx</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cy</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="c1"># TF</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span> <span class="o">=</span> <span class="n">Buffer</span><span class="p">()</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span> <span class="o">=</span> <span class="n">TransformListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">create_subscription</span><span class="p">(</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>            <span class="n">CameraInfo</span><span class="p">,</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>            <span class="s2">&quot;/camera/camera_info&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">camera_info_callback</span><span class="p">,</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>            <span class="mi">10</span><span class="p">,</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>        <span class="p">)</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_pixel</span><span class="p">)</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">camera_info_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">CameraInfo</span><span class="p">):</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>        <span class="c1"># msg.k =</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>        <span class="c1"># [fx, 0,  cx,</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>        <span class="c1">#  0,  fy, cy,</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>        <span class="c1">#  0,  0,  1]</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fx</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fy</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cx</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cy</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">process_pixel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for /camera/camera_info ...&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a>            <span class="k">return</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a>        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_depth_m</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65"></a>
+<a id="__codelineno-3-66" name="__codelineno-3-66"></a>        <span class="c1"># Back-project pixel -&gt; 3D point in camera_optical_frame</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67"></a>        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cx</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">fx</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68"></a>        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cy</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">fy</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69"></a>
+<a id="__codelineno-3-70" name="__codelineno-3-70"></a>        <span class="n">p_cam</span> <span class="o">=</span> <span class="n">PointStamped</span><span class="p">()</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71"></a>        <span class="n">p_cam</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_clock</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_msg</span><span class="p">()</span>
+<a id="__codelineno-3-72" name="__codelineno-3-72"></a>        <span class="n">p_cam</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_frame</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73"></a>        <span class="n">p_cam</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-3-74" name="__codelineno-3-74"></a>        <span class="n">p_cam</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<a id="__codelineno-3-75" name="__codelineno-3-75"></a>        <span class="n">p_cam</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<a id="__codelineno-3-76" name="__codelineno-3-76"></a>
+<a id="__codelineno-3-77" name="__codelineno-3-77"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+<a id="__codelineno-3-78" name="__codelineno-3-78"></a>            <span class="sa">f</span><span class="s2">&quot;pixel=(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">}</span><span class="s2">) &quot;</span>
+<a id="__codelineno-3-79" name="__codelineno-3-79"></a>            <span class="sa">f</span><span class="s2">&quot;-&gt; camera [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_frame</span><span class="si">}</span><span class="s2">] &quot;</span>
+<a id="__codelineno-3-80" name="__codelineno-3-80"></a>            <span class="sa">f</span><span class="s2">&quot;x=</span><span class="si">{</span><span class="n">p_cam</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="n">p_cam</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, z=</span><span class="si">{</span><span class="n">p_cam</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">z</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81"></a>        <span class="p">)</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82"></a>
+<a id="__codelineno-3-83" name="__codelineno-3-83"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-3-84" name="__codelineno-3-84"></a>            <span class="n">transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="o">.</span><span class="n">lookup_transform</span><span class="p">(</span>
+<a id="__codelineno-3-85" name="__codelineno-3-85"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">world_frame</span><span class="p">,</span>
+<a id="__codelineno-3-86" name="__codelineno-3-86"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">camera_frame</span><span class="p">,</span>
+<a id="__codelineno-3-87" name="__codelineno-3-87"></a>                <span class="n">rclpy</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span>
+<a id="__codelineno-3-88" name="__codelineno-3-88"></a>            <span class="p">)</span>
+<a id="__codelineno-3-89" name="__codelineno-3-89"></a>
+<a id="__codelineno-3-90" name="__codelineno-3-90"></a>            <span class="n">p_world</span> <span class="o">=</span> <span class="n">do_transform_point</span><span class="p">(</span><span class="n">p_cam</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
+<a id="__codelineno-3-91" name="__codelineno-3-91"></a>
+<a id="__codelineno-3-92" name="__codelineno-3-92"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+<a id="__codelineno-3-93" name="__codelineno-3-93"></a>                <span class="sa">f</span><span class="s2">&quot;world [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">world_frame</span><span class="si">}</span><span class="s2">] &quot;</span>
+<a id="__codelineno-3-94" name="__codelineno-3-94"></a>                <span class="sa">f</span><span class="s2">&quot;x=</span><span class="si">{</span><span class="n">p_world</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, y=</span><span class="si">{</span><span class="n">p_world</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, z=</span><span class="si">{</span><span class="n">p_world</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">z</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-3-95" name="__codelineno-3-95"></a>            <span class="p">)</span>
+<a id="__codelineno-3-96" name="__codelineno-3-96"></a>
+<a id="__codelineno-3-97" name="__codelineno-3-97"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-3-98" name="__codelineno-3-98"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TF lookup failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-99" name="__codelineno-3-99"></a>
+<a id="__codelineno-3-100" name="__codelineno-3-100"></a>
+<a id="__codelineno-3-101" name="__codelineno-3-101"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-3-102" name="__codelineno-3-102"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<a id="__codelineno-3-103" name="__codelineno-3-103"></a>    <span class="n">node</span> <span class="o">=</span> <span class="n">PixelToWorldFixedDepth</span><span class="p">()</span>
+<a id="__codelineno-3-104" name="__codelineno-3-104"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<a id="__codelineno-3-105" name="__codelineno-3-105"></a>    <span class="n">node</span><span class="o">.</span><span class="n">destroy_node</span><span class="p">()</span>
+<a id="__codelineno-3-106" name="__codelineno-3-106"></a>    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+<a id="__codelineno-3-107" name="__codelineno-3-107"></a>
+<a id="__codelineno-3-108" name="__codelineno-3-108"></a>
+<a id="__codelineno-3-109" name="__codelineno-3-109"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-3-110" name="__codelineno-3-110"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
 
 
 
