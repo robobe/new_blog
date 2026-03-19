@@ -73,3 +73,50 @@ angle_in_radians = acos( a.dot(b) )
 
 ## Cross product
 [3Blue1Brown - cross product](https://youtu.be/eu6i7WJeinw)
+
+---
+
+## Inverse matrix
+
+### Inverse 2*2 Matrix
+[Inverse of a 2*2 Matrix](https://youtu.be/aiBgjz5xbyg)
+
+$$A =
+\begin{bmatrix}
+a & b \\
+c & d
+\end{bmatrix}$$
+
+#### Check determinate
+
+$$
+\det(A) = ad - bc
+$$
+
+Inverse (if determinate != 0)
+
+$$
+A^{-1} = \frac{1}{ad - bc}
+\begin{bmatrix}
+d & -b \\
+-c & a
+\end{bmatrix}
+$$
+
+### Inverse 3*3 matrix
+[Inverse of a 3*3 Matrix](https://youtu.be/Fg7_mv3izR0)
+
+
+```python
+import numpy as np
+
+A = np.array([
+    [1, 2, 3],
+    [0, 1, 4],
+    [5, 6, 0]
+])
+
+A_inv = np.linalg.inv(A)
+
+print("A inverse:\n", A_inv)
+```

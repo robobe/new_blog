@@ -4,6 +4,12 @@ tags:
     - book
 ---
 
+# Youtube channels
+- [The Organic Chemistry Tutor](https://www.youtube.com/@TheOrganicChemistryTutor/playlists)
+
+
+---
+
 # Courses
 ## AI
 - [Neural Networks From Scratch in Python](https://youtube.com/playlist?list=PL1u-h-YIOL0u7R6dg_d5O5M9HUj0SFjHE&si=paB1P39AU5rT_E8a)
