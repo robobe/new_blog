@@ -8,17 +8,18 @@ tags:
 
 {{ page_folder_links() }}
 
-- [](#)
-- [Minimal](#minimal)
-  - [remap topic](#remap-topic)
-- [parameters](#parameters)
-- [let](#let)
-- [Argument](#argument)
-  - [basic](#basic)
-  - [with default](#with-default)
-  - [with multiple choice](#with-multiple-choice)
-- [Include](#include)
-- [set\_env / unset\_env](#set_env--unset_env)
+- [TODO: find all mapping](#todo-find-all-mapping)
+- [TODO: fill table with data](#todo-fill-table-with-data)
+    - [Minimal](#minimal)
+    - [remap topic](#remap-topic)
+  - [parameters](#parameters)
+  - [let](#let)
+  - [Argument](#argument)
+    - [basic](#basic)
+    - [with default](#with-default)
+    - [with multiple choice](#with-multiple-choice)
+  - [Include](#include)
+  - [set\_env / unset\_env](#set_env--unset_env)
 
 ---
 
@@ -46,7 +47,51 @@ tags:
 </div>
 ---
 
-## Minimal
+## Node
+
+
+```yaml
+launch:
+
+- node:
+    pkg: zero_copy_demo
+    exec: sub_num
+    env:
+        - name: FASTDDS_BUILTIN_TRANSPORTS
+          value: UDPv4
+    param:
+        - name: use_sim_time
+          value : true
+        - name: use_intra_process_comms
+          value: true
+    name: my_talker
+    namespace: /robot1
+    output: screen
+    remap:
+      - from: /chatter
+        to: /robot1/chatter
+    respawn: "true"
+    respawn_delay: 1.0
+```
+
+| filed  | description  |   |
+|---|---|---|
+| pkg  |   |   |
+| exec  |   |   |
+| name  |   |   |
+| namespace  |   |   |
+| output  |   |   |
+| respawn  |   |   |
+| respawn_delay  |   |   |
+| remap  |   |   |
+| param  |   |   |
+| env  |   |   |
+
+# TODO: find all mapping
+# TODO: fill table with data
+
+
+### Minimal
 Launch two nodes
 
 
@@ -101,6 +146,7 @@ launch:
             value: 75
       
 ```
+
 ---
 
 ## let
