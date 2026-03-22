@@ -7,6 +7,7 @@ tags:
     - generator
     - iterable
     - closure
+    - descriptor
 ---
 
 <div class="grid-container">
@@ -28,6 +29,11 @@ tags:
     <div class="grid-item">
         <a href="#closure">
             <p>Closures (one step to Decorator)</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="#descriptor">
+            <p>Descriptor</p>
         </a>
     </div>
 </div>
@@ -400,4 +406,51 @@ print(func.__closure__)
 print(func.__closure__[0].cell_contents)
 ```
 
+---
 
+## Descriptor
+[Descriptor Deep Dive](https://youtu.be/7SUzTOkUVLY)
+
+A descriptor is any object that implements one or more of these methods:
+
+- `__get__(self, instance, owner)`
+- `__set__(self, instance, value)`
+- `__delete__(self, instance)`
+
+
+### Demo:
+
+<details>
+<summary>Descriptor</summary>
+```
+--8<-- "docs/Programming/python/python/python/code/descriptor_demo.py"
+```
+</details>
+
+- instance → the object (obj in the example)
+- owner → the class (MyClass in the example)
+
+### Descriptor type
+
+- Data descriptor
+- Non-Data descriptor
+
+#### Data descriptor
+Has `__get__` + `__set__` (or `__delete__`)
+
+!!! info 
+    👉 Takes priority over instance attributes
+
+
+#### Non-Data descriptor
+Has only `__get__`
+
+!!! info
+    👉 Can be overridden by instance attributes
+
+<details>
+<summary>Non-data descriptor demo</summary>
+```
+--8<-- "docs/Programming/python/python/python/code/descriptor_non_data.py"
+```
+</details>

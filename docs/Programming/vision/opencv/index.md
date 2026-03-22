@@ -38,9 +38,9 @@ sudo apt install libopencv-dev
 ### Demo
 
 ```cpp
---8<-- "code/hello_cv.cpp"
+--8<-- "docs/Programming/vision/opencv/code/hello_cv.cpp"
 ```
 
 ```cpp
---8<-- "code/CMakeLists.txt"
+--8<-- "docs/Programming/vision/opencv/code/CMakeLists.txt"
 ```

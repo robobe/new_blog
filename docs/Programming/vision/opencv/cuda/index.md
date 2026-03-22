@@ -51,6 +51,7 @@ using cv2.cuda.HostMem lets you allocate page-locked (pinned) memory in host RAM
 ---
 
 ## Reference
+- [OpenCV Cuda C++](https://www.youtube.com/playlist?list=PLkmvobsnE0GHmLeVETd6zbbJSDZJWa5Fw)
 - [https://www.simonwenkel.com/notes/software_libraries/opencv/opencv-cuda-integration.html#opencv-cuda-intro](https://www.simonwenkel.com/notes/software_libraries/opencv/opencv-cuda-integration.html#opencv-cuda-intro)
 
 ---

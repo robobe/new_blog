@@ -36,18 +36,66 @@
 ├── .gitignore
 ├── README.md
 ├── colcon_defaults.md
-├── env.sh
+├── rc.sh
 └── src
 ```
 
 ### VSCode files
+- tasks.json
+- settings.json
+- launch.json
+
 
 <details>
-<summary>Summary</summary>
-```
---8<-- "path/to/file.md"
+<summary>colcon build tasks.json </summary>
+```json
+{
+  "tasks": [
+    {
+      "label": "build workspace",
+      "detail": "Build ROS 2 workspace",
+      "type": "shell",
+      "command": "colcon build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$gcc"
+    }
+  ]
+}
 ```
 </details>
+
+#### settings.json
+
+##### python
+
+```json
+{
+  "python.autoComplete.extraPaths": [
+        "/opt/ros/jazzy/lib/python3.12/site-packages/"
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+
+    "ruff.importStrategy": "fromEnvironment",
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always",
+        "source.fixAll": "always"
+    },
+    "python.linting.enabled": false,
+    }
+```
+
+---
+
+### Env file
+- colcon_defaults.yaml
+- rc.sh
 
 <details>
 <summary>colcon_defaults</summary>
@@ -58,7 +106,8 @@ build:
   symlink-install: true
   # Set build type (e.g., Release or Debug)
   cmake-args:
-    - "-DCMAKE_BUILD_TYPE=Release"
+    - "-DCMAKE_BUILD_TYPE=Release",
+    - "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 test:
   # Run tests in parallel
@@ -69,6 +118,29 @@ test-result:
   verbose: true
 ```
 </details>
+
+
+- Source ros environment 
+- Change Prompt
+- Add keyboard shortcuts
+
+```bash title="rc.sh"
+source /home/user/.bashrc
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+echo '🐢 Environment ready!'
+# bash key bindings
+# replace bringup with full bringup name
+bind '"\C-b": "ros2 launch <bringup>"'
+
+# Function to get git branch
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+}
+
+# Custom PS1 with turtle icon and git branch
+export PS1="🐢 \[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]\$ "
+```
 
 
 ---

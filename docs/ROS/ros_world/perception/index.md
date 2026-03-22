@@ -1,11 +1,26 @@
 ---
+title: Perception
 tags:
     - ros
     - cvbridge
     - cv-bridge
 ---
 
-# Perception
+Perception is the process that turns raw sensor data into useful understanding of the environment
+
+Perception takes raw data like:
+
+- image pixels
+- depth values
+- point cloud
+
+And extracts:
+
+- Objects
+- Position
+- Shapes 
+- Lines
+
 
 
 <div class="grid-container">
@@ -135,7 +150,7 @@ $$
 
 ---
 
-### Demo
+### Demo: Python code to calc u,v
 
 ```python
 import numpy as np
@@ -239,6 +254,8 @@ Z
 $$
 
 #### Camera to World coordinate system
+
+![alt text](images/world_to_camera.png)
 
 $$
 T =
