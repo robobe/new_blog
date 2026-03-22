@@ -908,6 +908,73 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#descriptor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descriptor
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Descriptor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descriptor-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descriptor type
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Descriptor type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-descriptor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data descriptor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-data-descriptor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-Data descriptor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -944,6 +1011,13 @@
       
       
         <span class="md-tag">contextmanager</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">descriptor</span>
       
     
       
@@ -995,6 +1069,11 @@
     <div class="grid-item">
         <a href="#closure">
             <p>Closures (one step to Decorator)</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="#descriptor">
+            <p>Descriptor</p>
         </a>
     </div>
 </div>
@@ -1605,6 +1684,110 @@ it's tuple that it's item point to variable</p>
 <a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="c1"># outer variable data</span>
 <a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__closure__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cell_contents</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="descriptor">Descriptor</h2>
+<p><a href="https://youtu.be/7SUzTOkUVLY">Descriptor Deep Dive</a></p>
+<p>A descriptor is any object that implements one or more of these methods:</p>
+<ul>
+<li><code>__get__(self, instance, owner)</code></li>
+<li><code>__set__(self, instance, value)</code></li>
+<li><code>__delete__(self, instance)</code></li>
+</ul>
+<h3 id="demo">Demo:</h3>
+<details>
+<summary>Descriptor</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-24-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-24-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-24-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-24-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-24-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-24-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-24-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-24-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-24-10">10</a></span>
+<span class="normal"><a href="#__codelineno-24-11">11</a></span>
+<span class="normal"><a href="#__codelineno-24-12">12</a></span>
+<span class="normal"><a href="#__codelineno-24-13">13</a></span>
+<span class="normal"><a href="#__codelineno-24-14">14</a></span>
+<span class="normal"><a href="#__codelineno-24-15">15</a></span>
+<span class="normal"><a href="#__codelineno-24-16">16</a></span>
+<span class="normal"><a href="#__codelineno-24-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>class MyDescriptor:
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a>    def __get__(self, instance, owner):
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a>        print(&quot;GET called&quot;)
+<a id="__codelineno-24-4" name="__codelineno-24-4"></a>        return 42
+<a id="__codelineno-24-5" name="__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6"></a>    def __set__(self, instance, value):
+<a id="__codelineno-24-7" name="__codelineno-24-7"></a>        print(f&quot;SET called with {value}&quot;)
+<a id="__codelineno-24-8" name="__codelineno-24-8"></a>
+<a id="__codelineno-24-9" name="__codelineno-24-9"></a>
+<a id="__codelineno-24-10" name="__codelineno-24-10"></a>class MyClass:
+<a id="__codelineno-24-11" name="__codelineno-24-11"></a>    x = MyDescriptor()
+<a id="__codelineno-24-12" name="__codelineno-24-12"></a>
+<a id="__codelineno-24-13" name="__codelineno-24-13"></a>
+<a id="__codelineno-24-14" name="__codelineno-24-14"></a>obj = MyClass()
+<a id="__codelineno-24-15" name="__codelineno-24-15"></a>
+<a id="__codelineno-24-16" name="__codelineno-24-16"></a>print(obj.x)   # triggers __get__
+<a id="__codelineno-24-17" name="__codelineno-24-17"></a>obj.x = 10     # triggers __set__
+</code></pre></div></td></tr></table></div>
+</details>
+
+<ul>
+<li>instance → the object (obj in the example)</li>
+<li>owner → the class (MyClass in the example)</li>
+</ul>
+<h3 id="descriptor-type">Descriptor type</h3>
+<ul>
+<li>Data descriptor</li>
+<li>Non-Data descriptor</li>
+</ul>
+<h4 id="data-descriptor">Data descriptor</h4>
+<p>Has <code>__get__</code> + <code>__set__</code> (or <code>__delete__</code>)</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>👉 Takes priority over instance attributes</p>
+</div>
+<h4 id="non-data-descriptor">Non-Data descriptor</h4>
+<p>Has only <code>__get__</code></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>👉 Can be overridden by instance attributes</p>
+</div>
+<details>
+<summary>Non-data descriptor demo</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-25-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-25-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-25-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-25-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-25-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-25-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-25-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-25-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-25-10">10</a></span>
+<span class="normal"><a href="#__codelineno-25-11">11</a></span>
+<span class="normal"><a href="#__codelineno-25-12">12</a></span>
+<span class="normal"><a href="#__codelineno-25-13">13</a></span>
+<span class="normal"><a href="#__codelineno-25-14">14</a></span>
+<span class="normal"><a href="#__codelineno-25-15">15</a></span>
+<span class="normal"><a href="#__codelineno-25-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>class NonData:
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a>    def __get__(self, instance, owner):
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a>        return &quot;descriptor value&quot;
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a>
+<a id="__codelineno-25-5" name="__codelineno-25-5"></a>
+<a id="__codelineno-25-6" name="__codelineno-25-6"></a>class A:
+<a id="__codelineno-25-7" name="__codelineno-25-7"></a>    x = NonData()
+<a id="__codelineno-25-8" name="__codelineno-25-8"></a>    y = NonData()
+<a id="__codelineno-25-9" name="__codelineno-25-9"></a>
+<a id="__codelineno-25-10" name="__codelineno-25-10"></a>
+<a id="__codelineno-25-11" name="__codelineno-25-11"></a>a = A()
+<a id="__codelineno-25-12" name="__codelineno-25-12"></a>a.x = &quot;instance value&quot;
+<a id="__codelineno-25-13" name="__codelineno-25-13"></a>
+<a id="__codelineno-25-14" name="__codelineno-25-14"></a>print(a.x)   # &quot;instance value&quot; (descriptor ignored)
+<a id="__codelineno-25-15" name="__codelineno-25-15"></a>print(a.y)
+<a id="__codelineno-25-16" name="__codelineno-25-16"></a>print(a.__dict__)
+</code></pre></div></td></tr></table></div>
+</details>
 
 
 
