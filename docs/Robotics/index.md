@@ -1,3 +1,9 @@
+<style>
+    h1 {
+         display: none;
+    }
+</style>
+
 # Robotics
 
 <div class="grid-container">

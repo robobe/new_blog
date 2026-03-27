@@ -1,4 +1,10 @@
 
+<style>
+    h1 {
+         display: none;
+    }
+</style>
+
 <div class="grid-container">
     <div class="grid-item">
         <a href="Gstreamer/">

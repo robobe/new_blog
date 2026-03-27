@@ -1,6 +1,6 @@
 <style>
     h1 {
-        visibility: hidden;
+         display: none;
     }
 </style>
 

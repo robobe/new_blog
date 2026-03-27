@@ -12,28 +12,34 @@ tf2  provides a coordinate transformation framework, allowing nodes to track and
 
 <div class="grid-container">
     <div class="grid-item">
-            <a href="euler">
-                <img src="images/euler.png"  width="150" height="150">
-                <p>Euler RPY</p>
-            </a>
-        </div>
-        <div class="grid-item">
-             <a href="quaternion">
-                <img src="images/quaternion.png"  width="150" height="150">
-                <p>Quaternion</p>
-            </a>
-        </div>
+        <a href="euler">
+            <img src="images/euler.png"  width="150" height="150">
+            <p>Euler RPY</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="quaternion">
+            <img src="images/quaternion.png"  width="150" height="150">
+            <p>Quaternion</p>
+        </a>
+    </div>
     <div class="grid-item">
           <a href="/Robotics/math/linear_algebra">
                 <img src="images/linear_algebra.png"  width="150" height="150">
                 <p>Linear algebra</p>
             </a>
     </div>
-    <!--  -->
+</div>
+<!--  -->
+<div>
     <div class="grid-item">
           <a href="tf_transformations" title="ROS that provides functions for working with 3D rotations and transformation">
-                <img src="images/"  width="150" height="150">
-                <p >tf transformations</p>
+                <p >tf transformations library</p>
+            </a>
+    </div>
+     <div class="grid-item">
+          <a href="tf_python_api" title="">
+                <p >tf python API</p>
             </a>
     </div>
 </div>

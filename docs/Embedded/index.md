@@ -1,6 +1,10 @@
+<style>
+    h1 {
+         display: none;
+    }
+</style>
+
 # Embedded
-
-
 
 <div class="grid-container">
     <div class="grid-item">

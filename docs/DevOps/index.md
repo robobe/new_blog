@@ -1,3 +1,9 @@
+<style>
+    h1 {
+         display: none;
+    }
+</style>
+
 # Devops
 
 <div class="grid-container">

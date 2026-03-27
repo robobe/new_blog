@@ -36,6 +36,12 @@ tags:
         <p>asyncio</p>
         </a>
     </div>
+     <div class="grid-item">
+            <a href="GUI">
+            <img src="images/gui.png" width="150" height="150">
+            <p>GUI</p>
+            </a>
+        </div>
 </div>
 
 
