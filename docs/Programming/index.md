@@ -24,9 +24,11 @@
         </a>
     </div>
     <div class="grid-item">
+     <a href="lua">
         <img src="images/lua.png"   width="150" height="150">
         <p>Lua</p>
-    </div
+        </a>
+    </div>
     <div class="grid-item">
         <a href="ai">
             <img src="images/ai.png"  width="150" height="150">
