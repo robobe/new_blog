@@ -1,4 +1,8 @@
-# Programing
+<style>
+    h1 {
+         display: none;
+    }
+</style>
 
 <div class="grid-container">
     <div class="grid-item">
@@ -19,10 +23,10 @@
         <p>Rust</p>
         </a>
     </div>
-    <!--div class="grid-item">
-        <img src="images/website.png"   width="150" height="150">
-        <p>Web</p>
-    </div-->
+    <div class="grid-item">
+        <img src="images/lua.png"   width="150" height="150">
+        <p>Lua</p>
+    </div
     <div class="grid-item">
         <a href="ai">
             <img src="images/ai.png"  width="150" height="150">

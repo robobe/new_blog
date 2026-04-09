@@ -28,6 +28,12 @@ tags:
             </a>
     </div>
     <div class="grid-item">
+        <a href="mavlink">
+                <img src="images/lua.png"  width="150" height="150">
+                <p>lua</p>
+            </a>
+    </div>
+    <div class="grid-item">
         <a href="debug">
                 <p>debug</p>
             </a>
