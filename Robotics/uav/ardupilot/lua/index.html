@@ -691,6 +691,62 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#predefined-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predefined parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vscode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VSCode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VSCode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-docslua" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using docs.lua
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -742,8 +798,14 @@
   <h1>Ardupilot Lua</h1>
 
 <div class="admonition tip">
+<p class="admonition-title">ardupilot use Lua version 5.3</p>
+</div>
+<div class="admonition tip">
 <p class="admonition-title">ardupilot lua API</p>
-<p>Ardupilot Lua API declare in <code>docs.lua</code> locate <code>libraries/AP_Scripting/docs/docs.lua</code></p>
+<ul>
+<li><a href="https://ardupilot.org/copter/docs/common-lua-scripts.html#api-documentation">Ardupilot API Documentation</a></li>
+<li>Ardupilot Lua API declare in <code>docs.lua</code> locate <code>libraries/AP_Scripting/docs/docs.lua</code></li>
+</ul>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Lua demo script</p>
@@ -768,10 +830,121 @@
 <a id="__codelineno-0-5" name="__codelineno-0-5"></a>
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="k">return</span><span class="w"> </span><span class="n">update</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
+<h2 id="parameters">Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Purpose</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SCR_ENABLE</code></td>
+<td>Enable Lua</td>
+<td>Always set to 1</td>
+</tr>
+<tr>
+<td><code>SCR_DIR_DISABLE</code></td>
+<td>Disable auto script loading</td>
+<td>Rare</td>
+</tr>
+<tr>
+<td><code>SCR_HEAP_SIZE</code></td>
+<td>Memory for Lua</td>
+<td>Increase if crash</td>
+</tr>
+</tbody>
+</table>
+<p>There more parameters for logging and debugging check documentation</p>
+<h3 id="predefined-parameters">Predefined parameters</h3>
+<p><code>SCR_USERx</code> parameter are generic parameters meant exactly for Lua scripts.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SCR_USER1</code></td>
+<td>float</td>
+<td>user-defined value</td>
+</tr>
+<tr>
+<td><code>SCR_USER2</code></td>
+<td>float</td>
+<td>user-defined value</td>
+</tr>
+<tr>
+<td><code>SCR_USER3</code></td>
+<td>float</td>
+<td>user-defined value</td>
+</tr>
+<tr>
+<td><code>SCR_USER4</code></td>
+<td>float</td>
+<td>user-defined value</td>
+</tr>
+<tr>
+<td><code>SCR_USER5</code></td>
+<td>float</td>
+<td>user-defined value</td>
+</tr>
+<tr>
+<td><code>SCR_USER6</code></td>
+<td>float</td>
+<td>user-defined value</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">local</span><span class="w"> </span><span class="n">gain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">param</span><span class="o">:</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;SCR_USER1&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">Custom parameter</p>
+<p><a href="https://ardupilot.org/copter/docs/common-scripting-parameters.html">Ardupilot Accessing/Adding Parameters via Scripts</a></p>
+</div>
+<hr />
+<h2 id="vscode">VSCode</h2>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=sumneko.lua">VSCode lua</a></p>
+<h3 id="using-docslua">Using docs.lua</h3>
+<p>Get <code>libraries/AP_Scripting/docs/docs.lua</code> from ardupilot github (choose the right version)</p>
+<ul>
+<li>This file is not meant to run</li>
+<li>It’s a fake API definition for tooling (IntelliSense, completion)</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;Lua.workspace.library&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="s2">&quot;/path/to/ardupilot/libraries/AP_Scripting/docs&quot;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="nt">&quot;Lua.diagnostics.globals&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="s2">&quot;vehicle&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="s2">&quot;ahrs&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="s2">&quot;gcs&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="s2">&quot;arming&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="s2">&quot;param&quot;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href=""></a></li>
+<li><a href="https://ardupilot.org/copter/docs/common-lua-scripts.html#getting-started">Ardupilot Lua getting started</a></li>
+<li><a href="https://github.com/yuri-rage/ArduRover_Mower">Good project that use lua</a></li>
 </ul>
 
 
