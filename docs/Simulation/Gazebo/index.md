@@ -26,6 +26,11 @@ tags:
         <p>Custom plugins</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="bindings">
+        <p>Bindings</p>
+        </a>
+    </div>
 </div>
 <div>
      <div class="grid-item">
@@ -35,8 +40,7 @@ tags:
     </div>
 </div>
 
-- [Tutorials](tutorials/index.md)
-- [ROS2 Bridge](/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge)
+- [ROS2 Bridge](ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge)
 - [Sensors](sensors/index.md)
 - [Plugins](plugins/index.md)
 
@@ -49,8 +53,8 @@ tags:
 | Name  | Description  |
 |---|---|
 | **SIM**  |   |
-| GZ_SIM_RESOURCE_PATH  |   |
-| GZ_SIM_SYSTEM_PLUGIN_PATH  |   |
+| GZ_SIM_RESOURCE_PATH  | where to search for `world`,`models` include meshes, textures, materials  |
+| GZ_SIM_SYSTEM_PLUGIN_PATH  | where to find compiled system plugins (.so files) |
 | **TRANSPORT**  |   |
 | GZ_TRANSPORT_IP  |   |
 | GZ_DISCOVERY_SERVER  |   |

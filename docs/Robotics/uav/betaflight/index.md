@@ -6,6 +6,17 @@ tags:
 
 {{ page_folder_links() }}
 
+[TO CHECK](https://betaflight.com/docs/development/autopilot/SITL_Autopilot_Testing_Gazebo)
+
+- [aeroloop](https://github.com/betaflight/aeroloop_gazebo/tree/gz/)
+- [Testing Betaflight Autopilot with SITL and Gazebo on Ubuntu 24.04](https://betaflight.com/docs/development/autopilot/SITL_Autopilot_Testing_Gazebo)
+
+
+
+---
+
+# old
+
 ## betaflight sitl
 
 ```bash
