@@ -13,3 +13,16 @@ tags:
 
 - [Camera](camera.md)
 - [IMU](imu.md)
+
+## TODO:
+
+| Plugin            | Attach To | What It Does                      | Typical Use                  |
+| ----------------- | --------- | --------------------------------- | ---------------------------- |
+| **Sensors**       | World     | Manages all sensors in simulation | Required for sensors to work |
+| **Imu**           | Link      | Publishes IMU data                | Orientation / control        |
+| **Contact**       | Link      | Detects collisions                | Foot contact / bumpers       |
+| **ForceTorque**   | Joint     | Measures forces/torques           | Grippers / joints            |
+| **NavSat**        | Link      | GPS-like data                     | Outdoor robots               |
+| **Magnetometer**  | Link      | Magnetic field / heading          | Yaw estimation               |
+| **AirPressure**   | Link      | Pressure sensor                   | Altitude estimation          |
+| **LogicalCamera** | Link      | Detects objects in view           | Object detection (simple)    |

@@ -31,16 +31,20 @@ tags:
         <p>Bindings</p>
         </a>
     </div>
-</div>
-<div>
-     <div class="grid-item">
-        <a href="gazebo_worlds">
-        <p>Gazebo Worlds</p>
+    <div class="grid-item">
+        <a href="ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/">
+        <p>ROS Bridge</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="demo_worlds">
+        <p>Demo worlds</p>
         </a>
     </div>
 </div>
 
-- [ROS2 Bridge](ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/jazzy_bridge)
+
+## Plugins
 - [Sensors](sensors/index.md)
 - [Plugins](plugins/index.md)
 
@@ -60,5 +64,3 @@ tags:
 | GZ_DISCOVERY_SERVER  |   |
 | GZ_PARTITION  |   |
 
-
-[](https://github.com/gazebo-tooling/release-tools/issues/734)

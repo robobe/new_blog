@@ -22,15 +22,7 @@ from gz.transport13 import Node
 from gz.msgs10.double_pb2 import Double
 from gz.msgs10.model_pb2 import Model
 
-q = 0.0
-qdot = 0.0
-have_state = False
-lock = threading.Lock()
 
-q_ref = 0.7
-k1 = 12.0
-k2 = 3.5
-tau_max = 8.0
 
 def on_joint_state(msg: Model):
     print(msg)
