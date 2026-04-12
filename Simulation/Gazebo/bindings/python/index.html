@@ -774,15 +774,7 @@
 <span class="normal"><a href="#__codelineno-0-19">19</a></span>
 <span class="normal"><a href="#__codelineno-0-20">20</a></span>
 <span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span>
-<span class="normal"><a href="#__codelineno-0-23">23</a></span>
-<span class="normal"><a href="#__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4"></a>
@@ -790,28 +782,20 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gz.msgs10.double_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Double</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gz.msgs10.model_pb2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8"></a>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="n">q</span> <span class="o">=</span> <span class="mf">0.0</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="n">qdot</span> <span class="o">=</span> <span class="mf">0.0</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">have_state</span> <span class="o">=</span> <span class="kc">False</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_joint_state</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="n">Model</span><span class="p">):</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="n">q_ref</span> <span class="o">=</span> <span class="mf">0.7</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="n">k1</span> <span class="o">=</span> <span class="mf">12.0</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="n">k2</span> <span class="o">=</span> <span class="mf">3.5</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="n">tau_max</span> <span class="o">=</span> <span class="mf">8.0</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_joint_state</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="n">Model</span><span class="p">):</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="n">joint_state_topic_name</span> <span class="o">=</span> <span class="s2">&quot;/world/default/model/joint_position_controller_demo/joint_state&quot;</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">()</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="n">ok</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="n">joint_state_topic_name</span><span class="p">,</span> <span class="n">on_joint_state</span><span class="p">)</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to subscribe to /simple_arm/joint_state&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.005</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="n">joint_state_topic_name</span> <span class="o">=</span> <span class="s2">&quot;/world/default/model/joint_position_controller_demo/joint_state&quot;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">()</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="n">ok</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="n">joint_state_topic_name</span><span class="p">,</span> <span class="n">on_joint_state</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to subscribe to /simple_arm/joint_state&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.005</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 
 
