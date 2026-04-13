@@ -22,6 +22,16 @@ tags:
 ## RGB Camera
 
 ```xml
---8<-- "docs/Simulation/Gazebo/sensors/code/rgb_camera_sensor.xml"
+--8<-- "docs/Simulation/Gazebo/sensors/camera/code/rgb_camera_sensor.xml"
 ```     
 
+---
+
+## Demo:
+
+<details>
+<summary>World with camera</summary>
+```
+--8<-- "docs/Simulation/Gazebo/sensors/camera/code/camera_world.sdf"
+```
+</details>

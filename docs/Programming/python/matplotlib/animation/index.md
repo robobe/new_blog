@@ -22,3 +22,17 @@ It repeatedly calls your update function and redraws.
 
 !!! Note
     The callable `update` must return an `iterable` of artist when `blit=True`
+
+
+---
+
+## 
+Demo: Dynamic graph 
+- Moving x axis
+
+<details>
+<summary>Code</summary>
+```python
+--8<-- "docs/Programming/python/matplotlib/animation/code/moving_x_axis.py"
+```
+</details>

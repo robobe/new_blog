@@ -15,6 +15,7 @@ tags:
     [worlds examples](https://github.com/gazebosim/gz-sim/tree/main/examples/worlds)
     
 
+## Actuation Plugin
 
 <div class="grid-container">
     <div class="grid-item tooltip">
@@ -41,11 +42,20 @@ tags:
             <p>JointPositionController</p>
         </a>
     </div>
+</div>
+
+## Motion Plugins
+
+<div class="grid-container">
     <div class="grid-item">
         <a href="diff_drive">
             <p>Differential drive</p>
         </a>
     </div>
+</div>
+
+## State publisher
+<div class="grid-container">
     <div class="grid-item">
         <a href="pose_publisher">
             <p>Pose Publisher</p>
