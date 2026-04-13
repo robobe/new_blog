@@ -7,6 +7,9 @@ tags:
     - force
     - torque
 ---
+
+[gazebo source demo world](https://github.com/gazebosim/gz-sim/blob/main/examples/worlds/apply_joint_force.sdf)
+
 ApplyJointForce is `model` plugin that
 Apply joint raw force/torque to specific joint, create subscriber the names `/model/<model named>/joint/<joint name>/cmd_force` can control from cli using
 

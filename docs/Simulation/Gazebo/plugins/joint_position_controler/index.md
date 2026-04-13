@@ -30,12 +30,43 @@ JointPositionController uses a PID controller to reach a desired joint position.
 gz topic -t "/topic_name" -m gz.msgs.Double -p "data: -1.0"
 ```
 
+---
+
 ## Demo: Control joint position
 
+<details>
+<summary>robot sdf</summary>
+```
+--8<-- "docs/Simulation/Gazebo/plugins/joint_position_controler/code/rrbot.sdf"
+```
+</details>
 
-```bash
+
+!!! warning "Don't forget joint damping section"
+    
+    ```xml
+    <dynamics>
+          <damping>0.7</damping>
+          <friction>0.0</friction>          
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+    ```
+    
+
+```bash title="send position command"
 gz topic -t "/joint2_position" -m gz.msgs.Double -p "data: -1.0"
 ```
+
+![alt text](images/rbot_after_poistion_command.png)
+
+### how to tune
+
+- Set **i_gain** = 0 first
+- Increase **p_gain** until the joint reaches the target fast enough
+- Add **d_gain** to reduce overshoot and oscillation
+- Only then add a small **i_gain** if you still have steady-state error
+- Clamp the controller output with **cmd_max/cmd_min** and the integrator with **i_max/i_min**
 
 ---
 

@@ -14,15 +14,31 @@ tags:
     Gazebo source code include many examples locate at  
     [worlds examples](https://github.com/gazebosim/gz-sim/tree/main/examples/worlds)
     
-| example/world name  | description  | plugin usage  |
-|---|---|---|
-| [apply_joint_force.sdf](https://github.com/gazebosim/gz-sim/blob/main/examples/worlds/apply_joint_force.sdf)  | apply force / torque to revolute joint  | [ApplyJointForce](apply_joint_force)  |
-| [apply_link_wrench.sdf]()  | apply wrench to link  | [ApplyLinkWrench](apply_link_wrench)  |
+
 
 <div class="grid-container">
-<div class="grid-item">
+    <div class="grid-item tooltip">
+        <span class="tooltiptext">Apply joint raw force/torque to specific joint</span>
         <a href="apply_joint_force">
             <p>ApplyJointForce</p>
+        </a>
+    </div>
+    <div class="grid-item tooltip">
+        <span class="tooltiptext">Apply wrench to link</span>
+        <a href="apply_link_wrench">
+            <p>Apply link wrench (force/torque)</p>
+        </a>
+    </div>
+    <div class="grid-item tooltip">
+        <span class="tooltiptext">Control joint Velocity</span>
+        <a href="joint_controller">
+            <p>JointController</p>
+        </a>
+    </div>
+    <div class="grid-item tooltip">
+        <span class="tooltiptext">Control joint Position</span>
+        <a href="joint_position_controler">
+            <p>JointPositionController</p>
         </a>
     </div>
     <div class="grid-item">
