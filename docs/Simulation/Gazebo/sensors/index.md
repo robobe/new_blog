@@ -22,6 +22,16 @@ tags:
             <p>NavSat</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="altimeter_air_pressure">
+            <p>Altimeter</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="altimeter_air_pressure">
+            <p>Air Pressure</p>
+        </a>
+    </div>
 </div>
 
 ## TODO:
