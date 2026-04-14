@@ -11,8 +11,18 @@ tags:
 
 ---
 
-- [Camera](camera.md)
-- [IMU](imu.md)
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="camera">
+            <p>Camera</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="nav_sat">
+            <p>NavSat</p>
+        </a>
+    </div>
+</div>
 
 ## TODO:
 
