@@ -1,5 +1,5 @@
 ---
-title: Altimeter sensor
+title: Altimeter and Air pressure sensor
 tags:
     - gazebo
     - harmonic
@@ -7,6 +7,12 @@ tags:
 ---
 
 ## Altimeter
+
+Altitude (height) relative to a reference (usually world origin or sea level)
+
+The sensor return `gz.msgs.Altimeter` message
+
+
 
 ```xml title="plugin"
 <plugin
@@ -24,8 +30,19 @@ tags:
 </sensor>
 ```
 
+---
 
 ## Air Pressure
+
+Air pressure (Pa) at the sensor location return `gz.msgs.FluidPressure` message
+
+$$P = P_0 \cdot e^{-\frac{g \cdot M \cdot h}{R \cdot T}}$$
+
+- $P_0$ ​: pressure at sea level (~101325 Pa)
+- h: altitude
+- g: gravity
+- T: temperature
+
 
 ```xml  title="plugin"
 <plugin

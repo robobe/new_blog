@@ -32,6 +32,16 @@ tags:
             <p>Air Pressure</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="magnetometer">
+            <p>Magnetometer</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="contact">
+            <p>Contact</p>
+        </a>
+    </div>
 </div>
 
 ## TODO:
