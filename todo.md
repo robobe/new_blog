@@ -1,0 +1,3 @@
+- [ ] imu sensor gazebo (https://medium.com/@alitekes1/gazebo-sim-plugin-and-sensors-for-acquire-data-from-simulation-environment-681d8e2ad853)
+- [ ] gazebo friction (mu)
+- [ ] gazebo / ros graph (plotjuggler)

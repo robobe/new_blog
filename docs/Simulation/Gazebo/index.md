@@ -45,6 +45,24 @@ tags:
 
 
 ## Plugins
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="sensors">
+            <p>Sensors</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="plugins">
+            <p>plugins</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="gui_plugins">
+            <p>gui-plugins</p>
+        </a>
+    </div>
+</div>
 - [Sensors](sensors/index.md)
 - [Plugins](plugins/index.md)
 

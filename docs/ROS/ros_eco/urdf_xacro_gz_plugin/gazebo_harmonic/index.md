@@ -49,11 +49,20 @@ tags:
 launch:
   - arg:
       name: "bridge_config_file"
-      default: "$(find-pkg-share bumperbot_bringup)/config/bridge.yaml"
+      default: "$(find-pkg-share robot_bringup)/config/bridge.yaml"
+
+  - arg:
+      name: "world_name"
+      default: "robot.world"
+
 
     #gazebo simulation
   - executable:
-      cmd: gz sim -v 4 -r world.sdf
+      cmd: gz sim -v 4 -r $(var world_name)
+      output: screen
+      env:
+        - name: GZ_SIM_RESOURCE_PATH
+          value: "$(env GZ_SIM_RESOURCE_PATH):$(find-pkg-share robot_gazebo)/worlds"
 
     #ros-gz bridge
   - node:
