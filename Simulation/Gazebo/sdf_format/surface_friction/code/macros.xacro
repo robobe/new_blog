@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<sdf version="1.7" 
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="cube" params="name mass side color *pose *friction">
+    <model name="${name}">
+      <xacro:insert_block name="pose" />
+      <link name="${name}_link">
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>${mass}</mass>
+          <inertia>
+            <ixx>${1/6 * mass * side}</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>${1/6 * mass * side}</iyy>
+            <iyz>0</iyz>
+            <izz>${1/6 * mass * side}</izz>
+          </inertia>
+        </inertial>
+        <collision name="${name}_collision">
+          <pose relative_to="${name}_link">0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>${side} ${side} ${side}</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+06</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <xacro:insert_block name="friction" />
+          </surface>
+        </collision>
+        <visual name="${name}_visual">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>${side} ${side} ${side}</size>
+            </box>
+          </geometry>
+          <material>
+            <xacro:if value="${color=='green'}">
+              <ambient>0.0 1.0 0.0 1.0</ambient>
+              <diffuse>0.0 1.0 0.0 1.0</diffuse>
+              <specular>0.1 0.1 0.1 1.0</specular>
+            </xacro:if>
+            <xacro:if value="${color=='red'}">
+              <ambient>1.0 0.0 0.0 1.0</ambient>
+              <diffuse>1.0 0.0 0.0 1.0</diffuse>
+              <specular>0.1 0.1 0.1 1.0</specular>
+            </xacro:if>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay />
+      </link>
+    </model>
+  </xacro:macro>
+
+  <xacro:macro name="rect" params="name mass side color *pose *friction">
+    <model name="${name}">
+      <xacro:insert_block name="pose" />
+      <link name="${name}_link">
+        <pose>0 0 0 0 0 0</pose>
+        <!-- <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>${mass}</mass>
+          <inertia>
+            <ixx>${1/6 * mass * side}</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>${1/6 * mass * side}</iyy>
+            <iyz>0</iyz>
+            <izz>${1/6 * mass * side}</izz>
+          </inertia>
+        </inertial> -->
+        <collision name="${name}_collision">
+          <pose relative_to="${name}_link">0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>${side*1.5} ${side} ${side}</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <kp>1e+06</kp>
+                <kd>1</kd>
+              </ode>
+            </contact>
+            <xacro:insert_block name="friction" />
+          </surface>
+        </collision>
+        <visual name="${name}_visual">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>${side*1.5} ${side} ${side}</size>
+            </box>
+          </geometry>
+          <material>
+            <xacro:if value="${color=='green'}">
+              <ambient>0.0 1.0 0.0 1.0</ambient>
+              <diffuse>0.0 1.0 0.0 1.0</diffuse>
+              <specular>0.1 0.1 0.1 1.0</specular>
+            </xacro:if>
+            <xacro:if value="${color=='red'}">
+              <ambient>1.0 0.0 0.0 1.0</ambient>
+              <diffuse>1.0 0.0 0.0 1.0</diffuse>
+              <specular>0.1 0.1 0.1 1.0</specular>
+            </xacro:if>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay />
+      </link>
+    </model>
+  </xacro:macro>
+</sdf>
