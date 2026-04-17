@@ -32,7 +32,7 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/">
+        <a href="/ROS/ros_eco/urdf_xacro_gz_plugin/gazebo_harmonic/">
         <p>ROS Bridge</p>
         </a>
     </div>
@@ -63,8 +63,49 @@ tags:
         </a>
     </div>
 </div>
-- [Sensors](sensors/index.md)
-- [Plugins](plugins/index.md)
+
+## Physics
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="sdf_format/surface_friction/">
+            <p>surface friction</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="sdf_format/joint_friction/">
+            <p>joint friction</p>
+        </a>
+    </div>
+</div>
+
+## Running with nvidia
+My laptop has two graphics card and it config to `on-demand` using **Prime profiles**
+
+for running gz sim with nvidia card switch to nvidia mode using `sudo prime-select nvidia` or using 
+
+```bash
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz sim
+```
+
+!!! tip "check"
+    using `nvidia-smi` to check that gz sim use nvidia card
+
+
+!!! tip "prime-select`
+    prime-select is an Ubuntu-specific utility used to manage hybrid graphics on laptops
+
+    ```bash
+    # check mode
+    prime-select query
+    ```
+    
+
+```bash title="create alias"
+alias gznvidia='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz sim'
+```
+
+---
 
 ## Environment Variables
 

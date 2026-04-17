@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+
+<sdf version="1.6"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <world name="empty">
+
+    <xacro:include filename="macros.xacro" />
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin
+      filename="gz-sim-physics-system"
+      name="gz::sim::systems::Physics">
+    </plugin>
+    <plugin
+      filename="gz-sim-user-commands-system"
+      name="gz::sim::systems::UserCommands">
+    </plugin>
+    <plugin
+      filename="gz-sim-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ramp -->
+    <model name="ramp">
+      <pose>0 0 1 0 ${pi/16} 0 </pose>
+      <static>1</static>
+      <link name="ramp_link">
+        <pose>0 0 0 0 0 0</pose>
+        <collision name="ramp_collision">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>10 10 0.02</size>
+            </box>
+          </geometry>
+          <max_contacts>50</max_contacts>
+          <surface>
+            <friction>
+              <ode />
+            </friction>
+          </surface>
+        </collision>
+        <visual name="ramp_visual">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>10 10 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.7 1</ambient>
+            <diffuse>0.2 0.2 0.8 1</diffuse>
+            <specular>0.5 0.5 0.5 1</specular>
+          </material>
+        </visual>
+        <gravity>0</gravity>
+        <velocity_decay />
+      </link>
+    </model>
+
+    <model name="world_axes">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+
+      <!-- X axis (red) -->
+      <link name="x_axis">
+        <visual name="visual">
+          <pose>1 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
+          </material>
+          <cast_shadows>false</cast_shadows>
+        </visual>
+      </link>
+
+      <!-- Y axis (green) -->
+      <link name="y_axis">
+        <pose>0 1 0 0 0 1.5708</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
+          </material>
+          <cast_shadows>false</cast_shadows>
+        </visual>
+      </link>
+
+      <!-- Z axis (blue) -->
+      <link name="z_axis">
+        <pose>0 0 1 0 1.5708 0</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>2 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+          </material>
+          <cast_shadows>false</cast_shadows>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 1: nominal cube -->
+  <xacro:cube name="cube" mass="1" side="0.2" color="red">
+    <pose relative_to="ramp">0 2.0 0.11 0 0 0</pose>
+    <friction />
+  </xacro:cube>
+
+  <!-- 2: cubue with only mu -->
+  <xacro:cube name="cube_mu" mass="1" side="0.2" color="red">
+    <pose relative_to="ramp">0 1.5 0.11 0 0 0</pose>
+    <friction>
+      <ode>
+        <mu>1</mu>
+        <mu2>0</mu2>
+      </ode>
+    </friction>
+  </xacro:cube>
+
+  <!-- 3: cube with only mu2 -->
+  <xacro:cube name="cube_mu2" mass="1" side="0.2" color="green">
+    <pose relative_to="ramp">0 1.0 0.11 0 0 0</pose>
+    <friction>
+      <ode>
+        <mu>0</mu>
+        <mu2>1</mu2>
+      </ode>
+    </friction>
+  </xacro:cube>
+
+  <!-- 4: cube with mu fdir x-->
+  <xacro:cube name="cube_mu_fdir_x" mass="1" side="0.2" color="red">
+    <pose relative_to="ramp">0 0.5 0.11 0 0 0</pose>
+    <friction>
+      <ode>
+        <mu>1</mu>
+        <mu2>0</mu2>
+        <fdir1>1 0 0</fdir1>
+      </ode>
+    </friction>
+  </xacro:cube>
+
+  <!-- 5: cube with mu fdir y-->
+  <xacro:cube name="cube_mu_fdir_y" mass="1" side="0.2" color="green">
+    <pose relative_to="ramp">0 0 0.11 0 0 0</pose>
+    <friction>
+      <ode>
+        <mu>1</mu>
+        <mu2>0</mu2>
+        <fdir1>0 1 0</fdir1>
+      </ode>
+    </friction>
+  </xacro:cube>
+
+  <!-- 6: cube with mu fdir z-->
+  <xacro:cube name="cube_mu_fdir_z" mass="1" side="0.2" color="green">
+    <pose relative_to="ramp">0 -0.5 0.11 0 0 0</pose>
+    <friction>
+      <ode>
+        <mu>1</mu>
+        <mu2>0</mu2>
+        <fdir1>0 0 1</fdir1>
+      </ode>
+    </friction>
+  </xacro:cube>
+
+  <!-- 7: cube with mu fdir rotated-->
+  <xacro:cube name="cube_mu_fdir_rot" mass="1" side="0.2" color="green">
+    <pose relative_to="ramp">0 -1.0 0.11 0 ${pi/2} 0</pose>
+    <friction>
+      <ode>
+        <mu>1</mu>
+        <mu2>0</mu2>
+        <fdir1>1 0 0</fdir1>
+      </ode>
+    </friction>
+  </xacro:cube>
+
+
+
+  <!-- 8: cube rotated in x -->
+  <xacro:cube name="cube_mu_x_rot" mass="1" side="0.2" color="red">
+    <pose relative_to="ramp">0 -1.5 0.11 ${pi/2} 0 0</pose>
+    <friction>
+      <ode>
+        <mu>1</mu>
+        <!-- <mu2>1</mu2> -->
+      </ode>
+    </friction>
+  </xacro:cube>
+
+  <!-- 9: cube rotated in x and y -->
+  <xacro:cube name="cube_mu_xy_rot" mass="1" side="0.2" color="red">
+    <pose relative_to="ramp">0 -2.0 0.11 ${pi/2} ${pi/2} 0</pose>
+    <friction>
+      <ode>
+        <mu>1</mu>
+        <!-- <mu2>1</mu2> -->
+      </ode>
+    </friction>
+  </xacro:cube>
+  </world>
+</sdf>

@@ -13,7 +13,7 @@ Xacro (XML Macros) Xacro is an XML macro language. With xacro, you can construct
 ## Install ROS support
 
 ```bash 
-sudo apt install ros-humble-xacro
+sudo apt install ros-${ROS_DISTRO}-xacro
 ```
 
 ---
@@ -25,12 +25,48 @@ sudo apt install ros-humble-xacro
 xacro hello.urdf.xacro > hello.urdf
 ```
 
+```bash title="run gazebo with xacro"
+# create temp file
+# run the temp file created
+
+xacro friction.sdf.xacro > /tmp/my_world.sdf && gz sim /tmp/my_world.sdf
+```
+
 ### launch file
 - Load and procee xacro file
 - Run `robot_state_publisher` to publish `robot_description` topic
 - Run `joint_state_publisher_gui` to publish `TF's`
 - Run `rviz` to view the robot
 
+
+```yaml title=""
+launch:
+  - arg:
+      name: "rviz_config_file"
+      default: "$(find-pkg-share robot_bringup)/config/rviz.rviz"
+  - let:
+      name: robot_description
+      value: "$(command 'xacro $(find-pkg-share robot_description)/urdf/robot.xacro')"
+
+  - node:
+      pkg: rviz2
+      exec: rviz2
+      name: rviz2
+      output: screen
+      args: "-d $(var rviz_config_file)"
+  - node:
+      pkg: "robot_state_publisher"
+      exec: "robot_state_publisher"
+      name: "robot_state_publisher"
+      param:
+        - name: "robot_description"
+          value: "$(var robot_description)"
+  - node:
+      pkg: "joint_state_publisher_gui"
+      exec: "joint_state_publisher_gui"
+      name: "joint_state_publisher_gui"
+      output: screen
+```
 
 ```python title="load xacro and view in rviz"
 import os

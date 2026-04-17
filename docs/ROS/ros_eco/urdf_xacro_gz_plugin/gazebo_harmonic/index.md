@@ -43,7 +43,15 @@ tags:
 
 ## Launch
 
+- Launch gazebo and ROS bridge using yaml launch
+
+
 ### YAML
+
+!!! tip "gazebo environment"
+    `Executable` create it's on environment
+    variable need to pass using `env` tag
+    
 
 ```yaml
 launch:
@@ -128,6 +136,8 @@ def generate_launch_description():
 
     return ld
 ```
+
+### Bridge as YAML
 
 ```yaml title="config/bridge.yaml"
 - ros_topic_name: "/clock"
