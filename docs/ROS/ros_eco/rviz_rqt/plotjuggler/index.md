@@ -12,12 +12,13 @@ tags:
 ### ROS Package
 
 ```bash
-# The install method from snap include ROS2, zmq, websocket and MQTT
-sudo snap install plotjuggler
-#
-#sudo apt install ros-humble-plotjuggler-ros
+sudo apt install ros-${ROS_DISTRO}-plotjuggler
+sudo apt install ros-${ROS_DISTRO}-plotjuggler-ros
 ```
 
+```bash
+ros2 run plotjuggler plotjuggler
+```
 
 ---
 
@@ -116,3 +117,8 @@ pip install paho-mqtt numpy
 
 ![alt text](images/plotjuggler_mqtt_plot.png)
 
+
+---
+
+## Reference
+- [PlotJuggler: The Best Time Series Visualization Tool for ROS](https://youtu.be/9kFRecDU1bg)

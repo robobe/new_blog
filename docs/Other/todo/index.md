@@ -4,6 +4,12 @@ tags:
     - todo
 ---
 
+## youtube to watch
+- [ PlotJuggler: The Best Time Series Visualization Tool for ROS ](https://youtu.be/9kFRecDU1bg)
+- [visual odometry](https://youtu.be/H_1OtbMD-sE)
+
+---
+
 # ROS2
 - [map and localization](https://www.udemy.com/course-dashboard-redirect/?course_id=4855856)
 - [Odometry and control](https://www.udemy.com/course-dashboard-redirect/?course_id=5527030)

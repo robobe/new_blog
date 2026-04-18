@@ -13,6 +13,11 @@ tags:
 
 <div class="grid-container">
     <div class="grid-item">
+        <a href="imu">
+            <p>Imu</p>
+        </a>
+    </div>
+    <div class="grid-item">
         <a href="camera">
             <p>Camera</p>
         </a>
