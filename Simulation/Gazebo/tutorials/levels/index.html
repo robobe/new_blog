@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Simulation/Gazebo/sdf_format/surface_friction/">
+        <link rel="canonical" href="https://robobe.github.io/Simulation/Gazebo/tutorials/levels/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Surface friction - Robots Inside</title>
+        <title>Gazebo levels - Robots Inside</title>
       
     
     
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Surface friction
+              Gazebo levels
             
           </span>
         </div>
@@ -683,7 +683,7 @@
   <a href="#demo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Demo:
+        Demo
       
     </span>
   </a>
@@ -729,14 +729,7 @@
       
       
       
-        <span class="md-tag">mu</span>
-      
-    
-      
-      
-      
-      
-        <span class="md-tag">sdf</span>
+        <span class="md-tag">levels</span>
       
     
   </nav>
@@ -746,70 +739,22 @@
   
 
 
-  <h1>Surface friction</h1>
+  <h1>Gazebo levels</h1>
 
-<p>Gazebo default physics engine (DART) use <strong>Coulomb friction</strong> model</p>
-<p>friction force = coefficient * how hard you press</p>
-<p>In Gazebo / SDF, mu and mu2 are friction coefficients in two perpendicular directions on the contact surface.</p>
+<hr />
+<h2 id="demo">Demo</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
-<span class="normal"><a href="#__codelineno-0-3">3</a></span>
-<span class="normal"><a href="#__codelineno-0-4">4</a></span>
-<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>      ↑ normal (N)
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>      |
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>------•------→ direction 1 (mu)
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>      |
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a>      ↓ direction 2 (mu2)
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>gz<span class="w"> </span>sim<span class="w"> </span>levels.sdf<span class="w"> </span>--levels
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span><span class="s2">&quot;/model/vehicle_blue/cmd_vel&quot;</span><span class="w"> </span>-m<span class="w"> </span>gz.msgs.Twist<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;linear: {x: 4.0}&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span><span class="s2">&quot;/model/vehicle_red/cmd_vel&quot;</span><span class="w"> </span>-m<span class="w"> </span>gz.msgs.Twist<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;linear: {x: 2.0}&quot;</span>
 </code></pre></div></td></tr></table></div>
-<p>for example for wheels we set</p>
-<ul>
-<li>forward/backward direction → you want low resistance to rolling</li>
-<li>sideways direction → you want high resistance to slipping</li>
-</ul>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">&lt;mu&gt;</span>0.1<span class="nt">&lt;/mu&gt;</span><span class="w">   </span><span class="cm">&lt;!-- rolling direction --&gt;</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">&lt;mu2&gt;</span>1.0<span class="nt">&lt;/mu2&gt;</span><span class="w"> </span><span class="cm">&lt;!-- sideways grip --&gt;</span>
-</code></pre></div></td></tr></table></div>
-<div class="admonition info">
-<p class="admonition-title">DART support</p>
-<p>The friction <code>mu</code>, <code>mu2</code> support by dart engine event that is declare under  <code>ode</code> tag</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span>
-<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">&lt;friction&gt;</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">&lt;ode&gt;</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;mu&gt;</span>1<span class="nt">&lt;/mu&gt;</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">    </span><span class="nt">&lt;mu2&gt;</span>0<span class="nt">&lt;/mu2&gt;</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="nt">&lt;/ode&gt;</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="nt">&lt;/friction&gt;</span>
-</code></pre></div></td></tr></table></div>
-</div>
-<h2 id="demo">Demo:</h2>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">run xacro and load the world</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>xacro<span class="w"> </span>friction.sdf.xacro<span class="w"> </span>&gt;<span class="w"> </span>/tmp/my_world.sdf<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>gz<span class="w"> </span>sim<span class="w"> </span>/tmp/my_world.sdf
-</code></pre></div></td></tr></table></div>
-<p><img alt="alt text" src="images/gz.png" /></p>
-<ul>
-<li>Cube1 Default friction. sdformat states that if no friction is set, mu1 and mu2 are set to 1 (high friction). Therefore, this cube shouldn't move.</li>
-<li>Cube2 mu=1, mu2=0. The ramp is pointed down the X axis. Therefore, I expect that with a high mu along that axis, the cube will not move</li>
-<li><strong>Cube3</strong> mu=0, mu2=1. The ramp is pointed down the X axis. Therefore, I expect that with no friction along this direction, the cube will move down the ramp.</li>
-<li>Cube4 mu=1, mu2=0, fdir1=1 0 0 (pointed down the ramp). Since the mu value is aligned with the ramp, I expect the block to stay still.</li>
-<li>
-<p><strong>Cube5</strong> mu=1, mu2=0, fdir1=0 1 0 (pointed toward the sides of the ramp). Since the mu value is perpendicular to the ramp, I expect the block to move.</p>
-</li>
-<li>
-<p><a href="code/friction.sdf.xacro">source code</a></p>
-<ul>
-<li><a href="code/macros.xacro">source code helper macros</a></li>
-</ul>
-</li>
-</ul>
+<p><a href="code/levels.sdf">code</a></p>
+<hr />
 <h2 id="reference">Reference</h2>
 <ul>
-<li><a href="https://robotics.stackexchange.com/questions/27714/explain-gazebo-friction-coefficients-mu-and-mu2">Explain Gazebo friction coefficients <mu> and <mu2>?</a></li>
-<li><a href="https://www.allisonthackston.com/articles/ignition-vs-gazebo">https://github.com/athackst/ignition_vs_gazebo/blob/main/friction/README.md</a></li>
-<li><a href="https://classic.gazebosim.org/tutorials?tut=physics_params">gazebo physics</a></li>
+<li><a href="https://gazebosim.org/api/gazebo/3/levels.html">gazebo tutorial levels</a></li>
+<li><a href="https://github.com/gazebosim/gz-sim/blob/main/examples/worlds/tunnel.sdf">tunnel world with levels</a></li>
 </ul>
 
 
