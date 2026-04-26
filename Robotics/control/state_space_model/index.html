@@ -733,6 +733,62 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="rewrite as a matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matrix-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix A
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix B
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Final">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#write-as-a-vector-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Write as a vector state
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -748,6 +804,90 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-mass-string-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: Mass String system
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo: Mass String system">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-output-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case 1: Output = position
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Case 1: Output = position">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -802,8 +942,8 @@
 
   <h1>State Space Model</h1>
 
-<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/control/">control</a>
-A State Space Model is linear representation of dynamic system,</p>
+<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/control/">control</a></p>
+<p>A State Space Model is linear representation of dynamic system,</p>
 <p><a href="https://youtu.be/g9G8b7FxEHc">Good Video - Intro to Control - 6.1 State-Space Model Basics </a></p>
 <div class="arithmatex">\[\dot{x} = A x + B u\]</div>
 <p>Where:</p>
@@ -846,82 +986,130 @@ u_1 - kx_1 - bx_2 = m\dot{x_2}
 <p><span class="arithmatex">\(\dot{x_2} = \frac{1}{m}u_1 - \frac{k}{m}x_1 - \frac{b}{m}x_2\)</span></p>
 <h3 id="rewrite-the-equation">rewrite the equation</h3>
 <p>related to <span class="arithmatex">\(x_1, x_2, u_1\)</span></p>
-<p><span class="arithmatex">\(\dot{x_1} = 0x_1 + 1x_2 + 0u_1\)</span></p>
-<p><span class="arithmatex">\(\dot{x_2} = -\frac{k}{m}x_1 - \frac{b}{m}x_2 + \frac{1}{m}u_1\)</span></p>
+<p><strong>Equation 1</strong>
+<span class="arithmatex">\(\dot{x_1} = 0x_1 + 1x_2 + 0u_1\)</span></p>
+<p><strong>Equation 2</strong>
+<span class="arithmatex">\(\dot{x_2} = -\frac{k}{m}x_1 - \frac{b}{m}x_2 + \frac{1}{m}u_1\)</span></p>
 <h3 id="rewrite-as-a-matrix">rewrite as a matrix</h3>
-<div class="arithmatex">\[
+<h4 id="matrix-a">Matrix A</h4>
+<p>$A =
 \begin{bmatrix}
-\dot{x_1} \\
+\text{coeff of } x_1 \text{ in eq1} &amp; \text{coeff of } x_2 \text{ in eq1} \
+\text{coeff of } x_1 \text{ in eq2} &amp; \text{coeff of } x_2 \text{ in eq2}
+\end{bmatrix}
+$</p>
+<p>so:</p>
+<p>$A =
+\begin{bmatrix}
+0 &amp; 1 \
+-\frac{k}{m} &amp; -\frac{b}{m}
+\end{bmatrix}
+$</p>
+<h4 id="matrix-b">Matrix B</h4>
+<p>$B =
+\begin{bmatrix}
+\text{coeff of } u \text{ in eq1} \
+\text{coeff of } u \text{ in eq2}
+\end{bmatrix}
+$</p>
+<p>so:</p>
+<p>$B =
+\begin{bmatrix}
+0 \
+\frac{1}{m}
+\end{bmatrix}
+$</p>
+<h3 id="final">Final</h3>
+<div class="arithmatex">\[\dot{x} = A x + B u\]</div>
+<p>$
+\begin{bmatrix}
+\dot{x_1} \
 \dot{x_2}
 \end{bmatrix}
 =\begin{bmatrix}
-0 &amp; 1 \\
+0 &amp; 1 \
 -\frac{k}{m} &amp; -\frac{b}{m}
 \end{bmatrix}
 \begin{bmatrix}
-x_1 \\
+x_1 \
 x_2
 \end{bmatrix}
 +
 \begin{bmatrix}
-0 \\
+0 \
 \frac{1}{m}
 \end{bmatrix}
 u_1
-\]</div>
-<div class="arithmatex">\[\dot{x} =
+$</p>
+<h4 id="write-as-a-vector-state">Write as a vector state</h4>
+<p>$\dot{x} =
 \begin{bmatrix}
-0 &amp; 1 \\
+0 &amp; 1 \
 -\frac{k}{m} &amp; -\frac{b}{m}
 \end{bmatrix}
 x
 +
 \begin{bmatrix}
-0 \\
+0 \
 \frac{1}{m}
 \end{bmatrix}
-u\]</div>
-<div class="arithmatex">\[\dot{x} = A x + B u\]</div>
+u
+$</p>
+<hr />
 <h2 id="output">Output</h2>
-<p>How is the ouput (x) depend and the system state and control input</p>
-<p>in the example we want to find change in distance <span class="arithmatex">\(x(t)\)</span></p>
-<ul>
-<li><span class="arithmatex">\(y = x_1 = x(t)\)</span></li>
-</ul>
-<p><span class="arithmatex">\(y = Cx + Du\)</span></p>
+<p>State-space has two parts</p>
+<div class="arithmatex">\[\dot{x} = Ax + Bu \quad \text{(system dynamics)}\]</div>
+<div class="arithmatex">\[y = Cx + Du \quad \text{(what you measure / output)}\]</div>
+<p>👉 A, B → physics
+👉 C, D → what you choose to observe</p>
+<h3 id="demo-mass-string-system">Demo: Mass String system</h3>
+<p>State:</p>
 <div class="arithmatex">\[
-y = 1x_1 + 0x_2 + 0u_1
+x =
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}
+=\begin{bmatrix}
+position \\
+velocity
+\end{bmatrix}
 \]</div>
+<h4 id="case-1-output-position">Case 1: Output = position</h4>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>C is just a matrix that <strong>picks</strong> which part of the state you want to <strong>observe</strong>.</p>
+</div>
+<h5 id="step1">Step1</h5>
+<p>I want output = position</p>
+<div class="arithmatex">\[y = x_1\]</div>
+<p>but the state vector 
+<span class="arithmatex">\(<span class="arithmatex">\(x =
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}\)</span>\)</span></p>
+<h5 id="step-2">Step 2</h5>
+<p>Build <strong>C</strong> matrix as selector</p>
 <div class="arithmatex">\[y =
 \begin{bmatrix}
 1 &amp; 0
 \end{bmatrix}
+x\]</div>
+<h5 id="step-3">Step 3</h5>
+<p>Define <strong>D</strong></p>
+<div class="admonition tip">
+<p class="admonition-title">Ask Chat</p>
+<p>Position depends on control input, so shouldn’t $ D\ne0$ ?”</p>
+</div>
+<div class="arithmatex">\[D = 0\]</div>
+<h5 id="final_1">Final</h5>
+<div class="arithmatex">\[y = Cx + Du$$
+$$y =
 \begin{bmatrix}
-x_1 \\
-x_2
+1 &amp; 0
 \end{bmatrix}
-+
-\begin{bmatrix}
-0
-\end{bmatrix}
-u_1\]</div>
-<p>for example if we want to look at the system if the velocity is the output <span class="arithmatex">\(y = \dot(x) = x_2\)</span></p>
-<div class="arithmatex">\[
-y = 0x_1 + 1x_2 + 0u_1
-\]</div>
-<div class="arithmatex">\[y =
-\begin{bmatrix}
-0 &amp; 1
-\end{bmatrix}
-\begin{bmatrix}
-x_1 \\
-x_2
-\end{bmatrix}
-+
-\begin{bmatrix}
-0
-\end{bmatrix}
-u_1\]</div>
+x + 0 \cdot u\]</div>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
