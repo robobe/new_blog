@@ -7,6 +7,7 @@ tags:
 
 
 {{ page_folder_links() }}
+
 A State Space Model is linear representation of dynamic system,
 
 [Good Video - Intro to Control - 6.1 State-Space Model Basics ](https://youtu.be/g9G8b7FxEHc)
@@ -62,12 +63,54 @@ $\dot{x_2} = \frac{1}{m}u_1 - \frac{k}{m}x_1 - \frac{b}{m}x_2$
 ### rewrite the equation 
 related to $x_1, x_2, u_1$
 
+**Equation 1**
 $\dot{x_1} = 0x_1 + 1x_2 + 0u_1$
 
+**Equation 2**
 $\dot{x_2} = -\frac{k}{m}x_1 - \frac{b}{m}x_2 + \frac{1}{m}u_1$
 
 ### rewrite as a matrix
-$$
+#### Matrix A
+
+$A =
+\begin{bmatrix}
+\text{coeff of } x_1 \text{ in eq1} &amp; \text{coeff of } x_2 \text{ in eq1} \\
+\text{coeff of } x_1 \text{ in eq2} &amp; \text{coeff of } x_2 \text{ in eq2}
+\end{bmatrix}
+$
+
+so:
+
+$A =
+\begin{bmatrix}
+0 &amp; 1 \\
+-\frac{k}{m} &amp; -\frac{b}{m}
+\end{bmatrix}
+$
+
+#### Matrix B
+
+$B =
+\begin{bmatrix}
+\text{coeff of } u \text{ in eq1} \\
+\text{coeff of } u \text{ in eq2}
+\end{bmatrix}
+$
+
+so:
+
+$B =
+\begin{bmatrix}
+0 \\
+\frac{1}{m}
+\end{bmatrix}
+$
+
+### Final
+
+$$\dot{x} = A x + B u$$
+
+$
 \begin{bmatrix}
 \dot{x_1} \\
 \dot{x_2}
@@ -86,9 +129,11 @@ x_2
 \frac{1}{m}
 \end{bmatrix}
 u_1
-$$
+$
 
-$$\dot{x} =
+#### Write as a vector state
+
+$\dot{x} =
 \begin{bmatrix}
 0 & 1 \\
 -\frac{k}{m} & -\frac{b}{m}
@@ -99,60 +144,84 @@ x
 0 \\
 \frac{1}{m}
 \end{bmatrix}
-u$$
+u
+$
 
-$$\dot{x} = A x + B u$$
+---
 
 
 ## Output
-How is the ouput (x) depend and the system state and control input
+State-space has two parts
 
-in the example we want to find change in distance $x(t)$
+$$\dot{x} = Ax + Bu \quad \text{(system dynamics)}$$
 
-- $y = x_1 = x(t)$
+$$y = Cx + Du \quad \text{(what you measure / output)}$$
 
+👉 A, B → physics
+👉 C, D → what you choose to observe
 
-$y = Cx + Du$
+### Demo: Mass String system
 
-
+State:
 
 $$
-y = 1x_1 + 0x_2 + 0u_1
+x =
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}
+=\begin{bmatrix}
+position \\
+velocity
+\end{bmatrix}
 $$
+
+
+#### Case 1: Output = position
+
+!!! tip 
+    C is just a matrix that **picks** which part of the state you want to **observe**.
+
+##### Step1
+
+I want output = position
+
+$$y = x_1$$
+
+but the state vector 
+$$x =
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}$$
+
+##### Step 2
+Build **C** matrix as selector
 
 $$y =
 \begin{bmatrix}
 1 & 0
 \end{bmatrix}
-\begin{bmatrix}
-x_1 \\
-x_2
-\end{bmatrix}
-+
-\begin{bmatrix}
-0
-\end{bmatrix}
-u_1$$
+x$$
 
-for example if we want to look at the system if the velocity is the output $y = \dot(x) = x_2$
 
-$$
-y = 0x_1 + 1x_2 + 0u_1
-$$
+##### Step 3
+Define **D**
 
+!!! tip "Ask Chat"
+    Position depends on control input, so shouldn’t $ D\ne0$ ?”
+    
+
+$$D = 0$$
+
+
+##### Final
+$$y = Cx + Du$$
 $$y =
 \begin{bmatrix}
-0 & 1
+1 & 0
 \end{bmatrix}
-\begin{bmatrix}
-x_1 \\
-x_2
-\end{bmatrix}
-+
-\begin{bmatrix}
-0
-\end{bmatrix}
-u_1$$
+x + 0 \cdot u$$
 
 ---
 
