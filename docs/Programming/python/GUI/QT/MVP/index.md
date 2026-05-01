@@ -26,21 +26,76 @@ MVP splits your UI code into three roles:
 
 ---
 
+## Downloads
+- <a href="code/mvp_simple_demo.py" download>Download code example</a>
+- <a href="code/skill.md" download>Download SKILL.md</a>
+
+---
 ## Simple Demo
+
 
 ![](images/mvp.drawio.png)
 
-```python
---8<-- "docs/Programming/GUI/QT/MVP/code/mvp_simple_demo.py"
 ```
-
-### Model notify variant
-
-![](images/mvp1.drawio.png)
-
+--8<-- "docs/Programming/python/GUI/QT/MVP/code/mvp_simple_demo.py"
 ```
 
 ```
+NumberService thread
+    ↓
+model.set_value()
+    ↓
+model.value_changed.fire()
+    ↓
+Presenter Python callback
+    ↓
+Presenter Qt signal
+    ↓
+Presenter Qt slot
+    ↓
+View update
+```
+
+---
+
+!!! warning "Qt UI must run in main thread"
+    We must convert from events that raise by the model to QT signal for gui updating
+    
+    callback → Qt signal → slot → UI
+
+
+!!! Tip
+    **The solution following**:
+    - Model = state
+    - Service = updates state
+    - Event = notify change
+    - Presenter = translate + route
+    - View = display
+
+
+### Presenter
+Presenter is **only** bridge
+
+- listen to model (Python callback)
+- convert to Qt signal
+- update view
+- handle user actions
+- control service (start/stop)
+
+!!! warning "No other component touches UI"
+    
+
+**RIGHT SIDE (unsafe threads)**
+- service
+- model
+- callbacks
+
+**LEFT SIDE (Qt main thread)**
+- presenter (slot)
+- view
+
+
+---
 
 ### Brief remainder
 Qt uses signals & slots to implement an event-driven, observer pattern.  

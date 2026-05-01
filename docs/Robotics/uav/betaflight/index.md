@@ -10,7 +10,8 @@ tags:
 
 - [aeroloop](https://github.com/betaflight/aeroloop_gazebo/tree/gz/)
 - [Testing Betaflight Autopilot with SITL and Gazebo on Ubuntu 24.04](https://betaflight.com/docs/development/autopilot/SITL_Autopilot_Testing_Gazebo)
-
+- [Fix calib arm disable flag for SITL#15073](https://github.com/betaflight/betaflight/pull/15073)
+    - [SITL + Gazebo remains stuck on ARMING_DISABLED_CALIBRATING even though IMU attitude updates from Gazebo #15022](https://github.com/betaflight/betaflight/discussions/15022)
 
 
 ---
