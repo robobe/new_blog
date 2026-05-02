@@ -31,7 +31,11 @@ tags:
         <p>Serialization</p>
         </a>
     </div>
-    
+     <div class="grid-item">
+        <a href="pub_sub/poller/">
+        <p>Poller</p>
+        </a>
+    </div>
 </div>
 
 | Pattern       | Direction | Fan-out | Reliable | Typical use       |
@@ -199,8 +203,4 @@ if __name__ == "__main__":
     p_sub.join()
 ```
 
----
 
-- [zmq_req_rep](zmq_req_rep.md)
-- [zmq_req_rep using ipc](zmq_req_rep_ipc.md)
-- [pub sub with dataclass and msgpack](pub_sub_msgpack.md)

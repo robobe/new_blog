@@ -30,13 +30,15 @@ MVP splits your UI code into three roles:
 - <a href="code/mvp_simple_demo.py" download>Download code example</a>
 - <a href="code/skill.md" download>Download SKILL.md</a>
 
+- [skill bk download](code/skill.md)
+
 ---
 ## Simple Demo
 
 
 ![](images/mvp.drawio.png)
 
-```
+```python
 --8<-- "docs/Programming/python/GUI/QT/MVP/code/mvp_simple_demo.py"
 ```
 

@@ -9,6 +9,7 @@ Generate a PyQt application using a strict MVP architecture with:
 * Python event system (no Qt in model)
 * Presenter as the ONLY Qt bridge
 * Thread-safe UI updates via Qt signals
+* Dedicated package folders for models, services, views, presenters, and tests
 
 ---
 
@@ -34,16 +35,57 @@ View (UI)
 
 ## Rules
 
+### 0. Project Layout (REQUIRED)
+
+Always create a dedicated folder for each architectural type:
+
+```text
+project_root/
+  app_package/
+    __init__.py
+    app.py                  # composition root
+    models/
+      __init__.py           # Event class lives here
+      x_model.py
+    services/
+      __init__.py
+      x_service.py
+    views/
+      __init__.py
+      x_view.py
+    presenters/
+      __init__.py
+      x_presenter.py
+  tests/
+    __init__.py
+    mock_data.py            # generated / mocked model data
+    test_x_model.py
+```
+
+Rules:
+
+* Do NOT place `model.py`, `service.py`, `view.py`, or `presenter.py` directly in the app package root.
+* Use plural folder names: `models`, `services`, `views`, `presenters`.
+* Keep `app.py` as the composition root that wires all objects together.
+* Tests must be outside the runtime package in a top-level `tests/` folder.
+
 ### 1. Model (STRICT)
 
 * Must NOT import Qt
 * Must NOT use pyqtSignal / QObject
 * Must use pure Python (dataclass preferred)
 * Must expose events using a custom Event class
+* Model files must live under `models/`
+* Models import `Event` from their own package: `from . import Event`
 
 Example:
 
 ```python
+from dataclasses import dataclass, field
+
+from . import Event
+
+
 @dataclass
 class Model:
     value: int = 0
@@ -54,7 +96,37 @@ class Model:
 
 ### 2. Event System (REQUIRED)
 
-Implement a simple Python callback system:
+Implement the shared Python callback system in `models/__init__.py`.
+
+Example:
+
+```python
+from collections.abc import Callable
+from threading import Lock
+from typing import Generic, TypeVar
+
+
+T = TypeVar("T")
+
+
+class Event(Generic[T]):
+    def __init__(self) -> None:
+        self._subs: list[Callable[[T], None]] = []
+        self._lock = Lock()
+
+    def subscribe(self, cb: Callable[[T], None]) -> None:
+        with self._lock:
+            self._subs.append(cb)
+
+    def emit(self, value: T) -> None:
+        with self._lock:
+            subscribers = tuple(self._subs)
+
+        for cb in subscribers:
+            cb(value)
+```
+
+Minimal form:
 
 ```python
 class Event:
@@ -80,6 +152,8 @@ class Event:
 * Must update model only
 * Must NOT touch View
 * Must NOT emit Qt signals
+* Service files must live under `services/`
+* Services may provide deterministic helper methods such as `generate_once()` to support tests
 
 Example:
 
@@ -100,6 +174,7 @@ class Service:
 * No logic
 * No model access
 * Expose user actions via Qt signals
+* View files must live under `views/`
 
 Example:
 
@@ -121,6 +196,7 @@ Responsibilities:
 * Subscribe to Model events (Python callbacks)
 * Convert Python callbacks → Qt signals
 * Update View ONLY inside Qt slot
+* Presenter files must live under `presenters/`
 
 Pattern:
 
@@ -186,6 +262,7 @@ Rules:
 
 * Keep references to presenters
 * Do not create objects inside other classes implicitly
+* Import models, services, views, and presenters from their dedicated packages
 
 ---
 
@@ -223,6 +300,59 @@ When generating advanced code, support:
 
 ---
 
+### 11. Tests + Mock Data (REQUIRED)
+
+Every generated app must include a top-level `tests/` folder.
+
+Required test files:
+
+```text
+tests/
+  __init__.py
+  mock_data.py
+  test_x_model.py
+```
+
+Rules:
+
+* `tests/mock_data.py` contains generated or mocked data for models.
+* Model tests must verify that mocked data is stored correctly.
+* Model tests must verify that model events emit mocked data.
+* Test code must not import Qt unless it is specifically testing a view or presenter.
+* Prefer pure model tests first because they are fast and do not require a display server.
+* Use standard-library `unittest` unless the project already has a configured test runner.
+
+Example:
+
+```python
+# tests/mock_data.py
+MOCK_VALUES = ("one", "two", "three")
+
+
+def make_values():
+    return MOCK_VALUES
+```
+
+```python
+import unittest
+
+from app_package.models import XModel
+
+from mock_data import make_values
+
+
+class TestXModel(unittest.TestCase):
+    def test_model_stores_mock_values(self):
+        model = XModel()
+        values = make_values()
+
+        model.set_values(values)
+
+        self.assertEqual(model.values(), values)
+```
+
+---
+
 ## Output Requirements
 
 When generating code:
@@ -235,7 +365,9 @@ When generating code:
   * View
   * Presenter
   * Main / composition root
-* Keep files modular if possible
+  * Tests folder
+  * Mock model data
+* Keep files modular using the required folder layout
 * Use clear naming: `XModel`, `XService`, `XView`, `XPresenter`
 
 ---

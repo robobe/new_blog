@@ -8,27 +8,48 @@ tags:
 
 {{ page_folder_links() }}
 
-Odometry Publisher which can be attached to any entity in order to periodically publish 2D or 3D odometry data in the form of gz::msgs::Odometry messages. [more](https://gazebosim.org/api/sim/8/classgz_1_1sim_1_1systems_1_1OdometryPublisher.html#details)
+Odometry Publisher which can be attached to any entity in order to periodically publish 2D or 3D odometry data in the form of gz::msgs::Odometry messages. [more](https://gazebosim.org/api/sim/8/classgz_1_1sim_1_1systems_1_1OdometryPublisher.html#details){:target="_blank"}
+
 
 
 ```xml
 <!-- add to model -->
-<plugin
-    filename="gz-sim-odometry-publisher-system"
-    name="gz::sim::systems::OdometryPublisher">
-    <odom_frame>vehicle/odom</odom_frame>
+<model>
+  <plugin filename="gz-sim-odometry-publisher-system"
+        name="gz::sim::systems::OdometryPublisher">
+    <odom_frame>odom</odom_frame>
     <robot_base_frame>base_link</robot_base_frame>
-</plugin>
+    <odom_topic>/robot/odometry</odom_topic>
+    <odom_publish_frequency>50</odom_publish_frequency>
+    <!-- default is 2; use 3 for full x,y,z + roll,pitch,yaw odometry -->
+    <dimensions>3</dimensions>
+  </plugin>
+...
+</model>
 ```
 
 !!! note "model plugin"
      
+    
 
-Add 3 topics
+### Topics
 
 - /model/my_bot/odometry (gz.msgs.Odometry)
 - /model/my_bot/odometry_with_covariance (gz.msgs.OdometryWithCovariance)
 - /model/my_bot/pose (gz.msgs.Pose_V)
+
+!!! tip "topics name"
+    The default topic name
+
+    ```xml
+    /model/{model_name}/odometry
+    ```
+
+
+!!! info "velocity"
+    Velocity data send only if the entity moving
+    
+---
 
 
 ## Config
