@@ -47,6 +47,11 @@ tags:
             <p>Contact</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="ultrasonic">
+            <p>Ultrasonic</p>
+        </a>
+    </div>
 </div>
 
 ## TODO:

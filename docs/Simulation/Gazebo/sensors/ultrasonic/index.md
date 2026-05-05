@@ -33,26 +33,33 @@ tags:
 [Sdf specification](http://sdformat.org/spec?ver=1.12&elem=sensor)
 
 ```xml title="gpu_ray sensor"
-<sensor name="ultrasonic" type="gpu_ray">
-    <pose>0 0 0.1 0 0 0</pose>
-    <always_on>true</always_on>
-    <update_rate>10</update_rate>
+<sensor name="ultrasonic_lidar" type="gpu_lidar">
+    <pose>0 0 0 0 0 0</pose>
+    <always_on>1</always_on>
+    <update_rate>20</update_rate>
     <visualize>true</visualize>
-    <topic>ultrasonic_range</topic>
+    <topic>ultrasonic_lidar</topic>
 
     <ray>
         <scan>
             <horizontal>
-                <samples>1</samples>
+                <samples>5</samples>
                 <resolution>1</resolution>
-                <min_angle>0.0</min_angle>
-                <max_angle>0.0</max_angle>
+                <min_angle>-0.26</min_angle>
+                <max_angle>0.26</max_angle>
             </horizontal>
+            <vertical>
+                <samples>3</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.10</min_angle>
+                <max_angle>0.10</max_angle>
+            </vertical>
         </scan>
+
         <range>
-            <min>0.02</min>      <!-- 2 cm -->
-            <max>4.0</max>       <!-- 4 meters -->
-            <resolution>0.001</resolution>
+            <min>0.02</min>
+            <max>10.0</max>
+            <resolution>0.01</resolution>
         </range>
     </ray>
 </sensor>
@@ -153,11 +160,66 @@ intensities: 0
      
 ---
 
+## Demo
+
 <details>
     <summary>world with ray sensor</summary>
 
 ```xml
---8<-- "docs/Simulation/Gazebo/sensors/code/gpu_ray_sesnor.sdf"
+--8<-- "docs/Simulation/Gazebo/sensors/ultrasonic/code/world.sdf"
 ```
 
 </details>
+
+
+![alt text](images/gz_with_visualize_lidar_1.png)
+
+Show the same data as ray and filter only ray that hit the target
+![alt text](images/gz_with_visualize_lidar_ray.png)
+
+### Python binding
+[download code](code/python_binding.py)
+
+```python 
+import math
+import time
+
+from gz.transport13 import Node
+from gz.msgs10.laserscan_pb2 import LaserScan
+
+TOPIC = "/ultrasonic_lidar"
+
+
+def lidar_cb(msg: LaserScan):
+    valid_ranges = [
+        r for r in msg.ranges
+        if math.isfinite(r) and msg.range_min <= r <= msg.range_max
+    ]
+
+    if not valid_ranges:
+        print("No object detected")
+        return
+
+    distance = min(valid_ranges)
+    print(f"Distance to object: {distance:.3f} m")
+
+
+def main():
+    node = Node()
+
+    ok = node.subscribe(LaserScan, TOPIC, lidar_cb)
+    if not ok:
+        raise RuntimeError(f"Failed to subscribe to {TOPIC}")
+
+    print(f"Listening on {TOPIC}...")
+
+    try:
+        while True:
+            time.sleep(0.1)
+    except KeyboardInterrupt:
+        print("Stopping")
+
+
+if __name__ == "__main__":
+    main()
+```
