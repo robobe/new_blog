@@ -4,6 +4,7 @@ tags:
     - bt
     - robotics
     - algorithm
+    - pytrees
 ---
 Behavior Trees (BTs) are a way to model decision-making logic,
 
@@ -41,7 +42,16 @@ The ancestors decide "What to do next?"
 ![alt text](images/tick_example_failer_with_running.png)
 
 
-## TOdo : code example
+## Demo: Simple tree 
+
+Implement behavior tree using python py-trees package
+
+```bash
+pip install py-trees
+```
+
+
+
 ---
 
 ## Reference

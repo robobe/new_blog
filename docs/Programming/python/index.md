@@ -43,10 +43,3 @@ tags:
             </a>
         </div>
 </div>
-
-
-
-## Packages
-
-- [zmq](zmq/index.md)
-- [protobuf](protobuf/index.md)

@@ -31,11 +31,6 @@ tags:
         <p>Language Highlights</p>
         </a>
     </div>
-    <div class="grid-item">
-        <a href="protocol">
-        <p>Protocols</p>
-        </a>
-    </div>
      <div class="grid-item">
         <a href="annotation">
         <p>Annotation</p>
@@ -61,6 +56,21 @@ tags:
     <div class="grid-item">
         <a href="libraries/msgpack">
         <p>msgpack</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="libraries/zmq/">
+        <p>zmq</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="libraries/pro">
+        <p>protobuf</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="libraries/pytrees/">
+            <p>PyTrees</p>
         </a>
     </div>
 </div>
