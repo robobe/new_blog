@@ -75,6 +75,16 @@ tags:
     </div>
 </div>
 
+### Data structure
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="libraries/heapq">
+        <p>heapq</p>
+        </a>
+    </div>
+</div>
+
 ---
 
 ## Good Posts and videos
