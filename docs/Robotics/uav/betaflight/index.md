@@ -16,6 +16,18 @@ tags:
 
 ---
 
+## Build firmware
+### MAMBAF722
+
+```
+sudo apt update
+sudo apt install git make gcc-arm-none-eabi binutils-arm-none-eabi
+git clone https://github.com/betaflight/betaflight.git
+cd betaflight
+git submodule update --init --recursive
+make MAMBAF722
+```
+
 # old
 
 ## betaflight sitl

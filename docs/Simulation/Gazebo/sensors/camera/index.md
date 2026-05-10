@@ -37,7 +37,7 @@ tags:
 </details>
 
 
-![alt text](image/camera_world.png)
+![alt text](images/camera_world.png)
 
 
 !!! tip "Add image display"

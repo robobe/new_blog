@@ -20,3 +20,8 @@ tags:
         </a>
     </div>
 </div>
+
+## World to check
+- [Simulating multiple connected drone](https://discuss.px4.io/t/simulating-multiple-physically-connected-drones-in-gazebo/31153/12)
+- [SubT](https://www.openrobotics.org/blog/2022/2/3/open-robotics-and-the-darpa-subterranean-challenge)
+- [check the world](https://discourse.openrobotics.org/t/announcement-of-rgl-gazebo-plugin/48907)

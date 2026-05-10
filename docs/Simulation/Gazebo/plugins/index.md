@@ -42,6 +42,11 @@ tags:
             <p>JointPositionController</p>
         </a>
     </div>
+    <div class="grid-item tooltip">
+        <a href="wind">
+            <p>Wind</p>
+        </a>
+    </div>
 </div>
 
 ## Motion Plugins

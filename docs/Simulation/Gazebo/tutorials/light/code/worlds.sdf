@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<sdf version="1.10">
+  <world name="spotlight_led_world">
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <scene>
+      <ambient>0.02 0.02 0.02 1</ambient>
+      <background>0.01 0.01 0.01 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <!-- Ground -->
+    <model name="ground">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>20 20</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>20 20</size>
+            </plane>
+          </geometry>
+          <material>
+            <diffuse>0.4 0.4 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Target box so you can see the light -->
+    <model name="box">
+      <pose>3 0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Spotlight LED -->
+    <light name="led_spotlight" type="spot">
+      <!-- x y z roll pitch yaw -->
+      <pose>0 0 3 0 0 0</pose>
+
+      <!-- Direction vector: points toward +X and slightly downward -->
+      <direction>1 0 -0.5</direction>
+
+      <diffuse>1.0 0.95 0.75 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <intensity>5.0</intensity>
+      <cast_shadows>true</cast_shadows>
+
+      <attenuation>
+        <range>15</range>
+        <constant>0.5</constant>
+        <linear>0.05</linear>
+        <quadratic>0.01</quadratic>
+      </attenuation>
+
+      <spot>
+        <inner_angle>0.25</inner_angle>
+        <outer_angle>0.8</outer_angle>
+        <falloff>1.0</falloff>
+      </spot>
+    </light>
+
+    <model name="my_robot">
+      <pose>5 5 0 0 0 0</pose>
+
+      <link name="base_link">
+        <!-- robot visuals / collisions here -->
+
+        <light name="front_spotlight" type="spot">
+          <!-- pose relative to base_link -->
+          <pose>0.4 0 0.3 0 0 0</pose>
+
+          <direction>1 0 -0.2</direction>
+
+          <diffuse>1.0 0.95 0.75 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+          <intensity>5.0</intensity>
+          <cast_shadows>true</cast_shadows>
+
+          <attenuation>
+            <range>15</range>
+            <constant>0.5</constant>
+            <linear>0.05</linear>
+            <quadratic>0.01</quadratic>
+          </attenuation>
+
+          <spot>
+            <inner_angle>0.25</inner_angle>
+            <outer_angle>0.8</outer_angle>
+            <falloff>1.0</falloff>
+          </spot>
+        </light>
+      </link>
+    </model>
+
+
+  </world>
+</sdf>

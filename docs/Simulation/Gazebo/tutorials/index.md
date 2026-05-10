@@ -7,6 +7,10 @@ tags:
 
 # Gazebo Harmonic Tutorials
 
-- [empty world](empty_world.md)
-- [joint controllers](joint_control.md)
-- [read IMU data](read_imu_data.md)
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="light">
+        <p>Light</p>
+        </a>
+    </div>
+</div>
