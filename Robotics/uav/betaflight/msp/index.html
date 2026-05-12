@@ -1,0 +1,1398 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/betaflight/msp/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Betaflight MSP protocol - Robots Inside</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#config-betaflight-uart-port-for-msp-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robots Inside
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Betaflight MSP protocol
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robots Inside
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#config-betaflight-uart-port-for-msp-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Config betaflight uart port for msp usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-python-msp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: python msp
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">betaflight</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">msp</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Betaflight MSP protocol</h1>
+
+<h2 id="config-betaflight-uart-port-for-msp-usage">Config betaflight uart port for msp usage</h2>
+<p><img alt="alt text" src="images/ports.png" /></p>
+<h2 id="demo-python-msp">Demo: python msp</h2>
+<details>
+<summary>MSP get status</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-0-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-0-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-0-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-0-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-0-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-0-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-0-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-0-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-0-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-0-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-0-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-0-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-0-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-0-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-0-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-0-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-0-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-0-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-0-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-0-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-0-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-0-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-0-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-0-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-0-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-0-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-0-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-0-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-0-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-0-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-0-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-0-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-0-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-0-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-0-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-0-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-0-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-0-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-0-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-0-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-0-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-0-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-0-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-0-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-0-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-0-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-0-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-0-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-0-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-0-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-0-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-0-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-0-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-0-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-0-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-0-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-0-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-0-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-0-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-0-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-0-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-0-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-0-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-0-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-0-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-0-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-0-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-0-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-0-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-0-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-0-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-0-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-0-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-0-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-0-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-0-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-0-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-0-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-0-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-0-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-0-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-0-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-0-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-0-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-0-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-0-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-0-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-0-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-0-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-0-100">100</a></span>
+<span class="normal"><a href="#__codelineno-0-101">101</a></span>
+<span class="normal"><a href="#__codelineno-0-102">102</a></span>
+<span class="normal"><a href="#__codelineno-0-103">103</a></span>
+<span class="normal"><a href="#__codelineno-0-104">104</a></span>
+<span class="normal"><a href="#__codelineno-0-105">105</a></span>
+<span class="normal"><a href="#__codelineno-0-106">106</a></span>
+<span class="normal"><a href="#__codelineno-0-107">107</a></span>
+<span class="normal"><a href="#__codelineno-0-108">108</a></span>
+<span class="normal"><a href="#__codelineno-0-109">109</a></span>
+<span class="normal"><a href="#__codelineno-0-110">110</a></span>
+<span class="normal"><a href="#__codelineno-0-111">111</a></span>
+<span class="normal"><a href="#__codelineno-0-112">112</a></span>
+<span class="normal"><a href="#__codelineno-0-113">113</a></span>
+<span class="normal"><a href="#__codelineno-0-114">114</a></span>
+<span class="normal"><a href="#__codelineno-0-115">115</a></span>
+<span class="normal"><a href="#__codelineno-0-116">116</a></span>
+<span class="normal"><a href="#__codelineno-0-117">117</a></span>
+<span class="normal"><a href="#__codelineno-0-118">118</a></span>
+<span class="normal"><a href="#__codelineno-0-119">119</a></span>
+<span class="normal"><a href="#__codelineno-0-120">120</a></span>
+<span class="normal"><a href="#__codelineno-0-121">121</a></span>
+<span class="normal"><a href="#__codelineno-0-122">122</a></span>
+<span class="normal"><a href="#__codelineno-0-123">123</a></span>
+<span class="normal"><a href="#__codelineno-0-124">124</a></span>
+<span class="normal"><a href="#__codelineno-0-125">125</a></span>
+<span class="normal"><a href="#__codelineno-0-126">126</a></span>
+<span class="normal"><a href="#__codelineno-0-127">127</a></span>
+<span class="normal"><a href="#__codelineno-0-128">128</a></span>
+<span class="normal"><a href="#__codelineno-0-129">129</a></span>
+<span class="normal"><a href="#__codelineno-0-130">130</a></span>
+<span class="normal"><a href="#__codelineno-0-131">131</a></span>
+<span class="normal"><a href="#__codelineno-0-132">132</a></span>
+<span class="normal"><a href="#__codelineno-0-133">133</a></span>
+<span class="normal"><a href="#__codelineno-0-134">134</a></span>
+<span class="normal"><a href="#__codelineno-0-135">135</a></span>
+<span class="normal"><a href="#__codelineno-0-136">136</a></span>
+<span class="normal"><a href="#__codelineno-0-137">137</a></span>
+<span class="normal"><a href="#__codelineno-0-138">138</a></span>
+<span class="normal"><a href="#__codelineno-0-139">139</a></span>
+<span class="normal"><a href="#__codelineno-0-140">140</a></span>
+<span class="normal"><a href="#__codelineno-0-141">141</a></span>
+<span class="normal"><a href="#__codelineno-0-142">142</a></span>
+<span class="normal"><a href="#__codelineno-0-143">143</a></span>
+<span class="normal"><a href="#__codelineno-0-144">144</a></span>
+<span class="normal"><a href="#__codelineno-0-145">145</a></span>
+<span class="normal"><a href="#__codelineno-0-146">146</a></span>
+<span class="normal"><a href="#__codelineno-0-147">147</a></span>
+<span class="normal"><a href="#__codelineno-0-148">148</a></span>
+<span class="normal"><a href="#__codelineno-0-149">149</a></span>
+<span class="normal"><a href="#__codelineno-0-150">150</a></span>
+<span class="normal"><a href="#__codelineno-0-151">151</a></span>
+<span class="normal"><a href="#__codelineno-0-152">152</a></span>
+<span class="normal"><a href="#__codelineno-0-153">153</a></span>
+<span class="normal"><a href="#__codelineno-0-154">154</a></span>
+<span class="normal"><a href="#__codelineno-0-155">155</a></span>
+<span class="normal"><a href="#__codelineno-0-156">156</a></span>
+<span class="normal"><a href="#__codelineno-0-157">157</a></span>
+<span class="normal"><a href="#__codelineno-0-158">158</a></span>
+<span class="normal"><a href="#__codelineno-0-159">159</a></span>
+<span class="normal"><a href="#__codelineno-0-160">160</a></span>
+<span class="normal"><a href="#__codelineno-0-161">161</a></span>
+<span class="normal"><a href="#__codelineno-0-162">162</a></span>
+<span class="normal"><a href="#__codelineno-0-163">163</a></span>
+<span class="normal"><a href="#__codelineno-0-164">164</a></span>
+<span class="normal"><a href="#__codelineno-0-165">165</a></span>
+<span class="normal"><a href="#__codelineno-0-166">166</a></span>
+<span class="normal"><a href="#__codelineno-0-167">167</a></span>
+<span class="normal"><a href="#__codelineno-0-168">168</a></span>
+<span class="normal"><a href="#__codelineno-0-169">169</a></span>
+<span class="normal"><a href="#__codelineno-0-170">170</a></span>
+<span class="normal"><a href="#__codelineno-0-171">171</a></span>
+<span class="normal"><a href="#__codelineno-0-172">172</a></span>
+<span class="normal"><a href="#__codelineno-0-173">173</a></span>
+<span class="normal"><a href="#__codelineno-0-174">174</a></span>
+<span class="normal"><a href="#__codelineno-0-175">175</a></span>
+<span class="normal"><a href="#__codelineno-0-176">176</a></span>
+<span class="normal"><a href="#__codelineno-0-177">177</a></span>
+<span class="normal"><a href="#__codelineno-0-178">178</a></span>
+<span class="normal"><a href="#__codelineno-0-179">179</a></span>
+<span class="normal"><a href="#__codelineno-0-180">180</a></span>
+<span class="normal"><a href="#__codelineno-0-181">181</a></span>
+<span class="normal"><a href="#__codelineno-0-182">182</a></span>
+<span class="normal"><a href="#__codelineno-0-183">183</a></span>
+<span class="normal"><a href="#__codelineno-0-184">184</a></span>
+<span class="normal"><a href="#__codelineno-0-185">185</a></span>
+<span class="normal"><a href="#__codelineno-0-186">186</a></span>
+<span class="normal"><a href="#__codelineno-0-187">187</a></span>
+<span class="normal"><a href="#__codelineno-0-188">188</a></span>
+<span class="normal"><a href="#__codelineno-0-189">189</a></span>
+<span class="normal"><a href="#__codelineno-0-190">190</a></span>
+<span class="normal"><a href="#__codelineno-0-191">191</a></span>
+<span class="normal"><a href="#__codelineno-0-192">192</a></span>
+<span class="normal"><a href="#__codelineno-0-193">193</a></span>
+<span class="normal"><a href="#__codelineno-0-194">194</a></span>
+<span class="normal"><a href="#__codelineno-0-195">195</a></span>
+<span class="normal"><a href="#__codelineno-0-196">196</a></span>
+<span class="normal"><a href="#__codelineno-0-197">197</a></span>
+<span class="normal"><a href="#__codelineno-0-198">198</a></span>
+<span class="normal"><a href="#__codelineno-0-199">199</a></span>
+<span class="normal"><a href="#__codelineno-0-200">200</a></span>
+<span class="normal"><a href="#__codelineno-0-201">201</a></span>
+<span class="normal"><a href="#__codelineno-0-202">202</a></span>
+<span class="normal"><a href="#__codelineno-0-203">203</a></span>
+<span class="normal"><a href="#__codelineno-0-204">204</a></span>
+<span class="normal"><a href="#__codelineno-0-205">205</a></span>
+<span class="normal"><a href="#__codelineno-0-206">206</a></span>
+<span class="normal"><a href="#__codelineno-0-207">207</a></span>
+<span class="normal"><a href="#__codelineno-0-208">208</a></span>
+<span class="normal"><a href="#__codelineno-0-209">209</a></span>
+<span class="normal"><a href="#__codelineno-0-210">210</a></span>
+<span class="normal"><a href="#__codelineno-0-211">211</a></span>
+<span class="normal"><a href="#__codelineno-0-212">212</a></span>
+<span class="normal"><a href="#__codelineno-0-213">213</a></span>
+<span class="normal"><a href="#__codelineno-0-214">214</a></span>
+<span class="normal"><a href="#__codelineno-0-215">215</a></span>
+<span class="normal"><a href="#__codelineno-0-216">216</a></span>
+<span class="normal"><a href="#__codelineno-0-217">217</a></span>
+<span class="normal"><a href="#__codelineno-0-218">218</a></span>
+<span class="normal"><a href="#__codelineno-0-219">219</a></span>
+<span class="normal"><a href="#__codelineno-0-220">220</a></span>
+<span class="normal"><a href="#__codelineno-0-221">221</a></span>
+<span class="normal"><a href="#__codelineno-0-222">222</a></span>
+<span class="normal"><a href="#__codelineno-0-223">223</a></span>
+<span class="normal"><a href="#__codelineno-0-224">224</a></span>
+<span class="normal"><a href="#__codelineno-0-225">225</a></span>
+<span class="normal"><a href="#__codelineno-0-226">226</a></span>
+<span class="normal"><a href="#__codelineno-0-227">227</a></span>
+<span class="normal"><a href="#__codelineno-0-228">228</a></span>
+<span class="normal"><a href="#__codelineno-0-229">229</a></span>
+<span class="normal"><a href="#__codelineno-0-230">230</a></span>
+<span class="normal"><a href="#__codelineno-0-231">231</a></span>
+<span class="normal"><a href="#__codelineno-0-232">232</a></span>
+<span class="normal"><a href="#__codelineno-0-233">233</a></span>
+<span class="normal"><a href="#__codelineno-0-234">234</a></span>
+<span class="normal"><a href="#__codelineno-0-235">235</a></span>
+<span class="normal"><a href="#__codelineno-0-236">236</a></span>
+<span class="normal"><a href="#__codelineno-0-237">237</a></span>
+<span class="normal"><a href="#__codelineno-0-238">238</a></span>
+<span class="normal"><a href="#__codelineno-0-239">239</a></span>
+<span class="normal"><a href="#__codelineno-0-240">240</a></span>
+<span class="normal"><a href="#__codelineno-0-241">241</a></span>
+<span class="normal"><a href="#__codelineno-0-242">242</a></span>
+<span class="normal"><a href="#__codelineno-0-243">243</a></span>
+<span class="normal"><a href="#__codelineno-0-244">244</a></span>
+<span class="normal"><a href="#__codelineno-0-245">245</a></span>
+<span class="normal"><a href="#__codelineno-0-246">246</a></span>
+<span class="normal"><a href="#__codelineno-0-247">247</a></span>
+<span class="normal"><a href="#__codelineno-0-248">248</a></span>
+<span class="normal"><a href="#__codelineno-0-249">249</a></span>
+<span class="normal"><a href="#__codelineno-0-250">250</a></span>
+<span class="normal"><a href="#__codelineno-0-251">251</a></span>
+<span class="normal"><a href="#__codelineno-0-252">252</a></span>
+<span class="normal"><a href="#__codelineno-0-253">253</a></span>
+<span class="normal"><a href="#__codelineno-0-254">254</a></span>
+<span class="normal"><a href="#__codelineno-0-255">255</a></span>
+<span class="normal"><a href="#__codelineno-0-256">256</a></span>
+<span class="normal"><a href="#__codelineno-0-257">257</a></span>
+<span class="normal"><a href="#__codelineno-0-258">258</a></span>
+<span class="normal"><a href="#__codelineno-0-259">259</a></span>
+<span class="normal"><a href="#__codelineno-0-260">260</a></span>
+<span class="normal"><a href="#__codelineno-0-261">261</a></span>
+<span class="normal"><a href="#__codelineno-0-262">262</a></span>
+<span class="normal"><a href="#__codelineno-0-263">263</a></span>
+<span class="normal"><a href="#__codelineno-0-264">264</a></span>
+<span class="normal"><a href="#__codelineno-0-265">265</a></span>
+<span class="normal"><a href="#__codelineno-0-266">266</a></span>
+<span class="normal"><a href="#__codelineno-0-267">267</a></span>
+<span class="normal"><a href="#__codelineno-0-268">268</a></span>
+<span class="normal"><a href="#__codelineno-0-269">269</a></span>
+<span class="normal"><a href="#__codelineno-0-270">270</a></span>
+<span class="normal"><a href="#__codelineno-0-271">271</a></span>
+<span class="normal"><a href="#__codelineno-0-272">272</a></span>
+<span class="normal"><a href="#__codelineno-0-273">273</a></span>
+<span class="normal"><a href="#__codelineno-0-274">274</a></span>
+<span class="normal"><a href="#__codelineno-0-275">275</a></span>
+<span class="normal"><a href="#__codelineno-0-276">276</a></span>
+<span class="normal"><a href="#__codelineno-0-277">277</a></span>
+<span class="normal"><a href="#__codelineno-0-278">278</a></span>
+<span class="normal"><a href="#__codelineno-0-279">279</a></span>
+<span class="normal"><a href="#__codelineno-0-280">280</a></span>
+<span class="normal"><a href="#__codelineno-0-281">281</a></span>
+<span class="normal"><a href="#__codelineno-0-282">282</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>#!/usr/bin/env python3
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>from __future__ import annotations
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>import argparse
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>import json
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>import struct
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>import time
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>DEFAULT_DEVICE = &quot;/dev/ttyUSB0&quot;
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>DEFAULT_BAUDRATE = 115200
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>MSP_STATUS_EX = 150
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>ARMING_DISABLE_FLAGS = {
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>    0: &quot;NO_GYRO&quot;,
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    1: &quot;FAILSAFE&quot;,
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    2: &quot;RX_FAILSAFE&quot;,
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>    3: &quot;NOT_DISARMED&quot;,
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    4: &quot;BOXFAILSAFE&quot;,
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    5: &quot;RUNAWAY_TAKEOFF&quot;,
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    6: &quot;CRASH_DETECTED&quot;,
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    7: &quot;THROTTLE&quot;,
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    8: &quot;ANGLE&quot;,
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>    9: &quot;BOOT_GRACE_TIME&quot;,
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    10: &quot;NOPREARM&quot;,
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    11: &quot;LOAD&quot;,
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    12: &quot;CALIBRATING&quot;,
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    13: &quot;CLI&quot;,
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    14: &quot;CMS_MENU&quot;,
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    15: &quot;BST&quot;,
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    16: &quot;MSP&quot;,
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    17: &quot;PARALYZE&quot;,
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    18: &quot;GPS&quot;,
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>    19: &quot;RESCUE_SW&quot;,
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>    20: &quot;RPMFILTER&quot;,
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>    21: &quot;REBOOT_REQUIRED&quot;,
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>    22: &quot;DSHOT_BITBANG&quot;,
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    23: &quot;ACC_CALIBRATION&quot;,
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>    24: &quot;MOTOR_PROTOCOL&quot;,
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>    25: &quot;ARMING_DISABLED_ARM_SWITCH&quot;,
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>    26: &quot;ALTITUDE&quot;,
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>    27: &quot;POSITION&quot;,
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>    28: &quot;ARM_SWITCH&quot;,
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>}
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>def msp_v1_request(command: int, payload: bytes = b&quot;&quot;) -&gt; bytes:
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>    size = len(payload)
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>    checksum = size ^ command
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>    for byte in payload:
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>        checksum ^= byte
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>    return b&quot;$M&lt;&quot; + bytes([size, command]) + payload + bytes([checksum])
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>def crc8_dvb_s2(data: bytes) -&gt; int:
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>    crc = 0
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>    for byte in data:
+<a id="__codelineno-0-59" name="__codelineno-0-59"></a>        crc ^= byte
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a>        for _ in range(8):
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>            if crc &amp; 0x80:
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>                crc = ((crc &lt;&lt; 1) ^ 0xD5) &amp; 0xFF
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a>            else:
+<a id="__codelineno-0-64" name="__codelineno-0-64"></a>                crc = (crc &lt;&lt; 1) &amp; 0xFF
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a>    return crc
+<a id="__codelineno-0-66" name="__codelineno-0-66"></a>
+<a id="__codelineno-0-67" name="__codelineno-0-67"></a>
+<a id="__codelineno-0-68" name="__codelineno-0-68"></a>def msp_v2_request(command: int, payload: bytes = b&quot;&quot;) -&gt; bytes:
+<a id="__codelineno-0-69" name="__codelineno-0-69"></a>    flags = 0
+<a id="__codelineno-0-70" name="__codelineno-0-70"></a>    body = (
+<a id="__codelineno-0-71" name="__codelineno-0-71"></a>        bytes([flags])
+<a id="__codelineno-0-72" name="__codelineno-0-72"></a>        + command.to_bytes(2, &quot;little&quot;)
+<a id="__codelineno-0-73" name="__codelineno-0-73"></a>        + len(payload).to_bytes(2, &quot;little&quot;)
+<a id="__codelineno-0-74" name="__codelineno-0-74"></a>        + payload
+<a id="__codelineno-0-75" name="__codelineno-0-75"></a>    )
+<a id="__codelineno-0-76" name="__codelineno-0-76"></a>    return b&quot;$X&lt;&quot; + body + bytes([crc8_dvb_s2(body)])
+<a id="__codelineno-0-77" name="__codelineno-0-77"></a>
+<a id="__codelineno-0-78" name="__codelineno-0-78"></a>
+<a id="__codelineno-0-79" name="__codelineno-0-79"></a>def read_exact(serial_port, size: int, timeout: float) -&gt; bytes:
+<a id="__codelineno-0-80" name="__codelineno-0-80"></a>    serial_port.timeout = timeout
+<a id="__codelineno-0-81" name="__codelineno-0-81"></a>    data = serial_port.read(size)
+<a id="__codelineno-0-82" name="__codelineno-0-82"></a>    if len(data) != size:
+<a id="__codelineno-0-83" name="__codelineno-0-83"></a>        raise TimeoutError(f&quot;Timeout while reading {size} serial bytes&quot;)
+<a id="__codelineno-0-84" name="__codelineno-0-84"></a>    return data
+<a id="__codelineno-0-85" name="__codelineno-0-85"></a>
+<a id="__codelineno-0-86" name="__codelineno-0-86"></a>
+<a id="__codelineno-0-87" name="__codelineno-0-87"></a>def read_msp_response(serial_port, timeout: float) -&gt; tuple[int, bytes]:
+<a id="__codelineno-0-88" name="__codelineno-0-88"></a>    deadline = time.monotonic() + timeout
+<a id="__codelineno-0-89" name="__codelineno-0-89"></a>
+<a id="__codelineno-0-90" name="__codelineno-0-90"></a>    while time.monotonic() &lt; deadline:
+<a id="__codelineno-0-91" name="__codelineno-0-91"></a>        remaining = max(0.001, deadline - time.monotonic())
+<a id="__codelineno-0-92" name="__codelineno-0-92"></a>        if read_exact(serial_port, 1, remaining) != b&quot;$&quot;:
+<a id="__codelineno-0-93" name="__codelineno-0-93"></a>            continue
+<a id="__codelineno-0-94" name="__codelineno-0-94"></a>        protocol = read_exact(serial_port, 1, remaining)
+<a id="__codelineno-0-95" name="__codelineno-0-95"></a>
+<a id="__codelineno-0-96" name="__codelineno-0-96"></a>        if protocol == b&quot;M&quot;:
+<a id="__codelineno-0-97" name="__codelineno-0-97"></a>            return read_msp_v1_response_after_header(serial_port, deadline)
+<a id="__codelineno-0-98" name="__codelineno-0-98"></a>        if protocol == b&quot;X&quot;:
+<a id="__codelineno-0-99" name="__codelineno-0-99"></a>            return read_msp_v2_response_after_header(serial_port, deadline)
+<a id="__codelineno-0-100" name="__codelineno-0-100"></a>
+<a id="__codelineno-0-101" name="__codelineno-0-101"></a>    raise TimeoutError(&quot;No MSP response&quot;)
+<a id="__codelineno-0-102" name="__codelineno-0-102"></a>
+<a id="__codelineno-0-103" name="__codelineno-0-103"></a>
+<a id="__codelineno-0-104" name="__codelineno-0-104"></a>def read_msp_v1_response_after_header(serial_port, deadline: float) -&gt; tuple[int, bytes]:
+<a id="__codelineno-0-105" name="__codelineno-0-105"></a>    remaining = max(0.001, deadline - time.monotonic())
+<a id="__codelineno-0-106" name="__codelineno-0-106"></a>    direction = read_exact(serial_port, 1, remaining)
+<a id="__codelineno-0-107" name="__codelineno-0-107"></a>    if direction not in (b&quot;&gt;&quot;, b&quot;!&quot;):
+<a id="__codelineno-0-108" name="__codelineno-0-108"></a>        raise ValueError(f&quot;Invalid MSP v1 direction: {direction!r}&quot;)
+<a id="__codelineno-0-109" name="__codelineno-0-109"></a>
+<a id="__codelineno-0-110" name="__codelineno-0-110"></a>    size = read_exact(serial_port, 1, remaining)[0]
+<a id="__codelineno-0-111" name="__codelineno-0-111"></a>    command = read_exact(serial_port, 1, remaining)[0]
+<a id="__codelineno-0-112" name="__codelineno-0-112"></a>    payload = read_exact(serial_port, size, remaining)
+<a id="__codelineno-0-113" name="__codelineno-0-113"></a>    received_checksum = read_exact(serial_port, 1, remaining)[0]
+<a id="__codelineno-0-114" name="__codelineno-0-114"></a>
+<a id="__codelineno-0-115" name="__codelineno-0-115"></a>    checksum = size ^ command
+<a id="__codelineno-0-116" name="__codelineno-0-116"></a>    for byte in payload:
+<a id="__codelineno-0-117" name="__codelineno-0-117"></a>        checksum ^= byte
+<a id="__codelineno-0-118" name="__codelineno-0-118"></a>    if checksum != received_checksum:
+<a id="__codelineno-0-119" name="__codelineno-0-119"></a>        raise ValueError(
+<a id="__codelineno-0-120" name="__codelineno-0-120"></a>            f&quot;Bad MSP v1 checksum: got 0x{received_checksum:02x}, &quot;
+<a id="__codelineno-0-121" name="__codelineno-0-121"></a>            f&quot;expected 0x{checksum:02x}&quot;
+<a id="__codelineno-0-122" name="__codelineno-0-122"></a>        )
+<a id="__codelineno-0-123" name="__codelineno-0-123"></a>    if direction == b&quot;!&quot;:
+<a id="__codelineno-0-124" name="__codelineno-0-124"></a>        raise RuntimeError(f&quot;MSP error response for command {command}&quot;)
+<a id="__codelineno-0-125" name="__codelineno-0-125"></a>
+<a id="__codelineno-0-126" name="__codelineno-0-126"></a>    return command, payload
+<a id="__codelineno-0-127" name="__codelineno-0-127"></a>
+<a id="__codelineno-0-128" name="__codelineno-0-128"></a>
+<a id="__codelineno-0-129" name="__codelineno-0-129"></a>def read_msp_v2_response_after_header(serial_port, deadline: float) -&gt; tuple[int, bytes]:
+<a id="__codelineno-0-130" name="__codelineno-0-130"></a>    remaining = max(0.001, deadline - time.monotonic())
+<a id="__codelineno-0-131" name="__codelineno-0-131"></a>    direction = read_exact(serial_port, 1, remaining)
+<a id="__codelineno-0-132" name="__codelineno-0-132"></a>    if direction not in (b&quot;&gt;&quot;, b&quot;!&quot;):
+<a id="__codelineno-0-133" name="__codelineno-0-133"></a>        raise ValueError(f&quot;Invalid MSP v2 direction: {direction!r}&quot;)
+<a id="__codelineno-0-134" name="__codelineno-0-134"></a>
+<a id="__codelineno-0-135" name="__codelineno-0-135"></a>    flags = read_exact(serial_port, 1, remaining)
+<a id="__codelineno-0-136" name="__codelineno-0-136"></a>    command_bytes = read_exact(serial_port, 2, remaining)
+<a id="__codelineno-0-137" name="__codelineno-0-137"></a>    size_bytes = read_exact(serial_port, 2, remaining)
+<a id="__codelineno-0-138" name="__codelineno-0-138"></a>    size = int.from_bytes(size_bytes, &quot;little&quot;)
+<a id="__codelineno-0-139" name="__codelineno-0-139"></a>    payload = read_exact(serial_port, size, remaining)
+<a id="__codelineno-0-140" name="__codelineno-0-140"></a>    received_checksum = read_exact(serial_port, 1, remaining)[0]
+<a id="__codelineno-0-141" name="__codelineno-0-141"></a>
+<a id="__codelineno-0-142" name="__codelineno-0-142"></a>    checksum_data = flags + command_bytes + size_bytes + payload
+<a id="__codelineno-0-143" name="__codelineno-0-143"></a>    checksum = crc8_dvb_s2(checksum_data)
+<a id="__codelineno-0-144" name="__codelineno-0-144"></a>    if checksum != received_checksum:
+<a id="__codelineno-0-145" name="__codelineno-0-145"></a>        raise ValueError(
+<a id="__codelineno-0-146" name="__codelineno-0-146"></a>            f&quot;Bad MSP v2 checksum: got 0x{received_checksum:02x}, &quot;
+<a id="__codelineno-0-147" name="__codelineno-0-147"></a>            f&quot;expected 0x{checksum:02x}&quot;
+<a id="__codelineno-0-148" name="__codelineno-0-148"></a>        )
+<a id="__codelineno-0-149" name="__codelineno-0-149"></a>
+<a id="__codelineno-0-150" name="__codelineno-0-150"></a>    command = int.from_bytes(command_bytes, &quot;little&quot;)
+<a id="__codelineno-0-151" name="__codelineno-0-151"></a>    if direction == b&quot;!&quot;:
+<a id="__codelineno-0-152" name="__codelineno-0-152"></a>        raise RuntimeError(f&quot;MSP error response for command {command}&quot;)
+<a id="__codelineno-0-153" name="__codelineno-0-153"></a>
+<a id="__codelineno-0-154" name="__codelineno-0-154"></a>    return command, payload
+<a id="__codelineno-0-155" name="__codelineno-0-155"></a>
+<a id="__codelineno-0-156" name="__codelineno-0-156"></a>
+<a id="__codelineno-0-157" name="__codelineno-0-157"></a>def request_msp(
+<a id="__codelineno-0-158" name="__codelineno-0-158"></a>    serial_port,
+<a id="__codelineno-0-159" name="__codelineno-0-159"></a>    command: int,
+<a id="__codelineno-0-160" name="__codelineno-0-160"></a>    timeout: float,
+<a id="__codelineno-0-161" name="__codelineno-0-161"></a>    version: int = 1,
+<a id="__codelineno-0-162" name="__codelineno-0-162"></a>) -&gt; bytes:
+<a id="__codelineno-0-163" name="__codelineno-0-163"></a>    if version == 1:
+<a id="__codelineno-0-164" name="__codelineno-0-164"></a>        request = msp_v1_request(command)
+<a id="__codelineno-0-165" name="__codelineno-0-165"></a>    elif version == 2:
+<a id="__codelineno-0-166" name="__codelineno-0-166"></a>        request = msp_v2_request(command)
+<a id="__codelineno-0-167" name="__codelineno-0-167"></a>    else:
+<a id="__codelineno-0-168" name="__codelineno-0-168"></a>        raise ValueError(f&quot;Unsupported MSP version: {version}&quot;)
+<a id="__codelineno-0-169" name="__codelineno-0-169"></a>
+<a id="__codelineno-0-170" name="__codelineno-0-170"></a>    serial_port.write(request)
+<a id="__codelineno-0-171" name="__codelineno-0-171"></a>    serial_port.flush()
+<a id="__codelineno-0-172" name="__codelineno-0-172"></a>
+<a id="__codelineno-0-173" name="__codelineno-0-173"></a>    while True:
+<a id="__codelineno-0-174" name="__codelineno-0-174"></a>        response_command, payload = read_msp_response(serial_port, timeout)
+<a id="__codelineno-0-175" name="__codelineno-0-175"></a>        if response_command == command:
+<a id="__codelineno-0-176" name="__codelineno-0-176"></a>            return payload
+<a id="__codelineno-0-177" name="__codelineno-0-177"></a>
+<a id="__codelineno-0-178" name="__codelineno-0-178"></a>
+<a id="__codelineno-0-179" name="__codelineno-0-179"></a>def decode_arming_mask(mask: int) -&gt; list[str]:
+<a id="__codelineno-0-180" name="__codelineno-0-180"></a>    return [
+<a id="__codelineno-0-181" name="__codelineno-0-181"></a>        name
+<a id="__codelineno-0-182" name="__codelineno-0-182"></a>        for bit, name in ARMING_DISABLE_FLAGS.items()
+<a id="__codelineno-0-183" name="__codelineno-0-183"></a>        if mask &amp; (1 &lt;&lt; bit)
+<a id="__codelineno-0-184" name="__codelineno-0-184"></a>    ]
+<a id="__codelineno-0-185" name="__codelineno-0-185"></a>
+<a id="__codelineno-0-186" name="__codelineno-0-186"></a>
+<a id="__codelineno-0-187" name="__codelineno-0-187"></a>def parse_status_ex(payload: bytes) -&gt; dict[str, object]:
+<a id="__codelineno-0-188" name="__codelineno-0-188"></a>    if len(payload) &lt; 16:
+<a id="__codelineno-0-189" name="__codelineno-0-189"></a>        raise ValueError(f&quot;MSP_STATUS_EX payload too short: {len(payload)} bytes&quot;)
+<a id="__codelineno-0-190" name="__codelineno-0-190"></a>
+<a id="__codelineno-0-191" name="__codelineno-0-191"></a>    cycle_time_us = struct.unpack_from(&quot;&lt;H&quot;, payload, 0)[0]
+<a id="__codelineno-0-192" name="__codelineno-0-192"></a>    i2c_errors = struct.unpack_from(&quot;&lt;H&quot;, payload, 2)[0]
+<a id="__codelineno-0-193" name="__codelineno-0-193"></a>    sensors_mask = struct.unpack_from(&quot;&lt;H&quot;, payload, 4)[0]
+<a id="__codelineno-0-194" name="__codelineno-0-194"></a>    box_mode_flags = struct.unpack_from(&quot;&lt;I&quot;, payload, 6)[0]
+<a id="__codelineno-0-195" name="__codelineno-0-195"></a>    pid_profile = payload[10]
+<a id="__codelineno-0-196" name="__codelineno-0-196"></a>    cpu_load = struct.unpack_from(&quot;&lt;H&quot;, payload, 11)[0]
+<a id="__codelineno-0-197" name="__codelineno-0-197"></a>    pid_profile_count = payload[13]
+<a id="__codelineno-0-198" name="__codelineno-0-198"></a>    rate_profile = payload[14]
+<a id="__codelineno-0-199" name="__codelineno-0-199"></a>    flight_mode_byte_count = payload[15]
+<a id="__codelineno-0-200" name="__codelineno-0-200"></a>    arming_offset = 16 + flight_mode_byte_count
+<a id="__codelineno-0-201" name="__codelineno-0-201"></a>
+<a id="__codelineno-0-202" name="__codelineno-0-202"></a>    if len(payload) &lt; arming_offset + 5:
+<a id="__codelineno-0-203" name="__codelineno-0-203"></a>        raise ValueError(
+<a id="__codelineno-0-204" name="__codelineno-0-204"></a>            f&quot;Cannot decode arming flags. payload_len={len(payload)}, &quot;
+<a id="__codelineno-0-205" name="__codelineno-0-205"></a>            f&quot;flight_mode_byte_count={flight_mode_byte_count}&quot;
+<a id="__codelineno-0-206" name="__codelineno-0-206"></a>        )
+<a id="__codelineno-0-207" name="__codelineno-0-207"></a>
+<a id="__codelineno-0-208" name="__codelineno-0-208"></a>    arming_disable_flag_count = payload[arming_offset]
+<a id="__codelineno-0-209" name="__codelineno-0-209"></a>    arming_disable_mask = struct.unpack_from(&quot;&lt;I&quot;, payload, arming_offset + 1)[0]
+<a id="__codelineno-0-210" name="__codelineno-0-210"></a>    arming_disable_flags = decode_arming_mask(arming_disable_mask)
+<a id="__codelineno-0-211" name="__codelineno-0-211"></a>
+<a id="__codelineno-0-212" name="__codelineno-0-212"></a>    return {
+<a id="__codelineno-0-213" name="__codelineno-0-213"></a>        &quot;cycle_time_us&quot;: cycle_time_us,
+<a id="__codelineno-0-214" name="__codelineno-0-214"></a>        &quot;i2c_errors&quot;: i2c_errors,
+<a id="__codelineno-0-215" name="__codelineno-0-215"></a>        &quot;sensors_mask&quot;: sensors_mask,
+<a id="__codelineno-0-216" name="__codelineno-0-216"></a>        &quot;sensors_mask_hex&quot;: f&quot;0x{sensors_mask:04x}&quot;,
+<a id="__codelineno-0-217" name="__codelineno-0-217"></a>        &quot;box_mode_flags&quot;: box_mode_flags,
+<a id="__codelineno-0-218" name="__codelineno-0-218"></a>        &quot;box_mode_flags_hex&quot;: f&quot;0x{box_mode_flags:08x}&quot;,
+<a id="__codelineno-0-219" name="__codelineno-0-219"></a>        &quot;pid_profile&quot;: pid_profile,
+<a id="__codelineno-0-220" name="__codelineno-0-220"></a>        &quot;pid_profile_count&quot;: pid_profile_count,
+<a id="__codelineno-0-221" name="__codelineno-0-221"></a>        &quot;rate_profile&quot;: rate_profile,
+<a id="__codelineno-0-222" name="__codelineno-0-222"></a>        &quot;cpu_load_raw&quot;: cpu_load,
+<a id="__codelineno-0-223" name="__codelineno-0-223"></a>        &quot;flight_mode_byte_count&quot;: flight_mode_byte_count,
+<a id="__codelineno-0-224" name="__codelineno-0-224"></a>        &quot;arming_disable_flag_count&quot;: arming_disable_flag_count,
+<a id="__codelineno-0-225" name="__codelineno-0-225"></a>        &quot;arming_disable_mask&quot;: arming_disable_mask,
+<a id="__codelineno-0-226" name="__codelineno-0-226"></a>        &quot;arming_disable_mask_hex&quot;: f&quot;0x{arming_disable_mask:08x}&quot;,
+<a id="__codelineno-0-227" name="__codelineno-0-227"></a>        &quot;arming_disable_flags&quot;: arming_disable_flags,
+<a id="__codelineno-0-228" name="__codelineno-0-228"></a>        &quot;arming_disabled&quot;: bool(arming_disable_flags),
+<a id="__codelineno-0-229" name="__codelineno-0-229"></a>        &quot;armable&quot;: not arming_disable_flags,
+<a id="__codelineno-0-230" name="__codelineno-0-230"></a>        &quot;calibrating&quot;: &quot;CALIBRATING&quot; in arming_disable_flags,
+<a id="__codelineno-0-231" name="__codelineno-0-231"></a>        &quot;failsafe&quot;: &quot;FAILSAFE&quot; in arming_disable_flags
+<a id="__codelineno-0-232" name="__codelineno-0-232"></a>        or &quot;RX_FAILSAFE&quot; in arming_disable_flags,
+<a id="__codelineno-0-233" name="__codelineno-0-233"></a>    }
+<a id="__codelineno-0-234" name="__codelineno-0-234"></a>
+<a id="__codelineno-0-235" name="__codelineno-0-235"></a>
+<a id="__codelineno-0-236" name="__codelineno-0-236"></a>def parse_args() -&gt; argparse.Namespace:
+<a id="__codelineno-0-237" name="__codelineno-0-237"></a>    parser = argparse.ArgumentParser(
+<a id="__codelineno-0-238" name="__codelineno-0-238"></a>        description=&quot;Read Betaflight MSP status telemetry from a serial device.&quot;
+<a id="__codelineno-0-239" name="__codelineno-0-239"></a>    )
+<a id="__codelineno-0-240" name="__codelineno-0-240"></a>    parser.add_argument(&quot;--device&quot;, default=DEFAULT_DEVICE)
+<a id="__codelineno-0-241" name="__codelineno-0-241"></a>    parser.add_argument(&quot;--baudrate&quot;, default=DEFAULT_BAUDRATE, type=int)
+<a id="__codelineno-0-242" name="__codelineno-0-242"></a>    parser.add_argument(&quot;--rate-hz&quot;, default=2.0, type=float)
+<a id="__codelineno-0-243" name="__codelineno-0-243"></a>    parser.add_argument(&quot;--timeout&quot;, default=0.5, type=float)
+<a id="__codelineno-0-244" name="__codelineno-0-244"></a>    parser.add_argument(&quot;--count&quot;, default=0, type=int, help=&quot;0 means run forever&quot;)
+<a id="__codelineno-0-245" name="__codelineno-0-245"></a>    parser.add_argument(&quot;--msp-version&quot;, default=1, choices=(1, 2), type=int)
+<a id="__codelineno-0-246" name="__codelineno-0-246"></a>    return parser.parse_args()
+<a id="__codelineno-0-247" name="__codelineno-0-247"></a>
+<a id="__codelineno-0-248" name="__codelineno-0-248"></a>
+<a id="__codelineno-0-249" name="__codelineno-0-249"></a>def main() -&gt; None:
+<a id="__codelineno-0-250" name="__codelineno-0-250"></a>    import serial
+<a id="__codelineno-0-251" name="__codelineno-0-251"></a>
+<a id="__codelineno-0-252" name="__codelineno-0-252"></a>    args = parse_args()
+<a id="__codelineno-0-253" name="__codelineno-0-253"></a>    interval_s = 1.0 / args.rate_hz if args.rate_hz &gt; 0 else 0.0
+<a id="__codelineno-0-254" name="__codelineno-0-254"></a>
+<a id="__codelineno-0-255" name="__codelineno-0-255"></a>    with serial.Serial(
+<a id="__codelineno-0-256" name="__codelineno-0-256"></a>        port=args.device,
+<a id="__codelineno-0-257" name="__codelineno-0-257"></a>        baudrate=args.baudrate,
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a>        timeout=0,
+<a id="__codelineno-0-259" name="__codelineno-0-259"></a>        write_timeout=1,
+<a id="__codelineno-0-260" name="__codelineno-0-260"></a>    ) as serial_port:
+<a id="__codelineno-0-261" name="__codelineno-0-261"></a>        reads = 0
+<a id="__codelineno-0-262" name="__codelineno-0-262"></a>        while args.count &lt;= 0 or reads &lt; args.count:
+<a id="__codelineno-0-263" name="__codelineno-0-263"></a>            started = time.monotonic()
+<a id="__codelineno-0-264" name="__codelineno-0-264"></a>            payload = request_msp(
+<a id="__codelineno-0-265" name="__codelineno-0-265"></a>                serial_port,
+<a id="__codelineno-0-266" name="__codelineno-0-266"></a>                MSP_STATUS_EX,
+<a id="__codelineno-0-267" name="__codelineno-0-267"></a>                args.timeout,
+<a id="__codelineno-0-268" name="__codelineno-0-268"></a>                version=args.msp_version,
+<a id="__codelineno-0-269" name="__codelineno-0-269"></a>            )
+<a id="__codelineno-0-270" name="__codelineno-0-270"></a>            telemetry = parse_status_ex(payload)
+<a id="__codelineno-0-271" name="__codelineno-0-271"></a>            telemetry[&quot;timestamp_s&quot;] = time.time()
+<a id="__codelineno-0-272" name="__codelineno-0-272"></a>            print(json.dumps(telemetry, indent=2, sort_keys=True), flush=True)
+<a id="__codelineno-0-273" name="__codelineno-0-273"></a>
+<a id="__codelineno-0-274" name="__codelineno-0-274"></a>            reads += 1
+<a id="__codelineno-0-275" name="__codelineno-0-275"></a>
+<a id="__codelineno-0-276" name="__codelineno-0-276"></a>            if interval_s:
+<a id="__codelineno-0-277" name="__codelineno-0-277"></a>                elapsed = time.monotonic() - started
+<a id="__codelineno-0-278" name="__codelineno-0-278"></a>                time.sleep(max(0.0, interval_s - elapsed))
+<a id="__codelineno-0-279" name="__codelineno-0-279"></a>
+<a id="__codelineno-0-280" name="__codelineno-0-280"></a>
+<a id="__codelineno-0-281" name="__codelineno-0-281"></a>if __name__ == &quot;__main__&quot;:
+<a id="__codelineno-0-282" name="__codelineno-0-282"></a>    main()
+</code></pre></div></td></tr></table></div>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
