@@ -3,6 +3,23 @@ tags:
     - betaflight
 ---
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="firmware_install">
+        <p>install firmware</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="msp">
+        <p>msp</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="hardware">
+        <p>hardware</p>
+        </a>
+    </div>
+</div>
 
 {{ page_folder_links() }}
 
