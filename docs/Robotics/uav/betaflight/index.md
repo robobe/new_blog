@@ -49,6 +49,11 @@ make MAMBAF722
 
 ## betaflight sitl
 
+!!! tip "build sitl as static binary"
+    ```
+    make TARGET=SITL OPTIONS=SITL_STATIC
+    ```
+
 ```bash
 sudo apt update && sudo apt upgrade
 sudo apt -y install build-essential git curl clang-18 python3 python-is-python3
@@ -56,7 +61,7 @@ git clone https://github.com/betaflight/betaflight.git
 cd betaflight
 make arm_sdk_install
 make configs
-make TARGET=SITL
+make TARGET=SITL OPTIONS=SITL_STATIC
 ```
 
 ### betaflight web app

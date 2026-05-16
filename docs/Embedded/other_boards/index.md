@@ -12,9 +12,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="">
-            <img src=""  width="150" height="150">
-            <p>TBD</p>
+        <a href="rockchip">
+            <img src="images/rockchip.png"  width="150" height="150">
+            <p>Rockchip</p>
         </a>
     </div>
     <div class="grid-item">
@@ -24,3 +24,5 @@ tags:
         </a>
     </div>
 </div>
+
+![alt text](image.png)

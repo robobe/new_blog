@@ -27,7 +27,7 @@
     </div>
 </div>
 
-## Agent and Tools
+## Agent Skills and other Tools
 
 <div class="grid-container">
     <div class="grid-item">
@@ -36,6 +36,10 @@
         <p>Codex</p></a>
     </div>
 </div>
+
+- [ What Are Skills? Build Your First AI Agent Skill in Minutes ](https://youtu.be/2REiUlciObk)
+
+---
 
 ## Resources
 - [Neural Networks From Scratch](https://www.youtube.com/playlist?list=PL1u-h-YIOL0u7R6dg_d5O5M9HUj0SFjHE)
