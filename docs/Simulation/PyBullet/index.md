@@ -8,7 +8,146 @@ tags:
 
 {{ page_folder_links() }}
 
-Physics simulation for games, visual effects, robotics and reinforcement learning.
+PyBullet is a physics simulator. the user describe bodies, joints, gravity, motors, contacts, etc., and PyBullet numerically advances the world step by step.
+The simulator use in robotics and reinforcement learning.
+
+## Simulation step / motion
+
+- Apply gravity
+- Apply external force / torque
+- Solve joint constrains
+- Detect collisions
+- Solve contact constrains
+- Integrated velocity and position
+
+```python title="simulation loop"
+for _ in range(1000):
+    p.stepSimulation()
+    time.sleep(1 / 240)
+```
+
+<details>
+<summary>empty.py</summary>
+```python
+--8<-- "docs/Simulation/PyBullet/code/empty.py"
+```
+</details>
+
+![alt text](images/pybullet_empty.png)
+
+
+### Coordinate frame
+
+- X = red
+- Y = green
+- Z = blue
+
+### PyBullet status bar
+
+![alt text](images/pybullet_bar.png)
+
+- dist: Change the Visual Camera distance from world origin (coordinate frame) change distance using **mouse scroll**
+- Pitch, Yaw: Change Visual Camera orientation **hold mouse left and move**
+
+---
+
+### Control view 
+Control 
+
+```python title="enable/disable camera views"
+# Enabled / Disabled camera's viewer
+
+p.configureDebugVisualizer(p.COV_ENABLE_RGB_BUFFER_PREVIEW, 0)
+p.configureDebugVisualizer(p.COV_ENABLE_DEPTH_BUFFER_PREVIEW, 0)
+p.configureDebugVisualizer(p.COV_ENABLE_SEGMENTATION_MARK_PREVIEW, 0)
+```
+
+```python
+# close all gui
+p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
+```
+
+<details>
+<summary>Without GUI (debug)</summary>
+```
+--8<-- "docs/Simulation/PyBullet/images/pybullet_clear.png"
+```
+</details>
+
+![alt text](images/pybullet_clear.png)
+
+---
+
+## Nvidia
+
+```bash title="force opengl run on nvidia"
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia python3 hello.py
+```
+
+```bash title="pybullet log"
+GL_VENDOR=Intel
+GL_RENDERER=Mesa Intel(R) Graphics (ARL)
+```
+
+```bash title="with nvidia log"
+GL_VENDOR=NVIDIA Corporation
+GL_RENDERER=NVIDIA GeForce RTX 5070 Laptop GPU/PCIe/SSE2
+GL_VERSION=3.3.0 NVIDIA 580.142
+GL_SHADING_LANGUAGE_VERSION=3.30 NVIDIA via Cg compiler
+```
+
+---
+
+## Rigid body
+A rigid body is a object that does **not deform**
+likes:
+    - box
+    - sphere
+    - any shape that use as a link
+
+A rigid body can move in 6 degree of freedom
+- translation: x, y, z
+- rotation: Roll, Pitch, Yaw
+
+!!! info
+    A rigid body is a mathematical physical object
+    
+### rigid body definition
+
+| Property         | Meaning                |
+| ---------------- | ---------------------- |
+| position         | where object is        |
+| orientation      | rotation               |
+| linear velocity  | movement speed         |
+| angular velocity | rotation speed         |
+| mass             | inertia to motion      |
+| inertia tensor   | resistance to rotation |
+| collision shape  | physics geometry       |
+| visual shape     | rendering geometry     |
+
+
+### Visual Collision and Inertia
+
+In `rigid_body.py`, the box is built from two separate shapes:
+
+- `createCollisionShape(...)` defines the physical geometry used by the simulator for contact, friction, bouncing, and collision tests.
+- `createVisualShape(...)` defines only how the object is drawn in the GUI, including color and visible size. It does not affect physics.
+
+Both shapes are attached to the body with `createMultiBody(...)`. PyBullet uses `baseMass` together with the collision shape dimensions to compute the body's default local inertia. Inertia is the body's resistance to rotation: a larger mass or a larger shape is harder to spin.
+
+Briefly:
+
+- `baseMass > 0` creates a dynamic body affected by gravity, forces, collisions, and inertia.
+- `baseMass = 0` creates a static body. It can collide with dynamic bodies, but it does not move and PyBullet treats its inertia as fixed/infinite for simulation purposes.
+
+
+<details>
+<summary>rigid body example</summary>
+```
+--8<-- "docs/Simulation/PyBullet/code/rigid_body.py"
+```
+</details>
+---
 
 <div class="grid-container">
      <div class="grid-item">
@@ -29,6 +168,9 @@ Physics simulation for games, visual effects, robotics and reinforcement learnin
     install pyi for intellisense
     [pybulley.pyi download](code/pybullet.pyi)
 
+
+
+---
 
 ## Demo
 
@@ -58,9 +200,7 @@ while True:
 
 ```
 
-```bash title="force opengl run on nvidia"
-__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia python3 hello.py
-```
+
 
 - pybullet_data provide many URDF examples.
 - `loadURDF` return integer that use to refer the robot in other pybullet commands/
