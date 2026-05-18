@@ -93,3 +93,9 @@ sudo apt install python3-libgpiod
 --8<-- "docs/Embedded/RPI/gpio/code/gpio_blink.py"
 ```
 </details>
+
+---
+
+### RPi zero gpio
+
+![alt text](images/zero_gpio.png)

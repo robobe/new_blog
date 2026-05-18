@@ -69,9 +69,8 @@ p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
 
 <details>
 <summary>Without GUI (debug)</summary>
-```
---8<-- "docs/Simulation/PyBullet/images/pybullet_clear.png"
-```
+
+![Without GUI debug view](images/pybullet_clear.png)
 </details>
 
 ![alt text](images/pybullet_clear.png)
