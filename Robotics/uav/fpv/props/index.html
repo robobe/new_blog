@@ -1,0 +1,1163 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/fpv/props/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Propellers - Robots Inside</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fpv-propellers-video-summary" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robots Inside
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Propellers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robots Inside
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fpv-propellers-video-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FPV Propellers Video Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#propeller-direction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propeller Direction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#props-in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Props In
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#props-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Props Out
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-blade-props" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two-Blade Props
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-blade-props" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three-Blade Props
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#four-blade-props" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Four-Blade Props
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prop-design-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prop Design Basics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prop-pitch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prop Pitch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prop-size-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prop Size Numbers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-props" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing Props
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">drone</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">fpv</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">props</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Propellers</h1>
+
+<h2 id="fpv-propellers-video-summary">FPV Propellers Video Summary</h2>
+<p>Reference video: <a href="https://youtu.be/WWZImwj-cIc">FPV #8 - Propellers for FPV Drones - What you need to know</a></p>
+<p>The main idea is that propellers are not just a replaceable plastic part. They define a large part of how the quad feels: thrust, efficiency, grip, noise, motor load, battery current, and how quickly the drone reacts to throttle changes.</p>
+<p>For FPV drones, prop selection is usually a tradeoff between:</p>
+<ul>
+<li>More efficiency and longer flight time</li>
+<li>More grip and control authority</li>
+<li>More top speed</li>
+<li>Less prop wash</li>
+<li>Less motor heat and current draw</li>
+<li>Better durability after crashes</li>
+</ul>
+<p>There is no single best prop. The right prop depends on the frame size, motor KV, battery voltage, aircraft weight, and flying style.</p>
+<h2 id="propeller-direction">Propeller Direction</h2>
+<p>Every quad uses two clockwise props and two counter-clockwise props. This cancels motor torque so the frame does not spin by itself.</p>
+<p>The important rule is:</p>
+<ul>
+<li>A clockwise motor needs a clockwise prop.</li>
+<li>A counter-clockwise motor needs a counter-clockwise prop.</li>
+<li>The high leading edge of the blade must cut into the air first.</li>
+<li>If the prop is upside down or on the wrong motor, the quad will push air upward instead of downward and will flip on takeoff.</li>
+</ul>
+<p><img alt="Props in and props out propeller mounting" src="images/props_in_out_mounting.svg" /></p>
+<p>Always check motor direction in Betaflight or the flight-controller setup tool before installing props.</p>
+<h2 id="props-in">Props In</h2>
+<p><code>Props in</code> is the traditional quadcopter direction.</p>
+<p>On the front of the quad, the propeller tips rotate inward toward the center line of the frame. The front-left and front-right props throw air toward the camera and middle of the frame.</p>
+<p>Typical behavior:</p>
+<ul>
+<li>Common default setup on many FPV quads</li>
+<li>Slightly more air and debris can be pushed toward the camera</li>
+<li>Can feel stable and predictable</li>
+<li>May collect more grass, dirt, or branches into the frame after a crash</li>
+</ul>
+<p>Use <code>props in</code> when you want the standard setup and do not have a reason to change it.</p>
+<h2 id="props-out">Props Out</h2>
+<p><code>Props out</code> reverses the motor directions.</p>
+<p>On the front of the quad, the propeller tips rotate outward away from the center line of the frame. Instead of throwing air and debris toward the camera, the front props tend to throw them away from the middle of the quad.</p>
+<p>Typical behavior:</p>
+<ul>
+<li>Popular on freestyle and whoop builds</li>
+<li>Can reduce dirt, grass, and branches hitting the camera</li>
+<li>Can help the quad slide out of some crashes instead of pulling objects into the frame</li>
+<li>May slightly change yaw and corner feel</li>
+<li>Requires changing both motor direction and prop direction</li>
+</ul>
+<p>Use <code>props out</code> if you fly close to obstacles, grass, gates, trees, or indoor objects. The performance difference is usually smaller than the practical crash and debris difference.</p>
+<h2 id="two-blade-props">Two-Blade Props</h2>
+<p>Two-blade props have the lowest blade area and usually the lowest drag.</p>
+<p>Pros:</p>
+<ul>
+<li>Most efficient blade count</li>
+<li>Lower current draw</li>
+<li>Longer flight time</li>
+<li>Lower motor load and heat</li>
+<li>Often good for long range and lightweight builds</li>
+<li>Can have good top speed when matched correctly</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Less grip in corners and throttle punches</li>
+<li>Less braking authority</li>
+<li>Less thrust in limited prop diameter</li>
+<li>Can feel loose compared with tri-blades</li>
+<li>Usually not the default choice for aggressive 5-inch freestyle</li>
+</ul>
+<p>Good use cases:</p>
+<ul>
+<li>Long range</li>
+<li>Lightweight cruising</li>
+<li>Efficiency-focused builds</li>
+<li>Small batteries where current draw matters</li>
+</ul>
+<h2 id="three-blade-props">Three-Blade Props</h2>
+<p>Three-blade props are the most common choice for modern 5-inch FPV freestyle and racing.</p>
+<p>Pros:</p>
+<ul>
+<li>Good balance between thrust and efficiency</li>
+<li>Strong grip in turns</li>
+<li>Good throttle response</li>
+<li>Better braking than two-blade props</li>
+<li>Works well for freestyle, racing, and general FPV</li>
+<li>Easy to tune because many pilots and manufacturers use them</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Less efficient than two-blade props</li>
+<li>More current draw</li>
+<li>More motor load</li>
+<li>Shorter flight time than a similar two-blade prop</li>
+<li>More noise and drag</li>
+</ul>
+<p>Good use cases:</p>
+<ul>
+<li>5-inch freestyle</li>
+<li>Racing</li>
+<li>General FPV flying</li>
+<li>Builds where control feel matters more than maximum endurance</li>
+</ul>
+<h2 id="four-blade-props">Four-Blade Props</h2>
+<p>Four-blade props add more blade area again. They can create more thrust in a small diameter, but they cost more power.</p>
+<p>Pros:</p>
+<ul>
+<li>More grip at low speed</li>
+<li>More thrust in limited prop size</li>
+<li>Strong control authority</li>
+<li>Can feel locked-in and smooth</li>
+<li>Useful for cinewhoops, ducts, and small frames where prop diameter is limited</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Higher current draw</li>
+<li>Lower efficiency</li>
+<li>Shorter flight time</li>
+<li>More motor heat</li>
+<li>Lower top speed in many setups</li>
+<li>More drag and weight</li>
+<li>Can make tuning more sensitive</li>
+</ul>
+<p>Good use cases:</p>
+<ul>
+<li>Cinewhoops</li>
+<li>Ducted builds</li>
+<li>Small frames that need more thrust from limited diameter</li>
+<li>Smooth cinematic flying where control authority is more important than efficiency</li>
+</ul>
+<h2 id="prop-design-basics">Prop Design Basics</h2>
+<p>A propeller is a rotating wing. Each blade has an airfoil shape. When the motor spins the prop, the blade accelerates air downward. The drone rises because the prop pushes air down and the air pushes the drone up.</p>
+<p>The main design parameters are:</p>
+<ul>
+<li>Diameter: Larger diameter moves more air and can make more thrust, but needs more torque and frame clearance.</li>
+<li>Pitch: Higher pitch moves more air per rotation and can increase speed, but also increases current draw and motor load.</li>
+<li>Blade count: More blades increase blade area and grip, but reduce efficiency.</li>
+<li>Chord: Wider blades create more thrust and drag.</li>
+<li>Airfoil shape: Controls lift, drag, stall behavior, and noise.</li>
+<li>Blade twist: The angle changes from hub to tip so each part of the blade works at a better angle of attack.</li>
+<li>Tip shape: Affects efficiency, noise, and prop wash.</li>
+<li>Material stiffness: Stiffer props feel sharper, but can transfer more vibration and may break instead of bending.</li>
+<li>Weight: Heavier props need more energy to accelerate and slow down.</li>
+</ul>
+<h2 id="prop-pitch">Prop Pitch</h2>
+<p>Pitch describes how far a propeller would move forward in one full revolution if it was moving through a solid material, like a screw moving through wood. Air is not solid, so the real movement is lower, but the number is still useful for comparing props.</p>
+<p>Example:</p>
+<ul>
+<li>A <code>5x3x3</code> prop is 5 inches diameter, 3 inches pitch, 3 blades.</li>
+<li>A <code>5x5x3</code> prop is 5 inches diameter, 5 inches pitch, 3 blades.</li>
+</ul>
+<p>The higher-pitch prop has a steeper blade angle. For the same RPM, it tries to move more air and create more forward speed. This also means the motor must work harder.</p>
+<p><img alt="Low pitch and high pitch propeller example" src="images/prop_pitch_low_high.svg" /></p>
+<p>Low pitch behavior:</p>
+<ul>
+<li>Easier for the motor to spin</li>
+<li>Lower current draw</li>
+<li>Cooler motors</li>
+<li>Better efficiency and longer flight time</li>
+<li>Smoother throttle control at low speed</li>
+<li>Less top speed and less aggressive punch</li>
+</ul>
+<p>High pitch behavior:</p>
+<ul>
+<li>Moves more air per revolution</li>
+<li>More thrust at higher speed</li>
+<li>Higher possible top speed</li>
+<li>Stronger throttle response when the motor can handle it</li>
+<li>Higher current draw</li>
+<li>More motor and ESC heat</li>
+<li>Shorter flight time</li>
+<li>Can feel rough or inefficient if the pitch is too high for the motor</li>
+</ul>
+<p>Pitch is linked to motor KV and battery voltage. A high-KV motor on 6S already spins very fast, so a high-pitch prop can overload the motor and ESC. A lower-KV motor may handle more pitch because it has more torque and lower RPM.</p>
+<p>For freestyle, medium pitch is usually easier to control. For racing, pilots may choose more pitch for speed. For long range, lower pitch is usually better because efficiency matters more than maximum acceleration.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If motors are hot after a short flight, try a lower-pitch prop before changing the tune.</p>
+</div>
+<h2 id="prop-size-numbers">Prop Size Numbers</h2>
+<p>FPV props are usually named with <strong>diameter</strong>, <strong>pitch</strong>, and <strong>blade</strong> count.</p>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>5x4.3x3
+</code></pre></div></td></tr></table></div>
+<p>Meaning:</p>
+<ul>
+<li><code>5</code>: 5 inch diameter</li>
+<li><code>4.3</code>: 4.3 inch pitch</li>
+<li><code>3</code>: three blades</li>
+</ul>
+<p>A higher pitch or more blades does not automatically mean a better prop. It means the prop loads the motor harder. If the motor, ESC, and battery cannot supply the power cleanly, the quad may feel hot, inefficient, noisy, or hard to tune.</p>
+<h2 id="choosing-props">Choosing Props</h2>
+<p>Start with the common prop type for the frame size:</p>
+<ul>
+<li>5-inch freestyle: 5 inch tri-blade, medium pitch</li>
+<li>5-inch racing: light tri-blade or aggressive high-pitch tri-blade</li>
+<li>Long range: efficient two-blade or low-pitch tri-blade</li>
+<li>Cinewhoop: three-blade, four-blade, or more blades depending on duct and motor size</li>
+<li>Tiny whoop: small multi-blade props are common because diameter is limited</li>
+</ul>
+<p>Then tune by flight feel:</p>
+<ul>
+<li>If motors are hot, reduce pitch or blade count.</li>
+<li>If flight time is too short, reduce pitch, blade count, or prop weight.</li>
+<li>If the quad feels weak, increase pitch or blade area carefully.</li>
+<li>If the quad feels loose in corners, try more blade area or a different prop shape.</li>
+<li>If there is vibration or bad video, check for bent, damaged, or unbalanced props.</li>
+</ul>
+<h2 id="practical-notes">Practical Notes</h2>
+<p>Props are consumables. Replace them when they are bent, cracked, chipped, or causing vibration.</p>
+<p>Do not mix different prop models on the same quad. Different blade count, pitch, or shape creates different thrust on each motor and makes the flight controller work harder.</p>
+<p>After changing props, check:</p>
+<ul>
+<li>Motor temperature</li>
+<li>Hover throttle</li>
+<li>Full-throttle current</li>
+<li>Vibration</li>
+<li>Prop wash</li>
+<li>Flight time</li>
+<li>Tune quality</li>
+</ul>
+<p>Small prop changes can make a large difference in FPV flight feel.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
