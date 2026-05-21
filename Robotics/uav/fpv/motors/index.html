@@ -691,6 +691,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#kv-torque-and-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KV, Torque, And Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#motor-parts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -847,6 +858,34 @@ RPM_{no-load} = KV \cdot V
 <li>Easier to run larger props</li>
 <li>Usually more efficient for long range or heavy builds</li>
 <li>Often feels smoother and less aggressive</li>
+</ul>
+<h2 id="kv-torque-and-efficiency">KV, Torque, And Efficiency</h2>
+<p>KV alone can show the theoretical torque-per-amp trend. Lower KV gives more torque per amp, and higher KV gives less torque per amp.</p>
+<div class="arithmatex">\[
+K_t \approx \frac{60}{2 \pi \cdot KV}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><code>KV</code> is in RPM per volt.</li>
+<li><code>Kt</code> is the motor torque constant in N m/A.</li>
+</ul>
+<pre class="mermaid"><code>xychart-beta
+    title "Motor KV vs Torque Per Amp"
+    x-axis "Motor KV" [900, 1300, 1750, 2450, 3500, 5000, 8000]
+    y-axis "Kt, torque constant (mN m/A)" 0 --&gt; 12
+    line "Theoretical Kt" [10.6, 7.3, 5.5, 3.9, 2.7, 1.9, 1.2]</code></pre>
+<p>This graph does not show motor efficiency. Efficiency needs the real working point:</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Motor KV] --&gt; E[Efficiency]
+    B[Battery voltage] --&gt; E
+    C[Prop diameter and pitch] --&gt; E
+    D[Current and RPM] --&gt; E
+    E --&gt; F[g/W or thrust per watt]</code></pre>
+<p>For a useful efficiency graph, use real thrust-test data:</p>
+<ul>
+<li>X-axis: throttle, RPM, or current</li>
+<li>Y-axis: efficiency in <code>g/W</code></li>
+<li>Separate lines: different propellers on the same motor</li>
 </ul>
 <h2 id="motor-parts">Motor Parts</h2>
 <p>FPV drones use brushless outrunner motors. <code>Outrunner</code> means the outside bell rotates around the fixed stator.</p>
