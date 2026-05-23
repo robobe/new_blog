@@ -17,4 +17,9 @@ tags:
             <p>USB I2C adapter</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="lidar">
+            <p>LiDAR Sensors</p>
+        </a>
+    </div>
 </div>

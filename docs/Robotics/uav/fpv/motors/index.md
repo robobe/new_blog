@@ -38,6 +38,44 @@ Low KV:
 - Usually more efficient for long range or heavy builds
 - Often feels smoother and less aggressive
 
+## KV, Torque, And Efficiency
+
+KV alone can show the theoretical torque-per-amp trend. Lower KV gives more torque per amp, and higher KV gives less torque per amp.
+
+\[
+K_t \approx \frac{60}{2 \pi \cdot KV}
+\]
+
+Where:
+
+- `KV` is in RPM per volt.
+- `Kt` is the motor torque constant in N m/A.
+
+```mermaid
+xychart-beta
+    title "Motor KV vs Torque Per Amp"
+    x-axis "Motor KV" [900, 1300, 1750, 2450, 3500, 5000, 8000]
+    y-axis "Kt, torque constant (mN m/A)" 0 --> 12
+    line "Theoretical Kt" [10.6, 7.3, 5.5, 3.9, 2.7, 1.9, 1.2]
+```
+
+This graph does not show motor efficiency. Efficiency needs the real working point:
+
+```mermaid
+flowchart LR
+    A[Motor KV] --> E[Efficiency]
+    B[Battery voltage] --> E
+    C[Prop diameter and pitch] --> E
+    D[Current and RPM] --> E
+    E --> F[g/W or thrust per watt]
+```
+
+For a useful efficiency graph, use real thrust-test data:
+
+- X-axis: throttle, RPM, or current
+- Y-axis: efficiency in `g/W`
+- Separate lines: different propellers on the same motor
+
 ## Motor Parts
 
 FPV drones use brushless outrunner motors. `Outrunner` means the outside bell rotates around the fixed stator.

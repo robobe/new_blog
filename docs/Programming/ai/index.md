@@ -4,6 +4,12 @@
 }
 </style>
 
+## Read and watch
+- [What Are Skills? Build Your First AI Agent Skill in Minutes ](https://youtu.be/2REiUlciObk)
+- [The Age of Agent Command Centers: How to Build Your Own Multi-Agent AI System](https://medium.com/@georgethomasm_89397/the-age-of-agent-command-centers-how-to-build-your-own-multi-agent-ai-system-7f1d63330776)
+
+---
+
 <div class="grid-container">
     <!-- <div class="grid-item">
         <a href="math">
@@ -37,7 +43,6 @@
     </div>
 </div>
 
-- [ What Are Skills? Build Your First AI Agent Skill in Minutes ](https://youtu.be/2REiUlciObk)
 
 ---
 

@@ -24,5 +24,3 @@ tags:
         </a>
     </div>
 </div>
-
-![alt text](image.png)
