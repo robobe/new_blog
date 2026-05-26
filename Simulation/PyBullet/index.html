@@ -1084,39 +1084,39 @@ likes:
 <span class="normal"><a href="#__codelineno-7-30">30</a></span>
 <span class="normal"><a href="#__codelineno-7-31">31</a></span>
 <span class="normal"><a href="#__codelineno-7-32">32</a></span>
-<span class="normal"><a href="#__codelineno-7-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>import pybullet as p
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>import pybullet_data
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a>import time
+<span class="normal"><a href="#__codelineno-7-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">p</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pybullet_data</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <a id="__codelineno-7-4" name="__codelineno-7-4"></a>
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a>p.connect(p.GUI)
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="n">p</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">GUI</span><span class="p">)</span>
 <a id="__codelineno-7-6" name="__codelineno-7-6"></a>
-<a id="__codelineno-7-7" name="__codelineno-7-7"></a>p.setAdditionalSearchPath(pybullet_data.getDataPath())
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="n">p</span><span class="o">.</span><span class="n">setAdditionalSearchPath</span><span class="p">(</span><span class="n">pybullet_data</span><span class="o">.</span><span class="n">getDataPath</span><span class="p">())</span>
 <a id="__codelineno-7-8" name="__codelineno-7-8"></a>
-<a id="__codelineno-7-9" name="__codelineno-7-9"></a>p.setGravity(0, 0, -9.81)
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="n">p</span><span class="o">.</span><span class="n">setGravity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.81</span><span class="p">)</span>
 <a id="__codelineno-7-10" name="__codelineno-7-10"></a>
-<a id="__codelineno-7-11" name="__codelineno-7-11"></a>p.loadURDF(&quot;plane.urdf&quot;)
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="s2">&quot;plane.urdf&quot;</span><span class="p">)</span>
 <a id="__codelineno-7-12" name="__codelineno-7-12"></a>
-<a id="__codelineno-7-13" name="__codelineno-7-13"></a>collision = p.createCollisionShape(
-<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    p.GEOM_BOX,
-<a id="__codelineno-7-15" name="__codelineno-7-15"></a>    halfExtents=[0.2, 0.2, 0.2],
-<a id="__codelineno-7-16" name="__codelineno-7-16"></a>)
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="n">collision</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">createCollisionShape</span><span class="p">(</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    <span class="n">p</span><span class="o">.</span><span class="n">GEOM_BOX</span><span class="p">,</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>    <span class="n">halfExtents</span><span class="o">=</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="p">)</span>
 <a id="__codelineno-7-17" name="__codelineno-7-17"></a>
-<a id="__codelineno-7-18" name="__codelineno-7-18"></a>visual = p.createVisualShape(
-<a id="__codelineno-7-19" name="__codelineno-7-19"></a>    p.GEOM_BOX,
-<a id="__codelineno-7-20" name="__codelineno-7-20"></a>    halfExtents=[0.2, 0.2, 0.2],
-<a id="__codelineno-7-21" name="__codelineno-7-21"></a>    rgbaColor=[1, 0, 0, 1],
-<a id="__codelineno-7-22" name="__codelineno-7-22"></a>)
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="n">visual</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">createVisualShape</span><span class="p">(</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a>    <span class="n">p</span><span class="o">.</span><span class="n">GEOM_BOX</span><span class="p">,</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>    <span class="n">halfExtents</span><span class="o">=</span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a>    <span class="n">rgbaColor</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="p">)</span>
 <a id="__codelineno-7-23" name="__codelineno-7-23"></a>
-<a id="__codelineno-7-24" name="__codelineno-7-24"></a>body = p.createMultiBody(
-<a id="__codelineno-7-25" name="__codelineno-7-25"></a>    baseMass=1.0,
-<a id="__codelineno-7-26" name="__codelineno-7-26"></a>    baseCollisionShapeIndex=collision,
-<a id="__codelineno-7-27" name="__codelineno-7-27"></a>    baseVisualShapeIndex=visual,
-<a id="__codelineno-7-28" name="__codelineno-7-28"></a>    basePosition=[0, 0, 1],
-<a id="__codelineno-7-29" name="__codelineno-7-29"></a>)
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="n">body</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">createMultiBody</span><span class="p">(</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>    <span class="n">baseMass</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>    <span class="n">baseCollisionShapeIndex</span><span class="o">=</span><span class="n">collision</span><span class="p">,</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>    <span class="n">baseVisualShapeIndex</span><span class="o">=</span><span class="n">visual</span><span class="p">,</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>    <span class="n">basePosition</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a><span class="p">)</span>
 <a id="__codelineno-7-30" name="__codelineno-7-30"></a>
-<a id="__codelineno-7-31" name="__codelineno-7-31"></a>while True:
-<a id="__codelineno-7-32" name="__codelineno-7-32"></a>    p.stepSimulation()
-<a id="__codelineno-7-33" name="__codelineno-7-33"></a>    time.sleep(1 / 240)
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a>    <span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">240</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </details>
 <hr />
