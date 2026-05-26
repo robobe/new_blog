@@ -31,8 +31,20 @@ Crossfire CH2 RX -> Flight controller TX
 GND -> GND
 ```
 
+![alt text](images/wiring.png)
+
 In Betaflight:
 
 - Ports tab: enable `Serial RX`.
 - Receiver protocol: `CRSF`.
 
+## Receiver LED color
+
+![alt text](images/receiver_led.png)
+
+
+---
+
+## Reference
+
+- [tbs-crossfire-nano quickstart](https://www.team-blacksheep.com/media/files/tbs-crossfire-nano-quickstart.pdf)

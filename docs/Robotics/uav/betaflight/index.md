@@ -19,6 +19,11 @@ tags:
         <p>hardware</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="pid_tune">
+        <p>pid tuning</p>
+        </a>
+    </div>
 </div>
 
 {{ page_folder_links() }}

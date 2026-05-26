@@ -142,7 +142,7 @@ Briefly:
 
 <details>
 <summary>rigid body example</summary>
-```
+```python
 --8<-- "docs/Simulation/PyBullet/code/rigid_body.py"
 ```
 </details>
