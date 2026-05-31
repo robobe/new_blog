@@ -1,0 +1,1117 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Simulation/blender/blender_robotics_course/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Blender for Robotics Engineers – Beginner Course - Robots Inside</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#blender-for-robotics-engineers-beginner-course" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Robots Inside
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Blender for Robotics Engineers – Beginner Course
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Robots Inside
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#course-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Course Goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="blender-for-robotics-engineers-beginner-course">Blender for Robotics Engineers – Beginner Course</h1>
+<h2 id="course-goal">Course Goal</h2>
+<p>At the end of this course you will be able to:</p>
+<ul>
+<li>Create simple robot parts</li>
+<li>Import CAD models</li>
+<li>Export DAE/GLB/STL</li>
+<li>Build Gazebo environments</li>
+<li>Create terrains</li>
+<li>Optimize meshes</li>
+<li>Apply textures</li>
+<li>Create camera training scenes for YOLO</li>
+</ul>
+<hr />
+<h1 id="module-1-blender-basics-1-day">Module 1 - Blender Basics (1 Day)</h1>
+<h2 id="lesson-11-interface">Lesson 1.1 - Interface</h2>
+<p>Learn:</p>
+<ul>
+<li>Viewport</li>
+<li>Outliner</li>
+<li>Properties panel</li>
+<li>Scene hierarchy</li>
+</ul>
+<p>Exercise:</p>
+<ul>
+<li>Create cube</li>
+<li>Move cube</li>
+<li>Delete cube</li>
+<li>Save project</li>
+</ul>
+<h2 id="lesson-12-navigation">Lesson 1.2 - Navigation</h2>
+<p>Learn:</p>
+<ul>
+<li>Rotate View (Middle Mouse)</li>
+<li>Pan (Shift + Middle Mouse)</li>
+<li>Zoom (Mouse Wheel)</li>
+<li>Front View (Numpad 1)</li>
+<li>Side View (Numpad 3)</li>
+<li>Top View (Numpad 7)</li>
+</ul>
+<p>Exercise:</p>
+<ul>
+<li>Create 5 cubes</li>
+<li>Navigate around the scene</li>
+<li>Focus on an object</li>
+</ul>
+<hr />
+<h1 id="module-2-basic-modeling-2-days">Module 2 - Basic Modeling (2 Days)</h1>
+<h2 id="lesson-21-transformations">Lesson 2.1 - Transformations</h2>
+<p>Learn:</p>
+<ul>
+<li>Move (G)</li>
+<li>Rotate (R)</li>
+<li>Scale (S)</li>
+</ul>
+<p>Exercise:</p>
+<ul>
+<li>Box</li>
+<li>Cylinder</li>
+<li>Cone</li>
+</ul>
+<h2 id="lesson-22-edit-mode">Lesson 2.2 - Edit Mode</h2>
+<p>Learn:</p>
+<ul>
+<li>Vertices</li>
+<li>Edges</li>
+<li>Faces</li>
+</ul>
+<p>Shortcuts:</p>
+<ul>
+<li>Tab</li>
+<li>1 Vertex</li>
+<li>2 Edge</li>
+<li>3 Face</li>
+</ul>
+<p>Exercise:</p>
+<ul>
+<li>Simple drone arm</li>
+<li>Simple wall</li>
+<li>Simple table</li>
+</ul>
+<h2 id="lesson-23-extrude">Lesson 2.3 - Extrude</h2>
+<p>Shortcut:</p>
+<ul>
+<li>E</li>
+</ul>
+<p>Exercise:</p>
+<ul>
+<li>Building</li>
+<li>Road</li>
+<li>Landing pad</li>
+</ul>
+<hr />
+<h1 id="module-3-robotics-assets-2-days">Module 3 - Robotics Assets (2 Days)</h1>
+<h2 id="lesson-31-import-existing-models">Lesson 3.1 - Import Existing Models</h2>
+<p>Import:</p>
+<ul>
+<li>STL</li>
+<li>OBJ</li>
+<li>GLB</li>
+</ul>
+<h2 id="lesson-32-fix-scale">Lesson 3.2 - Fix Scale</h2>
+<p>Rule:</p>
+<ul>
+<li>1 Blender Unit = 1 Meter</li>
+</ul>
+<p>Exercise:</p>
+<ul>
+<li>1m cube</li>
+<li>2m wall</li>
+</ul>
+<h2 id="lesson-33-origin-and-pivot">Lesson 3.3 - Origin and Pivot</h2>
+<p>Learn:</p>
+<ul>
+<li>Set Origin</li>
+<li>Apply Transform</li>
+</ul>
+<p>Important for:</p>
+<ul>
+<li>Robot links</li>
+<li>Wheels</li>
+<li>Gimbals</li>
+</ul>
+<hr />
+<h1 id="module-4-gazebo-workflow-2-days">Module 4 - Gazebo Workflow (2 Days)</h1>
+<h2 id="lesson-41-export-dae">Lesson 4.1 - Export DAE</h2>
+<p>Exercise:</p>
+<ul>
+<li>Create a simple drone frame</li>
+<li>Export frame.dae</li>
+</ul>
+<h2 id="lesson-42-export-glb">Lesson 4.2 - Export GLB</h2>
+<p>Exercise:</p>
+<ul>
+<li>Building</li>
+<li>Tree</li>
+<li>Obstacle</li>
+</ul>
+<h2 id="lesson-43-create-environment">Lesson 4.3 - Create Environment</h2>
+<p>Build:</p>
+<ul>
+<li>Road</li>
+<li>Buildings</li>
+<li>Landing zone</li>
+</ul>
+<p>Export to Gazebo Harmonic.</p>
+<hr />
+<h1 id="module-5-materials-and-textures-2-days">Module 5 - Materials and Textures (2 Days)</h1>
+<h2 id="lesson-51-materials">Lesson 5.1 - Materials</h2>
+<p>Create:</p>
+<ul>
+<li>Metal</li>
+<li>Plastic</li>
+<li>Concrete</li>
+</ul>
+<h2 id="lesson-52-textures">Lesson 5.2 - Textures</h2>
+<p>Apply:</p>
+<ul>
+<li>Road texture</li>
+<li>Grass texture</li>
+<li>Wall texture</li>
+</ul>
+<p>Useful for:</p>
+<ul>
+<li>Optical flow</li>
+<li>Visual SLAM</li>
+<li>YOLO</li>
+</ul>
+<hr />
+<h1 id="module-6-terrain-creation-2-days">Module 6 - Terrain Creation (2 Days)</h1>
+<h2 id="lesson-61-heightmaps">Lesson 6.1 - Heightmaps</h2>
+<p>Create:</p>
+<ul>
+<li>Hill</li>
+<li>Valley</li>
+<li>Road</li>
+</ul>
+<h2 id="lesson-62-terrain-export">Lesson 6.2 - Terrain Export</h2>
+<p>Export:</p>
+<ul>
+<li>PNG Heightmap</li>
+</ul>
+<p>Use in Gazebo.</p>
+<p>Exercise:</p>
+<ul>
+<li>Drone test area</li>
+</ul>
+<hr />
+<h1 id="module-7-mesh-optimization-1-day">Module 7 - Mesh Optimization (1 Day)</h1>
+<h2 id="lesson-71-polygon-count">Lesson 7.1 - Polygon Count</h2>
+<p>Learn:</p>
+<ul>
+<li>Statistics Overlay</li>
+</ul>
+<h2 id="lesson-72-decimate-modifier">Lesson 7.2 - Decimate Modifier</h2>
+<p>Reduce mesh complexity for simulation performance.</p>
+<p>Example:</p>
+<ul>
+<li>100,000 triangles → 5,000 triangles</li>
+</ul>
+<hr />
+<h1 id="module-8-synthetic-data-generation-optional">Module 8 - Synthetic Data Generation (Optional)</h1>
+<h2 id="lesson-81-cameras">Lesson 8.1 - Cameras</h2>
+<p>Create:</p>
+<ul>
+<li>Track</li>
+<li>Car</li>
+<li>Drone</li>
+</ul>
+<h2 id="lesson-82-lighting">Lesson 8.2 - Lighting</h2>
+<p>Experiment with:</p>
+<ul>
+<li>Morning</li>
+<li>Noon</li>
+<li>Sunset</li>
+<li>Night</li>
+</ul>
+<h2 id="lesson-83-domain-randomization">Lesson 8.3 - Domain Randomization</h2>
+<p>Randomize:</p>
+<ul>
+<li>Colors</li>
+<li>Objects</li>
+<li>Textures</li>
+<li>Weather</li>
+</ul>
+<p>Generate training images for YOLO.</p>
+<hr />
+<h1 id="final-projects">Final Projects</h1>
+<h2 id="project-1-drone-landing-zone">Project 1 – Drone Landing Zone</h2>
+<p>Contains:</p>
+<ul>
+<li>Terrain</li>
+<li>Buildings</li>
+<li>Trees</li>
+<li>Landing pad</li>
+</ul>
+<p>Export to Gazebo.</p>
+<h2 id="project-2-autonomous-vehicle-track">Project 2 – Autonomous Vehicle Track</h2>
+<p>Contains:</p>
+<ul>
+<li>Road</li>
+<li>Signs</li>
+<li>Obstacles</li>
+</ul>
+<p>Use with YOLO.</p>
+<h2 id="project-3-optical-flow-test-environment">Project 3 – Optical Flow Test Environment</h2>
+<p>Contains:</p>
+<ul>
+<li>Textured floor</li>
+<li>Moving objects</li>
+<li>Camera viewpoints</li>
+</ul>
+<p>Use with a GStreamer optical flow pipeline.</p>
+<hr />
+<h1 id="recommended-youtube-tutorials">Recommended YouTube Tutorials</h1>
+<h2 id="beginner-blender">Beginner Blender</h2>
+<ol>
+<li>
+<p>Blender Beginner Tutorial Series – Blender Guru
+   https://www.youtube.com/@blenderguru</p>
+</li>
+<li>
+<p>Grant Abbitt – Blender Beginners Course
+   https://www.youtube.com/@grabbitt</p>
+</li>
+</ol>
+<h2 id="modeling">Modeling</h2>
+<ol>
+<li>
+<p>CG Essentials
+   https://www.youtube.com/@TheCGEssentials</p>
+</li>
+<li>
+<p>Ryan King Art
+   https://www.youtube.com/@RyanKingArt</p>
+</li>
+</ol>
+<h2 id="robotics-simulation-related">Robotics / Simulation Related</h2>
+<ol>
+<li>
+<p>Gazebo + Blender Mesh Workflow
+   Search:
+   "Blender Gazebo mesh tutorial"</p>
+</li>
+<li>
+<p>ROS Mesh Export Tutorials
+   Search:
+   "Blender URDF STL DAE tutorial"</p>
+</li>
+</ol>
+<h2 id="terrain-and-environment-design">Terrain and Environment Design</h2>
+<ol>
+<li>
+<p>Blender Terrain Tutorials
+   Search:
+   "Blender terrain beginner"</p>
+</li>
+<li>
+<p>Low Poly Environment Design
+   Search:
+   "Blender low poly environment"</p>
+</li>
+</ol>
+<hr />
+<h1 id="learning-schedule">Learning Schedule</h1>
+<p>Week 1
+- Navigation
+- Interface
+- Basic Modeling</p>
+<p>Week 2
+- Edit Mode
+- Import/Export
+- Scale and Origins</p>
+<p>Week 3
+- Gazebo Workflow
+- Materials
+- Textures</p>
+<p>Week 4
+- Terrain Creation
+- Mesh Optimization
+- Final Projects</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

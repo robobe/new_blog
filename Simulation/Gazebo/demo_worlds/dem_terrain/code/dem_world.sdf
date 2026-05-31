@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="dem_terrain_demo">
+    <gravity>0 0 -9.8</gravity>
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin
+      filename="gz-sim-physics-system"
+      name="gz::sim::systems::Physics">
+    </plugin>
+    <plugin
+      filename="gz-sim-user-commands-system"
+      name="gz::sim::systems::UserCommands">
+    </plugin>
+    <plugin
+      filename="gz-sim-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 1200 0 0 0</pose>
+      <diffuse>0.9 0.86 0.78 1</diffuse>
+      <specular>0.25 0.25 0.25 1</specular>
+      <direction>-0.45 0.35 -0.82</direction>
+    </light>
+
+    <model name="dem_terrain">
+      <static>true</static>
+      <link name="terrain_link">
+        <collision name="terrain_collision">
+          <geometry>
+            <heightmap>
+              <uri>dem_2km_10m_utm.tif</uri>
+              <size>2030.000 2030.000 828.009</size>
+              <pos>0 0 -3283.396</pos>
+              <sampling>1</sampling>
+            </heightmap>
+          </geometry>
+        </collision>
+        <visual name="terrain_visual">
+          <geometry>
+            <heightmap>
+              <uri>dem_2km_10m_utm.tif</uri>
+              <size>2030.000 2030.000 828.009</size>
+              <pos>0 0 -3283.396</pos>
+              <sampling>1</sampling>
+              <texture>
+                <diffuse>textures/dem_diffuse.png</diffuse>
+                <normal>textures/flat_normal.png</normal>
+                <size>50</size>
+              </texture>
+            </heightmap>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="origin_marker">
+      <static>true</static>
+      <pose>0 0 5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>5</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>1 0.1 0.1 1</ambient>
+            <diffuse>1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
