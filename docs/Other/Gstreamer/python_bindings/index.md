@@ -27,9 +27,9 @@ sudo apt-get install gstreamer1.0-tools gstreamer1.0-python3
         </a>
     </div>
     <div class="grid-item">
-         <!-- <a href="python_bindings"> -->
-        <p>TBD</p>
-        <!-- </a> -->
+        <a href="metadata">
+        <p>metadata</p>
+        </a>
     </div>
     
 </div>
@@ -60,4 +60,3 @@ except KeyboardInterrupt:
 ```
 
 ---
-

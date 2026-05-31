@@ -106,6 +106,23 @@ Use descriptive file names:
 - `camera_demo.cpp`
 - `config.yaml`
 
+Do not provide absolute local filesystem paths in Markdown links, snippet paths, or command examples. Link to the local code file near the usage example, then show usage as if the reader downloaded the script from the post and runs it from their local working directory. Do not use `cd` in usage examples unless changing directories is the point of the example.
+
+This is bad example:
+
+```bash
+cd /home/user/projects/new_blog/docs/Simulation/Gazebo/demo_worlds/dem_terrain/code
+./download_usgs10m_2km.sh "$CENTER_LAT" "$CENTER_LON"
+```
+
+This is better:
+
+[Download script](code/download_usgs10m_2km.sh)
+
+```bash
+./download_usgs10m_2km.sh "$CENTER_LAT" "$CENTER_LON"
+```
+
 ## Math
 
 Use LaTeX for equations.
@@ -148,11 +165,13 @@ Use relative links for local pages:
 [GPIO](../../RPI/gpio/)
 ```
 
-Use direct external links for references:
+Use direct external links for references, and make every external link open in a new window/tab:
 
 ```md
-[PX4 documentation](https://docs.px4.io/)
+[PX4 documentation](https://docs.px4.io/){:target="_blank" rel="noopener noreferrer"}
 ```
+
+Do not add `target="_blank"` to local relative links.
 
 Check local image and page links when possible with MkDocs.
 

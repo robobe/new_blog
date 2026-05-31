@@ -24,6 +24,11 @@ tags:
         <p>pid tuning</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="failsafe">
+        <p>failsafe</p>
+        </a>
+    </div>
 </div>
 
 {{ page_folder_links() }}

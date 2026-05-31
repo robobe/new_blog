@@ -19,6 +19,16 @@ tags:
         <p>Diff Drive</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="heightmap">
+        <p>Heightmap Terrain</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="dem_terrain">
+        <p>DEM Terrain</p>
+        </a>
+    </div>
 </div>
 
 ## World to check

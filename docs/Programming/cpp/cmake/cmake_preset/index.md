@@ -7,6 +7,104 @@ tags:
 
 {{ page_folder_links() }}
 
+CMakePresets.json is a project-root JSON file that stores repeatable CMake workflows: configure, build, test, package, and workflow settings. Instead of remembering:
+
+- CMake: Build system generator create Make/Ninja files describer how the project should be built
+- Make/Ninja: build tools run the compiler and linker to create binary from source code
+- GCC/Clang: compiler toolchain
+
+## Demo: Run build system and Build tools from cli
+
+```bash
+cmake -S . -B build
+cmake --build build
+./build/app
+```
+
+```bash
+cmake -S . -B build -DUSE_FAST_MODE=ON
+cmake --build build
+./build-fast/app
+```
+
+```bash
+# List cache variables after configuration.
+cmake -S . -B build -LA
+
+# first time clean cache
+# CMAKE_STRIP:FILEPATH=/usr/bin/strip
+# ...
+# CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
+# USE_FAST_MODE:BOOL=OFF
+```
+
+```bash title="set variable"
+cmake -S . -B build -DUSE_FAST_MODE=ON -LA
+
+# CMAKE_STRIP:FILEPATH=/usr/bin/strip
+# ...
+# CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
+# USE_FAST_MODE:BOOL=ON
+```
+
+```bash title="reset variable to default"
+cmake -S . -B build -U USE_FAST_MODE
+```
+
+Create `CMakePresets.json` in the project root:
+
+```json title="CMakePresets.json"
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "default",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/default",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "USE_FAST_MODE": "OFF"
+      }
+    },
+    {
+      "name": "fast",
+      "inherits": "default",
+      "binaryDir": "${sourceDir}/build/fast",
+      "cacheVariables": {
+        "USE_FAST_MODE": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default"
+    },
+    {
+      "name": "fast",
+      "configurePreset": "fast"
+    }
+  ]
+}
+```
+
+Use the preset instead of repeating `-S`, `-B`, and `-D` arguments:
+
+```bash
+cmake --list-presets
+
+cmake --preset default
+cmake --build --preset default
+./build/default/app
+
+cmake --preset fast
+cmake --build --preset fast
+./build/fast/app
+```
+
+
+---
+
 CMake presets by creating a file named `CMakePresets.json` in your **project root directory**. The basic format for this file is:
 
 ```json
@@ -81,7 +179,7 @@ CMake presets by creating a file named `CMakePresets.json` in your **project roo
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
-        },
+        }
 ]
 ```
 
@@ -108,9 +206,6 @@ Avoid repeating common options using inheritance
 }
 
 ```
-
-!!! note "TODO"
-     check if multi inheritance work
 
 ---
 
@@ -180,7 +275,7 @@ cmake --preset <name>
 ```
 
 ```json title="CMakePresets.json"
---8<-- "docs/Programming/cpp/cmake/cmake_preset/code/CMakePresets.json">
+--8<-- "docs/Programming/cpp/cmake/cmake_preset/code/CMakePresets.json"
 ```
 
 

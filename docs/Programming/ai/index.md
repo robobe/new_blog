@@ -7,6 +7,9 @@
 ## Read and watch
 - [What Are Skills? Build Your First AI Agent Skill in Minutes ](https://youtu.be/2REiUlciObk)
 - [The Age of Agent Command Centers: How to Build Your Own Multi-Agent AI System](https://medium.com/@georgethomasm_89397/the-age-of-agent-command-centers-how-to-build-your-own-multi-agent-ai-system-7f1d63330776)
+- [Full Walkthrough: Workflow for AI Coding — Matt Pocock](https://youtu.be/-QFHIoCo-Ko)
+- ["Software Fundamentals Matter More Than Ever" — Matt Pocock](https://youtu.be/v4F1gFy-hqg)
+- [AI Agents Full Course 2026: Master Agentic AI (2 Hours)](https://youtu.be/EsTrWCV0Ph4)
 
 ---
 

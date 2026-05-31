@@ -129,7 +129,5 @@ alias gznvidia='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz 
 | GZ_SIM_RESOURCE_PATH  | where to search for `world`,`models` include meshes, textures, materials  |
 | GZ_SIM_SYSTEM_PLUGIN_PATH  | where to find compiled system plugins (.so files) |
 | **TRANSPORT**  |   |
-| GZ_TRANSPORT_IP  |   |
-| GZ_DISCOVERY_SERVER  |   |
-| GZ_PARTITION  |   |
+| GZ_IP  | force Gazebo Transport to use a particular IP and multicast discovery messages `export GZ_IP=127.0.0.1` |
 

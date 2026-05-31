@@ -8,11 +8,6 @@ tags:
 # Gstreamer
 
 <div class="grid-container">
- <div class="grid-item">
-        <a href="debug_and_trace">
-            <p>gstreamer debug and trace</p>
-        </a>
-    </div>
     <div class="grid-item">
         <a href="clock">
             <p>gstreamer clock</p>
