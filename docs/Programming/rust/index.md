@@ -118,3 +118,4 @@ cargo build --release --target aarch64-unknown-linux-gnu
 
 ## Reference
 - [Let's Get Rusty](https://www.youtube.com/@letsgetrusty/playlists)
+- [Learn rust](https://www.youtube.com/@smartcontractprogrammer)

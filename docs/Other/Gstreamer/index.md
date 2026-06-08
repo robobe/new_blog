@@ -22,7 +22,6 @@ flowchart LR
         </a>
     </div>
     <div class="grid-item">
-    <div class="grid-item">
         <a href="python_bindings">
             <p>python_bindings</p>
         </a>
@@ -30,6 +29,11 @@ flowchart LR
      <div class="grid-item">
         <a href="debug_and_trace">
             <p>gstreamer debug and trace</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="custom_plugin">
+            <p>custom plugin</p>
         </a>
     </div>
 </div>
@@ -100,6 +104,149 @@ In this example, `videotestsrc` has a source pad connected to the sink pad of
 ```bash
 videotestsrc ! videoconvert
 ```
+
+### caps
+
+# Caps
+
+In GStreamer, caps means capabilities: a description of what kind of media data can flow through a pad.
+
+A caps string between elements is usually a shorthand for inserting a capsfilter element.
+
+```bash
+videotestsrc ! videoconvert ! video/x-raw,format=BGR ! autovideosink
+```
+
+```bash
+videotestsrc ! videoconvert ! capsfilter caps="video/x-raw,format=BGR" ! autovideosink
+```
+
+!!! Note
+    “At this exact point in the pipeline, only buffers matching this format may pass.”
+
+
+## Auto negotiation
+
+```bash
+videotestsrc ! videoconvert ! autovideosink
+```
+
+GStreamer negotiates automatically.
+videotestsrc may produce many possible raw video formats. videoconvert can convert between formats. autovideosink chooses a real video sink available on your system.
+
+GStreamer tries to find a compatible format that all linked elements can handle.
+
+---
+
+Caps are attached to pads
+
+Every GStreamer element has pads.
+
+![alt text](images/caps.png)
+
+### Demo
+
+A's output and B's input must agree on video/x-raw,format=BGR.
+
+```
+element A ! video/x-raw,format=BGR ! element B
+```
+
+**Only BGR raw video may pass from element_a to element_b.**
+
+!!! Warning
+    It does not perform conversion itself.
+    only videoconvert,videoscale and videorate are actually change the data
+
+
+using `gst-inspect` we can check the capability of element pads
+
+```bash
+gst-inspect videotestsrc
+
+#
+
+Pad Templates:
+  SRC template: 'src'
+    Availability: Always
+    Capabilities:
+      video/x-raw
+                 format: { (string)A444_16LE, (string)A444_16BE, (string)AYUV64, (string)RG
+BA64_LE, (string)ARGB64, (string)ARGB64_LE, (string)BGRA64_LE, (string)ABGR64_LE, (string)R
+GBA64_BE, (string)ARGB64_BE, (string)BGRA64_BE, (string)ABGR64_BE, (string)A422_16LE, (stri
+ng)A422_16BE, (string)A420_16LE, (string)A420_16BE, (string)A444_12LE, (string)GBRA_12LE, (
+string)A444_12BE
+```
+
+### usage
+
+```bash
+videoconvert ! video/x-raw,format=BGR ! autovideosink
+```
+
+```bash
+videoconvert ! capsfilter caps="video/x-raw,format=BGR" ! autovideosink
+```
+
+```bash
+videoconvert ! 'video/x-raw,format=BGR,width=640,height=480' ! autovideosink
+```
+
+!!! Note
+    Quoting is especially useful when caps contain parentheses or lists.
+
+
+---
+
+### Common example
+
+- videoscale    handles width/height
+- videorate     handles framerate
+- videoconvert  handles pixel format
+
+#### Rate
+```
+source ! video/x-raw,framerate=30/1 ! videorate ! video/x-raw,framerate=10/1 ! sink
+```
+
+!!! note
+    `videorate` understand that downstream the pipe expected to video at 10 HZ
+
+```bash title="control rate"
+gst-launch-1.0 -v \
+  videotestsrc is-live=true ! \
+  video/x-raw,framerate=30/1 ! \
+  videorate ! \
+  video/x-raw,framerate=10/1 ! \
+  fpsdisplaysink
+```
+
+#TODO: explain how videorate handler down and up rate
+
+
+#### scale
+
+```bash
+gst-launch-1.0 -v \
+  videotestsrc is-live=true ! \
+  video/x-raw,width=1280,height=720 ! \
+  videoscale ! \
+  video/x-raw,width=640,height=360 ! \
+  videoconvert ! \
+  autovideosink
+```
+
+#### format
+
+```bash
+gst-launch-1.0 -v   videotestsrc is-live=true \
+! video/x-raw,format=I420 \
+! videoconvert \
+! video/x-raw,format=YV12 \
+! autovideosink
+```
+
+---
 
 ### Source
 

@@ -8,6 +8,14 @@ tags:
     - opentopography
 ---
 
+```bash title="gdal install"
+sudo apt-get install gdal-bin \
+  libgdal-dev
+  python3-gdal
+```
+
+
+---
 # DEM terrain from OpenTopography
 
 This page shows how to download a real Digital Elevation Model (DEM) from OpenTopography and use it as terrain in Gazebo Harmonic.

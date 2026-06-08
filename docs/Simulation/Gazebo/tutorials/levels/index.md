@@ -10,13 +10,16 @@ tags:
 
 ## Demo
 
-```bash
+```bash title="run gz with levels"
 gz sim levels.sdf --levels
+```
+
+```bash
 gz topic -t "/model/vehicle_blue/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 4.0}"
 gz topic -t "/model/vehicle_red/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 2.0}"
 ```
 
-[code](code/levels.sdf)
+<a href="code/levels.sdf" download="levels.sdf">Download code</a>
 
 ---
 
