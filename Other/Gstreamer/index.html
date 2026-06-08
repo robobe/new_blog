@@ -675,6 +675,86 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-gstreamer-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic GStreamer terms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic GStreamer terms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#element" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Element
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        caps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -711,7 +791,6 @@ elements and finally to a sink element.</p>
         </a>
     </div>
     <div class="grid-item">
-    <div class="grid-item">
         <a href="python_bindings">
             <p>python_bindings</p>
         </a>
@@ -721,10 +800,14 @@ elements and finally to a sink element.</p>
             <p>gstreamer debug and trace</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="custom_plugin">
+            <p>custom plugin</p>
+        </a>
+    </div>
 </div>
 
-## install
-
+<h2 id="install">install</h2>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">3</a></span>
@@ -739,8 +822,6 @@ elements and finally to a sink element.</p>
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a>gstreamer1.0-plugins-ugly<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7"></a>gstreamer1.0-libav
 </code></pre></div></td></tr></table></div>
-
-
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">python binding</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
 <span class="normal"><a href="#__codelineno-1-3">3</a></span>
@@ -749,150 +830,230 @@ elements and finally to a sink element.</p>
 <a id="__codelineno-1-3" name="__codelineno-1-3"></a>python3-gst-1.0<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4"></a>gir1.2-gstreamer-1.0
 </code></pre></div></td></tr></table></div>
-
----
-
-## Basic GStreamer terms
-
-Use the pipeline image as a map: data usually moves from left to right, from a
+<hr />
+<h2 id="basic-gstreamer-terms">Basic GStreamer terms</h2>
+<p>Use the pipeline image as a map: data usually moves from left to right, from a
 source, through elements, and into a sink. Control messages and questions can
-also move between elements.
-
-### Pipeline
-
-A **pipeline** is the full media graph. It owns the elements and controls their
-state: `NULL`, `READY`, `PAUSED`, and `PLAYING`.
-
+also move between elements.</p>
+<h3 id="pipeline">Pipeline</h3>
+<p>A <strong>pipeline</strong> is the full media graph. It owns the elements and controls their
+state: <code>NULL</code>, <code>READY</code>, <code>PAUSED</code>, and <code>PLAYING</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Simple test video pipeline</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>autovideosink
 </code></pre></div></td></tr></table></div>
-
-This pipeline creates test video, converts it to a display format, and shows it
-on the screen.
-
-### Element
-
-An **element** is one processing block inside the pipeline. Each element has one
-job.
-
+<p>This pipeline creates test video, converts it to a display format, and shows it
+on the screen.</p>
+<h3 id="element">Element</h3>
+<p>An <strong>element</strong> is one processing block inside the pipeline. Each element has one
+job.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>autovideosink
 </code></pre></div></td></tr></table></div>
-
-- `videotestsrc` creates video frames.
-- `videoconvert` converts video format when needed.
-- `autovideosink` displays the video.
-
-### Pad
-
-A **pad** is the connection point of an element.
-
-- A **src pad** sends data out.
-- A **sink pad** receives data in.
-
-In this example, `videotestsrc` has a source pad connected to the sink pad of
-`videoconvert`:
-
+<ul>
+<li><code>videotestsrc</code> creates video frames.</li>
+<li><code>videoconvert</code> converts video format when needed.</li>
+<li><code>autovideosink</code> displays the video.</li>
+</ul>
+<h3 id="pad">Pad</h3>
+<p>A <strong>pad</strong> is the connection point of an element.</p>
+<ul>
+<li>A <strong>src pad</strong> sends data out.</li>
+<li>A <strong>sink pad</strong> receives data in.</li>
+</ul>
+<p>In this example, <code>videotestsrc</code> has a source pad connected to the sink pad of
+<code>videoconvert</code>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert
 </code></pre></div></td></tr></table></div>
-
-### Source
-
-A **source** is an element that starts data flow. It can read from a camera,
-file, network stream, or generate test data.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Camera source</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>gst-launch-1.0<span class="w"> </span>v4l2src<span class="w"> </span><span class="nv">device</span><span class="o">=</span>/dev/video0<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>autovideosink
+<h3 id="caps">caps</h3>
+<h1 id="caps_1">Caps</h1>
+<p>In GStreamer, caps means capabilities: a description of what kind of media data can flow through a pad.</p>
+<p>A caps string between elements is usually a shorthand for inserting a capsfilter element.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>video/x-raw,format<span class="o">=</span>BGR<span class="w"> </span>!<span class="w"> </span>autovideosink
 </code></pre></div></td></tr></table></div>
-
-### Sink
-
-A **sink** is an element that ends data flow. It can show video, play audio,
-write a file, or send data to the network.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Write test video to a file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">100</span><span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>x264enc<span class="w"> </span>!<span class="w"> </span>mp4mux<span class="w"> </span>!<span class="w"> </span>filesink<span class="w"> </span><span class="nv">location</span><span class="o">=</span>test.mp4
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>capsfilter<span class="w"> </span><span class="nv">caps</span><span class="o">=</span><span class="s2">&quot;video/x-raw,format=BGR&quot;</span><span class="w"> </span>!<span class="w"> </span>autovideosink
 </code></pre></div></td></tr></table></div>
-
-### Buffer
-
-A **buffer** is one chunk of media data moving through the pipeline. For video,
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>“At this exact point in the pipeline, only buffers matching this format may pass.”</p>
+</div>
+<h2 id="auto-negotiation">Auto negotiation</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>autovideosink
+</code></pre></div></td></tr></table></div>
+<p>GStreamer negotiates automatically.
+videotestsrc may produce many possible raw video formats. videoconvert can convert between formats. autovideosink chooses a real video sink available on your system.</p>
+<p>GStreamer tries to find a compatible format that all linked elements can handle.</p>
+<hr />
+<p>Caps are attached to pads</p>
+<p>Every GStreamer element has pads.</p>
+<p><img alt="alt text" src="images/caps.png" /></p>
+<h3 id="demo">Demo</h3>
+<p>A's output and B's input must agree on video/x-raw,format=BGR.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>element A ! video/x-raw,format=BGR ! element B
+</code></pre></div></td></tr></table></div>
+<p><strong>Only BGR raw video may pass from element_a to element_b.</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It does not perform conversion itself.
+only videoconvert,videoscale and videorate are actually change the data</p>
+</div>
+<p>using <code>gst-inspect</code> we can check the capability of element pads</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>gst-inspect<span class="w"> </span>videotestsrc
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1">#</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>Pad<span class="w"> </span>Templates:
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">  </span>SRC<span class="w"> </span>template:<span class="w"> </span><span class="s1">&#39;src&#39;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">    </span>Availability:<span class="w"> </span>Always
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">    </span>Capabilities:
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">      </span>video/x-raw
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="w">                 </span>format:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="o">(</span>string<span class="o">)</span>A444_16LE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>A444_16BE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>AYUV64,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>RG
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>BA64_LE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>ARGB64,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>ARGB64_LE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>BGRA64_LE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>ABGR64_LE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>R
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>GBA64_BE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>ARGB64_BE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>BGRA64_BE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>ABGR64_BE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>A422_16LE,<span class="w"> </span><span class="o">(</span>stri
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a>ng<span class="o">)</span>A422_16BE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>A420_16LE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>A420_16BE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>A444_12LE,<span class="w"> </span><span class="o">(</span>string<span class="o">)</span>GBRA_12LE,<span class="w"> </span><span class="o">(</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a>string<span class="o">)</span>A444_12BE
+</code></pre></div></td></tr></table></div>
+<h3 id="usage">usage</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>videoconvert<span class="w"> </span>!<span class="w"> </span>video/x-raw,format<span class="o">=</span>BGR<span class="w"> </span>!<span class="w"> </span>autovideosink
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>videoconvert<span class="w"> </span>!<span class="w"> </span>capsfilter<span class="w"> </span><span class="nv">caps</span><span class="o">=</span><span class="s2">&quot;video/x-raw,format=BGR&quot;</span><span class="w"> </span>!<span class="w"> </span>autovideosink
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>videoconvert<span class="w"> </span>!<span class="w"> </span><span class="s1">&#39;video/x-raw,format=BGR,width=640,height=480&#39;</span><span class="w"> </span>!<span class="w"> </span>autovideosink
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Quoting is especially useful when caps contain parentheses or lists.</p>
+</div>
+<hr />
+<h3 id="common-example">Common example</h3>
+<ul>
+<li>videoscale    handles width/height</li>
+<li>videorate     handles framerate</li>
+<li>videoconvert  handles pixel format</li>
+</ul>
+<h4 id="rate">Rate</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>source ! video/x-raw,framerate=30/1 ! videorate ! video/x-raw,framerate=10/1 ! sink
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>videorate</code> understand that downstream the pipe expected to video at 10 HZ</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">control rate</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>gst-launch-1.0<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span>videotestsrc<span class="w"> </span>is-live<span class="o">=</span><span class="nb">true</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">  </span>video/x-raw,framerate<span class="o">=</span><span class="m">30</span>/1<span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">  </span>videorate<span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">  </span>video/x-raw,framerate<span class="o">=</span><span class="m">10</span>/1<span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">  </span>fpsdisplaysink
+</code></pre></div></td></tr></table></div>
+<h1 id="todo-explain-how-videorate-handler-down-and-up-rate">TODO: explain how videorate handler down and up rate</h1>
+<h4 id="scale">scale</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span>
+<span class="normal"><a href="#__codelineno-15-6">6</a></span>
+<span class="normal"><a href="#__codelineno-15-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>gst-launch-1.0<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">  </span>videotestsrc<span class="w"> </span>is-live<span class="o">=</span><span class="nb">true</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">  </span>video/x-raw,width<span class="o">=</span><span class="m">1280</span>,height<span class="o">=</span><span class="m">720</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">  </span>videoscale<span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">  </span>video/x-raw,width<span class="o">=</span><span class="m">640</span>,height<span class="o">=</span><span class="m">360</span><span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">  </span>videoconvert<span class="w"> </span>!<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">  </span>autovideosink
+</code></pre></div></td></tr></table></div>
+<h4 id="format">format</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>gst-launch-1.0<span class="w"> </span>-v<span class="w">   </span>videotestsrc<span class="w"> </span>is-live<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>!<span class="w"> </span>video/x-raw,format<span class="o">=</span>I420<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a>!<span class="w"> </span>videoconvert<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>!<span class="w"> </span>video/x-raw,format<span class="o">=</span>YV12<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a>!<span class="w"> </span>autovideosink
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="source">Source</h3>
+<p>A <strong>source</strong> is an element that starts data flow. It can read from a camera,
+file, network stream, or generate test data.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Camera source</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>gst-launch-1.0<span class="w"> </span>v4l2src<span class="w"> </span><span class="nv">device</span><span class="o">=</span>/dev/video0<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>autovideosink
+</code></pre></div></td></tr></table></div>
+<h3 id="sink">Sink</h3>
+<p>A <strong>sink</strong> is an element that ends data flow. It can show video, play audio,
+write a file, or send data to the network.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Write test video to a file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">100</span><span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>x264enc<span class="w"> </span>!<span class="w"> </span>mp4mux<span class="w"> </span>!<span class="w"> </span>filesink<span class="w"> </span><span class="nv">location</span><span class="o">=</span>test.mp4
+</code></pre></div></td></tr></table></div>
+<h3 id="buffer">Buffer</h3>
+<p>A <strong>buffer</strong> is one chunk of media data moving through the pipeline. For video,
 one buffer is usually one frame. For audio, one buffer is usually a small group
-of samples.
-
-Example flow:
-
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>videotestsrc creates buffer -&gt; videoconvert changes format -&gt; autovideosink displays buffer
+of samples.</p>
+<p>Example flow:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>videotestsrc creates buffer -&gt; videoconvert changes format -&gt; autovideosink displays buffer
 </code></pre></div></td></tr></table></div>
-
-### Bus
-
-The **bus** carries messages from the pipeline to the application. The
+<h3 id="bus">Bus</h3>
+<p>The <strong>bus</strong> carries messages from the pipeline to the application. The
 application uses it to read errors, end-of-stream messages, warnings, and state
-changes.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show bus messages while running</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">2</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">30</span><span class="w"> </span>!<span class="w"> </span>fakesink
+changes.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show bus messages while running</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">2</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">30</span><span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
-
-When the source sends 30 buffers, the pipeline posts an `EOS` message on the
-bus.
-
-### Event
-
-An **event** is a control signal that travels through pads. Events are used for
-actions like start, stop, seek, flush, and end-of-stream.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Finite pipeline that sends EOS</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">10</span><span class="w"> </span>!<span class="w"> </span>fakesink
+<p>When the source sends 30 buffers, the pipeline posts an <code>EOS</code> message on the
+bus.</p>
+<h3 id="event">Event</h3>
+<p>An <strong>event</strong> is a control signal that travels through pads. Events are used for
+actions like start, stop, seek, flush, and end-of-stream.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Finite pipeline that sends EOS</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">10</span><span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
-
-After 10 buffers, `videotestsrc` sends an `EOS` event downstream to `fakesink`.
-
-### Query
-
-A **query** asks an element or pipeline for information. Common queries ask for
-duration, current position, latency, or supported capabilities.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Inspect element pads and caps</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>gst-inspect-1.0<span class="w"> </span>videoconvert
+<p>After 10 buffers, <code>videotestsrc</code> sends an <code>EOS</code> event downstream to <code>fakesink</code>.</p>
+<h3 id="query">Query</h3>
+<p>A <strong>query</strong> asks an element or pipeline for information. Common queries ask for
+duration, current position, latency, or supported capabilities.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Inspect element pads and caps</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>gst-inspect-1.0<span class="w"> </span>videoconvert
 </code></pre></div></td></tr></table></div>
-
-For example, an application can query a playing file pipeline for the current
-position to update a progress bar.
-
-
----
-
-## Logging
-
-GStreamer uses debug categories and levels to control log output. The main
-environment variable is `GST_DEBUG`, which can enable logs globally or for
-specific categories.
-
-Common debug levels are:
-
-- `0`: none
-- `1`: errors
-- `2`: warnings
-- `3`: info
-- `4`: debug
-- `5`: log
-- `6` and higher: very verbose tracing
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show warning and error logs</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">2</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">3</span><span class="w"> </span>!<span class="w"> </span>fakesink
+<p>For example, an application can query a playing file pipeline for the current
+position to update a progress bar.</p>
+<hr />
+<h2 id="logging">Logging</h2>
+<p>GStreamer uses debug categories and levels to control log output. The main
+environment variable is <code>GST_DEBUG</code>, which can enable logs globally or for
+specific categories.</p>
+<p>Common debug levels are:</p>
+<ul>
+<li><code>0</code>: none</li>
+<li><code>1</code>: errors</li>
+<li><code>2</code>: warnings</li>
+<li><code>3</code>: info</li>
+<li><code>4</code>: debug</li>
+<li><code>5</code>: log</li>
+<li><code>6</code> and higher: very verbose tracing</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show warning and error logs</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">2</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">3</span><span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show debug logs for all categories</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">4</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">3</span><span class="w"> </span>!<span class="w"> </span>fakesink
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show debug logs for all categories</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">4</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">3</span><span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
-
-You can also target one category instead of enabling noisy logs for the whole
-pipeline.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show detailed logs only for caps negotiation</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span>GST_CAPS:5<span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>fakesink
+<p>You can also target one category instead of enabling noisy logs for the whole
+pipeline.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Show detailed logs only for caps negotiation</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span>GST_CAPS:5<span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>!<span class="w"> </span>videoconvert<span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
-
-Multiple categories can be combined with commas.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Debug filesrc and decodebin</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span>filesrc:4,decodebin:5<span class="w"> </span>gst-launch-1.0<span class="w"> </span>filesrc<span class="w"> </span><span class="nv">location</span><span class="o">=</span>video.mp4<span class="w"> </span>!<span class="w"> </span>decodebin<span class="w"> </span>!<span class="w"> </span>fakesink
+<p>Multiple categories can be combined with commas.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Debug filesrc and decodebin</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span>filesrc:4,decodebin:5<span class="w"> </span>gst-launch-1.0<span class="w"> </span>filesrc<span class="w"> </span><span class="nv">location</span><span class="o">=</span>video.mp4<span class="w"> </span>!<span class="w"> </span>decodebin<span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
-
-To save logs to a file, set `GST_DEBUG_FILE`.
-
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Write logs to a file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">GST_DEBUG_FILE</span><span class="o">=</span>gstreamer.log<span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">3</span><span class="w"> </span>!<span class="w"> </span>fakesink
+<p>To save logs to a file, set <code>GST_DEBUG_FILE</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Write logs to a file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="nv">GST_DEBUG</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">GST_DEBUG_FILE</span><span class="o">=</span>gstreamer.log<span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">3</span><span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
 
 
