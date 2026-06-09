@@ -25,9 +25,9 @@ Using NanoTracker v2
 
 ### Downloads
 
-- [video](docs/Programming/vision/visual_trackers/nano_tracker/code/data/vtest.avi)
-- [nanotrack_backbone_v2](docs/Programming/vision/visual_trackers/nano_tracker/code/models/nanotrack_backbone_sim.onnx)
-- [nanotrack_head_v2](docs/Programming/vision/visual_trackers/nano_tracker/code/models/nanotrack_head_sim.onnx)
+- [video](/docs/Programming/vision/visual_trackers/nano_tracker/code/data/vtest.avi)
+- [nanotrack_backbone_v2](/docs/Programming/vision/visual_trackers/nano_tracker/code/models/nanotrack_backbone_sim.onnx)
+- [nanotrack_head_v2](/docs/Programming/vision/visual_trackers/nano_tracker/code/models/nanotrack_head_sim.onnx)
 - [Dockerfile](docs/Programming/vision/visual_trackers/nano_tracker/code/Dockerfile)
 
 

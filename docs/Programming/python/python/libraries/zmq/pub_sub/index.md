@@ -57,7 +57,7 @@ Uses one SUB socket connected to multiple PUB endpoints.
 <details>
 <summary>Code</summary>
 ```python
---8<-- "docs/Programming/python/zmq/pub_sub/code/multiple_pub_on_sub.py"
+--8<-- "docs/Programming/python/python/libraries/zmq/pub_sub/code/multiple_pub_on_sub.py"
 ```
 </details>
 
@@ -68,6 +68,6 @@ Uses one SUB socket connected to multiple PUB endpoints and listen only to speci
 <details>
 <summary>Code</summary>
 ```python
---8<-- "docs/Programming/python/zmq/pub_sub/code/multiple_pub_on_sub_topics.py"
+--8<-- "docs/Programming/python/python/libraries/zmq/pub_sub/code/multiple_pub_on_sub_topics.py"
 ```
 </details>

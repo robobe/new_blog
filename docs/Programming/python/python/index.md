@@ -18,29 +18,16 @@ tags:
         </a>
     </div>
 </div>
-## Python
+
+## Rust
 
 <div class="grid-container">
      <div class="grid-item">
-        <a href="zen_and_beyond">
-        <p>Zen and Beyond</p>
+        <a href="threading_and_concurrency">
+        <p>Threading and concurrency</p>
         </a>
     </div>
-    <div class="grid-item">
-        <a href="python">
-        <p>Language Highlights</p>
-        </a>
-    </div>
-     <div class="grid-item">
-        <a href="annotation">
-        <p>Annotation</p>
-        </a>
-    </div>
-     <div class="grid-item">
-        <a href="dataclasses">
-        <p>Dataclass</p>
-        </a>
-    </div>
+    
 </div>
 
 ---
@@ -49,8 +36,8 @@ tags:
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="libraries/log_guru">
-        <p>log guru</p>
+        <a href="libraries/rust_log_guru">
+        <p>rust log guru</p>
         </a>
     </div>
     <div class="grid-item">
@@ -61,16 +48,6 @@ tags:
     <div class="grid-item">
         <a href="libraries/zmq/">
         <p>zmq</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="libraries/pro">
-        <p>protobuf</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="libraries/pytrees/">
-            <p>PyTrees</p>
         </a>
     </div>
 </div>
