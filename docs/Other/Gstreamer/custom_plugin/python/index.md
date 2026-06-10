@@ -16,6 +16,11 @@ processing or custom `Gst.Meta`, move the final plugin to C, C++, or Rust.
 <div class="grid-container">
     <div class="grid-item">
         <a href="bus_message">
+            <p>Metadata</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="bus_message">
             <p>bus message</p>
         </a>
     </div>
