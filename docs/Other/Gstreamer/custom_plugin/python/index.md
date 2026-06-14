@@ -15,7 +15,7 @@ processing or custom `Gst.Meta`, move the final plugin to C, C++, or Rust.
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="bus_message">
+        <a href="metadata">
             <p>Metadata</p>
         </a>
     </div>
@@ -27,6 +27,11 @@ processing or custom `Gst.Meta`, move the final plugin to C, C++, or Rust.
     <div class="grid-item">
         <a href="appsink_meta">
             <p>appsink metadata</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="gst_event">
+            <p>Gst.Event</p>
         </a>
     </div>
 </div>

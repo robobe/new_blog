@@ -32,7 +32,7 @@ flowchart LR
         </a>
     </div>
      <div class="grid-item">
-        <a href="custom_plugin">
+        <a href="custom_plugin/python/">
             <p>custom plugin</p>
         </a>
     </div>
