@@ -701,6 +701,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Read the metadata from appsink">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pull-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull style
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#callback-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callback style
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -708,17 +736,6 @@
     <span class="md-ellipsis">
       
         Run
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bus-message-vs-appsink-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bus message vs appsink metadata
       
     </span>
   </a>
@@ -760,10 +777,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#can-third-and-fourth-plugins-read-it" class="md-nav__link">
+  <a href="#pipe" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Can third and fourth plugins read it?
+        pipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run:
       
     </span>
   </a>
@@ -846,129 +874,147 @@ pull the buffer from <code>appsink</code>.</p>
 </code></pre></div></td></tr></table></div>
 <p>This example uses <code>GstVideo.VideoRegionOfInterestMeta</code>, which is useful for
 object detection boxes.</p>
+<div class="admonition info">
+<p class="admonition-title">gst_buffer_get_video_region_of_interest_meta_id</p>
+<p><code>gst_buffer_get_video_region_of_interest_meta_id()</code> is used to retrieve a specific Region of Interest (ROI) metadata attached to a GstBuffer.</p>
+<p>The ROI metadata type is GstVideoRegionOfInterestMeta and is defined in the GStreamer video library.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>GstMeta
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>    └── GstVideoRegionOfInterestMeta
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>        └── optional Gst.Structure params
+</code></pre></div></td></tr></table></div>
+<p>Attaches a Gst.Structure inside the ROI meta as extra parameters.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">params</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Structure</span><span class="o">.</span><span class="n">new_empty</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">roi</span><span class="o">.</span><span class="n">add_param</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</div>
 <h2 id="plugin-code">Plugin code</h2>
 <p>The plugin adds one ROI metadata object to every buffer. The ROI contains a
 label and bounding box. Extra fields, such as confidence and frame count, are
 stored in a <code>Gst.Structure</code> parameter attached to the ROI.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">../code/python/appsink_meta_plugin.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span>
-<span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span>
-<span class="normal"><a href="#__codelineno-1-13">13</a></span>
-<span class="normal"><a href="#__codelineno-1-14">14</a></span>
-<span class="normal"><a href="#__codelineno-1-15">15</a></span>
-<span class="normal"><a href="#__codelineno-1-16">16</a></span>
-<span class="normal"><a href="#__codelineno-1-17">17</a></span>
-<span class="normal"><a href="#__codelineno-1-18">18</a></span>
-<span class="normal"><a href="#__codelineno-1-19">19</a></span>
-<span class="normal"><a href="#__codelineno-1-20">20</a></span>
-<span class="normal"><a href="#__codelineno-1-21">21</a></span>
-<span class="normal"><a href="#__codelineno-1-22">22</a></span>
-<span class="normal"><a href="#__codelineno-1-23">23</a></span>
-<span class="normal"><a href="#__codelineno-1-24">24</a></span>
-<span class="normal"><a href="#__codelineno-1-25">25</a></span>
-<span class="normal"><a href="#__codelineno-1-26">26</a></span>
-<span class="normal"><a href="#__codelineno-1-27">27</a></span>
-<span class="normal"><a href="#__codelineno-1-28">28</a></span>
-<span class="normal"><a href="#__codelineno-1-29">29</a></span>
-<span class="normal"><a href="#__codelineno-1-30">30</a></span>
-<span class="normal"><a href="#__codelineno-1-31">31</a></span>
-<span class="normal"><a href="#__codelineno-1-32">32</a></span>
-<span class="normal"><a href="#__codelineno-1-33">33</a></span>
-<span class="normal"><a href="#__codelineno-1-34">34</a></span>
-<span class="normal"><a href="#__codelineno-1-35">35</a></span>
-<span class="normal"><a href="#__codelineno-1-36">36</a></span>
-<span class="normal"><a href="#__codelineno-1-37">37</a></span>
-<span class="normal"><a href="#__codelineno-1-38">38</a></span>
-<span class="normal"><a href="#__codelineno-1-39">39</a></span>
-<span class="normal"><a href="#__codelineno-1-40">40</a></span>
-<span class="normal"><a href="#__codelineno-1-41">41</a></span>
-<span class="normal"><a href="#__codelineno-1-42">42</a></span>
-<span class="normal"><a href="#__codelineno-1-43">43</a></span>
-<span class="normal"><a href="#__codelineno-1-44">44</a></span>
-<span class="normal"><a href="#__codelineno-1-45">45</a></span>
-<span class="normal"><a href="#__codelineno-1-46">46</a></span>
-<span class="normal"><a href="#__codelineno-1-47">47</a></span>
-<span class="normal"><a href="#__codelineno-1-48">48</a></span>
-<span class="normal"><a href="#__codelineno-1-49">49</a></span>
-<span class="normal"><a href="#__codelineno-1-50">50</a></span>
-<span class="normal"><a href="#__codelineno-1-51">51</a></span>
-<span class="normal"><a href="#__codelineno-1-52">52</a></span>
-<span class="normal"><a href="#__codelineno-1-53">53</a></span>
-<span class="normal"><a href="#__codelineno-1-54">54</a></span>
-<span class="normal"><a href="#__codelineno-1-55">55</a></span>
-<span class="normal"><a href="#__codelineno-1-56">56</a></span>
-<span class="normal"><a href="#__codelineno-1-57">57</a></span>
-<span class="normal"><a href="#__codelineno-1-58">58</a></span>
-<span class="normal"><a href="#__codelineno-1-59">59</a></span>
-<span class="normal"><a href="#__codelineno-1-60">60</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="ch">#!/usr/bin/env python3</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">gi</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;Gst&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstBase&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstVideo&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gi.repository</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gst</span><span class="p">,</span> <span class="n">GstBase</span><span class="p">,</span> <span class="n">GstVideo</span><span class="p">,</span> <span class="n">GObject</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="n">Gst</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="k">class</span><span class="w"> </span><span class="nc">AppSinkMetaFilter</span><span class="p">(</span><span class="n">GstBase</span><span class="o">.</span><span class="n">BaseTransform</span><span class="p">):</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="n">__gstmetadata__</span> <span class="o">=</span> <span class="p">(</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14"></a>        <span class="s2">&quot;AppSinkMetaFilter&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15"></a>        <span class="s2">&quot;Filter/Analyzer/Video&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="s2">&quot;Attach ROI metadata to buffers for appsink&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="s2">&quot;example&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18"></a>    <span class="p">)</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19"></a>
-<a id="__codelineno-1-20" name="__codelineno-1-20"></a>    <span class="n">__gsttemplates__</span> <span class="o">=</span> <span class="p">(</span>
-<a id="__codelineno-1-21" name="__codelineno-1-21"></a>        <span class="n">Gst</span><span class="o">.</span><span class="n">PadTemplate</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-<a id="__codelineno-1-22" name="__codelineno-1-22"></a>            <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadDirection</span><span class="o">.</span><span class="n">SINK</span><span class="p">,</span>
-<a id="__codelineno-1-24" name="__codelineno-1-24"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadPresence</span><span class="o">.</span><span class="n">ALWAYS</span><span class="p">,</span>
-<a id="__codelineno-1-25" name="__codelineno-1-25"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">Caps</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;video/x-raw&quot;</span><span class="p">),</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26"></a>        <span class="p">),</span>
-<a id="__codelineno-1-27" name="__codelineno-1-27"></a>        <span class="n">Gst</span><span class="o">.</span><span class="n">PadTemplate</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-<a id="__codelineno-1-28" name="__codelineno-1-28"></a>            <span class="s2">&quot;src&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadDirection</span><span class="o">.</span><span class="n">SRC</span><span class="p">,</span>
-<a id="__codelineno-1-30" name="__codelineno-1-30"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadPresence</span><span class="o">.</span><span class="n">ALWAYS</span><span class="p">,</span>
-<a id="__codelineno-1-31" name="__codelineno-1-31"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">Caps</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;video/x-raw&quot;</span><span class="p">),</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32"></a>        <span class="p">),</span>
-<a id="__codelineno-1-33" name="__codelineno-1-33"></a>    <span class="p">)</span>
-<a id="__codelineno-1-34" name="__codelineno-1-34"></a>
-<a id="__codelineno-1-35" name="__codelineno-1-35"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-1-36" name="__codelineno-1-36"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-<a id="__codelineno-1-37" name="__codelineno-1-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">=</span> <span class="mi">0</span>
-<a id="__codelineno-1-38" name="__codelineno-1-38"></a>
-<a id="__codelineno-1-39" name="__codelineno-1-39"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_transform_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer</span><span class="p">):</span>
-<a id="__codelineno-1-40" name="__codelineno-1-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">+=</span> <span class="mi">1</span>
-<a id="__codelineno-1-41" name="__codelineno-1-41"></a>
-<a id="__codelineno-1-42" name="__codelineno-1-42"></a>        <span class="n">roi</span> <span class="o">=</span> <span class="n">GstVideo</span><span class="o">.</span><span class="n">buffer_add_video_region_of_interest_meta</span><span class="p">(</span>
-<a id="__codelineno-1-43" name="__codelineno-1-43"></a>            <span class="n">buffer</span><span class="p">,</span>
-<a id="__codelineno-1-44" name="__codelineno-1-44"></a>            <span class="s2">&quot;person&quot;</span><span class="p">,</span>
-<a id="__codelineno-1-45" name="__codelineno-1-45"></a>            <span class="mi">120</span><span class="p">,</span>
-<a id="__codelineno-1-46" name="__codelineno-1-46"></a>            <span class="mi">40</span><span class="p">,</span>
-<a id="__codelineno-1-47" name="__codelineno-1-47"></a>            <span class="mi">80</span><span class="p">,</span>
-<a id="__codelineno-1-48" name="__codelineno-1-48"></a>            <span class="mi">180</span><span class="p">,</span>
-<a id="__codelineno-1-49" name="__codelineno-1-49"></a>        <span class="p">)</span>
-<a id="__codelineno-1-50" name="__codelineno-1-50"></a>
-<a id="__codelineno-1-51" name="__codelineno-1-51"></a>        <span class="n">params</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Structure</span><span class="o">.</span><span class="n">new_empty</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-52" name="__codelineno-1-52"></a>        <span class="n">params</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;frame-count&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span><span class="p">)</span>
-<a id="__codelineno-1-53" name="__codelineno-1-53"></a>        <span class="n">params</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;confidence&quot;</span><span class="p">,</span> <span class="mf">0.91</span><span class="p">)</span>
-<a id="__codelineno-1-54" name="__codelineno-1-54"></a>        <span class="n">roi</span><span class="o">.</span><span class="n">add_param</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-<a id="__codelineno-1-55" name="__codelineno-1-55"></a>
-<a id="__codelineno-1-56" name="__codelineno-1-56"></a>        <span class="k">return</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">OK</span>
-<a id="__codelineno-1-57" name="__codelineno-1-57"></a>
-<a id="__codelineno-1-58" name="__codelineno-1-58"></a>
-<a id="__codelineno-1-59" name="__codelineno-1-59"></a><span class="n">GObject</span><span class="o">.</span><span class="n">type_register</span><span class="p">(</span><span class="n">AppSinkMetaFilter</span><span class="p">)</span>
-<a id="__codelineno-1-60" name="__codelineno-1-60"></a><span class="n">__gstelementfactory__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;appsinkmetafilter&quot;</span><span class="p">,</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Rank</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span> <span class="n">AppSinkMetaFilter</span><span class="p">)</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">../code/python/appsink_meta_plugin.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span>
+<span class="normal"><a href="#__codelineno-3-50">50</a></span>
+<span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span>
+<span class="normal"><a href="#__codelineno-3-53">53</a></span>
+<span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">gi</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;Gst&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstBase&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstVideo&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gi.repository</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gst</span><span class="p">,</span> <span class="n">GstBase</span><span class="p">,</span> <span class="n">GstVideo</span><span class="p">,</span> <span class="n">GObject</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="n">Gst</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="k">class</span><span class="w"> </span><span class="nc">AppSinkMetaFilter</span><span class="p">(</span><span class="n">GstBase</span><span class="o">.</span><span class="n">BaseTransform</span><span class="p">):</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="n">__gstmetadata__</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>        <span class="s2">&quot;AppSinkMetaFilter&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="s2">&quot;Filter/Analyzer/Video&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="s2">&quot;Attach ROI metadata to buffers for appsink&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>        <span class="s2">&quot;example&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">__gsttemplates__</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="n">Gst</span><span class="o">.</span><span class="n">PadTemplate</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>            <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadDirection</span><span class="o">.</span><span class="n">SINK</span><span class="p">,</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadPresence</span><span class="o">.</span><span class="n">ALWAYS</span><span class="p">,</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">Caps</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;video/x-raw&quot;</span><span class="p">),</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>        <span class="p">),</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>        <span class="n">Gst</span><span class="o">.</span><span class="n">PadTemplate</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>            <span class="s2">&quot;src&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadDirection</span><span class="o">.</span><span class="n">SRC</span><span class="p">,</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadPresence</span><span class="o">.</span><span class="n">ALWAYS</span><span class="p">,</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">Caps</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;video/x-raw&quot;</span><span class="p">),</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>        <span class="p">),</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>    <span class="p">)</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_transform_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer</span><span class="p">):</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>        <span class="n">roi</span> <span class="o">=</span> <span class="n">GstVideo</span><span class="o">.</span><span class="n">buffer_add_video_region_of_interest_meta</span><span class="p">(</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>            <span class="n">buffer</span><span class="p">,</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>            <span class="s2">&quot;person&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>            <span class="mi">120</span><span class="p">,</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>            <span class="mi">40</span><span class="p">,</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>            <span class="mi">80</span><span class="p">,</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>            <span class="mi">180</span><span class="p">,</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>        <span class="p">)</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>        <span class="c1"># add params to roi object </span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>        <span class="n">params</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Structure</span><span class="o">.</span><span class="n">new_empty</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>        <span class="n">params</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;frame-count&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span><span class="p">)</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>        <span class="n">params</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;confidence&quot;</span><span class="p">,</span> <span class="mf">0.91</span><span class="p">)</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>        <span class="n">roi</span><span class="o">.</span><span class="n">add_param</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>        <span class="k">return</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">OK</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a><span class="n">GObject</span><span class="o">.</span><span class="n">type_register</span><span class="p">(</span><span class="n">AppSinkMetaFilter</span><span class="p">)</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a><span class="n">__gstelementfactory__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;appsinkmetafilter&quot;</span><span class="p">,</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Rank</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span> <span class="n">AppSinkMetaFilter</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Important blocks:</p>
 <ul>
@@ -977,319 +1023,650 @@ stored in a <code>Gst.Structure</code> parameter attached to the ROI.</p>
 <li><code>roi.add_param(params)</code> attaches extra fields to the ROI.</li>
 <li>The buffer continues downstream to <code>appsink</code>.</li>
 </ul>
+<hr />
 <h2 id="read-the-metadata-from-appsink">Read the metadata from appsink</h2>
-<p>The application pulls samples from <code>appsink</code>, gets the sample buffer, and reads
-the ROI metadata from that buffer.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">../code/read_appsink_meta.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-2-10">10</a></span>
-<span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span>
-<span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span>
-<span class="normal"><a href="#__codelineno-2-20">20</a></span>
-<span class="normal"><a href="#__codelineno-2-21">21</a></span>
-<span class="normal"><a href="#__codelineno-2-22">22</a></span>
-<span class="normal"><a href="#__codelineno-2-23">23</a></span>
-<span class="normal"><a href="#__codelineno-2-24">24</a></span>
-<span class="normal"><a href="#__codelineno-2-25">25</a></span>
-<span class="normal"><a href="#__codelineno-2-26">26</a></span>
-<span class="normal"><a href="#__codelineno-2-27">27</a></span>
-<span class="normal"><a href="#__codelineno-2-28">28</a></span>
-<span class="normal"><a href="#__codelineno-2-29">29</a></span>
-<span class="normal"><a href="#__codelineno-2-30">30</a></span>
-<span class="normal"><a href="#__codelineno-2-31">31</a></span>
-<span class="normal"><a href="#__codelineno-2-32">32</a></span>
-<span class="normal"><a href="#__codelineno-2-33">33</a></span>
-<span class="normal"><a href="#__codelineno-2-34">34</a></span>
-<span class="normal"><a href="#__codelineno-2-35">35</a></span>
-<span class="normal"><a href="#__codelineno-2-36">36</a></span>
-<span class="normal"><a href="#__codelineno-2-37">37</a></span>
-<span class="normal"><a href="#__codelineno-2-38">38</a></span>
-<span class="normal"><a href="#__codelineno-2-39">39</a></span>
-<span class="normal"><a href="#__codelineno-2-40">40</a></span>
-<span class="normal"><a href="#__codelineno-2-41">41</a></span>
-<span class="normal"><a href="#__codelineno-2-42">42</a></span>
-<span class="normal"><a href="#__codelineno-2-43">43</a></span>
-<span class="normal"><a href="#__codelineno-2-44">44</a></span>
-<span class="normal"><a href="#__codelineno-2-45">45</a></span>
-<span class="normal"><a href="#__codelineno-2-46">46</a></span>
-<span class="normal"><a href="#__codelineno-2-47">47</a></span>
-<span class="normal"><a href="#__codelineno-2-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="ch">#!/usr/bin/env python3</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">gi</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;Gst&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstApp&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstVideo&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gi.repository</span><span class="w"> </span><span class="kn">import</span> <span class="n">GLib</span><span class="p">,</span> <span class="n">Gst</span><span class="p">,</span> <span class="n">GstApp</span><span class="p">,</span> <span class="n">GstVideo</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="n">Gst</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">parse_launch</span><span class="p">(</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="s2">&quot;videotestsrc num-buffers=5 ! &quot;</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="s2">&quot;videoconvert ! &quot;</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="s2">&quot;appsinkmetafilter ! &quot;</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="s2">&quot;appsink name=sink emit-signals=false sync=false&quot;</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="p">)</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="n">appsink</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="s2">&quot;sink&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">)</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a>    <span class="n">sample</span> <span class="o">=</span> <span class="n">appsink</span><span class="o">.</span><span class="n">try_pull_sample</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">SECOND</span><span class="p">)</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a>    <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a>        <span class="k">break</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="n">buffer</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">get_buffer</span><span class="p">()</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a>    <span class="n">roi</span> <span class="o">=</span> <span class="n">GstVideo</span><span class="o">.</span><span class="n">buffer_get_video_region_of_interest_meta_id</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">roi</span><span class="p">:</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sample has no ROI metadata&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a>        <span class="k">continue</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a>
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="n">label</span> <span class="o">=</span> <span class="n">GLib</span><span class="o">.</span><span class="n">quark_to_string</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">roi_type</span><span class="p">)</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a>    <span class="n">params</span> <span class="o">=</span> <span class="n">roi</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34"></a>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a>    <span class="nb">print</span><span class="p">(</span>
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a>        <span class="s2">&quot;label:&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a>        <span class="n">label</span><span class="p">,</span>
-<a id="__codelineno-2-38" name="__codelineno-2-38"></a>        <span class="s2">&quot;box:&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-39" name="__codelineno-2-39"></a>        <span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">h</span><span class="p">),</span>
-<a id="__codelineno-2-40" name="__codelineno-2-40"></a>        <span class="s2">&quot;frame:&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-41" name="__codelineno-2-41"></a>        <span class="n">params</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;frame-count&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-2-42" name="__codelineno-2-42"></a>        <span class="s2">&quot;confidence:&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-43" name="__codelineno-2-43"></a>        <span class="n">params</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;confidence&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-2-44" name="__codelineno-2-44"></a>        <span class="s2">&quot;pts:&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-45" name="__codelineno-2-45"></a>        <span class="nb">int</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">pts</span><span class="p">),</span>
-<a id="__codelineno-2-46" name="__codelineno-2-46"></a>    <span class="p">)</span>
-<a id="__codelineno-2-47" name="__codelineno-2-47"></a>
-<a id="__codelineno-2-48" name="__codelineno-2-48"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">NULL</span><span class="p">)</span>
+<div class="admonition tip">
+<p class="admonition-title">GST_PLUGIN_PATH</p>
+<p>Don't forget using / export GST_PLUGIN_PATH environment variable</p>
+</div>
+<h3 id="pull-style">Pull style</h3>
+<p>The application <strong>pulls</strong> samples from <code>appsink</code>, gets the sample buffer, and reads the ROI metadata using <code>buffer_get_video_region_of_interest_meta_id</code> from that buffer.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">read_appsink_meta.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span>
+<span class="normal"><a href="#__codelineno-4-44">44</a></span>
+<span class="normal"><a href="#__codelineno-4-45">45</a></span>
+<span class="normal"><a href="#__codelineno-4-46">46</a></span>
+<span class="normal"><a href="#__codelineno-4-47">47</a></span>
+<span class="normal"><a href="#__codelineno-4-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">gi</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;Gst&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstApp&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstVideo&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gi.repository</span><span class="w"> </span><span class="kn">import</span> <span class="n">GLib</span><span class="p">,</span> <span class="n">Gst</span><span class="p">,</span> <span class="n">GstApp</span><span class="p">,</span> <span class="n">GstVideo</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="n">Gst</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">parse_launch</span><span class="p">(</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="s2">&quot;videotestsrc num-buffers=5 ! &quot;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>    <span class="s2">&quot;videoconvert ! &quot;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>    <span class="s2">&quot;appsinkmetafilter ! &quot;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>    <span class="s2">&quot;appsink name=sink emit-signals=false sync=false&quot;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="n">appsink</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="s2">&quot;sink&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">)</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>    <span class="n">sample</span> <span class="o">=</span> <span class="n">appsink</span><span class="o">.</span><span class="n">try_pull_sample</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">SECOND</span><span class="p">)</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a>    <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a>        <span class="k">break</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a>    <span class="n">buffer</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">get_buffer</span><span class="p">()</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a>    <span class="n">roi</span> <span class="o">=</span> <span class="n">GstVideo</span><span class="o">.</span><span class="n">buffer_get_video_region_of_interest_meta_id</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">roi</span><span class="p">:</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sample has no ROI metadata&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a>        <span class="k">continue</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a>    <span class="n">label</span> <span class="o">=</span> <span class="n">GLib</span><span class="o">.</span><span class="n">quark_to_string</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">roi_type</span><span class="p">)</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a>    <span class="n">params</span> <span class="o">=</span> <span class="n">roi</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a>    <span class="nb">print</span><span class="p">(</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a>        <span class="s2">&quot;label:&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a>        <span class="n">label</span><span class="p">,</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a>        <span class="s2">&quot;box:&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a>        <span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">h</span><span class="p">),</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a>        <span class="s2">&quot;frame:&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a>        <span class="n">params</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;frame-count&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a>        <span class="s2">&quot;confidence:&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a>        <span class="n">params</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;confidence&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a>        <span class="s2">&quot;pts:&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a>        <span class="nb">int</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">pts</span><span class="p">),</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a>    <span class="p">)</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47"></a>
+<a id="__codelineno-4-48" name="__codelineno-4-48"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">NULL</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
+<h3 id="callback-style">Callback style</h3>
+<p>You can also let <code>appsink</code> emit a <code>new-sample</code> signal and read each sample from
+a callback. This is useful when the application already uses a <code>GLib.MainLoop</code>.
+The metadata is still buffer metadata, so the callback still gets the sample
+from <code>appsink</code> and then reads the <code>Gst.Buffer</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">read_appsink_meta_callback.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span>
+<span class="normal"><a href="#__codelineno-5-36">36</a></span>
+<span class="normal"><a href="#__codelineno-5-37">37</a></span>
+<span class="normal"><a href="#__codelineno-5-38">38</a></span>
+<span class="normal"><a href="#__codelineno-5-39">39</a></span>
+<span class="normal"><a href="#__codelineno-5-40">40</a></span>
+<span class="normal"><a href="#__codelineno-5-41">41</a></span>
+<span class="normal"><a href="#__codelineno-5-42">42</a></span>
+<span class="normal"><a href="#__codelineno-5-43">43</a></span>
+<span class="normal"><a href="#__codelineno-5-44">44</a></span>
+<span class="normal"><a href="#__codelineno-5-45">45</a></span>
+<span class="normal"><a href="#__codelineno-5-46">46</a></span>
+<span class="normal"><a href="#__codelineno-5-47">47</a></span>
+<span class="normal"><a href="#__codelineno-5-48">48</a></span>
+<span class="normal"><a href="#__codelineno-5-49">49</a></span>
+<span class="normal"><a href="#__codelineno-5-50">50</a></span>
+<span class="normal"><a href="#__codelineno-5-51">51</a></span>
+<span class="normal"><a href="#__codelineno-5-52">52</a></span>
+<span class="normal"><a href="#__codelineno-5-53">53</a></span>
+<span class="normal"><a href="#__codelineno-5-54">54</a></span>
+<span class="normal"><a href="#__codelineno-5-55">55</a></span>
+<span class="normal"><a href="#__codelineno-5-56">56</a></span>
+<span class="normal"><a href="#__codelineno-5-57">57</a></span>
+<span class="normal"><a href="#__codelineno-5-58">58</a></span>
+<span class="normal"><a href="#__codelineno-5-59">59</a></span>
+<span class="normal"><a href="#__codelineno-5-60">60</a></span>
+<span class="normal"><a href="#__codelineno-5-61">61</a></span>
+<span class="normal"><a href="#__codelineno-5-62">62</a></span>
+<span class="normal"><a href="#__codelineno-5-63">63</a></span>
+<span class="normal"><a href="#__codelineno-5-64">64</a></span>
+<span class="normal"><a href="#__codelineno-5-65">65</a></span>
+<span class="normal"><a href="#__codelineno-5-66">66</a></span>
+<span class="normal"><a href="#__codelineno-5-67">67</a></span>
+<span class="normal"><a href="#__codelineno-5-68">68</a></span>
+<span class="normal"><a href="#__codelineno-5-69">69</a></span>
+<span class="normal"><a href="#__codelineno-5-70">70</a></span>
+<span class="normal"><a href="#__codelineno-5-71">71</a></span>
+<span class="normal"><a href="#__codelineno-5-72">72</a></span>
+<span class="normal"><a href="#__codelineno-5-73">73</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">gi</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;Gst&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="n">gi</span><span class="o">.</span><span class="n">require_version</span><span class="p">(</span><span class="s2">&quot;GstVideo&quot;</span><span class="p">,</span> <span class="s2">&quot;1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">gi.repository</span><span class="w"> </span><span class="kn">import</span> <span class="n">GLib</span><span class="p">,</span> <span class="n">Gst</span><span class="p">,</span> <span class="n">GstVideo</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="n">Gst</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">print_roi_from_sample</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>    <span class="n">buffer</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">get_buffer</span><span class="p">()</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>    <span class="n">roi</span> <span class="o">=</span> <span class="n">GstVideo</span><span class="o">.</span><span class="n">buffer_get_video_region_of_interest_meta_id</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">roi</span><span class="p">:</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sample has no ROI metadata&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>        <span class="k">return</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="n">label</span> <span class="o">=</span> <span class="n">GLib</span><span class="o">.</span><span class="n">quark_to_string</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">roi_type</span><span class="p">)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>    <span class="n">params</span> <span class="o">=</span> <span class="n">roi</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a>    <span class="nb">print</span><span class="p">(</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a>        <span class="s2">&quot;label:&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a>        <span class="n">label</span><span class="p">,</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a>        <span class="s2">&quot;box:&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a>        <span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">h</span><span class="p">),</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a>        <span class="s2">&quot;frame:&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a>        <span class="n">params</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;frame-count&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a>        <span class="s2">&quot;confidence:&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a>        <span class="n">params</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;confidence&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a>        <span class="s2">&quot;pts:&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a>        <span class="nb">int</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">pts</span><span class="p">),</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a>    <span class="p">)</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_new_sample</span><span class="p">(</span><span class="n">appsink</span><span class="p">):</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a>    <span class="n">sample</span> <span class="o">=</span> <span class="n">appsink</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s2">&quot;pull-sample&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a>    <span class="k">if</span> <span class="n">sample</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a>        <span class="k">return</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">ERROR</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a>
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a>    <span class="n">print_roi_from_sample</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a>    <span class="k">return</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">OK</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a>
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_bus_message</span><span class="p">(</span><span class="n">bus</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">loop</span><span class="p">):</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45"></a>    <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">EOS</span><span class="p">:</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a>    <span class="k">elif</span> <span class="n">message</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">Gst</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a>        <span class="n">error</span><span class="p">,</span> <span class="n">debug</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">parse_error</span><span class="p">()</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error:&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a>        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;debug:&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="p">)</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a>        <span class="n">loop</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">parse_launch</span><span class="p">(</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a>    <span class="s2">&quot;videotestsrc num-buffers=5 ! &quot;</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a>    <span class="s2">&quot;videoconvert ! &quot;</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a>    <span class="s2">&quot;appsinkmetafilter ! &quot;</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59"></a>    <span class="s2">&quot;appsink name=sink emit-signals=true sync=false&quot;</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a><span class="p">)</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61"></a>
+<a id="__codelineno-5-62" name="__codelineno-5-62"></a><span class="n">loop</span> <span class="o">=</span> <span class="n">GLib</span><span class="o">.</span><span class="n">MainLoop</span><span class="p">()</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63"></a>
+<a id="__codelineno-5-64" name="__codelineno-5-64"></a><span class="n">appsink</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="s2">&quot;sink&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65"></a><span class="n">appsink</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;new-sample&quot;</span><span class="p">,</span> <span class="n">on_new_sample</span><span class="p">)</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66"></a>
+<a id="__codelineno-5-67" name="__codelineno-5-67"></a><span class="n">bus</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">get_bus</span><span class="p">()</span>
+<a id="__codelineno-5-68" name="__codelineno-5-68"></a><span class="n">bus</span><span class="o">.</span><span class="n">add_signal_watch</span><span class="p">()</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69"></a><span class="n">bus</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">on_bus_message</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70"></a>
+<a id="__codelineno-5-71" name="__codelineno-5-71"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">PLAYING</span><span class="p">)</span>
+<a id="__codelineno-5-72" name="__codelineno-5-72"></a><span class="n">loop</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73"></a><span class="n">pipeline</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="n">Gst</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">NULL</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>This is a callback example, not a <code>Gst.Event</code> example. A <code>Gst.Event</code> is normally
+used for pipeline control information such as EOS, seek, flush, or custom
+upstream/downstream events. Per-frame ROI data should stay on the <code>Gst.Buffer</code>
+as metadata.</p>
 <h2 id="run">Run</h2>
 <p>Run commands from the <code>code</code> folder:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>docs/Other/Gstreamer/custom_plugin/python/code
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>docs/Other/Gstreamer/custom_plugin/python/code
 </code></pre></div></td></tr></table></div>
 <p>Check that GStreamer sees the plugin:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-inspect-1.0<span class="w"> </span>appsinkmetafilter
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-inspect-1.0<span class="w"> </span>appsinkmetafilter
 </code></pre></div></td></tr></table></div>
 <p>Run the app:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>python3<span class="w"> </span>read_appsink_meta.py
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>python3<span class="w"> </span>read_appsink_meta.py
+</code></pre></div></td></tr></table></div>
+<p>Or run the callback version:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>python3<span class="w"> </span>read_appsink_meta_callback.py
 </code></pre></div></td></tr></table></div>
 <p>Expected output:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>label: person box: (120, 40, 80, 180) frame: 1 confidence: 0.91 pts: 0
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>label: person box: (120, 40, 80, 180) frame: 2 confidence: 0.91 pts: 33333333
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>label: person box: (120, 40, 80, 180) frame: 1 confidence: 0.91 pts: 0
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>label: person box: (120, 40, 80, 180) frame: 2 confidence: 0.91 pts: 33333333
 </code></pre></div></td></tr></table></div>
-<h2 id="bus-message-vs-appsink-metadata">Bus message vs appsink metadata</h2>
-<p>Use a bus message when the application needs global events, warnings, or status
-updates.</p>
-<p>Use <code>appsink</code> metadata when the application pulls frames and needs data attached
-to each frame, such as detection boxes.</p>
-<p>For production custom metadata shared between GStreamer elements, implement a
-real custom <code>Gst.Meta</code> in C, C++, or Rust.</p>
 <h2 id="pass-metadata-between-plugins">Pass metadata between plugins</h2>
 <p>Metadata attached to a <code>Gst.Buffer</code> can be read by the next plugin in the pipe.
 For example:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
-<span class="normal"><a href="#__codelineno-7-2">2</a></span>
-<span class="normal"><a href="#__codelineno-7-3">3</a></span>
-<span class="normal"><a href="#__codelineno-7-4">4</a></span>
-<span class="normal"><a href="#__codelineno-7-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>videotestsrc ! fakedetector ! roiprinter ! appsink
-<a id="__codelineno-7-2" name="__codelineno-7-2"></a>                 |              |          |
-<a id="__codelineno-7-3" name="__codelineno-7-3"></a>                 |              |          +-&gt; application reads ROI metadata
-<a id="__codelineno-7-4" name="__codelineno-7-4"></a>                 |              +-&gt; reads ROI metadata from the buffer
-<a id="__codelineno-7-5" name="__codelineno-7-5"></a>                 +-&gt; attaches ROI metadata to the buffer
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>videotestsrc ! fakedetector ! roiprinter ! appsink
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>                 |              |          |
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>                 |              |          +-&gt; application reads ROI metadata
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>                 |              +-&gt; reads ROI metadata from the buffer
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>                 +-&gt; attaches ROI metadata to the buffer
 </code></pre></div></td></tr></table></div>
 <p><code>fakedetector</code> creates the detection. <code>roiprinter</code> reads the detection from the
 same buffer and passes the buffer downstream unchanged. <code>appsink</code> can still read
 the same metadata after both plugins.</p>
 <h3 id="detector-plugin">Detector plugin</h3>
 <p>The detector attaches one fake object box to the buffer.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-8-10">10</a></span>
-<span class="normal"><a href="#__codelineno-8-11">11</a></span>
-<span class="normal"><a href="#__codelineno-8-12">12</a></span>
-<span class="normal"><a href="#__codelineno-8-13">13</a></span>
-<span class="normal"><a href="#__codelineno-8-14">14</a></span>
-<span class="normal"><a href="#__codelineno-8-15">15</a></span>
-<span class="normal"><a href="#__codelineno-8-16">16</a></span>
-<span class="normal"><a href="#__codelineno-8-17">17</a></span>
-<span class="normal"><a href="#__codelineno-8-18">18</a></span>
-<span class="normal"><a href="#__codelineno-8-19">19</a></span>
-<span class="normal"><a href="#__codelineno-8-20">20</a></span>
-<span class="normal"><a href="#__codelineno-8-21">21</a></span>
-<span class="normal"><a href="#__codelineno-8-22">22</a></span>
-<span class="normal"><a href="#__codelineno-8-23">23</a></span>
-<span class="normal"><a href="#__codelineno-8-24">24</a></span>
-<span class="normal"><a href="#__codelineno-8-25">25</a></span>
-<span class="normal"><a href="#__codelineno-8-26">26</a></span>
-<span class="normal"><a href="#__codelineno-8-27">27</a></span>
-<span class="normal"><a href="#__codelineno-8-28">28</a></span>
-<span class="normal"><a href="#__codelineno-8-29">29</a></span>
-<span class="normal"><a href="#__codelineno-8-30">30</a></span>
-<span class="normal"><a href="#__codelineno-8-31">31</a></span>
-<span class="normal"><a href="#__codelineno-8-32">32</a></span>
-<span class="normal"><a href="#__codelineno-8-33">33</a></span>
-<span class="normal"><a href="#__codelineno-8-34">34</a></span>
-<span class="normal"><a href="#__codelineno-8-35">35</a></span>
-<span class="normal"><a href="#__codelineno-8-36">36</a></span>
-<span class="normal"><a href="#__codelineno-8-37">37</a></span>
-<span class="normal"><a href="#__codelineno-8-38">38</a></span>
-<span class="normal"><a href="#__codelineno-8-39">39</a></span>
-<span class="normal"><a href="#__codelineno-8-40">40</a></span>
-<span class="normal"><a href="#__codelineno-8-41">41</a></span>
-<span class="normal"><a href="#__codelineno-8-42">42</a></span>
-<span class="normal"><a href="#__codelineno-8-43">43</a></span>
-<span class="normal"><a href="#__codelineno-8-44">44</a></span>
-<span class="normal"><a href="#__codelineno-8-45">45</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FakeDetector</span><span class="p">(</span><span class="n">GstBase</span><span class="o">.</span><span class="n">BaseTransform</span><span class="p">):</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a>    <span class="n">__gstmetadata__</span> <span class="o">=</span> <span class="p">(</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a>        <span class="s2">&quot;FakeDetector&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4"></a>        <span class="s2">&quot;Filter/Analyzer/Video&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5"></a>        <span class="s2">&quot;Attach one fake object detection ROI to each buffer&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6"></a>        <span class="s2">&quot;example&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7"></a>    <span class="p">)</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8"></a>
-<a id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="n">__gsttemplates__</span> <span class="o">=</span> <span class="p">(</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10"></a>        <span class="n">Gst</span><span class="o">.</span><span class="n">PadTemplate</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11"></a>            <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadDirection</span><span class="o">.</span><span class="n">SINK</span><span class="p">,</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadPresence</span><span class="o">.</span><span class="n">ALWAYS</span><span class="p">,</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">Caps</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;video/x-raw&quot;</span><span class="p">),</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15"></a>        <span class="p">),</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16"></a>        <span class="n">Gst</span><span class="o">.</span><span class="n">PadTemplate</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17"></a>            <span class="s2">&quot;src&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadDirection</span><span class="o">.</span><span class="n">SRC</span><span class="p">,</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">PadPresence</span><span class="o">.</span><span class="n">ALWAYS</span><span class="p">,</span>
-<a id="__codelineno-8-20" name="__codelineno-8-20"></a>            <span class="n">Gst</span><span class="o">.</span><span class="n">Caps</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;video/x-raw&quot;</span><span class="p">),</span>
-<a id="__codelineno-8-21" name="__codelineno-8-21"></a>        <span class="p">),</span>
-<a id="__codelineno-8-22" name="__codelineno-8-22"></a>    <span class="p">)</span>
-<a id="__codelineno-8-23" name="__codelineno-8-23"></a>
-<a id="__codelineno-8-24" name="__codelineno-8-24"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<a id="__codelineno-8-25" name="__codelineno-8-25"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-<a id="__codelineno-8-26" name="__codelineno-8-26"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">=</span> <span class="mi">0</span>
-<a id="__codelineno-8-27" name="__codelineno-8-27"></a>
-<a id="__codelineno-8-28" name="__codelineno-8-28"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_transform_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer</span><span class="p">):</span>
-<a id="__codelineno-8-29" name="__codelineno-8-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span> <span class="o">+=</span> <span class="mi">1</span>
-<a id="__codelineno-8-30" name="__codelineno-8-30"></a>
-<a id="__codelineno-8-31" name="__codelineno-8-31"></a>        <span class="n">roi</span> <span class="o">=</span> <span class="n">GstVideo</span><span class="o">.</span><span class="n">buffer_add_video_region_of_interest_meta</span><span class="p">(</span>
-<a id="__codelineno-8-32" name="__codelineno-8-32"></a>            <span class="n">buffer</span><span class="p">,</span>
-<a id="__codelineno-8-33" name="__codelineno-8-33"></a>            <span class="s2">&quot;person&quot;</span><span class="p">,</span>
-<a id="__codelineno-8-34" name="__codelineno-8-34"></a>            <span class="mi">80</span><span class="p">,</span>
-<a id="__codelineno-8-35" name="__codelineno-8-35"></a>            <span class="mi">60</span><span class="p">,</span>
-<a id="__codelineno-8-36" name="__codelineno-8-36"></a>            <span class="mi">180</span><span class="p">,</span>
-<a id="__codelineno-8-37" name="__codelineno-8-37"></a>            <span class="mi">120</span><span class="p">,</span>
-<a id="__codelineno-8-38" name="__codelineno-8-38"></a>        <span class="p">)</span>
-<a id="__codelineno-8-39" name="__codelineno-8-39"></a>
-<a id="__codelineno-8-40" name="__codelineno-8-40"></a>        <span class="n">params</span> <span class="o">=</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Structure</span><span class="o">.</span><span class="n">new_empty</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-41" name="__codelineno-8-41"></a>        <span class="n">params</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;frame-count&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_count</span><span class="p">)</span>
-<a id="__codelineno-8-42" name="__codelineno-8-42"></a>        <span class="n">params</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s2">&quot;confidence&quot;</span><span class="p">,</span> <span class="mf">0.91</span><span class="p">)</span>
-<a id="__codelineno-8-43" name="__codelineno-8-43"></a>        <span class="n">roi</span><span class="o">.</span><span class="n">add_param</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-<a id="__codelineno-8-44" name="__codelineno-8-44"></a>
-<a id="__codelineno-8-45" name="__codelineno-8-45"></a>        <span class="k">return</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">OK</span>
+<details>
+<summary>fakedetector plugin</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span>
+<span class="normal"><a href="#__codelineno-12-14">14</a></span>
+<span class="normal"><a href="#__codelineno-12-15">15</a></span>
+<span class="normal"><a href="#__codelineno-12-16">16</a></span>
+<span class="normal"><a href="#__codelineno-12-17">17</a></span>
+<span class="normal"><a href="#__codelineno-12-18">18</a></span>
+<span class="normal"><a href="#__codelineno-12-19">19</a></span>
+<span class="normal"><a href="#__codelineno-12-20">20</a></span>
+<span class="normal"><a href="#__codelineno-12-21">21</a></span>
+<span class="normal"><a href="#__codelineno-12-22">22</a></span>
+<span class="normal"><a href="#__codelineno-12-23">23</a></span>
+<span class="normal"><a href="#__codelineno-12-24">24</a></span>
+<span class="normal"><a href="#__codelineno-12-25">25</a></span>
+<span class="normal"><a href="#__codelineno-12-26">26</a></span>
+<span class="normal"><a href="#__codelineno-12-27">27</a></span>
+<span class="normal"><a href="#__codelineno-12-28">28</a></span>
+<span class="normal"><a href="#__codelineno-12-29">29</a></span>
+<span class="normal"><a href="#__codelineno-12-30">30</a></span>
+<span class="normal"><a href="#__codelineno-12-31">31</a></span>
+<span class="normal"><a href="#__codelineno-12-32">32</a></span>
+<span class="normal"><a href="#__codelineno-12-33">33</a></span>
+<span class="normal"><a href="#__codelineno-12-34">34</a></span>
+<span class="normal"><a href="#__codelineno-12-35">35</a></span>
+<span class="normal"><a href="#__codelineno-12-36">36</a></span>
+<span class="normal"><a href="#__codelineno-12-37">37</a></span>
+<span class="normal"><a href="#__codelineno-12-38">38</a></span>
+<span class="normal"><a href="#__codelineno-12-39">39</a></span>
+<span class="normal"><a href="#__codelineno-12-40">40</a></span>
+<span class="normal"><a href="#__codelineno-12-41">41</a></span>
+<span class="normal"><a href="#__codelineno-12-42">42</a></span>
+<span class="normal"><a href="#__codelineno-12-43">43</a></span>
+<span class="normal"><a href="#__codelineno-12-44">44</a></span>
+<span class="normal"><a href="#__codelineno-12-45">45</a></span>
+<span class="normal"><a href="#__codelineno-12-46">46</a></span>
+<span class="normal"><a href="#__codelineno-12-47">47</a></span>
+<span class="normal"><a href="#__codelineno-12-48">48</a></span>
+<span class="normal"><a href="#__codelineno-12-49">49</a></span>
+<span class="normal"><a href="#__codelineno-12-50">50</a></span>
+<span class="normal"><a href="#__codelineno-12-51">51</a></span>
+<span class="normal"><a href="#__codelineno-12-52">52</a></span>
+<span class="normal"><a href="#__codelineno-12-53">53</a></span>
+<span class="normal"><a href="#__codelineno-12-54">54</a></span>
+<span class="normal"><a href="#__codelineno-12-55">55</a></span>
+<span class="normal"><a href="#__codelineno-12-56">56</a></span>
+<span class="normal"><a href="#__codelineno-12-57">57</a></span>
+<span class="normal"><a href="#__codelineno-12-58">58</a></span>
+<span class="normal"><a href="#__codelineno-12-59">59</a></span>
+<span class="normal"><a href="#__codelineno-12-60">60</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>#!/usr/bin/env python3
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>import gi
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>gi.require_version(&quot;Gst&quot;, &quot;1.0&quot;)
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>gi.require_version(&quot;GstBase&quot;, &quot;1.0&quot;)
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>gi.require_version(&quot;GstVideo&quot;, &quot;1.0&quot;)
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>from gi.repository import Gst, GstBase, GstVideo, GObject
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a>Gst.init(None)
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a>
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a>class FakeDetector(GstBase.BaseTransform):
+<a id="__codelineno-12-13" name="__codelineno-12-13"></a>    __gstmetadata__ = (
+<a id="__codelineno-12-14" name="__codelineno-12-14"></a>        &quot;FakeDetector&quot;,
+<a id="__codelineno-12-15" name="__codelineno-12-15"></a>        &quot;Filter/Analyzer/Video&quot;,
+<a id="__codelineno-12-16" name="__codelineno-12-16"></a>        &quot;Attach one fake object detection ROI to each buffer&quot;,
+<a id="__codelineno-12-17" name="__codelineno-12-17"></a>        &quot;example&quot;,
+<a id="__codelineno-12-18" name="__codelineno-12-18"></a>    )
+<a id="__codelineno-12-19" name="__codelineno-12-19"></a>
+<a id="__codelineno-12-20" name="__codelineno-12-20"></a>    __gsttemplates__ = (
+<a id="__codelineno-12-21" name="__codelineno-12-21"></a>        Gst.PadTemplate.new(
+<a id="__codelineno-12-22" name="__codelineno-12-22"></a>            &quot;sink&quot;,
+<a id="__codelineno-12-23" name="__codelineno-12-23"></a>            Gst.PadDirection.SINK,
+<a id="__codelineno-12-24" name="__codelineno-12-24"></a>            Gst.PadPresence.ALWAYS,
+<a id="__codelineno-12-25" name="__codelineno-12-25"></a>            Gst.Caps.from_string(&quot;video/x-raw&quot;),
+<a id="__codelineno-12-26" name="__codelineno-12-26"></a>        ),
+<a id="__codelineno-12-27" name="__codelineno-12-27"></a>        Gst.PadTemplate.new(
+<a id="__codelineno-12-28" name="__codelineno-12-28"></a>            &quot;src&quot;,
+<a id="__codelineno-12-29" name="__codelineno-12-29"></a>            Gst.PadDirection.SRC,
+<a id="__codelineno-12-30" name="__codelineno-12-30"></a>            Gst.PadPresence.ALWAYS,
+<a id="__codelineno-12-31" name="__codelineno-12-31"></a>            Gst.Caps.from_string(&quot;video/x-raw&quot;),
+<a id="__codelineno-12-32" name="__codelineno-12-32"></a>        ),
+<a id="__codelineno-12-33" name="__codelineno-12-33"></a>    )
+<a id="__codelineno-12-34" name="__codelineno-12-34"></a>
+<a id="__codelineno-12-35" name="__codelineno-12-35"></a>    def __init__(self):
+<a id="__codelineno-12-36" name="__codelineno-12-36"></a>        super().__init__()
+<a id="__codelineno-12-37" name="__codelineno-12-37"></a>        self.frame_count = 0
+<a id="__codelineno-12-38" name="__codelineno-12-38"></a>
+<a id="__codelineno-12-39" name="__codelineno-12-39"></a>    def do_transform_ip(self, buffer):
+<a id="__codelineno-12-40" name="__codelineno-12-40"></a>        self.frame_count += 1
+<a id="__codelineno-12-41" name="__codelineno-12-41"></a>
+<a id="__codelineno-12-42" name="__codelineno-12-42"></a>        roi = GstVideo.buffer_add_video_region_of_interest_meta(
+<a id="__codelineno-12-43" name="__codelineno-12-43"></a>            buffer,
+<a id="__codelineno-12-44" name="__codelineno-12-44"></a>            &quot;person&quot;,
+<a id="__codelineno-12-45" name="__codelineno-12-45"></a>            80,
+<a id="__codelineno-12-46" name="__codelineno-12-46"></a>            60,
+<a id="__codelineno-12-47" name="__codelineno-12-47"></a>            180,
+<a id="__codelineno-12-48" name="__codelineno-12-48"></a>            120,
+<a id="__codelineno-12-49" name="__codelineno-12-49"></a>        )
+<a id="__codelineno-12-50" name="__codelineno-12-50"></a>
+<a id="__codelineno-12-51" name="__codelineno-12-51"></a>        params = Gst.Structure.new_empty(&quot;detection&quot;)
+<a id="__codelineno-12-52" name="__codelineno-12-52"></a>        params.set_value(&quot;frame-count&quot;, self.frame_count)
+<a id="__codelineno-12-53" name="__codelineno-12-53"></a>        params.set_value(&quot;confidence&quot;, 0.91)
+<a id="__codelineno-12-54" name="__codelineno-12-54"></a>        roi.add_param(params)
+<a id="__codelineno-12-55" name="__codelineno-12-55"></a>
+<a id="__codelineno-12-56" name="__codelineno-12-56"></a>        return Gst.FlowReturn.OK
+<a id="__codelineno-12-57" name="__codelineno-12-57"></a>
+<a id="__codelineno-12-58" name="__codelineno-12-58"></a>
+<a id="__codelineno-12-59" name="__codelineno-12-59"></a>GObject.type_register(FakeDetector)
+<a id="__codelineno-12-60" name="__codelineno-12-60"></a>__gstelementfactory__ = (&quot;fakedetector&quot;, Gst.Rank.NONE, FakeDetector)
 </code></pre></div></td></tr></table></div>
+</details>
+
 <h3 id="next-plugin-reads-the-metadata">Next plugin reads the metadata</h3>
 <p>The next plugin reads the bounding box from the same buffer. This example only
 prints it. A real drawing plugin would use the box values to draw on the frame.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-9-10">10</a></span>
-<span class="normal"><a href="#__codelineno-9-11">11</a></span>
-<span class="normal"><a href="#__codelineno-9-12">12</a></span>
-<span class="normal"><a href="#__codelineno-9-13">13</a></span>
-<span class="normal"><a href="#__codelineno-9-14">14</a></span>
-<span class="normal"><a href="#__codelineno-9-15">15</a></span>
-<span class="normal"><a href="#__codelineno-9-16">16</a></span>
-<span class="normal"><a href="#__codelineno-9-17">17</a></span>
-<span class="normal"><a href="#__codelineno-9-18">18</a></span>
-<span class="normal"><a href="#__codelineno-9-19">19</a></span>
-<span class="normal"><a href="#__codelineno-9-20">20</a></span>
-<span class="normal"><a href="#__codelineno-9-21">21</a></span>
-<span class="normal"><a href="#__codelineno-9-22">22</a></span>
-<span class="normal"><a href="#__codelineno-9-23">23</a></span>
-<span class="normal"><a href="#__codelineno-9-24">24</a></span>
-<span class="normal"><a href="#__codelineno-9-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">RoiPrinter</span><span class="p">(</span><span class="n">GstBase</span><span class="o">.</span><span class="n">BaseTransform</span><span class="p">):</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="n">__gstmetadata__</span> <span class="o">=</span> <span class="p">(</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a>        <span class="s2">&quot;RoiPrinter&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a>        <span class="s2">&quot;Filter/Analyzer/Video&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a>        <span class="s2">&quot;Read ROI metadata from buffers and print it&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6"></a>        <span class="s2">&quot;example&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a>    <span class="p">)</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a>
-<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="n">__gsttemplates__</span> <span class="o">=</span> <span class="n">FakeDetector</span><span class="o">.</span><span class="n">__gsttemplates__</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10"></a>
-<a id="__codelineno-9-11" name="__codelineno-9-11"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_transform_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer</span><span class="p">):</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12"></a>        <span class="n">roi</span> <span class="o">=</span> <span class="n">GstVideo</span><span class="o">.</span><span class="n">buffer_get_video_region_of_interest_meta_id</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<a id="__codelineno-9-13" name="__codelineno-9-13"></a>        <span class="k">if</span> <span class="n">roi</span><span class="p">:</span>
-<a id="__codelineno-9-14" name="__codelineno-9-14"></a>            <span class="n">label</span> <span class="o">=</span> <span class="n">GLib</span><span class="o">.</span><span class="n">quark_to_string</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">roi_type</span><span class="p">)</span>
-<a id="__codelineno-9-15" name="__codelineno-9-15"></a>            <span class="n">params</span> <span class="o">=</span> <span class="n">roi</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;detection&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-16" name="__codelineno-9-16"></a>            <span class="n">confidence</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s2">&quot;confidence&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span> <span class="k">else</span> <span class="kc">None</span>
-<a id="__codelineno-9-17" name="__codelineno-9-17"></a>            <span class="nb">print</span><span class="p">(</span>
-<a id="__codelineno-9-18" name="__codelineno-9-18"></a>                <span class="s2">&quot;roi:&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-19" name="__codelineno-9-19"></a>                <span class="n">label</span><span class="p">,</span>
-<a id="__codelineno-9-20" name="__codelineno-9-20"></a>                <span class="s2">&quot;box:&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-21" name="__codelineno-9-21"></a>                <span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">roi</span><span class="o">.</span><span class="n">h</span><span class="p">),</span>
-<a id="__codelineno-9-22" name="__codelineno-9-22"></a>                <span class="s2">&quot;confidence:&quot;</span><span class="p">,</span>
-<a id="__codelineno-9-23" name="__codelineno-9-23"></a>                <span class="n">confidence</span><span class="p">,</span>
-<a id="__codelineno-9-24" name="__codelineno-9-24"></a>            <span class="p">)</span>
-<a id="__codelineno-9-25" name="__codelineno-9-25"></a>        <span class="k">return</span> <span class="n">Gst</span><span class="o">.</span><span class="n">FlowReturn</span><span class="o">.</span><span class="n">OK</span>
+<details>
+<summary>roiprinter plugin</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-13-10">10</a></span>
+<span class="normal"><a href="#__codelineno-13-11">11</a></span>
+<span class="normal"><a href="#__codelineno-13-12">12</a></span>
+<span class="normal"><a href="#__codelineno-13-13">13</a></span>
+<span class="normal"><a href="#__codelineno-13-14">14</a></span>
+<span class="normal"><a href="#__codelineno-13-15">15</a></span>
+<span class="normal"><a href="#__codelineno-13-16">16</a></span>
+<span class="normal"><a href="#__codelineno-13-17">17</a></span>
+<span class="normal"><a href="#__codelineno-13-18">18</a></span>
+<span class="normal"><a href="#__codelineno-13-19">19</a></span>
+<span class="normal"><a href="#__codelineno-13-20">20</a></span>
+<span class="normal"><a href="#__codelineno-13-21">21</a></span>
+<span class="normal"><a href="#__codelineno-13-22">22</a></span>
+<span class="normal"><a href="#__codelineno-13-23">23</a></span>
+<span class="normal"><a href="#__codelineno-13-24">24</a></span>
+<span class="normal"><a href="#__codelineno-13-25">25</a></span>
+<span class="normal"><a href="#__codelineno-13-26">26</a></span>
+<span class="normal"><a href="#__codelineno-13-27">27</a></span>
+<span class="normal"><a href="#__codelineno-13-28">28</a></span>
+<span class="normal"><a href="#__codelineno-13-29">29</a></span>
+<span class="normal"><a href="#__codelineno-13-30">30</a></span>
+<span class="normal"><a href="#__codelineno-13-31">31</a></span>
+<span class="normal"><a href="#__codelineno-13-32">32</a></span>
+<span class="normal"><a href="#__codelineno-13-33">33</a></span>
+<span class="normal"><a href="#__codelineno-13-34">34</a></span>
+<span class="normal"><a href="#__codelineno-13-35">35</a></span>
+<span class="normal"><a href="#__codelineno-13-36">36</a></span>
+<span class="normal"><a href="#__codelineno-13-37">37</a></span>
+<span class="normal"><a href="#__codelineno-13-38">38</a></span>
+<span class="normal"><a href="#__codelineno-13-39">39</a></span>
+<span class="normal"><a href="#__codelineno-13-40">40</a></span>
+<span class="normal"><a href="#__codelineno-13-41">41</a></span>
+<span class="normal"><a href="#__codelineno-13-42">42</a></span>
+<span class="normal"><a href="#__codelineno-13-43">43</a></span>
+<span class="normal"><a href="#__codelineno-13-44">44</a></span>
+<span class="normal"><a href="#__codelineno-13-45">45</a></span>
+<span class="normal"><a href="#__codelineno-13-46">46</a></span>
+<span class="normal"><a href="#__codelineno-13-47">47</a></span>
+<span class="normal"><a href="#__codelineno-13-48">48</a></span>
+<span class="normal"><a href="#__codelineno-13-49">49</a></span>
+<span class="normal"><a href="#__codelineno-13-50">50</a></span>
+<span class="normal"><a href="#__codelineno-13-51">51</a></span>
+<span class="normal"><a href="#__codelineno-13-52">52</a></span>
+<span class="normal"><a href="#__codelineno-13-53">53</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>#!/usr/bin/env python3
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>import gi
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>gi.require_version(&quot;Gst&quot;, &quot;1.0&quot;)
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>gi.require_version(&quot;GstBase&quot;, &quot;1.0&quot;)
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a>gi.require_version(&quot;GstVideo&quot;, &quot;1.0&quot;)
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a>from gi.repository import GLib, Gst, GstBase, GstVideo, GObject
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a>Gst.init(None)
+<a id="__codelineno-13-10" name="__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11"></a>
+<a id="__codelineno-13-12" name="__codelineno-13-12"></a>class RoiPrinter(GstBase.BaseTransform):
+<a id="__codelineno-13-13" name="__codelineno-13-13"></a>    __gstmetadata__ = (
+<a id="__codelineno-13-14" name="__codelineno-13-14"></a>        &quot;RoiPrinter&quot;,
+<a id="__codelineno-13-15" name="__codelineno-13-15"></a>        &quot;Filter/Analyzer/Video&quot;,
+<a id="__codelineno-13-16" name="__codelineno-13-16"></a>        &quot;Read ROI metadata from buffers and print it&quot;,
+<a id="__codelineno-13-17" name="__codelineno-13-17"></a>        &quot;example&quot;,
+<a id="__codelineno-13-18" name="__codelineno-13-18"></a>    )
+<a id="__codelineno-13-19" name="__codelineno-13-19"></a>
+<a id="__codelineno-13-20" name="__codelineno-13-20"></a>    __gsttemplates__ = (
+<a id="__codelineno-13-21" name="__codelineno-13-21"></a>        Gst.PadTemplate.new(
+<a id="__codelineno-13-22" name="__codelineno-13-22"></a>            &quot;sink&quot;,
+<a id="__codelineno-13-23" name="__codelineno-13-23"></a>            Gst.PadDirection.SINK,
+<a id="__codelineno-13-24" name="__codelineno-13-24"></a>            Gst.PadPresence.ALWAYS,
+<a id="__codelineno-13-25" name="__codelineno-13-25"></a>            Gst.Caps.from_string(&quot;video/x-raw&quot;),
+<a id="__codelineno-13-26" name="__codelineno-13-26"></a>        ),
+<a id="__codelineno-13-27" name="__codelineno-13-27"></a>        Gst.PadTemplate.new(
+<a id="__codelineno-13-28" name="__codelineno-13-28"></a>            &quot;src&quot;,
+<a id="__codelineno-13-29" name="__codelineno-13-29"></a>            Gst.PadDirection.SRC,
+<a id="__codelineno-13-30" name="__codelineno-13-30"></a>            Gst.PadPresence.ALWAYS,
+<a id="__codelineno-13-31" name="__codelineno-13-31"></a>            Gst.Caps.from_string(&quot;video/x-raw&quot;),
+<a id="__codelineno-13-32" name="__codelineno-13-32"></a>        ),
+<a id="__codelineno-13-33" name="__codelineno-13-33"></a>    )
+<a id="__codelineno-13-34" name="__codelineno-13-34"></a>
+<a id="__codelineno-13-35" name="__codelineno-13-35"></a>    def do_transform_ip(self, buffer):
+<a id="__codelineno-13-36" name="__codelineno-13-36"></a>        roi = GstVideo.buffer_get_video_region_of_interest_meta_id(buffer, 0)
+<a id="__codelineno-13-37" name="__codelineno-13-37"></a>        if roi:
+<a id="__codelineno-13-38" name="__codelineno-13-38"></a>            label = GLib.quark_to_string(roi.roi_type)
+<a id="__codelineno-13-39" name="__codelineno-13-39"></a>            params = roi.get_param(&quot;detection&quot;)
+<a id="__codelineno-13-40" name="__codelineno-13-40"></a>            confidence = params.get_value(&quot;confidence&quot;) if params else None
+<a id="__codelineno-13-41" name="__codelineno-13-41"></a>            print(
+<a id="__codelineno-13-42" name="__codelineno-13-42"></a>                &quot;roi:&quot;,
+<a id="__codelineno-13-43" name="__codelineno-13-43"></a>                label,
+<a id="__codelineno-13-44" name="__codelineno-13-44"></a>                &quot;box:&quot;,
+<a id="__codelineno-13-45" name="__codelineno-13-45"></a>                (roi.x, roi.y, roi.w, roi.h),
+<a id="__codelineno-13-46" name="__codelineno-13-46"></a>                &quot;confidence:&quot;,
+<a id="__codelineno-13-47" name="__codelineno-13-47"></a>                confidence,
+<a id="__codelineno-13-48" name="__codelineno-13-48"></a>            )
+<a id="__codelineno-13-49" name="__codelineno-13-49"></a>        return Gst.FlowReturn.OK
+<a id="__codelineno-13-50" name="__codelineno-13-50"></a>
+<a id="__codelineno-13-51" name="__codelineno-13-51"></a>
+<a id="__codelineno-13-52" name="__codelineno-13-52"></a>GObject.type_register(RoiPrinter)
+<a id="__codelineno-13-53" name="__codelineno-13-53"></a>__gstelementfactory__ = (&quot;roiprinter&quot;, Gst.Rank.NONE, RoiPrinter)
 </code></pre></div></td></tr></table></div>
-<p>Full code:</p>
-<ul>
-<li><code>../code/python/fake_detector_plugin.py</code></li>
-<li><code>../code/python/roi_printer_plugin.py</code></li>
-<li><code>../code/read_roi_chain.py</code></li>
-</ul>
-<p>Run:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
-<span class="normal"><a href="#__codelineno-10-2">2</a></span>
-<span class="normal"><a href="#__codelineno-10-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>docs/Other/Gstreamer/custom_plugin/python/code
-<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-inspect-1.0<span class="w"> </span>fakedetector<span class="w"> </span>roiprinter
-<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>python3<span class="w"> </span>read_roi_chain.py
+</details>
+
+<h3 id="pipe">pipe</h3>
+<details>
+<summary>pipe</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span>
+<span class="normal"><a href="#__codelineno-14-16">16</a></span>
+<span class="normal"><a href="#__codelineno-14-17">17</a></span>
+<span class="normal"><a href="#__codelineno-14-18">18</a></span>
+<span class="normal"><a href="#__codelineno-14-19">19</a></span>
+<span class="normal"><a href="#__codelineno-14-20">20</a></span>
+<span class="normal"><a href="#__codelineno-14-21">21</a></span>
+<span class="normal"><a href="#__codelineno-14-22">22</a></span>
+<span class="normal"><a href="#__codelineno-14-23">23</a></span>
+<span class="normal"><a href="#__codelineno-14-24">24</a></span>
+<span class="normal"><a href="#__codelineno-14-25">25</a></span>
+<span class="normal"><a href="#__codelineno-14-26">26</a></span>
+<span class="normal"><a href="#__codelineno-14-27">27</a></span>
+<span class="normal"><a href="#__codelineno-14-28">28</a></span>
+<span class="normal"><a href="#__codelineno-14-29">29</a></span>
+<span class="normal"><a href="#__codelineno-14-30">30</a></span>
+<span class="normal"><a href="#__codelineno-14-31">31</a></span>
+<span class="normal"><a href="#__codelineno-14-32">32</a></span>
+<span class="normal"><a href="#__codelineno-14-33">33</a></span>
+<span class="normal"><a href="#__codelineno-14-34">34</a></span>
+<span class="normal"><a href="#__codelineno-14-35">35</a></span>
+<span class="normal"><a href="#__codelineno-14-36">36</a></span>
+<span class="normal"><a href="#__codelineno-14-37">37</a></span>
+<span class="normal"><a href="#__codelineno-14-38">38</a></span>
+<span class="normal"><a href="#__codelineno-14-39">39</a></span>
+<span class="normal"><a href="#__codelineno-14-40">40</a></span>
+<span class="normal"><a href="#__codelineno-14-41">41</a></span>
+<span class="normal"><a href="#__codelineno-14-42">42</a></span>
+<span class="normal"><a href="#__codelineno-14-43">43</a></span>
+<span class="normal"><a href="#__codelineno-14-44">44</a></span>
+<span class="normal"><a href="#__codelineno-14-45">45</a></span>
+<span class="normal"><a href="#__codelineno-14-46">46</a></span>
+<span class="normal"><a href="#__codelineno-14-47">47</a></span>
+<span class="normal"><a href="#__codelineno-14-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>#!/usr/bin/env python3
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>import gi
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>gi.require_version(&quot;Gst&quot;, &quot;1.0&quot;)
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a>gi.require_version(&quot;GstApp&quot;, &quot;1.0&quot;)
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a>gi.require_version(&quot;GstVideo&quot;, &quot;1.0&quot;)
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a>from gi.repository import GLib, Gst, GstApp, GstVideo
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a>Gst.init(None)
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a>pipeline = Gst.parse_launch(
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a>    &quot;videotestsrc num-buffers=5 ! &quot;
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a>    &quot;videoconvert ! &quot;
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a>    &quot;fakedetector ! &quot;
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a>    &quot;roiprinter ! &quot;
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a>    &quot;appsink name=sink emit-signals=false sync=false&quot;
+<a id="__codelineno-14-17" name="__codelineno-14-17"></a>)
+<a id="__codelineno-14-18" name="__codelineno-14-18"></a>
+<a id="__codelineno-14-19" name="__codelineno-14-19"></a>appsink = pipeline.get_by_name(&quot;sink&quot;)
+<a id="__codelineno-14-20" name="__codelineno-14-20"></a>pipeline.set_state(Gst.State.PLAYING)
+<a id="__codelineno-14-21" name="__codelineno-14-21"></a>
+<a id="__codelineno-14-22" name="__codelineno-14-22"></a>while True:
+<a id="__codelineno-14-23" name="__codelineno-14-23"></a>    sample = appsink.try_pull_sample(Gst.SECOND)
+<a id="__codelineno-14-24" name="__codelineno-14-24"></a>    if sample is None:
+<a id="__codelineno-14-25" name="__codelineno-14-25"></a>        break
+<a id="__codelineno-14-26" name="__codelineno-14-26"></a>
+<a id="__codelineno-14-27" name="__codelineno-14-27"></a>    buffer = sample.get_buffer()
+<a id="__codelineno-14-28" name="__codelineno-14-28"></a>    roi = GstVideo.buffer_get_video_region_of_interest_meta_id(buffer, 0)
+<a id="__codelineno-14-29" name="__codelineno-14-29"></a>    if not roi:
+<a id="__codelineno-14-30" name="__codelineno-14-30"></a>        print(&quot;appsink: no ROI metadata&quot;)
+<a id="__codelineno-14-31" name="__codelineno-14-31"></a>        continue
+<a id="__codelineno-14-32" name="__codelineno-14-32"></a>
+<a id="__codelineno-14-33" name="__codelineno-14-33"></a>    label = GLib.quark_to_string(roi.roi_type)
+<a id="__codelineno-14-34" name="__codelineno-14-34"></a>    params = roi.get_param(&quot;detection&quot;)
+<a id="__codelineno-14-35" name="__codelineno-14-35"></a>    confidence = params.get_value(&quot;confidence&quot;) if params else None
+<a id="__codelineno-14-36" name="__codelineno-14-36"></a>
+<a id="__codelineno-14-37" name="__codelineno-14-37"></a>    print(
+<a id="__codelineno-14-38" name="__codelineno-14-38"></a>        &quot;appsink:&quot;,
+<a id="__codelineno-14-39" name="__codelineno-14-39"></a>        label,
+<a id="__codelineno-14-40" name="__codelineno-14-40"></a>        &quot;box:&quot;,
+<a id="__codelineno-14-41" name="__codelineno-14-41"></a>        (roi.x, roi.y, roi.w, roi.h),
+<a id="__codelineno-14-42" name="__codelineno-14-42"></a>        &quot;confidence:&quot;,
+<a id="__codelineno-14-43" name="__codelineno-14-43"></a>        confidence,
+<a id="__codelineno-14-44" name="__codelineno-14-44"></a>        &quot;pts:&quot;,
+<a id="__codelineno-14-45" name="__codelineno-14-45"></a>        int(buffer.pts),
+<a id="__codelineno-14-46" name="__codelineno-14-46"></a>    )
+<a id="__codelineno-14-47" name="__codelineno-14-47"></a>
+<a id="__codelineno-14-48" name="__codelineno-14-48"></a>pipeline.set_state(Gst.State.NULL)
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h3 id="run_1">Run:</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-inspect-1.0<span class="w"> </span>fakedetector<span class="w"> </span>roiprinter
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>python3<span class="w"> </span>read_roi_chain.py
 </code></pre></div></td></tr></table></div>
 <p>Expected output:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
-<span class="normal"><a href="#__codelineno-11-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>roi: person box: (80, 60, 180, 120) confidence: 0.91
-<a id="__codelineno-11-2" name="__codelineno-11-2"></a>appsink: person box: (80, 60, 180, 120) confidence: 0.91 pts: 0
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>roi: person box: (80, 60, 180, 120) confidence: 0.91
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>appsink: person box: (80, 60, 180, 120) confidence: 0.91 pts: 0
 </code></pre></div></td></tr></table></div>
-<h3 id="can-third-and-fourth-plugins-read-it">Can third and fourth plugins read it?</h3>
-<p>Yes, if the metadata stays attached to the same buffer. Simple pass-through
-elements, <code>queue</code>, and most in-place filters keep the metadata.</p>
-<p>Metadata may be lost when an element creates a new buffer and does not copy the
-metadata. Examples can include encoders, decoders, converters, scalers, muxers,
-or custom elements that allocate new output buffers.</p>
-<p>Good rule:</p>
-<ul>
-<li>Put metadata-producing and metadata-consuming elements close together.</li>
-<li>If an element creates a new output buffer, make sure it copies the metadata.</li>
-<li>In production, define a proper metadata copy/transform function in C, C++, or
-  Rust so metadata survives buffer copies.</li>
-</ul>
 
 
 

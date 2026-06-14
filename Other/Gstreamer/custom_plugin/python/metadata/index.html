@@ -782,13 +782,13 @@
 <td>⚠ Requires binding</td>
 </tr>
 <tr>
-<td>GstCustomMeta</td>
+<td><a href="#gstcustommeta">GstCustomMeta</a></td>
 <td>✅ Very Good</td>
 <td>❌</td>
 <td>⚠ Limited GI support</td>
 </tr>
 <tr>
-<td>Bus Message (GstStructure)</td>
+<td><a href="#gststructure">Bus Message (GstStructure)</a></td>
 <td>✅</td>
 <td>❌</td>
 <td>✅ Easy</td>
@@ -921,6 +921,9 @@
 </code></pre></div></td></tr></table></div>
 </details>
 
+<p>The <code>simplemeta</code> element posts a <code>Gst.MessageType.APPLICATION</code> message on the pipeline bus for each buffer.
+The message carries a <code>GstStructure</code> named <code>tracker</code> with the metadata fields <code>x</code> and <code>y</code>.
+The application reads messages from the bus, filters application messages, extracts the structure, and prints those values.</p>
 <details>
 <summary>usage</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
@@ -1003,6 +1006,20 @@
 
 <hr />
 <h2 id="gstcustommeta">GstCustomMeta</h2>
+<p><code>GstMeta</code> is the base mechanism GStreamer uses to attach metadata directly to a
+<code>Gst.Buffer</code>. A custom <code>GstMeta</code> implementation defines its own metadata type,
+allocation logic, transform/copy behavior, and usually needs C or Rust code plus
+language bindings before Python can use it comfortably.</p>
+<p><code>GstCustomMeta</code> is a built-in <code>GstMeta</code> implementation whose payload is a named
+<code>Gst.Structure</code>. Instead of defining a new native metadata type, the plugin
+registers a custom metadata name and stores fields in that structure. This makes
+it useful for small, structured values that need to travel with the buffer inside
+the same process, while avoiding most of the boilerplate required by a full
+custom <code>GstMeta</code>.</p>
+<p>The tradeoff is that <code>GstCustomMeta</code> is less flexible than a native custom
+<code>GstMeta</code>: the data model is limited to <code>Gst.Structure</code> fields, transform
+behavior is generic, and Python GI access can be limited depending on the
+GStreamer version and bindings.</p>
 <details>
 <summary>plugin</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">  1</a></span>
