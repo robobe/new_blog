@@ -36,6 +36,16 @@ flowchart LR
             <p>custom plugin</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="metadata">
+            <p>Metadata</p>
+        </a>
+    </div>
+     <div class="grid-item">
+        <a href="pad_prob">
+            <p>PAD Prob</p>
+        </a>
+    </div>
 </div>
 
 ## install
@@ -65,6 +75,8 @@ gir1.2-gstreamer-1.0
 Use the pipeline image as a map: data usually moves from left to right, from a
 source, through elements, and into a sink. Control messages and questions can
 also move between elements.
+
+![alt text](images/gst_framework.png)
 
 ### Pipeline
 
