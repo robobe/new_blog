@@ -46,6 +46,11 @@ flowchart LR
             <p>PAD Prob</p>
         </a>
     </div>
+     <div class="grid-item">
+        <a href="demo_application">
+            <p>Demo application</p>
+        </a>
+    </div>
 </div>
 
 ## install
