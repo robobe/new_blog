@@ -1,5 +1,7 @@
+import time
 import queue
 import threading
+from collections import deque
 from concurrent.futures import Future
 from dataclasses import dataclass
 from typing import Any
@@ -24,7 +26,8 @@ DEFAULT_FPS = 30
 DEFAULT_BITRATE_KBPS = 300
 DEFAULT_KEY_INT_MAX = 30
 SUPPORTED_KEY_INT_MAX = (30, 60, 90)
-DEFAULT_VBV_BUF_CAPACITY = 100
+DEFAULT_VBV_BUF_CAPACITY = 1000
+BANDWIDTH_WINDOW_SECONDS = 1.0
 
 CMD_INIT = "init"
 CMD_SHUTDOWN = "shutdown"
@@ -50,7 +53,12 @@ class StreamController:
         self.crop = None
         self.capsfilter = None
         self.encoder = None
+        self.bandwidth_meter = None
         self.started = False
+
+        self.bandwidth_lock = threading.Lock()
+        self.bandwidth_samples = deque()
+        self.bandwidth_total_bytes = 0
 
         self.width = DEFAULT_WIDTH
         self.height = DEFAULT_HEIGHT
@@ -132,15 +140,27 @@ class StreamController:
             "bframes=0 byte-stream=true ! "
             "h264parse config-interval=1 ! "
             "rtph264pay pt=96 mtu=1400 config-interval=1 ! "
+            "identity name=bandwidth_meter silent=true ! "
             "udpsink host=127.0.0.1 port=5600 sync=false async=false"
         )
 
         self.crop = self.pipeline.get_by_name("center_crop")
         self.capsfilter = self.pipeline.get_by_name("stream_caps")
         self.encoder = self.pipeline.get_by_name("encoder")
+        self.bandwidth_meter = self.pipeline.get_by_name("bandwidth_meter")
 
-        if self.crop is None or self.capsfilter is None or self.encoder is None:
+        if (
+            self.crop is None
+            or self.capsfilter is None
+            or self.encoder is None
+            or self.bandwidth_meter is None
+        ):
             raise RuntimeError("Could not find required GStreamer elements")
+
+        srcpad = self.bandwidth_meter.get_static_pad("src")
+        if srcpad is None:
+            raise RuntimeError("Could not find bandwidth meter src pad")
+        srcpad.add_probe(Gst.PadProbeType.BUFFER, self._on_bandwidth_buffer)
 
         self._apply_stream_settings(
             self.width,
@@ -169,6 +189,11 @@ class StreamController:
             self.crop = None
             self.capsfilter = None
             self.encoder = None
+            self.bandwidth_meter = None
+
+        with self.bandwidth_lock:
+            self.bandwidth_samples.clear()
+            self.bandwidth_total_bytes = 0
 
         self.started = False
         return {"ok": True, **self._status_fields()}
@@ -271,6 +296,8 @@ class StreamController:
             "has_crop": self.crop is not None,
             "has_capsfilter": self.capsfilter is not None,
             "has_encoder": self.encoder is not None,
+            "has_bandwidth_meter": self.bandwidth_meter is not None,
+            **self._bandwidth_fields(),
         }
 
     def _center_crop_values(self, width: int, height: int):
@@ -279,6 +306,47 @@ class StreamController:
         top = (CAMERA_HEIGHT - height) // 2
         bottom = CAMERA_HEIGHT - height - top
         return {"left": left, "right": right, "top": top, "bottom": bottom}
+
+    def _on_bandwidth_buffer(self, pad, info):
+        buffer = info.get_buffer()
+        if buffer is None:
+            return Gst.PadProbeReturn.OK
+
+        now = time.monotonic()
+        size = buffer.get_size()
+
+        with self.bandwidth_lock:
+            self.bandwidth_total_bytes += size
+            self.bandwidth_samples.append((now, size))
+            self._drop_old_bandwidth_samples(now)
+
+        return Gst.PadProbeReturn.OK
+
+    def _bandwidth_fields(self):
+        now = time.monotonic()
+
+        with self.bandwidth_lock:
+            self._drop_old_bandwidth_samples(now)
+            window_bytes = sum(size for _, size in self.bandwidth_samples)
+            if self.bandwidth_samples:
+                elapsed = max(now - self.bandwidth_samples[0][0], 0.001)
+            else:
+                elapsed = BANDWIDTH_WINDOW_SECONDS
+            total_bytes = self.bandwidth_total_bytes
+
+        bandwidth_bps = int((window_bytes * 8) / elapsed)
+
+        return {
+            "measured_bandwidth_bps": bandwidth_bps,
+            "measured_bandwidth_kbps": round(bandwidth_bps / 1000, 1),
+            "measured_window_seconds": BANDWIDTH_WINDOW_SECONDS,
+            "measured_total_bytes": total_bytes,
+        }
+
+    def _drop_old_bandwidth_samples(self, now: float):
+        cutoff = now - BANDWIDTH_WINDOW_SECONDS
+        while self.bandwidth_samples and self.bandwidth_samples[0][0] < cutoff:
+            self.bandwidth_samples.popleft()
 
     def _on_bus_message(self, bus, message):
         if message.type == Gst.MessageType.ERROR:

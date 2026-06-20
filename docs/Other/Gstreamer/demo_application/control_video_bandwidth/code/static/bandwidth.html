@@ -184,6 +184,8 @@
         <dd id="output">unknown</dd>
         <dt>Bitrate</dt>
         <dd id="bitrate-status">unknown</dd>
+        <dt>Measured bandwidth</dt>
+        <dd id="measured-bandwidth">unknown</dd>
         <dt>Keyframe interval</dt>
         <dd id="key-int-status">unknown</dd>
         <dt>Center crop</dt>
@@ -206,6 +208,7 @@
     const startedEl = document.getElementById("started");
     const outputEl = document.getElementById("output");
     const bitrateStatusEl = document.getElementById("bitrate-status");
+    const measuredBandwidthEl = document.getElementById("measured-bandwidth");
     const keyIntStatusEl = document.getElementById("key-int-status");
     const cropEl = document.getElementById("crop");
     const udpEl = document.getElementById("udp");
@@ -224,6 +227,13 @@
     function setMessage(text, isError = false) {
       messageEl.textContent = text || "";
       messageEl.className = isError ? "error" : "";
+    }
+
+    function formatBandwidth(kbps) {
+      if (kbps >= 1000) {
+        return `${(kbps / 1000).toFixed(2)} Mbps`;
+      }
+      return `${kbps.toFixed(1)} kbps`;
     }
 
     async function requestJson(url, options = {}) {
@@ -249,6 +259,7 @@
       startedEl.textContent = yesNo(status.started);
       outputEl.textContent = `${status.width}x${status.height} @ ${status.fps} FPS`;
       bitrateStatusEl.textContent = `${status.bitrate_kbps} kbps`;
+      measuredBandwidthEl.textContent = formatBandwidth(status.measured_bandwidth_kbps);
       keyIntStatusEl.textContent = status.key_int_max;
       cropEl.textContent = `left ${status.crop.left}, right ${status.crop.right}, top ${status.crop.top}, bottom ${status.crop.bottom}`;
       udpEl.textContent = `${status.udp_host}:${status.udp_port}`;
@@ -257,6 +268,7 @@
         status.has_crop ? "crop" : "",
         status.has_capsfilter ? "capsfilter" : "",
         status.has_encoder ? "encoder" : "",
+        status.has_bandwidth_meter ? "meter" : "",
       ].filter(Boolean).join(", ") || "missing";
 
       currentWidth = status.width;
