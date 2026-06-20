@@ -7,11 +7,18 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
-from .fps_control import (
-    CMD_SET_FPS,
-    CMD_STATUS,
-    FpsController,
-)
+try:
+    from .fps_control import (
+        CMD_SET_FPS,
+        CMD_STATUS,
+        FpsController,
+    )
+except ImportError:
+    from fps_control import (
+        CMD_SET_FPS,
+        CMD_STATUS,
+        FpsController,
+    )
 
 
 STATIC_DIR = Path(__file__).with_name("static")
