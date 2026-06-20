@@ -4,6 +4,130 @@ tags:
     - gstreamer
     - h264
 ---
+H.264 / H.265 encoder compress raw video frames into smaller bitstream.
+
+basic idea
+
+```
+Raw frames
+   ↓
+Find repeated areas between frames
+   ↓
+Store only differences/motion
+   ↓
+Quantize details to reduce size
+   ↓
+Entropy coding
+   ↓
+Compressed H.264/H.265 stream
+```
+
+```
+Frame 1: full image
+Frame 2: only changes
+Frame 3: only changes
+```
+
+It use frame types
+
+| Frame   | Meaning                                 |
+| ------- | --------------------------------------- |
+| I-frame | Full frame, large size                  |
+| P-frame | Difference from previous frame          |
+| B-frame | Difference using previous/future frames |
+
+
+---
+
+## Demo: Stream camera over udp using h264 and RTP
+
+
+### Understand camera output
+
+```
+v4l2-ctl -d /dev/video0 --list-formats-ext
+ioctl: VIDIOC_ENUM_FMT
+	Type: Video Capture
+
+	[0]: 'MJPG' (Motion-JPEG, compressed)
+		Size: Discrete 1920x1080
+			Interval: Discrete 0.033s (30.000 fps)
+		Size: Discrete 1280x960
+			Interval: Discrete 0.033s (30.000 fps)
+		Size: Discrete 1280x720
+			Interval: Discrete 0.033s (30.000 fps)
+		Size: Discrete 640x480
+			Interval: Discrete 0.033s (30.000 fps)
+		Size: Discrete 640x360
+			Interval: Discrete 0.033s (30.000 fps)
+	[1]: 'YUYV' (YUYV 4:2:2)
+		Size: Discrete 640x480
+			Interval: Discrete 0.033s (30.000 fps)
+		Size: Discrete 640x360
+			Interval: Discrete 0.033s (30.000 fps)
+```
+
+#### understand x264enc input
+
+```bash title="check sink pad for incoming format"
+gst-inspect-1.0 x264enc
+Factory Details:
+  Rank                     primary (256)
+  Long-name                x264 H.264 Encoder
+  ...
+
+Plugin Details:
+  Name                     x264
+  Description              libx264-based H.264 encoder plugin
+  ...
+GObject
+ +----GInitiallyUnowned
+       +----GstObject
+             +----GstElement
+                   +----GstVideoEncoder
+                         +----GstX264Enc
+
+Implemented Interfaces:
+  GstPreset
+
+Pad Templates:
+  SINK template: 'sink'
+    Availability: Always
+    Capabilities:
+      video/x-raw
+              framerate: [ 0/1, 2147483647/1 ]
+                  width: [ 1, 2147483647 ]
+                 height: [ 1, 2147483647 ]
+                 format: { (string)Y444, (string)Y42B, (string)I420, (string)YV12, (string)NV12, (string)GRAY8, (string)Y444_10LE, (string)I422_10LE, (string)I420_10LE }
+
+```
+### Pipe
+```bash title="sender"
+gst-launch-1.0 -v v4l2src device=/dev/video0 \
+! video/x-raw,format=YUY2,width=640,height=480,framerate=30/1 \
+! videoconvert \
+! x264enc bitrate=1000 speed-preset=ultrafast \
+  tune=zerolatency \
+  key-int-max=30 \
+  bframes=0 byte-stream=true \
+! h264parse config-interval=1 \
+! rtph264pay pt=96 mtu=1200 config-interval=1 \
+! udpsink host=127.0.0.1 port=5600 sync=false async=false
+```
+
+```bash title="receiver"
+gst-launch-1.0 -v udpsrc port=5600 caps="application/x-rtp,media=video,encoding-name=H264,payload=96,clock-rate=90000" \
+! rtpjitterbuffer latency=200 \
+! rtph264depay \
+! h264parse \
+! avdec_h264 \
+! videoconvert \
+! autovideosink sync=false
+
+
+```
+
+---
 
 Gstreamer h264 encoder has few implementation for different hardware support
 
@@ -25,7 +149,11 @@ Gstreamer h264 encoder has few implementation for different hardware support
 
 ## Demo
 Send video data over network using h264 and RTP
+The following pipe use different type of encoder that use hardware and different implementation
 
+- [#x264enc](#x264enc)
+- [#nvh264enc](#using-nvidia-nvdec)
+- [#vaapih264enc](#using-intel-igpu)
 
 ### Receiver
 The receiver pipe common for all sender's

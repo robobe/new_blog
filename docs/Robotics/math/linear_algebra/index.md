@@ -1,11 +1,65 @@
 ---
+title: Liner algebra with python numpy
 tags:
     - math
     - linear algebra
 ---
 
-
 {{ page_folder_links() }}
+
+## Vector
+A vector is a quantity with both magnitude and direction, often written as a list of components such as `[x, y]` or `[x, y, z]`.
+
+![2D vector diagram](images/vector.svg)
+
+In 2D, the vector `[3, 2]` starts at the origin, moves 3 units on the x-axis, then 2 units on the y-axis. The arrow shows the vector's direction and length.
+
+### Create vector using numpy
+
+```python
+import numpy as np
+
+v = np.array([3, 2])
+
+print(type(v))
+print(v.shape)   # vector dimensions, for example (2,)
+print(v.ndim)    # number of dimensions, for a vector usually 1
+print(v.dtype)   # data type, for example int64 or float64
+print(v.size)    # number of elements
+
+#
+<class 'numpy.ndarray'>
+(2,)
+1
+int64
+2
+```
+
+### Common ndarray method
+
+#### reshape
+
+reshape() changes the shape of a NumPy array without changing its values.
+
+```python
+import numpy as np
+
+v = np.array([3, 2])
+print("data: ", v)
+print("1D array ", v.shape)
+v = v.reshape(1,2)
+print("data: ", v)
+print("2D array (matrix) ", v.shape)
+```
+
+```
+data:  [3 2]
+1D array  (2,)
+data:  [[3 2]]
+2D array (matrix)  (1, 2)
+```
+
+---
 
 ## Unit vector
 Any vector with magnitude of length 1 is considered a unit vector.

@@ -5,6 +5,361 @@ tags:
     - factory
 ---
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="#solid">
+        <p>SOLID</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="#gof">
+        <p>GoF</p>
+        </a>
+    </div>
+</div>
+
+
+## SOLID
+SOLID is not a design pattern. It is a set of 5 object-oriented design principles that help make code easier to maintain, extend, test, and understand.
+
+| Principle | Name                            | Brief Description                                                |
+| --------- | ------------------------------- | ---------------------------------------------------------------- |
+| S         | Single Responsibility Principle | A class should have only one reason to change.                   |
+| O         | Open/Closed Principle           | Open for extension, closed for modification.                     |
+| L         | Liskov Substitution Principle   | Derived types must be usable wherever the base type is expected. |
+| I         | Interface Segregation Principle | Prefer many small interfaces over one large interface.           |
+| D         | Dependency Inversion Principle  | Depend on abstractions, not concrete implementations.            |
+
+### Single Responsibility Principle
+
+A class should have one job. Split unrelated responsibilities into separate classes.
+
+Bad:
+
+```python
+class Report:
+    def __init__(self, data):
+        self.data = data
+
+    def calculate_total(self):
+        return sum(self.data)
+
+    def save_to_file(self, path):
+        with open(path, "w") as file:
+            file.write(str(self.calculate_total()))
+```
+
+Fixed:
+
+```python
+class Report:
+    def __init__(self, data):
+        self.data = data
+
+    def calculate_total(self):
+        return sum(self.data)
+
+
+class ReportFileWriter:
+    def save(self, report, path):
+        with open(path, "w") as file:
+            file.write(str(report.calculate_total()))
+```
+
+### Open/Closed Principle
+
+Code should allow new behavior without editing existing tested logic.
+
+Bad:
+
+```python
+class Discount:
+    def calculate(self, customer_type, price):
+        if customer_type == "regular":
+            return price * 0.95
+        if customer_type == "vip":
+            return price * 0.80
+        return price
+```
+
+Fixed:
+
+```python
+class Discount:
+    def calculate(self, price):
+        return price
+
+
+class RegularDiscount(Discount):
+    def calculate(self, price):
+        return price * 0.95
+
+
+class VipDiscount(Discount):
+    def calculate(self, price):
+        return price * 0.80
+
+
+def checkout(price, discount):
+    return discount.calculate(price)
+```
+
+The bad example puts every discount rule inside one method. Adding a new customer
+type means editing `Discount.calculate`, which makes old, already-tested behavior
+easy to break while adding new behavior.
+
+The fixed version keeps `checkout` and the existing discount classes closed to
+changes. New behavior is added by creating another class, such as
+`StudentDiscount`, that implements `calculate`. The code is open for extension
+because new discount types can be introduced without rewriting the shared
+checkout flow or changing the existing discount rules.
+
+
+Using a Python protocol, the shared abstraction can be expressed as behavior
+instead of inheritance:
+
+```python
+from typing import Protocol
+
+
+class Discount(Protocol):
+    def calculate(self, price: float) -> float:
+        ...
+
+
+class RegularDiscount:
+    def calculate(self, price: float) -> float:
+        return price * 0.95
+
+
+class VipDiscount:
+    def calculate(self, price: float) -> float:
+        return price * 0.80
+
+
+def checkout(price: float, discount: Discount) -> float:
+    return discount.calculate(price)
+```
+
+`RegularDiscount` and `VipDiscount` do not need to inherit from `Discount`.
+They match the protocol because they provide a compatible `calculate` method.
+This keeps the code open to new discount implementations while allowing static
+type checkers to verify that `checkout` receives an object with the required
+behavior.
+
+
+### Liskov Substitution Principle
+
+A subclass should work anywhere its parent class is expected.
+
+Bad:
+
+```python
+class Bird:
+    def fly(self):
+        return "Flying"
+
+
+class Penguin(Bird):
+    def fly(self):
+        raise NotImplementedError("Penguins cannot fly")
+```
+
+Fixed:
+
+```python
+class Bird:
+    pass
+
+
+class FlyingBird(Bird):
+    def fly(self):
+        return "Flying"
+
+
+class Sparrow(FlyingBird):
+    pass
+
+
+class Penguin(Bird):
+    pass
+```
+
+This principle matters when other code receives a `Bird` and assumes every bird
+can fly. For example, a migration tracker, game engine, or delivery simulation
+might call `bird.fly()` on every object in a list of birds. If `Penguin`
+inherits from `Bird` but raises an error when `fly` is called, the subclass
+breaks code that correctly worked with the parent type.
+
+The fixed design avoids lying in the inheritance hierarchy. Code that needs
+flying behavior depends on `FlyingBird`, while code that only needs general bird
+data can still use `Bird`. This keeps functions easier to reason about because
+they do not need special checks like `if not isinstance(bird, Penguin)` before
+calling methods. When subclasses keep the promises made by their parent classes,
+new types can be added with fewer hidden runtime surprises.
+
+
+### Interface Segregation Principle
+
+Clients should not be forced to implement methods they do not use.
+
+Bad:
+
+```python
+class Worker:
+    def work(self):
+        raise NotImplementedError
+
+    def eat(self):
+        raise NotImplementedError
+
+
+class Robot(Worker):
+    def work(self):
+        return "Working"
+
+    def eat(self):
+        raise NotImplementedError("Robots do not eat")
+```
+
+Fixed:
+
+```python
+class Workable:
+    def work(self):
+        raise NotImplementedError
+
+
+class Eatable:
+    def eat(self):
+        raise NotImplementedError
+
+
+class Human(Workable, Eatable):
+    def work(self):
+        return "Working"
+
+    def eat(self):
+        return "Eating"
+
+
+class Robot(Workable):
+    def work(self):
+        return "Working"
+```
+
+Using protocols, the small interfaces describe required behavior without forcing
+classes to inherit from them:
+
+```python
+from typing import Protocol
+
+
+class Workable(Protocol):
+    def work(self) -> str:
+        ...
+
+
+class Eatable(Protocol):
+    def eat(self) -> str:
+        ...
+
+
+class Human:
+    def work(self) -> str:
+        return "Working"
+
+    def eat(self) -> str:
+        return "Eating"
+
+
+class Robot:
+    def work(self) -> str:
+        return "Working"
+
+
+def start_shift(worker: Workable) -> str:
+    return worker.work()
+
+
+def lunch_break(worker: Eatable) -> str:
+    return worker.eat()
+```
+
+`Human` satisfies both protocols because it can work and eat. `Robot` satisfies
+only `Workable`, so code that needs eating behavior cannot accidentally receive
+a robot when checked by a static type checker.
+
+
+### Dependency Inversion Principle
+
+High-level code should depend on abstractions instead of concrete classes.
+
+Bad:
+
+```python
+class MySQLDatabase:
+    def save(self, data):
+        print(f"Saving {data} to MySQL")
+
+
+class UserService:
+    def __init__(self):
+        self.database = MySQLDatabase()
+
+    def create_user(self, user):
+        self.database.save(user)
+```
+
+Fixed:
+
+```python
+class Database:
+    def save(self, data):
+        raise NotImplementedError
+
+
+class MySQLDatabase(Database):
+    def save(self, data):
+        print(f"Saving {data} to MySQL")
+
+
+class UserService:
+    def __init__(self, database):
+        self.database = database
+
+    def create_user(self, user):
+        self.database.save(user)
+```
+
+Using a protocol:
+
+```python
+from typing import Protocol
+
+
+class Database(Protocol):
+    def save(self, data):
+        ...
+
+
+class MySQLDatabase:
+    def save(self, data):
+        print(f"Saving {data} to MySQL")
+
+
+class UserService:
+    def __init__(self, database: Database):
+        self.database = database
+
+    def create_user(self, user):
+        self.database.save(user)
+```
+
+---
+
+
+## GoF
 ## Singleton
 
 Singleton is a design pattern where a class can have only one instance, and that instance is globally accessible.

@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bandwidth Stream Control</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light dark;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #101418;
+      color: #edf2f7;
+    }
+
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    section {
+      margin-bottom: 16px;
+      padding: 16px;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      background: #151b22;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      min-width: 130px;
+      color: #a0aec0;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      border: 1px solid #4a5568;
+      border-radius: 6px;
+      background: #111827;
+      color: #edf2f7;
+      font-size: 14px;
+    }
+
+    button {
+      min-width: 132px;
+      padding: 9px 14px;
+      border: 1px solid #3182ce;
+      border-radius: 6px;
+      background: #2b6cb0;
+      color: #edf2f7;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button.active {
+      border-color: #68d391;
+      background: #2f855a;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    dl {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 8px 12px;
+      margin: 0;
+    }
+
+    dt {
+      color: #a0aec0;
+    }
+
+    dd {
+      margin: 0;
+      word-break: break-word;
+    }
+
+    #message {
+      min-height: 22px;
+      color: #90cdf4;
+    }
+
+    #message.error {
+      color: #feb2b2;
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 16px;
+      }
+
+      label,
+      button {
+        width: 100%;
+      }
+
+      dl {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Bandwidth Stream Control</h1>
+
+    <section>
+      <h2>Crop</h2>
+      <div class="button-group">
+        <button data-profile="normal">Normal 640x480</button>
+        <button data-profile="center_320x240">Center 320x240</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>FPS</h2>
+      <div class="button-group">
+        <button data-fps="1">1 FPS</button>
+        <button data-fps="5">5 FPS</button>
+        <button data-fps="10">10 FPS</button>
+        <button data-fps="15">15 FPS</button>
+        <button data-fps="30">30 FPS</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Encoder</h2>
+      <div class="button-group">
+        <button data-bitrate="100">100 kbps</button>
+        <button data-bitrate="200">200 kbps</button>
+        <button data-bitrate="300">300 kbps</button>
+        <button data-bitrate="500">500 kbps</button>
+        <button data-bitrate="1000">1000 kbps</button>
+      </div>
+      <div class="button-group">
+        <button data-key-int-max="30">Keyframe 30</button>
+        <button data-key-int-max="60">Keyframe 60</button>
+        <button data-key-int-max="90">Keyframe 90</button>
+      </div>
+    </section>
+
+    <section>
+      <dl>
+        <dt>Pipeline</dt>
+        <dd id="started">unknown</dd>
+        <dt>Output</dt>
+        <dd id="output">unknown</dd>
+        <dt>Bitrate</dt>
+        <dd id="bitrate-status">unknown</dd>
+        <dt>Keyframe interval</dt>
+        <dd id="key-int-status">unknown</dd>
+        <dt>Center crop</dt>
+        <dd id="crop">unknown</dd>
+        <dt>UDP</dt>
+        <dd id="udp">unknown</dd>
+        <dt>Elements</dt>
+        <dd id="elements">unknown</dd>
+      </dl>
+    </section>
+
+    <section id="message"></section>
+  </main>
+
+  <script>
+    const profileButtons = Array.from(document.querySelectorAll("[data-profile]"));
+    const fpsButtons = Array.from(document.querySelectorAll("[data-fps]"));
+    const bitrateButtons = Array.from(document.querySelectorAll("[data-bitrate]"));
+    const keyIntButtons = Array.from(document.querySelectorAll("[data-key-int-max]"));
+    const startedEl = document.getElementById("started");
+    const outputEl = document.getElementById("output");
+    const bitrateStatusEl = document.getElementById("bitrate-status");
+    const keyIntStatusEl = document.getElementById("key-int-status");
+    const cropEl = document.getElementById("crop");
+    const udpEl = document.getElementById("udp");
+    const elementsEl = document.getElementById("elements");
+    const messageEl = document.getElementById("message");
+    let currentWidth = 640;
+    let currentHeight = 480;
+    let selectedFps = 30;
+    let selectedBitrateKbps = 300;
+    let selectedKeyIntMax = 30;
+
+    function yesNo(value) {
+      return value ? "yes" : "no";
+    }
+
+    function setMessage(text, isError = false) {
+      messageEl.textContent = text || "";
+      messageEl.className = isError ? "error" : "";
+    }
+
+    async function requestJson(url, options = {}) {
+      const response = await fetch(url, options);
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(body.detail || `HTTP ${response.status}`);
+      }
+      return body;
+    }
+
+    function currentProfile(status) {
+      if (status.width === 640 && status.height === 480) {
+        return "normal";
+      }
+      if (status.width === 320 && status.height === 240) {
+        return "center_320x240";
+      }
+      return "";
+    }
+
+    function renderStatus(status) {
+      startedEl.textContent = yesNo(status.started);
+      outputEl.textContent = `${status.width}x${status.height} @ ${status.fps} FPS`;
+      bitrateStatusEl.textContent = `${status.bitrate_kbps} kbps`;
+      keyIntStatusEl.textContent = status.key_int_max;
+      cropEl.textContent = `left ${status.crop.left}, right ${status.crop.right}, top ${status.crop.top}, bottom ${status.crop.bottom}`;
+      udpEl.textContent = `${status.udp_host}:${status.udp_port}`;
+      elementsEl.textContent = [
+        status.has_pipeline ? "pipeline" : "",
+        status.has_crop ? "crop" : "",
+        status.has_capsfilter ? "capsfilter" : "",
+        status.has_encoder ? "encoder" : "",
+      ].filter(Boolean).join(", ") || "missing";
+
+      currentWidth = status.width;
+      currentHeight = status.height;
+      selectedFps = status.fps;
+      selectedBitrateKbps = status.bitrate_kbps;
+      selectedKeyIntMax = status.key_int_max;
+
+      const activeProfile = currentProfile(status);
+      for (const button of profileButtons) {
+        button.disabled = !status.started;
+        button.classList.toggle("active", button.dataset.profile === activeProfile);
+      }
+      for (const button of fpsButtons) {
+        const fps = Number(button.dataset.fps);
+        button.disabled = !status.started;
+        button.classList.toggle("active", fps === status.fps);
+      }
+      for (const button of bitrateButtons) {
+        const bitrateKbps = Number(button.dataset.bitrate);
+        button.disabled = !status.started;
+        button.classList.toggle("active", bitrateKbps === status.bitrate_kbps);
+      }
+      for (const button of keyIntButtons) {
+        const keyIntMax = Number(button.dataset.keyIntMax);
+        button.disabled = !status.started;
+        button.classList.toggle("active", keyIntMax === status.key_int_max);
+      }
+    }
+
+    async function refreshStatus() {
+      const status = await requestJson("/status");
+      renderStatus(status);
+      return status;
+    }
+
+    async function applyStreamSettings(width, height, fps, bitrateKbps, keyIntMax) {
+      const payload = {
+        width,
+        height,
+        fps,
+        bitrate_kbps: bitrateKbps,
+        key_int_max: keyIntMax,
+      };
+      const status = await requestJson("/stream", {
+        method: "POST",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify(payload),
+      });
+      renderStatus(status);
+      return status;
+    }
+
+    for (const button of profileButtons) {
+      button.addEventListener("click", async () => {
+        try {
+          const profile = button.dataset.profile;
+          const width = profile === "normal" ? 640 : 320;
+          const height = profile === "normal" ? 480 : 240;
+          const status = await applyStreamSettings(
+            width,
+            height,
+            selectedFps,
+            selectedBitrateKbps,
+            selectedKeyIntMax,
+          );
+          setMessage(`Applied ${button.textContent}`);
+        } catch (err) {
+          setMessage(err.message, true);
+          await refreshStatus().catch(() => {});
+        }
+      });
+    }
+
+    for (const button of fpsButtons) {
+      button.addEventListener("click", async () => {
+        try {
+          selectedFps = Number(button.dataset.fps);
+          const status = await applyStreamSettings(
+            currentWidth,
+            currentHeight,
+            selectedFps,
+            selectedBitrateKbps,
+            selectedKeyIntMax,
+          );
+          setMessage(`FPS set to ${status.fps}`);
+        } catch (err) {
+          setMessage(err.message, true);
+          await refreshStatus().catch(() => {});
+        }
+      });
+    }
+
+    for (const button of bitrateButtons) {
+      button.addEventListener("click", async () => {
+        try {
+          selectedBitrateKbps = Number(button.dataset.bitrate);
+          const status = await applyStreamSettings(
+            currentWidth,
+            currentHeight,
+            selectedFps,
+            selectedBitrateKbps,
+            selectedKeyIntMax,
+          );
+          setMessage(`Bitrate set to ${status.bitrate_kbps} kbps`);
+        } catch (err) {
+          setMessage(err.message, true);
+          await refreshStatus().catch(() => {});
+        }
+      });
+    }
+
+    for (const button of keyIntButtons) {
+      button.addEventListener("click", async () => {
+        try {
+          selectedKeyIntMax = Number(button.dataset.keyIntMax);
+          const status = await applyStreamSettings(
+            currentWidth,
+            currentHeight,
+            selectedFps,
+            selectedBitrateKbps,
+            selectedKeyIntMax,
+          );
+          setMessage(`Keyframe interval set to ${status.key_int_max}`);
+        } catch (err) {
+          setMessage(err.message, true);
+          await refreshStatus().catch(() => {});
+        }
+      });
+    }
+
+    refreshStatus().catch((err) => setMessage(err.message, true));
+    setInterval(() => {
+      refreshStatus().catch((err) => setMessage(err.message, true));
+    }, 2000);
+  </script>
+</body>
+</html>
