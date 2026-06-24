@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#video-56" class="md-skip">
+        <a href="#demo" class="md-skip">
           Skip to content
         </a>
       
@@ -680,22 +680,122 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#video-56" class="md-nav__link">
+  <a href="#demo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Video 5/6
+        Demo
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Video 5/6">
+    <nav class="md-nav" aria-label="Demo">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#demo" class="md-nav__link">
+  <a href="#1-state-and-measurement-vector" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Demo:
+        1. State and measurement vector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measure-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        measure position
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-f-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. F Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-h-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. H Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        R Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kalman-filter-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kalman filter steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kalman filter steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predict
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correct-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correct / Update
       
     </span>
   </a>
@@ -706,15 +806,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#video-7-multi-dimension" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Video 7- (multi dimension)
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -776,91 +870,193 @@
 
   <h1>Kalman filter</h1>
 
-<p>Kalman filter is an iterative mathematical process that use a set of equations and consecutive data input to quickly estimate the true value, position velocity etc of the object being measured when the measures values contains unpredicted or random error , uncertainty or variation <a href="https://youtu.be/CaCcOwJPytQ">Michel Van biezen</a></p>
-<p><a href="https://youtube.com/playlist?list=PLX2gX-ftPVXU3oUFNATxGXY90AULiqnWT&amp;si=lGjt-xsTlZQi77o2">Special Topics - The Kalman Filter (1 of 55) What is a Kalman Filter?</a></p>
-<hr />
-<h2 id="video-56">Video 5/6</h2>
-<p><a href="https://youtu.be/SIQJaqYVtuE?list=PLX2gX-ftPVXU3oUFNATxGXY90AULiqnWT">A Simple Example of the Kalman Filter</a></p>
-<div class="arithmatex">\[
-KG = \frac{E_{est}}{E_{est}+E_{meas}}
+<h2 id="demo">Demo</h2>
+<p>Simple system 1D constant velocity system</p>
+<h3 id="1-state-and-measurement-vector">1. State and measurement vector</h3>
+<div class="arithmatex">\[x =
+\begin{bmatrix}
+p \\
+v
+\end{bmatrix}\]</div>
+<p>p = position
+v = velocity</p>
+<h3 id="measure-position">measure position</h3>
+<div class="arithmatex">\[z = p_{measured}\]</div>
+<h3 id="2-f-matrix">2. F Matrix</h3>
+<p>The F matrix predicts the next state from the current state. To build it, write
+one motion equation for each state variable at the next time step, then collect
+the coefficients of the current state variables in the same order as the state
+vector. Each equation becomes one row in F.</p>
+<p>from motion equation to state transform matrix</p>
+<div class="arithmatex">\[p_{k+1} = p_k + v_k \Delta t\]</div>
+<div class="arithmatex">\[v_{k+1} = v_k\]</div>
+<p>Notice that every equation is a linear combination of state variables.</p>
+<div class="arithmatex">\[p_{k+1} = 1\cdot p_k + \Delta t \cdot v_k\]</div>
+<div class="arithmatex">\[v_{k+1} = 0\cdot p_k + 1\cdot v_k\]</div>
+<p>Extract coefficients</p>
+<div class="arithmatex">\[F=
+\begin{bmatrix}
+1 &amp; \Delta t\\
+0 &amp; 1
+\end{bmatrix}\]</div>
+<div class="arithmatex">\[F x_k
+=
+\begin{bmatrix}
+1 &amp; \Delta t\\
+0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+p_k\\
+v_k
+\end{bmatrix}
+=
+\begin{bmatrix}
+p_k &amp; \Delta tv_k\\
+&amp; v_k
+\end{bmatrix}
 \]</div>
-<div class="arithmatex">\[
-EST_t=EST_{t-1} + KG[MEAS-EST_{t-1}]
-\]</div>
-<div class="arithmatex">\[
-E_{est_t}=[1-KG](E_{est_{t-1}})
-\]</div>
-<h3 id="demo">Demo:</h3>
+<h3 id="3-h-matrix">3. H Matrix</h3>
+<p>The H matrix maps the internal state vector to the measurement space. In this
+example the state contains position and velocity, but the sensor measures only
+position, so H selects the position component and ignores velocity.</p>
+<div class="arithmatex">\[z = p\]</div>
+<p>The state is: <span class="arithmatex">\(<span class="arithmatex">\(x =
+\begin{bmatrix}
+p \\
+v
+\end{bmatrix}\)</span>\)</span></p>
+<div class="arithmatex">\[z = Hx\]</div>
+<div class="arithmatex">\[H =
+\begin{bmatrix}
+1 &amp; 0
+\end{bmatrix}\]</div>
+<div class="arithmatex">\[z =
+\begin{bmatrix}
+1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+p \\
+v
+\end{bmatrix}\]</div>
+<h3 id="p-matrix">P Matrix</h3>
+<p>P is the uncertainty of your state estimate.</p>
+<p>Because state is [position, velocity], P is 2x2</p>
+<div class="arithmatex">\[P =
+\begin{bmatrix}
+\sigma_p^2 &amp; 0 \\
+0 &amp; \sigma_v^2
+\end{bmatrix}\]</div>
+<p>The values on the diagonal are the variance of each state variable:</p>
 <ul>
-<li>true temperature = 72</li>
-<li>init estimate = 68</li>
-<li>init <span class="arithmatex">\(E_{est}\)</span> = 2</li>
-<li>init measurement = 75</li>
-<li>error in measurement =4</li>
+<li><span class="arithmatex">\(\sigma_p^2\)</span> is the uncertainty in the initial position estimate.</li>
+<li><span class="arithmatex">\(\sigma_v^2\)</span> is the uncertainty in the initial velocity estimate.</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>MEA</th>
-<th><span class="arithmatex">\(E_{MEA}\)</span></th>
-<th>EST</th>
-<th><span class="arithmatex">\(E_{est_{t-1}}\)</span></th>
-<th>KG</th>
-<th><span class="arithmatex">\(E_{est_t}\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>t-1</td>
-<td></td>
-<td>4</td>
-<td>68</td>
-<td>2</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>t</td>
-<td>75</td>
-<td>4</td>
-<td>70.33</td>
-<td></td>
-<td>0.33</td>
-<td>1.33</td>
-</tr>
-<tr>
-<td>t+1</td>
-<td>71</td>
-<td>4</td>
-<td>70.50</td>
-<td></td>
-<td>0.25</td>
-<td>1.00</td>
-</tr>
-<tr>
-<td>t+2</td>
-<td>70</td>
-<td>4</td>
-<td>70.40</td>
-<td></td>
-<td>0.20</td>
-<td>0.80</td>
-</tr>
-<tr>
-<td>t+3</td>
-<td>74</td>
-<td>4</td>
-<td>71</td>
-<td></td>
-<td>0.17</td>
-<td>0.66</td>
-</tr>
-</tbody>
-</table>
-<p><img alt="1d" src="images/kalman_1d.png" /></p>
+<p>The off-diagonal values describe how much the errors in position and velocity are related. If you do not know that relationship at the beginning, set them to <code>0</code>.</p>
+<p>You often initialize <code>P</code> as an identity matrix scaled by a number:</p>
+<div class="arithmatex">\[P = I \cdot c =
+\begin{bmatrix}
+c &amp; 0 \\
+0 &amp; c
+\end{bmatrix}\]</div>
+<p>The value <code>c</code> is your starting uncertainty. Use a large value when the initial state is only a rough guess, and a small value when the initial state comes from a reliable measurement.</p>
+<p>For example:</p>
+<div class="arithmatex">\[P =
+\begin{bmatrix}
+100 &amp; 0 \\
+0 &amp; 100
+\end{bmatrix}\]</div>
+<p>means the filter starts with high uncertainty in both position and velocity.</p>
+<p>Large values mean:
+“I do not trust my initial position/velocity estimate.”</p>
+<p>Small values mean:
+“I trust my initial estimate.”</p>
+<h3 id="q-matrix">Q Matrix</h3>
+<p>Q is the process noise covariance matrix.</p>
+<p>It describes how much uncertainty is added during the prediction step because
+the motion model is not perfect. In this example, the model assumes constant
+velocity:</p>
+<div class="arithmatex">\[p_{k+1} = p_k + v_k \Delta t\]</div>
+<div class="arithmatex">\[v_{k+1} = v_k\]</div>
+<p>Real objects may accelerate, slow down, slip, or be affected by forces that are
+not included in the model. Q tells the filter how much error to expect from
+those unmodeled effects.</p>
+<p>For a 1D constant-velocity model, a common Q matrix is built from acceleration
+noise:</p>
+<div class="arithmatex">\[Q =
+\sigma_a^2
+\begin{bmatrix}
+\frac{\Delta t^4}{4} &amp; \frac{\Delta t^3}{2} \\
+\frac{\Delta t^3}{2} &amp; \Delta t^2
+\end{bmatrix}\]</div>
+<p>where <span class="arithmatex">\(\sigma_a^2\)</span> is the variance of the unknown acceleration.</p>
+<p>Large values in Q mean:
+"I do not trust the motion model very much."</p>
+<p>Small values in Q mean:
+"I expect the motion model to be accurate."</p>
+<p>If Q is too small, the filter may react slowly to real changes in motion. If Q
+is too large, the estimate may become noisy because the filter expects too much
+random motion.</p>
+<h3 id="r-matrix">R Matrix</h3>
+<p>R is measurement noise.</p>
+<p>Larger R means the filter trusts measurements less.</p>
+<h3 id="kalman-filter-steps">Kalman filter steps</h3>
+<h4 id="predict">Predict</h4>
+<p>predict next state</p>
+<div class="arithmatex">\[\hat{x}_{k|k-1} = F \hat{x}_{k-1}\]</div>
+<p>This step uses only the previous estimate and the motion model. No new sensor
+measurement is used yet. The notation means:</p>
+<ul>
+<li><span class="arithmatex">\(\hat{x}_{k-1}\)</span> is the best state estimate from the previous step.</li>
+<li><span class="arithmatex">\(\hat{x}_{k|k-1}\)</span> is the predicted state at time <code>k</code>, before reading the
+  measurement at time <code>k</code>.</li>
+<li><code>F</code> moves the state forward by one time step according to the chosen motion
+  model.</li>
+</ul>
+<p>predict uncertainty</p>
+<div class="arithmatex">\[P_{k|k-1} = F P_{k-1} F^T + Q\]</div>
+<h4 id="correct-update">Correct / Update</h4>
+<p>Measurement residual:</p>
+<div class="arithmatex">\[y = z - H\hat{x}_{k|k-1}\]</div>
+<p>The residual, or innovation, is the difference between what the sensor measured
+and what the filter expected to measure from the predicted state:</p>
+<ul>
+<li><code>z</code> is the actual measurement at time <code>k</code>.</li>
+<li><span class="arithmatex">\(H\hat{x}_{k|k-1}\)</span> is the predicted measurement, found by mapping the
+  predicted state into measurement space with <code>H</code>.</li>
+<li><code>y</code> is the measurement error used by the update step. If <code>y</code> is close to zero,
+  the prediction already matches the sensor well. If it is large, the correction
+  step will pull the state estimate toward the new measurement.</li>
+</ul>
+<p>Kalman gain</p>
+<div class="arithmatex">\[K = P H^T (H P H^T + R)^{-1}\]</div>
+<p>The Kalman gain decides how strongly the new measurement should correct the
+predicted state:</p>
+<ul>
+<li><code>P</code> is the predicted state covariance. A larger <code>P</code> means the prediction is
+  less certain, so the measurement should have more influence.</li>
+<li><code>H P H^T</code> is the predicted uncertainty expressed in measurement space.</li>
+<li><code>R</code> is the measurement noise covariance. A larger <code>R</code> means the sensor is less
+  reliable, so the measurement should have less influence.</li>
+<li><code>(H P H^T + R)^{-1}</code> normalizes the gain by the total expected measurement
+  uncertainty.</li>
+</ul>
+<p>In short, <code>K</code> is large when the prediction is uncertain and the sensor is
+trusted, and small when the prediction is confident or the sensor is noisy.</p>
+<p>Correct state:</p>
+<div class="arithmatex">\[\hat{x}_k = \hat{x}_{k|k-1} + Ky\]</div>
+<p>Correct uncertainty</p>
+<div class="arithmatex">\[P_k = (I - KH)P\]</div>
+<p>The corrected state starts with the predicted state <span class="arithmatex">\(\hat{x}_{k|k-1}\)</span> and adds
+only the part of the innovation <code>y</code> that should be trusted. The Kalman gain <code>K</code>
+decides how strongly the measurement pulls the prediction: a large gain moves
+the estimate closer to the measurement, while a small gain keeps it closer to
+the model prediction.</p>
+<p>The corrected uncertainty is reduced by the information gained from the
+measurement. <code>KH</code> describes how much of the predicted state uncertainty was
+observed and corrected, so <code>(I - KH)</code> leaves only the uncertainty that remains
+after applying the measurement update.</p>
 <details>
-<summary>kalman 1d</summary>
+<summary>1d const velocity code</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
@@ -896,55 +1092,100 @@ E_{est_t}=[1-KG](E_{est_{t-1}})
 <span class="normal"><a href="#__codelineno-0-33">33</a></span>
 <span class="normal"><a href="#__codelineno-0-34">34</a></span>
 <span class="normal"><a href="#__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#__codelineno-0-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="n">true_value</span> <span class="o">=</span> <span class="mi">72</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="n">error_meas</span> <span class="o">=</span> <span class="mi">4</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="n">init_estimate</span> <span class="o">=</span> <span class="mi">68</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">error_estimate</span> <span class="o">=</span> <span class="mi">2</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="n">measurements</span> <span class="o">=</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">74</span><span class="p">]</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="n">estimates</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="k">for</span> <span class="n">measurement</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">:</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="c1"># Kalman Gain</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="n">kalman_gain</span> <span class="o">=</span> <span class="n">error_estimate</span> <span class="o">/</span> <span class="p">(</span><span class="n">error_estimate</span> <span class="o">+</span> <span class="n">error_meas</span><span class="p">)</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="c1"># Update estimate with measurement</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    <span class="n">estimate</span> <span class="o">=</span> <span class="n">init_estimate</span> <span class="o">+</span> <span class="n">kalman_gain</span> <span class="o">*</span> <span class="p">(</span><span class="n">measurement</span> <span class="o">-</span> <span class="n">init_estimate</span><span class="p">)</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
-<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="c1"># Update error estimate</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="n">error_estimate</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kalman_gain</span><span class="p">)</span> <span class="o">*</span> <span class="n">error_estimate</span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>import numpy as np
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>dt = 1.0
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a># State: [position, velocity]
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>x = np.array([
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    [0.0],
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    [0.0]
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>])
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>F = np.array([
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    [1.0, dt],
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>    [0.0, 1.0]
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>])
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>H = np.array([
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>    [1.0, 0.0]
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>])
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a>
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Measurement: </span><span class="si">{</span><span class="n">measurement</span><span class="si">}</span><span class="s2">, Estimate: </span><span class="si">{</span><span class="n">estimate</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Error Estimate: </span><span class="si">{</span><span class="n">error_estimate</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="c1"># Prepare for next iteration</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    <span class="n">init_estimate</span> <span class="o">=</span> <span class="n">estimate</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    <span class="n">estimates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estimate</span><span class="p">)</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
-<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="c1"># Plotting</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">measurements</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Measurements&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimates</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Kalman Estimates&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">true_value</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Value&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Kalman Filter 1D Estimation&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Measurement Index&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>P = np.array([
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    [10.0, 0.0],
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    [0.0, 10.0]
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>])
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>Q = np.array([
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    [0.01, 0.0],
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    [0.0, 0.1]
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>])
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>R = np.array([
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    [4.0]
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>])
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>I = np.eye(2)
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>measurements = [1.2, 2.1, 2.9, 4.2, 5.0, 6.1]
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>for z_value in measurements:
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    z = np.array([[z_value]])
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>    # --------------------
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>    # Predict
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>    # --------------------
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>    x_pred = F @ x
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>    P_pred = F @ P @ F.T + Q
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>    # --------------------
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>    # Correct
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>    # --------------------
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>    y = z - H @ x_pred
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>    S = H @ P_pred @ H.T + R
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>    K = P_pred @ H.T @ np.linalg.inv(S)
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>    x = x_pred + K @ y
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>    P = (I - K @ H) @ P_pred
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>    print(f&quot;measurement={z_value:.2f}, position={x[0,0]:.2f}, velocity={x[1,0]:.2f}&quot;)
 </code></pre></div></td></tr></table></div>
 </details>
 
-<hr />
-<h2 id="video-7-multi-dimension">Video 7- (multi dimension)</h2>
 <ul>
-<li><a href="https://youtu.be/-cD7WkbAIL0?list=PLX2gX-ftPVXU3oUFNATxGXY90AULiqnWT">video 7 - multi dimension 1</a></li>
+<li>F = how the system moves</li>
+<li>H = what you measure from the state</li>
+<li>P = how uncertain you are</li>
+<li>Q = how wrong the motion model may be</li>
+<li>R = how noisy the sensor is</li>
 </ul>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="https://www.youtube.com/playlist?list=PLgG0XDQqJckmfolmM8y0GFS8l3x_r2p_S">hummingbird - kalman filter</a></li>
 <li><a href="https://youtu.be/mwn8xhgNpFY?list=PLn8PRpmsu08pzi6EMiYnR-076Mh-q3tWr">Why Use Kalman Filters? | Understanding Kalman Filters, Part 1</a></li>
+<li><a href="https://medium.com/@mathiasmantelli/kalman-filter-series-introduction-6d2e2b28d4cf">Kalman Filter Part 1 — Introduction</a></li>
 </ul>
 
 
