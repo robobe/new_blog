@@ -1,36 +1,57 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
-true_value = 72
-error_meas = 4
-init_estimate = 68
-error_estimate = 2
-measurements = [75, 71, 70, 74]
-estimates = []
-for measurement in measurements:
-    # Kalman Gain
-    kalman_gain = error_estimate / (error_estimate + error_meas)
+dt = 1.0
 
-    # Update estimate with measurement
-    estimate = init_estimate + kalman_gain * (measurement - init_estimate)
+# State: [position, velocity]
+x = np.array([
+    [0.0],
+    [0.0]
+])
 
-    # Update error estimate
-    error_estimate = (1 - kalman_gain) * error_estimate
+F = np.array([
+    [1.0, dt],
+    [0.0, 1.0]
+])
 
-    print(f"Measurement: {measurement}, Estimate: {estimate:.2f}, Error Estimate: {error_estimate:.2f}")
+H = np.array([
+    [1.0, 0.0]
+])
 
-    # Prepare for next iteration
-    init_estimate = estimate
-    estimates.append(estimate)
+P = np.array([
+    [10.0, 0.0],
+    [0.0, 10.0]
+])
 
-# Plotting
-plt.figure(figsize=(10, 5))
-plt.plot(measurements, label='Measurements', marker='o')
-plt.plot(estimates, label='Kalman Estimates', marker='x')
-plt.axhline(true_value, color='r', linestyle='--', label='True Value')
-plt.title('Kalman Filter 1D Estimation')
-plt.xlabel('Measurement Index')
-plt.ylabel('Value')
-plt.legend()
-plt.grid()
-plt.show()
+Q = np.array([
+    [0.01, 0.0],
+    [0.0, 0.1]
+])
+
+R = np.array([
+    [4.0]
+])
+
+I = np.eye(2)
+
+measurements = [1.2, 2.1, 2.9, 4.2, 5.0, 6.1]
+
+for z_value in measurements:
+    z = np.array([[z_value]])
+
+    # --------------------
+    # Predict
+    # --------------------
+    x_pred = F @ x
+    P_pred = F @ P @ F.T + Q
+
+    # --------------------
+    # Correct
+    # --------------------
+    y = z - H @ x_pred
+    S = H @ P_pred @ H.T + R
+    K = P_pred @ H.T @ np.linalg.inv(S)
+
+    x = x_pred + K @ y
+    P = (I - K @ H) @ P_pred
+
+    print(f"measurement={z_value:.2f}, position={x[0,0]:.2f}, velocity={x[1,0]:.2f}")

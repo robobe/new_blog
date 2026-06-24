@@ -6,16 +6,22 @@ tags:
 ---
 
 <div class="grid-container">
- <div class="grid-item">
+ <!-- <div class="grid-item">
         <a href="slam">
                 <img src="images/slam.png"  width="150" height="150">
                 <p>SLAM</p>
             </a>
-    </div>
+    </div> -->
     <div class="grid-item">
         <a href="behavior_trees">
             <img src="images/behaviour_tree.png"  width="150" height="150">
                 <p>Behavior trees</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="fsm">
+            <img src="images/fsm.png"  width="150" height="150">
+                <p>Finite State machine</p>
         </a>
     </div>
 </div>

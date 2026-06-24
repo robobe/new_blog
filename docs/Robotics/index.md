@@ -7,17 +7,17 @@
 # Robotics
 
 <div class="grid-container">
-    <div class="grid-item">
+    <!-- <div class="grid-item">
         <a href="sensors">
                 <img src="images/sensors.png"  width="150" height="150">
                 <p>sensors</p></a>
-    </div>
-    <div class="grid-item">
+    </div> -->
+    <!-- <div class="grid-item">
         <a href="math">
                 <img src="images/robotics_math.png"  width="150" height="150">
                 <p>Math</p>
             </a>
-    </div>
+    </div> -->
     <div class="grid-item">
         <a href="algorithms">
                 <img src="images/algorithm.png"  width="150" height="150">
@@ -36,10 +36,10 @@
                 <p>Control</p>
             </a>
     </div>
-    <div class="grid-item">
+    <!-- <div class="grid-item">
          <a href="filter_and_estimator">
                 <img src="images/filters_and_estimators.png"  width="150" height="150">
                 <p>Filters and Estimators</p>
             </a>
-    </div>
+    </div> -->
 </div>

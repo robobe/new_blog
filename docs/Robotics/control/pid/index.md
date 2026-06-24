@@ -13,3 +13,4 @@ tags:
 
 ## Reference
 - [Understanding PID Control](https://www.mathworks.com/videos/series/understanding-pid-control.html)
+- [pid alternative](docs/Robotics/control/adrc)
