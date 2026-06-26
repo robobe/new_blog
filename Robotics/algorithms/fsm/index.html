@@ -991,76 +991,76 @@ At the end it calls the generated <code>robot.to_ERROR()</code> method to move d
 <span class="normal"><a href="#__codelineno-2-67">67</a></span>
 <span class="normal"><a href="#__codelineno-2-68">68</a></span>
 <span class="normal"><a href="#__codelineno-2-69">69</a></span>
-<span class="normal"><a href="#__codelineno-2-70">70</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>from enum import Enum
+<span class="normal"><a href="#__codelineno-2-70">70</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>from transitions import Machine
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">transitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Machine</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4"></a>
 <a id="__codelineno-2-5" name="__codelineno-2-5"></a>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>class RobotState(Enum):
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    IDLE = &quot;IDLE&quot;
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    TRACKING = &quot;TRACKING&quot;
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a>    ERROR = &quot;ERROR&quot;
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="k">class</span><span class="w"> </span><span class="nc">RobotState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="n">IDLE</span> <span class="o">=</span> <span class="s2">&quot;IDLE&quot;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="n">TRACKING</span> <span class="o">=</span> <span class="s2">&quot;TRACKING&quot;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
 <a id="__codelineno-2-10" name="__codelineno-2-10"></a>
 <a id="__codelineno-2-11" name="__codelineno-2-11"></a>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a>class Robot:
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    def on_enter_ERROR(self):
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a>        print(&quot;----enter error&quot;)
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="k">class</span><span class="w"> </span><span class="nc">Robot</span><span class="p">:</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_enter_ERROR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----enter error&quot;</span><span class="p">)</span>
 <a id="__codelineno-2-15" name="__codelineno-2-15"></a>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    def on_exit_ERROR(self):
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a>        print(&quot;----exit error&quot;)
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_exit_ERROR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----exit error&quot;</span><span class="p">)</span>
 <a id="__codelineno-2-18" name="__codelineno-2-18"></a>
 <a id="__codelineno-2-19" name="__codelineno-2-19"></a>
 <a id="__codelineno-2-20" name="__codelineno-2-20"></a>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a>robot = Robot()
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a><span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
 <a id="__codelineno-2-22" name="__codelineno-2-22"></a>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a>states = [
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    RobotState.IDLE,
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    RobotState.TRACKING,
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    RobotState.ERROR
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a>]
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a><span class="n">states</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    <span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    <span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span><span class="p">,</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="n">RobotState</span><span class="o">.</span><span class="n">ERROR</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a><span class="p">]</span>
 <a id="__codelineno-2-28" name="__codelineno-2-28"></a>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a>machine = Machine(
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a>    model=robot,
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a>    states=states,
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    initial=RobotState.IDLE
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a>)
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="n">machine</span> <span class="o">=</span> <span class="n">Machine</span><span class="p">(</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>    <span class="n">model</span><span class="o">=</span><span class="n">robot</span><span class="p">,</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>    <span class="n">states</span><span class="o">=</span><span class="n">states</span><span class="p">,</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>    <span class="n">initial</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a><span class="p">)</span>
 <a id="__codelineno-2-34" name="__codelineno-2-34"></a>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a>machine.add_transition(
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a>    trigger=&quot;start_tracking&quot;,
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a>    source=RobotState.IDLE,
-<a id="__codelineno-2-38" name="__codelineno-2-38"></a>    dest=RobotState.TRACKING
-<a id="__codelineno-2-39" name="__codelineno-2-39"></a>)
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>    <span class="n">trigger</span><span class="o">=</span><span class="s2">&quot;start_tracking&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>    <span class="n">source</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>    <span class="n">dest</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a><span class="p">)</span>
 <a id="__codelineno-2-40" name="__codelineno-2-40"></a>
-<a id="__codelineno-2-41" name="__codelineno-2-41"></a>machine.add_transition(
-<a id="__codelineno-2-42" name="__codelineno-2-42"></a>    trigger=&quot;error&quot;,
-<a id="__codelineno-2-43" name="__codelineno-2-43"></a>    source=&quot;*&quot;,
-<a id="__codelineno-2-44" name="__codelineno-2-44"></a>    dest=RobotState.ERROR
-<a id="__codelineno-2-45" name="__codelineno-2-45"></a>)
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a>    <span class="n">trigger</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a>    <span class="n">source</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a>    <span class="n">dest</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">ERROR</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="p">)</span>
 <a id="__codelineno-2-46" name="__codelineno-2-46"></a>
-<a id="__codelineno-2-47" name="__codelineno-2-47"></a>machine.add_transition(
-<a id="__codelineno-2-48" name="__codelineno-2-48"></a>    trigger=&quot;reset&quot;,
-<a id="__codelineno-2-49" name="__codelineno-2-49"></a>    source=RobotState.ERROR,
-<a id="__codelineno-2-50" name="__codelineno-2-50"></a>    dest=RobotState.IDLE
-<a id="__codelineno-2-51" name="__codelineno-2-51"></a>)
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a>    <span class="n">trigger</span><span class="o">=</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a>    <span class="n">source</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50"></a>    <span class="n">dest</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51"></a><span class="p">)</span>
 <a id="__codelineno-2-52" name="__codelineno-2-52"></a>
-<a id="__codelineno-2-53" name="__codelineno-2-53"></a>print(robot.state)
-<a id="__codelineno-2-54" name="__codelineno-2-54"></a># call trigger
-<a id="__codelineno-2-55" name="__codelineno-2-55"></a>robot.start_tracking()
-<a id="__codelineno-2-56" name="__codelineno-2-56"></a># print state
-<a id="__codelineno-2-57" name="__codelineno-2-57"></a>print(robot.state)
-<a id="__codelineno-2-58" name="__codelineno-2-58"></a># call trigger
-<a id="__codelineno-2-59" name="__codelineno-2-59"></a>robot.error()
-<a id="__codelineno-2-60" name="__codelineno-2-60"></a># check if in state
-<a id="__codelineno-2-61" name="__codelineno-2-61"></a>if robot.is_ERROR():
-<a id="__codelineno-2-62" name="__codelineno-2-62"></a>    print(&quot;**robot has error**&quot;)
-<a id="__codelineno-2-63" name="__codelineno-2-63"></a># print state
-<a id="__codelineno-2-64" name="__codelineno-2-64"></a>print(robot.state)
-<a id="__codelineno-2-65" name="__codelineno-2-65"></a># call trigger
-<a id="__codelineno-2-66" name="__codelineno-2-66"></a>robot.reset()
-<a id="__codelineno-2-67" name="__codelineno-2-67"></a>print(robot.state)
-<a id="__codelineno-2-68" name="__codelineno-2-68"></a># move to state without trigger
-<a id="__codelineno-2-69" name="__codelineno-2-69"></a>robot.to_ERROR()
-<a id="__codelineno-2-70" name="__codelineno-2-70"></a>print(robot.state)
+<a id="__codelineno-2-53" name="__codelineno-2-53"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-2-54" name="__codelineno-2-54"></a><span class="c1"># call trigger</span>
+<a id="__codelineno-2-55" name="__codelineno-2-55"></a><span class="n">robot</span><span class="o">.</span><span class="n">start_tracking</span><span class="p">()</span>
+<a id="__codelineno-2-56" name="__codelineno-2-56"></a><span class="c1"># print state</span>
+<a id="__codelineno-2-57" name="__codelineno-2-57"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-2-58" name="__codelineno-2-58"></a><span class="c1"># call trigger</span>
+<a id="__codelineno-2-59" name="__codelineno-2-59"></a><span class="n">robot</span><span class="o">.</span><span class="n">error</span><span class="p">()</span>
+<a id="__codelineno-2-60" name="__codelineno-2-60"></a><span class="c1"># check if in state</span>
+<a id="__codelineno-2-61" name="__codelineno-2-61"></a><span class="k">if</span> <span class="n">robot</span><span class="o">.</span><span class="n">is_ERROR</span><span class="p">():</span>
+<a id="__codelineno-2-62" name="__codelineno-2-62"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**robot has error**&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-63" name="__codelineno-2-63"></a><span class="c1"># print state</span>
+<a id="__codelineno-2-64" name="__codelineno-2-64"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-2-65" name="__codelineno-2-65"></a><span class="c1"># call trigger</span>
+<a id="__codelineno-2-66" name="__codelineno-2-66"></a><span class="n">robot</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+<a id="__codelineno-2-67" name="__codelineno-2-67"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+<a id="__codelineno-2-68" name="__codelineno-2-68"></a><span class="c1"># move to state without trigger</span>
+<a id="__codelineno-2-69" name="__codelineno-2-69"></a><span class="n">robot</span><span class="o">.</span><span class="n">to_ERROR</span><span class="p">()</span>
+<a id="__codelineno-2-70" name="__codelineno-2-70"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
@@ -1181,113 +1181,113 @@ The wildcard transition from <code>*</code> to <code>ERROR</code> catches critic
 <span class="normal"><a href="#__codelineno-3-104">104</a></span>
 <span class="normal"><a href="#__codelineno-3-105">105</a></span>
 <span class="normal"><a href="#__codelineno-3-106">106</a></span>
-<span class="normal"><a href="#__codelineno-3-107">107</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>from dataclasses import dataclass
-<a id="__codelineno-3-2" name="__codelineno-3-2"></a>from enum import Enum
+<span class="normal"><a href="#__codelineno-3-107">107</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4"></a>from transitions import Machine
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">transitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Machine</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5"></a>
 <a id="__codelineno-3-6" name="__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7"></a>class RobotState(Enum):
-<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    IDLE = &quot;IDLE&quot;
-<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    SEARCH = &quot;SEARCH&quot;
-<a id="__codelineno-3-10" name="__codelineno-3-10"></a>    TRACKING = &quot;TRACKING&quot;
-<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    RECOVERY = &quot;RECOVERY&quot;
-<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    ERROR = &quot;ERROR&quot;
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">RobotState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">IDLE</span> <span class="o">=</span> <span class="s2">&quot;IDLE&quot;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>    <span class="n">SEARCH</span> <span class="o">=</span> <span class="s2">&quot;SEARCH&quot;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="n">TRACKING</span> <span class="o">=</span> <span class="s2">&quot;TRACKING&quot;</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">RECOVERY</span> <span class="o">=</span> <span class="s2">&quot;RECOVERY&quot;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
 <a id="__codelineno-3-13" name="__codelineno-3-13"></a>
 <a id="__codelineno-3-14" name="__codelineno-3-14"></a>
-<a id="__codelineno-3-15" name="__codelineno-3-15"></a>@dataclass
-<a id="__codelineno-3-16" name="__codelineno-3-16"></a>class Context:
-<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    camera_connected: bool = False
-<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    target_found: bool = False
-<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    target_confidence: float = 0.0
-<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    battery_voltage: float = 12.0
-<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    retry_count: int = 0
-<a id="__codelineno-3-22" name="__codelineno-3-22"></a>    error: bool = False
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="k">class</span><span class="w"> </span><span class="nc">Context</span><span class="p">:</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="n">camera_connected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="n">target_found</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="n">target_confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">battery_voltage</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">12.0</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>    <span class="n">retry_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>    <span class="n">error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <a id="__codelineno-3-23" name="__codelineno-3-23"></a>
 <a id="__codelineno-3-24" name="__codelineno-3-24"></a>
-<a id="__codelineno-3-25" name="__codelineno-3-25"></a>class Robot:
-<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    states = list(RobotState)
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="k">class</span><span class="w"> </span><span class="nc">Robot</span><span class="p">:</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="n">states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">RobotState</span><span class="p">)</span>
 <a id="__codelineno-3-27" name="__codelineno-3-27"></a>
-<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    def __init__(self):
-<a id="__codelineno-3-29" name="__codelineno-3-29"></a>        self.ctx = Context()
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">()</span>
 <a id="__codelineno-3-30" name="__codelineno-3-30"></a>
-<a id="__codelineno-3-31" name="__codelineno-3-31"></a>        self.machine = Machine(
-<a id="__codelineno-3-32" name="__codelineno-3-32"></a>            model=self,
-<a id="__codelineno-3-33" name="__codelineno-3-33"></a>            states=self.states,
-<a id="__codelineno-3-34" name="__codelineno-3-34"></a>            initial=RobotState.IDLE,
-<a id="__codelineno-3-35" name="__codelineno-3-35"></a>            ignore_invalid_triggers=True,
-<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        )
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span> <span class="o">=</span> <span class="n">Machine</span><span class="p">(</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>            <span class="n">states</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">,</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>            <span class="n">initial</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>            <span class="n">ignore_invalid_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="p">)</span>
 <a id="__codelineno-3-37" name="__codelineno-3-37"></a>
-<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        self.machine.add_transition(
-<a id="__codelineno-3-39" name="__codelineno-3-39"></a>            &quot;resolve&quot;,
-<a id="__codelineno-3-40" name="__codelineno-3-40"></a>            RobotState.IDLE,
-<a id="__codelineno-3-41" name="__codelineno-3-41"></a>            RobotState.SEARCH,
-<a id="__codelineno-3-42" name="__codelineno-3-42"></a>            conditions=[self.can_start_search],
-<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        )
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">can_start_search</span><span class="p">],</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        <span class="p">)</span>
 <a id="__codelineno-3-44" name="__codelineno-3-44"></a>
-<a id="__codelineno-3-45" name="__codelineno-3-45"></a>        self.machine.add_transition(
-<a id="__codelineno-3-46" name="__codelineno-3-46"></a>            &quot;resolve&quot;,
-<a id="__codelineno-3-47" name="__codelineno-3-47"></a>            RobotState.SEARCH,
-<a id="__codelineno-3-48" name="__codelineno-3-48"></a>            RobotState.TRACKING,
-<a id="__codelineno-3-49" name="__codelineno-3-49"></a>            conditions=[self.good_target],
-<a id="__codelineno-3-50" name="__codelineno-3-50"></a>        )
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span><span class="p">,</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">good_target</span><span class="p">],</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>        <span class="p">)</span>
 <a id="__codelineno-3-51" name="__codelineno-3-51"></a>
-<a id="__codelineno-3-52" name="__codelineno-3-52"></a>        self.machine.add_transition(
-<a id="__codelineno-3-53" name="__codelineno-3-53"></a>            &quot;resolve&quot;,
-<a id="__codelineno-3-54" name="__codelineno-3-54"></a>            RobotState.TRACKING,
-<a id="__codelineno-3-55" name="__codelineno-3-55"></a>            RobotState.RECOVERY,
-<a id="__codelineno-3-56" name="__codelineno-3-56"></a>            conditions=[self.target_lost_but_can_retry],
-<a id="__codelineno-3-57" name="__codelineno-3-57"></a>        )
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span><span class="p">,</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">RECOVERY</span><span class="p">,</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_lost_but_can_retry</span><span class="p">],</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>        <span class="p">)</span>
 <a id="__codelineno-3-58" name="__codelineno-3-58"></a>
-<a id="__codelineno-3-59" name="__codelineno-3-59"></a>        self.machine.add_transition(
-<a id="__codelineno-3-60" name="__codelineno-3-60"></a>            &quot;resolve&quot;,
-<a id="__codelineno-3-61" name="__codelineno-3-61"></a>            &quot;*&quot;,
-<a id="__codelineno-3-62" name="__codelineno-3-62"></a>            RobotState.ERROR,
-<a id="__codelineno-3-63" name="__codelineno-3-63"></a>            conditions=[self.critical_error],
-<a id="__codelineno-3-64" name="__codelineno-3-64"></a>        )
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>            <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">critical_error</span><span class="p">],</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a>        <span class="p">)</span>
 <a id="__codelineno-3-65" name="__codelineno-3-65"></a>
-<a id="__codelineno-3-66" name="__codelineno-3-66"></a>    def can_start_search(self):
-<a id="__codelineno-3-67" name="__codelineno-3-67"></a>        return (
-<a id="__codelineno-3-68" name="__codelineno-3-68"></a>            self.ctx.camera_connected
-<a id="__codelineno-3-69" name="__codelineno-3-69"></a>            and self.ctx.battery_voltage &gt; 10.5
-<a id="__codelineno-3-70" name="__codelineno-3-70"></a>            and not self.ctx.error
-<a id="__codelineno-3-71" name="__codelineno-3-71"></a>        )
+<a id="__codelineno-3-66" name="__codelineno-3-66"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">can_start_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">camera_connected</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">&gt;</span> <span class="mf">10.5</span>
+<a id="__codelineno-3-70" name="__codelineno-3-70"></a>            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">error</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71"></a>        <span class="p">)</span>
 <a id="__codelineno-3-72" name="__codelineno-3-72"></a>
-<a id="__codelineno-3-73" name="__codelineno-3-73"></a>    def good_target(self):
-<a id="__codelineno-3-74" name="__codelineno-3-74"></a>        return (
-<a id="__codelineno-3-75" name="__codelineno-3-75"></a>            self.ctx.target_found
-<a id="__codelineno-3-76" name="__codelineno-3-76"></a>            and self.ctx.target_confidence &gt; 0.75
-<a id="__codelineno-3-77" name="__codelineno-3-77"></a>        )
+<a id="__codelineno-3-73" name="__codelineno-3-73"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">good_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-74" name="__codelineno-3-74"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-3-75" name="__codelineno-3-75"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span>
+<a id="__codelineno-3-76" name="__codelineno-3-76"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_confidence</span> <span class="o">&gt;</span> <span class="mf">0.75</span>
+<a id="__codelineno-3-77" name="__codelineno-3-77"></a>        <span class="p">)</span>
 <a id="__codelineno-3-78" name="__codelineno-3-78"></a>
-<a id="__codelineno-3-79" name="__codelineno-3-79"></a>    def target_lost_but_can_retry(self):
-<a id="__codelineno-3-80" name="__codelineno-3-80"></a>        return (
-<a id="__codelineno-3-81" name="__codelineno-3-81"></a>            not self.ctx.target_found
-<a id="__codelineno-3-82" name="__codelineno-3-82"></a>            and self.ctx.retry_count &lt; 3
-<a id="__codelineno-3-83" name="__codelineno-3-83"></a>        )
+<a id="__codelineno-3-79" name="__codelineno-3-79"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">target_lost_but_can_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-80" name="__codelineno-3-80"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81"></a>            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">&lt;</span> <span class="mi">3</span>
+<a id="__codelineno-3-83" name="__codelineno-3-83"></a>        <span class="p">)</span>
 <a id="__codelineno-3-84" name="__codelineno-3-84"></a>
-<a id="__codelineno-3-85" name="__codelineno-3-85"></a>    def critical_error(self):
-<a id="__codelineno-3-86" name="__codelineno-3-86"></a>        return (
-<a id="__codelineno-3-87" name="__codelineno-3-87"></a>            self.ctx.error
-<a id="__codelineno-3-88" name="__codelineno-3-88"></a>            or self.ctx.battery_voltage &lt; 9.5
-<a id="__codelineno-3-89" name="__codelineno-3-89"></a>            or self.ctx.retry_count &gt;= 3
-<a id="__codelineno-3-90" name="__codelineno-3-90"></a>        )
+<a id="__codelineno-3-85" name="__codelineno-3-85"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">critical_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-86" name="__codelineno-3-86"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-3-87" name="__codelineno-3-87"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">error</span>
+<a id="__codelineno-3-88" name="__codelineno-3-88"></a>            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">&lt;</span> <span class="mf">9.5</span>
+<a id="__codelineno-3-89" name="__codelineno-3-89"></a>            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+<a id="__codelineno-3-90" name="__codelineno-3-90"></a>        <span class="p">)</span>
 <a id="__codelineno-3-91" name="__codelineno-3-91"></a>
-<a id="__codelineno-3-92" name="__codelineno-3-92"></a>robot = Robot()
+<a id="__codelineno-3-92" name="__codelineno-3-92"></a><span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
 <a id="__codelineno-3-93" name="__codelineno-3-93"></a>
-<a id="__codelineno-3-94" name="__codelineno-3-94"></a>robot.ctx.camera_connected = True
-<a id="__codelineno-3-95" name="__codelineno-3-95"></a>robot.ctx.battery_voltage = 11.8
-<a id="__codelineno-3-96" name="__codelineno-3-96"></a>robot.resolve()
-<a id="__codelineno-3-97" name="__codelineno-3-97"></a>print(robot.state)  # RobotState.SEARCH
+<a id="__codelineno-3-94" name="__codelineno-3-94"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">camera_connected</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-95" name="__codelineno-3-95"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">=</span> <span class="mf">11.8</span>
+<a id="__codelineno-3-96" name="__codelineno-3-96"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-3-97" name="__codelineno-3-97"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.SEARCH</span>
 <a id="__codelineno-3-98" name="__codelineno-3-98"></a>
-<a id="__codelineno-3-99" name="__codelineno-3-99"></a>robot.ctx.target_found = True
-<a id="__codelineno-3-100" name="__codelineno-3-100"></a>robot.ctx.target_confidence = 0.9
-<a id="__codelineno-3-101" name="__codelineno-3-101"></a>robot.resolve()
-<a id="__codelineno-3-102" name="__codelineno-3-102"></a>print(robot.state)  # RobotState.TRACKING
+<a id="__codelineno-3-99" name="__codelineno-3-99"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-100" name="__codelineno-3-100"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_confidence</span> <span class="o">=</span> <span class="mf">0.9</span>
+<a id="__codelineno-3-101" name="__codelineno-3-101"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-3-102" name="__codelineno-3-102"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.TRACKING</span>
 <a id="__codelineno-3-103" name="__codelineno-3-103"></a>
-<a id="__codelineno-3-104" name="__codelineno-3-104"></a>robot.ctx.target_found = False
-<a id="__codelineno-3-105" name="__codelineno-3-105"></a>robot.ctx.retry_count = 1
-<a id="__codelineno-3-106" name="__codelineno-3-106"></a>robot.resolve()
-<a id="__codelineno-3-107" name="__codelineno-3-107"></a>print(robot.state)  # RobotState.RECOVERY
+<a id="__codelineno-3-104" name="__codelineno-3-104"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-105" name="__codelineno-3-105"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-3-106" name="__codelineno-3-106"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-3-107" name="__codelineno-3-107"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.RECOVERY</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
@@ -1299,7 +1299,235 @@ The machine is created with <code>send_event=True</code>, so callbacks receive a
 <details>
 <summary>State Machine with conditions and callback</summary>
 
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-4-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-4-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-4-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-4-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-4-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-4-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-4-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-4-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-4-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-4-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-4-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-4-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-4-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-4-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-4-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-4-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-4-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-4-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-4-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-4-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-4-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-4-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-4-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-4-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-4-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-4-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-4-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-4-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-4-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-4-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-4-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-4-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-4-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-4-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-4-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-4-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-4-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-4-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-4-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-4-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-4-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-4-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-4-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-4-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-4-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-4-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-4-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-4-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-4-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-4-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-4-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-4-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-4-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-4-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-4-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-4-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-4-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-4-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-4-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-4-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-4-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-4-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-4-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-4-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-4-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-4-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-4-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-4-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-4-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-4-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-4-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-4-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-4-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-4-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-4-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-4-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-4-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-4-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-4-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-4-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-4-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-4-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-4-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-4-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-4-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-4-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-4-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-4-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-4-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-4-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-4-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-4-100">100</a></span>
+<span class="normal"><a href="#__codelineno-4-101">101</a></span>
+<span class="normal"><a href="#__codelineno-4-102">102</a></span>
+<span class="normal"><a href="#__codelineno-4-103">103</a></span>
+<span class="normal"><a href="#__codelineno-4-104">104</a></span>
+<span class="normal"><a href="#__codelineno-4-105">105</a></span>
+<span class="normal"><a href="#__codelineno-4-106">106</a></span>
+<span class="normal"><a href="#__codelineno-4-107">107</a></span>
+<span class="normal"><a href="#__codelineno-4-108">108</a></span>
+<span class="normal"><a href="#__codelineno-4-109">109</a></span>
+<span class="normal"><a href="#__codelineno-4-110">110</a></span>
+<span class="normal"><a href="#__codelineno-4-111">111</a></span>
+<span class="normal"><a href="#__codelineno-4-112">112</a></span>
+<span class="normal"><a href="#__codelineno-4-113">113</a></span>
+<span class="normal"><a href="#__codelineno-4-114">114</a></span>
+<span class="normal"><a href="#__codelineno-4-115">115</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">transitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Machine</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">RobotState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>    <span class="n">IDLE</span> <span class="o">=</span> <span class="s2">&quot;IDLE&quot;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="n">SEARCH</span> <span class="o">=</span> <span class="s2">&quot;SEARCH&quot;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="n">TRACKING</span> <span class="o">=</span> <span class="s2">&quot;TRACKING&quot;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="n">RECOVERY</span> <span class="o">=</span> <span class="s2">&quot;RECOVERY&quot;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="k">class</span><span class="w"> </span><span class="nc">Context</span><span class="p">:</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>    <span class="n">camera_connected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>    <span class="n">target_found</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a>    <span class="n">target_confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a>    <span class="n">battery_voltage</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">12.0</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a>    <span class="n">retry_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>    <span class="n">error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="k">class</span><span class="w"> </span><span class="nc">Robot</span><span class="p">:</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a>    <span class="n">states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">RobotState</span><span class="p">)</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">()</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span> <span class="o">=</span> <span class="n">Machine</span><span class="p">(</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a>            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a>            <span class="n">states</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">,</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a>            <span class="n">initial</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a>            <span class="n">ignore_invalid_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a>            <span class="n">send_event</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a>            <span class="n">after_state_change</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_state_changed</span><span class="p">,</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a>        <span class="p">)</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">can_start_search</span><span class="p">],</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a>        <span class="p">)</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a>
+<a id="__codelineno-4-47" name="__codelineno-4-47"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span><span class="p">,</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">good_target</span><span class="p">],</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52"></a>        <span class="p">)</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53"></a>
+<a id="__codelineno-4-54" name="__codelineno-4-54"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-56" name="__codelineno-4-56"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span><span class="p">,</span>
+<a id="__codelineno-4-57" name="__codelineno-4-57"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">RECOVERY</span><span class="p">,</span>
+<a id="__codelineno-4-58" name="__codelineno-4-58"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_lost_but_can_retry</span><span class="p">],</span>
+<a id="__codelineno-4-59" name="__codelineno-4-59"></a>        <span class="p">)</span>
+<a id="__codelineno-4-60" name="__codelineno-4-60"></a>
+<a id="__codelineno-4-61" name="__codelineno-4-61"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-4-62" name="__codelineno-4-62"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-63" name="__codelineno-4-63"></a>            <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-64" name="__codelineno-4-64"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+<a id="__codelineno-4-65" name="__codelineno-4-65"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">critical_error</span><span class="p">],</span>
+<a id="__codelineno-4-66" name="__codelineno-4-66"></a>        <span class="p">)</span>
+<a id="__codelineno-4-67" name="__codelineno-4-67"></a>
+<a id="__codelineno-4-68" name="__codelineno-4-68"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_state_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-4-69" name="__codelineno-4-69"></a>        <span class="n">previous_state</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">source</span>
+<a id="__codelineno-4-70" name="__codelineno-4-70"></a>        <span class="n">new_state</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">dest</span>
+<a id="__codelineno-4-71" name="__codelineno-4-71"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State changed: </span><span class="si">{</span><span class="n">previous_state</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">new_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-72" name="__codelineno-4-72"></a>
+<a id="__codelineno-4-73" name="__codelineno-4-73"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">can_start_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-4-74" name="__codelineno-4-74"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-4-75" name="__codelineno-4-75"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">camera_connected</span>
+<a id="__codelineno-4-76" name="__codelineno-4-76"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">&gt;</span> <span class="mf">10.5</span>
+<a id="__codelineno-4-77" name="__codelineno-4-77"></a>            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">error</span>
+<a id="__codelineno-4-78" name="__codelineno-4-78"></a>        <span class="p">)</span>
+<a id="__codelineno-4-79" name="__codelineno-4-79"></a>
+<a id="__codelineno-4-80" name="__codelineno-4-80"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">good_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-4-81" name="__codelineno-4-81"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-4-82" name="__codelineno-4-82"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span>
+<a id="__codelineno-4-83" name="__codelineno-4-83"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_confidence</span> <span class="o">&gt;</span> <span class="mf">0.75</span>
+<a id="__codelineno-4-84" name="__codelineno-4-84"></a>        <span class="p">)</span>
+<a id="__codelineno-4-85" name="__codelineno-4-85"></a>
+<a id="__codelineno-4-86" name="__codelineno-4-86"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">target_lost_but_can_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-4-87" name="__codelineno-4-87"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-4-88" name="__codelineno-4-88"></a>            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span>
+<a id="__codelineno-4-89" name="__codelineno-4-89"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">&lt;</span> <span class="mi">3</span>
+<a id="__codelineno-4-90" name="__codelineno-4-90"></a>        <span class="p">)</span>
+<a id="__codelineno-4-91" name="__codelineno-4-91"></a>
+<a id="__codelineno-4-92" name="__codelineno-4-92"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">critical_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-4-93" name="__codelineno-4-93"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-4-94" name="__codelineno-4-94"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">error</span>
+<a id="__codelineno-4-95" name="__codelineno-4-95"></a>            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">&lt;</span> <span class="mf">9.5</span>
+<a id="__codelineno-4-96" name="__codelineno-4-96"></a>            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+<a id="__codelineno-4-97" name="__codelineno-4-97"></a>        <span class="p">)</span>
+<a id="__codelineno-4-98" name="__codelineno-4-98"></a>
+<a id="__codelineno-4-99" name="__codelineno-4-99"></a>
+<a id="__codelineno-4-100" name="__codelineno-4-100"></a><span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
+<a id="__codelineno-4-101" name="__codelineno-4-101"></a>
+<a id="__codelineno-4-102" name="__codelineno-4-102"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">camera_connected</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-4-103" name="__codelineno-4-103"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">=</span> <span class="mf">11.8</span>
+<a id="__codelineno-4-104" name="__codelineno-4-104"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-4-105" name="__codelineno-4-105"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.SEARCH</span>
+<a id="__codelineno-4-106" name="__codelineno-4-106"></a>
+<a id="__codelineno-4-107" name="__codelineno-4-107"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-4-108" name="__codelineno-4-108"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_confidence</span> <span class="o">=</span> <span class="mf">0.9</span>
+<a id="__codelineno-4-109" name="__codelineno-4-109"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-4-110" name="__codelineno-4-110"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.TRACKING</span>
+<a id="__codelineno-4-111" name="__codelineno-4-111"></a>
+<a id="__codelineno-4-112" name="__codelineno-4-112"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-4-113" name="__codelineno-4-113"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-4-114" name="__codelineno-4-114"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-4-115" name="__codelineno-4-115"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.RECOVERY</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
@@ -1470,121 +1698,121 @@ That makes this callback useful for logging, publishing state changes, updating 
 <span class="normal"><a href="#__codelineno-9-112">112</a></span>
 <span class="normal"><a href="#__codelineno-9-113">113</a></span>
 <span class="normal"><a href="#__codelineno-9-114">114</a></span>
-<span class="normal"><a href="#__codelineno-9-115">115</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>from dataclasses import dataclass
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a>from enum import Enum
+<span class="normal"><a href="#__codelineno-9-115">115</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3"></a>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a>from transitions import Machine
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">transitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Machine</span>
 <a id="__codelineno-9-5" name="__codelineno-9-5"></a>
 <a id="__codelineno-9-6" name="__codelineno-9-6"></a>
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a>class RobotState(Enum):
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a>    IDLE = &quot;IDLE&quot;
-<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    SEARCH = &quot;SEARCH&quot;
-<a id="__codelineno-9-10" name="__codelineno-9-10"></a>    TRACKING = &quot;TRACKING&quot;
-<a id="__codelineno-9-11" name="__codelineno-9-11"></a>    RECOVERY = &quot;RECOVERY&quot;
-<a id="__codelineno-9-12" name="__codelineno-9-12"></a>    ERROR = &quot;ERROR&quot;
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">RobotState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>    <span class="n">IDLE</span> <span class="o">=</span> <span class="s2">&quot;IDLE&quot;</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="n">SEARCH</span> <span class="o">=</span> <span class="s2">&quot;SEARCH&quot;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>    <span class="n">TRACKING</span> <span class="o">=</span> <span class="s2">&quot;TRACKING&quot;</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>    <span class="n">RECOVERY</span> <span class="o">=</span> <span class="s2">&quot;RECOVERY&quot;</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>    <span class="n">ERROR</span> <span class="o">=</span> <span class="s2">&quot;ERROR&quot;</span>
 <a id="__codelineno-9-13" name="__codelineno-9-13"></a>
 <a id="__codelineno-9-14" name="__codelineno-9-14"></a>
-<a id="__codelineno-9-15" name="__codelineno-9-15"></a>@dataclass
-<a id="__codelineno-9-16" name="__codelineno-9-16"></a>class Context:
-<a id="__codelineno-9-17" name="__codelineno-9-17"></a>    camera_connected: bool = False
-<a id="__codelineno-9-18" name="__codelineno-9-18"></a>    target_found: bool = False
-<a id="__codelineno-9-19" name="__codelineno-9-19"></a>    target_confidence: float = 0.0
-<a id="__codelineno-9-20" name="__codelineno-9-20"></a>    battery_voltage: float = 12.0
-<a id="__codelineno-9-21" name="__codelineno-9-21"></a>    retry_count: int = 0
-<a id="__codelineno-9-22" name="__codelineno-9-22"></a>    error: bool = False
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="k">class</span><span class="w"> </span><span class="nc">Context</span><span class="p">:</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>    <span class="n">camera_connected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a>    <span class="n">target_found</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>    <span class="n">target_confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a>    <span class="n">battery_voltage</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">12.0</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a>    <span class="n">retry_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a>    <span class="n">error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <a id="__codelineno-9-23" name="__codelineno-9-23"></a>
 <a id="__codelineno-9-24" name="__codelineno-9-24"></a>
-<a id="__codelineno-9-25" name="__codelineno-9-25"></a>class Robot:
-<a id="__codelineno-9-26" name="__codelineno-9-26"></a>    states = list(RobotState)
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="k">class</span><span class="w"> </span><span class="nc">Robot</span><span class="p">:</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a>    <span class="n">states</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">RobotState</span><span class="p">)</span>
 <a id="__codelineno-9-27" name="__codelineno-9-27"></a>
-<a id="__codelineno-9-28" name="__codelineno-9-28"></a>    def __init__(self):
-<a id="__codelineno-9-29" name="__codelineno-9-29"></a>        self.ctx = Context()
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">()</span>
 <a id="__codelineno-9-30" name="__codelineno-9-30"></a>
-<a id="__codelineno-9-31" name="__codelineno-9-31"></a>        self.machine = Machine(
-<a id="__codelineno-9-32" name="__codelineno-9-32"></a>            model=self,
-<a id="__codelineno-9-33" name="__codelineno-9-33"></a>            states=self.states,
-<a id="__codelineno-9-34" name="__codelineno-9-34"></a>            initial=RobotState.IDLE,
-<a id="__codelineno-9-35" name="__codelineno-9-35"></a>            ignore_invalid_triggers=True,
-<a id="__codelineno-9-36" name="__codelineno-9-36"></a>            send_event=True,
-<a id="__codelineno-9-37" name="__codelineno-9-37"></a>            after_state_change=self.on_state_changed,
-<a id="__codelineno-9-38" name="__codelineno-9-38"></a>        )
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span> <span class="o">=</span> <span class="n">Machine</span><span class="p">(</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a>            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a>            <span class="n">states</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">,</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34"></a>            <span class="n">initial</span><span class="o">=</span><span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35"></a>            <span class="n">ignore_invalid_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36"></a>            <span class="n">send_event</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37"></a>            <span class="n">after_state_change</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_state_changed</span><span class="p">,</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38"></a>        <span class="p">)</span>
 <a id="__codelineno-9-39" name="__codelineno-9-39"></a>
-<a id="__codelineno-9-40" name="__codelineno-9-40"></a>        self.machine.add_transition(
-<a id="__codelineno-9-41" name="__codelineno-9-41"></a>            &quot;resolve&quot;,
-<a id="__codelineno-9-42" name="__codelineno-9-42"></a>            RobotState.IDLE,
-<a id="__codelineno-9-43" name="__codelineno-9-43"></a>            RobotState.SEARCH,
-<a id="__codelineno-9-44" name="__codelineno-9-44"></a>            conditions=[self.can_start_search],
-<a id="__codelineno-9-45" name="__codelineno-9-45"></a>        )
+<a id="__codelineno-9-40" name="__codelineno-9-40"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">IDLE</span><span class="p">,</span>
+<a id="__codelineno-9-43" name="__codelineno-9-43"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">can_start_search</span><span class="p">],</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45"></a>        <span class="p">)</span>
 <a id="__codelineno-9-46" name="__codelineno-9-46"></a>
-<a id="__codelineno-9-47" name="__codelineno-9-47"></a>        self.machine.add_transition(
-<a id="__codelineno-9-48" name="__codelineno-9-48"></a>            &quot;resolve&quot;,
-<a id="__codelineno-9-49" name="__codelineno-9-49"></a>            RobotState.SEARCH,
-<a id="__codelineno-9-50" name="__codelineno-9-50"></a>            RobotState.TRACKING,
-<a id="__codelineno-9-51" name="__codelineno-9-51"></a>            conditions=[self.good_target],
-<a id="__codelineno-9-52" name="__codelineno-9-52"></a>        )
+<a id="__codelineno-9-47" name="__codelineno-9-47"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-49" name="__codelineno-9-49"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">SEARCH</span><span class="p">,</span>
+<a id="__codelineno-9-50" name="__codelineno-9-50"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span><span class="p">,</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">good_target</span><span class="p">],</span>
+<a id="__codelineno-9-52" name="__codelineno-9-52"></a>        <span class="p">)</span>
 <a id="__codelineno-9-53" name="__codelineno-9-53"></a>
-<a id="__codelineno-9-54" name="__codelineno-9-54"></a>        self.machine.add_transition(
-<a id="__codelineno-9-55" name="__codelineno-9-55"></a>            &quot;resolve&quot;,
-<a id="__codelineno-9-56" name="__codelineno-9-56"></a>            RobotState.TRACKING,
-<a id="__codelineno-9-57" name="__codelineno-9-57"></a>            RobotState.RECOVERY,
-<a id="__codelineno-9-58" name="__codelineno-9-58"></a>            conditions=[self.target_lost_but_can_retry],
-<a id="__codelineno-9-59" name="__codelineno-9-59"></a>        )
+<a id="__codelineno-9-54" name="__codelineno-9-54"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-56" name="__codelineno-9-56"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">TRACKING</span><span class="p">,</span>
+<a id="__codelineno-9-57" name="__codelineno-9-57"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">RECOVERY</span><span class="p">,</span>
+<a id="__codelineno-9-58" name="__codelineno-9-58"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_lost_but_can_retry</span><span class="p">],</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59"></a>        <span class="p">)</span>
 <a id="__codelineno-9-60" name="__codelineno-9-60"></a>
-<a id="__codelineno-9-61" name="__codelineno-9-61"></a>        self.machine.add_transition(
-<a id="__codelineno-9-62" name="__codelineno-9-62"></a>            &quot;resolve&quot;,
-<a id="__codelineno-9-63" name="__codelineno-9-63"></a>            &quot;*&quot;,
-<a id="__codelineno-9-64" name="__codelineno-9-64"></a>            RobotState.ERROR,
-<a id="__codelineno-9-65" name="__codelineno-9-65"></a>            conditions=[self.critical_error],
-<a id="__codelineno-9-66" name="__codelineno-9-66"></a>        )
+<a id="__codelineno-9-61" name="__codelineno-9-61"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">machine</span><span class="o">.</span><span class="n">add_transition</span><span class="p">(</span>
+<a id="__codelineno-9-62" name="__codelineno-9-62"></a>            <span class="s2">&quot;resolve&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-63" name="__codelineno-9-63"></a>            <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-64" name="__codelineno-9-64"></a>            <span class="n">RobotState</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+<a id="__codelineno-9-65" name="__codelineno-9-65"></a>            <span class="n">conditions</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">critical_error</span><span class="p">],</span>
+<a id="__codelineno-9-66" name="__codelineno-9-66"></a>        <span class="p">)</span>
 <a id="__codelineno-9-67" name="__codelineno-9-67"></a>
-<a id="__codelineno-9-68" name="__codelineno-9-68"></a>    def on_state_changed(self, event):
-<a id="__codelineno-9-69" name="__codelineno-9-69"></a>        previous_state = event.transition.source
-<a id="__codelineno-9-70" name="__codelineno-9-70"></a>        new_state = event.transition.dest
-<a id="__codelineno-9-71" name="__codelineno-9-71"></a>        print(f&quot;State changed: {previous_state} -&gt; {new_state}&quot;)
+<a id="__codelineno-9-68" name="__codelineno-9-68"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_state_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-9-69" name="__codelineno-9-69"></a>        <span class="n">previous_state</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">source</span>
+<a id="__codelineno-9-70" name="__codelineno-9-70"></a>        <span class="n">new_state</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">dest</span>
+<a id="__codelineno-9-71" name="__codelineno-9-71"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State changed: </span><span class="si">{</span><span class="n">previous_state</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">new_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <a id="__codelineno-9-72" name="__codelineno-9-72"></a>
-<a id="__codelineno-9-73" name="__codelineno-9-73"></a>    def can_start_search(self, event):
-<a id="__codelineno-9-74" name="__codelineno-9-74"></a>        return (
-<a id="__codelineno-9-75" name="__codelineno-9-75"></a>            self.ctx.camera_connected
-<a id="__codelineno-9-76" name="__codelineno-9-76"></a>            and self.ctx.battery_voltage &gt; 10.5
-<a id="__codelineno-9-77" name="__codelineno-9-77"></a>            and not self.ctx.error
-<a id="__codelineno-9-78" name="__codelineno-9-78"></a>        )
+<a id="__codelineno-9-73" name="__codelineno-9-73"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">can_start_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-9-74" name="__codelineno-9-74"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-9-75" name="__codelineno-9-75"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">camera_connected</span>
+<a id="__codelineno-9-76" name="__codelineno-9-76"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">&gt;</span> <span class="mf">10.5</span>
+<a id="__codelineno-9-77" name="__codelineno-9-77"></a>            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">error</span>
+<a id="__codelineno-9-78" name="__codelineno-9-78"></a>        <span class="p">)</span>
 <a id="__codelineno-9-79" name="__codelineno-9-79"></a>
-<a id="__codelineno-9-80" name="__codelineno-9-80"></a>    def good_target(self, event):
-<a id="__codelineno-9-81" name="__codelineno-9-81"></a>        return (
-<a id="__codelineno-9-82" name="__codelineno-9-82"></a>            self.ctx.target_found
-<a id="__codelineno-9-83" name="__codelineno-9-83"></a>            and self.ctx.target_confidence &gt; 0.75
-<a id="__codelineno-9-84" name="__codelineno-9-84"></a>        )
+<a id="__codelineno-9-80" name="__codelineno-9-80"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">good_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-9-81" name="__codelineno-9-81"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-9-82" name="__codelineno-9-82"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span>
+<a id="__codelineno-9-83" name="__codelineno-9-83"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_confidence</span> <span class="o">&gt;</span> <span class="mf">0.75</span>
+<a id="__codelineno-9-84" name="__codelineno-9-84"></a>        <span class="p">)</span>
 <a id="__codelineno-9-85" name="__codelineno-9-85"></a>
-<a id="__codelineno-9-86" name="__codelineno-9-86"></a>    def target_lost_but_can_retry(self, event):
-<a id="__codelineno-9-87" name="__codelineno-9-87"></a>        return (
-<a id="__codelineno-9-88" name="__codelineno-9-88"></a>            not self.ctx.target_found
-<a id="__codelineno-9-89" name="__codelineno-9-89"></a>            and self.ctx.retry_count &lt; 3
-<a id="__codelineno-9-90" name="__codelineno-9-90"></a>        )
+<a id="__codelineno-9-86" name="__codelineno-9-86"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">target_lost_but_can_retry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-9-87" name="__codelineno-9-87"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-9-88" name="__codelineno-9-88"></a>            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span>
+<a id="__codelineno-9-89" name="__codelineno-9-89"></a>            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">&lt;</span> <span class="mi">3</span>
+<a id="__codelineno-9-90" name="__codelineno-9-90"></a>        <span class="p">)</span>
 <a id="__codelineno-9-91" name="__codelineno-9-91"></a>
-<a id="__codelineno-9-92" name="__codelineno-9-92"></a>    def critical_error(self, event):
-<a id="__codelineno-9-93" name="__codelineno-9-93"></a>        return (
-<a id="__codelineno-9-94" name="__codelineno-9-94"></a>            self.ctx.error
-<a id="__codelineno-9-95" name="__codelineno-9-95"></a>            or self.ctx.battery_voltage &lt; 9.5
-<a id="__codelineno-9-96" name="__codelineno-9-96"></a>            or self.ctx.retry_count &gt;= 3
-<a id="__codelineno-9-97" name="__codelineno-9-97"></a>        )
+<a id="__codelineno-9-92" name="__codelineno-9-92"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">critical_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<a id="__codelineno-9-93" name="__codelineno-9-93"></a>        <span class="k">return</span> <span class="p">(</span>
+<a id="__codelineno-9-94" name="__codelineno-9-94"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">error</span>
+<a id="__codelineno-9-95" name="__codelineno-9-95"></a>            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">&lt;</span> <span class="mf">9.5</span>
+<a id="__codelineno-9-96" name="__codelineno-9-96"></a>            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+<a id="__codelineno-9-97" name="__codelineno-9-97"></a>        <span class="p">)</span>
 <a id="__codelineno-9-98" name="__codelineno-9-98"></a>
 <a id="__codelineno-9-99" name="__codelineno-9-99"></a>
-<a id="__codelineno-9-100" name="__codelineno-9-100"></a>robot = Robot()
+<a id="__codelineno-9-100" name="__codelineno-9-100"></a><span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">()</span>
 <a id="__codelineno-9-101" name="__codelineno-9-101"></a>
-<a id="__codelineno-9-102" name="__codelineno-9-102"></a>robot.ctx.camera_connected = True
-<a id="__codelineno-9-103" name="__codelineno-9-103"></a>robot.ctx.battery_voltage = 11.8
-<a id="__codelineno-9-104" name="__codelineno-9-104"></a>robot.resolve()
-<a id="__codelineno-9-105" name="__codelineno-9-105"></a>print(robot.state)  # RobotState.SEARCH
+<a id="__codelineno-9-102" name="__codelineno-9-102"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">camera_connected</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-9-103" name="__codelineno-9-103"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">battery_voltage</span> <span class="o">=</span> <span class="mf">11.8</span>
+<a id="__codelineno-9-104" name="__codelineno-9-104"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-9-105" name="__codelineno-9-105"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.SEARCH</span>
 <a id="__codelineno-9-106" name="__codelineno-9-106"></a>
-<a id="__codelineno-9-107" name="__codelineno-9-107"></a>robot.ctx.target_found = True
-<a id="__codelineno-9-108" name="__codelineno-9-108"></a>robot.ctx.target_confidence = 0.9
-<a id="__codelineno-9-109" name="__codelineno-9-109"></a>robot.resolve()
-<a id="__codelineno-9-110" name="__codelineno-9-110"></a>print(robot.state)  # RobotState.TRACKING
+<a id="__codelineno-9-107" name="__codelineno-9-107"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-9-108" name="__codelineno-9-108"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_confidence</span> <span class="o">=</span> <span class="mf">0.9</span>
+<a id="__codelineno-9-109" name="__codelineno-9-109"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-9-110" name="__codelineno-9-110"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.TRACKING</span>
 <a id="__codelineno-9-111" name="__codelineno-9-111"></a>
-<a id="__codelineno-9-112" name="__codelineno-9-112"></a>robot.ctx.target_found = False
-<a id="__codelineno-9-113" name="__codelineno-9-113"></a>robot.ctx.retry_count = 1
-<a id="__codelineno-9-114" name="__codelineno-9-114"></a>robot.resolve()
-<a id="__codelineno-9-115" name="__codelineno-9-115"></a>print(robot.state)  # RobotState.RECOVERY
+<a id="__codelineno-9-112" name="__codelineno-9-112"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">target_found</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-9-113" name="__codelineno-9-113"></a><span class="n">robot</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">retry_count</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-9-114" name="__codelineno-9-114"></a><span class="n">robot</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<a id="__codelineno-9-115" name="__codelineno-9-115"></a><span class="nb">print</span><span class="p">(</span><span class="n">robot</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># RobotState.RECOVERY</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
