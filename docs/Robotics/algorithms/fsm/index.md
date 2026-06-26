@@ -53,7 +53,7 @@ At the end it calls the generated `robot.to_ERROR()` method to move directly int
 <details>
 <summary>more simple demo</summary>
 
-```
+```python
 --8<-- "docs/Robotics/algorithms/fsm/code/basic_example_II.py"
 ```
 </details>
@@ -74,7 +74,7 @@ The script updates the context before each `resolve()` call, so the printed stat
 
 <details>
 <summary>State Machine with conditions</summary>
-```
+```python
 --8<-- "docs/Robotics/algorithms/fsm/code/conditions.py"
 ```
 </details>
@@ -90,8 +90,8 @@ Because `send_event=True` also passes the event object to condition callbacks, t
 <details>
 <summary>State Machine with conditions and callback</summary>
 
-```
---8<-- "docs/Robotics/algorithms/fsm/code/conditions_with_callback.py"
+```python
+--8<-- "docs/Robotics/algorithms/fsm/code/machine_callback.py"
 ```
 </details>
 
@@ -157,7 +157,7 @@ The condition methods in this example do not need the event, but they still acce
 
 <details>
 <summary>code</summary>
-```
+```python
 --8<-- "docs/Robotics/algorithms/fsm/code/machine_callback.py"
 ```
 </details>

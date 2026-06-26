@@ -13,13 +13,13 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="">
-        <p>---</p>
+        <a href="plugin">
+        <p>Plugin</p>
         </a>
     </div>
 </div>
 
-## Rust
+## Python
 
 <div class="grid-container">
      <div class="grid-item">
@@ -36,7 +36,7 @@ tags:
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="libraries/rust_log_guru">
+        <a href="libraries/log_guru">
         <p>rust log guru</p>
         </a>
     </div>
