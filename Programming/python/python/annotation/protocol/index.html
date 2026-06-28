@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#runtime_checkable" class="md-skip">
+        <a href="#protocol-vs-inheritances" class="md-skip">
           Skip to content
         </a>
       
@@ -680,10 +680,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#protocol-vs-inheritances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocol vs Inheritances
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol vs Inheritances">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#runtime_checkable" class="md-nav__link">
     <span class="md-ellipsis">
       
         @runtime_checkable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#once-class-many-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Once class, many protocol
       
     </span>
   </a>
@@ -776,11 +804,91 @@
 <a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="n">make_it_talk</span><span class="p">(</span><span class="n">Cat</span><span class="p">())</span>
 </code></pre></div></td></tr></table></div>
 <hr />
+<h2 id="protocol-vs-inheritances">Protocol vs Inheritances</h2>
+<p>Python Protocols and inheritance are two different ways to define what an object can do.</p>
+<p>The short version is:</p>
+<ul>
+<li><strong>Inheritance</strong> says: "This class IS a type of another class."</li>
+<li><strong>Protocol</strong> says: "This class HAS the required methods."</li>
+</ul>
+<p>A protocol checks behavior, not inheritance.
+In the above example any class with a <code>speak()</code> method satisfies the protocol.</p>
+<ul>
+<li>Use <strong>inheritance</strong> when you want to share implementation (common logging, lifecycle methods, utility functions).</li>
+<li>Use <strong>Protocols</strong> when you want to define interchangeable components based on what they can do, not what they inherit from.</li>
+</ul>
+<hr />
 <h3 id="runtime_checkable">@runtime_checkable</h3>
 <p>@runtime_checkable makes a protocol usable with isinstance() or issubclass() at runtime.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>
 </code></pre></div></td></tr></table></div>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="once-class-many-protocol">Once class, many protocol</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Protocol</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">Startable</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>        <span class="o">...</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">Stoppable</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="o">...</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="k">class</span><span class="w"> </span><span class="nc">Configurable</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">):</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>        <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+<p>A camera implements all three.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Camera</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>        <span class="o">...</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>        <span class="o">...</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">):</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>        <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+<p>Now the same object can be used in different places.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">7</a></span>
+<span class="normal"><a href="#__codelineno-5-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">boot</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">Startable</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="n">device</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">Stoppable</span><span class="p">):</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>    <span class="n">device</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">Configurable</span><span class="p">):</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    <span class="n">device</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 
 
