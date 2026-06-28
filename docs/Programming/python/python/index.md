@@ -9,46 +9,135 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="design_patterns/">
-        <p>Design patterns</p>
+            <p>Design patterns</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                SOLID principles and common object-oriented design patterns with
+                Python examples.
+            </p>
+        </details>
     </div>
     <div class="grid-item">
         <a href="plugin">
-        <p>Plugin</p>
+            <p>Plugin</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Runtime plugin loading with importlib, protocols, and a simple
+                plugin contract.
+            </p>
+        </details>
     </div>
 </div>
 
 ## Python
 
 <div class="grid-container">
-     <div class="grid-item">
-        <a href="threading_and_concurrency">
-        <p>Threading and concurrency</p>
+    <div class="grid-item">
+        <a href="annotation">
+            <p>Annotation</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Type hints for primitives, collections, unions, protocols, and
+                type-checker-only imports.
+            </p>
+        </details>
     </div>
-    
+    <div class="grid-item">
+        <a href="dataclasses">
+            <p>Dataclasses</p>
+        </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Dataclass basics, generated methods, post-init hooks, fields,
+                defaults, and conversion helpers.
+            </p>
+        </details>
+    </div>
+    <div class="grid-item">
+        <a href="zen_and_beyond">
+            <p>Zen and Beyond</p>
+        </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Python idioms and core terms such as the Zen of Python, object
+                behavior, duck typing, and mutability.
+            </p>
+        </details>
+    </div>
 </div>
 
 ---
 
-## libraries
+## Libraries
 
 <div class="grid-container">
     <div class="grid-item">
         <a href="libraries/log_guru">
-        <p>rust log guru</p>
+            <p>Loguru</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Practical logging examples with Loguru, including simple logs,
+                file output, and logger configuration.
+            </p>
+        </details>
     </div>
     <div class="grid-item">
         <a href="libraries/msgpack">
-        <p>msgpack</p>
+            <p>msgpack</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Binary serialization examples with msgpack, including custom
+                object packing and unpacking.
+            </p>
+        </details>
+    </div>
+    <div class="grid-item">
+        <a href="libraries/protobuf">
+            <p>protobuf</p>
+        </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Protocol Buffers notes for structured cross-language message
+                serialization.
+            </p>
+        </details>
+    </div>
+    <div class="grid-item">
+        <a href="libraries/pytrees">
+            <p>py_trees</p>
+        </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Behavior tree examples with py_trees, blackboards, and worker
+                thread patterns.
+            </p>
+        </details>
     </div>
     <div class="grid-item">
         <a href="libraries/zmq/">
-        <p>zmq</p>
+            <p>zmq</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                ZeroMQ communication patterns, including TCP, IPC, in-process,
+                pub/sub, request-reply, and serialization examples.
+            </p>
+        </details>
     </div>
 </div>
 
@@ -57,8 +146,15 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="libraries/heapq">
-        <p>heapq</p>
+            <p>heapq</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Priority queue and scheduler examples using Python's heapq
+                module.
+            </p>
+        </details>
     </div>
 </div>
 

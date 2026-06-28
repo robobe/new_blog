@@ -224,3 +224,41 @@ This repository currently has existing site-wide strict warnings. If strict mode
 - Do not add large code blocks when a runnable `code/` file is clearer.
 - Do not change unrelated pages while adding a new topic.
 - Do not create a new visual style when sibling pages already show a pattern.
+
+
+## menu and navigation
+
+- use the pattern to add menu and menu item
+
+```
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="design_patterns/">
+        <p>Design patterns</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="plugin">
+        <p>Plugin</p>
+        </a>
+    </div>
+</div>
+```
+
+- Add a summary section for each menu item, and add a link to the page for more details. the summary section should be a collapsible section, and the link should be a clickable link to the page.
+
+```
+<div class="grid-item">
+    <a href="control_video_bandwidth">
+        <p>Control Video Bandwidth</p>
+    </a>
+    <details>
+        <summary>More ..</summary>
+        <p>
+            Demo application for controlling video bandwidth with crop
+            presets, FPS, encoder bitrate, keyframe interval, and measured
+            RTP bandwidth from the running pipeline.
+        </p>
+    </details>
+</div>
+```

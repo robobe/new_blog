@@ -11,6 +11,9 @@
 - ["Software Fundamentals Matter More Than Ever" — Matt Pocock](https://youtu.be/v4F1gFy-hqg)
 - [AI Agents Full Course 2026: Master Agentic AI (2 Hours)](https://youtu.be/EsTrWCV0Ph4)
 
+### Ollama
+- [Run AI Models Locally for FREE - Simple 3-Step Guide (Ollama Tutorial)](https://youtu.be/XMSROaxZ4hU)
+- [Coding in VS Code with Gemma 4 and Ollama ](https://youtu.be/89bhDV0FBSM)
 ---
 
 <div class="grid-container">
