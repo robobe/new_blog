@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#build-system" class="md-skip">
+        <a href="#uv" class="md-skip">
           Skip to content
         </a>
       
@@ -680,6 +680,69 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="uv">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyprojecttoml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pyproject.toml
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#todo-refactor-and-add-relate-description-to-uv-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TODO: refactor and add relate description to uv build
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TODO: refactor and add relate description to uv build">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Backend
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Backend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#build-system" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -689,8 +752,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#python-build" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -700,8 +763,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#project-metadata-pep-621" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -789,6 +852,16 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#from-wheel-to-deb" class="md-nav__link">
@@ -822,7 +895,7 @@
       
       
       
-        <span class="md-tag">debian</span>
+        <span class="md-tag">build</span>
       
     
       
@@ -839,6 +912,20 @@
         <span class="md-tag">python</span>
       
     
+      
+      
+      
+      
+        <span class="md-tag">uv</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">wheel</span>
+      
+    
   </nav>
 
 
@@ -846,6 +933,71 @@
   
 
 
+<h2 id="uv">uv</h2>
+<p>manages Python versions, virtual environments, dependencies, locking, running commands, building, and publishing.</p>
+<h3 id="command-commands">Command commands</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>pip</th>
+<th>uv</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create project</td>
+<td>—</td>
+<td><code>uv init</code></td>
+</tr>
+<tr>
+<td>Install package</td>
+<td><code>pip install</code></td>
+<td><code>uv add</code></td>
+</tr>
+<tr>
+<td>Install dependencies</td>
+<td><code>pip install -r requirements.txt</code></td>
+<td><code>uv sync</code></td>
+</tr>
+<tr>
+<td>Run program</td>
+<td><code>python</code></td>
+<td><code>uv run</code></td>
+</tr>
+<tr>
+<td>Create venv</td>
+<td><code>python -m venv</code></td>
+<td>Automatic</td>
+</tr>
+<tr>
+<td>Update package</td>
+<td><code>pip install -U</code></td>
+<td><code>uv lock --upgrade</code> or <code>uv add &lt;pkg&gt;@latest</code></td>
+</tr>
+<tr>
+<td>Remove package</td>
+<td><code>pip uninstall</code></td>
+<td><code>uv remove</code></td>
+</tr>
+<tr>
+<td>Install Python</td>
+<td>External tool</td>
+<td><code>uv python install</code></td>
+</tr>
+<tr>
+<td>Build package</td>
+<td><code>python3 -m build (pip install build) |</code>uv build`</td>
+<td></td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="pyprojecttoml">pyproject.toml</h2>
 <p><strong>pyproject.toml</strong> is a standardized file (PEP 518, PEP 621) used to configure Python packaging, building, and tools.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
@@ -868,17 +1020,113 @@
 <span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
 <span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
 <span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-1-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">[build-system]</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;setuptools&gt;=61&quot;</span><span class="p">]</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;setuptools.build_meta&quot;</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="k">[project]</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;myproject&quot;</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.8&quot;</span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">[project]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;vision_app&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Computer vision utilities&quot;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.12&quot;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="s2">&quot;numpy&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="s2">&quot;opencv-python&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="p">]</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="k">[project.optional-dependencies]</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="s2">&quot;pytest&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="s2">&quot;ruff&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="p">]</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="k">[build-system]</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;hatchling&quot;</span><span class="p">]</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hatchling.build&quot;</span>
 </code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[project]</code></td>
+<td>Main project metadata</td>
+<td>Name, version, description</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Package name</td>
+<td><code>"vision_app"</code></td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>Current version</td>
+<td><code>"0.1.0"</code></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Short project description</td>
+<td><code>"Computer vision toolkit"</code></td>
+</tr>
+<tr>
+<td><code>readme</code></td>
+<td>README file</td>
+<td><code>"README.md"</code></td>
+</tr>
+<tr>
+<td><code>requires-python</code></td>
+<td>Minimum Python version</td>
+<td><code>"&gt;=3.11"</code></td>
+</tr>
+<tr>
+<td><code>dependencies</code></td>
+<td>Runtime dependencies</td>
+<td><code>["numpy", "opencv-python"]</code></td>
+</tr>
+<tr>
+<td><code>optional-dependencies</code></td>
+<td>Extra dependency groups</td>
+<td><code>dev</code>, <code>docs</code>, <code>test</code></td>
+</tr>
+<tr>
+<td><code>[build-system]</code></td>
+<td>Package build configuration</td>
+<td><code>hatchling</code>, <code>setuptools</code></td>
+</tr>
+<tr>
+<td><code>requires</code></td>
+<td>Build backend dependencies</td>
+<td><code>["hatchling"]</code></td>
+</tr>
+<tr>
+<td><code>build-backend</code></td>
+<td>Build backend</td>
+<td><code>"hatchling.build"</code></td>
+</tr>
+<tr>
+<td><code>[tool.*]</code></td>
+<td>Tool-specific configuration</td>
+<td><code>ruff</code>, <code>pytest</code>, <code>uv</code>, <code>mypy</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="todo-refactor-and-add-relate-description-to-uv-build">TODO: refactor and add relate description to uv build</h1>
+<h2 id="build-backend">Build Backend</h2>
 <h3 id="build-system">build-system</h3>
 <p>Defines how your project is built.
 This tells Python which tools to use when running <code>pip install</code> or <code>python -m build</code>.
