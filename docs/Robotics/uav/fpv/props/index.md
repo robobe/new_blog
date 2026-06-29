@@ -263,3 +263,8 @@ After changing props, check:
 - Tune quality
 
 Small prop changes can make a large difference in FPV flight feel.
+
+---
+
+## Reference
+- [ My Search for the Best 5” FPV Prop ](https://youtu.be/JzcIJuwH-0g)

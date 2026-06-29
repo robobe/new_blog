@@ -2,11 +2,36 @@
 title: Pack python project as wheel and debian package
 tags:
     - python
-    - debian
+    - uv
+    - build
+    - wheel
     - pyproject.toml
 ---
 
+## uv
+manages Python versions, virtual environments, dependencies, locking, running commands, building, and publishing.
+
+
+### Command commands
+
+| Task                 | pip                               |  uv                                           |
+| -------------------- | --------------------------------- |  -------------------------------------------- |
+| Create project       | —                                 |  `uv init`                                    |
+| Install package      | `pip install`                     |  `uv add`                                     |
+| Install dependencies | `pip install -r requirements.txt` |  `uv sync`                                    |
+| Run program          | `python`                          |  `uv run`                                     |
+| Create venv          | `python -m venv`                  |  Automatic                                    |
+| Update package       | `pip install -U`                  |  `uv lock --upgrade` or `uv add <pkg>@latest` |
+| Remove package       | `pip uninstall`                   |  `uv remove`                                  |
+| Install Python       | External tool                     |  `uv python install`                          |
+| Build package        | `python3 -m build (pip install build) | `uv build`                                |
+---
+
+
+## pyproject.toml
+
 **pyproject.toml** is a standardized file (PEP 518, PEP 621) used to configure Python packaging, building, and tools.
+
 
 ```
 my_package/
@@ -18,18 +43,50 @@ my_package/
 ```
 
 ```toml
-[build-system]
-requires = ["setuptools>=61"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "myproject"
+name = "vision_app"
 version = "0.1.0"
-description = ""
+description = "Computer vision utilities"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
+
+dependencies = [
+    "numpy",
+    "opencv-python",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 ```
 
+
+| Section                 | Purpose                     | Example                        |
+| ----------------------- | --------------------------- | ------------------------------ |
+| `[project]`             | Main project metadata       | Name, version, description     |
+| `name`                  | Package name                | `"vision_app"`                 |
+| `version`               | Current version             | `"0.1.0"`                      |
+| `description`           | Short project description   | `"Computer vision toolkit"`    |
+| `readme`                | README file                 | `"README.md"`                  |
+| `requires-python`       | Minimum Python version      | `">=3.11"`                     |
+| `dependencies`          | Runtime dependencies        | `["numpy", "opencv-python"]`   |
+| `optional-dependencies` | Extra dependency groups     | `dev`, `docs`, `test`          |
+| `[build-system]`        | Package build configuration | `hatchling`, `setuptools`      |
+| `requires`              | Build backend dependencies  | `["hatchling"]`                |
+| `build-backend`         | Build backend               | `"hatchling.build"`            |
+| `[tool.*]`              | Tool-specific configuration | `ruff`, `pytest`, `uv`, `mypy` |
+
+
+---
+
+# TODO: refactor and add relate description to uv build
+## Build Backend
 
 ### build-system
 Defines how your project is built.
