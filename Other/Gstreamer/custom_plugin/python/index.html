@@ -817,6 +817,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -887,6 +904,11 @@ processing or custom <code>Gst.Meta</code>, move the final plugin to C, C++, or 
     <div class="grid-item">
         <a href="gst_event">
             <p>Gst.Event</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="source_element">
+            <p>Source element</p>
         </a>
     </div>
 </div>
@@ -1074,22 +1096,42 @@ the frame, or post messages.</p>
 <a id="__codelineno-9-39" name="__codelineno-9-39"></a><span class="n">GObject</span><span class="o">.</span><span class="n">type_register</span><span class="p">(</span><span class="n">MinimalFilter</span><span class="p">)</span>
 <a id="__codelineno-9-40" name="__codelineno-9-40"></a><span class="n">__gstelementfactory__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;minimalfilter&quot;</span><span class="p">,</span> <span class="n">Gst</span><span class="o">.</span><span class="n">Rank</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span> <span class="n">MinimalFilter</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
+<p>The plugin folder should look like this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>plugins/
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>└── python/
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>    └── minimal_plugin.py
+</code></pre></div></td></tr></table></div>
+<p><code>minimal_plugin.py</code> contains the plugin code shown above. GStreamer discovers Python
+plugins from the <code>python/</code> subfolder of each directory listed in <code>GST_PLUGIN_PATH</code>.</p>
 <h2 id="test">Test</h2>
 <p>Put the file under <code>python/minimal_plugin.py</code>, then run:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-inspect-1.0<span class="w"> </span>minimalfilter
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># from plugin folder</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-inspect-1.0<span class="w"> </span>minimalfilter
 </code></pre></div></td></tr></table></div>
 <p>Run a pipeline:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">5</span><span class="w"> </span>!<span class="w"> </span>minimalfilter<span class="w"> </span>!<span class="w"> </span>fakesink
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>num-buffers<span class="o">=</span><span class="m">5</span><span class="w"> </span>!<span class="w"> </span>minimalfilter<span class="w"> </span>!<span class="w"> </span>fakesink
 </code></pre></div></td></tr></table></div>
 <p>If GStreamer does not find the element, enable plugin loading logs:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
-<span class="normal"><a href="#__codelineno-12-2">2</a></span>
-<span class="normal"><a href="#__codelineno-12-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="nv">GST_DEBUG</span><span class="o">=</span>python:6,pythonplugin:6,GST_PLUGIN_LOADING:5<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3"></a>gst-inspect-1.0<span class="w"> </span>minimalfilter
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nv">GST_PLUGIN_PATH</span><span class="o">=</span><span class="nv">$PWD</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="nv">GST_DEBUG</span><span class="o">=</span>python:6,pythonplugin:6,GST_PLUGIN_LOADING:5<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>gst-inspect-1.0<span class="w"> </span>minimalfilter
 </code></pre></div></td></tr></table></div>
-<p>If the registry cache is stale, remove it:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>rm<span class="w"> </span>~/.cache/gstreamer-1.0/registry.*.bin
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If the inspect not found the plugin 
+check if it <strong>block list</strong></p>
+<div class="admonition info">
+<p class="admonition-title">what is block list</p>
+<p>It means GStreamer tried to load that plugin before, the load failed, and GStreamer cached it as “bad” in its registry. After that, it skips the plugin quickly instead of trying to load it every time.</p>
+</div>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>gst-inspect-1.0<span class="w"> </span>-b
+</code></pre></div></td></tr></table></div>
+If the plugin in the block list clear the cache</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>rm<span class="w"> </span>~/.cache/gstreamer-1.0/registry.*.bin
 </code></pre></div></td></tr></table></div>
 
 

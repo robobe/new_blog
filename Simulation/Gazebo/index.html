@@ -714,17 +714,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment Variables
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -859,54 +848,64 @@
 <p class="admonition-title">check</p>
 <p>using <code>nvidia-smi</code> to check that gz sim use nvidia card</p>
 </div>
-<p>!!! tip "prime-select`
-    prime-select is an Ubuntu-specific utility used to manage hybrid graphics on laptops</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code>```bash
-# check mode
-prime-select query
-```
+<details>
+<summary>OpenGL Env variable</summary>
+```bash title="check OpenGL
+glxinfo | grep "OpenGL renderer"
+#
+OpenGL renderer string: Mesa Intel(R) Graphics (ARL)
+
+
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gl
+xinfo | grep "OpenGL renderer"
+#
+OpenGL renderer string: NVIDIA GeForce RTX 5070 Laptop GPU/PCIe/SSE2
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>&lt;/details&gt;
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>!!! tip &quot;prime-select`
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    prime-select is an Ubuntu-specific utility used to manage hybrid graphics on laptops
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    ```bash
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>    # check mode
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    prime-select query
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>    ```
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>```bash title=&quot;create alias&quot;
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>alias gznvidia=&#39;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz sim&#39;
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">create alias</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">gznvidia</span><span class="o">=</span><span class="s1">&#39;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz sim&#39;</span>
-</code></pre></div></td></tr></table></div>
-<hr />
-<h2 id="environment-variables">Environment Variables</h2>
-<div class="admonition tip">
-<p class="admonition-title">migration from ign</p>
-<p>IGNITION_GAZEBO -&gt; GZ_SIM</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>SIM</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>GZ_SIM_RESOURCE_PATH</td>
-<td>where to search for <code>world</code>,<code>models</code> include meshes, textures, materials</td>
-</tr>
-<tr>
-<td>GZ_SIM_SYSTEM_PLUGIN_PATH</td>
-<td>where to find compiled system plugins (.so files)</td>
-</tr>
-<tr>
-<td><strong>TRANSPORT</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>GZ_IP</td>
-<td>force Gazebo Transport to use a particular IP and multicast discovery messages <code>export GZ_IP=127.0.0.1</code></td>
-</tr>
-</tbody>
-</table>
+
+---
+
+## Environment Variables
+
+!!! tip "migration from ign"
+    IGNITION_GAZEBO -> GZ_SIM
+
+
+| Name  | Description  |
+|---|---|
+| **SIM**  |   |
+| GZ_SIM_RESOURCE_PATH  | where to search for `world`,`models` include meshes, textures, materials  |
+| GZ_SIM_SYSTEM_PLUGIN_PATH  | where to find compiled system plugins (.so files) |
+| **TRANSPORT**  |   |
+| GZ_IP  | force Gazebo Transport to use a particular IP and multicast discovery messages `export GZ_IP=127.0.0.1` |
 
 
 
