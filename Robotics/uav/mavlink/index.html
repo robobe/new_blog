@@ -25,7 +25,7 @@
     
     
       
-        <title>Mavlink - Robots Inside</title>
+        <title>Mavlink - Nodes and Pipes</title>
       
     
     
@@ -90,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -104,7 +104,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Robots Inside
+            Nodes and Pipes
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -389,13 +389,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Robots Inside
+    Nodes and Pipes
   </label>
   
     <div class="md-nav__source">
@@ -751,17 +751,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#mavlink-network" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mavlink network
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -802,8 +791,14 @@
 
   <h1>Mavlink</h1>
 
-<p>MAVLink (Micro Air Vehicle Link) is a lightweight communication protocol used to exchange messages between drones (UAVs), their autopilots, ground control stations, and companion computers</p>
-<p>In MAVLink, every message is tagged with two identifiers so the network knows who sent the message and which part of the system it came from:</p>
+<p>MAVLink is used as the messaging layer between the main parts of a UAV system. It carries telemetry, commands, mission data, parameters, status updates, and sensor information over serial links, UDP/TCP, radios, or onboard networks.</p>
+<p>The main MAVLink components are:</p>
+<ul>
+<li><strong>Autopilot / flight controller</strong>: controls the vehicle and publishes telemetry.</li>
+<li><strong>Ground control station (GCS)</strong>: monitors the vehicle and sends commands or mission plans.</li>
+<li><strong>Companion computer</strong>: runs higher-level software such as computer vision, autonomy, or payload control.</li>
+<li><strong>MAVLink router or bridge</strong>: forwards MAVLink traffic between links, tools, and components.</li>
+</ul>
 <div class="grid-container">
     <div class="grid-item">
         <a href="pymavlink">
@@ -816,8 +811,8 @@
         </a>
     </div>
      <div class="grid-item">
-        <a href="mavlink_router">
-            <p>mavlink-router</p>
+        <a href="mavlink_network">
+            <p>mavlink network</p>
         </a>
     </div>
 </div>
@@ -837,47 +832,55 @@
 Distinguishes different vehicles on the same MAVLink network (Vehicle ID)</p>
 <p>Examples:</p>
 <ul>
-<li>Drone #1 → SYSID = 1</li>
-<li>Drone #2 → SYSID = 2</li>
-<li>Simulator (SITL) → often SYSID = 1 (configurable)</li>
-<li>GCS () = 255</li>
+<li><strong>Drone #1</strong> → SYSID = 1</li>
+<li><strong>Drone #2</strong> → SYSID = 2</li>
+<li><strong>Simulator (SITL)</strong> → often SYSID = 1 (configurable)</li>
+<li><strong>GCS ()</strong> = 255</li>
 </ul>
 <h2 id="compid-component-id">COMPID (Component ID)</h2>
-<p>A number that identifies a component inside a system. (1-255)
+<p>A number that identifies a <strong>component</strong> inside a system. (1-255)
 Distinguishes subsystems within the same vehicle</p>
 <p>Think of it as the process/module ID</p>
 <p>Common COMPIDs:
-- 1 → Autopilot (flight controller)
-- 190 → Companion computer
-- 191 → GCS (ground control station)
-- 200+ → Custom components</p>
+- <strong>1</strong> → Autopilot (flight controller)
+- <strong>190</strong> → Companion computer
+- <strong>191</strong> → GCS (ground control station)
+- <strong>200+</strong> → Custom components</p>
 <h2 id="source-target-broadcast">Source / Target / Broadcast</h2>
-<p>In MAVLink, every message has two layers of identity:</p>
-<p>1️⃣ Message header → SOURCE
-- These are set automatically by your MAVLink connection:
-- source_system (your SYSID)
-- source_component (your COMPID)</p>
-<p>👉 Identifies who is sending the message.</p>
-<p>2️⃣ Command fields → TARGET
-- Certain messages (especially commands) include explicit target fields inside the payload:
-- target_system
-- target_component</p>
-<p>👉 Identifies who should execute the command.</p>
+<p>MAVLink separates the <strong>sender identity</strong> from any optional <strong>receiver target</strong>:</p>
+<ol>
+<li>Message header → source</li>
+</ol>
+<p>Every MAVLink frame contains the sender IDs in the header:</p>
+<ul>
+<li><code>sysid</code> / <code>source_system</code> - the system that sent the message</li>
+<li><code>compid</code> / <code>source_component</code> - the component that sent the message</li>
+</ul>
+<p>These identify <strong>who sent the message</strong>. They are normally set by the MAVLink library or connection configuration.</p>
+<p><img alt="alt text" src="images/mavlink_v2_frame.png" /></p>
+<ol>
+<li>Payload fields → target</li>
+</ol>
+<p>Only some MAVLink messages are addressed to a receiver. Those messages include target fields in the payload, for example:</p>
+<ul>
+<li><code>target_system</code></li>
+<li><code>target_component</code></li>
+</ul>
+<p>These identify <strong>who should handle or execute the message</strong>. Common examples are command, mission, and parameter messages.</p>
 <h3 id="example-command_long76">Example: COMMAND_LONG(76)</h3>
 <p><img alt="alt text" src="images/command_long.png" /></p>
 <h3 id="broadcast">Broadcast</h3>
+<p>For messages that have target fields, <code>0</code> means broadcast:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
 <span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>target_system    = 0
 <a id="__codelineno-0-2" name="__codelineno-0-2"></a>target_component = 0
 </code></pre></div></td></tr></table></div>
 <ul>
-<li>Telemetry → always broadcast</li>
-<li>Queries → sometimes broadcast</li>
-<li>Control commands → never broadcast unless you are 100% sure</li>
+<li><code>target_system = 0</code> - send to all systems</li>
+<li><code>target_component = 0</code> - send to all components in the selected system</li>
 </ul>
-<hr />
-<h2 id="mavlink-network">Mavlink network</h2>
-<p>MAVLink “stream” is usually <strong>one physical link</strong> to connect multiple customer we use tool like <a href="https://github.com/mavlink-router/mavlink-router"><strong>mavlink-router</strong></a></p>
+<p><strong>Telemetry messages</strong> <u>usually do not have target fields</u>. They are simply published by the sender, and any MAVLink peer on the link may consume them.</p>
+<p>Avoid broadcasting <strong>control commands</strong> unless the intended behavior is clear and safe.</p>
 
 
 

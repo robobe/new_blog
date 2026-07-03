@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/mavlink/mavlink_router/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/mavlink/mavlink_network/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Mavlink router - Robots Inside</title>
+        <title>Mavlink network - Nodes and Pipes</title>
       
     
     
@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#mavlink-router" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -85,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -99,13 +104,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Robots Inside
+            Nodes and Pipes
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mavlink router
+              Mavlink network
             
           </span>
         </div>
@@ -384,13 +389,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Robots Inside
+    Nodes and Pipes
   </label>
   
     <div class="md-nav__source">
@@ -668,6 +673,53 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mavlink-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mavlink router
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mavlink router">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-route-message-using-mavlink-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: route message using mavlink-router
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo-control-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: control traffic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -704,11 +756,169 @@
   
 
 
-  <h1>Mavlink router</h1>
+  <h1>Mavlink network</h1>
 
-<p><a href="https://github.com/mavlink-router/mavlink-router">github</a></p>
+<p>MAVLink is a message based network protocol. Every packet identifies the sender
+with two fields:</p>
+<ul>
+<li><code>sysid</code>: the system id. This usually identifies one vehicle, ground station,
+  antenna tracker, camera rig, or other MAVLink node on the network.</li>
+<li><code>compid</code>: the component id inside that system. For example, one vehicle may
+  use the same <code>sysid</code> for its autopilot, camera, gimbal, and companion
+  computer, while each component uses a different <code>compid</code>.</li>
+</ul>
+<p>Together, <code>sysid</code> and <code>compid</code> form the <strong>source address</strong> of a MAVLink component.
+Messages that target a specific receiver usually include <code>target_system</code> and
+<code>target_component</code> fields in the <strong>message payload</strong>. A ground station can use these
+fields to send a command to one vehicle, or to one component on that vehicle.</p>
+<p>Some MAVLink messages are effectively broadcast. They are sent on the link and
+any receiver that understands the message may consume them. Heartbeats,
+position, attitude, and status messages commonly work this way: each component
+publishes its state, and routers or endpoints forward the packet to other links.
+Broadcast is also commonly represented by target values of <code>0</code>, meaning all
+systems or all components, when the message type has target fields.</p>
+<p>In a routed MAVLink network, tools such as <code>mavlink-router</code> forward messages
+between serial, UDP, and TCP links. The router does not assign vehicle identity;
+it forwards packets while preserving the sender <code>sysid</code> and <code>compid</code>, so every
+endpoint can decide whether a message is relevant.</p>
+<hr />
+<h2 id="mavlink-router">Mavlink router</h2>
+<p>MAVLink Router is a proxy that forwards MAVLink traffic between several endpoints, such as a flight controller, ground control station, simulator, companion computer, or telemetry radio.
+It lets one MAVLink source be shared by multiple clients and can route traffic across UDP, TCP, and serial links.</p>
+<p><a href="https://github.com/mavlink-router/mavlink-router">more project github</a></p>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">route SITL to udp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>./mavlink-routerd-glibc-x86_64<span class="w"> </span>-e<span class="w"> </span><span class="m">127</span>.0.0.1:14550<span class="w">  </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:5760
 </code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="demo-route-message-using-mavlink-router">Demo: route message using mavlink-router</h3>
+<pre class="mermaid"><code>flowchart LR
+    Drone["Drone / Flight Controller"]
+    Router["mavlink-router"]
+    Operator["GCS: Operator"]
+    Supervisor["GCS: Supervisor"]
+
+    Drone &lt;--&gt;|MAVLink| Router
+    Router --&gt;|UDP 14550| Operator
+    Router --&gt;|UDP 14551| Supervisor</code></pre>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">route serial telemetry to UDP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>./mavlink-routerd-glibc-x86_64<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span>-e<span class="w"> </span><span class="m">192</span>.168.1.20:14550<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span>-e<span class="w"> </span><span class="m">192</span>.168.1.21:14551<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span>/dev/ttyACM0:57600
+</code></pre></div></td></tr></table></div>
+<p>In this example, <code>/dev/ttyACM0:57600</code> is the serial MAVLink source from the
+flight controller. Each <code>-e</code> option adds a UDP endpoint that receives the routed
+MAVLink stream.</p>
+<p>The same route can be written as a <code>mavlink-router</code> config file:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.conf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">[General]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="na">ReportStats</span><span class="o">=</span><span class="s">false</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="k">[UartEndpoint flight_controller]</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="na">Device</span><span class="o">=</span><span class="s">/dev/ttyACM0</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="na">Baud</span><span class="o">=</span><span class="s">57600</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="k">[UdpEndpoint operator_gcs]</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="na">Mode</span><span class="o">=</span><span class="s">Normal</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="na">Address</span><span class="o">=</span><span class="s">192.168.1.20</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="na">Port</span><span class="o">=</span><span class="s">14550</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="k">[UdpEndpoint supervisor_gcs]</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="na">Mode</span><span class="o">=</span><span class="s">Normal</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="na">Address</span><span class="o">=</span><span class="s">192.168.1.21</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="na">Port</span><span class="o">=</span><span class="s">14551</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">run mavlink-router with config</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>./mavlink-routerd-glibc-x86_64<span class="w"> </span>-c<span class="w"> </span>main.conf
+</code></pre></div></td></tr></table></div>
+<p>The config file is split into endpoint sections:</p>
+<ul>
+<li><code>[General]</code> contains router-wide settings.</li>
+<li><code>ReportStats=false</code> disables periodic traffic statistics in the router log.</li>
+<li><code>[UartEndpoint flight_controller]</code> defines a serial MAVLink link named
+  <code>flight_controller</code>.</li>
+<li><code>Device=/dev/ttyACM0</code> selects the serial device connected to the flight
+  controller.</li>
+<li><code>Baud=57600</code> sets the serial baud rate for that device.</li>
+<li><code>[UdpEndpoint operator_gcs]</code> and <code>[UdpEndpoint supervisor_gcs]</code> define UDP
+  outputs for two ground stations.</li>
+<li><code>Mode=Normal</code> makes the UDP endpoint send MAVLink packets to the configured
+  address and port.</li>
+<li><code>Address=192.168.1.20</code> and <code>Address=192.168.1.21</code> are the destination IP
+  addresses for each ground station.</li>
+<li><code>Port=14550</code> and <code>Port=14551</code> are the destination UDP ports.</li>
+</ul>
+<p>With this config, MAVLink packets arriving from the flight controller serial
+port are forwarded to both ground stations over UDP.</p>
+<h3 id="demo-control-traffic">Demo: control traffic</h3>
+<p>Use endpoint filters when the supervisor station is only a monitor. This example
+sends only heartbeat and GPS position messages to the supervisor endpoint, and
+drops any MAVLink packets received from that supervisor endpoint before they can
+be routed back to the flight controller.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">monitor-supervisor.conf</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">[General]</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="na">ReportStats</span><span class="o">=</span><span class="s">false</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="k">[UartEndpoint flight_controller]</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="na">Device</span><span class="o">=</span><span class="s">/dev/ttyACM0</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="na">Baud</span><span class="o">=</span><span class="s">57600</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="k">[UdpEndpoint operator_gcs]</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="na">Mode</span><span class="o">=</span><span class="s">Normal</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="na">Address</span><span class="o">=</span><span class="s">192.168.1.20</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="na">Port</span><span class="o">=</span><span class="s">14550</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="k">[UdpEndpoint supervisor_monitor]</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="na">Mode</span><span class="o">=</span><span class="s">Normal</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="na">Address</span><span class="o">=</span><span class="s">192.168.1.21</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="na">Port</span><span class="o">=</span><span class="s">14551</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="na">AllowMsgIdOut</span><span class="o">=</span><span class="s">0,24,33</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="na">AllowSrcSysIn</span><span class="o">=</span><span class="s">0</span>
+</code></pre></div></td></tr></table></div>
+<p>The supervisor receives:</p>
+<ul>
+<li><code>0</code>: <code>HEARTBEAT</code></li>
+<li><code>24</code>: <code>GPS_RAW_INT</code></li>
+<li><code>33</code>: <code>GLOBAL_POSITION_INT</code></li>
+</ul>
+<p><code>AllowMsgIdOut=0,24,33</code> is applied only to traffic leaving the router through
+<code>supervisor_monitor</code>; the operator ground station still receives the full
+stream. <code>AllowSrcSysIn=0</code> drops normal MAVLink packets received from the
+supervisor, because MAVLink source system id <code>0</code> is reserved for broadcast
+targets and should not be used by a real sender. For a passive monitor, you do
+not need to allow heartbeat from the supervisor. Only allow it if the supervisor
+should become an active MAVLink participant that the router discovers and routes
+messages to.</p>
 
 
 

@@ -25,7 +25,7 @@
     
     
       
-        <title>QOpenHD - Robots Inside</title>
+        <title>QOpenHD - Nodes and Pipes</title>
       
     
     
@@ -90,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Robots Inside" class="md-header__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -104,7 +104,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Robots Inside
+            Nodes and Pipes
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -389,13 +389,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Robots Inside" class="md-nav__button md-logo" aria-label="Robots Inside" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Robots Inside
+    Nodes and Pipes
   </label>
   
     <div class="md-nav__source">
@@ -813,23 +813,31 @@ that talks to a running OpenHD system over MAVLink and receives the video stream
 <span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-1-10">10</a></span>
 <span class="normal"><a href="#__codelineno-1-11">11</a></span>
-<span class="normal"><a href="#__codelineno-1-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>is-live<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="nv">pattern</span><span class="o">=</span>smpte<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span>!<span class="w"> </span>video/x-raw,format<span class="o">=</span>I420,width<span class="o">=</span><span class="m">640</span>,height<span class="o">=</span><span class="m">480</span>,framerate<span class="o">=</span><span class="m">30</span>/1<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span>!<span class="w"> </span>x264enc<span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">1500</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">        </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">        </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span>key-int-max<span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span>intra-refresh<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">        </span>sliced-threads<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">        </span><span class="nv">threads</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span>!<span class="w"> </span>h264parse<span class="w"> </span>config-interval<span class="o">=</span>-1<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span>!<span class="w"> </span>rtph264pay<span class="w"> </span><span class="nv">pt</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">1024</span><span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5600</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="nv">async</span><span class="o">=</span><span class="nb">false</span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>gst-launch-1.0<span class="w"> </span>-v<span class="w"> </span>videotestsrc<span class="w"> </span>is-live<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="nv">pattern</span><span class="o">=</span>smpte<span class="w">   </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span>!<span class="w"> </span>video/x-raw,width<span class="o">=</span><span class="m">640</span>,height<span class="o">=</span><span class="m">480</span>,framerate<span class="o">=</span><span class="m">30</span>/1<span class="w">   </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span>!<span class="w"> </span>videoconvert<span class="w">   </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span>!<span class="w"> </span>videoscale<span class="w">   </span>!<span class="w"> </span>video/x-raw,format<span class="o">=</span>I420,width<span class="o">=</span><span class="m">640</span>,height<span class="o">=</span><span class="m">480</span>,framerate<span class="o">=</span><span class="m">30</span>/1<span class="w">   </span><span class="se">\</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span>!<span class="w"> </span>x264enc<span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">1500</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">        </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">        </span>key-int-max<span class="o">=</span><span class="m">30</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">        </span><span class="nv">bframes</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">        </span>byte-stream<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">        </span><span class="nv">aud</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">        </span>intra-refresh<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">        </span>sliced-threads<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">        </span><span class="nv">threads</span><span class="o">=</span><span class="m">1</span><span class="w">   </span><span class="se">\</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span>!<span class="w"> </span>video/x-h264,stream-format<span class="o">=</span>byte-stream,alignment<span class="o">=</span>au,profile<span class="o">=</span>constrained-baseline<span class="w">  </span><span class="se">\</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span>!<span class="w"> </span>h264parse<span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span>!<span class="w"> </span>rtph264pay<span class="w"> </span><span class="nv">pt</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">800</span><span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span>aggregate-mode<span class="o">=</span>zero-latency<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5600</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="nv">async</span><span class="o">=</span><span class="nb">false</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="sim-mavlink">Sim mavlink</h3>
-<details>
-<summary>Mavlink code</summary>
-
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
@@ -841,162 +849,190 @@ that talks to a running OpenHD system over MAVLink and receives the video stream
 <span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
 <span class="normal"><a href="#__codelineno-2-10">10</a></span>
 <span class="normal"><a href="#__codelineno-2-11">11</a></span>
-<span class="normal"><a href="#__codelineno-2-12">12</a></span>
-<span class="normal"><a href="#__codelineno-2-13">13</a></span>
-<span class="normal"><a href="#__codelineno-2-14">14</a></span>
-<span class="normal"><a href="#__codelineno-2-15">15</a></span>
-<span class="normal"><a href="#__codelineno-2-16">16</a></span>
-<span class="normal"><a href="#__codelineno-2-17">17</a></span>
-<span class="normal"><a href="#__codelineno-2-18">18</a></span>
-<span class="normal"><a href="#__codelineno-2-19">19</a></span>
-<span class="normal"><a href="#__codelineno-2-20">20</a></span>
-<span class="normal"><a href="#__codelineno-2-21">21</a></span>
-<span class="normal"><a href="#__codelineno-2-22">22</a></span>
-<span class="normal"><a href="#__codelineno-2-23">23</a></span>
-<span class="normal"><a href="#__codelineno-2-24">24</a></span>
-<span class="normal"><a href="#__codelineno-2-25">25</a></span>
-<span class="normal"><a href="#__codelineno-2-26">26</a></span>
-<span class="normal"><a href="#__codelineno-2-27">27</a></span>
-<span class="normal"><a href="#__codelineno-2-28">28</a></span>
-<span class="normal"><a href="#__codelineno-2-29">29</a></span>
-<span class="normal"><a href="#__codelineno-2-30">30</a></span>
-<span class="normal"><a href="#__codelineno-2-31">31</a></span>
-<span class="normal"><a href="#__codelineno-2-32">32</a></span>
-<span class="normal"><a href="#__codelineno-2-33">33</a></span>
-<span class="normal"><a href="#__codelineno-2-34">34</a></span>
-<span class="normal"><a href="#__codelineno-2-35">35</a></span>
-<span class="normal"><a href="#__codelineno-2-36">36</a></span>
-<span class="normal"><a href="#__codelineno-2-37">37</a></span>
-<span class="normal"><a href="#__codelineno-2-38">38</a></span>
-<span class="normal"><a href="#__codelineno-2-39">39</a></span>
-<span class="normal"><a href="#__codelineno-2-40">40</a></span>
-<span class="normal"><a href="#__codelineno-2-41">41</a></span>
-<span class="normal"><a href="#__codelineno-2-42">42</a></span>
-<span class="normal"><a href="#__codelineno-2-43">43</a></span>
-<span class="normal"><a href="#__codelineno-2-44">44</a></span>
-<span class="normal"><a href="#__codelineno-2-45">45</a></span>
-<span class="normal"><a href="#__codelineno-2-46">46</a></span>
-<span class="normal"><a href="#__codelineno-2-47">47</a></span>
-<span class="normal"><a href="#__codelineno-2-48">48</a></span>
-<span class="normal"><a href="#__codelineno-2-49">49</a></span>
-<span class="normal"><a href="#__codelineno-2-50">50</a></span>
-<span class="normal"><a href="#__codelineno-2-51">51</a></span>
-<span class="normal"><a href="#__codelineno-2-52">52</a></span>
-<span class="normal"><a href="#__codelineno-2-53">53</a></span>
-<span class="normal"><a href="#__codelineno-2-54">54</a></span>
-<span class="normal"><a href="#__codelineno-2-55">55</a></span>
-<span class="normal"><a href="#__codelineno-2-56">56</a></span>
-<span class="normal"><a href="#__codelineno-2-57">57</a></span>
-<span class="normal"><a href="#__codelineno-2-58">58</a></span>
-<span class="normal"><a href="#__codelineno-2-59">59</a></span>
-<span class="normal"><a href="#__codelineno-2-60">60</a></span>
-<span class="normal"><a href="#__codelineno-2-61">61</a></span>
-<span class="normal"><a href="#__codelineno-2-62">62</a></span>
-<span class="normal"><a href="#__codelineno-2-63">63</a></span>
-<span class="normal"><a href="#__codelineno-2-64">64</a></span>
-<span class="normal"><a href="#__codelineno-2-65">65</a></span>
-<span class="normal"><a href="#__codelineno-2-66">66</a></span>
-<span class="normal"><a href="#__codelineno-2-67">67</a></span>
-<span class="normal"><a href="#__codelineno-2-68">68</a></span>
-<span class="normal"><a href="#__codelineno-2-69">69</a></span>
-<span class="normal"><a href="#__codelineno-2-70">70</a></span>
-<span class="normal"><a href="#__codelineno-2-71">71</a></span>
-<span class="normal"><a href="#__codelineno-2-72">72</a></span>
-<span class="normal"><a href="#__codelineno-2-73">73</a></span>
-<span class="normal"><a href="#__codelineno-2-74">74</a></span>
-<span class="normal"><a href="#__codelineno-2-75">75</a></span>
-<span class="normal"><a href="#__codelineno-2-76">76</a></span>
-<span class="normal"><a href="#__codelineno-2-77">77</a></span>
-<span class="normal"><a href="#__codelineno-2-78">78</a></span>
-<span class="normal"><a href="#__codelineno-2-79">79</a></span>
-<span class="normal"><a href="#__codelineno-2-80">80</a></span>
-<span class="normal"><a href="#__codelineno-2-81">81</a></span>
-<span class="normal"><a href="#__codelineno-2-82">82</a></span>
-<span class="normal"><a href="#__codelineno-2-83">83</a></span>
-<span class="normal"><a href="#__codelineno-2-84">84</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="ch">#!/usr/bin/env python3</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="o">,</span><span class="w"> </span><span class="nn">math</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pymavlink</span><span class="w"> </span><span class="kn">import</span> <span class="n">mavutil</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">mav</span> <span class="o">=</span> <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink_connection</span><span class="p">(</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="s2">&quot;udpout:127.0.0.1:14550&quot;</span><span class="p">,</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="n">source_system</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    <span class="n">source_component</span><span class="o">=</span><span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_COMP_ID_AUTOPILOT1</span><span class="p">,</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="p">)</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="n">lat</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">32.0853</span> <span class="o">*</span> <span class="mf">1e7</span><span class="p">)</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="n">lon</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">34.7818</span> <span class="o">*</span> <span class="mf">1e7</span><span class="p">)</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="n">home_sent</span> <span class="o">=</span> <span class="kc">False</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15"></a>
-<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18"></a>    <span class="n">boot_ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19"></a>
-<a id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">heartbeat_send</span><span class="p">(</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_TYPE_QUADROTOR</span><span class="p">,</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_AUTOPILOT_ARDUPILOTMEGA</span><span class="p">,</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_MODE_FLAG_CUSTOM_MODE_ENABLED</span><span class="p">,</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24"></a>        <span class="mi">0</span><span class="p">,</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_STATE_ACTIVE</span><span class="p">,</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="p">)</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27"></a>
-<a id="__codelineno-2-28" name="__codelineno-2-28"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">sys_status_send</span><span class="p">(</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29"></a>        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30"></a>        <span class="mi">16000</span><span class="p">,</span>      <span class="c1"># battery mV</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31"></a>        <span class="mi">1200</span><span class="p">,</span>       <span class="c1"># current cA = 12A</span>
-<a id="__codelineno-2-32" name="__codelineno-2-32"></a>        <span class="mi">82</span><span class="p">,</span>         <span class="c1"># battery %</span>
-<a id="__codelineno-2-33" name="__codelineno-2-33"></a>        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-<a id="__codelineno-2-34" name="__codelineno-2-34"></a>    <span class="p">)</span>
-<a id="__codelineno-2-35" name="__codelineno-2-35"></a>
-<a id="__codelineno-2-36" name="__codelineno-2-36"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">gps_raw_int_send</span><span class="p">(</span>
-<a id="__codelineno-2-37" name="__codelineno-2-37"></a>        <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">),</span>
-<a id="__codelineno-2-38" name="__codelineno-2-38"></a>        <span class="mi">3</span><span class="p">,</span>          <span class="c1"># 3D fix</span>
-<a id="__codelineno-2-39" name="__codelineno-2-39"></a>        <span class="n">lat</span><span class="p">,</span>
-<a id="__codelineno-2-40" name="__codelineno-2-40"></a>        <span class="n">lon</span><span class="p">,</span>
-<a id="__codelineno-2-41" name="__codelineno-2-41"></a>        <span class="mi">120000</span><span class="p">,</span>     <span class="c1"># altitude mm</span>
-<a id="__codelineno-2-42" name="__codelineno-2-42"></a>        <span class="mi">80</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span>    <span class="c1"># hdop/vdop * 100</span>
-<a id="__codelineno-2-43" name="__codelineno-2-43"></a>        <span class="mi">500</span><span class="p">,</span>        <span class="c1"># velocity cm/s</span>
-<a id="__codelineno-2-44" name="__codelineno-2-44"></a>        <span class="mi">9000</span><span class="p">,</span>       <span class="c1"># course deg * 100</span>
-<a id="__codelineno-2-45" name="__codelineno-2-45"></a>        <span class="mi">14</span><span class="p">,</span>         <span class="c1"># satellites</span>
-<a id="__codelineno-2-46" name="__codelineno-2-46"></a>    <span class="p">)</span>
-<a id="__codelineno-2-47" name="__codelineno-2-47"></a>
-<a id="__codelineno-2-48" name="__codelineno-2-48"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">global_position_int_send</span><span class="p">(</span>
-<a id="__codelineno-2-49" name="__codelineno-2-49"></a>        <span class="n">boot_ms</span><span class="p">,</span>
-<a id="__codelineno-2-50" name="__codelineno-2-50"></a>        <span class="n">lat</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span>
-<a id="__codelineno-2-51" name="__codelineno-2-51"></a>        <span class="n">lon</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span>
-<a id="__codelineno-2-52" name="__codelineno-2-52"></a>        <span class="mi">120000</span><span class="p">,</span>     <span class="c1"># MSL alt mm</span>
-<a id="__codelineno-2-53" name="__codelineno-2-53"></a>        <span class="mi">50000</span><span class="p">,</span>      <span class="c1"># relative alt mm</span>
-<a id="__codelineno-2-54" name="__codelineno-2-54"></a>        <span class="mi">500</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1"># vx/vy/vz cm/s</span>
-<a id="__codelineno-2-55" name="__codelineno-2-55"></a>        <span class="mi">9000</span><span class="p">,</span>       <span class="c1"># heading deg * 100</span>
-<a id="__codelineno-2-56" name="__codelineno-2-56"></a>    <span class="p">)</span>
-<a id="__codelineno-2-57" name="__codelineno-2-57"></a>
-<a id="__codelineno-2-58" name="__codelineno-2-58"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">attitude_send</span><span class="p">(</span>
-<a id="__codelineno-2-59" name="__codelineno-2-59"></a>        <span class="n">boot_ms</span><span class="p">,</span>
-<a id="__codelineno-2-60" name="__codelineno-2-60"></a>        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)),</span>
-<a id="__codelineno-2-61" name="__codelineno-2-61"></a>        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">)),</span>
-<a id="__codelineno-2-62" name="__codelineno-2-62"></a>        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span>
-<a id="__codelineno-2-63" name="__codelineno-2-63"></a>        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-<a id="__codelineno-2-64" name="__codelineno-2-64"></a>    <span class="p">)</span>
-<a id="__codelineno-2-65" name="__codelineno-2-65"></a>
-<a id="__codelineno-2-66" name="__codelineno-2-66"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">vfr_hud_send</span><span class="p">(</span>
-<a id="__codelineno-2-67" name="__codelineno-2-67"></a>        <span class="mf">12.0</span><span class="p">,</span>       <span class="c1"># airspeed</span>
-<a id="__codelineno-2-68" name="__codelineno-2-68"></a>        <span class="mf">10.0</span><span class="p">,</span>       <span class="c1"># groundspeed</span>
-<a id="__codelineno-2-69" name="__codelineno-2-69"></a>        <span class="mi">90</span><span class="p">,</span>         <span class="c1"># heading</span>
-<a id="__codelineno-2-70" name="__codelineno-2-70"></a>        <span class="mi">45</span><span class="p">,</span>         <span class="c1"># throttle</span>
-<a id="__codelineno-2-71" name="__codelineno-2-71"></a>        <span class="mf">120.0</span><span class="p">,</span>      <span class="c1"># alt</span>
-<a id="__codelineno-2-72" name="__codelineno-2-72"></a>        <span class="mf">0.4</span><span class="p">,</span>        <span class="c1"># climb</span>
-<a id="__codelineno-2-73" name="__codelineno-2-73"></a>    <span class="p">)</span>
-<a id="__codelineno-2-74" name="__codelineno-2-74"></a>
-<a id="__codelineno-2-75" name="__codelineno-2-75"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">home_sent</span><span class="p">:</span>
-<a id="__codelineno-2-76" name="__codelineno-2-76"></a>        <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">home_position_send</span><span class="p">(</span>
-<a id="__codelineno-2-77" name="__codelineno-2-77"></a>            <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span>
-<a id="__codelineno-2-78" name="__codelineno-2-78"></a>            <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-<a id="__codelineno-2-79" name="__codelineno-2-79"></a>            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<a id="__codelineno-2-80" name="__codelineno-2-80"></a>            <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
-<a id="__codelineno-2-81" name="__codelineno-2-81"></a>        <span class="p">)</span>
-<a id="__codelineno-2-82" name="__codelineno-2-82"></a>        <span class="n">home_sent</span> <span class="o">=</span> <span class="kc">True</span>
-<a id="__codelineno-2-83" name="__codelineno-2-83"></a>
-<a id="__codelineno-2-84" name="__codelineno-2-84"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>gst-launch-1.0<span class="w"> </span>videotestsrc<span class="w"> </span>is-live<span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="nv">pattern</span><span class="o">=</span>smpte<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">    </span>!<span class="w"> </span>video/x-raw,format<span class="o">=</span>I420,width<span class="o">=</span><span class="m">640</span>,height<span class="o">=</span><span class="m">480</span>,framerate<span class="o">=</span><span class="m">30</span>/1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span>!<span class="w"> </span>x264enc<span class="w"> </span><span class="nv">bitrate</span><span class="o">=</span><span class="m">1500</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">        </span>speed-preset<span class="o">=</span>ultrafast<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">        </span><span class="nv">tune</span><span class="o">=</span>zerolatency<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">        </span>key-int-max<span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">        </span>intra-refresh<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">        </span>sliced-threads<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">        </span><span class="nv">threads</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span>!<span class="w"> </span>h264parse<span class="w"> </span>config-interval<span class="o">=</span>-1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">    </span>!<span class="w"> </span>rtph264pay<span class="w"> </span><span class="nv">pt</span><span class="o">=</span><span class="m">96</span><span class="w"> </span><span class="nv">mtu</span><span class="o">=</span><span class="m">1024</span><span class="w"> </span>config-interval<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">    </span>!<span class="w"> </span>udpsink<span class="w"> </span><span class="nv">host</span><span class="o">=</span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">5600</span><span class="w"> </span><span class="nv">sync</span><span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="nv">async</span><span class="o">=</span><span class="nb">false</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="sim-mavlink">Sim mavlink</h3>
+<details>
+<summary>Mavlink code</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span>
+<span class="normal"><a href="#__codelineno-3-50">50</a></span>
+<span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span>
+<span class="normal"><a href="#__codelineno-3-53">53</a></span>
+<span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span>
+<span class="normal"><a href="#__codelineno-3-62">62</a></span>
+<span class="normal"><a href="#__codelineno-3-63">63</a></span>
+<span class="normal"><a href="#__codelineno-3-64">64</a></span>
+<span class="normal"><a href="#__codelineno-3-65">65</a></span>
+<span class="normal"><a href="#__codelineno-3-66">66</a></span>
+<span class="normal"><a href="#__codelineno-3-67">67</a></span>
+<span class="normal"><a href="#__codelineno-3-68">68</a></span>
+<span class="normal"><a href="#__codelineno-3-69">69</a></span>
+<span class="normal"><a href="#__codelineno-3-70">70</a></span>
+<span class="normal"><a href="#__codelineno-3-71">71</a></span>
+<span class="normal"><a href="#__codelineno-3-72">72</a></span>
+<span class="normal"><a href="#__codelineno-3-73">73</a></span>
+<span class="normal"><a href="#__codelineno-3-74">74</a></span>
+<span class="normal"><a href="#__codelineno-3-75">75</a></span>
+<span class="normal"><a href="#__codelineno-3-76">76</a></span>
+<span class="normal"><a href="#__codelineno-3-77">77</a></span>
+<span class="normal"><a href="#__codelineno-3-78">78</a></span>
+<span class="normal"><a href="#__codelineno-3-79">79</a></span>
+<span class="normal"><a href="#__codelineno-3-80">80</a></span>
+<span class="normal"><a href="#__codelineno-3-81">81</a></span>
+<span class="normal"><a href="#__codelineno-3-82">82</a></span>
+<span class="normal"><a href="#__codelineno-3-83">83</a></span>
+<span class="normal"><a href="#__codelineno-3-84">84</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="o">,</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pymavlink</span><span class="w"> </span><span class="kn">import</span> <span class="n">mavutil</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="n">mav</span> <span class="o">=</span> <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink_connection</span><span class="p">(</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="s2">&quot;udpout:127.0.0.1:14550&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">source_system</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">source_component</span><span class="o">=</span><span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_COMP_ID_AUTOPILOT1</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="n">lat</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">32.0853</span> <span class="o">*</span> <span class="mf">1e7</span><span class="p">)</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="n">lon</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">34.7818</span> <span class="o">*</span> <span class="mf">1e7</span><span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="n">home_sent</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="n">boot_ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">heartbeat_send</span><span class="p">(</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_TYPE_QUADROTOR</span><span class="p">,</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_AUTOPILOT_ARDUPILOTMEGA</span><span class="p">,</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_MODE_FLAG_CUSTOM_MODE_ENABLED</span><span class="p">,</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>        <span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>        <span class="n">mavutil</span><span class="o">.</span><span class="n">mavlink</span><span class="o">.</span><span class="n">MAV_STATE_ACTIVE</span><span class="p">,</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>    <span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">sys_status_send</span><span class="p">(</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>        <span class="mi">16000</span><span class="p">,</span>      <span class="c1"># battery mV</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>        <span class="mi">1200</span><span class="p">,</span>       <span class="c1"># current cA = 12A</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>        <span class="mi">82</span><span class="p">,</span>         <span class="c1"># battery %</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>    <span class="p">)</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">gps_raw_int_send</span><span class="p">(</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">),</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>        <span class="mi">3</span><span class="p">,</span>          <span class="c1"># 3D fix</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>        <span class="n">lat</span><span class="p">,</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>        <span class="n">lon</span><span class="p">,</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        <span class="mi">120000</span><span class="p">,</span>     <span class="c1"># altitude mm</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>        <span class="mi">80</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span>    <span class="c1"># hdop/vdop * 100</span>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        <span class="mi">500</span><span class="p">,</span>        <span class="c1"># velocity cm/s</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>        <span class="mi">9000</span><span class="p">,</span>       <span class="c1"># course deg * 100</span>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>        <span class="mi">14</span><span class="p">,</span>         <span class="c1"># satellites</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>    <span class="p">)</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">global_position_int_send</span><span class="p">(</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>        <span class="n">boot_ms</span><span class="p">,</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>        <span class="n">lat</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>        <span class="n">lon</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>        <span class="mi">120000</span><span class="p">,</span>     <span class="c1"># MSL alt mm</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>        <span class="mi">50000</span><span class="p">,</span>      <span class="c1"># relative alt mm</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>        <span class="mi">500</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1"># vx/vy/vz cm/s</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>        <span class="mi">9000</span><span class="p">,</span>       <span class="c1"># heading deg * 100</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>    <span class="p">)</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">attitude_send</span><span class="p">(</span>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>        <span class="n">boot_ms</span><span class="p">,</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)),</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">)),</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a>        <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a>        <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a>    <span class="p">)</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65"></a>
+<a id="__codelineno-3-66" name="__codelineno-3-66"></a>    <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">vfr_hud_send</span><span class="p">(</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67"></a>        <span class="mf">12.0</span><span class="p">,</span>       <span class="c1"># airspeed</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68"></a>        <span class="mf">10.0</span><span class="p">,</span>       <span class="c1"># groundspeed</span>
+<a id="__codelineno-3-69" name="__codelineno-3-69"></a>        <span class="mi">90</span><span class="p">,</span>         <span class="c1"># heading</span>
+<a id="__codelineno-3-70" name="__codelineno-3-70"></a>        <span class="mi">45</span><span class="p">,</span>         <span class="c1"># throttle</span>
+<a id="__codelineno-3-71" name="__codelineno-3-71"></a>        <span class="mf">120.0</span><span class="p">,</span>      <span class="c1"># alt</span>
+<a id="__codelineno-3-72" name="__codelineno-3-72"></a>        <span class="mf">0.4</span><span class="p">,</span>        <span class="c1"># climb</span>
+<a id="__codelineno-3-73" name="__codelineno-3-73"></a>    <span class="p">)</span>
+<a id="__codelineno-3-74" name="__codelineno-3-74"></a>
+<a id="__codelineno-3-75" name="__codelineno-3-75"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">home_sent</span><span class="p">:</span>
+<a id="__codelineno-3-76" name="__codelineno-3-76"></a>        <span class="n">mav</span><span class="o">.</span><span class="n">mav</span><span class="o">.</span><span class="n">home_position_send</span><span class="p">(</span>
+<a id="__codelineno-3-77" name="__codelineno-3-77"></a>            <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="mi">120000</span><span class="p">,</span>
+<a id="__codelineno-3-78" name="__codelineno-3-78"></a>            <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-3-79" name="__codelineno-3-79"></a>            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-3-80" name="__codelineno-3-80"></a>            <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-3-81" name="__codelineno-3-81"></a>        <span class="p">)</span>
+<a id="__codelineno-3-82" name="__codelineno-3-82"></a>        <span class="n">home_sent</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-3-83" name="__codelineno-3-83"></a>
+<a id="__codelineno-3-84" name="__codelineno-3-84"></a>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
