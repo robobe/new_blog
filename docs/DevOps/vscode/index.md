@@ -31,9 +31,9 @@ tags:
         </a>
     </div>
      <div class="grid-item">
-        <a href="copilot">
-        <img src="images/copilot.png" width="150" height="150">
-        <p>Copilot</p>
+        <a href="agents">
+        <img src="images/agent.png" width="150" height="150">
+        <p>agents</p>
         </a>
     </div>
     <div class="grid-item">

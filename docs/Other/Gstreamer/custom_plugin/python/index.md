@@ -34,6 +34,11 @@ processing or custom `Gst.Meta`, move the final plugin to C, C++, or Rust.
             <p>Gst.Event</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="source_element">
+            <p>Source element</p>
+        </a>
+    </div>
 </div>
 
 ## Install
@@ -190,11 +195,23 @@ GObject.type_register(MinimalFilter)
 __gstelementfactory__ = ("minimalfilter", Gst.Rank.NONE, MinimalFilter)
 ```
 
+The plugin folder should look like this:
+
+```text
+plugins/
+└── python/
+    └── minimal_plugin.py
+```
+
+`minimal_plugin.py` contains the plugin code shown above. GStreamer discovers Python
+plugins from the `python/` subfolder of each directory listed in `GST_PLUGIN_PATH`.
+
 ## Test
 
 Put the file under `python/minimal_plugin.py`, then run:
 
 ```bash
+# from plugin folder
 GST_PLUGIN_PATH=$PWD gst-inspect-1.0 minimalfilter
 ```
 
@@ -212,7 +229,19 @@ GST_DEBUG=python:6,pythonplugin:6,GST_PLUGIN_LOADING:5 \
 gst-inspect-1.0 minimalfilter
 ```
 
-If the registry cache is stale, remove it:
+### Troubleshooting
+
+If the inspect not found the plugin 
+check if it **block list**
+
+!!! info "what is block list"
+    It means GStreamer tried to load that plugin before, the load failed, and GStreamer cached it as “bad” in its registry. After that, it skips the plugin quickly instead of trying to load it every time.
+
+```bash
+gst-inspect-1.0 -b
+```
+If the plugin in the block list clear the cache
+
 
 ```bash
 rm ~/.cache/gstreamer-1.0/registry.*.bin

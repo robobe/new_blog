@@ -43,3 +43,16 @@ tags:
         </a>
     </div>
 </div>
+
+---
+
+## Projects
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="build_guide">
+        <p>5inch Build Guide</p>
+        </a>
+    </div>
+</div>
+

@@ -82,6 +82,34 @@ You use field() when you want extra control over a property:
 attribute: type = field(...)
 ```
 
+### default
+Use `default` when every instance can safely start with the same immutable value.
+
+```python
+@dataclass
+class User:
+    name: str = "guest"
+    active: bool = True
+```
+
+`default` stores the value directly on the field. That is fine for immutable
+values like `str`, `int`, `float`, `bool`, `None`, or tuples.
+
+Do not use `default` for mutable values like lists or dicts, because the same
+object can be shared between instances. Use `default_factory` when each instance
+needs a new object.
+
+Writing `active: bool = True` and `active: bool = field(default=True)` create the
+same default value. Use the shorter assignment when you only need a default.
+Use `field(default=True)` when you also need `field()` options, such as
+`repr=False`, `compare=False`, `metadata=...`, or `kw_only=True`.
+
+```python
+@dataclass
+class User:
+    active: bool = field(default=True, repr=False)
+```
+
 ### default_factory
 init the mutable attribute correctly 
 Use default_factory for:

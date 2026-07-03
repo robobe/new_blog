@@ -102,6 +102,23 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz sim
     using `nvidia-smi` to check that gz sim use nvidia card
 
 
+<details>
+<summary>OpenGL Env variable</summary>
+```bash title="check OpenGL
+glxinfo | grep "OpenGL renderer"
+#
+OpenGL renderer string: Mesa Intel(R) Graphics (ARL)
+
+
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gl
+xinfo | grep "OpenGL renderer"
+#
+OpenGL renderer string: NVIDIA GeForce RTX 5070 Laptop GPU/PCIe/SSE2
+```
+</details>
+
+
+
 !!! tip "prime-select`
     prime-select is an Ubuntu-specific utility used to manage hybrid graphics on laptops
 

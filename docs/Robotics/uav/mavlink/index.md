@@ -5,9 +5,15 @@ tags:
     - pymavlink
 ---
 
-MAVLink (Micro Air Vehicle Link) is a lightweight communication protocol used to exchange messages between drones (UAVs), their autopilots, ground control stations, and companion computers
+MAVLink is used as the messaging layer between the main parts of a UAV system. It carries telemetry, commands, mission data, parameters, status updates, and sensor information over serial links, UDP/TCP, radios, or onboard networks.
 
-In MAVLink, every message is tagged with two identifiers so the network knows who sent the message and which part of the system it came from:
+The main MAVLink components are:
+
+- **Autopilot / flight controller**: controls the vehicle and publishes telemetry.
+- **Ground control station (GCS)**: monitors the vehicle and sends commands or mission plans.
+- **Companion computer**: runs higher-level software such as computer vision, autonomy, or payload control.
+- **MAVLink router or bridge**: forwards MAVLink traffic between links, tools, and components.
+
 
 <div class="grid-container">
     <div class="grid-item">
@@ -21,8 +27,8 @@ In MAVLink, every message is tagged with two identifiers so the network knows wh
         </a>
     </div>
      <div class="grid-item">
-        <a href="mavlink_router">
-            <p>mavlink-router</p>
+        <a href="mavlink_network">
+            <p>mavlink network</p>
         </a>
     </div>
 </div>
@@ -48,39 +54,45 @@ Distinguishes different vehicles on the same MAVLink network (Vehicle ID)
 
 Examples:
 
-- Drone #1 → SYSID = 1
-- Drone #2 → SYSID = 2
-- Simulator (SITL) → often SYSID = 1 (configurable)
-- GCS () = 255
+- **Drone #1** → SYSID = 1
+- **Drone #2** → SYSID = 2
+- **Simulator (SITL)** → often SYSID = 1 (configurable)
+- **GCS ()** = 255
 
 ## COMPID (Component ID)
-A number that identifies a component inside a system. (1-255)
+A number that identifies a **component** inside a system. (1-255)
 Distinguishes subsystems within the same vehicle
 
 Think of it as the process/module ID
 
 Common COMPIDs:
-- 1 → Autopilot (flight controller)
-- 190 → Companion computer
-- 191 → GCS (ground control station)
-- 200+ → Custom components
+- **1** → Autopilot (flight controller)
+- **190** → Companion computer
+- **191** → GCS (ground control station)
+- **200+** → Custom components
 
 ## Source / Target / Broadcast
-In MAVLink, every message has two layers of identity:
+MAVLink separates the **sender identity** from any optional **receiver target**:
 
-1️⃣ Message header → SOURCE
-- These are set automatically by your MAVLink connection:
-- source_system (your SYSID)
-- source_component (your COMPID)
+1. Message header → source
 
-👉 Identifies who is sending the message.
+Every MAVLink frame contains the sender IDs in the header:
 
-2️⃣ Command fields → TARGET
-- Certain messages (especially commands) include explicit target fields inside the payload:
-- target_system
-- target_component
+- `sysid` / `source_system` - the system that sent the message
+- `compid` / `source_component` - the component that sent the message
 
-👉 Identifies who should execute the command.
+These identify **who sent the message**. They are normally set by the MAVLink library or connection configuration.
+
+![alt text](images/mavlink_v2_frame.png)
+
+2. Payload fields → target
+
+Only some MAVLink messages are addressed to a receiver. Those messages include target fields in the payload, for example:
+
+- `target_system`
+- `target_component`
+
+These identify **who should handle or execute the message**. Common examples are command, mission, and parameter messages.
 
 ### Example: COMMAND_LONG(76)
 
@@ -88,16 +100,17 @@ In MAVLink, every message has two layers of identity:
 
 ### Broadcast
 
+For messages that have target fields, `0` means broadcast:
+
 ```
 target_system    = 0
 target_component = 0
 ```
 
-- Telemetry → always broadcast
-- Queries → sometimes broadcast
-- Control commands → never broadcast unless you are 100% sure
+- `target_system = 0` - send to all systems
+- `target_component = 0` - send to all components in the selected system
 
----
+**Telemetry messages** <u>usually do not have target fields</u>. They are simply published by the sender, and any MAVLink peer on the link may consume them.
 
-## Mavlink network
-MAVLink “stream” is usually **one physical link** to connect multiple customer we use tool like [**mavlink-router**](https://github.com/mavlink-router/mavlink-router)
+Avoid broadcasting **control commands** unless the intended behavior is clear and safe.
+

@@ -83,6 +83,7 @@ build-backend = "hatchling.build"
 | `[tool.*]`              | Tool-specific configuration | `ruff`, `pytest`, `uv`, `mypy` |
 
 
+
 ---
 
 # TODO: refactor and add relate description to uv build
