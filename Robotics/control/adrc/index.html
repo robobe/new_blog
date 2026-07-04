@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#learning-path" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -668,6 +673,69 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-code-adrc-idea-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The code ADRC idea is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mass-system-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mass System Simulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adrc-in-codesimplepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADRC in code/simple.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -699,6 +767,146 @@
 
   <h1>ADRC</h1>
 
+<h2 id="learning-path">Learning path</h2>
+<ol>
+<li>PID on mass system</li>
+<li>Add unknown disturbance</li>
+<li>Add observer that estimates velocity</li>
+<li>Extend observer to estimate disturbance</li>
+<li>Cancel disturbance in control law</li>
+</ol>
+<h2 id="the-code-adrc-idea-is">The code ADRC idea is</h2>
+<ul>
+<li>Do not perfectly model the disturbance</li>
+<li>Estimate it</li>
+<li>Cancel it</li>
+</ul>
+<hr />
+<h2 id="mass-system-simulation">Mass System Simulation</h2>
+<p>Start with the simplest case: a unit mass moving along one axis with no
+disturbance.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>a = u
+</code></pre></div></td></tr></table></div>
+<p>The controller command <code>u</code> directly creates acceleration <code>a</code>. Acceleration does
+not change position directly. It first changes velocity, and velocity changes
+position:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>v_dot = a
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>x_dot = v
+</code></pre></div></td></tr></table></div>
+<p>That is why the state of the mass needs two values:</p>
+<ul>
+<li><code>x</code>: position, where the mass is</li>
+<li><code>v</code>: velocity, how fast the position is changing</li>
+</ul>
+<p>If the simulation only stored <code>x</code>, it would not know how the mass is moving
+between control updates. The velocity <code>v</code> is the memory of previous acceleration.</p>
+<p>With a small timestep <code>dt</code>, the no-disturbance simulation is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">a</span> <span class="o">=</span> <span class="n">u</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">v</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="n">x</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="n">dt</span>
+</code></pre></div></td></tr></table></div>
+<p>After that basic model is working, add the unknown disturbance. The environment
+adds <code>d</code> to the acceleration, so the plant becomes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>a = u + d
+</code></pre></div></td></tr></table></div>
+<p>Because this is a unit mass, force and acceleration have the same numeric value.
+For a different mass <code>m</code>, the model would be <code>a = (u + d) / m</code>.</p>
+<p>The simulation advances the continuous system with a small fixed timestep <code>dt</code>.
+At each step:</p>
+<ol>
+<li>Read the current position as the measurement <code>y</code>.</li>
+<li>Let the controller compute a new command <code>u</code>.</li>
+<li>Compute the disturbance at the current time.</li>
+<li>Update acceleration, velocity, and position.</li>
+</ol>
+<p>The plant update is Euler integration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">d</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">a</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="n">d</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="n">v</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="n">x</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="n">dt</span>
+</code></pre></div></td></tr></table></div>
+<p>In <code>code/simple.py</code>, the simulation uses <code>dt = 0.001</code> seconds for <code>T = 5.0</code>
+seconds. The reference position is <code>1.0</code>, so the controller tries to move the
+mass from <code>x = 0</code> to <code>x = 1</code> while rejecting the sinusoidal disturbance.</p>
+<hr />
+<h2 id="adrc-in-codesimplepy">ADRC in <code>code/simple.py</code></h2>
+<p>Active Disturbance Rejection Control (ADRC) treats everything that is not the
+known control input as a disturbance and estimates it online. In
+<a href="code/simple.py"><code>simple.py</code></a>, the plant is a simple mass:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">a</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="n">d</span>
+</code></pre></div></td></tr></table></div>
+<p>In this example, the system is a point mass moving in one dimension. The state
+of the mass is its position <code>x</code> and velocity <code>v</code>. The controller sends a command
+<code>u</code>, and the plant turns the total force into acceleration:</p>
+<ul>
+<li><code>a</code>: acceleration of the mass</li>
+<li><code>u</code>: control input chosen by the controller</li>
+<li><code>d</code>: unknown disturbance added by the real system</li>
+</ul>
+<p>So <code>u</code> is the part we control, and <code>d</code> is the part we do not control. If there
+were no disturbance, the mass would accelerate only according to <code>u</code>. Because
+<code>d</code> exists, the real acceleration becomes <code>u + d</code>.</p>
+<p>The controller only measures position <code>y = x</code>. It does not measure velocity
+directly, and it does not know the disturbance <code>d</code>, so it uses an Extended State
+Observer (ESO) to estimate all three values:</p>
+<ul>
+<li><code>z1</code>: estimated position</li>
+<li><code>z2</code>: estimated velocity</li>
+<li><code>z3</code>: estimated total disturbance</li>
+</ul>
+<p>For a second-order system, position changes because of velocity and velocity
+changes because of acceleration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>x_dot = v
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>v_dot = b0 * u + disturbance
+</code></pre></div></td></tr></table></div>
+<p>That is why the observer needs <code>z1</code> and <code>z2</code>. ADRC then adds one extra state,
+<code>z3</code>, for the unknown part of the acceleration. This includes the real external
+disturbance, modeling error, friction, wrong mass estimate, or anything else
+that makes the plant behave differently from <code>b0 * u</code>.</p>
+<p>The observer compares the estimated position with the measured position:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z1</span> <span class="o">-</span> <span class="n">y</span>
+</code></pre></div></td></tr></table></div>
+<p>Then it corrects <code>z1</code>, <code>z2</code>, and <code>z3</code> using the gains <code>beta1</code>, <code>beta2</code>, and
+<code>beta3</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">beta1</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">w0</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">beta2</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">w0</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">beta3</span> <span class="o">=</span> <span class="n">w0</span><span class="o">**</span><span class="mi">3</span>
+</code></pre></div></td></tr></table></div>
+<p>These gains come from choosing an observer bandwidth <code>w0</code>. A larger <code>w0</code> makes
+<code>z1</code>, <code>z2</code>, and <code>z3</code> react faster to measurement error, but it also amplifies
+noise and can require a smaller <code>dt</code>. In this example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">observer_bandwidth</span><span class="o">=</span><span class="mf">30.0</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="n">controller_bandwidth</span><span class="o">=</span><span class="mf">5.0</span>
+</code></pre></div></td></tr></table></div>
+<p>The observer is intentionally faster than the controller. A common starting
+rule is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>observer_bandwidth = 3 to 10 * controller_bandwidth
+</code></pre></div></td></tr></table></div>
+<p>Here the ratio is <code>30 / 5 = 6</code>, which is a reasonable first choice.</p>
+<p>The controller uses <code>z1</code> and <code>z2</code> like a normal PD controller:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="n">a_desired</span> <span class="o">=</span> <span class="n">kp</span> <span class="o">*</span> <span class="p">(</span><span class="n">ref</span> <span class="o">-</span> <span class="n">z1</span><span class="p">)</span> <span class="o">+</span> <span class="n">kd</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="n">z2</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Then it subtracts the estimated disturbance:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_desired</span> <span class="o">-</span> <span class="n">z3</span><span class="p">)</span> <span class="o">/</span> <span class="n">b0</span>
+</code></pre></div></td></tr></table></div>
+<p>So the role of the three observer states is:</p>
+<ul>
+<li><code>z1</code> tells the controller where the mass is.</li>
+<li><code>z2</code> tells the controller how fast the mass is moving.</li>
+<li><code>z3</code> tells the controller how much unknown acceleration should be cancelled.</li>
+</ul>
+<hr />
+<h2 id="reference">Reference</h2>
 <p><a href="https://www.youtube.com/watch?v=4SE_t6-DnQ4&amp;list=PLq9ofiBVTfA4VNMVnCCFWjLdfVxZqoWKv">adrc controller</a>
 - <a href="https://youtu.be/DS5VEFD-r_A"> Active Disturbance Rejection Control the intuitive way part 1 </a></p>
 
