@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/control/adrc/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/control/pid/windup/">
       
       
       
@@ -20,19 +20,19 @@
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.ico">
+      <link rel="icon" href="../../../../assets/images/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>ADRC - Nodes and Pipes</title>
+        <title>PID Windup - Nodes and Pipes</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,9 +51,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../extra.css">
+      <link rel="stylesheet" href="../../../../extra.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#what-is-integral-windup" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -85,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -105,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ADRC
+              PID Windup
             
           </span>
         </div>
@@ -197,7 +202,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
   
@@ -216,7 +221,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../ROS/" class="md-tabs__link">
+      <a href="../../../../ROS/" class="md-tabs__link">
         
   
   
@@ -235,7 +240,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Simulation/" class="md-tabs__link">
+      <a href="../../../../Simulation/" class="md-tabs__link">
         
   
   
@@ -254,7 +259,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         
   
   
@@ -273,7 +278,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Programming/" class="md-tabs__link">
+      <a href="../../../../Programming/" class="md-tabs__link">
         
   
   
@@ -292,7 +297,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Embedded/" class="md-tabs__link">
+      <a href="../../../../Embedded/" class="md-tabs__link">
         
   
   
@@ -311,7 +316,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../DevOps/" class="md-tabs__link">
+      <a href="../../../../DevOps/" class="md-tabs__link">
         
   
   
@@ -330,7 +335,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../Other/" class="md-tabs__link">
+      <a href="../../../../Other/" class="md-tabs__link">
         
   
   
@@ -349,7 +354,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../projects/" class="md-tabs__link">
+      <a href="../../../../projects/" class="md-tabs__link">
         
   
   
@@ -384,7 +389,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -414,7 +419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -441,7 +446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ROS/" class="md-nav__link">
+      <a href="../../../../ROS/" class="md-nav__link">
         
   
   
@@ -468,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Simulation/" class="md-nav__link">
+      <a href="../../../../Simulation/" class="md-nav__link">
         
   
   
@@ -495,7 +500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   
@@ -522,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Programming/" class="md-nav__link">
+      <a href="../../../../Programming/" class="md-nav__link">
         
   
   
@@ -549,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Embedded/" class="md-nav__link">
+      <a href="../../../../Embedded/" class="md-nav__link">
         
   
   
@@ -576,7 +581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../DevOps/" class="md-nav__link">
+      <a href="../../../../DevOps/" class="md-nav__link">
         
   
   
@@ -603,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Other/" class="md-nav__link">
+      <a href="../../../../Other/" class="md-nav__link">
         
   
   
@@ -630,7 +635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../projects/" class="md-nav__link">
+      <a href="../../../../projects/" class="md-nav__link">
         
   
   
@@ -668,6 +673,58 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-integral-windup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is integral windup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-windup-appears" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where windup appears
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-anti-windup-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple anti-windup idea
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -690,6 +747,20 @@
         <span class="md-tag">control</span>
       
     
+      
+      
+      
+      
+        <span class="md-tag">pid</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">windup</span>
+      
+    
   </nav>
 
 
@@ -697,10 +768,74 @@
   
 
 
-  <h1>ADRC</h1>
+  <h1>PID Windup</h1>
 
-<p><a href="https://www.youtube.com/watch?v=4SE_t6-DnQ4&amp;list=PLq9ofiBVTfA4VNMVnCCFWjLdfVxZqoWKv">adrc controller</a>
-- <a href="https://youtu.be/DS5VEFD-r_A"> Active Disturbance Rejection Control the intuitive way part 1 </a></p>
+<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/control/">control</a> / <a href="/Robotics/control/pid/">pid</a></p>
+<hr />
+<h2 id="what-is-integral-windup">What is integral windup</h2>
+<p>Integral windup happens when the integral term keeps growing while the actuator
+is already saturated.</p>
+<p>For example, a motor command might be limited to:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>-10 N
+</code></pre></div></td></tr></table></div>
+<p>If the PID controller asks for <code>40 N</code>, the real system still receives only
+<code>10 N</code>. The error remains large, so the integral term keeps accumulating. Later,
+when the system gets close to the target, the large stored integral still pushes
+the plant too hard. This can create overshoot, oscillation, and slow recovery.</p>
+<p>Windup is not the part that helps. The useful part is <strong>anti-windup</strong>: limiting
+or correcting the integral term so the controller does not store more error than
+the actuator can use.</p>
+<hr />
+<h2 id="where-windup-appears">Where windup appears</h2>
+<p>This is common in robotics because actuators are limited:</p>
+<ul>
+<li>a motor has maximum torque</li>
+<li>a drone has maximum thrust</li>
+<li>a wheel has limited traction</li>
+<li>a servo has a maximum speed</li>
+</ul>
+<p>The controller may compute a command that is physically impossible. If the
+integral term does not know about that limit, it can grow in the wrong direction
+for too long.</p>
+<hr />
+<h2 id="simple-anti-windup-idea">Simple anti-windup idea</h2>
+<p>A simple approach is to clamp the integral term:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">+=</span> <span class="n">error</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="n">integral_limit</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">integral_limit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">integral</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<p>This keeps the integral term useful for removing steady-state error, but prevents
+it from dominating the response after saturation.</p>
+<pre class="mermaid"><code>flowchart LR
+    error["error"] --&gt; integral["integral"]
+    integral --&gt; clamp["clamp integral"]
+    clamp --&gt; pid["PID output"]
+    pid --&gt; saturate["actuator limit"]
+    saturate --&gt; plant["plant"]</code></pre>
+<hr />
+<h2 id="demo">Demo</h2>
+<p>Run the demo:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>python3<span class="w"> </span>docs/Robotics/control/pid/windup/code/windup_demo.py
+</code></pre></div></td></tr></table></div>
+<p>Use the <code>Windup</code> button to run the controller without integral limiting. Use
+the <code>Anti-windup</code> button to run the same controller with a clamped integral
+term. <code>Reset</code> clears the graph.</p>
+<p>The example compares two controllers on the same mass system:</p>
+<ul>
+<li><code>without anti-windup</code>: the integral term can grow without a limit</li>
+<li><code>with anti-windup</code>: the integral term is clamped</li>
+</ul>
+<p>Both controllers use the same actuator limit, so neither one can push harder
+than the plant allows. The difference is what happens to the integral term while
+the actuator is saturated.</p>
+<p>Expected result:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>without anti-windup: more overshoot and slower settling
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>with anti-windup: less overshoot and faster settling
+</code></pre></div></td></tr></table></div>
+<p>The anti-windup controller is more stable because it does not keep a large
+stored integral after the plant gets close to the target.</p>
+<p><img alt="PID windup compared with anti-windup" src="images/windup_comparison.png" /></p>
 
 
 
@@ -772,14 +907,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
         <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
       
-        <script src="../../../assets/mathjax.js"></script>
+        <script src="../../../../assets/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       

@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#reference" class="md-skip">
+        <a href="#what-is-pid-control" class="md-skip">
           Skip to content
         </a>
       
@@ -680,6 +680,150 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#what-is-pid-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is PID control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#role-of-p-i-and-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Role of P, I, and D
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Role of P, I, and D">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p-proportional-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P: proportional term
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-integral-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I: integral term
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-derivative-term" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D: derivative term
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-on-pid-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        More on PID Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-presets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo presets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo presets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slow-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slow response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Good response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oscillating-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Oscillating response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pid-terms-and-tuning-tricks-to-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PID terms and tuning tricks to learn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -731,6 +875,363 @@
   <h1>PID Control</h1>
 
 <p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/control/">control</a></p>
+<hr />
+<h2 id="what-is-pid-control">What is PID control</h2>
+<p>PID is a feedback controller. It measures the current system output, compares it
+to a target, and creates a control command from the error.</p>
+<pre class="mermaid"><code>flowchart LR
+    target["r(t)"] --&gt; error_sum(("Σ"))
+    error_sum --&gt; proportional["P"]
+    error_sum --&gt; integral["I"]
+    error_sum --&gt; derivative["D"]
+
+    proportional --&gt; control_sum(("Σ"))
+    integral --&gt; control_sum
+    derivative --&gt; control_sum
+
+    subgraph loop[" "]
+        direction TB
+        plant["Plant / Process"] --&gt; output["y(t)"]
+        output --&gt; feedback["Feedback"]
+    end
+
+    control_sum --&gt; plant
+    feedback --&gt; error_sum</code></pre>
+<h2 id="role-of-p-i-and-d">Role of P, I, and D</h2>
+<h3 id="p-proportional-term">P: proportional term</h3>
+<p>The proportional term reacts to the current error.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">kp</span> <span class="o">*</span> <span class="n">error</span>
+</code></pre></div></td></tr></table></div>
+<p>If the position is far from the target, the error is large, so the controller
+applies a large force. Increasing <code>Kp</code> usually makes the system respond faster.
+If <code>Kp</code> is too high, the mass can overshoot the target and oscillate.</p>
+<h3 id="i-integral-term">I: integral term</h3>
+<p>The integral term reacts to accumulated error over time.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">+=</span> <span class="n">error</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">ki</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">integral</span>
+</code></pre></div></td></tr></table></div>
+<p>This helps remove steady-state error. For example, if friction or a constant
+disturbance prevents the system from reaching the target exactly, the integral
+term slowly grows until the controller applies enough extra force.</p>
+<p>Too much <code>Ki</code> can make the response overshoot, oscillate, or recover slowly
+because the accumulated error keeps pushing even after the system reaches the
+target.</p>
+<h3 id="d-derivative-term">D: derivative term</h3>
+<p>The derivative term reacts to how quickly the error is changing.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">derivative</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_error</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">kd</span> <span class="o">*</span> <span class="n">derivative</span>
+</code></pre></div></td></tr></table></div>
+<p>This acts like damping. It reduces overshoot by pushing against fast changes in
+error. Increasing <code>Kd</code> can make the response smoother and more stable.</p>
+<p>Too much <code>Kd</code> can make the controller sensitive to measurement noise and can
+make the control command jumpy.</p>
+<hr />
+<h3 id="more-on-pid-control">More on PID Control</h3>
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="feed_forward">
+            <h2>Feed-forward</h2>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="windup">
+            <h2>Windup</h2>
+        </a>
+    </div>
+
+</div>
+
+<hr />
+<h3 id="demo">Demo</h3>
+<p>In the demo code, the target is the desired position:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">target</span> <span class="o">=</span> <span class="mf">1.0</span>
+</code></pre></div></td></tr></table></div>
+<p>The measured value is the mass position:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">x</span>
+</code></pre></div></td></tr></table></div>
+<p>The controller computes the force applied to the mass:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">control_force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="n">measurement</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="n">dt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Inside <code>PIDController.compute()</code>, the control law is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">-</span> <span class="n">measurement</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">+=</span> <span class="n">error</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="n">derivative</span> <span class="o">=</span> <span class="p">(</span><span class="n">error</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_error</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">kp</span> <span class="o">*</span> <span class="n">error</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a>    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ki</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">integral</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a>    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">kd</span> <span class="o">*</span> <span class="n">derivative</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>That means:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>control = Kp * error + Ki * accumulated_error + Kd * error_change_rate
+</code></pre></div></td></tr></table></div>
+<p>The plant in this example is a simple mass with friction:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="n">friction_force</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">friction</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">v</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="n">acceleration</span> <span class="o">=</span> <span class="p">(</span><span class="n">force</span> <span class="o">+</span> <span class="n">friction_force</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">v</span> <span class="o">+=</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">v</span> <span class="o">*</span> <span class="n">dt</span>
+</code></pre></div></td></tr></table></div>
+<p>So the PID controller is not directly setting the position. It applies a force,
+the force changes acceleration, acceleration changes velocity, and velocity
+changes position.</p>
+<hr />
+<h2 id="demo-presets">Demo presets</h2>
+<p>Run the interactive demo:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>python3<span class="w"> </span>docs/Robotics/control/pid/code/simple_system.py
+</code></pre></div></td></tr></table></div>
+<p>The demo has sliders for <code>Kp</code>, <code>Ki</code>, and <code>Kd</code>, plus three preset buttons:</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Gains</th>
+<th>Expected response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Slow</code></td>
+<td><code>Kp=4.0</code>, <code>Ki=0.0</code>, <code>Kd=2.0</code></td>
+<td>The position moves toward the target slowly. It is stable, but takes more time to settle.</td>
+</tr>
+<tr>
+<td><code>Good</code></td>
+<td><code>Kp=25.0</code>, <code>Ki=0.5</code>, <code>Kd=8.0</code></td>
+<td>The position reaches the target quickly with limited overshoot.</td>
+</tr>
+<tr>
+<td><code>Oscillate</code></td>
+<td><code>Kp=80.0</code>, <code>Ki=0.0</code>, <code>Kd=0.0</code></td>
+<td>The high proportional gain pushes hard with no damping, so the mass overshoots and oscillates.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="slow-response">Slow response</h3>
+<p><img alt="Slow PID response after 5 seconds" src="images/slow_response.png" /></p>
+<h3 id="good-response">Good response</h3>
+<p><img alt="Good PID response after 5 seconds" src="images/good_response.png" /></p>
+<h3 id="oscillating-response">Oscillating response</h3>
+<p><img alt="Oscillating PID response after 5 seconds" src="images/oscillate_response.png" /></p>
+<p>Use <code>Start</code> to run the simulation and <code>Reset</code> to clear the plot. When you press a
+preset button, the sliders are updated and the simulation is reset so the new
+response starts from the same initial state.</p>
+<p>Look at the three plots:</p>
+<ul>
+<li><code>position</code>: how close the mass is to the target.</li>
+<li><code>velocity</code>: how fast the mass is moving.</li>
+<li><code>control force</code>: how hard the PID controller is pushing.</li>
+</ul>
+<p>The goal is not always the fastest response. A useful PID tuning usually balances
+rise time, overshoot, settling time, and control effort.</p>
+<hr />
+<h2 id="pid-terms-and-tuning-tricks-to-learn">PID terms and tuning tricks to learn</h2>
+<p>Basic words:</p>
+<ul>
+<li><strong>Setpoint</strong>: the target value the controller is trying to reach.</li>
+<li><strong>Process variable</strong>: the measured value from the system, such as position,
+  speed, temperature, or pressure.</li>
+<li><strong>Error</strong>: the difference between the setpoint and the process variable.</li>
+<li><strong>Rise time</strong>: how long the system takes to move close to the target after a
+  change in setpoint.</li>
+<li><strong>Overshoot</strong>: how far the response goes past the target before coming back.</li>
+<li><strong>Settling time</strong>: how long the system takes to stay near the target without
+  large oscillations.</li>
+<li><strong>Steady-state error</strong>: the remaining error after the system has mostly
+  settled.</li>
+<li><strong>Control effort</strong>: how much actuator force, torque, voltage, or command the
+  controller uses.</li>
+<li><strong>Saturation</strong>: when the actuator reaches its limit and cannot apply a larger
+  command.</li>
+</ul>
+<p>Practical PID tricks:</p>
+<ul>
+<li><strong>Integral windup</strong>: accumulated integral error that keeps pushing the system
+  even after the actuator saturates or the target is reached.</li>
+<li><strong>Anti-windup</strong>: a technique that limits or resets the integral term when it
+  would make recovery worse.</li>
+<li><strong>Integral clamp</strong>: limiting the stored integral value so <code>Ki</code> cannot dominate
+  the controller after a long error.</li>
+<li><strong>Conditional integration</strong>: only accumulating the integral term when the
+  actuator is not saturated, or when the integral is helping move out of
+  saturation.</li>
+<li><strong>Integral deadband</strong>: stopping or reducing integral accumulation when the
+  error is already very small, so the controller does not hunt around the target.</li>
+<li><strong>Integral reset</strong>: clearing the integral term when the controller mode,
+  target, or operating state changes.</li>
+<li><strong>Integrator preload</strong>: starting the integral term near the command needed for
+  a known operating point, instead of always starting from zero.</li>
+<li><strong>Derivative kick</strong>: a sharp spike in the derivative term caused by a sudden
+  setpoint change.</li>
+<li><strong>Derivative on measurement</strong>: computing <code>D</code> from the measured output instead
+  of the error, often written as <code>D = -Kd * dy / dt</code>, to reduce derivative kick.</li>
+<li><strong>Derivative on output</strong>: another name for derivative on measurement; it uses
+  how fast the plant output is moving instead of how fast the error changes.</li>
+<li><strong>Derivative filtering</strong>: smoothing the derivative term so measurement noise
+  does not create a jumpy control command.</li>
+<li><strong>Low-pass sensor filtering</strong>: filtering the measured value before the PID
+  calculation when the sensor is noisy.</li>
+<li><strong>Setpoint weighting</strong>: letting the proportional and derivative terms react
+  less aggressively to setpoint changes while still correcting disturbances.</li>
+<li><strong>Feed-forward</strong>: adding a predicted control command before feedback correction,
+  such as the force needed to hold a known load.</li>
+<li><strong>Gravity compensation</strong>: a common robotics feed-forward term that adds the
+  torque or force needed to hold a link, elevator, or vertical axis.</li>
+<li><strong>Velocity feed-forward</strong>: adding a command proportional to desired speed so
+  the feedback loop does not need to create all motion from error.</li>
+<li><strong>Acceleration feed-forward</strong>: adding a command proportional to desired
+  acceleration, useful when the required force or torque is predictable.</li>
+<li><strong>Gain scheduling</strong>: using different PID gains in different operating ranges,
+  such as low speed and high speed.</li>
+<li><strong>Deadband</strong>: ignoring very small errors when tiny corrections would cause
+  actuator chatter.</li>
+<li><strong>Output deadband compensation</strong>: adding enough command to overcome motor
+  friction or static friction once the controller decides to move.</li>
+<li><strong>Output clamp</strong>: limiting the final controller command to the actuator range.</li>
+<li><strong>Output ramp limit</strong>: limiting how quickly the control command is allowed to
+  change.</li>
+<li><strong>Slew rate limit</strong>: another name for output ramp limiting; useful when sudden
+  command jumps stress hardware or break traction.</li>
+<li><strong>Sample time</strong>: the controller update interval; changing it affects the
+  integral and derivative terms.</li>
+<li><strong>Fixed update rate</strong>: running the PID loop at a stable <code>dt</code> so the <code>I</code> and
+  <code>D</code> terms behave consistently.</li>
+<li><strong>Bumpless transfer</strong>: switching between manual control and PID control without
+  creating a sudden command jump.</li>
+<li><strong>Cascade control</strong>: using one PID loop to command another loop, such as a
+  position loop that commands a velocity loop.</li>
+<li><strong>Split-range control</strong>: using different actuators or command ranges for
+  different parts of the control effort.</li>
+<li><strong>Friction compensation</strong>: adding a small model-based command to overcome
+  static or Coulomb friction.</li>
+<li><strong>Backlash handling</strong>: reducing aggressive corrections when gears or mechanisms
+  have play before force transfers.</li>
+</ul>
+<p>Integral tricks in code:</p>
+<table>
+<thead>
+<tr>
+<th>Trick</th>
+<th>Use when</th>
+<th>Simple Python implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plain integral</td>
+<td>The actuator is not saturating and the system needs steady-state error correction.</td>
+<td><code>self.integral += error * dt</code></td>
+</tr>
+<tr>
+<td>Integral clamp</td>
+<td>The integral term grows too large and causes overshoot or slow recovery.</td>
+<td><code>self.integral = max(-i_limit, min(i_limit, self.integral))</code></td>
+</tr>
+<tr>
+<td>Output-based anti-windup</td>
+<td>The final command is limited by the actuator.</td>
+<td><code>if output == unclamped_output: self.integral += error * dt</code></td>
+</tr>
+<tr>
+<td>Conditional integration</td>
+<td>You only want to integrate when the actuator can still use the extra command.</td>
+<td><code>if not saturated: self.integral += error * dt</code></td>
+</tr>
+<tr>
+<td>Integral deadband</td>
+<td>Tiny errors near the target make the controller hunt or chatter.</td>
+<td><code>if abs(error) &gt; i_deadband: self.integral += error * dt</code></td>
+</tr>
+<tr>
+<td>I-zone</td>
+<td>The integral should only work near the target, not during large moves.</td>
+<td><code>if abs(error) &lt; i_zone: self.integral += error * dt</code></td>
+</tr>
+<tr>
+<td>Integral reset</td>
+<td>The target, control mode, or enabled state changes.</td>
+<td><code>self.integral = 0.0</code></td>
+</tr>
+<tr>
+<td>Integrator preload</td>
+<td>The controller already knows the command needed to hold the current state.</td>
+<td><code>self.integral = hold_command / self.ki</code></td>
+</tr>
+<tr>
+<td>Leaky integral</td>
+<td>Old integral error should slowly disappear instead of staying forever.</td>
+<td><code>self.integral = leak * self.integral + error * dt</code></td>
+</tr>
+<tr>
+<td>Back-calculation anti-windup</td>
+<td>The output is clamped, but you want the integral to track the real actuator command.</td>
+<td><code>self.integral += error * dt + aw_gain * (output - unclamped_output) * dt</code></td>
+</tr>
+</tbody>
+</table>
+<p>Example with clamp and integral deadband:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">error</span> <span class="o">=</span> <span class="n">target</span> <span class="o">-</span> <span class="n">measurement</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i_deadband</span><span class="p">:</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">+=</span> <span class="n">error</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="n">i_limit</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">i_limit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">integral</span><span class="p">))</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>    <span class="n">kp</span> <span class="o">*</span> <span class="n">error</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>    <span class="o">+</span> <span class="n">ki</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">integral</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a>    <span class="o">+</span> <span class="n">kd</span> <span class="o">*</span> <span class="n">derivative</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Tuning habits:</p>
+<ul>
+<li><strong>Start with PD tuning</strong>: tune <code>Kp</code> for response speed, add <code>Kd</code> for damping,
+  then add only enough <code>Ki</code> to remove steady-state error.</li>
+<li><strong>Tune one gain at a time</strong>: change a single gain, run the same test, and
+  compare rise time, overshoot, settling time, and control effort.</li>
+<li><strong>Use small integral gain first</strong>: <code>Ki</code> is useful but can make the response
+  slow to recover if it is too large.</li>
+<li><strong>Check actuator limits</strong>: a gain that looks good in simulation can fail on
+  real hardware if the motor, valve, or servo saturates.</li>
+<li><strong>Log the response</strong>: record setpoint, measured output, error, PID terms, and
+  final command so tuning decisions are based on data.</li>
+<li><strong>Tune around the real task</strong>: test the moves, loads, speeds, and disturbances
+  the robot will actually see.</li>
+</ul>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
