@@ -38,6 +38,11 @@ tags:
             <p>text</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="fpsdisplaysink">
+            <p>fpsdisplaysink</p>
+        </a>
+    </div>
 </div>
 
 ---
@@ -48,4 +53,3 @@ tags:
 
 ## Resource
 - [intel deep learning streamer](https://dlstreamer.github.io/get_started/get_started_index.html)
-

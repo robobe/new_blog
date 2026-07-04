@@ -32,6 +32,13 @@ The main MAVLink components are:
         </a>
     </div>
 </div>
+<div>
+    <div class="grid-item">
+        <a href="heartbeat">
+            <p>heartbeat</p>
+        </a>
+    </div>
+</div>
 
 ---
 
@@ -113,4 +120,3 @@ target_component = 0
 **Telemetry messages** <u>usually do not have target fields</u>. They are simply published by the sender, and any MAVLink peer on the link may consume them.
 
 Avoid broadcasting **control commands** unless the intended behavior is clear and safe.
-
