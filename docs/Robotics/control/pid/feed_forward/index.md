@@ -9,6 +9,7 @@ tags:
 
 ---
 
+
 ## What is feed-forward control
 
 Feedback control reacts to error after it appears. Feed-forward control adds a
@@ -27,6 +28,7 @@ Feed-forward does not replace feedback. It helps the controller start closer to
 the right command. Feedback still corrects model errors, friction changes,
 disturbances, and sensor noise.
 
+![alt text](ff.png)
 ---
 
 ## Simple idea

@@ -16,26 +16,7 @@ tags:
 PID is a feedback controller. It measures the current system output, compares it
 to a target, and creates a control command from the error.
 
-```mermaid
-flowchart LR
-    target["r(t)"] --> error_sum(("Σ"))
-    error_sum --> proportional["P"]
-    error_sum --> integral["I"]
-    error_sum --> derivative["D"]
-
-    proportional --> control_sum(("Σ"))
-    integral --> control_sum
-    derivative --> control_sum
-
-    subgraph loop[" "]
-        direction TB
-        plant["Plant / Process"] --> output["y(t)"]
-        output --> feedback["Feedback"]
-    end
-
-    control_sum --> plant
-    feedback --> error_sum
-```
+![alt text](images/pid.png)
 
 ## Role of P, I, and D
 

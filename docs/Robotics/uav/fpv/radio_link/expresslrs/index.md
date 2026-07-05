@@ -41,3 +41,15 @@ In Betaflight:
 - Ports tab: enable `Serial RX` on the receiver UART.
 - Receiver tab: set receiver protocol to `CRSF`.
 
+
+### Demo: ExpressLRS sniffer
+
+- bind expresslrs receiver
+- connect it to serial2usb (tx->rx)
+
+<details>
+<summary>Express LRS sniffer</summary>
+```
+--8<-- "docs/Robotics/uav/fpv/radio_link/expresslrs/code/elrs_crsf_sniffer.py"
+```
+</details>

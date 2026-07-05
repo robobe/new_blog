@@ -22,12 +22,12 @@ tags:
                 <p>State Space Model</p>
             </a>
     </div>
-    <div class="grid-item">
+    <!-- <div class="grid-item">
         <a href="lqr">
                 <img src="images/lqr.png"  width="150" height="150">
                 <p>LQR</p>
             </a>
-    </div>
+    </div> -->
    
 </div>
 ---
