@@ -879,24 +879,7 @@
 <h2 id="what-is-pid-control">What is PID control</h2>
 <p>PID is a feedback controller. It measures the current system output, compares it
 to a target, and creates a control command from the error.</p>
-<pre class="mermaid"><code>flowchart LR
-    target["r(t)"] --&gt; error_sum(("Σ"))
-    error_sum --&gt; proportional["P"]
-    error_sum --&gt; integral["I"]
-    error_sum --&gt; derivative["D"]
-
-    proportional --&gt; control_sum(("Σ"))
-    integral --&gt; control_sum
-    derivative --&gt; control_sum
-
-    subgraph loop[" "]
-        direction TB
-        plant["Plant / Process"] --&gt; output["y(t)"]
-        output --&gt; feedback["Feedback"]
-    end
-
-    control_sum --&gt; plant
-    feedback --&gt; error_sum</code></pre>
+<p><img alt="alt text" src="images/pid.png" /></p>
 <h2 id="role-of-p-i-and-d">Role of P, I, and D</h2>
 <h3 id="p-proportional-term">P: proportional term</h3>
 <p>The proportional term reacts to the current error.</p>
