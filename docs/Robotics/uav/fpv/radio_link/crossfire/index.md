@@ -38,6 +38,8 @@ In Betaflight:
 - Ports tab: enable `Serial RX`.
 - Receiver protocol: `CRSF`.
 
+See [CRSF Protocol](../protocols/crsf/index.md) for the serial frame structure, message types, and device addresses used by Crossfire-compatible receivers.
+
 ## Receiver LED color
 
 ![alt text](images/receiver_led.png)

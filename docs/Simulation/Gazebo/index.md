@@ -87,6 +87,11 @@ tags:
             <p>joint friction</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="sdf_format/joint_friction/">
+            <p>Wind</p>
+        </a>
+    </div>
 </div>
 
 ## Running with nvidia

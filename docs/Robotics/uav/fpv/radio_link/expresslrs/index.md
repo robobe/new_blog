@@ -41,6 +41,7 @@ In Betaflight:
 - Ports tab: enable `Serial RX` on the receiver UART.
 - Receiver tab: set receiver protocol to `CRSF`.
 
+See [CRSF Protocol](../protocols/crsf/index.md) for the frame structure, message types, device addresses, and how ExpressLRS relates to Crossfire.
 
 ### Demo: ExpressLRS sniffer
 

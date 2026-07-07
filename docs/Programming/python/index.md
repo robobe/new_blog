@@ -42,4 +42,9 @@ tags:
             <p>GUI</p>
             </a>
         </div>
+    <div class="grid-item">
+            <a href="mini_projects/">
+            <p>mini projects</p>
+            </a>
+        </div>
 </div>

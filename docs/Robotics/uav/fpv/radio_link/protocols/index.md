@@ -28,6 +28,14 @@ CRSF is the protocol used between the receiver and Betaflight.
 | `PWM` | old receivers | One wire per channel, not common for modern FPV |
 | `PPM` | old receivers | Multiple channels on one signal wire, mostly obsolete |
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="crsf">
+            <p>CRSF Protocol</p>
+        </a>
+    </div>
+</div>
+
 ## Betaflight Setup Pattern
 
 For most serial receivers:
@@ -37,4 +45,3 @@ For most serial receivers:
 3. Select the matching receiver protocol.
 4. Check channel movement in the Receiver tab.
 5. Set failsafe before flying.
-
