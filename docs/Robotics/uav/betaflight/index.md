@@ -5,6 +5,11 @@ tags:
 
 <div class="grid-container">
     <div class="grid-item">
+        <a href="sitl">
+        <p>SITL with gazebo simulation</p>
+        </a>
+    </div>
+    <div class="grid-item">
         <a href="firmware_install">
         <p>install firmware</p>
         </a>

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 import threading
 import time
 
@@ -17,6 +18,15 @@ except ImportError:
     from worker import ErrorCallback, SchedulerWorker
 
 
+def _validate_delay(delay_s: float) -> None:
+    if not math.isfinite(delay_s) or delay_s < 0:
+        raise ValueError("delay_s must be a finite number >= 0")
+
+
+def _validate_interval(interval_s: float) -> None:
+    if not math.isfinite(interval_s) or interval_s <= 0:
+        raise ValueError("interval_s must be a finite number > 0")
+    
 class CommandScheduler:
     def __init__(
         self,
@@ -71,6 +81,7 @@ class CommandScheduler:
         """
         submit a command to be executed after a delay or immediately.
         """
+        _validate_delay(delay_s)
         token = self._cancellation.new_token(command)
         self._submit(command, delay_s=delay_s, token=token, replace=True)
 
@@ -84,8 +95,8 @@ class CommandScheduler:
         """
         schedule a command to be executed repeatedly at a given interval.
         """
-        if interval_s <= 0:
-            raise ValueError("interval_s must be > 0")
+        _validate_interval(interval_s)
+        _validate_delay(delay_s)
 
         self.submit(
             ScheduledCommand(
