@@ -1,0 +1,1447 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Simulation/Gazebo/demo_worlds/quadcopter/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Quadcopter in Gazebo Harmonic - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#run" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quadcopter in Gazebo Harmonic
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#world-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        World setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multicopter-motor-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multicopter motor plugin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-motor-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing motor parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">gazebo</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">harmonic</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">plugin</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">quadcopter</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Quadcopter in Gazebo Harmonic</h1>
+
+<p>This demo runs the Gazebo Harmonic quadcopter world from <code>code/quadcopter.sdf</code>.
+The world loads the X3 UAV model from Gazebo Fuel and attaches one
+<code>gz::sim::systems::MulticopterMotorModel</code> plugin for each rotor.</p>
+<h2 id="run">Run</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>gz<span class="w"> </span>sim<span class="w"> </span>docs/Simulation/Gazebo/demo_worlds/quadcopter/code/quadcopter.sdf
+</code></pre></div></td></tr></table></div>
+<p>Send equal motor speeds to all four rotors to lift the vehicle:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span>/X3/gazebo/command/motor_speed<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span>--msgtype<span class="w"> </span>gz.msgs.Actuators<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span>-p<span class="w"> </span><span class="s1">&#39;velocity:[700, 700, 700, 700]&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Stop the rotors:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-t<span class="w"> </span>/X3/gazebo/command/motor_speed<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span>--msgtype<span class="w"> </span>gz.msgs.Actuators<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span>-p<span class="w"> </span><span class="s1">&#39;velocity:[0, 0, 0, 0]&#39;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="world-setup">World setup</h2>
+<p>The world starts the common Gazebo systems:</p>
+<ul>
+<li><code>gz::sim::systems::Physics</code> runs the physics step.</li>
+<li><code>gz::sim::systems::SceneBroadcaster</code> publishes scene state to the GUI.</li>
+<li><code>gz::sim::systems::UserCommands</code> handles commands from the GUI and CLI.</li>
+<li><code>gz::sim::systems::Sensors</code> enables sensor updates with the <code>ogre2</code> renderer.</li>
+</ul>
+<p>The X3 UAV is included from Gazebo Fuel:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">&lt;include&gt;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">&lt;uri&gt;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span>https://fuel.gazebosim.org/1.0/OpenRobotics/models/X3<span class="w"> </span>UAV/4
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">&lt;/uri&gt;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span>...
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="nt">&lt;/include&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="multicopter-motor-plugin">Multicopter motor plugin</h2>
+<p>Each rotor has its own <code>MulticopterMotorModel</code> plugin:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">&lt;plugin</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="na">filename=</span><span class="s">&quot;gz-sim-multicopter-motor-model-system&quot;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::MulticopterMotorModel&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">&lt;robotNamespace&gt;</span>X3<span class="nt">&lt;/robotNamespace&gt;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="nt">&lt;jointName&gt;</span>X3/rotor_0_joint<span class="nt">&lt;/jointName&gt;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">  </span><span class="nt">&lt;linkName&gt;</span>X3/rotor_0<span class="nt">&lt;/linkName&gt;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">  </span><span class="nt">&lt;turningDirection&gt;</span>ccw<span class="nt">&lt;/turningDirection&gt;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">  </span><span class="nt">&lt;commandSubTopic&gt;</span>gazebo/command/motor_speed<span class="nt">&lt;/commandSubTopic&gt;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">  </span><span class="nt">&lt;actuator_number&gt;</span>0<span class="nt">&lt;/actuator_number&gt;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="nt">&lt;/plugin&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>The plugin reads the <code>gz.msgs.Actuators</code> command message from
+<code>/X3/gazebo/command/motor_speed</code>. The <code>actuator_number</code> selects which value in
+the <code>velocity</code> array belongs to this rotor. For example, rotor 0 reads
+<code>velocity[0]</code>, rotor 1 reads <code>velocity[1]</code>, and so on.</p>
+<p>Important fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>robotNamespace</code></td>
+<td>Prefix used for the command and published motor speed topics.</td>
+</tr>
+<tr>
+<td><code>jointName</code></td>
+<td>Rotor joint that receives the motor velocity command.</td>
+</tr>
+<tr>
+<td><code>linkName</code></td>
+<td>Rotor link where thrust and drag forces are applied.</td>
+</tr>
+<tr>
+<td><code>turningDirection</code></td>
+<td>Rotor spin direction, <code>cw</code> or <code>ccw</code>, used for yaw torque.</td>
+</tr>
+<tr>
+<td><code>timeConstantUp</code> / <code>timeConstantDown</code></td>
+<td>Motor response when speeding up or slowing down.</td>
+</tr>
+<tr>
+<td><code>maxRotVelocity</code></td>
+<td>Maximum rotor angular velocity.</td>
+</tr>
+<tr>
+<td><code>motorConstant</code></td>
+<td>Converts rotor speed squared into thrust.</td>
+</tr>
+<tr>
+<td><code>momentConstant</code></td>
+<td>Converts thrust into reaction torque.</td>
+</tr>
+<tr>
+<td><code>commandSubTopic</code></td>
+<td>Topic suffix for actuator commands.</td>
+</tr>
+<tr>
+<td><code>actuator_number</code></td>
+<td>Index in the actuator velocity array for this rotor.</td>
+</tr>
+<tr>
+<td><code>rotorDragCoefficient</code></td>
+<td>Aerodynamic drag coefficient for the rotor.</td>
+</tr>
+<tr>
+<td><code>rollingMomentCoefficient</code></td>
+<td>Rolling moment coefficient caused by rotor motion.</td>
+</tr>
+<tr>
+<td><code>motorSpeedPubTopic</code></td>
+<td>Topic suffix used to publish the simulated motor speed.</td>
+</tr>
+<tr>
+<td><code>rotorVelocitySlowdownSim</code></td>
+<td>Visual / simulation slowdown factor for rotor velocity.</td>
+</tr>
+<tr>
+<td><code>motorType</code></td>
+<td>Motor control mode. This demo uses <code>velocity</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Two rotors turn counter-clockwise and two turn clockwise. This balances the
+reaction torques so the vehicle can lift without immediately spinning around
+the yaw axis.</p>
+<h2 id="documentation">Documentation</h2>
+<p>The official Gazebo Sim API page for the plugin is:</p>
+<p><a href="https://gazebosim.org/api/sim/8/classgz_1_1sim_1_1systems_1_1MulticopterMotorModel.html" target="_blank">MulticopterMotorModel class reference</a></p>
+<p>That page describes the system as the plugin that applies thrust forces to
+models with spinning propellers and points to the quadcopter SDF example used by
+Gazebo Sim.</p>
+<details>
+<summary>World source code</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-5-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-5-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-5-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-5-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-5-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-5-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-5-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-5-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-5-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-5-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-5-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-5-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-5-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-5-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-5-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-5-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-5-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-5-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-5-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-5-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-5-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-5-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-5-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-5-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-5-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-5-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-5-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-5-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-5-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-5-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-5-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-5-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-5-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-5-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-5-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-5-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-5-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-5-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-5-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-5-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-5-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-5-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-5-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-5-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-5-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-5-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-5-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-5-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-5-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-5-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-5-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-5-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-5-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-5-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-5-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-5-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-5-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-5-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-5-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-5-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-5-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-5-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-5-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-5-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-5-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-5-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-5-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-5-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-5-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-5-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-5-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-5-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-5-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-5-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-5-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-5-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-5-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-5-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-5-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-5-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-5-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-5-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-5-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-5-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-5-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-5-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-5-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-5-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-5-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-5-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-5-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-5-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-5-100">100</a></span>
+<span class="normal"><a href="#__codelineno-5-101">101</a></span>
+<span class="normal"><a href="#__codelineno-5-102">102</a></span>
+<span class="normal"><a href="#__codelineno-5-103">103</a></span>
+<span class="normal"><a href="#__codelineno-5-104">104</a></span>
+<span class="normal"><a href="#__codelineno-5-105">105</a></span>
+<span class="normal"><a href="#__codelineno-5-106">106</a></span>
+<span class="normal"><a href="#__codelineno-5-107">107</a></span>
+<span class="normal"><a href="#__codelineno-5-108">108</a></span>
+<span class="normal"><a href="#__codelineno-5-109">109</a></span>
+<span class="normal"><a href="#__codelineno-5-110">110</a></span>
+<span class="normal"><a href="#__codelineno-5-111">111</a></span>
+<span class="normal"><a href="#__codelineno-5-112">112</a></span>
+<span class="normal"><a href="#__codelineno-5-113">113</a></span>
+<span class="normal"><a href="#__codelineno-5-114">114</a></span>
+<span class="normal"><a href="#__codelineno-5-115">115</a></span>
+<span class="normal"><a href="#__codelineno-5-116">116</a></span>
+<span class="normal"><a href="#__codelineno-5-117">117</a></span>
+<span class="normal"><a href="#__codelineno-5-118">118</a></span>
+<span class="normal"><a href="#__codelineno-5-119">119</a></span>
+<span class="normal"><a href="#__codelineno-5-120">120</a></span>
+<span class="normal"><a href="#__codelineno-5-121">121</a></span>
+<span class="normal"><a href="#__codelineno-5-122">122</a></span>
+<span class="normal"><a href="#__codelineno-5-123">123</a></span>
+<span class="normal"><a href="#__codelineno-5-124">124</a></span>
+<span class="normal"><a href="#__codelineno-5-125">125</a></span>
+<span class="normal"><a href="#__codelineno-5-126">126</a></span>
+<span class="normal"><a href="#__codelineno-5-127">127</a></span>
+<span class="normal"><a href="#__codelineno-5-128">128</a></span>
+<span class="normal"><a href="#__codelineno-5-129">129</a></span>
+<span class="normal"><a href="#__codelineno-5-130">130</a></span>
+<span class="normal"><a href="#__codelineno-5-131">131</a></span>
+<span class="normal"><a href="#__codelineno-5-132">132</a></span>
+<span class="normal"><a href="#__codelineno-5-133">133</a></span>
+<span class="normal"><a href="#__codelineno-5-134">134</a></span>
+<span class="normal"><a href="#__codelineno-5-135">135</a></span>
+<span class="normal"><a href="#__codelineno-5-136">136</a></span>
+<span class="normal"><a href="#__codelineno-5-137">137</a></span>
+<span class="normal"><a href="#__codelineno-5-138">138</a></span>
+<span class="normal"><a href="#__codelineno-5-139">139</a></span>
+<span class="normal"><a href="#__codelineno-5-140">140</a></span>
+<span class="normal"><a href="#__codelineno-5-141">141</a></span>
+<span class="normal"><a href="#__codelineno-5-142">142</a></span>
+<span class="normal"><a href="#__codelineno-5-143">143</a></span>
+<span class="normal"><a href="#__codelineno-5-144">144</a></span>
+<span class="normal"><a href="#__codelineno-5-145">145</a></span>
+<span class="normal"><a href="#__codelineno-5-146">146</a></span>
+<span class="normal"><a href="#__codelineno-5-147">147</a></span>
+<span class="normal"><a href="#__codelineno-5-148">148</a></span>
+<span class="normal"><a href="#__codelineno-5-149">149</a></span>
+<span class="normal"><a href="#__codelineno-5-150">150</a></span>
+<span class="normal"><a href="#__codelineno-5-151">151</a></span>
+<span class="normal"><a href="#__codelineno-5-152">152</a></span>
+<span class="normal"><a href="#__codelineno-5-153">153</a></span>
+<span class="normal"><a href="#__codelineno-5-154">154</a></span>
+<span class="normal"><a href="#__codelineno-5-155">155</a></span>
+<span class="normal"><a href="#__codelineno-5-156">156</a></span>
+<span class="normal"><a href="#__codelineno-5-157">157</a></span>
+<span class="normal"><a href="#__codelineno-5-158">158</a></span>
+<span class="normal"><a href="#__codelineno-5-159">159</a></span>
+<span class="normal"><a href="#__codelineno-5-160">160</a></span>
+<span class="normal"><a href="#__codelineno-5-161">161</a></span>
+<span class="normal"><a href="#__codelineno-5-162">162</a></span>
+<span class="normal"><a href="#__codelineno-5-163">163</a></span>
+<span class="normal"><a href="#__codelineno-5-164">164</a></span>
+<span class="normal"><a href="#__codelineno-5-165">165</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="cm">&lt;!--</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="cm">  Multicopter motor plugin demo</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="cm">  Send commands to go straight up:</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="cm">      gz topic -t /X3/gazebo/command/motor_speed --msgtype gz.msgs.Actuators -p &#39;velocity:[700, 700, 700, 700]&#39;</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="cm">  And to turn off propellers:</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="cm">      gz topic -t /X3/gazebo/command/motor_speed --msgtype gz.msgs.Actuators -p &#39;velocity:[0, 0, 0, 0]&#39;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="cm">--&gt;</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="nt">&lt;sdf</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.6&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">  </span><span class="nt">&lt;world</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;quadcopter&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">    </span><span class="nt">&lt;physics</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;1ms&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;ignored&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">      </span><span class="nt">&lt;max_step_size&gt;</span>0.001<span class="nt">&lt;/max_step_size&gt;</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="w">      </span><span class="nt">&lt;real_time_factor&gt;</span>1.0<span class="nt">&lt;/real_time_factor&gt;</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="w">    </span><span class="nt">&lt;/physics&gt;</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">    </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="w">      </span><span class="na">filename=</span><span class="s">&quot;gz-sim-physics-system&quot;</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="w">      </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::Physics&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="w">    </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="w">    </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">      </span><span class="na">filename=</span><span class="s">&quot;gz-sim-scene-broadcaster-system&quot;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="w">      </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::SceneBroadcaster&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="w">    </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a><span class="w">    </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="w">      </span><span class="na">filename=</span><span class="s">&quot;gz-sim-user-commands-system&quot;</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="w">      </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::UserCommands&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="w">    </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="w">    </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="w">      </span><span class="na">filename=</span><span class="s">&quot;gz-sim-sensors-system&quot;</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="w">      </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::Sensors&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="w">      </span><span class="nt">&lt;render_engine&gt;</span>ogre2<span class="nt">&lt;/render_engine&gt;</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a><span class="w">    </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a>
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="w">    </span><span class="nt">&lt;light</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;directional&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sun&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a><span class="w">      </span><span class="nt">&lt;cast_shadows&gt;</span>true<span class="nt">&lt;/cast_shadows&gt;</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="w">      </span><span class="nt">&lt;pose&gt;</span>0<span class="w"> </span>0<span class="w"> </span>10<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="nt">&lt;/pose&gt;</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="w">      </span><span class="nt">&lt;diffuse&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/diffuse&gt;</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="w">      </span><span class="nt">&lt;specular&gt;</span>0.2<span class="w"> </span>0.2<span class="w"> </span>0.2<span class="w"> </span>1<span class="nt">&lt;/specular&gt;</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="w">      </span><span class="nt">&lt;attenuation&gt;</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="w">        </span><span class="nt">&lt;range&gt;</span>1000<span class="nt">&lt;/range&gt;</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="w">        </span><span class="nt">&lt;constant&gt;</span>0.9<span class="nt">&lt;/constant&gt;</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="w">        </span><span class="nt">&lt;linear&gt;</span>0.01<span class="nt">&lt;/linear&gt;</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="w">        </span><span class="nt">&lt;quadratic&gt;</span>0.001<span class="nt">&lt;/quadratic&gt;</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a><span class="w">      </span><span class="nt">&lt;/attenuation&gt;</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="w">      </span><span class="nt">&lt;direction&gt;</span>-0.5<span class="w"> </span>0.1<span class="w"> </span>-0.9<span class="nt">&lt;/direction&gt;</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a><span class="w">    </span><span class="nt">&lt;/light&gt;</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51"></a>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="w">    </span><span class="nt">&lt;model</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ground_plane&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a><span class="w">      </span><span class="nt">&lt;static&gt;</span>true<span class="nt">&lt;/static&gt;</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a><span class="w">      </span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;link&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="w">        </span><span class="nt">&lt;collision</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;collision&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a><span class="w">          </span><span class="nt">&lt;geometry&gt;</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a><span class="w">            </span><span class="nt">&lt;plane&gt;</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a><span class="w">              </span><span class="nt">&lt;normal&gt;</span>0<span class="w"> </span>0<span class="w"> </span>1<span class="nt">&lt;/normal&gt;</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59"></a><span class="w">              </span><span class="nt">&lt;size&gt;</span>100<span class="w"> </span>100<span class="nt">&lt;/size&gt;</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a><span class="w">            </span><span class="nt">&lt;/plane&gt;</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61"></a><span class="w">          </span><span class="nt">&lt;/geometry&gt;</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62"></a><span class="w">        </span><span class="nt">&lt;/collision&gt;</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63"></a><span class="w">        </span><span class="nt">&lt;visual</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;visual&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64"></a><span class="w">          </span><span class="nt">&lt;geometry&gt;</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65"></a><span class="w">            </span><span class="nt">&lt;plane&gt;</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66"></a><span class="w">              </span><span class="nt">&lt;normal&gt;</span>0<span class="w"> </span>0<span class="w"> </span>1<span class="nt">&lt;/normal&gt;</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67"></a><span class="w">              </span><span class="nt">&lt;size&gt;</span>100<span class="w"> </span>100<span class="nt">&lt;/size&gt;</span>
+<a id="__codelineno-5-68" name="__codelineno-5-68"></a><span class="w">            </span><span class="nt">&lt;/plane&gt;</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69"></a><span class="w">          </span><span class="nt">&lt;/geometry&gt;</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70"></a><span class="w">          </span><span class="nt">&lt;material&gt;</span>
+<a id="__codelineno-5-71" name="__codelineno-5-71"></a><span class="w">            </span><span class="nt">&lt;ambient&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/ambient&gt;</span>
+<a id="__codelineno-5-72" name="__codelineno-5-72"></a><span class="w">            </span><span class="nt">&lt;diffuse&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/diffuse&gt;</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73"></a><span class="w">            </span><span class="nt">&lt;specular&gt;</span>0.8<span class="w"> </span>0.8<span class="w"> </span>0.8<span class="w"> </span>1<span class="nt">&lt;/specular&gt;</span>
+<a id="__codelineno-5-74" name="__codelineno-5-74"></a><span class="w">          </span><span class="nt">&lt;/material&gt;</span>
+<a id="__codelineno-5-75" name="__codelineno-5-75"></a><span class="w">        </span><span class="nt">&lt;/visual&gt;</span>
+<a id="__codelineno-5-76" name="__codelineno-5-76"></a><span class="w">      </span><span class="nt">&lt;/link&gt;</span>
+<a id="__codelineno-5-77" name="__codelineno-5-77"></a><span class="w">    </span><span class="nt">&lt;/model&gt;</span>
+<a id="__codelineno-5-78" name="__codelineno-5-78"></a>
+<a id="__codelineno-5-79" name="__codelineno-5-79"></a><span class="w">    </span><span class="nt">&lt;include&gt;</span>
+<a id="__codelineno-5-80" name="__codelineno-5-80"></a><span class="w">      </span><span class="nt">&lt;uri&gt;</span>
+<a id="__codelineno-5-81" name="__codelineno-5-81"></a><span class="w">        </span>https://fuel.gazebosim.org/1.0/OpenRobotics/models/X3<span class="w"> </span>UAV/4
+<a id="__codelineno-5-82" name="__codelineno-5-82"></a><span class="w">      </span><span class="nt">&lt;/uri&gt;</span>
+<a id="__codelineno-5-83" name="__codelineno-5-83"></a><span class="w">      </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-84" name="__codelineno-5-84"></a><span class="w">        </span><span class="na">filename=</span><span class="s">&quot;gz-sim-multicopter-motor-model-system&quot;</span>
+<a id="__codelineno-5-85" name="__codelineno-5-85"></a><span class="w">        </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::MulticopterMotorModel&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-86" name="__codelineno-5-86"></a><span class="w">        </span><span class="nt">&lt;robotNamespace&gt;</span>X3<span class="nt">&lt;/robotNamespace&gt;</span>
+<a id="__codelineno-5-87" name="__codelineno-5-87"></a><span class="w">        </span><span class="nt">&lt;jointName&gt;</span>X3/rotor_0_joint<span class="nt">&lt;/jointName&gt;</span>
+<a id="__codelineno-5-88" name="__codelineno-5-88"></a><span class="w">        </span><span class="nt">&lt;linkName&gt;</span>X3/rotor_0<span class="nt">&lt;/linkName&gt;</span>
+<a id="__codelineno-5-89" name="__codelineno-5-89"></a><span class="w">        </span><span class="nt">&lt;turningDirection&gt;</span>ccw<span class="nt">&lt;/turningDirection&gt;</span>
+<a id="__codelineno-5-90" name="__codelineno-5-90"></a><span class="w">        </span><span class="nt">&lt;timeConstantUp&gt;</span>0.0125<span class="nt">&lt;/timeConstantUp&gt;</span>
+<a id="__codelineno-5-91" name="__codelineno-5-91"></a><span class="w">        </span><span class="nt">&lt;timeConstantDown&gt;</span>0.025<span class="nt">&lt;/timeConstantDown&gt;</span>
+<a id="__codelineno-5-92" name="__codelineno-5-92"></a><span class="w">        </span><span class="nt">&lt;maxRotVelocity&gt;</span>800.0<span class="nt">&lt;/maxRotVelocity&gt;</span>
+<a id="__codelineno-5-93" name="__codelineno-5-93"></a><span class="w">        </span><span class="nt">&lt;motorConstant&gt;</span>8.54858e-06<span class="nt">&lt;/motorConstant&gt;</span>
+<a id="__codelineno-5-94" name="__codelineno-5-94"></a><span class="w">        </span><span class="nt">&lt;momentConstant&gt;</span>0.016<span class="nt">&lt;/momentConstant&gt;</span>
+<a id="__codelineno-5-95" name="__codelineno-5-95"></a><span class="w">        </span><span class="nt">&lt;commandSubTopic&gt;</span>gazebo/command/motor_speed<span class="nt">&lt;/commandSubTopic&gt;</span>
+<a id="__codelineno-5-96" name="__codelineno-5-96"></a><span class="w">        </span><span class="nt">&lt;actuator_number&gt;</span>0<span class="nt">&lt;/actuator_number&gt;</span>
+<a id="__codelineno-5-97" name="__codelineno-5-97"></a><span class="w">        </span><span class="nt">&lt;rotorDragCoefficient&gt;</span>8.06428e-05<span class="nt">&lt;/rotorDragCoefficient&gt;</span>
+<a id="__codelineno-5-98" name="__codelineno-5-98"></a><span class="w">        </span><span class="nt">&lt;rollingMomentCoefficient&gt;</span>1e-06<span class="nt">&lt;/rollingMomentCoefficient&gt;</span>
+<a id="__codelineno-5-99" name="__codelineno-5-99"></a><span class="w">        </span><span class="nt">&lt;motorSpeedPubTopic&gt;</span>motor_speed/0<span class="nt">&lt;/motorSpeedPubTopic&gt;</span>
+<a id="__codelineno-5-100" name="__codelineno-5-100"></a><span class="w">        </span><span class="nt">&lt;rotorVelocitySlowdownSim&gt;</span>10<span class="nt">&lt;/rotorVelocitySlowdownSim&gt;</span>
+<a id="__codelineno-5-101" name="__codelineno-5-101"></a><span class="w">        </span><span class="nt">&lt;motorType&gt;</span>velocity<span class="nt">&lt;/motorType&gt;</span>
+<a id="__codelineno-5-102" name="__codelineno-5-102"></a><span class="w">      </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-103" name="__codelineno-5-103"></a><span class="w">      </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-104" name="__codelineno-5-104"></a><span class="w">        </span><span class="na">filename=</span><span class="s">&quot;gz-sim-multicopter-motor-model-system&quot;</span>
+<a id="__codelineno-5-105" name="__codelineno-5-105"></a><span class="w">        </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::MulticopterMotorModel&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-106" name="__codelineno-5-106"></a><span class="w">        </span><span class="nt">&lt;robotNamespace&gt;</span>X3<span class="nt">&lt;/robotNamespace&gt;</span>
+<a id="__codelineno-5-107" name="__codelineno-5-107"></a><span class="w">        </span><span class="nt">&lt;jointName&gt;</span>X3/rotor_1_joint<span class="nt">&lt;/jointName&gt;</span>
+<a id="__codelineno-5-108" name="__codelineno-5-108"></a><span class="w">        </span><span class="nt">&lt;linkName&gt;</span>X3/rotor_1<span class="nt">&lt;/linkName&gt;</span>
+<a id="__codelineno-5-109" name="__codelineno-5-109"></a><span class="w">        </span><span class="nt">&lt;turningDirection&gt;</span>ccw<span class="nt">&lt;/turningDirection&gt;</span>
+<a id="__codelineno-5-110" name="__codelineno-5-110"></a><span class="w">        </span><span class="nt">&lt;timeConstantUp&gt;</span>0.0125<span class="nt">&lt;/timeConstantUp&gt;</span>
+<a id="__codelineno-5-111" name="__codelineno-5-111"></a><span class="w">        </span><span class="nt">&lt;timeConstantDown&gt;</span>0.025<span class="nt">&lt;/timeConstantDown&gt;</span>
+<a id="__codelineno-5-112" name="__codelineno-5-112"></a><span class="w">        </span><span class="nt">&lt;maxRotVelocity&gt;</span>800.0<span class="nt">&lt;/maxRotVelocity&gt;</span>
+<a id="__codelineno-5-113" name="__codelineno-5-113"></a><span class="w">        </span><span class="nt">&lt;motorConstant&gt;</span>8.54858e-06<span class="nt">&lt;/motorConstant&gt;</span>
+<a id="__codelineno-5-114" name="__codelineno-5-114"></a><span class="w">        </span><span class="nt">&lt;momentConstant&gt;</span>0.016<span class="nt">&lt;/momentConstant&gt;</span>
+<a id="__codelineno-5-115" name="__codelineno-5-115"></a><span class="w">        </span><span class="nt">&lt;commandSubTopic&gt;</span>gazebo/command/motor_speed<span class="nt">&lt;/commandSubTopic&gt;</span>
+<a id="__codelineno-5-116" name="__codelineno-5-116"></a><span class="w">        </span><span class="nt">&lt;actuator_number&gt;</span>1<span class="nt">&lt;/actuator_number&gt;</span>
+<a id="__codelineno-5-117" name="__codelineno-5-117"></a><span class="w">        </span><span class="nt">&lt;rotorDragCoefficient&gt;</span>8.06428e-05<span class="nt">&lt;/rotorDragCoefficient&gt;</span>
+<a id="__codelineno-5-118" name="__codelineno-5-118"></a><span class="w">        </span><span class="nt">&lt;rollingMomentCoefficient&gt;</span>1e-06<span class="nt">&lt;/rollingMomentCoefficient&gt;</span>
+<a id="__codelineno-5-119" name="__codelineno-5-119"></a><span class="w">        </span><span class="nt">&lt;motorSpeedPubTopic&gt;</span>motor_speed/1<span class="nt">&lt;/motorSpeedPubTopic&gt;</span>
+<a id="__codelineno-5-120" name="__codelineno-5-120"></a><span class="w">        </span><span class="nt">&lt;rotorVelocitySlowdownSim&gt;</span>10<span class="nt">&lt;/rotorVelocitySlowdownSim&gt;</span>
+<a id="__codelineno-5-121" name="__codelineno-5-121"></a><span class="w">        </span><span class="nt">&lt;motorType&gt;</span>velocity<span class="nt">&lt;/motorType&gt;</span>
+<a id="__codelineno-5-122" name="__codelineno-5-122"></a><span class="w">      </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-123" name="__codelineno-5-123"></a><span class="w">      </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-124" name="__codelineno-5-124"></a><span class="w">        </span><span class="na">filename=</span><span class="s">&quot;gz-sim-multicopter-motor-model-system&quot;</span>
+<a id="__codelineno-5-125" name="__codelineno-5-125"></a><span class="w">        </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::MulticopterMotorModel&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-126" name="__codelineno-5-126"></a><span class="w">        </span><span class="nt">&lt;robotNamespace&gt;</span>X3<span class="nt">&lt;/robotNamespace&gt;</span>
+<a id="__codelineno-5-127" name="__codelineno-5-127"></a><span class="w">        </span><span class="nt">&lt;jointName&gt;</span>X3/rotor_2_joint<span class="nt">&lt;/jointName&gt;</span>
+<a id="__codelineno-5-128" name="__codelineno-5-128"></a><span class="w">        </span><span class="nt">&lt;linkName&gt;</span>X3/rotor_2<span class="nt">&lt;/linkName&gt;</span>
+<a id="__codelineno-5-129" name="__codelineno-5-129"></a><span class="w">        </span><span class="nt">&lt;turningDirection&gt;</span>cw<span class="nt">&lt;/turningDirection&gt;</span>
+<a id="__codelineno-5-130" name="__codelineno-5-130"></a><span class="w">        </span><span class="nt">&lt;timeConstantUp&gt;</span>0.0125<span class="nt">&lt;/timeConstantUp&gt;</span>
+<a id="__codelineno-5-131" name="__codelineno-5-131"></a><span class="w">        </span><span class="nt">&lt;timeConstantDown&gt;</span>0.025<span class="nt">&lt;/timeConstantDown&gt;</span>
+<a id="__codelineno-5-132" name="__codelineno-5-132"></a><span class="w">        </span><span class="nt">&lt;maxRotVelocity&gt;</span>800.0<span class="nt">&lt;/maxRotVelocity&gt;</span>
+<a id="__codelineno-5-133" name="__codelineno-5-133"></a><span class="w">        </span><span class="nt">&lt;motorConstant&gt;</span>8.54858e-06<span class="nt">&lt;/motorConstant&gt;</span>
+<a id="__codelineno-5-134" name="__codelineno-5-134"></a><span class="w">        </span><span class="nt">&lt;momentConstant&gt;</span>0.016<span class="nt">&lt;/momentConstant&gt;</span>
+<a id="__codelineno-5-135" name="__codelineno-5-135"></a><span class="w">        </span><span class="nt">&lt;commandSubTopic&gt;</span>gazebo/command/motor_speed<span class="nt">&lt;/commandSubTopic&gt;</span>
+<a id="__codelineno-5-136" name="__codelineno-5-136"></a><span class="w">        </span><span class="nt">&lt;actuator_number&gt;</span>2<span class="nt">&lt;/actuator_number&gt;</span>
+<a id="__codelineno-5-137" name="__codelineno-5-137"></a><span class="w">        </span><span class="nt">&lt;rotorDragCoefficient&gt;</span>8.06428e-05<span class="nt">&lt;/rotorDragCoefficient&gt;</span>
+<a id="__codelineno-5-138" name="__codelineno-5-138"></a><span class="w">        </span><span class="nt">&lt;rollingMomentCoefficient&gt;</span>1e-06<span class="nt">&lt;/rollingMomentCoefficient&gt;</span>
+<a id="__codelineno-5-139" name="__codelineno-5-139"></a><span class="w">        </span><span class="nt">&lt;motorSpeedPubTopic&gt;</span>motor_speed/2<span class="nt">&lt;/motorSpeedPubTopic&gt;</span>
+<a id="__codelineno-5-140" name="__codelineno-5-140"></a><span class="w">        </span><span class="nt">&lt;rotorVelocitySlowdownSim&gt;</span>10<span class="nt">&lt;/rotorVelocitySlowdownSim&gt;</span>
+<a id="__codelineno-5-141" name="__codelineno-5-141"></a><span class="w">        </span><span class="nt">&lt;motorType&gt;</span>velocity<span class="nt">&lt;/motorType&gt;</span>
+<a id="__codelineno-5-142" name="__codelineno-5-142"></a><span class="w">      </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-143" name="__codelineno-5-143"></a><span class="w">      </span><span class="nt">&lt;plugin</span>
+<a id="__codelineno-5-144" name="__codelineno-5-144"></a><span class="w">        </span><span class="na">filename=</span><span class="s">&quot;gz-sim-multicopter-motor-model-system&quot;</span>
+<a id="__codelineno-5-145" name="__codelineno-5-145"></a><span class="w">        </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::MulticopterMotorModel&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-146" name="__codelineno-5-146"></a><span class="w">        </span><span class="nt">&lt;robotNamespace&gt;</span>X3<span class="nt">&lt;/robotNamespace&gt;</span>
+<a id="__codelineno-5-147" name="__codelineno-5-147"></a><span class="w">        </span><span class="nt">&lt;jointName&gt;</span>X3/rotor_3_joint<span class="nt">&lt;/jointName&gt;</span>
+<a id="__codelineno-5-148" name="__codelineno-5-148"></a><span class="w">        </span><span class="nt">&lt;linkName&gt;</span>X3/rotor_3<span class="nt">&lt;/linkName&gt;</span>
+<a id="__codelineno-5-149" name="__codelineno-5-149"></a><span class="w">        </span><span class="nt">&lt;turningDirection&gt;</span>cw<span class="nt">&lt;/turningDirection&gt;</span>
+<a id="__codelineno-5-150" name="__codelineno-5-150"></a><span class="w">        </span><span class="nt">&lt;timeConstantUp&gt;</span>0.0125<span class="nt">&lt;/timeConstantUp&gt;</span>
+<a id="__codelineno-5-151" name="__codelineno-5-151"></a><span class="w">        </span><span class="nt">&lt;timeConstantDown&gt;</span>0.025<span class="nt">&lt;/timeConstantDown&gt;</span>
+<a id="__codelineno-5-152" name="__codelineno-5-152"></a><span class="w">        </span><span class="nt">&lt;maxRotVelocity&gt;</span>800.0<span class="nt">&lt;/maxRotVelocity&gt;</span>
+<a id="__codelineno-5-153" name="__codelineno-5-153"></a><span class="w">        </span><span class="nt">&lt;motorConstant&gt;</span>8.54858e-06<span class="nt">&lt;/motorConstant&gt;</span>
+<a id="__codelineno-5-154" name="__codelineno-5-154"></a><span class="w">        </span><span class="nt">&lt;momentConstant&gt;</span>0.016<span class="nt">&lt;/momentConstant&gt;</span>
+<a id="__codelineno-5-155" name="__codelineno-5-155"></a><span class="w">        </span><span class="nt">&lt;commandSubTopic&gt;</span>gazebo/command/motor_speed<span class="nt">&lt;/commandSubTopic&gt;</span>
+<a id="__codelineno-5-156" name="__codelineno-5-156"></a><span class="w">        </span><span class="nt">&lt;actuator_number&gt;</span>3<span class="nt">&lt;/actuator_number&gt;</span>
+<a id="__codelineno-5-157" name="__codelineno-5-157"></a><span class="w">        </span><span class="nt">&lt;rotorDragCoefficient&gt;</span>8.06428e-05<span class="nt">&lt;/rotorDragCoefficient&gt;</span>
+<a id="__codelineno-5-158" name="__codelineno-5-158"></a><span class="w">        </span><span class="nt">&lt;rollingMomentCoefficient&gt;</span>1e-06<span class="nt">&lt;/rollingMomentCoefficient&gt;</span>
+<a id="__codelineno-5-159" name="__codelineno-5-159"></a><span class="w">        </span><span class="nt">&lt;motorSpeedPubTopic&gt;</span>motor_speed/3<span class="nt">&lt;/motorSpeedPubTopic&gt;</span>
+<a id="__codelineno-5-160" name="__codelineno-5-160"></a><span class="w">        </span><span class="nt">&lt;rotorVelocitySlowdownSim&gt;</span>10<span class="nt">&lt;/rotorVelocitySlowdownSim&gt;</span>
+<a id="__codelineno-5-161" name="__codelineno-5-161"></a><span class="w">        </span><span class="nt">&lt;motorType&gt;</span>velocity<span class="nt">&lt;/motorType&gt;</span>
+<a id="__codelineno-5-162" name="__codelineno-5-162"></a><span class="w">      </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-5-163" name="__codelineno-5-163"></a><span class="w">    </span><span class="nt">&lt;/include&gt;</span>
+<a id="__codelineno-5-164" name="__codelineno-5-164"></a><span class="w">  </span><span class="nt">&lt;/world&gt;</span>
+<a id="__codelineno-5-165" name="__codelineno-5-165"></a><span class="nt">&lt;/sdf&gt;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+
+<hr />
+<h2 id="choosing-motor-parameters">Choosing motor parameters</h2>
+<p><code>motorType</code> describes how the actuator command should be interpreted. Gazebo's
+<code>MulticopterMotorModel</code> recognizes these values:</p>
+<table>
+<thead>
+<tr>
+<th><code>motorType</code></th>
+<th>Status</th>
+<th>Command meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>velocity</code></td>
+<td>Supported</td>
+<td><code>Actuators.velocity[actuator_number]</code> is the target rotor speed in rad/s.</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td>Parsed, but not implemented</td>
+<td>Intended for a rotor position target. Do not use for this model.</td>
+</tr>
+<tr>
+<td><code>force</code></td>
+<td>Parsed, but not implemented</td>
+<td>Intended for a direct force command. Do not use for this model.</td>
+</tr>
+</tbody>
+</table>
+<p>For normal quadcopter simulation, use <code>velocity</code>. The plugin filters the target
+speed with <code>timeConstantUp</code> and <code>timeConstantDown</code>, commands the rotor joint,
+then computes the propeller force from the simulated rotor speed.</p>
+<p>The most important aerodynamic parameter is <code>motorConstant</code>. It is the thrust
+coefficient:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>thrust_N = motorConstant * rotor_speed_rad_s^2
+</code></pre></div></td></tr></table></div>
+<p>To set it from a real motor and propeller, use thrust-stand data for the same
+propeller, motor, battery voltage, and air density that you want to simulate:</p>
+<ol>
+<li>Measure static thrust at several throttle points.</li>
+<li>Measure or estimate rotor RPM at the same points.</li>
+<li>Convert RPM to rad/s:</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>rotor_speed_rad_s = rpm * 2 * pi / 60
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Compute <code>motorConstant</code> for each point:</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>motorConstant = thrust_N / rotor_speed_rad_s^2
+</code></pre></div></td></tr></table></div>
+<ol>
+<li>Use an average value around the hover-to-cruise operating range. Avoid using
+   only the maximum-throttle point, because props often become less efficient
+   near the top of the throttle range.</li>
+</ol>
+<p><code>momentConstant</code> maps thrust into the reaction torque that yaws the vehicle:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>reaction_torque_Nm = thrust_N * momentConstant
+</code></pre></div></td></tr></table></div>
+<p>If your thrust stand measures torque, set:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>momentConstant = torque_Nm / thrust_N
+</code></pre></div></td></tr></table></div>
+<p>If you only have propeller datasheet data, start with the demo value and tune it
+until equal motor speeds produce little yaw drift while differential motor speeds
+produce a believable yaw response.</p>
+<p><code>rotorDragCoefficient</code> and <code>rollingMomentCoefficient</code> model aerodynamic effects
+caused by the rotor moving through the air:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>air_drag_force = -abs(rotor_speed_rad_s) * rotorDragCoefficient * side_velocity
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>rolling_moment = -abs(rotor_speed_rad_s) * rollingMomentCoefficient * side_velocity
+</code></pre></div></td></tr></table></div>
+<p>These are harder to identify from a normal static thrust test because the drone
+must have sideways airflow. A practical workflow is:</p>
+<ol>
+<li>Set <code>motorConstant</code> first so the simulated drone hovers at the same total
+   rotor speed as the real drone.</li>
+<li>Set <code>momentConstant</code> so yaw acceleration looks realistic.</li>
+<li>Start with the demo values for <code>rotorDragCoefficient</code> and
+   <code>rollingMomentCoefficient</code>.</li>
+<li>Fly or replay a sideways translation test. Increase the coefficients if the
+   simulated drone slides too freely or has too little aerodynamic damping.
+   Decrease them if it slows down too aggressively.</li>
+</ol>
+<p>Use <code>maxRotVelocity</code> as the real maximum rotor speed in rad/s. For example, a
+motor and propeller combination that reaches <code>7600 rpm</code> should use:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>maxRotVelocity = 7600 * 2 * pi / 60 = 795.9 rad/s
+</code></pre></div></td></tr></table></div>
+<p><code>rotorVelocitySlowdownSim</code> does not change the aerodynamic model directly. It
+keeps the physics joint speed lower to avoid numerical and visual aliasing while
+the plugin still uses the full rotor speed for thrust calculations.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
