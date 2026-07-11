@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#config-betaflight-uart-port-for-msp-usage" class="md-skip">
+        <a href="#msp-protocol-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -680,6 +680,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#msp-protocol-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MSP protocol overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#msp-command-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MSP command IDs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#config-betaflight-uart-port-for-msp-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -698,6 +720,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Demo: python msp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#msp_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MSP_STATUS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -741,9 +780,1265 @@
 
   <h1>Betaflight MSP protocol</h1>
 
+<h2 id="msp-protocol-overview">MSP protocol overview</h2>
+<p>MSP (MultiWii Serial Protocol) is the serial request/response protocol used by
+Betaflight Configurator and external tools to read telemetry, inspect settings,
+and send configuration commands to the flight controller.</p>
+<p>MSP v1 is the original frame format. It is simple and compact, but command IDs
+are limited to one byte and the payload length is limited to 255 bytes. MSP v2
+extends the frame with 16-bit command IDs, larger payload support, flags, and a
+stronger checksum. Betaflight still supports MSP v1 for compatibility, while
+newer or larger commands can use MSP v2 framing.</p>
+<p>The full list of Betaflight MSP command IDs is maintained in the Betaflight
+source tree:</p>
+<ul>
+<li><a href="https://github.com/betaflight/betaflight/blob/master/src/main/msp/msp_protocol.h">MSP command definitions</a></li>
+<li><a href="https://github.com/betaflight/betaflight/tree/master/src/main/msp">MSP command handlers</a></li>
+</ul>
+<p>As of the current Betaflight <code>master</code> branch, <code>msp_protocol.h</code> defines 167
+<code>MSP_*</code> IDs. Of those, 164 are usable command/response IDs; two are reserved
+IDs and <code>MSP_V2_FRAME</code> is the MSPv2 frame marker rather than a normal command.</p>
+<h2 id="msp-command-ids">MSP command IDs</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Command</th>
+<th>Usage</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td><code>MSP_API_VERSION</code></td>
+<td>Read</td>
+<td>Get API version</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>MSP_FC_VARIANT</code></td>
+<td>Read</td>
+<td>Get flight controller variant</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><code>MSP_FC_VERSION</code></td>
+<td>Read</td>
+<td>Get flight controller version</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><code>MSP_BOARD_INFO</code></td>
+<td>Read</td>
+<td>Get board information</td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td><code>MSP_BUILD_INFO</code></td>
+<td>Read</td>
+<td>Get build information</td>
+</tr>
+<tr>
+<td><code>10</code></td>
+<td><code>MSP_NAME</code></td>
+<td>Read</td>
+<td>Returns user set board name - betaflight</td>
+</tr>
+<tr>
+<td><code>11</code></td>
+<td><code>MSP_SET_NAME</code></td>
+<td>Write/action</td>
+<td>Sets board name - betaflight</td>
+</tr>
+<tr>
+<td><code>32</code></td>
+<td><code>MSP_BATTERY_CONFIG</code></td>
+<td>Read</td>
+<td>Get battery configuration</td>
+</tr>
+<tr>
+<td><code>33</code></td>
+<td><code>MSP_SET_BATTERY_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set battery configuration</td>
+</tr>
+<tr>
+<td><code>34</code></td>
+<td><code>MSP_MODE_RANGES</code></td>
+<td>Read</td>
+<td>Returns all mode ranges</td>
+</tr>
+<tr>
+<td><code>35</code></td>
+<td><code>MSP_SET_MODE_RANGE</code></td>
+<td>Write/action</td>
+<td>Sets a single mode range</td>
+</tr>
+<tr>
+<td><code>36</code></td>
+<td><code>MSP_FEATURE_CONFIG</code></td>
+<td>Read</td>
+<td>Get feature configuration</td>
+</tr>
+<tr>
+<td><code>37</code></td>
+<td><code>MSP_SET_FEATURE_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set feature configuration</td>
+</tr>
+<tr>
+<td><code>38</code></td>
+<td><code>MSP_BOARD_ALIGNMENT_CONFIG</code></td>
+<td>Read</td>
+<td>Get board alignment configuration</td>
+</tr>
+<tr>
+<td><code>39</code></td>
+<td><code>MSP_SET_BOARD_ALIGNMENT_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set board alignment configuration</td>
+</tr>
+<tr>
+<td><code>40</code></td>
+<td><code>MSP_CURRENT_METER_CONFIG</code></td>
+<td>Read</td>
+<td>Get current meter configuration</td>
+</tr>
+<tr>
+<td><code>41</code></td>
+<td><code>MSP_SET_CURRENT_METER_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set current meter configuration</td>
+</tr>
+<tr>
+<td><code>42</code></td>
+<td><code>MSP_MIXER_CONFIG</code></td>
+<td>Read</td>
+<td>Get mixer configuration</td>
+</tr>
+<tr>
+<td><code>43</code></td>
+<td><code>MSP_SET_MIXER_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set mixer configuration</td>
+</tr>
+<tr>
+<td><code>44</code></td>
+<td><code>MSP_RX_CONFIG</code></td>
+<td>Read</td>
+<td>Get RX configuration</td>
+</tr>
+<tr>
+<td><code>45</code></td>
+<td><code>MSP_SET_RX_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set RX configuration</td>
+</tr>
+<tr>
+<td><code>46</code></td>
+<td><code>MSP_LED_COLORS</code></td>
+<td>Read</td>
+<td>Get LED colors</td>
+</tr>
+<tr>
+<td><code>47</code></td>
+<td><code>MSP_SET_LED_COLORS</code></td>
+<td>Write/action</td>
+<td>Set LED colors</td>
+</tr>
+<tr>
+<td><code>48</code></td>
+<td><code>MSP_LED_STRIP_CONFIG</code></td>
+<td>Read</td>
+<td>Get LED strip configuration</td>
+</tr>
+<tr>
+<td><code>49</code></td>
+<td><code>MSP_SET_LED_STRIP_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set LED strip configuration</td>
+</tr>
+<tr>
+<td><code>50</code></td>
+<td><code>MSP_RSSI_CONFIG</code></td>
+<td>Read</td>
+<td>Get RSSI configuration</td>
+</tr>
+<tr>
+<td><code>51</code></td>
+<td><code>MSP_SET_RSSI_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set RSSI configuration</td>
+</tr>
+<tr>
+<td><code>52</code></td>
+<td><code>MSP_ADJUSTMENT_RANGES</code></td>
+<td>Read</td>
+<td>Get adjustment ranges</td>
+</tr>
+<tr>
+<td><code>53</code></td>
+<td><code>MSP_SET_ADJUSTMENT_RANGE</code></td>
+<td>Write/action</td>
+<td>Set adjustment range</td>
+</tr>
+<tr>
+<td><code>54</code></td>
+<td><code>MSP_CF_SERIAL_CONFIG</code></td>
+<td>Read</td>
+<td>Get Cleanflight serial configuration</td>
+</tr>
+<tr>
+<td><code>55</code></td>
+<td><code>MSP_SET_CF_SERIAL_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set Cleanflight serial configuration</td>
+</tr>
+<tr>
+<td><code>56</code></td>
+<td><code>MSP_VOLTAGE_METER_CONFIG</code></td>
+<td>Read</td>
+<td>Get voltage meter configuration</td>
+</tr>
+<tr>
+<td><code>57</code></td>
+<td><code>MSP_SET_VOLTAGE_METER_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set voltage meter configuration</td>
+</tr>
+<tr>
+<td><code>58</code></td>
+<td><code>MSP_SONAR_ALTITUDE</code></td>
+<td>Read</td>
+<td>Get sonar altitude [cm]</td>
+</tr>
+<tr>
+<td><code>59</code></td>
+<td><code>MSP_PID_CONTROLLER</code></td>
+<td>Read</td>
+<td>Get PID controller</td>
+</tr>
+<tr>
+<td><code>60</code></td>
+<td><code>MSP_SET_PID_CONTROLLER</code></td>
+<td>Write/action</td>
+<td>Set PID controller</td>
+</tr>
+<tr>
+<td><code>61</code></td>
+<td><code>MSP_ARMING_CONFIG</code></td>
+<td>Read</td>
+<td>Get arming configuration</td>
+</tr>
+<tr>
+<td><code>62</code></td>
+<td><code>MSP_SET_ARMING_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set arming configuration</td>
+</tr>
+<tr>
+<td><code>64</code></td>
+<td><code>MSP_RX_MAP</code></td>
+<td>Read</td>
+<td>Get RX map (also returns number of channels total)</td>
+</tr>
+<tr>
+<td><code>65</code></td>
+<td><code>MSP_SET_RX_MAP</code></td>
+<td>Write/action</td>
+<td>Set RX map, numchannels to set comes from MSP_RX_MAP</td>
+</tr>
+<tr>
+<td><code>68</code></td>
+<td><code>MSP_REBOOT</code></td>
+<td>Write/action</td>
+<td>Reboot settings</td>
+</tr>
+<tr>
+<td><code>70</code></td>
+<td><code>MSP_DATAFLASH_SUMMARY</code></td>
+<td>Read</td>
+<td>Get description of dataflash chip</td>
+</tr>
+<tr>
+<td><code>71</code></td>
+<td><code>MSP_DATAFLASH_READ</code></td>
+<td>Read</td>
+<td>Get content of dataflash chip</td>
+</tr>
+<tr>
+<td><code>72</code></td>
+<td><code>MSP_DATAFLASH_ERASE</code></td>
+<td>Write/action</td>
+<td>Erase dataflash chip</td>
+</tr>
+<tr>
+<td><code>75</code></td>
+<td><code>MSP_FAILSAFE_CONFIG</code></td>
+<td>Read</td>
+<td>Get failsafe settings</td>
+</tr>
+<tr>
+<td><code>76</code></td>
+<td><code>MSP_SET_FAILSAFE_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set failsafe settings</td>
+</tr>
+<tr>
+<td><code>77</code></td>
+<td><code>MSP_RXFAIL_CONFIG</code></td>
+<td>Read</td>
+<td>Get RX failsafe settings</td>
+</tr>
+<tr>
+<td><code>78</code></td>
+<td><code>MSP_SET_RXFAIL_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set RX failsafe settings</td>
+</tr>
+<tr>
+<td><code>79</code></td>
+<td><code>MSP_SDCARD_SUMMARY</code></td>
+<td>Read</td>
+<td>Get SD card state</td>
+</tr>
+<tr>
+<td><code>80</code></td>
+<td><code>MSP_BLACKBOX_CONFIG</code></td>
+<td>Read</td>
+<td>Get blackbox settings</td>
+</tr>
+<tr>
+<td><code>81</code></td>
+<td><code>MSP_SET_BLACKBOX_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set blackbox settings</td>
+</tr>
+<tr>
+<td><code>82</code></td>
+<td><code>MSP_TRANSPONDER_CONFIG</code></td>
+<td>Read</td>
+<td>Get transponder settings</td>
+</tr>
+<tr>
+<td><code>83</code></td>
+<td><code>MSP_SET_TRANSPONDER_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set transponder settings</td>
+</tr>
+<tr>
+<td><code>84</code></td>
+<td><code>MSP_OSD_CONFIG</code></td>
+<td>Read</td>
+<td>Get OSD settings</td>
+</tr>
+<tr>
+<td><code>85</code></td>
+<td><code>MSP_SET_OSD_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set OSD settings</td>
+</tr>
+<tr>
+<td><code>86</code></td>
+<td><code>MSP_OSD_CHAR_READ</code></td>
+<td>Read</td>
+<td>Get OSD characters</td>
+</tr>
+<tr>
+<td><code>87</code></td>
+<td><code>MSP_OSD_CHAR_WRITE</code></td>
+<td>Write/action</td>
+<td>Set OSD characters</td>
+</tr>
+<tr>
+<td><code>88</code></td>
+<td><code>MSP_VTX_CONFIG</code></td>
+<td>Read</td>
+<td>Get VTX settings</td>
+</tr>
+<tr>
+<td><code>89</code></td>
+<td><code>MSP_SET_VTX_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set VTX settings</td>
+</tr>
+<tr>
+<td><code>90</code></td>
+<td><code>MSP_ADVANCED_CONFIG</code></td>
+<td>Read</td>
+<td>Get advanced configuration</td>
+</tr>
+<tr>
+<td><code>91</code></td>
+<td><code>MSP_SET_ADVANCED_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set advanced configuration</td>
+</tr>
+<tr>
+<td><code>92</code></td>
+<td><code>MSP_FILTER_CONFIG</code></td>
+<td>Read</td>
+<td>Get filter configuration</td>
+</tr>
+<tr>
+<td><code>93</code></td>
+<td><code>MSP_SET_FILTER_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set filter configuration</td>
+</tr>
+<tr>
+<td><code>94</code></td>
+<td><code>MSP_PID_ADVANCED</code></td>
+<td>Read</td>
+<td>Get advanced PID settings</td>
+</tr>
+<tr>
+<td><code>95</code></td>
+<td><code>MSP_SET_PID_ADVANCED</code></td>
+<td>Write/action</td>
+<td>Set advanced PID settings</td>
+</tr>
+<tr>
+<td><code>96</code></td>
+<td><code>MSP_SENSOR_CONFIG</code></td>
+<td>Read</td>
+<td>Get sensor configuration</td>
+</tr>
+<tr>
+<td><code>97</code></td>
+<td><code>MSP_SET_SENSOR_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set sensor configuration</td>
+</tr>
+<tr>
+<td><code>98</code></td>
+<td><code>MSP_CAMERA_CONTROL</code></td>
+<td>Read/write</td>
+<td>Camera control</td>
+</tr>
+<tr>
+<td><code>99</code></td>
+<td><code>MSP_SET_ARMING_DISABLED</code></td>
+<td>Write/action</td>
+<td>Enable/disable arming</td>
+</tr>
+<tr>
+<td><code>101</code></td>
+<td><code>MSP_STATUS</code></td>
+<td>Read</td>
+<td>Cycletime &amp; errors_count &amp; sensor present &amp; box activation &amp; current setting number</td>
+</tr>
+<tr>
+<td><code>102</code></td>
+<td><code>MSP_RAW_IMU</code></td>
+<td>Read</td>
+<td>9 DOF</td>
+</tr>
+<tr>
+<td><code>103</code></td>
+<td><code>MSP_SERVO</code></td>
+<td>Read</td>
+<td>Servos</td>
+</tr>
+<tr>
+<td><code>104</code></td>
+<td><code>MSP_MOTOR</code></td>
+<td>Read</td>
+<td>Motors</td>
+</tr>
+<tr>
+<td><code>105</code></td>
+<td><code>MSP_RC</code></td>
+<td>Read</td>
+<td>RC channels and more</td>
+</tr>
+<tr>
+<td><code>106</code></td>
+<td><code>MSP_RAW_GPS</code></td>
+<td>Read</td>
+<td>Fix, numsat, lat, lon, alt, speed, ground course</td>
+</tr>
+<tr>
+<td><code>107</code></td>
+<td><code>MSP_COMP_GPS</code></td>
+<td>Read</td>
+<td>Distance home, direction home</td>
+</tr>
+<tr>
+<td><code>108</code></td>
+<td><code>MSP_ATTITUDE</code></td>
+<td>Read</td>
+<td>2 angles 1 heading</td>
+</tr>
+<tr>
+<td><code>109</code></td>
+<td><code>MSP_ALTITUDE</code></td>
+<td>Read</td>
+<td>Altitude, variometer</td>
+</tr>
+<tr>
+<td><code>110</code></td>
+<td><code>MSP_ANALOG</code></td>
+<td>Read</td>
+<td>Vbat, powermetersum, rssi if available on RX</td>
+</tr>
+<tr>
+<td><code>111</code></td>
+<td><code>MSP_RC_TUNING</code></td>
+<td>Read</td>
+<td>RC rate, rc expo, rollpitch rate, yaw rate, dyn throttle PID</td>
+</tr>
+<tr>
+<td><code>112</code></td>
+<td><code>MSP_PID</code></td>
+<td>Read</td>
+<td>P I D coeff (9 are used currently)</td>
+</tr>
+<tr>
+<td><code>116</code></td>
+<td><code>MSP_BOXNAMES</code></td>
+<td>Read</td>
+<td>The aux switch names</td>
+</tr>
+<tr>
+<td><code>117</code></td>
+<td><code>MSP_PIDNAMES</code></td>
+<td>Read</td>
+<td>The PID names</td>
+</tr>
+<tr>
+<td><code>118</code></td>
+<td><code>MSP_WP</code></td>
+<td>Read</td>
+<td>Get a WP, WP# is in the payload, returns (WP#, lat, lon, alt, flags) WP#0-home, WP#16-poshold</td>
+</tr>
+<tr>
+<td><code>119</code></td>
+<td><code>MSP_BOXIDS</code></td>
+<td>Read</td>
+<td>Get the permanent IDs associated to BOXes</td>
+</tr>
+<tr>
+<td><code>120</code></td>
+<td><code>MSP_SERVO_CONFIGURATIONS</code></td>
+<td>Read</td>
+<td>All servo configurations</td>
+</tr>
+<tr>
+<td><code>121</code></td>
+<td><code>MSP_NAV_STATUS</code></td>
+<td>Read</td>
+<td>Returns navigation status</td>
+</tr>
+<tr>
+<td><code>122</code></td>
+<td><code>MSP_NAV_CONFIG</code></td>
+<td>Read</td>
+<td>Returns navigation parameters</td>
+</tr>
+<tr>
+<td><code>124</code></td>
+<td><code>MSP_MOTOR_3D_CONFIG</code></td>
+<td>Read</td>
+<td>Settings needed for reversible ESCs</td>
+</tr>
+<tr>
+<td><code>125</code></td>
+<td><code>MSP_RC_DEADBAND</code></td>
+<td>Read</td>
+<td>Deadbands for yaw alt pitch roll</td>
+</tr>
+<tr>
+<td><code>126</code></td>
+<td><code>MSP_SENSOR_ALIGNMENT</code></td>
+<td>Read</td>
+<td>Orientation of acc,gyro,mag</td>
+</tr>
+<tr>
+<td><code>127</code></td>
+<td><code>MSP_LED_STRIP_MODECOLOR</code></td>
+<td>Read</td>
+<td>Get LED strip mode_color settings</td>
+</tr>
+<tr>
+<td><code>128</code></td>
+<td><code>MSP_VOLTAGE_METERS</code></td>
+<td>Read</td>
+<td>Voltage (per meter)</td>
+</tr>
+<tr>
+<td><code>129</code></td>
+<td><code>MSP_CURRENT_METERS</code></td>
+<td>Read</td>
+<td>Amperage (per meter)</td>
+</tr>
+<tr>
+<td><code>130</code></td>
+<td><code>MSP_BATTERY_STATE</code></td>
+<td>Read</td>
+<td>Connected/Disconnected, Voltage, Current Used</td>
+</tr>
+<tr>
+<td><code>131</code></td>
+<td><code>MSP_MOTOR_CONFIG</code></td>
+<td>Read</td>
+<td>Motor configuration (min/max throttle, etc)</td>
+</tr>
+<tr>
+<td><code>132</code></td>
+<td><code>MSP_GPS_CONFIG</code></td>
+<td>Read</td>
+<td>GPS configuration</td>
+</tr>
+<tr>
+<td><code>133</code></td>
+<td><code>MSP_COMPASS_CONFIG</code></td>
+<td>Read</td>
+<td>Compass configuration</td>
+</tr>
+<tr>
+<td><code>134</code></td>
+<td><code>MSP_ESC_SENSOR_DATA</code></td>
+<td>Read</td>
+<td>Extra ESC data from 32-Bit ESCs (Temperature, RPM)</td>
+</tr>
+<tr>
+<td><code>135</code></td>
+<td><code>MSP_GPS_RESCUE</code></td>
+<td>Read</td>
+<td>GPS Rescue angle, returnAltitude, descentDistance, groundSpeed, sanityChecks and minSats</td>
+</tr>
+<tr>
+<td><code>136</code></td>
+<td><code>MSP_GPS_RESCUE_PIDS</code></td>
+<td>Read</td>
+<td>GPS Rescue throttleP and velocity PIDS + yaw P</td>
+</tr>
+<tr>
+<td><code>137</code></td>
+<td><code>MSP_VTXTABLE_BAND</code></td>
+<td>Read</td>
+<td>VTX table band/channel data</td>
+</tr>
+<tr>
+<td><code>138</code></td>
+<td><code>MSP_VTXTABLE_POWERLEVEL</code></td>
+<td>Read</td>
+<td>VTX table powerLevel data</td>
+</tr>
+<tr>
+<td><code>139</code></td>
+<td><code>MSP_MOTOR_TELEMETRY</code></td>
+<td>Read</td>
+<td>Per-motor telemetry data (RPM, packet stats, ESC temp, etc.)</td>
+</tr>
+<tr>
+<td><code>140</code></td>
+<td><code>MSP_SIMPLIFIED_TUNING</code></td>
+<td>Read</td>
+<td>Get simplified tuning values and enabled state</td>
+</tr>
+<tr>
+<td><code>141</code></td>
+<td><code>MSP_SET_SIMPLIFIED_TUNING</code></td>
+<td>Write/action</td>
+<td>Set simplified tuning positions and apply calculated tuning</td>
+</tr>
+<tr>
+<td><code>142</code></td>
+<td><code>MSP_CALCULATE_SIMPLIFIED_PID</code></td>
+<td>Read</td>
+<td>Calculate PID values based on sliders without saving</td>
+</tr>
+<tr>
+<td><code>143</code></td>
+<td><code>MSP_CALCULATE_SIMPLIFIED_GYRO</code></td>
+<td>Read</td>
+<td>Calculate gyro filter values based on sliders without saving</td>
+</tr>
+<tr>
+<td><code>144</code></td>
+<td><code>MSP_CALCULATE_SIMPLIFIED_DTERM</code></td>
+<td>Read</td>
+<td>Calculate D term filter values based on sliders without saving</td>
+</tr>
+<tr>
+<td><code>145</code></td>
+<td><code>MSP_VALIDATE_SIMPLIFIED_TUNING</code></td>
+<td>Read</td>
+<td>Returns array of true/false showing which simplified tuning groups match values</td>
+</tr>
+<tr>
+<td><code>150</code></td>
+<td><code>MSP_STATUS_EX</code></td>
+<td>Read</td>
+<td>Cycletime, errors_count, CPU load, sensor present etc</td>
+</tr>
+<tr>
+<td><code>160</code></td>
+<td><code>MSP_UID</code></td>
+<td>Read</td>
+<td>Unique device ID</td>
+</tr>
+<tr>
+<td><code>164</code></td>
+<td><code>MSP_GPSSVINFO</code></td>
+<td>Read</td>
+<td>Get Signal Strength (only U-Blox)</td>
+</tr>
+<tr>
+<td><code>166</code></td>
+<td><code>MSP_GPSSTATISTICS</code></td>
+<td>Read</td>
+<td>Get GPS debugging data</td>
+</tr>
+<tr>
+<td><code>167</code></td>
+<td><code>MSP_ATTITUDE_QUATERNION</code></td>
+<td>Read</td>
+<td>Orientation quaternion components (w, x, y, z)</td>
+</tr>
+<tr>
+<td><code>180</code></td>
+<td><code>MSP_OSD_VIDEO_CONFIG</code></td>
+<td>Read</td>
+<td>Get OSD video settings</td>
+</tr>
+<tr>
+<td><code>181</code></td>
+<td><code>MSP_SET_OSD_VIDEO_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set OSD video settings</td>
+</tr>
+<tr>
+<td><code>182</code></td>
+<td><code>MSP_DISPLAYPORT</code></td>
+<td>Read</td>
+<td>External OSD displayport mode</td>
+</tr>
+<tr>
+<td><code>183</code></td>
+<td><code>MSP_COPY_PROFILE</code></td>
+<td>Write/action</td>
+<td>Copy settings between profiles</td>
+</tr>
+<tr>
+<td><code>184</code></td>
+<td><code>MSP_BEEPER_CONFIG</code></td>
+<td>Read</td>
+<td>Get beeper configuration</td>
+</tr>
+<tr>
+<td><code>185</code></td>
+<td><code>MSP_SET_BEEPER_CONFIG</code></td>
+<td>Write/action</td>
+<td>Set beeper configuration</td>
+</tr>
+<tr>
+<td><code>186</code></td>
+<td><code>MSP_SET_TX_INFO</code></td>
+<td>Write/action</td>
+<td>Set runtime information from TX lua scripts</td>
+</tr>
+<tr>
+<td><code>187</code></td>
+<td><code>MSP_TX_INFO</code></td>
+<td>Read</td>
+<td>Get runtime information for TX lua scripts</td>
+</tr>
+<tr>
+<td><code>188</code></td>
+<td><code>MSP_SET_OSD_CANVAS</code></td>
+<td>Write/action</td>
+<td>Set OSD canvas size COLSxROWS</td>
+</tr>
+<tr>
+<td><code>189</code></td>
+<td><code>MSP_OSD_CANVAS</code></td>
+<td>Read</td>
+<td>Get OSD canvas size COLSxROWS</td>
+</tr>
+<tr>
+<td><code>200</code></td>
+<td><code>MSP_SET_RAW_RC</code></td>
+<td>Write/action</td>
+<td>8 rc chan</td>
+</tr>
+<tr>
+<td><code>201</code></td>
+<td><code>MSP_SET_RAW_GPS</code></td>
+<td>Write/action</td>
+<td>Fix, numsat, lat, lon, alt, speed</td>
+</tr>
+<tr>
+<td><code>202</code></td>
+<td><code>MSP_SET_PID</code></td>
+<td>Write/action</td>
+<td>P I D coeff (9 are used currently)</td>
+</tr>
+<tr>
+<td><code>204</code></td>
+<td><code>MSP_SET_RC_TUNING</code></td>
+<td>Write/action</td>
+<td>RC rate, rc expo, rollpitch rate, yaw rate, dyn throttle PID, yaw expo</td>
+</tr>
+<tr>
+<td><code>205</code></td>
+<td><code>MSP_ACC_CALIBRATION</code></td>
+<td>Write/action</td>
+<td>No param - calibrate accelerometer</td>
+</tr>
+<tr>
+<td><code>206</code></td>
+<td><code>MSP_MAG_CALIBRATION</code></td>
+<td>Write/action</td>
+<td>No param - calibrate magnetometer</td>
+</tr>
+<tr>
+<td><code>208</code></td>
+<td><code>MSP_RESET_CONF</code></td>
+<td>Write/action</td>
+<td>No param - reset settings</td>
+</tr>
+<tr>
+<td><code>209</code></td>
+<td><code>MSP_SET_WP</code></td>
+<td>Write/action</td>
+<td>Sets a given WP (WP#,lat, lon, alt, flags)</td>
+</tr>
+<tr>
+<td><code>210</code></td>
+<td><code>MSP_SELECT_SETTING</code></td>
+<td>Write/action</td>
+<td>Select setting number (0-2)</td>
+</tr>
+<tr>
+<td><code>211</code></td>
+<td><code>MSP_SET_HEADING</code></td>
+<td>Write/action</td>
+<td>Define a new heading hold direction</td>
+</tr>
+<tr>
+<td><code>212</code></td>
+<td><code>MSP_SET_SERVO_CONFIGURATION</code></td>
+<td>Write/action</td>
+<td>Servo settings</td>
+</tr>
+<tr>
+<td><code>214</code></td>
+<td><code>MSP_SET_MOTOR</code></td>
+<td>Write/action</td>
+<td>PropBalance function</td>
+</tr>
+<tr>
+<td><code>215</code></td>
+<td><code>MSP_SET_NAV_CONFIG</code></td>
+<td>Write/action</td>
+<td>Sets nav config parameters</td>
+</tr>
+<tr>
+<td><code>217</code></td>
+<td><code>MSP_SET_MOTOR_3D_CONFIG</code></td>
+<td>Write/action</td>
+<td>Settings needed for reversible ESCs</td>
+</tr>
+<tr>
+<td><code>218</code></td>
+<td><code>MSP_SET_RC_DEADBAND</code></td>
+<td>Write/action</td>
+<td>Deadbands for yaw alt pitch roll</td>
+</tr>
+<tr>
+<td><code>219</code></td>
+<td><code>MSP_SET_RESET_CURR_PID</code></td>
+<td>Write/action</td>
+<td>Reset current PID profile to defaults</td>
+</tr>
+<tr>
+<td><code>220</code></td>
+<td><code>MSP_SET_SENSOR_ALIGNMENT</code></td>
+<td>Write/action</td>
+<td>Set the orientation of acc,gyro,mag</td>
+</tr>
+<tr>
+<td><code>221</code></td>
+<td><code>MSP_SET_LED_STRIP_MODECOLOR</code></td>
+<td>Write/action</td>
+<td>Set LED strip mode_color settings</td>
+</tr>
+<tr>
+<td><code>222</code></td>
+<td><code>MSP_SET_MOTOR_CONFIG</code></td>
+<td>Write/action</td>
+<td>Motor configuration (min/max throttle, etc)</td>
+</tr>
+<tr>
+<td><code>223</code></td>
+<td><code>MSP_SET_GPS_CONFIG</code></td>
+<td>Write/action</td>
+<td>GPS configuration</td>
+</tr>
+<tr>
+<td><code>224</code></td>
+<td><code>MSP_SET_COMPASS_CONFIG</code></td>
+<td>Write/action</td>
+<td>Compass configuration</td>
+</tr>
+<tr>
+<td><code>225</code></td>
+<td><code>MSP_SET_GPS_RESCUE</code></td>
+<td>Write/action</td>
+<td>Set GPS Rescue parameters</td>
+</tr>
+<tr>
+<td><code>226</code></td>
+<td><code>MSP_SET_GPS_RESCUE_PIDS</code></td>
+<td>Write/action</td>
+<td>Set GPS Rescue PID values</td>
+</tr>
+<tr>
+<td><code>227</code></td>
+<td><code>MSP_SET_VTXTABLE_BAND</code></td>
+<td>Write/action</td>
+<td>Set vtxTable band/channel data</td>
+</tr>
+<tr>
+<td><code>228</code></td>
+<td><code>MSP_SET_VTXTABLE_POWERLEVEL</code></td>
+<td>Write/action</td>
+<td>Set vtxTable powerLevel data</td>
+</tr>
+<tr>
+<td><code>230</code></td>
+<td><code>MSP_MULTIPLE_MSP</code></td>
+<td>Read</td>
+<td>Request multiple MSPs in one request</td>
+</tr>
+<tr>
+<td><code>238</code></td>
+<td><code>MSP_MODE_RANGES_EXTRA</code></td>
+<td>Read</td>
+<td>Extra mode range data</td>
+</tr>
+<tr>
+<td><code>239</code></td>
+<td><code>MSP_SET_ACC_TRIM</code></td>
+<td>Write/action</td>
+<td>Set acc angle trim values</td>
+</tr>
+<tr>
+<td><code>240</code></td>
+<td><code>MSP_ACC_TRIM</code></td>
+<td>Read</td>
+<td>Get acc angle trim values</td>
+</tr>
+<tr>
+<td><code>241</code></td>
+<td><code>MSP_SERVO_MIX_RULES</code></td>
+<td>Read</td>
+<td>Get servo mixer configuration</td>
+</tr>
+<tr>
+<td><code>242</code></td>
+<td><code>MSP_SET_SERVO_MIX_RULE</code></td>
+<td>Write/action</td>
+<td>Set servo mixer configuration</td>
+</tr>
+<tr>
+<td><code>245</code></td>
+<td><code>MSP_SET_PASSTHROUGH</code></td>
+<td>Write/action</td>
+<td>Set passthrough to peripherals</td>
+</tr>
+<tr>
+<td><code>246</code></td>
+<td><code>MSP_SET_RTC</code></td>
+<td>Write/action</td>
+<td>Set the RTC clock</td>
+</tr>
+<tr>
+<td><code>247</code></td>
+<td><code>MSP_RTC</code></td>
+<td>Read</td>
+<td>Get the RTC clock</td>
+</tr>
+<tr>
+<td><code>248</code></td>
+<td><code>MSP_SET_BOARD_INFO</code></td>
+<td>Write/action</td>
+<td>Set the board information</td>
+</tr>
+<tr>
+<td><code>249</code></td>
+<td><code>MSP_SET_SIGNATURE</code></td>
+<td>Write/action</td>
+<td>Set the signature of the board and serial number</td>
+</tr>
+<tr>
+<td><code>250</code></td>
+<td><code>MSP_EEPROM_WRITE</code></td>
+<td>Write/action</td>
+<td>Write settings to EEPROM</td>
+</tr>
+<tr>
+<td><code>251</code></td>
+<td><code>MSP_RESERVE_1</code></td>
+<td>Reserved</td>
+<td>reserved for system usage</td>
+</tr>
+<tr>
+<td><code>252</code></td>
+<td><code>MSP_RESERVE_2</code></td>
+<td>Reserved</td>
+<td>reserved for system usage</td>
+</tr>
+<tr>
+<td><code>253</code></td>
+<td><code>MSP_DEBUGMSG</code></td>
+<td>Read</td>
+<td>debug string buffer</td>
+</tr>
+<tr>
+<td><code>254</code></td>
+<td><code>MSP_DEBUG</code></td>
+<td>Read</td>
+<td>debug1,debug2,debug3,debug4</td>
+</tr>
+<tr>
+<td><code>255</code></td>
+<td><code>MSP_V2_FRAME</code></td>
+<td>Frame marker</td>
+<td>MSPv2 payload indicator</td>
+</tr>
+</tbody>
+</table>
 <h2 id="config-betaflight-uart-port-for-msp-usage">Config betaflight uart port for msp usage</h2>
 <p><img alt="alt text" src="images/ports.png" /></p>
 <h2 id="demo-python-msp">Demo: python msp</h2>
+<h3 id="msp_status"><code>MSP_STATUS</code></h3>
+<p><code>MSP_STATUS</code> (<code>101</code>) is a read-only status snapshot. Send it with an empty
+payload to get the controller loop timing, bus error count, detected sensors,
+active flight-mode flags, and the selected PID/profile slot. Multi-byte values
+are returned little-endian.</p>
+<table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Size</th>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><code>uint16</code></td>
+<td><code>cycleTime</code></td>
+<td>Main control-loop time in microseconds. Lower values mean the loop is running faster.</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>uint16</code></td>
+<td><code>i2cErrorCounter</code></td>
+<td>Number of I2C bus errors detected since boot. This should normally stay at <code>0</code>.</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><code>uint16</code></td>
+<td><code>sensorStatus</code></td>
+<td>Bit mask of sensors detected by the firmware. Common bits are accelerometer, barometer, magnetometer, GPS, sonar, and optical flow.</td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td><code>uint32</code></td>
+<td><code>flightModeFlags</code></td>
+<td>Bit mask of currently active BOX/flight modes, such as ARM, ANGLE, HORIZON, BEEPER, GPS Rescue, and other modes configured in Betaflight.</td>
+</tr>
+<tr>
+<td><code>10</code></td>
+<td><code>uint8</code></td>
+<td><code>profile</code></td>
+<td>Active PID/profile index reported by the firmware.</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>MSP_STATUS_EX</code> (<code>150</code>) when you also need CPU load, rate profile, and
+arming-disable reasons. The demo below requests <code>MSP_STATUS_EX</code> so it can print
+whether the flight controller is armable and why arming may be blocked.</p>
+<p><code>flightModeFlags</code> is a 32-bit mask. Test a mode with
+<code>flightModeFlags &amp; (1 &lt;&lt; bit)</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Mask</th>
+<th>Mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><code>0x00000001</code></td>
+<td><code>ARM</code></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><code>0x00000002</code></td>
+<td><code>ANGLE</code></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>0x00000004</code></td>
+<td><code>HORIZON</code></td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td><code>0x00000008</code></td>
+<td><code>MAG</code></td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td><code>0x00000010</code></td>
+<td><code>ALTHOLD</code></td>
+</tr>
+<tr>
+<td><code>5</code></td>
+<td><code>0x00000020</code></td>
+<td><code>HEADFREE</code></td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td><code>0x00000040</code></td>
+<td><code>CHIRP</code></td>
+</tr>
+<tr>
+<td><code>7</code></td>
+<td><code>0x00000080</code></td>
+<td><code>PASSTHRU</code></td>
+</tr>
+<tr>
+<td><code>8</code></td>
+<td><code>0x00000100</code></td>
+<td><code>FAILSAFE</code></td>
+</tr>
+<tr>
+<td><code>9</code></td>
+<td><code>0x00000200</code></td>
+<td><code>POSHOLD</code></td>
+</tr>
+<tr>
+<td><code>10</code></td>
+<td><code>0x00000400</code></td>
+<td><code>GPSRESCUE</code></td>
+</tr>
+<tr>
+<td><code>11</code></td>
+<td><code>0x00000800</code></td>
+<td><code>AUTOPILOT</code></td>
+</tr>
+<tr>
+<td><code>12</code></td>
+<td><code>0x00001000</code></td>
+<td><code>ANTIGRAVITY</code></td>
+</tr>
+<tr>
+<td><code>13</code></td>
+<td><code>0x00002000</code></td>
+<td><code>HEADADJ</code></td>
+</tr>
+<tr>
+<td><code>14</code></td>
+<td><code>0x00004000</code></td>
+<td><code>CAMSTAB</code></td>
+</tr>
+<tr>
+<td><code>15</code></td>
+<td><code>0x00008000</code></td>
+<td><code>BEEPERON</code></td>
+</tr>
+<tr>
+<td><code>16</code></td>
+<td><code>0x00010000</code></td>
+<td><code>LEDLOW</code></td>
+</tr>
+<tr>
+<td><code>17</code></td>
+<td><code>0x00020000</code></td>
+<td><code>CALIB</code></td>
+</tr>
+<tr>
+<td><code>18</code></td>
+<td><code>0x00040000</code></td>
+<td><code>OSD</code></td>
+</tr>
+<tr>
+<td><code>19</code></td>
+<td><code>0x00080000</code></td>
+<td><code>TELEMETRY</code></td>
+</tr>
+<tr>
+<td><code>20</code></td>
+<td><code>0x00100000</code></td>
+<td><code>SERVO1</code></td>
+</tr>
+<tr>
+<td><code>21</code></td>
+<td><code>0x00200000</code></td>
+<td><code>SERVO2</code></td>
+</tr>
+<tr>
+<td><code>22</code></td>
+<td><code>0x00400000</code></td>
+<td><code>SERVO3</code></td>
+</tr>
+<tr>
+<td><code>23</code></td>
+<td><code>0x00800000</code></td>
+<td><code>BLACKBOX</code></td>
+</tr>
+<tr>
+<td><code>24</code></td>
+<td><code>0x01000000</code></td>
+<td><code>AIRMODE</code></td>
+</tr>
+<tr>
+<td><code>25</code></td>
+<td><code>0x02000000</code></td>
+<td><code>3D</code></td>
+</tr>
+<tr>
+<td><code>26</code></td>
+<td><code>0x04000000</code></td>
+<td><code>FPVANGLEMIX</code></td>
+</tr>
+<tr>
+<td><code>27</code></td>
+<td><code>0x08000000</code></td>
+<td><code>BLACKBOXERASE</code></td>
+</tr>
+<tr>
+<td><code>28</code></td>
+<td><code>0x10000000</code></td>
+<td><code>CAMERA1</code></td>
+</tr>
+<tr>
+<td><code>29</code></td>
+<td><code>0x20000000</code></td>
+<td><code>CAMERA2</code></td>
+</tr>
+<tr>
+<td><code>30</code></td>
+<td><code>0x40000000</code></td>
+<td><code>CAMERA3</code></td>
+</tr>
+<tr>
+<td><code>31</code></td>
+<td><code>0x80000000</code></td>
+<td><code>CRASHFLIP</code></td>
+</tr>
+</tbody>
+</table>
 <details>
 <summary>MSP get status</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">  1</a></span>

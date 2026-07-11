@@ -920,86 +920,86 @@
 <span class="normal"><a href="#__codelineno-0-77">77</a></span>
 <span class="normal"><a href="#__codelineno-0-78">78</a></span>
 <span class="normal"><a href="#__codelineno-0-79">79</a></span>
-<span class="normal"><a href="#__codelineno-0-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>#!/usr/bin/env python3
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>import socket
-<a id="__codelineno-0-3" name="__codelineno-0-3"></a>import struct
-<a id="__codelineno-0-4" name="__codelineno-0-4"></a>import time
+<span class="normal"><a href="#__codelineno-0-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5"></a>
 <a id="__codelineno-0-6" name="__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7"></a>PORT = 9004
-<a id="__codelineno-0-8" name="__codelineno-0-8"></a>RATE_HZ = 50
-<a id="__codelineno-0-9" name="__codelineno-0-9"></a>DT = 1.0 / RATE_HZ
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9004</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="n">RATE_HZ</span> <span class="o">=</span> <span class="mi">50</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="n">DT</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">RATE_HZ</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10"></a>
-<a id="__codelineno-0-11" name="__codelineno-0-11"></a>ROLL = 0
-<a id="__codelineno-0-12" name="__codelineno-0-12"></a>PITCH = 1
-<a id="__codelineno-0-13" name="__codelineno-0-13"></a>THROTTLE = 2
-<a id="__codelineno-0-14" name="__codelineno-0-14"></a>YAW = 3
-<a id="__codelineno-0-15" name="__codelineno-0-15"></a>ARM = 4
-<a id="__codelineno-0-16" name="__codelineno-0-16"></a>AUTOPILOT = 5
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="n">ROLL</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="n">PITCH</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="n">THROTTLE</span> <span class="o">=</span> <span class="mi">2</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="n">YAW</span> <span class="o">=</span> <span class="mi">3</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="n">ARM</span> <span class="o">=</span> <span class="mi">4</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="n">AUTOPILOT</span> <span class="o">=</span> <span class="mi">5</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17"></a>
-<a id="__codelineno-0-18" name="__codelineno-0-18"></a>RC_MIN = 1000
-<a id="__codelineno-0-19" name="__codelineno-0-19"></a>RC_MID = 1500
-<a id="__codelineno-0-20" name="__codelineno-0-20"></a>RC_MAX = 2000
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="n">RC_MIN</span> <span class="o">=</span> <span class="mi">1000</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="n">RC_MID</span> <span class="o">=</span> <span class="mi">1500</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="n">RC_MAX</span> <span class="o">=</span> <span class="mi">2000</span>
 <a id="__codelineno-0-21" name="__codelineno-0-21"></a>
-<a id="__codelineno-0-22" name="__codelineno-0-22"></a>THROTTLE_TAKEOFF = 1650
-<a id="__codelineno-0-23" name="__codelineno-0-23"></a>THROTTLE_LAND = 1050
-<a id="__codelineno-0-24" name="__codelineno-0-24"></a>PITCH_FORWARD = 1600
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="n">THROTTLE_TAKEOFF</span> <span class="o">=</span> <span class="mi">1650</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="n">THROTTLE_LAND</span> <span class="o">=</span> <span class="mi">1050</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="n">PITCH_FORWARD</span> <span class="o">=</span> <span class="mi">1600</span>
 <a id="__codelineno-0-25" name="__codelineno-0-25"></a>
 <a id="__codelineno-0-26" name="__codelineno-0-26"></a>
-<a id="__codelineno-0-27" name="__codelineno-0-27"></a>sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
 <a id="__codelineno-0-28" name="__codelineno-0-28"></a>
 <a id="__codelineno-0-29" name="__codelineno-0-29"></a>
-<a id="__codelineno-0-30" name="__codelineno-0-30"></a>def send_rc(channels):
-<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    # little-endian: double + 16 uint16
-<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    pkt = struct.pack(&quot;&lt;d16H&quot;, time.time(), *channels)
-<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    sock.sendto(pkt, (&quot;127.0.0.1&quot;, PORT))
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="k">def</span><span class="w"> </span><span class="nf">send_rc</span><span class="p">(</span><span class="n">channels</span><span class="p">):</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="c1"># little-endian: double + 16 uint16</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="n">pkt</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;d16H&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="o">*</span><span class="n">channels</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">pkt</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
 <a id="__codelineno-0-34" name="__codelineno-0-34"></a>
 <a id="__codelineno-0-35" name="__codelineno-0-35"></a>
-<a id="__codelineno-0-36" name="__codelineno-0-36"></a>def channels(throttle=RC_MIN, pitch=RC_MID, armed=False):
-<a id="__codelineno-0-37" name="__codelineno-0-37"></a>    ch = [RC_MID] * 16
-<a id="__codelineno-0-38" name="__codelineno-0-38"></a>    ch[ROLL] = RC_MID
-<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    ch[PITCH] = pitch
-<a id="__codelineno-0-40" name="__codelineno-0-40"></a>    ch[THROTTLE] = throttle
-<a id="__codelineno-0-41" name="__codelineno-0-41"></a>    ch[YAW] = RC_MID
-<a id="__codelineno-0-42" name="__codelineno-0-42"></a>    ch[ARM] = RC_MAX if armed else RC_MIN
-<a id="__codelineno-0-43" name="__codelineno-0-43"></a>    ch[AUTOPILOT] = RC_MAX
-<a id="__codelineno-0-44" name="__codelineno-0-44"></a>    return ch
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="k">def</span><span class="w"> </span><span class="nf">channels</span><span class="p">(</span><span class="n">throttle</span><span class="o">=</span><span class="n">RC_MIN</span><span class="p">,</span> <span class="n">pitch</span><span class="o">=</span><span class="n">RC_MID</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>    <span class="n">ch</span> <span class="o">=</span> <span class="p">[</span><span class="n">RC_MID</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>    <span class="n">ch</span><span class="p">[</span><span class="n">ROLL</span><span class="p">]</span> <span class="o">=</span> <span class="n">RC_MID</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    <span class="n">ch</span><span class="p">[</span><span class="n">PITCH</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitch</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>    <span class="n">ch</span><span class="p">[</span><span class="n">THROTTLE</span><span class="p">]</span> <span class="o">=</span> <span class="n">throttle</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>    <span class="n">ch</span><span class="p">[</span><span class="n">YAW</span><span class="p">]</span> <span class="o">=</span> <span class="n">RC_MID</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>    <span class="n">ch</span><span class="p">[</span><span class="n">ARM</span><span class="p">]</span> <span class="o">=</span> <span class="n">RC_MAX</span> <span class="k">if</span> <span class="n">armed</span> <span class="k">else</span> <span class="n">RC_MIN</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>    <span class="n">ch</span><span class="p">[</span><span class="n">AUTOPILOT</span><span class="p">]</span> <span class="o">=</span> <span class="n">RC_MAX</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>    <span class="k">return</span> <span class="n">ch</span>
 <a id="__codelineno-0-45" name="__codelineno-0-45"></a>
 <a id="__codelineno-0-46" name="__codelineno-0-46"></a>
-<a id="__codelineno-0-47" name="__codelineno-0-47"></a>def hold(duration, throttle=RC_MIN, pitch=RC_MID, armed=False):
-<a id="__codelineno-0-48" name="__codelineno-0-48"></a>    end_time = time.monotonic() + duration
-<a id="__codelineno-0-49" name="__codelineno-0-49"></a>    ch = channels(throttle=throttle, pitch=pitch, armed=armed)
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a><span class="k">def</span><span class="w"> </span><span class="nf">hold</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">RC_MIN</span><span class="p">,</span> <span class="n">pitch</span><span class="o">=</span><span class="n">RC_MID</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>    <span class="n">ch</span> <span class="o">=</span> <span class="n">channels</span><span class="p">(</span><span class="n">throttle</span><span class="o">=</span><span class="n">throttle</span><span class="p">,</span> <span class="n">pitch</span><span class="o">=</span><span class="n">pitch</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="n">armed</span><span class="p">)</span>
 <a id="__codelineno-0-50" name="__codelineno-0-50"></a>
-<a id="__codelineno-0-51" name="__codelineno-0-51"></a>    while time.monotonic() &lt; end_time:
-<a id="__codelineno-0-52" name="__codelineno-0-52"></a>        send_rc(ch)
-<a id="__codelineno-0-53" name="__codelineno-0-53"></a>        time.sleep(DT)
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>        <span class="n">send_rc</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">DT</span><span class="p">)</span>
 <a id="__codelineno-0-54" name="__codelineno-0-54"></a>
 <a id="__codelineno-0-55" name="__codelineno-0-55"></a>
-<a id="__codelineno-0-56" name="__codelineno-0-56"></a>def step(message, duration, throttle=RC_MIN, pitch=RC_MID, armed=False):
-<a id="__codelineno-0-57" name="__codelineno-0-57"></a>    print(f&quot;{time.strftime(&#39;%H:%M:%S&#39;)} - {message}&quot;, flush=True)
-<a id="__codelineno-0-58" name="__codelineno-0-58"></a>    hold(duration, throttle=throttle, pitch=pitch, armed=armed)
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">RC_MIN</span><span class="p">,</span> <span class="n">pitch</span><span class="o">=</span><span class="n">RC_MID</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>    <span class="n">hold</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">throttle</span><span class="p">,</span> <span class="n">pitch</span><span class="o">=</span><span class="n">pitch</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="n">armed</span><span class="p">)</span>
 <a id="__codelineno-0-59" name="__codelineno-0-59"></a>
 <a id="__codelineno-0-60" name="__codelineno-0-60"></a>
-<a id="__codelineno-0-61" name="__codelineno-0-61"></a>def main():
-<a id="__codelineno-0-62" name="__codelineno-0-62"></a>    try:
-<a id="__codelineno-0-63" name="__codelineno-0-63"></a>        step(&quot;Send neutral RC with throttle low&quot;, 1.0, throttle=RC_MIN, armed=False)
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a>        <span class="n">step</span><span class="p">(</span><span class="s2">&quot;Send neutral RC with throttle low&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">RC_MIN</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <a id="__codelineno-0-64" name="__codelineno-0-64"></a>
-<a id="__codelineno-0-65" name="__codelineno-0-65"></a>        step(&quot;Arm with throttle low&quot;, 1.0, throttle=RC_MIN, armed=True)
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a>        <span class="n">step</span><span class="p">(</span><span class="s2">&quot;Arm with throttle low&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">RC_MIN</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-0-66" name="__codelineno-0-66"></a>
-<a id="__codelineno-0-67" name="__codelineno-0-67"></a>        step(&quot;Take off&quot;, 4.0, throttle=THROTTLE_TAKEOFF, armed=True)
+<a id="__codelineno-0-67" name="__codelineno-0-67"></a>        <span class="n">step</span><span class="p">(</span><span class="s2">&quot;Take off&quot;</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">THROTTLE_TAKEOFF</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-0-68" name="__codelineno-0-68"></a>
-<a id="__codelineno-0-69" name="__codelineno-0-69"></a>        step(&quot;Hold hover throttle&quot;, 3.0, throttle=RC_MID, armed=True)
+<a id="__codelineno-0-69" name="__codelineno-0-69"></a>        <span class="n">step</span><span class="p">(</span><span class="s2">&quot;Hold hover throttle&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">RC_MID</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-0-70" name="__codelineno-0-70"></a>
-<a id="__codelineno-0-71" name="__codelineno-0-71"></a>        step(&quot;Land by lowering throttle&quot;, 3.0, throttle=THROTTLE_LAND, armed=True)
-<a id="__codelineno-0-72" name="__codelineno-0-72"></a>        step(&quot;Disarm&quot;, 1.0, throttle=RC_MIN, armed=False)
-<a id="__codelineno-0-73" name="__codelineno-0-73"></a>    except KeyboardInterrupt:
-<a id="__codelineno-0-74" name="__codelineno-0-74"></a>        print(f&quot;{time.strftime(&#39;%H:%M:%S&#39;)} - Interrupted&quot;, flush=True)
-<a id="__codelineno-0-75" name="__codelineno-0-75"></a>    finally:
-<a id="__codelineno-0-76" name="__codelineno-0-76"></a>        step(&quot;Send final disarmed low-throttle command&quot;, 0.5, throttle=RC_MIN, armed=False)
+<a id="__codelineno-0-71" name="__codelineno-0-71"></a>        <span class="n">step</span><span class="p">(</span><span class="s2">&quot;Land by lowering throttle&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">THROTTLE_LAND</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72"></a>        <span class="n">step</span><span class="p">(</span><span class="s2">&quot;Disarm&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">RC_MIN</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73"></a>    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> - Interrupted&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75"></a>    <span class="k">finally</span><span class="p">:</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76"></a>        <span class="n">step</span><span class="p">(</span><span class="s2">&quot;Send final disarmed low-throttle command&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">RC_MIN</span><span class="p">,</span> <span class="n">armed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <a id="__codelineno-0-77" name="__codelineno-0-77"></a>
 <a id="__codelineno-0-78" name="__codelineno-0-78"></a>
-<a id="__codelineno-0-79" name="__codelineno-0-79"></a>if __name__ == &quot;__main__&quot;:
-<a id="__codelineno-0-80" name="__codelineno-0-80"></a>    main()
+<a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-80" name="__codelineno-0-80"></a>    <span class="n">main</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
 </details>
 
