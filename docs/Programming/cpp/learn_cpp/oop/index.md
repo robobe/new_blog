@@ -30,11 +30,15 @@ tags:
 - The role of virtual and override
 
 ## Constructors and Object Lifecycle
-- Default constructor, copy constructor, move constructor
-- Copy assignment, move assignment
-- The Rule of Three / Rule of Five
-- Destructor
-- RAII (Resource Acquisition Is Initialization)
+- [Constructor series](constructor/)
+- [constructors object life time](constructor/constructors_object_lifetime)
+- [Constructor overload and delegating constructors](constructor/constructor_overload_delegation)
+- [Default constructor, copy constructor, move constructor](constructor/default_copy_move_constructor)
+- [Copy assignment and move assignment](constructor/copy_move_assignment)
+- [The Rule of Three / Rule of Five](constructor/rule_of_three_five)
+- [Destructor and cleanup](constructor/destructor)
+- [RAII Resource Acquisition Is Initialization](constructor/raii)
+
 
 ## Operator Overloading
 - Overload operators like +, ==, <<, [], etc.

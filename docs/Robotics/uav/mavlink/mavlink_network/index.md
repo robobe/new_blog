@@ -44,8 +44,8 @@ It lets one MAVLink source be shared by multiple clients and can route traffic a
 
 <div class="grid-container">
     <div class="grid-item">
-        <a href="mavlink_router_static_aarch64_musl.md">
-            <p>Build static AArch64 musl binary</p>
+        <a href="mavlink_router_static_aarch64_musl">
+            <p>Build static aarch64 musl binary</p>
         </a>
     </div>
 </div>

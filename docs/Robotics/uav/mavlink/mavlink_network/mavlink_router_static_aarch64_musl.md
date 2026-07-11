@@ -215,7 +215,7 @@ Strip the final binary:
 
 ## Step 9: verify the binary
 
-Check that the output is an AArch64 executable:
+Check that the output is an **aarch64** executable:
 
 ```bash
 file build/mavlink-router-aarch64-musl-static/src/mavlink-routerd
@@ -283,3 +283,9 @@ If `file` is not installed on the Raspberry Pi, run only:
 ```bash
 ssh pi5 'chmod +x /tmp/mavlink-routerd && /tmp/mavlink-routerd -h | head -40'
 ```
+
+---
+
+## Download pre build
+
+- [mavlink-router musl aarch static build](code/mavlink-routerd)
