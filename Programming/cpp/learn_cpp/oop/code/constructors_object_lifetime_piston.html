@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C++ Piston Runner</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --border: #d0d7de;
+      --bg: #ffffff;
+      --panel: #f6f8fa;
+      --text: #24292f;
+      --muted: #57606a;
+      --accent: #0969da;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .runner {
+      display: grid;
+      gap: 10px;
+      height: calc(100vh - 24px);
+      min-height: 640px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    button {
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    textarea,
+    pre {
+      width: 100%;
+      margin: 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--text);
+      font: 13px/1.45 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    textarea {
+      min-height: 360px;
+      padding: 12px;
+      resize: vertical;
+      tab-size: 4;
+    }
+
+    pre {
+      min-height: 170px;
+      max-height: 260px;
+      overflow: auto;
+      padding: 12px;
+      white-space: pre-wrap;
+    }
+
+    .label {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main class="runner">
+    <div class="toolbar">
+      <div>
+        <div class="label">C++ code</div>
+        <div class="note">Press Run to send this code to the public Piston API.</div>
+      </div>
+      <button id="run-button" type="button">Run with Piston</button>
+    </div>
+
+    <textarea id="source" spellcheck="false">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+class Robot {
+public:
+    Robot(const std::string&amp; name)
+        : name_(name)
+    {
+        std::cout &lt;&lt; "constructor: " &lt;&lt; name_ &lt;&lt; "\n";
+    }
+
+    ~Robot()
+    {
+        std::cout &lt;&lt; "destructor: " &lt;&lt; name_ &lt;&lt; "\n";
+    }
+
+    void say_hello() const
+    {
+        std::cout &lt;&lt; "hello from " &lt;&lt; name_ &lt;&lt; "\n";
+    }
+
+private:
+    std::string name_;
+};
+
+int main()
+{
+    std::cout &lt;&lt; "start main\n";
+
+    {
+        Robot stack_robot("stack robot");
+        stack_robot.say_hello();
+    }
+
+    Robot* heap_robot = new Robot("heap robot");
+    heap_robot-&gt;say_hello();
+    delete heap_robot;
+
+    std::cout &lt;&lt; "end main\n";
+    return 0;
+}</textarea>
+
+    <section>
+      <div class="label">Output</div>
+      <pre id="output">Click "Run with Piston" to execute the example.</pre>
+    </section>
+  </main>
+
+  <script>
+    const button = document.getElementById("run-button");
+    const source = document.getElementById("source");
+    const output = document.getElementById("output");
+
+    async function runCode() {
+      button.disabled = true;
+      output.textContent = "Running...";
+
+      const payload = {
+        language: "c++",
+        version: "10.2.0",
+        files: [
+          {
+            name: "main.cpp",
+            content: source.value
+          }
+        ],
+        stdin: "",
+        args: [],
+        compile_timeout: 10000,
+        run_timeout: 3000
+      };
+
+      try {
+        const response = await fetch("https://emkc.org/api/v2/piston/execute", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`Piston returned HTTP ${response.status}\n${text}`);
+        }
+
+        const result = await response.json();
+        const parts = [];
+
+        if (result.compile && result.compile.output) {
+          parts.push("compile output:");
+          parts.push(result.compile.output.trimEnd());
+        }
+
+        if (result.run && result.run.output) {
+          parts.push("run output:");
+          parts.push(result.run.output.trimEnd());
+        }
+
+        if (result.run && typeof result.run.code !== "undefined") {
+          parts.push(`exit code: ${result.run.code}`);
+        }
+
+        output.textContent = parts.join("\n\n") || "No output.";
+      } catch (error) {
+        output.textContent = [
+          "Failed to run code.",
+          "",
+          String(error),
+          "",
+          "If this happens on GitHub Pages, the browser may be blocking the remote API request."
+        ].join("\n");
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    button.addEventListener("click", runCode);
+  </script>
+</body>
+</html>
