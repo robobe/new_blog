@@ -694,10 +694,65 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#git-tools" class="md-nav__link">
+  <a href="#clone" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Git tools
+        Clone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push-and-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Push and pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        branch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discard-file-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discard file changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rebase
       
     </span>
   </a>
@@ -706,17 +761,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reference
-      
-    </span>
-  </a>
   
 </li>
       
@@ -755,7 +799,7 @@
 <div class="grid-container">
     <div class="grid-item">
         <a href="tips_settings">
-        <img src="/assets/images/tips_and_settings.png" width="150" height="150">
+        <img src="images/git_tips_settings.png" width="150" height="150">
         <p>Tips / Settings</p>
         </a>
     </div>
@@ -766,23 +810,338 @@
         </a>
     </div>
     <div class="grid-item">
-         <a href="github">
-        <img src="images/github.png" width="150" height="150">
-        <p>Github</p>
+         <a href="git_hooks">
+        <img src="images/git_hooks_precommit.png" width="150" height="150">
+        <p>Git hooks / precommit</p>
         </a>
     </div>
 
 </div>
 
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+
+    participant W as Workspace
+    participant S as Staging Area
+    participant L as Local Repository
+    participant R as Remote Repository
+
+    rect rgb(225, 240, 255)
+        W-&gt;&gt;S: git add / git mv / git rm
+    end
+
+    rect rgb(255, 235, 220)
+        S-&gt;&gt;L: git commit
+        W-&gt;&gt;L: git commit -a
+    end
+
+    rect rgb(235, 250, 225)
+        S-&gt;&gt;W: git reset path/to/file
+        L-&gt;&gt;W: git reset commit-hash
+    end
+
+    Note over W,S: git diff&lt;br/&gt;Workspace to Staging
+    Note over W,L: git diff HEAD&lt;br/&gt;Workspace to HEAD
+
+    rect rgb(235, 250, 225)
+        L-&gt;&gt;R: git push
+    end
+
+    rect rgb(255, 245, 200)
+        R-&gt;&gt;L: git fetch
+        R-&gt;&gt;L: git pull - fetch changes
+        L-&gt;&gt;W: git pull - merge and update files
+        R-&gt;&gt;L: git clone - create local repository
+        L-&gt;&gt;W: git clone - create working files
+    end</code></pre>
 <h2 id="cheat-sheet">Cheat sheet</h2>
+<h3 id="clone">Clone</h3>
+<p><code>git clone</code> copies a remote repository to your machine and creates a local working directory.</p>
+<p>Clone the default branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/user/repo.git
+</code></pre></div></td></tr></table></div>
+<p>Clone a specific branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>feature/login<span class="w"> </span>https://github.com/user/repo.git
+</code></pre></div></td></tr></table></div>
+<p>Clone into a target folder:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/user/repo.git<span class="w"> </span>my-target-folder
+</code></pre></div></td></tr></table></div>
+<p>Clone a specific branch into a target folder:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>feature/login<span class="w"> </span>https://github.com/user/repo.git<span class="w"> </span>my-target-folder
+</code></pre></div></td></tr></table></div>
+<p>Clone a specific tag:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>v1.0.0<span class="w"> </span>https://github.com/user/repo.git
+</code></pre></div></td></tr></table></div>
+<p>Clone the repository and all submodules in one line:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span>https://github.com/user/repo.git
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="push-and-pull">Push and pull</h3>
+<p><code>git push</code> uploads commits from your local branch to a remote repository.
+It does not upload uncommitted file changes.</p>
+<p>Push commits from the current branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">push current branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>git<span class="w"> </span>push
+</code></pre></div></td></tr></table></div>
+<p>Push a new local branch and set the remote tracking branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">push new branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Push a local branch to a different remote branch name:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">push to different remote branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>local-branch:remote-branch
+</code></pre></div></td></tr></table></div>
+<p>Push tags:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">push tags</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>git<span class="w"> </span>push<span class="w"> </span>--tags
+</code></pre></div></td></tr></table></div>
+<p>Delete a remote branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">delete remote branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>--delete<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Avoid <code>git push --force</code> on shared branches.
+If you must update a rewritten branch, prefer <code>git push --force-with-lease</code> because it refuses to overwrite remote work you have not fetched.</p>
+</div>
+<p>Force push after rewriting local history:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">safer force push</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>git<span class="w"> </span>push<span class="w"> </span>--force-with-lease
+</code></pre></div></td></tr></table></div>
+<p><code>git pull</code> downloads changes from a remote branch and updates your current branch.
+By default, pull is similar to <code>git fetch</code> followed by <code>git merge</code>.</p>
+<p>Pull the latest changes:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pull latest changes</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>git<span class="w"> </span>pull
+</code></pre></div></td></tr></table></div>
+<p>Pull from a specific remote branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pull specific branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A normal <code>git pull</code> may create a merge commit when your local branch and the remote branch both have new commits.
+If Git can fast-forward your branch, no merge commit is created.</p>
+</div>
+<p>Pull without creating a merge commit:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pull only if fast-forward is possible</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>git<span class="w"> </span>pull<span class="w"> </span>--ff-only
+</code></pre></div></td></tr></table></div>
+<p>Pull with rebase instead of merge:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pull with rebase</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>git<span class="w"> </span>pull<span class="w"> </span>--rebase
+</code></pre></div></td></tr></table></div>
+<p>If you have uncommitted changes when pulling, Git tries to keep them.
+If the remote changes touch the same files, Git may stop the pull and ask you to commit, stash, or discard your local changes first.</p>
+<p>Check your local changes before pulling:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">check working tree</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>git<span class="w"> </span>status
+</code></pre></div></td></tr></table></div>
+<p>Stash uncommitted changes before pulling:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">stash before pull</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>git<span class="w"> </span>stash<span class="w"> </span>push<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;work before pull&quot;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>git<span class="w"> </span>pull
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>git<span class="w"> </span>stash<span class="w"> </span>pop
+</code></pre></div></td></tr></table></div>
+<p>Commit local changes before pulling:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">commit before pull</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;save local changes&quot;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a>git<span class="w"> </span>pull
+</code></pre></div></td></tr></table></div>
+<p>Pull with automatic stash:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pull with auto stash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>git<span class="w"> </span>pull<span class="w"> </span>--rebase<span class="w"> </span>--autostash
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>--autostash</code> temporarily stashes your uncommitted changes, pulls the remote changes, then reapplies your work.
+Conflicts can still happen when the same lines changed locally and remotely.</p>
+</div>
+<p><code>git pull</code> updates the branch you are currently on.
+To review remote changes in a new branch, create the review branch first.</p>
+<p>Create a review branch from the remote branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">create review branch from remote</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>origin
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>review/main<span class="w"> </span>origin/main
+</code></pre></div></td></tr></table></div>
+<p>Pull into an existing review branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pull into review branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>git<span class="w"> </span>switch<span class="w"> </span>review/main
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div></td></tr></table></div>
+<p>After reviewing, commit your own changes on the review branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">commit after review</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;review remote changes&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Fetch remote changes without merging into your current branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">fetch without changing current branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>origin
+</code></pre></div></td></tr></table></div>
+<p>Show local commits that are not pushed yet:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">show unpushed commits</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>git<span class="w"> </span>log<span class="w"> </span>origin/main..HEAD<span class="w"> </span>--oneline
+</code></pre></div></td></tr></table></div>
+<p>Show remote commits that you have not pulled yet:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">show unpulled commits</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>git<span class="w"> </span>log<span class="w"> </span>HEAD..origin/main<span class="w"> </span>--oneline
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="branch">branch</h3>
+<p>Git branches let you work on features, fixes, or experiments without changing the main code line.</p>
+<p>Create a new branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">create branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a>git<span class="w"> </span>branch<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Create a new branch and switch to it:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">create and switch branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Switch between branches:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">switch branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a>git<span class="w"> </span>switch<span class="w"> </span>main
+</code></pre></div></td></tr></table></div>
+<p>Switch to a remote branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">switch to remote branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span>
+<span class="normal"><a href="#__codelineno-29-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a>git<span class="w"> </span>fetch<span class="w"> </span>origin
+<a id="__codelineno-29-2" name="__codelineno-29-2"></a>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature/login<span class="w"> </span>origin/feature/login
+</code></pre></div></td></tr></table></div>
+<p>Show local branches:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">show local branches</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1"></a>git<span class="w"> </span>branch
+</code></pre></div></td></tr></table></div>
+<p>Show local and remote branches:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">show all branches</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1"></a>git<span class="w"> </span>branch<span class="w"> </span>-a
+</code></pre></div></td></tr></table></div>
+<p>Delete a local branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">delete local branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1"></a>git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Force delete a local branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">force delete local branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1"></a>git<span class="w"> </span>branch<span class="w"> </span>-D<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Delete a remote branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">delete remote branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>--delete<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Push a local branch that does not have a remote branch yet:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">push new branch to remote</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Rename the current branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">rename current branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1"></a>git<span class="w"> </span>branch<span class="w"> </span>-m<span class="w"> </span>new-branch-name
+</code></pre></div></td></tr></table></div>
+<p>Show the current branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">show current branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1"></a>git<span class="w"> </span>branch<span class="w"> </span>--show-current
+</code></pre></div></td></tr></table></div>
+<p>Show merged branches:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">show merged branches</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1"></a>git<span class="w"> </span>branch<span class="w"> </span>--merged
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>git branch --merged</code> only shows branches that still exist locally.
+If a merged source branch was already deleted, it will not appear in the output.
+The merged commits are still part of the history, but the branch name is gone.</p>
+</div>
+<h3 id="discard-file-changes">Discard file changes</h3>
+<p>Use these commands when you want to throw away local uncommitted changes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These commands discard changes from your working tree.
+Make sure you do not need the changes before running them.</p>
+</div>
+<p>Discard changes in all tracked files:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">discard all tracked file changes</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1"></a>git<span class="w"> </span>restore<span class="w"> </span>.
+</code></pre></div></td></tr></table></div>
+<p>Discard changes in one file:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">discard one file</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1"></a>git<span class="w"> </span>restore<span class="w"> </span>path/to/file
+</code></pre></div></td></tr></table></div>
+<p>Discard staged changes but keep the file content:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">unstage file changes</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1"></a>git<span class="w"> </span>restore<span class="w"> </span>--staged<span class="w"> </span>path/to/file
+</code></pre></div></td></tr></table></div>
+<p>Discard staged and unstaged changes in one file:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">discard staged and unstaged file changes</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span>
+<span class="normal"><a href="#__codelineno-42-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1"></a>git<span class="w"> </span>restore<span class="w"> </span>--staged<span class="w"> </span>path/to/file
+<a id="__codelineno-42-2" name="__codelineno-42-2"></a>git<span class="w"> </span>restore<span class="w"> </span>path/to/file
+</code></pre></div></td></tr></table></div>
+<p>Remove untracked files and folders:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">remove untracked files and folders</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1"></a>git<span class="w"> </span>clean<span class="w"> </span>-fd
+</code></pre></div></td></tr></table></div>
+<h3 id="merge">Merge</h3>
+<p><code>git merge</code> combines changes from another branch into the branch you are currently on.
+For example, if you are on <code>main</code> and merge <code>feature/login</code>, Git brings the commits from <code>feature/login</code> into <code>main</code>.</p>
+<p>Merge a branch into the current branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">merge branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-44-1">1</a></span>
+<span class="normal"><a href="#__codelineno-44-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1"></a>git<span class="w"> </span>switch<span class="w"> </span>main
+<a id="__codelineno-44-2" name="__codelineno-44-2"></a>git<span class="w"> </span>merge<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Merge process:</p>
+<ol>
+<li>Git checks the current branch.</li>
+<li>Git finds the common commit between the current branch and the branch being merged.</li>
+<li>Git applies the commits from the source branch into the current branch.</li>
+<li>If the changes do not conflict, Git completes the merge.</li>
+<li>If both branches changed the same lines, Git stops and asks you to resolve conflicts.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the current branch has no new commits, Git can do a fast-forward merge.
+If both branches have new commits, Git creates a merge commit.</p>
+</div>
+<p>Merge without creating a merge commit only if fast-forward is possible:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">fast-forward only merge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1"></a>git<span class="w"> </span>merge<span class="w"> </span>--ff-only<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Always create a merge commit:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">merge with merge commit</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1"></a>git<span class="w"> </span>merge<span class="w"> </span>--no-ff<span class="w"> </span>feature/login
+</code></pre></div></td></tr></table></div>
+<p>Abort a merge before finishing it:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">abort merge</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1"></a>git<span class="w"> </span>merge<span class="w"> </span>--abort
+</code></pre></div></td></tr></table></div>
+<p>Resolve merge conflicts:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">finish merge after conflicts</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1">1</a></span>
+<span class="normal"><a href="#__codelineno-48-2">2</a></span>
+<span class="normal"><a href="#__codelineno-48-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1"></a>git<span class="w"> </span>status
+<a id="__codelineno-48-2" name="__codelineno-48-2"></a>git<span class="w"> </span>add<span class="w"> </span>path/to/resolved-file
+<a id="__codelineno-48-3" name="__codelineno-48-3"></a>git<span class="w"> </span>commit
+</code></pre></div></td></tr></table></div>
+<h3 id="rebase">Rebase</h3>
+<p><code>git rebase</code> moves your branch commits so they start from a newer base commit.
+It is commonly used to update a feature branch with the latest changes from <code>main</code> while keeping a linear history.</p>
+<p>Rebase the current branch on top of <code>main</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">rebase current branch</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1">1</a></span>
+<span class="normal"><a href="#__codelineno-49-2">2</a></span>
+<span class="normal"><a href="#__codelineno-49-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1"></a>git<span class="w"> </span>switch<span class="w"> </span>feature/login
+<a id="__codelineno-49-2" name="__codelineno-49-2"></a>git<span class="w"> </span>fetch<span class="w"> </span>origin
+<a id="__codelineno-49-3" name="__codelineno-49-3"></a>git<span class="w"> </span>rebase<span class="w"> </span>origin/main
+</code></pre></div></td></tr></table></div>
+<p>Rebase one branch onto another branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">rebase branch onto main</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1">1</a></span>
+<span class="normal"><a href="#__codelineno-50-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1"></a>git<span class="w"> </span>switch<span class="w"> </span>feature/login
+<a id="__codelineno-50-2" name="__codelineno-50-2"></a>git<span class="w"> </span>rebase<span class="w"> </span>main
+</code></pre></div></td></tr></table></div>
+<p>Rebase process:</p>
+<ol>
+<li>Git finds the commits that exist only on your current branch.</li>
+<li>Git temporarily removes those commits.</li>
+<li>Git moves your branch to the new base branch.</li>
+<li>Git reapplies your commits one by one.</li>
+<li>If conflicts happen, Git stops and asks you to resolve them.</li>
+</ol>
+<p>Continue after resolving rebase conflicts:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">continue rebase</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-51-1">1</a></span>
+<span class="normal"><a href="#__codelineno-51-2">2</a></span>
+<span class="normal"><a href="#__codelineno-51-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1"></a>git<span class="w"> </span>status
+<a id="__codelineno-51-2" name="__codelineno-51-2"></a>git<span class="w"> </span>add<span class="w"> </span>path/to/resolved-file
+<a id="__codelineno-51-3" name="__codelineno-51-3"></a>git<span class="w"> </span>rebase<span class="w"> </span>--continue
+</code></pre></div></td></tr></table></div>
+<p>Abort a rebase and return to the previous state:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">abort rebase</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-52-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1"></a>git<span class="w"> </span>rebase<span class="w"> </span>--abort
+</code></pre></div></td></tr></table></div>
+<p>Skip the current commit during a rebase:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">skip rebase commit</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-53-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1"></a>git<span class="w"> </span>rebase<span class="w"> </span>--skip
+</code></pre></div></td></tr></table></div>
+<p>Interactive rebase for editing, squashing, or reordering commits:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">interactive rebase</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-54-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1"></a>git<span class="w"> </span>rebase<span class="w"> </span>-i<span class="w"> </span>HEAD~3
+</code></pre></div></td></tr></table></div>
+<p>Pull remote changes using rebase instead of merge:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pull with rebase</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-55-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1"></a>git<span class="w"> </span>pull<span class="w"> </span>--rebase
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Rebase rewrites commit history.
+Avoid rebasing commits that were already pushed to a shared branch unless your team expects that workflow.
+If you rebase a pushed branch, you usually need <code>git push --force-with-lease</code>.</p>
+</div>
+<h1 id="todo">TODO</h1>
 <ul>
-<li><a href="git_diff/">git diff</a></li>
-<li><a href="git_rebase/">git rebase</a></li>
-<li><a href="git_cherrypick/">git cherrypick</a></li>
-<li><a href="git_stash/">Git stash</a></li>
-<li><a href="git_submodule/">Git submodule</a></li>
-<li><a href="git_hooks/">Git hooks</a></li>
+<li>git log</li>
+<li>git stash</li>
+<li>git cherry-pick</li>
+<li>git reset</li>
+<li>git revert</li>
 </ul>
+<hr />
 <h3 id="git-tools">Git tools</h3>
 <p><a href="https://www.gitkraken.com/download">GitKraken</a></p>
 <hr />
