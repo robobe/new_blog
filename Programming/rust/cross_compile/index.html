@@ -1,0 +1,1068 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Programming/rust/cross_compile/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Rust static binary with musl - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#build-a-static-rust-binary-with-musl" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rust static binary with musl
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-install-the-musl-rust-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: install the musl Rust target
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-create-the-rust-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: create the Rust project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-source-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: source files
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-understand-the-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: understand the configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-build-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: build the application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-check-the-binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: check the binary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-run-the-arm64-binary-with-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: run the ARM64 binary with QEMU
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">cross-compile</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">musl</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">rust</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="build-a-static-rust-binary-with-musl">Build a static Rust binary with musl</h1>
+<p>This example builds a static ARM64 Linux binary for Raspberry Pi 5 from an
+x86_64 Linux development machine.</p>
+<p>The target used here is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>aarch64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<p>Use this target when you want:</p>
+<ul>
+<li>ARM64 Linux output.</li>
+<li>A musl libc binary.</li>
+<li>A static executable that can run without target-side shared libraries.</li>
+</ul>
+<h2 id="step-1-install-the-musl-rust-target">Step 1: install the musl Rust target</h2>
+<p>Check installed targets:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>rustup<span class="w"> </span>target<span class="w"> </span>list<span class="w"> </span>--installed
+</code></pre></div></td></tr></table></div>
+<p>Add the ARM64 musl target:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>aarch64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<p>For a local x86_64 static Linux binary, use:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>x86_64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<h2 id="step-2-create-the-rust-project">Step 2: create the Rust project</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>cargo<span class="w"> </span>new<span class="w"> </span>hello_static_pi<span class="w"> </span>--bin
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>hello_static_pi
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>.cargo
+</code></pre></div></td></tr></table></div>
+<h2 id="step-3-source-files">Step 3: source files</h2>
+<details>
+<summary>src/main.rs</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">env</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">time</span><span class="p">::{</span><span class="n">SystemTime</span><span class="p">,</span><span class="w"> </span><span class="n">UNIX_EPOCH</span><span class="p">};</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SystemTime</span><span class="p">::</span><span class="n">now</span><span class="p">()</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">        </span><span class="p">.</span><span class="n">duration_since</span><span class="p">(</span><span class="n">UNIX_EPOCH</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">        </span><span class="p">.</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;system clock should be after Unix epoch&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">        </span><span class="p">.</span><span class="n">as_secs</span><span class="p">();</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;hello from a static Rust binary&quot;</span><span class="p">);</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;package: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="fm">env!</span><span class="p">(</span><span class="s">&quot;CARGO_PKG_NAME&quot;</span><span class="p">));</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;version: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="fm">env!</span><span class="p">(</span><span class="s">&quot;CARGO_PKG_VERSION&quot;</span><span class="p">));</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;target arch: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">env</span><span class="p">::</span><span class="n">consts</span><span class="p">::</span><span class="n">ARCH</span><span class="p">);</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;target os: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">env</span><span class="p">::</span><span class="n">consts</span><span class="p">::</span><span class="n">OS</span><span class="p">);</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;unix time: {now}&quot;</span><span class="p">);</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+
+</details>
+
+<details>
+<summary>Cargo.toml</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span>
+<span class="normal"><a href="#__codelineno-6-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">[package]</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hello_static_pi&quot;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="n">edition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2024&quot;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="k">[dependencies]</span>
+</code></pre></div></td></tr></table></div>
+
+</details>
+
+<details>
+<summary>.cargo/config.toml</summary>
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">[build]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;aarch64-unknown-linux-musl&quot;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="k">[target.aarch64-unknown-linux-musl]</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="n">linker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rust-lld&quot;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="n">rustflags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;target-feature=+crt-static&quot;</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+
+</details>
+
+<h2 id="step-4-understand-the-configuration">Step 4: understand the configuration</h2>
+<p><code>Cargo.toml</code> describes the Rust package:</p>
+<ul>
+<li>package name</li>
+<li>version</li>
+<li>Rust edition</li>
+<li>dependencies</li>
+</ul>
+<p><code>.cargo/config.toml</code> controls how Cargo builds the project.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">[build]</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;aarch64-unknown-linux-musl&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>This makes <code>cargo build</code> use <code>aarch64-unknown-linux-musl</code> by default.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">[target.aarch64-unknown-linux-musl]</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="n">linker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;rust-lld&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>This tells Cargo to link the ARM64 musl binary with Rust's bundled LLVM linker.
+For a pure Rust application, this avoids needing a separate ARM64 musl GCC
+toolchain.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">rustflags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-C&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;target-feature=+crt-static&quot;</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+<p>This passes the static C runtime flag to <code>rustc</code>.</p>
+<p>For musl targets this is the important static binary flag:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>-C<span class="w"> </span>target-feature<span class="o">=</span>+crt-static
+</code></pre></div></td></tr></table></div>
+<h2 id="step-5-build-the-application">Step 5: build the application</h2>
+<p>Because <code>.cargo/config.toml</code> sets the default target, this is enough:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release
+</code></pre></div></td></tr></table></div>
+<p>The binary is created here:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>target/aarch64-unknown-linux-musl/release/hello_static_pi
+</code></pre></div></td></tr></table></div>
+<p>You can also build with a specific target from the command line:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--target<span class="w"> </span>aarch64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<p>Command-line <code>--target</code> is useful when the project does not define a default
+target in <code>.cargo/config.toml</code>, or when you want to override the default target.</p>
+<h2 id="step-6-check-the-binary">Step 6: check the binary</h2>
+<p>Use <code>file</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>file<span class="w"> </span>target/aarch64-unknown-linux-musl/release/hello_static_pi
+</code></pre></div></td></tr></table></div>
+<p>Expected result:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>ELF 64-bit LSB executable, ARM aarch64, statically linked
+</code></pre></div></td></tr></table></div>
+<p>Use <code>ldd</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>ldd<span class="w"> </span>target/aarch64-unknown-linux-musl/release/hello_static_pi
+</code></pre></div></td></tr></table></div>
+<p>Expected result:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>not a dynamic executable
+</code></pre></div></td></tr></table></div>
+<h2 id="step-7-run-the-arm64-binary-with-qemu">Step 7: run the ARM64 binary with QEMU</h2>
+<p>Install QEMU user emulation:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-user-static
+</code></pre></div></td></tr></table></div>
+<p>Run the ARM64 binary on the development machine:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>qemu-aarch64-static<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a>target/aarch64-unknown-linux-musl/release/hello_static_pi
+</code></pre></div></td></tr></table></div>
+<p>Expected output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span>
+<span class="normal"><a href="#__codelineno-21-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>hello from a static Rust binary
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a>package: hello_static_pi
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a>version: 0.1.0
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a>target arch: aarch64
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a>target os: linux
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

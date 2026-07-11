@@ -759,13 +759,74 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#add-target" class="md-nav__link">
+  <a href="#add-target-cross-compile" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Add target
+        Add target (cross compile)
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Add target (cross compile)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gnu-target-example-build-for-arm64-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GNU target example: build for ARM64 Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#musl-target-create-static-linux-binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        musl target: create static Linux binary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arm64-static-binary-with-musl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ARM64 static binary with musl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strip-and-reduce-binary-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strip and reduce binary size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -901,24 +962,151 @@
 <a id="__codelineno-6-4" name="__codelineno-6-4"></a>cargo<span class="w"> </span>fmt<span class="w">        </span><span class="c1"># format code</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5"></a>cargo<span class="w"> </span>clippy<span class="w">     </span><span class="c1"># lint code</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="add-target">Add target</h3>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install rust target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>aarch64-unknown-linux-gnu
+<h3 id="add-target-cross-compile">Add target (cross compile)</h3>
+<p>Cross compilation builds a binary for a different CPU or OS than the machine
+running <code>cargo build</code>.</p>
+<p>Rust needs two things:</p>
+<ul>
+<li><strong>Rust target</strong>: standard library for the target platform.</li>
+<li><strong>Linker / C toolchain</strong>: only needed when the crate links C code, system
+  libraries, or uses a target that needs an external linker.</li>
+</ul>
+<p>Target name format:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>&lt;cpu&gt;-&lt;vendor&gt;-&lt;os&gt;-&lt;abi&gt;
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install cross compiler</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
-<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gcc-arm-linux-gnueabihf
+<p>Common Linux targets:</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Use case</th>
+<th>libc</th>
+<th>Static friendly</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x86_64-unknown-linux-gnu</code></td>
+<td>normal Linux x86_64</td>
+<td>glibc</td>
+<td>partial</td>
+</tr>
+<tr>
+<td><code>aarch64-unknown-linux-gnu</code></td>
+<td>64-bit ARM Linux</td>
+<td>glibc</td>
+<td>partial</td>
+</tr>
+<tr>
+<td><code>x86_64-unknown-linux-musl</code></td>
+<td>portable Linux x86_64</td>
+<td>musl</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>aarch64-unknown-linux-musl</code></td>
+<td>portable 64-bit ARM Linux</td>
+<td>musl</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="gnu-target-example-build-for-arm64-linux">GNU target example: build for ARM64 Linux</h4>
+<p>GNU targets use glibc. The binary usually depends on shared libraries from the
+target system.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install rust target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>aarch64-unknown-linux-gnu
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">./.cargo/config.toml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
-<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>[target.aarch64-unknown-linux-gnu]
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a>linker = &quot;aarch64-linux-gnu-gcc&quot;
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install cross compiler</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gcc-aarch64-linux-gnu
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build with aarch target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--target<span class="w"> </span>aarch64-unknown-linux-gnu
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">./.cargo/config.toml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>[target.aarch64-unknown-linux-gnu]
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>linker = &quot;aarch64-linux-gnu-gcc&quot;
 </code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build with aarch target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--target<span class="w"> </span>aarch64-unknown-linux-gnu
+</code></pre></div></td></tr></table></div>
+<p>The output binary will be here:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>target/aarch64-unknown-linux-gnu/release/hello_world
+</code></pre></div></td></tr></table></div>
+<p>Check the binary:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>file<span class="w"> </span>target/aarch64-unknown-linux-gnu/release/hello_world
+</code></pre></div></td></tr></table></div>
+<h4 id="musl-target-create-static-linux-binary">musl target: create static Linux binary</h4>
+<p><code>musl</code> is an alternative C standard library.</p>
+<p>Why use musl:</p>
+<ul>
+<li>Produces mostly or fully static Linux binaries.</li>
+<li>Easier to copy one executable to another Linux machine.</li>
+<li>Good for containers, small deployments, and servers without matching glibc.</li>
+</ul>
+<p>Install musl tools:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install musl compiler</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>musl-tools
+</code></pre></div></td></tr></table></div>
+<p>Add the Rust musl target:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">x86_64 static binary target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>x86_64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<p>Build:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">build static binary</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--target<span class="w"> </span>x86_64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<p>Output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>target/x86_64-unknown-linux-musl/release/hello_world
+</code></pre></div></td></tr></table></div>
+<p>Check if the binary is static:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>file<span class="w"> </span>target/x86_64-unknown-linux-musl/release/hello_world
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a>ldd<span class="w"> </span>target/x86_64-unknown-linux-musl/release/hello_world
+</code></pre></div></td></tr></table></div>
+<p>For a static binary, <code>ldd</code> usually prints:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>not a dynamic executable
+</code></pre></div></td></tr></table></div>
+<h4 id="arm64-static-binary-with-musl">ARM64 static binary with musl</h4>
+<p>For ARM64 Linux:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>rustup<span class="w"> </span>target<span class="w"> </span>add<span class="w"> </span>aarch64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<p>On Ubuntu/Debian, the native <code>musl-tools</code> package usually gives a musl compiler
+for the host architecture. For cross-compiling musl to ARM64, the easiest
+practical option is often <code>cross</code>, which builds inside a prepared container.</p>
+<p>Install <code>cross</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>cargo<span class="w"> </span>install<span class="w"> </span>cross
+</code></pre></div></td></tr></table></div>
+<p>Build:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>cross<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--target<span class="w"> </span>aarch64-unknown-linux-musl
+</code></pre></div></td></tr></table></div>
+<p>Output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>target/aarch64-unknown-linux-musl/release/hello_world
+</code></pre></div></td></tr></table></div>
+<h4 id="strip-and-reduce-binary-size">Strip and reduce binary size</h4>
+<p>Strip debug symbols:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>strip<span class="w"> </span>target/x86_64-unknown-linux-musl/release/hello_world
+</code></pre></div></td></tr></table></div>
+<p>Or configure release builds in <code>Cargo.toml</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Cargo.toml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span>
+<span class="normal"><a href="#__codelineno-25-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="k">[profile.release]</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="n">strip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="n">lto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="n">codegen-units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="n">panic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;abort&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="important-notes">Important notes</h4>
+<ul>
+<li>Pure Rust crates are easiest to cross compile.</li>
+<li>Crates using C libraries may need matching target libraries and headers.</li>
+<li><code>musl-tools</code> is the musl compiler package on Ubuntu/Debian.</li>
+<li><code>cross</code> is usually simpler when building for another CPU architecture.</li>
+<li>Use <code>file</code> and <code>ldd</code> to verify what kind of binary was produced.</li>
+</ul>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="https://www.youtube.com/@letsgetrusty/playlists">Let's Get Rusty</a></li>
 <li><a href="https://www.youtube.com/@smartcontractprogrammer">Learn rust</a></li>
+<li><a href="https://rust-book.cs.brown.edu/">brown rust programming book</a></li>
 </ul>
 
 

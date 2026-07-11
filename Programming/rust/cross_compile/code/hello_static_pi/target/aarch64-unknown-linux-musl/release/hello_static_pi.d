@@ -1,0 +1,1 @@
+/home/user/projects/new_blog/docs/Programming/rust/cross_compile/code/hello_static_pi/target/aarch64-unknown-linux-musl/release/hello_static_pi: /home/user/projects/new_blog/docs/Programming/rust/cross_compile/code/hello_static_pi/src/main.rs
