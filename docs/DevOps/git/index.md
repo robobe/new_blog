@@ -508,6 +508,14 @@ git pull --rebase
     Avoid rebasing commits that were already pushed to a shared branch unless your team expects that workflow.
     If you rebase a pushed branch, you usually need `git push --force-with-lease`.
 
+
+
+#TODO
+- git log
+- git stash
+- git cherry-pick
+- git reset
+- git revert
 ---
 
 

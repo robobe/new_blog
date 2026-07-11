@@ -45,10 +45,28 @@ tags:
 ---
 
 ## To read and watch
+- [seeed studio esp32 drone](https://www.seeedstudio.com/ESP-FLY-co-create-p-6744.html)
+- [IL
 
+  
+    
+    
+    
+  
+
+  
+    
+      
+      
+    
+    
+      
+      
+    
+  
+DIY 3D Printed VTOL UAV](https://youtu.be/FE3cvICdO2A)
 - [Building a sub 250g Autonomous Drone with Ardupilot and ExpressLRS AirPort Telemetry](https://youtu.be/u_ArriXbrR0)
     - [part list](https://www.thingiverse.com/thing:6699961)
-- [BETAFLIGHT Tutorial for Beginners!!! - Updated & Step by Step](https://youtu.be/If1DEpShDV8)
 
 - [fpv simulators](https://oscarliang.com/fpv-simulator/)
 - [expresslrs](https://www.expresslrs.org/)
