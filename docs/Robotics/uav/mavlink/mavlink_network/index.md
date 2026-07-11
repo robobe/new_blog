@@ -42,6 +42,15 @@ It lets one MAVLink source be shared by multiple clients and can route traffic a
 
 [more project github](https://github.com/mavlink-router/mavlink-router)
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="mavlink_router_static_aarch64_musl.md">
+            <p>Build static AArch64 musl binary</p>
+        </a>
+    </div>
+</div>
+
+
 ```bash title="route SITL to udp"
 ./mavlink-routerd-glibc-x86_64 -e 127.0.0.1:14550  -p 127.0.0.1:5760
 ```

@@ -30,6 +30,10 @@ Create custom dialect and use it with pymavlink
 ### Generate 
 Generate python model using `mavgen.py` installed by `pymavlink` package
 
+!!! tip "mavgen.py location"
+    Installed with pymavlink location `.venv/bin/mavgen.py`
+    
+
 !!! tip ""
     copy `common.xml`, `minimal.xml` and `standard.xml` to folder that contain our custom message
 

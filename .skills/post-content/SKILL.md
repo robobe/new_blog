@@ -236,11 +236,27 @@ This repository currently has existing site-wide strict warnings. If strict mode
         <a href="design_patterns/">
         <p>Design patterns</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Demo application for controlling video bandwidth with crop
+                presets, FPS, encoder bitrate, keyframe interval, and measured
+                RTP bandwidth from the running pipeline.
+            </p>
+        </details>
     </div>
     <div class="grid-item">
         <a href="plugin">
         <p>Plugin</p>
         </a>
+        <details>
+            <summary>More ..</summary>
+            <p>
+                Demo application for controlling video bandwidth with crop
+                presets, FPS, encoder bitrate, keyframe interval, and measured
+                RTP bandwidth from the running pipeline.
+            </p>
+        </details>
     </div>
 </div>
 ```

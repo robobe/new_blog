@@ -43,16 +43,22 @@
             <p>Other embedded boards</p>
         </a>
     </div>
-    <div class="grid-item">
+    <!-- <div class="grid-item">
         <a href="micro_python">
             <img src="images/micro_python.png"  width="150" height="150">
             <p>micro python</p>
         </a>
-    </div>
+    </div> -->
      <div class="grid-item">
         <a href="hardware">
             <img src="images/hardware.png"  width="150" height="150">
             <p>Hardware</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="linux_toolchains">
+            <img src="images/linux_toolchains.png" width="150" height="150">
+            <p>Linux toolchains</p>
         </a>
     </div>
 </div>
