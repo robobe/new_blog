@@ -45,26 +45,10 @@ tags:
 ---
 
 ## To read and watch
+- [ Build a GOOD FPV Drone using an 18650 ](https://youtu.be/wq_tJd2a-ds)
+- [Build a Micro FPV Drone for $59 - Beginners Guide (2026) ](https://youtu.be/4nRgEmdwtJo)
 - [seeed studio esp32 drone](https://www.seeedstudio.com/ESP-FLY-co-create-p-6744.html)
-- [IL
-
-  
-    
-    
-    
-  
-
-  
-    
-      
-      
-    
-    
-      
-      
-    
-  
-DIY 3D Printed VTOL UAV](https://youtu.be/FE3cvICdO2A)
+- [DIY 3D Printed VTOL UAV](https://youtu.be/FE3cvICdO2A)
 - [Building a sub 250g Autonomous Drone with Ardupilot and ExpressLRS AirPort Telemetry](https://youtu.be/u_ArriXbrR0)
     - [part list](https://www.thingiverse.com/thing:6699961)
 
