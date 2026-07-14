@@ -702,6 +702,8 @@ Without virtual functions, inheritance is mostly about:
 Virtual functions are needed for runtime polymorphism. That should be learned in
 a separate step.
 
+- [Virtual functions](virtual_function/)
+
 C++ also does not have a special `interface` keyword like Java or C#.
 
 In C++, an interface is usually written as an abstract class with pure virtual

@@ -12,7 +12,7 @@ tags:
 ## Encapsulation
 - Use of private/protected fields
 - Getters and setters (if needed)
-- Const-correctness (const member functions)
+- [Const-correctness](const_correctness/) (const member functions)
 - Immutable objects
 
 ## Inheritance
