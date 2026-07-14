@@ -1,0 +1,126 @@
+.mermaid-viewer {
+  position: relative;
+  margin: 1.5rem 0;
+  overflow: hidden;
+
+  --mermaid-canvas-height: 500px;
+
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+
+  background: var(--md-default-bg-color);
+}
+
+.mermaid-height,
+[data-mermaid-height]:empty {
+  display: none;
+}
+
+.mermaid-toolbar {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.35rem;
+
+  padding: 0.35rem;
+
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.45rem;
+  background: var(--md-code-bg-color);
+  box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 12%);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease;
+}
+
+.mermaid-viewer:hover .mermaid-toolbar,
+.mermaid-viewer:focus-within .mermaid-toolbar,
+.mermaid-toolbar:hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mermaid-toolbar-button {
+  min-width: 2.25rem;
+  height: 2rem;
+  padding: 0 0.65rem;
+
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+
+  color: var(--md-default-fg-color);
+  background: var(--md-default-bg-color);
+
+  font: inherit;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.mermaid-toolbar-button:hover {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.mermaid-toolbar-button:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+.mermaid-canvas {
+  width: 100%;
+  height: var(--mermaid-canvas-height);
+  overflow: hidden;
+
+  cursor: grab;
+  touch-action: none;
+}
+
+.mermaid-canvas:active {
+  cursor: grabbing;
+}
+
+.mermaid-canvas .mermaid {
+  width: 100%;
+  height: 100%;
+}
+
+.mermaid-canvas svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none !important;
+}
+
+/* Full-screen appearance */
+
+.mermaid-viewer:fullscreen {
+  width: 100vw;
+  height: 100vh;
+
+  border: 0;
+  border-radius: 0;
+  background: var(--md-default-bg-color);
+}
+
+.mermaid-viewer:fullscreen .mermaid-canvas {
+  width: 100%;
+  height: 100vh;
+}
+
+/* Mobile layout */
+
+@media screen and (max-width: 600px) {
+  .mermaid-viewer {
+    --mermaid-canvas-height: 350px;
+  }
+
+  .mermaid-toolbar {
+    top: 0.35rem;
+    right: 0.35rem;
+  }
+}
