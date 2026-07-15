@@ -19,7 +19,10 @@
         </a>
     </div>
     <div class="grid-item">
-        <p>Block 3 Description</p>
+        <a href="cad/">
+        <img src="images/cad_ai.png" width="150" height="150">
+        <p>CAD & AI</p>
+        </a>
     </div>
     <div class="grid-item">
         <a href="todo/">

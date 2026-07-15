@@ -13,6 +13,7 @@ tags:
 - Use of private/protected fields
 - Getters and setters (if needed)
 - [Const-correctness](const_correctness/) (const member functions)
+- [Const and variables](const_and_variables/) (values, references, and pointers)
 - Immutable objects
 
 ## Inheritance
