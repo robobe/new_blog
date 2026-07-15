@@ -1,0 +1,1472 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Programming/cpp/learn_cpp/oop/consts/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Cpp const in function signatures - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/mermaid-viewer.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#c-const-in-function-signatures" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cpp const in function signatures
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-example-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The example class
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-read-the-signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to read the signature
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#f1-const-return-const-argument-const-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        f1: const return, const argument, const function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#f2-const-return-writable-argument-const-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        f2: const return, writable argument, const function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#f3-writable-return-writable-argument-const-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        f3: writable return, writable argument, const function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#f4-writable-return-writable-argument-non-const-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        f4: writable return, writable argument, non-const function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-test-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full test program
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-const-roles-in-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other const roles in classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Other const roles in classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#const-data-members" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Const data members
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#const-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Const objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#const-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Const pointers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mutable-data-members" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mutable data members
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rule-of-thumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule of thumb
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">const</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">cpp</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">functions</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">oop</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="c-const-in-function-signatures">C++ <code>const</code> in function signatures</h1>
+<p><code>const</code> can appear in several places in a member function signature.</p>
+<p>Each place controls something different:</p>
+<ul>
+<li><code>const X&amp;</code> before the function name: the return value is a read-only reference</li>
+<li><code>const X&amp; x</code> in the argument list: the parameter is a read-only reference</li>
+<li><code>const</code> after the argument list: the function cannot modify <code>*this</code></li>
+<li><code>X&amp;</code>: a writable reference</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">f1</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div></td></tr></table></div>
+<p>Read it like this:</p>
+<blockquote>
+<p><code>f1</code> is a const member function. It receives <code>x</code> as a const reference and
+returns a const reference to <code>X</code>.</p>
+</blockquote>
+<p>The <code>const</code> words do not all mean the same object is const. Each one belongs to
+the type or function part next to it.</p>
+<hr />
+<h2 id="the-example-class">The example class</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">X</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">f1</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">f2</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">f3</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">f4</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="how-to-read-the-signature">How to read the signature</h2>
+<p>Use this order:</p>
+<ol>
+<li>Read the function name and parameters.</li>
+<li>Check if there is <code>const</code> after <code>)</code>.</li>
+<li>Check whether each parameter is writable or read-only.</li>
+<li>Check whether the return value is writable or read-only.</li>
+</ol>
+<p>For member functions, the suffix <code>const</code> is very important:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="n">g</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div></td></tr></table></div>
+<p>This means:</p>
+<blockquote>
+<p>inside <code>g</code>, <code>this</code> behaves like <code>const X*</code>.</p>
+</blockquote>
+<p>So <code>g</code> cannot modify the current object and cannot return <code>*this</code> as <code>X&amp;</code>.</p>
+<hr />
+<h2 id="f1-const-return-const-argument-const-function"><code>f1</code>: const return, const argument, const function</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f1</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Meaning:</p>
+<ul>
+<li><code>const X&amp;</code> return: the caller receives a read-only reference</li>
+<li><code>const X&amp; x</code>: the function can read <code>x</code> but cannot modify it</li>
+<li>suffix <code>const</code>: the function can read <code>*this</code> but cannot modify it</li>
+</ul>
+<p>This is the most read-only version.</p>
+<p>It can be called on both non-const and const objects:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">X</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">ca</span><span class="p">;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="n">a</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">   </span><span class="c1">// OK</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="n">ca</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w">  </span><span class="c1">// OK</span>
+</code></pre></div></td></tr></table></div>
+<p>But the returned reference is const:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">X</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="n">X</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="c1">// X&amp; bad = a.f1(b);  // error: cannot bind X&amp; to const X</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="f2-const-return-writable-argument-const-function"><code>f2</code>: const return, writable argument, const function</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f2</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Meaning:</p>
+<ul>
+<li><code>const X&amp;</code> return: the caller receives a read-only reference</li>
+<li><code>X&amp; x</code>: the argument must be a non-const <code>X</code></li>
+<li>suffix <code>const</code>: the function cannot modify <code>*this</code></li>
+</ul>
+<p>The function itself is const, but the parameter is not const.</p>
+<p>So this is allowed:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">owner</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="n">X</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="n">owner</span><span class="p">.</span><span class="n">f2</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK: owner is const, value is writable</span>
+</code></pre></div></td></tr></table></div>
+<p>But this is not allowed:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">owner</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="c1">// owner.f2(value); // error: f2 needs X&amp;, not const X&amp;</span>
+</code></pre></div></td></tr></table></div>
+<p>Even though <code>f2</code> does not modify <code>x</code> in this code, its signature says it could.
+That is why a const argument cannot be passed.</p>
+<hr />
+<h2 id="f3-writable-return-writable-argument-const-function"><code>f3</code>: writable return, writable argument, const function</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f3</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Meaning:</p>
+<ul>
+<li><code>X&amp;</code> return: the caller receives a writable reference</li>
+<li><code>X&amp; x</code>: the argument must be a non-const <code>X</code></li>
+<li>suffix <code>const</code>: the function cannot modify <code>*this</code></li>
+</ul>
+<p>This function is const with respect to the current object, but it can still
+return another object as writable.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">owner</span><span class="p">;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="n">X</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">owner</span><span class="p">.</span><span class="n">f3</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">{};</span><span class="w">               </span><span class="c1">// OK: r refers to value, not owner</span>
+</code></pre></div></td></tr></table></div>
+<p>This works because <code>f3</code> returns <code>x</code>, not <code>*this</code>.</p>
+<p>This would not compile:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Bad</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">    </span><span class="n">Bad</span><span class="o">&amp;</span><span class="w"> </span><span class="n">f</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">        </span><span class="c1">// return *this; // error: *this is const inside a const member function</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>Inside a const member function, <code>*this</code> is treated as const. You cannot return it
+as a writable <code>X&amp;</code>.</p>
+<hr />
+<h2 id="f4-writable-return-writable-argument-non-const-function"><code>f4</code>: writable return, writable argument, non-const function</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f4</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Meaning:</p>
+<ul>
+<li><code>X&amp;</code> return: the caller receives a writable reference</li>
+<li><code>X&amp; x</code>: the argument must be a non-const <code>X</code></li>
+<li>no suffix <code>const</code>: the function may modify <code>*this</code></li>
+</ul>
+<p>Because <code>f4</code> is not a const member function, it cannot be called on a const
+object:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">X</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="n">X</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">ca</span><span class="p">;</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="n">a</span><span class="p">.</span><span class="n">f4</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">    </span><span class="c1">// OK</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="c1">// ca.f4(b); // error: f4 is not const</span>
+</code></pre></div></td></tr></table></div>
+<p>The returned reference is writable:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="n">X</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="n">X</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">f4</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK: r refers to a</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">{};</span><span class="w">        </span><span class="c1">// OK: modifies a</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="full-test-program">Full test program</h2>
+<p>Uncomment the error lines one by one to see what the compiler rejects.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span>
+<span class="normal"><a href="#__codelineno-15-18">18</a></span>
+<span class="normal"><a href="#__codelineno-15-19">19</a></span>
+<span class="normal"><a href="#__codelineno-15-20">20</a></span>
+<span class="normal"><a href="#__codelineno-15-21">21</a></span>
+<span class="normal"><a href="#__codelineno-15-22">22</a></span>
+<span class="normal"><a href="#__codelineno-15-23">23</a></span>
+<span class="normal"><a href="#__codelineno-15-24">24</a></span>
+<span class="normal"><a href="#__codelineno-15-25">25</a></span>
+<span class="normal"><a href="#__codelineno-15-26">26</a></span>
+<span class="normal"><a href="#__codelineno-15-27">27</a></span>
+<span class="normal"><a href="#__codelineno-15-28">28</a></span>
+<span class="normal"><a href="#__codelineno-15-29">29</a></span>
+<span class="normal"><a href="#__codelineno-15-30">30</a></span>
+<span class="normal"><a href="#__codelineno-15-31">31</a></span>
+<span class="normal"><a href="#__codelineno-15-32">32</a></span>
+<span class="normal"><a href="#__codelineno-15-33">33</a></span>
+<span class="normal"><a href="#__codelineno-15-34">34</a></span>
+<span class="normal"><a href="#__codelineno-15-35">35</a></span>
+<span class="normal"><a href="#__codelineno-15-36">36</a></span>
+<span class="normal"><a href="#__codelineno-15-37">37</a></span>
+<span class="normal"><a href="#__codelineno-15-38">38</a></span>
+<span class="normal"><a href="#__codelineno-15-39">39</a></span>
+<span class="normal"><a href="#__codelineno-15-40">40</a></span>
+<span class="normal"><a href="#__codelineno-15-41">41</a></span>
+<span class="normal"><a href="#__codelineno-15-42">42</a></span>
+<span class="normal"><a href="#__codelineno-15-43">43</a></span>
+<span class="normal"><a href="#__codelineno-15-44">44</a></span>
+<span class="normal"><a href="#__codelineno-15-45">45</a></span>
+<span class="normal"><a href="#__codelineno-15-46">46</a></span>
+<span class="normal"><a href="#__codelineno-15-47">47</a></span>
+<span class="normal"><a href="#__codelineno-15-48">48</a></span>
+<span class="normal"><a href="#__codelineno-15-49">49</a></span>
+<span class="normal"><a href="#__codelineno-15-50">50</a></span>
+<span class="normal"><a href="#__codelineno-15-51">51</a></span>
+<span class="normal"><a href="#__codelineno-15-52">52</a></span>
+<span class="normal"><a href="#__codelineno-15-53">53</a></span>
+<span class="normal"><a href="#__codelineno-15-54">54</a></span>
+<span class="normal"><a href="#__codelineno-15-55">55</a></span>
+<span class="normal"><a href="#__codelineno-15-56">56</a></span>
+<span class="normal"><a href="#__codelineno-15-57">57</a></span>
+<span class="normal"><a href="#__codelineno-15-58">58</a></span>
+<span class="normal"><a href="#__codelineno-15-59">59</a></span>
+<span class="normal"><a href="#__codelineno-15-60">60</a></span>
+<span class="normal"><a href="#__codelineno-15-61">61</a></span>
+<span class="normal"><a href="#__codelineno-15-62">62</a></span>
+<span class="normal"><a href="#__codelineno-15-63">63</a></span>
+<span class="normal"><a href="#__codelineno-15-64">64</a></span>
+<span class="normal"><a href="#__codelineno-15-65">65</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">X</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f1</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;f1 reads x.value = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f2</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="w">        </span><span class="n">x</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK: x is not const</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a><span class="w">    </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f3</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18"></a><span class="w">        </span><span class="n">x</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK: x is not const</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21"></a>
+<a id="__codelineno-15-22" name="__codelineno-15-22"></a><span class="w">    </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">f4</span><span class="p">(</span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23"></a><span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">40</span><span class="p">;</span><span class="w">   </span><span class="c1">// OK: this function is not const</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24"></a><span class="w">        </span><span class="n">x</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK: x is not const</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27"></a><span class="p">};</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28"></a>
+<a id="__codelineno-15-29" name="__codelineno-15-29"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30"></a><span class="p">{</span>
+<a id="__codelineno-15-31" name="__codelineno-15-31"></a><span class="w">    </span><span class="n">X</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<a id="__codelineno-15-32" name="__codelineno-15-32"></a><span class="w">    </span><span class="n">X</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<a id="__codelineno-15-33" name="__codelineno-15-33"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">ca</span><span class="p">;</span>
+<a id="__codelineno-15-34" name="__codelineno-15-34"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">cb</span><span class="p">;</span>
+<a id="__codelineno-15-35" name="__codelineno-15-35"></a>
+<a id="__codelineno-15-36" name="__codelineno-15-36"></a><span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">   </span><span class="c1">// OK</span>
+<a id="__codelineno-15-37" name="__codelineno-15-37"></a><span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">cb</span><span class="p">);</span><span class="w">  </span><span class="c1">// OK</span>
+<a id="__codelineno-15-38" name="__codelineno-15-38"></a><span class="w">    </span><span class="n">ca</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">  </span><span class="c1">// OK</span>
+<a id="__codelineno-15-39" name="__codelineno-15-39"></a><span class="w">    </span><span class="n">ca</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">cb</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK</span>
+<a id="__codelineno-15-40" name="__codelineno-15-40"></a>
+<a id="__codelineno-15-41" name="__codelineno-15-41"></a><span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">f2</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">   </span><span class="c1">// OK</span>
+<a id="__codelineno-15-42" name="__codelineno-15-42"></a><span class="w">    </span><span class="n">ca</span><span class="p">.</span><span class="n">f2</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">  </span><span class="c1">// OK</span>
+<a id="__codelineno-15-43" name="__codelineno-15-43"></a><span class="w">    </span><span class="c1">// a.f2(cb);  // error: f2 needs X&amp;, but cb is const</span>
+<a id="__codelineno-15-44" name="__codelineno-15-44"></a><span class="w">    </span><span class="c1">// ca.f2(cb); // error: f2 needs X&amp;, but cb is const</span>
+<a id="__codelineno-15-45" name="__codelineno-15-45"></a>
+<a id="__codelineno-15-46" name="__codelineno-15-46"></a><span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">f3</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">   </span><span class="c1">// OK</span>
+<a id="__codelineno-15-47" name="__codelineno-15-47"></a><span class="w">    </span><span class="n">ca</span><span class="p">.</span><span class="n">f3</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">  </span><span class="c1">// OK</span>
+<a id="__codelineno-15-48" name="__codelineno-15-48"></a><span class="w">    </span><span class="c1">// a.f3(cb);  // error: f3 needs X&amp;, but cb is const</span>
+<a id="__codelineno-15-49" name="__codelineno-15-49"></a>
+<a id="__codelineno-15-50" name="__codelineno-15-50"></a><span class="w">    </span><span class="n">a</span><span class="p">.</span><span class="n">f4</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w">   </span><span class="c1">// OK</span>
+<a id="__codelineno-15-51" name="__codelineno-15-51"></a><span class="w">    </span><span class="c1">// ca.f4(b); // error: f4 is not a const member function</span>
+<a id="__codelineno-15-52" name="__codelineno-15-52"></a>
+<a id="__codelineno-15-53" name="__codelineno-15-53"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">read_only</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">f1</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+<a id="__codelineno-15-54" name="__codelineno-15-54"></a><span class="w">    </span><span class="c1">// X&amp; writable1 = a.f1(b); // error: f1 returns const X&amp;</span>
+<a id="__codelineno-15-55" name="__codelineno-15-55"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;read_only.value = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">read_only</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<a id="__codelineno-15-56" name="__codelineno-15-56"></a>
+<a id="__codelineno-15-57" name="__codelineno-15-57"></a><span class="w">    </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">writable2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ca</span><span class="p">.</span><span class="n">f3</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK: returns b as writable</span>
+<a id="__codelineno-15-58" name="__codelineno-15-58"></a><span class="w">    </span><span class="n">writable2</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<a id="__codelineno-15-59" name="__codelineno-15-59"></a>
+<a id="__codelineno-15-60" name="__codelineno-15-60"></a><span class="w">    </span><span class="n">X</span><span class="o">&amp;</span><span class="w"> </span><span class="n">writable3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">f4</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// OK: returns a as writable</span>
+<a id="__codelineno-15-61" name="__codelineno-15-61"></a><span class="w">    </span><span class="n">writable3</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<a id="__codelineno-15-62" name="__codelineno-15-62"></a>
+<a id="__codelineno-15-63" name="__codelineno-15-63"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;a.value = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<a id="__codelineno-15-64" name="__codelineno-15-64"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;b.value = &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<a id="__codelineno-15-65" name="__codelineno-15-65"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Compile:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>g++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Wall<span class="w"> </span>-Wextra<span class="w"> </span>-pedantic<span class="w"> </span>const_functions.cpp<span class="w"> </span>-o<span class="w"> </span>const_functions
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>./const_functions
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="quick-table">Quick table</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th style="text-align: right;">Can be called on const object?</th>
+<th style="text-align: right;">Can receive const argument?</th>
+<th style="text-align: right;">Return is writable?</th>
+<th style="text-align: right;">Can modify <code>*this</code>?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>const X&amp; f1(const X&amp; x) const</code></td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">no</td>
+</tr>
+<tr>
+<td><code>const X&amp; f2(X&amp; x) const</code></td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">no</td>
+</tr>
+<tr>
+<td><code>X&amp; f3(X&amp; x) const</code></td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">no</td>
+</tr>
+<tr>
+<td><code>X&amp; f4(X&amp; x)</code></td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">yes</td>
+<td style="text-align: right;">yes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="other-const-roles-in-classes">Other <code>const</code> roles in classes</h2>
+<p><code>const</code> is also common in these class-related places.</p>
+<h3 id="const-data-members">Const data members</h3>
+<p>A data member can be const:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span>
+<span class="normal"><a href="#__codelineno-17-6">6</a></span>
+<span class="normal"><a href="#__codelineno-17-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">    </span><span class="n">User</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">id_</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">id_</span><span class="p">;</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>A const data member must be initialized in the constructor initializer list.
+After construction, it cannot be assigned a new value.</p>
+<h3 id="const-objects">Const objects</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>A const object can only call const member functions.</p>
+<h3 id="const-pointers">Const pointers</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">*</span><span class="w"> </span><span class="n">p1</span><span class="p">;</span><span class="w"> </span><span class="c1">// pointer to const X</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="n">X</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// const pointer to X</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="k">const</span><span class="w"> </span><span class="n">X</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">p3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"> </span><span class="c1">// const pointer to const X</span>
+</code></pre></div></td></tr></table></div>
+<p>Read pointer declarations from right to left:</p>
+<ul>
+<li><code>const X*</code>: the <code>X</code> is const</li>
+<li><code>X* const</code>: the pointer itself is const</li>
+<li><code>const X* const</code>: both are const</li>
+</ul>
+<h3 id="mutable-data-members">Mutable data members</h3>
+<p><code>mutable</code> is the exception to const member functions.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span>
+<span class="normal"><a href="#__codelineno-20-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Counter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="w">        </span><span class="o">++</span><span class="n">read_count_</span><span class="p">;</span><span class="w"> </span><span class="c1">// OK because read_count_ is mutable</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="w">    </span><span class="k">mutable</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">read_count_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>Use <code>mutable</code> carefully. It is usually for cache values, counters, or internal
+bookkeeping that does not change the logical value of the object.</p>
+<hr />
+<h2 id="rule-of-thumb">Rule of thumb</h2>
+<p>Use <code>const</code> to describe what the function promises:</p>
+<ul>
+<li>use <code>const T&amp;</code> for parameters that should only be read</li>
+<li>put <code>const</code> after a member function when it should not modify the object</li>
+<li>return <code>const T&amp;</code> when callers should not modify the returned object through
+  that reference</li>
+<li>return <code>T&amp;</code> only when callers are allowed to modify the returned object</li>
+</ul>
+<p>The suffix <code>const</code> protects the current object. Parameter <code>const</code> protects the
+argument. Return <code>const</code> protects the value returned to the caller.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../../assets/mermaid-viewer.js"></script>
+      
+    
+  </body>
+</html>
