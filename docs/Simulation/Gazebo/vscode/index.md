@@ -1,5 +1,5 @@
 ---
-title: Use gazebo harmonic with vscode devcontainer
+title: Use Gazebo Harmonic with VS Code devcontainer
 tags:
     - gazebo
     - gz
@@ -9,90 +9,165 @@ tags:
     - devcontainer
 ---
 
+## Use VS Code and Docker
+- Using Docker Compose
+- Using devcontainer to run Docker Compose
 
-
-
-
-## Use VSCode and docker
-- Using docker-compose
-- Using devcontainer to run the docker compose
-
-```
+```text
 ├── .devcontainer
 │   ├── Dockerfile
 │   └── devcontainer.json
 ├── docker-compose.yaml
+├── env.sh
 ├── .gitignore
 └── worlds
-        └── empty.world
-
+    └── minimal.world
 ```
+
+Download the complete project archive:
+
+[gz_harmonic_vscode.zip](code/gz_harmonic_vscode.zip)
+
+Extract it and open the folder in VS Code:
+
+```bash
+unzip gz_harmonic_vscode.zip
+cd gz_harmonic_vscode
+code .
+```
+
+
 
 <details>
 <summary>Dockerfile</summary>
+
+```dockerfile
+--8<-- "docs/Simulation/Gazebo/vscode/code/gz_harmonic_vscode/.devcontainer/Dockerfile"
 ```
---8<-- "docs/Simulation/Gazebo/vscode/code/Dockerfile"
-```
+
 </details>
 
+
+
 <details>
-<summary>docker-compose</summary>
+<summary>Docker Compose</summary>
+
 ```yaml title="docker-compose.yaml"
---8<-- "docs/Simulation/Gazebo/vscode/code/docker-compose.yaml"
+--8<-- "docs/Simulation/Gazebo/vscode/code/gz_harmonic_vscode/docker-compose.yaml"
 ```
+
 </details>
 
 !!! tip "nvidia glx"
     - __NV_PRIME_RENDER_OFFLOAD=1
     - __GLX_VENDOR_LIBRARY_NAME=nvidia
-    
+
 
 ```yaml title=".devcontainer/devcontainer.json"
---8<-- "docs/Simulation/Gazebo/vscode/code/devcontainer.json"
+--8<-- "docs/Simulation/Gazebo/vscode/code/gz_harmonic_vscode/.devcontainer/devcontainer.json"
 ```
 
 ---
 
 ## Run the simulation
 
+### Using Docker Compose
+
+```bash
+docker compose up --build -d
+```
+
+Then open a shell in the container:
+
+```bash
+docker compose exec gazebo bash
+```
+
+Run the world:
+
+```bash
+source env.sh
+gz sim -v 4 -r worlds/minimal.world
+```
+
+### Using Docker without Compose
+
+Build the image:
+
+```bash
+docker build \
+  -t gz-harmonic-vscode \
+  -f .devcontainer/Dockerfile \
+  .
+```
+
+Allow local Docker containers to connect to the X server:
+
+```bash
+xhost +local:docker
+```
+
+Run the container:
+
+```bash
+mkdir -p .gz
+
+docker run \
+  --rm \
+  -it \
+  --name gz-harmonic \
+  --network host \
+  --hostname gz \
+  --user user \
+  --workdir /workspace \
+  --gpus all \
+  -e DISPLAY="${DISPLAY}" \
+  -e QT_X11_NO_MITSHM=1 \
+  -e NVIDIA_VISIBLE_DEVICES=all \
+  -e NVIDIA_DRIVER_CAPABILITIES=all \
+  -e __NV_PRIME_RENDER_OFFLOAD=1 \
+  -e __GLX_VENDOR_LIBRARY_NAME=nvidia \
+  -e GZ_PARTITION=my_simulation \
+  -v "${PWD}:/workspace:rw" \
+  -v "${PWD}/.gz:/home/user/.gz:rw" \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  -v /dev/dri:/dev/dri \
+  --device /dev/nvidia0 \
+  --device /dev/nvidiactl \
+  --device /dev/nvidia-modeset \
+  gz-harmonic-vscode
+```
+
+Inside the container:
+
+```bash
+source env.sh
+gz sim -v 4 -r worlds/minimal.world
+```
+
 <details>
     <summary>minimal world</summary>
 
 ```xml
---8<-- "docs/Simulation/Gazebo/vscode/code/minimal.world"
+--8<-- "docs/Simulation/Gazebo/vscode/code/gz_harmonic_vscode/worlds/minimal.world"
 ```
-</details>
 
+</details>
 
 ### Environment helper file
 - Change prompt
 - Set Environment variables
 - Add keyboard shortcuts
 
-
 ```bash title="env.sh"
-
-export GZ_SIM_RESOURCE_PATH=$(pwd)/models:$(pwd)/worlds:$GZ_SIM_RESOURCE_PATH
-export GZ_SIM_SYSTEM_PLUGIN_PATH=$(pwd)/bin:$GZ_SIM_SYSTEM_PLUGIN_PATH
-echo '🤖 Environment ready!'
-# bash key bindings
-# replace bringup with full bringup name
-bind '"\C-b": "gz sim -v 4 -r mini.world"'
-
-# Function to get git branch
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
-}
-
-# Custom PS1 with turtle icon and git branch
-export PS1="🤖 \[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]\$ "
+--8<-- "docs/Simulation/Gazebo/vscode/code/gz_harmonic_vscode/env.sh"
 ```
 
 ### Usage
 
 ```bash
 # run the simulation
-gz sim -r v 4 gz_tutorial/worlds/mini.world 
+gz sim -v 4 -r worlds/minimal.world
 ```
 
 ![alt text](images/minimal_world.png)
