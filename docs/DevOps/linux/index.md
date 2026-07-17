@@ -28,44 +28,38 @@ tags:
         <p>Encryption</p>
         </a>
     </div>
-    <div class="grid-item">
-        <a href="Hardware">
-        <p>Hardware</p>
-        </a>
-    </div>
+
 </div>
 
 
 ## Terminal multiplexer
-### zellij
 
-#### Install
-Download binary (tar) extract and run
-[Download binary from github releases](https://github.com/zellij-org/zellij/releases)
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="terminal_multiplexer/linux_tmux_tmuxp">
+        <p>tmux/tmuxp</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="zellij">
+        <p>zellij</p>
+        </a>
+    </div>
+    <!-- <div class="grid-item">
+        <a href="encryption">
+        <p>Terminator</p>
+        </a>
+    </div> -->
+</div>
 
-#### Layout
 
-```
-layout {
-    pane split_direction="vertical" {
-        pane
-        pane
-    }
-    pane split_direction="vertical" {
-        pane
-        pane
-    }
-}
-```
-
-```bash
-zellij --layout /path/to/layout.kdl
-```
-
-### TMUX
-- [tmux / tmuxp config and usage](linux_tmux_tmuxp.md)
 
 ## Cheat sheet
 
-- [apt](linux_apt_cheat_sheet.md)
-- [ip](linux_ip_cheat_sheet.md)
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="networking/ip_command/cheat_sheet.md">
+        <p>ip command</p>
+        </a>
+    </div>
+</div>

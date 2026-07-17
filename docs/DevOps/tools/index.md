@@ -13,12 +13,12 @@ tags:
                 <p>Aptly</p>
                 </a>
             </div>
-    <!-- <div class="grid-item">
+    <div class="grid-item">
         <a href="ansible">
         <img src="images/ansible.png" width="150" height="150">
         <p>Ansible</p>
         </a>
-    </div> -->
+    </div>
     <!-- <div class="grid-item">
         <p>tbd</p>
     </div> -->
