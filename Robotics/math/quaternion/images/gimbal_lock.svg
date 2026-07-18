@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title id="title">Gimbal lock when pitch reaches 90 degrees</title>
+  <desc id="desc">A drawing that compares normal Euler rotation axes with gimbal lock where roll and yaw axes align.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #111827; }
+      .label { font-size: 18px; font-weight: 700; }
+      .small { font-size: 15px; }
+      .axis { stroke-width: 4; fill: none; stroke-linecap: round; }
+      .ring { fill: none; stroke-width: 8; opacity: .9; }
+      .body { fill: #e5e7eb; stroke: #374151; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect x="1" y="1" width="758" height="358" rx="10" fill="#ffffff" stroke="#d1d5db"/>
+
+  <text x="92" y="38" class="label">Normal Euler axes</text>
+  <text x="472" y="38" class="label">Gimbal lock</text>
+
+  <g transform="translate(190 190)">
+    <circle r="42" class="body"/>
+    <line x1="-95" y1="0" x2="105" y2="0" class="axis" stroke="#dc2626" marker-end="url(#arrow-red)"/>
+    <line x1="0" y1="95" x2="0" y2="-105" class="axis" stroke="#16a34a" marker-end="url(#arrow-green)"/>
+    <line x1="-70" y1="70" x2="80" y2="-80" class="axis" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+    <ellipse rx="88" ry="28" class="ring" stroke="#dc2626"/>
+    <ellipse rx="28" ry="88" class="ring" stroke="#16a34a"/>
+    <ellipse rx="82" ry="26" class="ring" stroke="#2563eb" transform="rotate(-45)"/>
+    <text x="112" y="6" class="small">Roll</text>
+    <text x="10" y="-112" class="small">Pitch</text>
+    <text x="88" y="-86" class="small">Yaw</text>
+  </g>
+
+  <g transform="translate(570 190)">
+    <circle r="42" class="body"/>
+    <line x1="-95" y1="0" x2="105" y2="0" class="axis" stroke="#dc2626" marker-end="url(#arrow-red)"/>
+    <line x1="-95" y1="0" x2="105" y2="0" class="axis" stroke="#2563eb" marker-end="url(#arrow-blue)" opacity=".55"/>
+    <line x1="0" y1="95" x2="0" y2="-105" class="axis" stroke="#16a34a" marker-end="url(#arrow-green)"/>
+    <ellipse rx="88" ry="28" class="ring" stroke="#dc2626"/>
+    <ellipse rx="88" ry="28" class="ring" stroke="#2563eb" opacity=".55"/>
+    <ellipse rx="28" ry="88" class="ring" stroke="#16a34a"/>
+    <text x="-84" y="-118" class="small">Pitch = 90 deg</text>
+    <text x="112" y="-8" class="small">Roll</text>
+    <text x="112" y="18" class="small">Yaw aligned</text>
+  </g>
+
+  <text x="110" y="326" class="small">Three independent rotation directions</text>
+  <text x="438" y="326" class="small">Roll and yaw overlap, so one direction is lost</text>
+</svg>

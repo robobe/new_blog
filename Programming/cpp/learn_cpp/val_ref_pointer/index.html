@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Simulation/vsg/">
+        <link rel="canonical" href="https://robobe.github.io/Programming/cpp/learn_cpp/val_ref_pointer/">
       
       
       
@@ -20,19 +20,19 @@
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>VulkanSceneGraph - Nodes and Pipes</title>
+        <title>by_val by_ref and pointer - Nodes and Pipes</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,11 +51,13 @@
       
     
     
-      <link rel="stylesheet" href="../../extra.css">
+      <link rel="stylesheet" href="../../../../extra.css">
     
-      <link rel="stylesheet" href="../../assets/mermaid-viewer.css">
+      <link rel="stylesheet" href="../../../../assets/mermaid-viewer.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+      <link rel="stylesheet" href="../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#install" class="md-skip">
+        <a href="#by_val" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +94,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              VulkanSceneGraph
+              by_val by_ref and pointer
             
           </span>
         </div>
@@ -204,7 +206,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
   
@@ -223,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../ROS/" class="md-tabs__link">
+      <a href="../../../../ROS/" class="md-tabs__link">
         
   
   
@@ -242,7 +244,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../" class="md-tabs__link">
+      <a href="../../../../Simulation/" class="md-tabs__link">
         
   
   
@@ -261,7 +263,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../Robotics/" class="md-tabs__link">
+      <a href="../../../../Robotics/" class="md-tabs__link">
         
   
   
@@ -280,7 +282,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../Programming/" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         
   
   
@@ -299,7 +301,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../Embedded/" class="md-tabs__link">
+      <a href="../../../../Embedded/" class="md-tabs__link">
         
   
   
@@ -318,7 +320,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../DevOps/" class="md-tabs__link">
+      <a href="../../../../DevOps/" class="md-tabs__link">
         
   
   
@@ -337,7 +339,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../Other/" class="md-tabs__link">
+      <a href="../../../../Other/" class="md-tabs__link">
         
   
   
@@ -356,7 +358,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../projects/" class="md-tabs__link">
+      <a href="../../../../projects/" class="md-tabs__link">
         
   
   
@@ -391,7 +393,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -421,7 +423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -448,7 +450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ROS/" class="md-nav__link">
+      <a href="../../../../ROS/" class="md-nav__link">
         
   
   
@@ -475,7 +477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../../../Simulation/" class="md-nav__link">
         
   
   
@@ -502,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Robotics/" class="md-nav__link">
+      <a href="../../../../Robotics/" class="md-nav__link">
         
   
   
@@ -529,7 +531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Programming/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   
@@ -556,7 +558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Embedded/" class="md-nav__link">
+      <a href="../../../../Embedded/" class="md-nav__link">
         
   
   
@@ -583,7 +585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../DevOps/" class="md-nav__link">
+      <a href="../../../../DevOps/" class="md-nav__link">
         
   
   
@@ -610,7 +612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Other/" class="md-nav__link">
+      <a href="../../../../Other/" class="md-nav__link">
         
   
   
@@ -637,7 +639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../projects/" class="md-nav__link">
+      <a href="../../../../projects/" class="md-nav__link">
         
   
   
@@ -682,38 +684,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#by_val" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#glslang" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        glslang
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#-install-version-150-vsg-complain-on-version-160" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        - Install version 15.0 (vsg complain on version 16.0)
+        by_val
       
     </span>
   </a>
@@ -741,14 +715,28 @@
       
       
       
-        <span class="md-tag">vsg</span>
+        <span class="md-tag">by_ref</span>
       
     
       
       
       
       
-        <span class="md-tag">vulkan</span>
+        <span class="md-tag">by_val</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">cpp</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">pointers</span>
       
     
   </nav>
@@ -758,43 +746,33 @@
   
 
 
-  <h1>VulkanSceneGraph</h1>
+  <h1>by_val by_ref and pointer</h1>
 
-<p><a href="/Simulation/">Simulation</a></p>
-<h2 id="install">Install</h2>
-<ul>
-<li>Install on ubuntu 22.04</li>
-<li>Install with glslang optional (ver 14.0.0)</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">glslang-dev glslang-tools</p>
-<p>Only if ubuntu 24.04 
-for ubuntu 22.04 install from source</p>
+<h2 id="by_val">by_val</h2>
+<p>Copy the value from the caller to callee</p>
+<details>
+<summary>Run section</summary>
+
+
+<div class="cpp-runner" style="--cpp-editor-height: 170px;">
+
+<textarea class="cpp-editor" spellcheck="false">
+#include <iostream>
+
+int main()
+{
+    std::cout << "Hello from Wandbox!\n";
+}
+</textarea>
+
+<button class="cpp-run-button">
+Run
+</button>
+
+<pre class="cpp-output" hidden></pre>
+
 </div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
-<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo apt-get install cmake-curses-gui g++ git libvulkan-dev \
-<a id="__codelineno-0-2" name="__codelineno-0-2"></a>glslang-dev glslang-tools
-</code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span>
-<span class="normal"><a href="#__codelineno-1-3">3</a></span>
-<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3"></a>sudo<span class="w"> </span>cmake<span class="w"> </span>--install<span class="w"> </span>build
-<a id="__codelineno-1-4" name="__codelineno-1-4"></a>sudo<span class="w"> </span>ldconfig
-</code></pre></div></td></tr></table></div>
-<h3 id="glslang">glslang</h3>
-<h2 id="-install-version-150-vsg-complain-on-version-160">- Install version 15.0 (vsg complain on version 16.0)</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span>
-<span class="normal"><a href="#__codelineno-2-4">4</a></span>
-<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>tags/15.0.0
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DENABLE_OPT<span class="o">=</span>off
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"> </span>-j<span class="k">$(</span>nproc<span class="k">)</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4"></a>sudo<span class="w"> </span>cmake<span class="w"> </span>--install<span class="w"> </span>build
-<a id="__codelineno-2-5" name="__codelineno-2-5"></a>sudo<span class="w"> </span>ldconfig
-</code></pre></div></td></tr></table></div>
+</details>
 
 
 
@@ -866,14 +844,14 @@ for ubuntu 22.04 install from source</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
         <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
       
-        <script src="../../assets/mathjax.js"></script>
+        <script src="../../../../assets/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
@@ -881,7 +859,9 @@ for ubuntu 22.04 install from source</p>
       
         <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
       
-        <script src="../../assets/mermaid-viewer.js"></script>
+        <script src="../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../assets/cpp-runner.js"></script>
       
     
   </body>
