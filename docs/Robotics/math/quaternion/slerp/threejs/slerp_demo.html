@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLERP Three.js Demo</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #111827;
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    #scene {
+      width: 100%;
+      height: 100%;
+    }
+
+    .panel {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: min(390px, calc(100% - 24px));
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(17, 24, 39, 0.9);
+      box-sizing: border-box;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .panel strong {
+      color: #93c5fd;
+      font-size: 14px;
+    }
+
+    .control {
+      display: grid;
+      grid-template-columns: 24px 1fr 48px;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #22c55e;
+    }
+
+    .value {
+      color: #f8fafc;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: 12px 1fr;
+      gap: 6px 8px;
+      margin-top: 12px;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      margin-top: 2px;
+    }
+
+    .start { background: #60a5fa; opacity: 0.65; }
+    .end { background: #f59e0b; opacity: 0.65; }
+    .current { background: #22c55e; }
+    .path { background: #e5e7eb; }
+
+    .readout {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      color: #cbd5e1;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 6px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 6px;
+      background: #1f2937;
+      color: #f8fafc;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #374151;
+    }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+  <div class="panel">
+    <strong>SLERP: smooth orientation interpolation</strong><br>
+    Move from start quaternion <code>q0</code> to end quaternion <code>q1</code>.
+    The green body shows <code>q(t)</code>.
+
+    <label class="control">
+      <span>t</span>
+      <input id="tSlider" type="range" min="0" max="1" step="0.01" value="0.35">
+      <span id="tValue" class="value">0.35</span>
+    </label>
+
+    <div class="legend">
+      <span class="swatch start"></span><span>Start orientation q0</span>
+      <span class="swatch end"></span><span>End orientation q1</span>
+      <span class="swatch current"></span><span>Interpolated orientation q(t)</span>
+      <span class="swatch path"></span><span>Forward direction path</span>
+    </div>
+
+    <div id="readout" class="readout"></div>
+    <button id="play" type="button">Play</button>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+    const container = document.getElementById("scene");
+    const tSlider = document.getElementById("tSlider");
+    const tValue = document.getElementById("tValue");
+    const readout = document.getElementById("readout");
+    const playButton = document.getElementById("play");
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x111827);
+
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(5.2, 3.8, 5.8);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.target.set(0, 0.55, 0);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+
+    const light = new THREE.DirectionalLight(0xffffff, 1.25);
+    light.position.set(5, 7, 6);
+    scene.add(light);
+
+    const grid = new THREE.GridHelper(7, 14, 0x4b5563, 0x374151);
+    scene.add(grid);
+
+    const axes = new THREE.AxesHelper(2.2);
+    scene.add(axes);
+
+    const q0 = new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(0, 0, 0, "XYZ")
+    );
+    const q1 = new THREE.Quaternion().setFromEuler(
+      new THREE.Euler(
+        THREE.MathUtils.degToRad(75),
+        THREE.MathUtils.degToRad(-35),
+        THREE.MathUtils.degToRad(115),
+        "XYZ"
+      )
+    );
+
+    function makeBody(options) {
+      const group = new THREE.Group();
+      const opacity = options.opacity;
+
+      const forward = new THREE.ArrowHelper(
+        new THREE.Vector3(1, 0, 0),
+        new THREE.Vector3(0, 0, 0),
+        options.length,
+        options.forwardColor,
+        0.2,
+        0.12
+      );
+      group.add(forward);
+
+      const wingMaterial = new THREE.MeshStandardMaterial({
+        color: options.sideColor,
+        transparent: opacity < 1,
+        opacity
+      });
+      const wing = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.65, 0.08), wingMaterial);
+      group.add(wing);
+
+      const up = new THREE.ArrowHelper(
+        new THREE.Vector3(0, 0, 1),
+        new THREE.Vector3(0, 0, 0),
+        options.length * 0.62,
+        options.upColor,
+        0.16,
+        0.1
+      );
+      group.add(up);
+
+      const noseMaterial = new THREE.MeshStandardMaterial({
+        color: options.forwardColor,
+        transparent: opacity < 1,
+        opacity
+      });
+      const nose = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.38, 28), noseMaterial);
+      nose.position.x = options.length + 0.18;
+      nose.rotation.z = -Math.PI / 2;
+      group.add(nose);
+
+      group.traverse((child) => {
+        if (child.material) {
+          child.material.transparent = opacity < 1;
+          child.material.opacity = opacity;
+        }
+      });
+
+      return group;
+    }
+
+    const startBody = makeBody({
+      length: 1.65,
+      opacity: 0.42,
+      forwardColor: 0x60a5fa,
+      sideColor: 0x60a5fa,
+      upColor: 0x93c5fd
+    });
+    startBody.quaternion.copy(q0);
+    scene.add(startBody);
+
+    const endBody = makeBody({
+      length: 1.65,
+      opacity: 0.42,
+      forwardColor: 0xf59e0b,
+      sideColor: 0xf59e0b,
+      upColor: 0xfbbf24
+    });
+    endBody.quaternion.copy(q1);
+    scene.add(endBody);
+
+    const currentBody = makeBody({
+      length: 2.05,
+      opacity: 1,
+      forwardColor: 0x22c55e,
+      sideColor: 0xf59e0b,
+      upColor: 0x86efac
+    });
+    scene.add(currentBody);
+
+    const pathPoints = [];
+    for (let i = 0; i <= 32; i += 1) {
+      const t = i / 32;
+      const q = q0.clone().slerp(q1, t);
+      const point = new THREE.Vector3(1, 0, 0).applyQuaternion(q).multiplyScalar(2.35);
+      pathPoints.push(point);
+    }
+
+    const pathGeometry = new THREE.BufferGeometry().setFromPoints(pathPoints);
+    const pathMaterial = new THREE.LineDashedMaterial({
+      color: 0xe5e7eb,
+      dashSize: 0.07,
+      gapSize: 0.06,
+      transparent: true,
+      opacity: 0.75
+    });
+    const pathLine = new THREE.Line(pathGeometry, pathMaterial);
+    pathLine.computeLineDistances();
+    scene.add(pathLine);
+
+    const pathDots = pathPoints.map((point) => {
+      const dot = new THREE.Mesh(
+        new THREE.SphereGeometry(0.035, 16, 8),
+        new THREE.MeshBasicMaterial({ color: 0xe5e7eb })
+      );
+      dot.position.copy(point);
+      scene.add(dot);
+      return dot;
+    });
+
+    const currentTip = new THREE.Mesh(
+      new THREE.SphereGeometry(0.08, 24, 12),
+      new THREE.MeshStandardMaterial({ color: 0x22c55e })
+    );
+    scene.add(currentTip);
+
+    let playing = false;
+    let playDirection = 1;
+
+    function format(value) {
+      return value.toFixed(3);
+    }
+
+    function formatQuaternion(q) {
+      return `(${format(q.w)}, ${format(q.x)}, ${format(q.y)}, ${format(q.z)})`;
+    }
+
+    function updateSlerp() {
+      const t = Number(tSlider.value);
+      const current = q0.clone().slerp(q1, t);
+      currentBody.quaternion.copy(current);
+
+      const forward = new THREE.Vector3(1, 0, 0).applyQuaternion(current).normalize();
+      currentTip.position.copy(forward.multiplyScalar(2.35));
+
+      pathDots.forEach((dot, index) => {
+        dot.material.color.set(index / (pathDots.length - 1) <= t ? 0x22c55e : 0xe5e7eb);
+      });
+
+      tValue.textContent = t.toFixed(2);
+      readout.innerHTML = [
+        `q0 = ${formatQuaternion(q0)}`,
+        `q1 = ${formatQuaternion(q1)}`,
+        `q(t) = ${formatQuaternion(current)}`
+      ].join("<br>");
+    }
+
+    tSlider.addEventListener("input", () => {
+      playing = false;
+      playButton.textContent = "Play";
+      updateSlerp();
+    });
+
+    playButton.addEventListener("click", () => {
+      playing = !playing;
+      playButton.textContent = playing ? "Pause" : "Play";
+    });
+
+    function resize() {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    updateSlerp();
+
+    function animate() {
+      if (playing) {
+        let t = Number(tSlider.value) + playDirection * 0.006;
+        if (t >= 1) {
+          t = 1;
+          playDirection = -1;
+        } else if (t <= 0) {
+          t = 0;
+          playDirection = 1;
+        }
+        tSlider.value = t.toFixed(2);
+        updateSlerp();
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>

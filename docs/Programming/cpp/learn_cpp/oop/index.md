@@ -22,7 +22,7 @@ tags:
 - Virtual functions
 - Constructor chaining (Base(args))
 
-## Polymorphism
+## [Polymorphism](polymorphism)
 - Function overriding
 - Virtual destructors
 - Pure virtual functions (= 0)

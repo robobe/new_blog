@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roll Pitch Yaw Quaternion Demo</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #111827;
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    #scene {
+      width: 100%;
+      height: 100%;
+    }
+
+    .panel {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: min(360px, calc(100% - 24px));
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(17, 24, 39, 0.88);
+      box-sizing: border-box;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .panel strong {
+      color: #93c5fd;
+      font-size: 14px;
+    }
+
+    .control {
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #60a5fa;
+    }
+
+    .value {
+      color: #f8fafc;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: 12px 1fr;
+      gap: 6px 8px;
+      margin-top: 12px;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      margin-top: 2px;
+    }
+
+    .blue { background: #60a5fa; }
+    .orange { background: #f59e0b; }
+    .green { background: #22c55e; }
+
+    .readout {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      color: #cbd5e1;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 6px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 6px;
+      background: #1f2937;
+      color: #f8fafc;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #374151;
+    }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+  <div class="panel">
+    <strong>Full 3D Rotation</strong><br>
+    Yaw and pitch aim the blue direction vector. Roll spins the orange wing and
+    green up marker around that same direction.
+
+    <label class="control">
+      <span>Roll</span>
+      <input id="roll" type="range" min="-180" max="180" value="0">
+      <span id="rollValue" class="value">0 deg</span>
+    </label>
+
+    <label class="control">
+      <span>Pitch</span>
+      <input id="pitch" type="range" min="-90" max="90" value="25">
+      <span id="pitchValue" class="value">25 deg</span>
+    </label>
+
+    <label class="control">
+      <span>Yaw</span>
+      <input id="yaw" type="range" min="-180" max="180" value="35">
+      <span id="yawValue" class="value">35 deg</span>
+    </label>
+
+    <div class="legend">
+      <span class="swatch blue"></span><span>Forward direction vector</span>
+      <span class="swatch orange"></span><span>Wing/side marker shows roll</span>
+      <span class="swatch green"></span><span>Up marker shows body orientation</span>
+    </div>
+
+    <div id="readout" class="readout"></div>
+    <button id="reset" type="button">Reset</button>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+    const container = document.getElementById("scene");
+    const rollSlider = document.getElementById("roll");
+    const pitchSlider = document.getElementById("pitch");
+    const yawSlider = document.getElementById("yaw");
+    const rollValue = document.getElementById("rollValue");
+    const pitchValue = document.getElementById("pitchValue");
+    const yawValue = document.getElementById("yawValue");
+    const readout = document.getElementById("readout");
+    const resetButton = document.getElementById("reset");
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x111827);
+
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(4.8, 3.6, 5.4);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.target.set(0, 0.45, 0);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+
+    const light = new THREE.DirectionalLight(0xffffff, 1.25);
+    light.position.set(5, 7, 6);
+    scene.add(light);
+
+    const grid = new THREE.GridHelper(7, 14, 0x4b5563, 0x374151);
+    scene.add(grid);
+
+    const axes = new THREE.AxesHelper(2.4);
+    scene.add(axes);
+
+    const worldZ = new THREE.ArrowHelper(
+      new THREE.Vector3(0, 0, 1),
+      new THREE.Vector3(0, 0, 0),
+      2.2,
+      0x2563eb,
+      0.16,
+      0.09
+    );
+    scene.add(worldZ);
+
+    const body = new THREE.Group();
+    scene.add(body);
+
+    const origin = new THREE.Vector3(0, 0, 0);
+    const forwardArrow = new THREE.ArrowHelper(
+      new THREE.Vector3(1, 0, 0),
+      origin,
+      2.1,
+      0x60a5fa,
+      0.22,
+      0.14
+    );
+    body.add(forwardArrow);
+
+    const wingGeometry = new THREE.BoxGeometry(0.08, 2.2, 0.08);
+    const wingMaterial = new THREE.MeshStandardMaterial({ color: 0xf59e0b });
+    const wing = new THREE.Mesh(wingGeometry, wingMaterial);
+    body.add(wing);
+
+    const upArrow = new THREE.ArrowHelper(
+      new THREE.Vector3(0, 0, 1),
+      origin,
+      1.25,
+      0x22c55e,
+      0.18,
+      0.11
+    );
+    body.add(upArrow);
+
+    const noseGeometry = new THREE.ConeGeometry(0.18, 0.45, 28);
+    const noseMaterial = new THREE.MeshStandardMaterial({
+      color: 0x93c5fd,
+      transparent: true,
+      opacity: 0.82
+    });
+    const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+    nose.position.x = 2.28;
+    nose.rotation.z = -Math.PI / 2;
+    body.add(nose);
+
+    const rollRingGeometry = new THREE.TorusGeometry(0.78, 0.012, 8, 96);
+    const rollRingMaterial = new THREE.MeshBasicMaterial({ color: 0xf59e0b });
+    const rollRing = new THREE.Mesh(rollRingGeometry, rollRingMaterial);
+    rollRing.rotation.y = Math.PI / 2;
+    body.add(rollRing);
+
+    const directionOnly = new THREE.ArrowHelper(
+      new THREE.Vector3(1, 0, 0),
+      origin,
+      2.1,
+      0x94a3b8,
+      0.15,
+      0.08
+    );
+    directionOnly.line.material.transparent = true;
+    directionOnly.line.material.opacity = 0.35;
+    directionOnly.cone.material.transparent = true;
+    directionOnly.cone.material.opacity = 0.35;
+    scene.add(directionOnly);
+
+    function degreesToRadians(value) {
+      return Number(value) * Math.PI / 180;
+    }
+
+    function format(value) {
+      return value.toFixed(3);
+    }
+
+    function updateRotation() {
+      const roll = degreesToRadians(rollSlider.value);
+      const pitch = degreesToRadians(pitchSlider.value);
+      const yaw = degreesToRadians(yawSlider.value);
+
+      const euler = new THREE.Euler(roll, pitch, yaw, "XYZ");
+      const quaternion = new THREE.Quaternion().setFromEuler(euler);
+      body.quaternion.copy(quaternion);
+
+      const directionQuaternion = new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(0, pitch, yaw, "XYZ")
+      );
+      directionOnly.setDirection(
+        new THREE.Vector3(1, 0, 0).applyQuaternion(directionQuaternion).normalize()
+      );
+
+      const forward = new THREE.Vector3(1, 0, 0).applyQuaternion(quaternion).normalize();
+      const up = new THREE.Vector3(0, 0, 1).applyQuaternion(quaternion).normalize();
+
+      rollValue.textContent = `${rollSlider.value} deg`;
+      pitchValue.textContent = `${pitchSlider.value} deg`;
+      yawValue.textContent = `${yawSlider.value} deg`;
+      readout.innerHTML = [
+        `q = (${format(quaternion.w)}, ${format(quaternion.x)}, ${format(quaternion.y)}, ${format(quaternion.z)})`,
+        `forward = (${format(forward.x)}, ${format(forward.y)}, ${format(forward.z)})`,
+        `up = (${format(up.x)}, ${format(up.y)}, ${format(up.z)})`
+      ].join("<br>");
+    }
+
+    [rollSlider, pitchSlider, yawSlider].forEach((slider) => {
+      slider.addEventListener("input", updateRotation);
+    });
+
+    resetButton.addEventListener("click", () => {
+      rollSlider.value = 0;
+      pitchSlider.value = 25;
+      yawSlider.value = 35;
+      updateRotation();
+    });
+
+    function resize() {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    updateRotation();
+
+    function animate() {
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>

@@ -5,9 +5,16 @@ tags:
     - learn
 ---
 
+## basic
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="val_ref_pointer">
+        <p>by_val, by_ref and pointers</p>
+        </a>
+    </div>
+</div>
 
-{{ page_folder_links() }}
-
+## more
 <div class="grid-container">
     <div class="grid-item">
         <a href="oop">

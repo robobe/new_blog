@@ -7,7 +7,7 @@ tags:
 # Math
 
 <div class="grid-container">
-    <div class="grid-item">
+    <!-- <div class="grid-item">
         <a href="linear_algebra">
                 <img src="images/linear_algebra.png"  width="150" height="150">
                 <p>linear algebra</p></a>
@@ -17,7 +17,7 @@ tags:
                 <img src="images/coordinate_system.png"  width="150" height="150">
                 <p>Coordinate systems</p>
             </a>
-    </div>
+    </div> -->
     <div class="grid-item">
         <a href="quaternion">
         <img src="images/quaternion.png"  width="150" height="150">

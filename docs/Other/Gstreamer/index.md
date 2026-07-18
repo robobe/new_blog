@@ -8,6 +8,10 @@ encode it, display it, save it, or send it over the network.
 A pipeline moves buffers from a source element to one or more processing
 elements and finally to a sink element.
 
+```html title="control one mermaid canvas"
+<div data-mermaid-height="60px"></div>
+```
+
 ```mermaid
 flowchart LR
     A["Source<br/>camera, file, network"] --> B["Element<br/>decoder"]
