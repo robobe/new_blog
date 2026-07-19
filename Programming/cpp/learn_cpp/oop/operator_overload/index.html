@@ -1,0 +1,1946 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Programming/cpp/learn_cpp/oop/operator_overload/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Cpp operator overload - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#c-operator-overload" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cpp operator overload
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#member-operator-overload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Member operator overload
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assignment-operator-must-be-a-member" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assignment operator must be a member
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-member-operator-overload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-member operator overload
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-member-operator-for-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-member operator for output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-member-operator-for-equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-member operator for equality
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#member-vs-non-member" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Member vs non-member
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implicit-conversion-and-non-member-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implicit conversion and non-member operators
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implicit conversion and non-member operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#member-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Member operator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-member-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-member operator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversion-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversion operator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conversion operator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#convert-to-another-class-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convert to another class type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-conversion-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit conversion operator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#const-correctness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Const correctness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#friend-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Friend functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-conversion-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: conversion operation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">cpp</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">oop</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">operator-overload</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="c-operator-overload">C++ operator overload</h1>
+<p>Operator overloading lets a class define how normal C++ operators work with
+objects of that class.</p>
+<p>For example, if <code>Number</code> is a class, C++ does not automatically know what this
+means:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>By writing <code>operator+</code>, we teach the class how <code>+</code> should behave.</p>
+<hr />
+<h2 id="full-example">Full example</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span>
+<span class="normal"><a href="#__codelineno-1-54">54</a></span>
+<span class="normal"><a href="#__codelineno-1-55">55</a></span>
+<span class="normal"><a href="#__codelineno-1-56">56</a></span>
+<span class="normal"><a href="#__codelineno-1-57">57</a></span>
+<span class="normal"><a href="#__codelineno-1-58">58</a></span>
+<span class="normal"><a href="#__codelineno-1-59">59</a></span>
+<span class="normal"><a href="#__codelineno-1-60">60</a></span>
+<span class="normal"><a href="#__codelineno-1-61">61</a></span>
+<span class="normal"><a href="#__codelineno-1-62">62</a></span>
+<span class="normal"><a href="#__codelineno-1-63">63</a></span>
+<span class="normal"><a href="#__codelineno-1-64">64</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">        </span><span class="n">value_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">value_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="p">};</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">number</span><span class="p">)</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="p">{</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">number</span><span class="p">.</span><span class="n">get_value</span><span class="p">();</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="p">}</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="p">{</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">get_value</span><span class="p">());</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="p">}</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="p">{</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">left</span><span class="p">.</span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">get_value</span><span class="p">();</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="p">}</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a><span class="p">{</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="nf">b</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49"></a>
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="w">    </span><span class="c1">// Calls a.operator+(b).</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a>
+<a id="__codelineno-1-53" name="__codelineno-1-53"></a><span class="w">    </span><span class="c1">// Calls operator-(b, a).</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="n">difference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55"></a>
+<a id="__codelineno-1-56" name="__codelineno-1-56"></a><span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span><span class="w"> </span><span class="c1">// Calls our copy assignment operator.</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57"></a>
+<a id="__codelineno-1-58" name="__codelineno-1-58"></a><span class="w">    </span><span class="c1">// Calls our operator&lt;&lt; function for each Number.</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Sum: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Difference: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">difference</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Are they equal? &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">sum</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">difference</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;Yes&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;No&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-1-62" name="__codelineno-1-62"></a>
+<a id="__codelineno-1-63" name="__codelineno-1-63"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-64" name="__codelineno-1-64"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>Sum: 30
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Difference: 10
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>Are they equal? No
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="member-operator-overload">Member operator overload</h2>
+<p>A member operator is written inside the class.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">value_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>This means:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>is translated by the compiler into:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>So with a member operator:</p>
+<ul>
+<li>the left side is the current object, <code>*this</code></li>
+<li>the right side is passed as a function argument</li>
+<li>the function can access private members of the class</li>
+</ul>
+<p>Inside <code>operator+</code>, the object on the left side is <code>a</code>, and the object on the
+right side is <code>b</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">value_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>This is the same idea as:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">value_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>but inside the member function, <code>a.value_</code> is written as just <code>value_</code>.</p>
+<hr />
+<h2 id="assignment-operator-must-be-a-member">Assignment operator must be a member</h2>
+<p>Some operators must be overloaded as member functions.</p>
+<p>The assignment operator is one of them:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="p">{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="n">value_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>This code:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>calls:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">a</span><span class="p">.</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">sum</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>The function returns <code>Number&amp;</code> so chained assignment can work:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>The expression <code>b = Number(30)</code> returns <code>b</code>, then <code>a = b</code> can run.</p>
+<p>Important operators that must be members include:</p>
+<ul>
+<li><code>operator=</code></li>
+<li><code>operator[]</code></li>
+<li><code>operator()</code></li>
+<li><code>operator-&gt;</code></li>
+</ul>
+<p>Use a member function for these operators because C++ requires it.</p>
+<hr />
+<h2 id="non-member-operator-overload">Non-member operator overload</h2>
+<p>A non-member operator is written outside the class.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">get_value</span><span class="p">());</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>This means:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">difference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>is translated by the compiler into:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">difference</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>With a non-member operator:</p>
+<ul>
+<li>both sides are normal function arguments</li>
+<li>there is no <code>this</code></li>
+<li>the function cannot access private members unless it is a <code>friend</code></li>
+<li>it usually uses public functions like <code>get_value()</code></li>
+</ul>
+<p>In this example, <code>operator-</code> is outside the class, so it cannot directly use
+<code>value_</code>.</p>
+<p>This would not compile:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="p">{</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">value_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span><span class="w"> </span><span class="c1">// error: value_ is private</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>So the function uses the public getter:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">get_value</span><span class="p">());</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="non-member-operator-for-output">Non-member operator for output</h2>
+<p>The stream operator <code>&lt;&lt;</code> is normally written as a non-member.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">number</span><span class="p">)</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="p">{</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">number</span><span class="p">.</span><span class="n">get_value</span><span class="p">();</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>This code:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>calls:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>It should not be a member of <code>Number</code>, because the left side is not a <code>Number</code>.
+The left side is <code>std::cout</code>, which is a <code>std::ostream</code>.</p>
+<p>If <code>operator&lt;&lt;</code> were a member of <code>Number</code>, the syntax would need to look like
+this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="n">sum</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">;</span><span class="w"> </span><span class="c1">// wrong direction for normal printing</span>
+</code></pre></div></td></tr></table></div>
+<p>So <code>operator&lt;&lt;</code> is almost always a non-member operator.</p>
+<p>It returns <code>std::ostream&amp;</code> so printing can be chained:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Sum: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>First this runs:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Sum: &quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Then the same stream is returned, so this can run next:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sum</span>
+</code></pre></div></td></tr></table></div>
+<p>Then the stream is returned again, so this can run:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="non-member-operator-for-equality">Non-member operator for equality</h2>
+<p>The equality operator is also often written as a non-member.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="p">{</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">left</span><span class="p">.</span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">get_value</span><span class="p">();</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>This code:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="n">sum</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">difference</span>
+</code></pre></div></td></tr></table></div>
+<p>calls:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span><span class="w"> </span><span class="n">difference</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>For comparison operators, non-member functions are often preferred because the
+left and right sides are treated equally.</p>
+<hr />
+<h2 id="member-vs-non-member">Member vs non-member</h2>
+<p>Use a member operator when:</p>
+<ul>
+<li>C++ requires the operator to be a member, like <code>=</code>, <code>[]</code>, <code>()</code>, or <code>-&gt;</code></li>
+<li>the operator naturally modifies the left object, like <code>+=</code></li>
+<li>the operation is strongly tied to the class internals</li>
+</ul>
+<p>Use a non-member operator when:</p>
+<ul>
+<li>the left side is not your class, like <code>std::cout &lt;&lt; number</code></li>
+<li>both sides should be treated equally, like <code>a == b</code></li>
+<li>you want conversions to work on the left side too</li>
+<li>the operator can be implemented using the public interface</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>This is a good non-member because subtraction uses two <code>Number</code> objects equally.</p>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>This must be a member because assignment changes the object on the left side.</p>
+<hr />
+<h2 id="implicit-conversion-and-non-member-operators">Implicit conversion and non-member operators</h2>
+<p>Implicit conversion on the left side only works with a non-member operator.</p>
+<p>In the main example, the constructor is marked <code>explicit</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="k">explicit</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">initial_value</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>That is usually a good choice because it prevents accidental conversions from
+<code>int</code> to <code>Number</code>.</p>
+<p>For this example only, remove <code>explicit</code> so C++ is allowed to convert an <code>int</code>
+into a <code>Number</code> automatically.</p>
+<h3 id="member-operator">Member operator</h3>
+<p>With a member <code>operator+</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-31-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-31-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-31-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-31-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-31-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-31-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-31-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-31-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-31-10">10</a></span>
+<span class="normal"><a href="#__codelineno-31-11">11</a></span>
+<span class="normal"><a href="#__codelineno-31-12">12</a></span>
+<span class="normal"><a href="#__codelineno-31-13">13</a></span>
+<span class="normal"><a href="#__codelineno-31-14">14</a></span>
+<span class="normal"><a href="#__codelineno-31-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3"></a><span class="w">    </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7"></a>
+<a id="__codelineno-31-8" name="__codelineno-31-8"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-31-10" name="__codelineno-31-10"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">value_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-31-12" name="__codelineno-31-12"></a>
+<a id="__codelineno-31-13" name="__codelineno-31-13"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-31-14" name="__codelineno-31-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-31-15" name="__codelineno-31-15"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>This works:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span>
+<span class="normal"><a href="#__codelineno-32-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1"></a><span class="n">Number</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2"></a><span class="n">Number</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>The compiler sees:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>The left side is already a <code>Number</code>, and the right side <code>5</code> can be converted to
+<code>Number</code>.</p>
+<p>But this does not work:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="c1">// error</span>
+</code></pre></div></td></tr></table></div>
+<p>For a member operator, the left side must already be the class object, because
+C++ needs something to call the member function on.</p>
+<p>The compiler would need this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1"></a><span class="mf">5.</span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"> </span><span class="c1">// impossible: int has no Number::operator+</span>
+</code></pre></div></td></tr></table></div>
+<p>So the compiler cannot use <code>Number::operator+</code> here.</p>
+<h3 id="non-member-operator">Non-member operator</h3>
+<p>With a non-member <code>operator+</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-36-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-36-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-36-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-36-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-36-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-36-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-36-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-36-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-36-10">10</a></span>
+<span class="normal"><a href="#__codelineno-36-11">11</a></span>
+<span class="normal"><a href="#__codelineno-36-12">12</a></span>
+<span class="normal"><a href="#__codelineno-36-13">13</a></span>
+<span class="normal"><a href="#__codelineno-36-14">14</a></span>
+<span class="normal"><a href="#__codelineno-36-15">15</a></span>
+<span class="normal"><a href="#__codelineno-36-16">16</a></span>
+<span class="normal"><a href="#__codelineno-36-17">17</a></span>
+<span class="normal"><a href="#__codelineno-36-18">18</a></span>
+<span class="normal"><a href="#__codelineno-36-19">19</a></span>
+<span class="normal"><a href="#__codelineno-36-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3"></a><span class="w">    </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-36-4" name="__codelineno-36-4"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-36-5" name="__codelineno-36-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-36-6" name="__codelineno-36-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-36-7" name="__codelineno-36-7"></a>
+<a id="__codelineno-36-8" name="__codelineno-36-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-36-9" name="__codelineno-36-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-36-10" name="__codelineno-36-10"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-36-11" name="__codelineno-36-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-36-12" name="__codelineno-36-12"></a>
+<a id="__codelineno-36-13" name="__codelineno-36-13"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-36-14" name="__codelineno-36-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-36-15" name="__codelineno-36-15"></a><span class="p">};</span>
+<a id="__codelineno-36-16" name="__codelineno-36-16"></a>
+<a id="__codelineno-36-17" name="__codelineno-36-17"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-36-18" name="__codelineno-36-18"></a><span class="p">{</span>
+<a id="__codelineno-36-19" name="__codelineno-36-19"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">get_value</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">get_value</span><span class="p">());</span>
+<a id="__codelineno-36-20" name="__codelineno-36-20"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Both directions work:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span>
+<span class="normal"><a href="#__codelineno-37-2">2</a></span>
+<span class="normal"><a href="#__codelineno-37-3">3</a></span>
+<span class="normal"><a href="#__codelineno-37-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1"></a><span class="n">Number</span><span class="w"> </span><span class="nf">a</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2"></a>
+<a id="__codelineno-37-3" name="__codelineno-37-3"></a><span class="n">Number</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="c1">// operator+(a, Number(5))</span>
+<a id="__codelineno-37-4" name="__codelineno-37-4"></a><span class="n">Number</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="c1">// operator+(Number(5), a)</span>
+</code></pre></div></td></tr></table></div>
+<p>Because <code>operator+</code> is a normal function, both arguments can use implicit
+conversion.</p>
+<p>That is why symmetric operators like <code>+</code>, <code>-</code>, <code>==</code>, and <code>!=</code> are often better
+as non-member functions.</p>
+<hr />
+<h2 id="conversion-operator">Conversion operator</h2>
+<p>A conversion operator lets an object convert itself to another type.</p>
+<p>The syntax is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1"></a><span class="k">operator</span><span class="w"> </span><span class="n">target_type</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div></td></tr></table></div>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-39-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-39-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-39-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-39-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-39-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-39-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-39-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-39-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-39-10">10</a></span>
+<span class="normal"><a href="#__codelineno-39-11">11</a></span>
+<span class="normal"><a href="#__codelineno-39-12">12</a></span>
+<span class="normal"><a href="#__codelineno-39-13">13</a></span>
+<span class="normal"><a href="#__codelineno-39-14">14</a></span>
+<span class="normal"><a href="#__codelineno-39-15">15</a></span>
+<span class="normal"><a href="#__codelineno-39-16">16</a></span>
+<span class="normal"><a href="#__codelineno-39-17">17</a></span>
+<span class="normal"><a href="#__codelineno-39-18">18</a></span>
+<span class="normal"><a href="#__codelineno-39-19">19</a></span>
+<span class="normal"><a href="#__codelineno-39-20">20</a></span>
+<span class="normal"><a href="#__codelineno-39-21">21</a></span>
+<span class="normal"><a href="#__codelineno-39-22">22</a></span>
+<span class="normal"><a href="#__codelineno-39-23">23</a></span>
+<span class="normal"><a href="#__codelineno-39-24">24</a></span>
+<span class="normal"><a href="#__codelineno-39-25">25</a></span>
+<span class="normal"><a href="#__codelineno-39-26">26</a></span>
+<span class="normal"><a href="#__codelineno-39-27">27</a></span>
+<span class="normal"><a href="#__codelineno-39-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2"></a>
+<a id="__codelineno-39-3" name="__codelineno-39-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-39-4" name="__codelineno-39-4"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-39-5" name="__codelineno-39-5"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-39-6" name="__codelineno-39-6"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-39-7" name="__codelineno-39-7"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-39-8" name="__codelineno-39-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-39-9" name="__codelineno-39-9"></a>
+<a id="__codelineno-39-10" name="__codelineno-39-10"></a><span class="w">    </span><span class="k">operator</span><span class="w"> </span><span class="kt">int</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-39-11" name="__codelineno-39-11"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-39-12" name="__codelineno-39-12"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-39-13" name="__codelineno-39-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-39-14" name="__codelineno-39-14"></a>
+<a id="__codelineno-39-15" name="__codelineno-39-15"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-39-16" name="__codelineno-39-16"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-39-17" name="__codelineno-39-17"></a><span class="p">};</span>
+<a id="__codelineno-39-18" name="__codelineno-39-18"></a>
+<a id="__codelineno-39-19" name="__codelineno-39-19"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<a id="__codelineno-39-20" name="__codelineno-39-20"></a><span class="p">{</span>
+<a id="__codelineno-39-21" name="__codelineno-39-21"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="n">number</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+<a id="__codelineno-39-22" name="__codelineno-39-22"></a>
+<a id="__codelineno-39-23" name="__codelineno-39-23"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span><span class="w"> </span><span class="c1">// calls number.operator int()</span>
+<a id="__codelineno-39-24" name="__codelineno-39-24"></a>
+<a id="__codelineno-39-25" name="__codelineno-39-25"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-39-26" name="__codelineno-39-26"></a>
+<a id="__codelineno-39-27" name="__codelineno-39-27"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-39-28" name="__codelineno-39-28"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1"></a>42
+</code></pre></div></td></tr></table></div>
+<p>This function:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1"></a><span class="k">operator</span><span class="w"> </span><span class="kt">int</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div></td></tr></table></div>
+<p>means:</p>
+<blockquote>
+<p>a <code>Number</code> object can be converted to an <code>int</code>.</p>
+</blockquote>
+<p>So this line:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>is similar to:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">.</span><span class="k">operator</span><span class="w"> </span><span class="kt">int</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<p>Notice that a conversion operator has no return type before the function name.
+The target type is written after the word <code>operator</code>.</p>
+<p>Do not write this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-44-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1"></a><span class="kt">int</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="kt">int</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="c1">// error</span>
+</code></pre></div></td></tr></table></div>
+<p>Write this:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1"></a><span class="k">operator</span><span class="w"> </span><span class="kt">int</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="convert-to-another-class-type">Convert to another class type</h3>
+<p>A conversion operator can also convert an object to another class type.</p>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-46-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-46-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-46-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-46-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-46-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-46-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-46-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-46-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-46-10">10</a></span>
+<span class="normal"><a href="#__codelineno-46-11">11</a></span>
+<span class="normal"><a href="#__codelineno-46-12">12</a></span>
+<span class="normal"><a href="#__codelineno-46-13">13</a></span>
+<span class="normal"><a href="#__codelineno-46-14">14</a></span>
+<span class="normal"><a href="#__codelineno-46-15">15</a></span>
+<span class="normal"><a href="#__codelineno-46-16">16</a></span>
+<span class="normal"><a href="#__codelineno-46-17">17</a></span>
+<span class="normal"><a href="#__codelineno-46-18">18</a></span>
+<span class="normal"><a href="#__codelineno-46-19">19</a></span>
+<span class="normal"><a href="#__codelineno-46-20">20</a></span>
+<span class="normal"><a href="#__codelineno-46-21">21</a></span>
+<span class="normal"><a href="#__codelineno-46-22">22</a></span>
+<span class="normal"><a href="#__codelineno-46-23">23</a></span>
+<span class="normal"><a href="#__codelineno-46-24">24</a></span>
+<span class="normal"><a href="#__codelineno-46-25">25</a></span>
+<span class="normal"><a href="#__codelineno-46-26">26</a></span>
+<span class="normal"><a href="#__codelineno-46-27">27</a></span>
+<span class="normal"><a href="#__codelineno-46-28">28</a></span>
+<span class="normal"><a href="#__codelineno-46-29">29</a></span>
+<span class="normal"><a href="#__codelineno-46-30">30</a></span>
+<span class="normal"><a href="#__codelineno-46-31">31</a></span>
+<span class="normal"><a href="#__codelineno-46-32">32</a></span>
+<span class="normal"><a href="#__codelineno-46-33">33</a></span>
+<span class="normal"><a href="#__codelineno-46-34">34</a></span>
+<span class="normal"><a href="#__codelineno-46-35">35</a></span>
+<span class="normal"><a href="#__codelineno-46-36">36</a></span>
+<span class="normal"><a href="#__codelineno-46-37">37</a></span>
+<span class="normal"><a href="#__codelineno-46-38">38</a></span>
+<span class="normal"><a href="#__codelineno-46-39">39</a></span>
+<span class="normal"><a href="#__codelineno-46-40">40</a></span>
+<span class="normal"><a href="#__codelineno-46-41">41</a></span>
+<span class="normal"><a href="#__codelineno-46-42">42</a></span>
+<span class="normal"><a href="#__codelineno-46-43">43</a></span>
+<span class="normal"><a href="#__codelineno-46-44">44</a></span>
+<span class="normal"><a href="#__codelineno-46-45">45</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<a id="__codelineno-46-3" name="__codelineno-46-3"></a>
+<a id="__codelineno-46-4" name="__codelineno-46-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">Text</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-46-5" name="__codelineno-46-5"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-46-6" name="__codelineno-46-6"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-46-7" name="__codelineno-46-7"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-46-8" name="__codelineno-46-8"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-46-9" name="__codelineno-46-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-46-10" name="__codelineno-46-10"></a>
+<a id="__codelineno-46-11" name="__codelineno-46-11"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">print</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-46-12" name="__codelineno-46-12"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-46-13" name="__codelineno-46-13"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">value_</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-46-14" name="__codelineno-46-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-46-15" name="__codelineno-46-15"></a>
+<a id="__codelineno-46-16" name="__codelineno-46-16"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-46-17" name="__codelineno-46-17"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-46-18" name="__codelineno-46-18"></a><span class="p">};</span>
+<a id="__codelineno-46-19" name="__codelineno-46-19"></a>
+<a id="__codelineno-46-20" name="__codelineno-46-20"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-46-21" name="__codelineno-46-21"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-46-22" name="__codelineno-46-22"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-46-23" name="__codelineno-46-23"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-46-24" name="__codelineno-46-24"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-46-25" name="__codelineno-46-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-46-26" name="__codelineno-46-26"></a>
+<a id="__codelineno-46-27" name="__codelineno-46-27"></a><span class="w">    </span><span class="k">operator</span><span class="w"> </span><span class="n">Text</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-46-28" name="__codelineno-46-28"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-46-29" name="__codelineno-46-29"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Text</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">value_</span><span class="p">));</span>
+<a id="__codelineno-46-30" name="__codelineno-46-30"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-46-31" name="__codelineno-46-31"></a>
+<a id="__codelineno-46-32" name="__codelineno-46-32"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-46-33" name="__codelineno-46-33"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-46-34" name="__codelineno-46-34"></a><span class="p">};</span>
+<a id="__codelineno-46-35" name="__codelineno-46-35"></a>
+<a id="__codelineno-46-36" name="__codelineno-46-36"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<a id="__codelineno-46-37" name="__codelineno-46-37"></a><span class="p">{</span>
+<a id="__codelineno-46-38" name="__codelineno-46-38"></a><span class="w">    </span><span class="n">Number</span><span class="w"> </span><span class="n">number</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+<a id="__codelineno-46-39" name="__codelineno-46-39"></a>
+<a id="__codelineno-46-40" name="__codelineno-46-40"></a><span class="w">    </span><span class="n">Text</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span><span class="w"> </span><span class="c1">// calls number.operator Text()</span>
+<a id="__codelineno-46-41" name="__codelineno-46-41"></a>
+<a id="__codelineno-46-42" name="__codelineno-46-42"></a><span class="w">    </span><span class="n">text</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+<a id="__codelineno-46-43" name="__codelineno-46-43"></a>
+<a id="__codelineno-46-44" name="__codelineno-46-44"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-46-45" name="__codelineno-46-45"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1"></a>42
+</code></pre></div></td></tr></table></div>
+<p>This function:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1"></a><span class="k">operator</span><span class="w"> </span><span class="n">Text</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div></td></tr></table></div>
+<p>means:</p>
+<blockquote>
+<p>a <code>Number</code> object can be converted to a <code>Text</code> object.</p>
+</blockquote>
+<p>So this line:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1"></a><span class="n">Text</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>is similar to:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1"></a><span class="n">Text</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">.</span><span class="k">operator</span><span class="w"> </span><span class="n">Text</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<p>The conversion operator belongs to the source type.</p>
+<p>In this example, <code>Number</code> knows how to convert itself into <code>Text</code>, so
+<code>operator Text()</code> is written inside <code>Number</code>.</p>
+<h3 id="explicit-conversion-operator">Explicit conversion operator</h3>
+<p>Implicit conversion can sometimes make code unclear.</p>
+<p>You can make the conversion operator <code>explicit</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-51-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-51-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-51-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-51-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-51-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-51-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-51-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-51-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-51-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-51-10">10</a></span>
+<span class="normal"><a href="#__codelineno-51-11">11</a></span>
+<span class="normal"><a href="#__codelineno-51-12">12</a></span>
+<span class="normal"><a href="#__codelineno-51-13">13</a></span>
+<span class="normal"><a href="#__codelineno-51-14">14</a></span>
+<span class="normal"><a href="#__codelineno-51-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-51-2" name="__codelineno-51-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-51-3" name="__codelineno-51-3"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-51-4" name="__codelineno-51-4"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-51-5" name="__codelineno-51-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-51-6" name="__codelineno-51-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-51-7" name="__codelineno-51-7"></a>
+<a id="__codelineno-51-8" name="__codelineno-51-8"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="kt">int</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-51-9" name="__codelineno-51-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-51-10" name="__codelineno-51-10"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-51-11" name="__codelineno-51-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-51-12" name="__codelineno-51-12"></a>
+<a id="__codelineno-51-13" name="__codelineno-51-13"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-51-14" name="__codelineno-51-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-51-15" name="__codelineno-51-15"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>Now this does not work:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-52-1">1</a></span>
+<span class="normal"><a href="#__codelineno-52-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1"></a><span class="n">Number</span><span class="w"> </span><span class="nf">number</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+<a id="__codelineno-52-2" name="__codelineno-52-2"></a><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="p">;</span><span class="w"> </span><span class="c1">// error</span>
+</code></pre></div></td></tr></table></div>
+<p>You must write the conversion clearly:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-53-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>Use <code>explicit operator type()</code> when automatic conversion could surprise the
+reader.</p>
+<hr />
+<h2 id="const-correctness">Const correctness</h2>
+<p>This operator is marked <code>const</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-54-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span>
+</code></pre></div></td></tr></table></div>
+<p>The final <code>const</code> means <code>operator+</code> does not modify the left object.</p>
+<p>That is important because addition should create a new value:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-55-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1"></a><span class="n">Number</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>It should not change <code>a</code> or <code>b</code>.</p>
+<p>The parameter is also a const reference:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-56-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1"></a><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span>
+</code></pre></div></td></tr></table></div>
+<p>This avoids copying <code>other</code> and promises not to modify it.</p>
+<hr />
+<h2 id="friend-functions">Friend functions</h2>
+<p>Sometimes a <strong>non-member</strong> operator needs access to private data.</p>
+<p>One option is to make it a <code>friend</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-57-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-57-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-57-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-57-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-57-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-57-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-57-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-57-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-57-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-57-10">10</a></span>
+<span class="normal"><a href="#__codelineno-57-11">11</a></span>
+<span class="normal"><a href="#__codelineno-57-12">12</a></span>
+<span class="normal"><a href="#__codelineno-57-13">13</a></span>
+<span class="normal"><a href="#__codelineno-57-14">14</a></span>
+<span class="normal"><a href="#__codelineno-57-15">15</a></span>
+<span class="normal"><a href="#__codelineno-57-16">16</a></span>
+<span class="normal"><a href="#__codelineno-57-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-57-2" name="__codelineno-57-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-57-3" name="__codelineno-57-3"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-57-4" name="__codelineno-57-4"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-57-5" name="__codelineno-57-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-57-6" name="__codelineno-57-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-57-7" name="__codelineno-57-7"></a>
+<a id="__codelineno-57-8" name="__codelineno-57-8"></a><span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">);</span>
+<a id="__codelineno-57-9" name="__codelineno-57-9"></a>
+<a id="__codelineno-57-10" name="__codelineno-57-10"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-57-11" name="__codelineno-57-11"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-57-12" name="__codelineno-57-12"></a><span class="p">};</span>
+<a id="__codelineno-57-13" name="__codelineno-57-13"></a>
+<a id="__codelineno-57-14" name="__codelineno-57-14"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-57-15" name="__codelineno-57-15"></a><span class="p">{</span>
+<a id="__codelineno-57-16" name="__codelineno-57-16"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">value_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+<a id="__codelineno-57-17" name="__codelineno-57-17"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>A <code>friend</code> function is not a member function, but it is allowed to access private
+members.</p>
+<p>This line inside the class is only a declaration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-58-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1"></a><span class="k">friend</span><span class="w"> </span><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>It tells C++:</p>
+<blockquote>
+<p>this non-member function is allowed to access private members of <code>Number</code>.</p>
+</blockquote>
+<p>The function body can be written outside the class:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-59-1">1</a></span>
+<span class="normal"><a href="#__codelineno-59-2">2</a></span>
+<span class="normal"><a href="#__codelineno-59-3">3</a></span>
+<span class="normal"><a href="#__codelineno-59-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1"></a><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-59-2" name="__codelineno-59-2"></a><span class="p">{</span>
+<a id="__codelineno-59-3" name="__codelineno-59-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">value_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+<a id="__codelineno-59-4" name="__codelineno-59-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>You can also write the body directly inside the class:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-60-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-60-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-60-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-60-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-60-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-60-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-60-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-60-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-60-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-60-10">10</a></span>
+<span class="normal"><a href="#__codelineno-60-11">11</a></span>
+<span class="normal"><a href="#__codelineno-60-12">12</a></span>
+<span class="normal"><a href="#__codelineno-60-13">13</a></span>
+<span class="normal"><a href="#__codelineno-60-14">14</a></span>
+<span class="normal"><a href="#__codelineno-60-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Number</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-60-2" name="__codelineno-60-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-60-3" name="__codelineno-60-3"></a><span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-60-4" name="__codelineno-60-4"></a><span class="w">        </span><span class="o">:</span><span class="w"> </span><span class="n">value_</span><span class="p">(</span><span class="n">initial_value</span><span class="p">)</span>
+<a id="__codelineno-60-5" name="__codelineno-60-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-60-6" name="__codelineno-60-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-60-7" name="__codelineno-60-7"></a>
+<a id="__codelineno-60-8" name="__codelineno-60-8"></a><span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">Number</span><span class="w"> </span><span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Number</span><span class="o">&amp;</span><span class="w"> </span><span class="n">right</span><span class="p">)</span>
+<a id="__codelineno-60-9" name="__codelineno-60-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-60-10" name="__codelineno-60-10"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Number</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">value_</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">right</span><span class="p">.</span><span class="n">value_</span><span class="p">);</span>
+<a id="__codelineno-60-11" name="__codelineno-60-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-60-12" name="__codelineno-60-12"></a>
+<a id="__codelineno-60-13" name="__codelineno-60-13"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-60-14" name="__codelineno-60-14"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value_</span><span class="p">;</span>
+<a id="__codelineno-60-15" name="__codelineno-60-15"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>This is still a non-member function. The <code>friend</code> keyword gives access to private
+members, but it does not make the function a class member.</p>
+<p>Use <code>friend</code> when the operator really belongs outside the class but needs direct
+access to private state.</p>
+<p>Do not use <code>friend</code> automatically. If the operator can be cleanly implemented
+with public getters, that is often simpler.</p>
+<hr />
+<h2 id="common-rule">Common rule</h2>
+<p>A practical rule:</p>
+<ul>
+<li>operators that change the left object are often members</li>
+<li>symmetric operators are often non-members</li>
+<li>stream operators are non-members</li>
+<li>assignment-like operators are members</li>
+</ul>
+<p>In this example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-61-1">1</a></span>
+<span class="normal"><a href="#__codelineno-61-2">2</a></span>
+<span class="normal"><a href="#__codelineno-61-3">3</a></span>
+<span class="normal"><a href="#__codelineno-61-4">4</a></span>
+<span class="normal"><a href="#__codelineno-61-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1"></a><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w">       </span><span class="c1">// member: a.operator+(b)</span>
+<a id="__codelineno-61-2" name="__codelineno-61-2"></a><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="w">       </span><span class="c1">// non-member: operator-(b, a)</span>
+<a id="__codelineno-61-3" name="__codelineno-61-3"></a><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="w">     </span><span class="c1">// member: a.operator=(sum)</span>
+<a id="__codelineno-61-4" name="__codelineno-61-4"></a><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="c1">// non-member: operator&lt;&lt;(std::cout, sum)</span>
+<a id="__codelineno-61-5" name="__codelineno-61-5"></a><span class="n">sum</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">difference</span><span class="w"> </span><span class="c1">// non-member: operator==(sum, difference)</span>
+</code></pre></div></td></tr></table></div>
+<p>The syntax looks similar, but the function call behind the syntax is different.</p>
+<hr />
+<h2 id="demo-conversion-operation">Demo: conversion operation</h2>
+<p>This example shows a conversion operator from one class type to another class
+type.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-62-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-62-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-62-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-62-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-62-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-62-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-62-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-62-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-62-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-62-10">10</a></span>
+<span class="normal"><a href="#__codelineno-62-11">11</a></span>
+<span class="normal"><a href="#__codelineno-62-12">12</a></span>
+<span class="normal"><a href="#__codelineno-62-13">13</a></span>
+<span class="normal"><a href="#__codelineno-62-14">14</a></span>
+<span class="normal"><a href="#__codelineno-62-15">15</a></span>
+<span class="normal"><a href="#__codelineno-62-16">16</a></span>
+<span class="normal"><a href="#__codelineno-62-17">17</a></span>
+<span class="normal"><a href="#__codelineno-62-18">18</a></span>
+<span class="normal"><a href="#__codelineno-62-19">19</a></span>
+<span class="normal"><a href="#__codelineno-62-20">20</a></span>
+<span class="normal"><a href="#__codelineno-62-21">21</a></span>
+<span class="normal"><a href="#__codelineno-62-22">22</a></span>
+<span class="normal"><a href="#__codelineno-62-23">23</a></span>
+<span class="normal"><a href="#__codelineno-62-24">24</a></span>
+<span class="normal"><a href="#__codelineno-62-25">25</a></span>
+<span class="normal"><a href="#__codelineno-62-26">26</a></span>
+<span class="normal"><a href="#__codelineno-62-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-62-2" name="__codelineno-62-2"></a><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+<a id="__codelineno-62-3" name="__codelineno-62-3"></a>
+<a id="__codelineno-62-4" name="__codelineno-62-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">A</span>
+<a id="__codelineno-62-5" name="__codelineno-62-5"></a><span class="p">{</span>
+<a id="__codelineno-62-6" name="__codelineno-62-6"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-62-7" name="__codelineno-62-7"></a><span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">A</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span>
+<a id="__codelineno-62-8" name="__codelineno-62-8"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-62-9" name="__codelineno-62-9"></a><span class="w">        </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">;</span>
+<a id="__codelineno-62-10" name="__codelineno-62-10"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">out</span><span class="p">;</span>
+<a id="__codelineno-62-11" name="__codelineno-62-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-62-12" name="__codelineno-62-12"></a><span class="p">};</span>
+<a id="__codelineno-62-13" name="__codelineno-62-13"></a>
+<a id="__codelineno-62-14" name="__codelineno-62-14"></a><span class="k">class</span><span class="w"> </span><span class="nc">Op</span>
+<a id="__codelineno-62-15" name="__codelineno-62-15"></a><span class="p">{</span>
+<a id="__codelineno-62-16" name="__codelineno-62-16"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-62-17" name="__codelineno-62-17"></a><span class="w">    </span><span class="k">operator</span><span class="w"> </span><span class="n">A</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-62-18" name="__codelineno-62-18"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-62-19" name="__codelineno-62-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">A</span><span class="p">();</span>
+<a id="__codelineno-62-20" name="__codelineno-62-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-62-21" name="__codelineno-62-21"></a><span class="p">};</span>
+<a id="__codelineno-62-22" name="__codelineno-62-22"></a>
+<a id="__codelineno-62-23" name="__codelineno-62-23"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<a id="__codelineno-62-24" name="__codelineno-62-24"></a><span class="p">{</span>
+<a id="__codelineno-62-25" name="__codelineno-62-25"></a><span class="w">    </span><span class="n">Op</span><span class="w"> </span><span class="n">op</span><span class="p">;</span>
+<a id="__codelineno-62-26" name="__codelineno-62-26"></a><span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="n">op</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<a id="__codelineno-62-27" name="__codelineno-62-27"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-63-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1"></a>1
+</code></pre></div></td></tr></table></div>
+<p>This function is the conversion operator:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-64-1">1</a></span>
+<span class="normal"><a href="#__codelineno-64-2">2</a></span>
+<span class="normal"><a href="#__codelineno-64-3">3</a></span>
+<span class="normal"><a href="#__codelineno-64-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1"></a><span class="k">operator</span><span class="w"> </span><span class="n">A</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-64-2" name="__codelineno-64-2"></a><span class="p">{</span>
+<a id="__codelineno-64-3" name="__codelineno-64-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">A</span><span class="p">();</span>
+<a id="__codelineno-64-4" name="__codelineno-64-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>It means:</p>
+<blockquote>
+<p>an <code>Op</code> object can be converted to an <code>A</code> object.</p>
+</blockquote>
+<p>This line:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-65-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1"></a><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="n">op</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>first converts <code>op</code> to <code>A</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-66-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1"></a><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="n">op</span>
+</code></pre></div></td></tr></table></div>
+<p>That cast calls:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-67-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1"></a><span class="n">op</span><span class="p">.</span><span class="k">operator</span><span class="w"> </span><span class="n">A</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<p>After the conversion, the expression becomes similar to:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-68-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1"></a><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">A</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>Then C++ calls the <code>operator&lt;&lt;</code> function for <code>A</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-69-1">1</a></span>
+<span class="normal"><a href="#__codelineno-69-2">2</a></span>
+<span class="normal"><a href="#__codelineno-69-3">3</a></span>
+<span class="normal"><a href="#__codelineno-69-4">4</a></span>
+<span class="normal"><a href="#__codelineno-69-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1"></a><span class="k">friend</span><span class="w"> </span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">A</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span>
+<a id="__codelineno-69-2" name="__codelineno-69-2"></a><span class="p">{</span>
+<a id="__codelineno-69-3" name="__codelineno-69-3"></a><span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">;</span>
+<a id="__codelineno-69-4" name="__codelineno-69-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">out</span><span class="p">;</span>
+<a id="__codelineno-69-5" name="__codelineno-69-5"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>So the full flow is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-70-1">1</a></span>
+<span class="normal"><a href="#__codelineno-70-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1"></a><span class="n">Op</span><span class="w"> </span><span class="n">op</span><span class="p">;</span>
+<a id="__codelineno-70-2" name="__codelineno-70-2"></a><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="n">op</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<ol>
+<li><code>(A)op</code> calls <code>Op::operator A() const</code></li>
+<li><code>operator A()</code> returns a new <code>A</code> object</li>
+<li><code>cout &lt;&lt; A_object</code> calls <code>operator&lt;&lt;(ostream&amp;, const A&amp;)</code></li>
+<li><code>operator&lt;&lt;</code> prints <code>1</code></li>
+</ol>
+<p>The conversion operator belongs to the source type, so <code>operator A()</code> is written
+inside <code>Op</code>.</p>
+<p>The stream operator belongs outside <code>A</code> because the left side is <code>cout</code>, not an
+<code>A</code> object.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>
