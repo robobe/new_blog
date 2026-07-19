@@ -8,10 +8,13 @@ tags:
 
 # VSCode CPP dev environment
 
-|   |   |
-|---|---|
-| ![alt text](images/c_cpp_extension.png)  | C/C++ IntelliSense, debugging, and code browsing.  |
-| ![alt text](images/cmake_tool_extension.png) | Interfacing with the build process  |
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="#clang">
+        <p>Clang</p>
+        </a>
+    </div>
+  </div>
 
 
 ## Build
@@ -191,6 +194,7 @@ sudo apt install -y  \
   pkg-config
 
 ```
+
 | Tool            | Purpose                     |
 | --------------- | --------------------------- |
 | clang           | Compiler                    |
@@ -202,6 +206,19 @@ sudo apt install -y  \
 | build-essential | System headers + base tools |
 | pkg-config      | Library detection           |
 
+
+## vscode extensions
+
+|  name | id  |
+|---|---|
+| C/C++   | ms-vscode.cpptools  |
+| CMake  | twxs.cmake   |
+| CMake Tools  | ms-vscode.cmake-tools   |
+| clangd  | llvm-vs-code-extensions.vscode-clangd  |
+| CodeLLDB | vadimcn.vscode-lldb |
+
+
+![](image.png)
 
 ---
 
@@ -277,6 +294,8 @@ using it with `launch.json"
     }
   ]
 }
+```
+
 ---
 
 #### VSCode project

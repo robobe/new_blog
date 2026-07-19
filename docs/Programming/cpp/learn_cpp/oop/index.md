@@ -42,8 +42,8 @@ tags:
 
 
 ## Operator Overloading
-- Overload operators like +, ==, <<, [], etc.
-- Understand which should be friend, member, or non-member
+- [Overload operators like +, ==, <<, [], etc.](operation_overload)
+- [Understand which should be friend, member, or non-member](operation_overload)
 - Best practices and dangers
 
 ## Smart Pointers and Ownership (Modern C++)
