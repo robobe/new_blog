@@ -787,6 +787,11 @@
         <p>Abstract base class</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="dynamic_cast">
+        <p>dynamic_cast</p>
+        </a>
+    </div>
 </div>
 
 <p>Polymorphism means <strong>one interface, many implementations</strong>.</p>
@@ -907,6 +912,45 @@ overriding a virtual function.</p>
 <p>Polymorphism lets you write code that works with a general type, like <code>Animal</code>,
 while still getting specialized behavior from derived types, like <code>Dog</code> and
 <code>Cat</code>.</p>
+<div class="admonition tip">
+<ul>
+<li>
+<p>Without <code>virtual</code>, C++ uses the <strong>pointer/reference type</strong>.</p>
+</li>
+<li>
+<p>With <code>virtual</code>, C++ uses the <strong>real object type</strong>.</p>
+</li>
+</ul>
+</div>
+<hr />
+<p><strong>A polymorphic class in C++ is a class that has at least one virtual function.</strong></p>
+<div class="admonition tip">
+<p class="admonition-title">polymorphic class</p>
+<p>Yes: for a class to be polymorphic, a virtual function must exist in the class itself or be inherited from a base class.</p>
+</div>
+<p>Example:</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Animal</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">speak</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+Animal is polymorphic because it has a virtual function.</p>
+<div class="admonition tip">
+<p class="admonition-title">Minimal Polymorphic class</p>
+<p>A very common minimal form is a virtual destructor:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Animal</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Animal</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p>This is enough to make Animal polymorphic.</p>
+</div>
 
 
 
