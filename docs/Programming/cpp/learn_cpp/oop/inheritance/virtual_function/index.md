@@ -22,9 +22,10 @@ animal points to Animal interface
 real object is Dog
 ```
 
-Without `virtual`, C++ uses the pointer/reference type.
+!!! tip ""
+    Without `virtual`, C++ uses the **pointer/reference type**.
 
-With `virtual`, C++ uses the real object type.
+    With `virtual`, C++ uses the **real object type**.
 
 ---
 

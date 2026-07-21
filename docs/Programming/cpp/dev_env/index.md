@@ -174,6 +174,42 @@ VSCode preset commnads
 ---
 
 ### Compilers
+## gcc
+
+
+| Ubuntu Version | Default Clang | Default GCC | Default C++ Standard Usable  |
+| -------------- | ------------- | ----------- | ---------------------------- |
+| 22.04 (Jammy)  | 14            | 11          | C++20 (usable)               |
+| 24.04 (Noble)  | 18            | 13          | C++20 / C++23 (good support) |
+
+### gdb
+
+!!! warning "gdb freeze and breakpoint not hit"
+
+    [](https://github.com/microsoft/vscode-cpptools/issues/13667)
+    VSCode seems to always enable debuginfod,
+
+    ```json title="launch.json"
+    {
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            ...
+            "setupCommands": [
+                {
+                    "description": "Clear debuginfod URLs",
+                    "text": "set debuginfod urls ",
+                    "ignoreFailures": true
+                }
+                ]
+            }
+        ]
+    }
+    ```
+    
+---
+
 ## Clang
 
 | Ubuntu Version | Default Clang | Default GCC | Default C++ Standard Usable  |

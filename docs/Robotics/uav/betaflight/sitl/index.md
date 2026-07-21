@@ -56,3 +56,28 @@ When started manually, Betaflight SITL opens UDP servers on `9003` and `9004`, s
   <source src="images/rc_flight.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
+
+---
+
+## files
+
+```
+├── bin
+│      ├── libBetaflightPlugin.so
+│      └── betaflight_2025.12.2_SITL    
+├── models
+│   └── betaloop_iris_with_standoffs
+│      └── meshes
+├── plugins (source)
+├── worlds
+│   └── betaloop_iris_with_standoffs.sdf
+└── scripts
+    └── start_gz.sh
+
+```
+
+- [gazebo plugin precompile](code/libBetaflightPlugin.so)
+- [betaflight sitl precompile](code/betaflight_2025.12.2_SITL)
+- [gazebo world](code/betaloop_iris_betaflight_demo_harmonic.sdf)
+- [iris models](code/modes.zip)
+- [start script](code/start_gz.sh)

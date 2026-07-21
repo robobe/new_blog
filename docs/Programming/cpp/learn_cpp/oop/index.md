@@ -10,23 +10,29 @@ tags:
 
 
 ## Encapsulation
+Put data and the functions that operate on that data into one unit (a class), and hide the implementation details.
+
 - Use of private/protected fields
 - Getters and setters (if needed)
 - [Const-correctness](const_correctness/) (const member functions)
 - [Const and variables](const_and_variables/) (values, references, and pointers)
 - Immutable objects
 
-## Inheritance
+## [Inheritance](inheritance/)
+One class can reuse another class.
+
 - Base and derived classes
 - public, private, and protected inheritance
-- Virtual functions
-- Constructor chaining (Base(args))
+- [Virtual functions](inheritance/virtual_function/)
+- [Constructor chaining (Base(args))](inheritance/)
 
 ## [Polymorphism](polymorphism)
-- Function overriding
-- Virtual destructors
-- Pure virtual functions (= 0)
-- Abstract base classes
+One interface, many implementations.
+
+- [Function overriding](polymorphism/function_override.md)
+- [Virtual destructors](polymorphism/virtual_destructor.md)
+- [Pure virtual functions (= 0)](polymorphism/abstract_base_class.md)
+- [Abstract base classes](polymorphism/abstract_base_class.md)
 - Runtime polymorphism via pointers or references
 - The role of virtual and override
 
@@ -42,8 +48,8 @@ tags:
 
 
 ## Operator Overloading
-- [Overload operators like +, ==, <<, [], etc.](operation_overload)
-- [Understand which should be friend, member, or non-member](operation_overload)
+- [Overload operators like +, ==, <<, [], etc.](operator_overload)
+- [Understand which should be friend, member, or non-member](operator_overload)
 - Best practices and dangers
 
 ## Smart Pointers and Ownership (Modern C++)
