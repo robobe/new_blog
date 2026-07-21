@@ -12,6 +12,11 @@ tags:
         <p>by_val, by_ref and pointers</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="files">
+        <p>Files and streams</p>
+        </a>
+    </div>
 </div>
 
 ## more

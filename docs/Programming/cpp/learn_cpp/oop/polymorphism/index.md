@@ -25,6 +25,11 @@ tags:
         <p>Abstract base class</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="dynamic_cast">
+        <p>dynamic_cast</p>
+        </a>
+    </div>
 </div>
 
 Polymorphism means **one interface, many implementations**.
@@ -129,3 +134,39 @@ overriding a virtual function.
 Polymorphism lets you write code that works with a general type, like `Animal`,
 while still getting specialized behavior from derived types, like `Dog` and
 `Cat`.
+
+!!! tip ""
+    - Without `virtual`, C++ uses the **pointer/reference type**.
+
+    - With `virtual`, C++ uses the **real object type**.
+
+
+---
+
+**A polymorphic class in C++ is a class that has at least one virtual function.**
+
+!!! tip "polymorphic class"
+    Yes: for a class to be polymorphic, a virtual function must exist in the class itself or be inherited from a base class.
+
+  Example:
+
+```cpp
+class Animal {
+  public:
+      virtual void speak() {}
+  };
+```
+Animal is polymorphic because it has a virtual function.
+
+
+!!! tip "Minimal Polymorphic class"
+    A very common minimal form is a virtual destructor:
+
+    ```cpp
+    class Animal {
+    public:
+        virtual ~Animal() = default;
+    };
+    ```
+
+    This is enough to make Animal polymorphic.
