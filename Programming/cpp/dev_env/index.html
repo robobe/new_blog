@@ -764,6 +764,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#gcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gcc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="gcc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gdb
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#clang" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1127,6 +1155,70 @@
 </ul>
 <hr />
 <h3 id="compilers">Compilers</h3>
+<h2 id="gcc">gcc</h2>
+<table>
+<thead>
+<tr>
+<th>Ubuntu Version</th>
+<th>Default Clang</th>
+<th>Default GCC</th>
+<th>Default C++ Standard Usable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22.04 (Jammy)</td>
+<td>14</td>
+<td>11</td>
+<td>C++20 (usable)</td>
+</tr>
+<tr>
+<td>24.04 (Noble)</td>
+<td>18</td>
+<td>13</td>
+<td>C++20 / C++23 (good support)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gdb">gdb</h3>
+<div class="admonition warning">
+<p class="admonition-title">gdb freeze and breakpoint not hit</p>
+<p><a href="https://github.com/microsoft/vscode-cpptools/issues/13667"></a>
+VSCode seems to always enable debuginfod,</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">launch.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">        </span><span class="err">...</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">        </span><span class="nt">&quot;setupCommands&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Clear debuginfod URLs&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="w">                </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;set debuginfod urls &quot;</span><span class="p">,</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="w">                </span><span class="nt">&quot;ignoreFailures&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="w">            </span><span class="p">]</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<hr />
 <h2 id="clang">Clang</h2>
 <table>
 <thead>
@@ -1152,23 +1244,23 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
-<span class="normal"><a href="#__codelineno-9-2">2</a></span>
-<span class="normal"><a href="#__codelineno-9-3">3</a></span>
-<span class="normal"><a href="#__codelineno-9-4">4</a></span>
-<span class="normal"><a href="#__codelineno-9-5">5</a></span>
-<span class="normal"><a href="#__codelineno-9-6">6</a></span>
-<span class="normal"><a href="#__codelineno-9-7">7</a></span>
-<span class="normal"><a href="#__codelineno-9-8">8</a></span>
-<span class="normal"><a href="#__codelineno-9-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span><span class="se">\</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span>clang<span class="w">     </span><span class="se">\</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span>clangd<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="w">  </span>lldb<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="w">  </span>lld<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">  </span>cmake<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">  </span>ninja-build<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">  </span>build-essential<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">  </span>pkg-config
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span>
+<span class="normal"><a href="#__codelineno-10-8">8</a></span>
+<span class="normal"><a href="#__codelineno-10-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">  </span>clang<span class="w">     </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">  </span>clangd<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">  </span>lldb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">  </span>lld<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="w">  </span>cmake<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">  </span>ninja-build<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">  </span>build-essential<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">  </span>pkg-config
 </code></pre></div></td></tr></table></div>
 <table>
 <thead>
@@ -1260,17 +1352,17 @@ Provides:</p>
 <div class="admonition tip">
 <p class="admonition-title">don't forget</p>
 <p>To install <code>clangd</code> binary</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>clangd
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>clangd
 </code></pre></div></td></tr></table></div>
 </div>
 <p>Disabled microsoft intellisense </p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nt">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nt">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span>
 </code></pre></div></td></tr></table></div>
 <h5 id="compile_commandjson">compile_command.json</h5>
 <p>It is a database of exact compiler commands used to build every .cpp file in your project.</p>
 <p><strong>The ground truth of how your project is compiled.</strong></p>
 <p>Generate <code>compile_command.json</code></p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_EXPORT_COMPILE_COMMANDS<span class="o">=</span>ON
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_EXPORT_COMPILE_COMMANDS<span class="o">=</span>ON
 </code></pre></div></td></tr></table></div>
 <ul>
 <li>Include paths</li>
@@ -1279,55 +1371,16 @@ Provides:</p>
 <li>C++ standard version</li>
 </ul>
 <p>Without this file → clangd guesses → incorrect IntelliSense.</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
-<span class="normal"><a href="#__codelineno-13-2">2</a></span>
-<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nt">&quot;clangd.arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="w">        </span><span class="s2">&quot;--compile-commands-dir=build&quot;</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="p">]</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nt">&quot;clangd.arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">        </span><span class="s2">&quot;--compile-commands-dir=build&quot;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">    </span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
 <h5 id="using-lldb">Using LLDB</h5>
 <p>Install <a href="https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb">CodeLLDB</a></p>
 <p>using it with `launch.json"</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/launch.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-14-10">10</a></span>
-<span class="normal"><a href="#__codelineno-14-11">11</a></span>
-<span class="normal"><a href="#__codelineno-14-12">12</a></span>
-<span class="normal"><a href="#__codelineno-14-13">13</a></span>
-<span class="normal"><a href="#__codelineno-14-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="p">{</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug with LLDB&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lldb&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="w">      </span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/build/debug/my_app&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="w">      </span><span class="nt">&quot;stopOnEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-<hr />
-<h4 id="vscode-project">VSCode project</h4>
-<ul>
-<li>using clang</li>
-<li>using cmake</li>
-<li>using cmake presets</li>
-</ul>
-<p>VSCode ext.
-- clangd
-- CodeLLDB
-- cmake tools</p>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/launch.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
@@ -1340,66 +1393,77 @@ Provides:</p>
 <span class="normal"><a href="#__codelineno-15-11">11</a></span>
 <span class="normal"><a href="#__codelineno-15-12">12</a></span>
 <span class="normal"><a href="#__codelineno-15-13">13</a></span>
-<span class="normal"><a href="#__codelineno-15-14">14</a></span>
-<span class="normal"><a href="#__codelineno-15-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="n">cmake_minimum_required</span><span class="p">(</span><span class="n">VERSION</span><span class="w"> </span><span class="mf">3.22</span><span class="p">)</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2"></a>
-<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="n">project</span><span class="p">(</span><span class="n">MyApp</span><span class="w"> </span><span class="n">VERSION</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="n">LANGUAGES</span><span class="w"> </span><span class="n">CXX</span><span class="p">)</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4"></a>
-<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_STANDARD_REQUIRED</span><span class="w"> </span><span class="n">ON</span><span class="p">)</span>
-<a id="__codelineno-15-7" name="__codelineno-15-7"></a>
-<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_C_COMPILER</span><span class="w"> </span><span class="n">clang</span><span class="p">)</span>
-<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_COMPILER</span><span class="w"> </span><span class="n">clang</span><span class="o">++</span><span class="p">)</span>
-<a id="__codelineno-15-10" name="__codelineno-15-10"></a>
-<a id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_EXPORT_COMPILE_COMMANDS</span><span class="w"> </span><span class="n">ON</span><span class="p">)</span>
-<a id="__codelineno-15-12" name="__codelineno-15-12"></a>
-<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="n">add_executable</span><span class="p">(</span><span class="n">my_app</span>
-<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="w">    </span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cpp</span>
-<a id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug with LLDB&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lldb&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="w">      </span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/build/debug/my_app&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="w">      </span><span class="nt">&quot;stopOnEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
-<span class="normal"><a href="#__codelineno-16-2">2</a></span>
-<span class="normal"><a href="#__codelineno-16-3">3</a></span>
-<span class="normal"><a href="#__codelineno-16-4">4</a></span>
-<span class="normal"><a href="#__codelineno-16-5">5</a></span>
-<span class="normal"><a href="#__codelineno-16-6">6</a></span>
-<span class="normal"><a href="#__codelineno-16-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="p">{</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">    </span><span class="nt">&quot;cmake.useCMakePresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;always&quot;</span><span class="p">,</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">    </span><span class="nt">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
-<a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="w">    </span><span class="nt">&quot;clangd.arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="w">        </span><span class="s2">&quot;--compile-commands-dir=build&quot;</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6"></a><span class="w">    </span><span class="p">]</span>
-<a id="__codelineno-16-7" name="__codelineno-16-7"></a><span class="p">}</span>
+<hr />
+<h4 id="vscode-project">VSCode project</h4>
+<ul>
+<li>using clang</li>
+<li>using cmake</li>
+<li>using cmake presets</li>
+</ul>
+<p>VSCode ext.
+- clangd
+- CodeLLDB
+- cmake tools</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-16-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-16-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-16-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-16-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-16-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-16-10">10</a></span>
+<span class="normal"><a href="#__codelineno-16-11">11</a></span>
+<span class="normal"><a href="#__codelineno-16-12">12</a></span>
+<span class="normal"><a href="#__codelineno-16-13">13</a></span>
+<span class="normal"><a href="#__codelineno-16-14">14</a></span>
+<span class="normal"><a href="#__codelineno-16-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="n">cmake_minimum_required</span><span class="p">(</span><span class="n">VERSION</span><span class="w"> </span><span class="mf">3.22</span><span class="p">)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="n">project</span><span class="p">(</span><span class="n">MyApp</span><span class="w"> </span><span class="n">VERSION</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="n">LANGUAGES</span><span class="w"> </span><span class="n">CXX</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_STANDARD_REQUIRED</span><span class="w"> </span><span class="n">ON</span><span class="p">)</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a>
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_C_COMPILER</span><span class="w"> </span><span class="n">clang</span><span class="p">)</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_COMPILER</span><span class="w"> </span><span class="n">clang</span><span class="o">++</span><span class="p">)</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_EXPORT_COMPILE_COMMANDS</span><span class="w"> </span><span class="n">ON</span><span class="p">)</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12"></a>
+<a id="__codelineno-16-13" name="__codelineno-16-13"></a><span class="n">add_executable</span><span class="p">(</span><span class="n">my_app</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14"></a><span class="w">    </span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">cpp</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15"></a><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/launch.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
-<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
-<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
-<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
-<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
-<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
-<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
-<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
-<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
-<span class="normal"><a href="#__codelineno-17-10">10</a></span>
-<span class="normal"><a href="#__codelineno-17-11">11</a></span>
-<span class="normal"><a href="#__codelineno-17-12">12</a></span>
-<span class="normal"><a href="#__codelineno-17-13">13</a></span>
-<span class="normal"><a href="#__codelineno-17-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="p">{</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug with LLDB&quot;</span><span class="p">,</span>
-<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lldb&quot;</span><span class="p">,</span>
-<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
-<a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="w">      </span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/build/debug/my_app&quot;</span><span class="p">,</span>
-<a id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span><span class="p">,</span>
-<a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="w">      </span><span class="nt">&quot;stopOnEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<a id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-17-14" name="__codelineno-17-14"></a><span class="p">}</span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span>
+<span class="normal"><a href="#__codelineno-17-6">6</a></span>
+<span class="normal"><a href="#__codelineno-17-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="w">    </span><span class="nt">&quot;cmake.useCMakePresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;always&quot;</span><span class="p">,</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">    </span><span class="nt">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="w">    </span><span class="nt">&quot;clangd.arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="w">        </span><span class="s2">&quot;--compile-commands-dir=build&quot;</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/task/json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/launch.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-18-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-18-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-18-4"> 4</a></span>
@@ -1412,66 +1476,22 @@ Provides:</p>
 <span class="normal"><a href="#__codelineno-18-11">11</a></span>
 <span class="normal"><a href="#__codelineno-18-12">12</a></span>
 <span class="normal"><a href="#__codelineno-18-13">13</a></span>
-<span class="normal"><a href="#__codelineno-18-14">14</a></span>
-<span class="normal"><a href="#__codelineno-18-15">15</a></span>
-<span class="normal"><a href="#__codelineno-18-16">16</a></span>
-<span class="normal"><a href="#__codelineno-18-17">17</a></span>
-<span class="normal"><a href="#__codelineno-18-18">18</a></span>
-<span class="normal"><a href="#__codelineno-18-19">19</a></span>
-<span class="normal"><a href="#__codelineno-18-20">20</a></span>
-<span class="normal"><a href="#__codelineno-18-21">21</a></span>
-<span class="normal"><a href="#__codelineno-18-22">22</a></span>
-<span class="normal"><a href="#__codelineno-18-23">23</a></span>
-<span class="normal"><a href="#__codelineno-18-24">24</a></span>
-<span class="normal"><a href="#__codelineno-18-25">25</a></span>
-<span class="normal"><a href="#__codelineno-18-26">26</a></span>
-<span class="normal"><a href="#__codelineno-18-27">27</a></span>
-<span class="normal"><a href="#__codelineno-18-28">28</a></span>
-<span class="normal"><a href="#__codelineno-18-29">29</a></span>
-<span class="normal"><a href="#__codelineno-18-30">30</a></span>
-<span class="normal"><a href="#__codelineno-18-31">31</a></span>
-<span class="normal"><a href="#__codelineno-18-32">32</a></span>
-<span class="normal"><a href="#__codelineno-18-33">33</a></span>
-<span class="normal"><a href="#__codelineno-18-34">34</a></span>
-<span class="normal"><a href="#__codelineno-18-35">35</a></span>
-<span class="normal"><a href="#__codelineno-18-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="p">{</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2.0.0&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">  </span><span class="nt">&quot;tasks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="normal"><a href="#__codelineno-18-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="p">{</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <a id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (debug preset)&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --preset debug&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
-<a id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-18-11" name="__codelineno-18-11"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Build (debug preset)&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --build --preset debug&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-14" name="__codelineno-18-14"></a><span class="w">      </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-18-15" name="__codelineno-18-15"></a><span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-16" name="__codelineno-18-16"></a><span class="w">        </span><span class="nt">&quot;isDefault&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<a id="__codelineno-18-17" name="__codelineno-18-17"></a><span class="w">      </span><span class="p">},</span>
-<a id="__codelineno-18-18" name="__codelineno-18-18"></a><span class="w">      </span><span class="nt">&quot;dependsOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (debug preset)&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-19" name="__codelineno-18-19"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$gcc&quot;</span>
-<a id="__codelineno-18-20" name="__codelineno-18-20"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-18-21" name="__codelineno-18-21"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-18-22" name="__codelineno-18-22"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (release preset)&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-23" name="__codelineno-18-23"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-24" name="__codelineno-18-24"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --preset release&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-25" name="__codelineno-18-25"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
-<a id="__codelineno-18-26" name="__codelineno-18-26"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-18-27" name="__codelineno-18-27"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-18-28" name="__codelineno-18-28"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Build (release preset)&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-29" name="__codelineno-18-29"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-30" name="__codelineno-18-30"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --build --preset release&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-31" name="__codelineno-18-31"></a><span class="w">      </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-32" name="__codelineno-18-32"></a><span class="w">      </span><span class="nt">&quot;dependsOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (release preset)&quot;</span><span class="p">,</span>
-<a id="__codelineno-18-33" name="__codelineno-18-33"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$gcc&quot;</span>
-<a id="__codelineno-18-34" name="__codelineno-18-34"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-18-35" name="__codelineno-18-35"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-18-36" name="__codelineno-18-36"></a><span class="p">}</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug with LLDB&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lldb&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="w">      </span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/build/debug/my_app&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11"></a><span class="w">      </span><span class="nt">&quot;stopOnEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
-<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakePresets.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/task/json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
 <span class="normal"><a href="#__codelineno-19-4"> 4</a></span>
@@ -1506,46 +1526,118 @@ Provides:</p>
 <span class="normal"><a href="#__codelineno-19-33">33</a></span>
 <span class="normal"><a href="#__codelineno-19-34">34</a></span>
 <span class="normal"><a href="#__codelineno-19-35">35</a></span>
-<span class="normal"><a href="#__codelineno-19-36">36</a></span>
-<span class="normal"><a href="#__codelineno-19-37">37</a></span>
-<span class="normal"><a href="#__codelineno-19-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="p">{</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="w">  </span><span class="nt">&quot;cmakeMinimumRequired&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="w">    </span><span class="nt">&quot;major&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<a id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="w">    </span><span class="nt">&quot;minor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span>
-<a id="__codelineno-19-6" name="__codelineno-19-6"></a><span class="w">    </span><span class="nt">&quot;patch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-19-8" name="__codelineno-19-8"></a><span class="w">  </span><span class="nt">&quot;configurePresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-19-9" name="__codelineno-19-9"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-11" name="__codelineno-19-11"></a><span class="w">      </span><span class="nt">&quot;displayName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-12" name="__codelineno-19-12"></a><span class="w">      </span><span class="nt">&quot;generator&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ninja&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-13" name="__codelineno-19-13"></a><span class="w">      </span><span class="nt">&quot;binaryDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${sourceDir}/build/debug&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-14" name="__codelineno-19-14"></a><span class="w">      </span><span class="nt">&quot;cacheVariables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-19-15" name="__codelineno-19-15"></a><span class="w">        </span><span class="nt">&quot;CMAKE_BUILD_TYPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span>
-<a id="__codelineno-19-16" name="__codelineno-19-16"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-19-17" name="__codelineno-19-17"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-19-18" name="__codelineno-19-18"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-19-19" name="__codelineno-19-19"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;release&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-20" name="__codelineno-19-20"></a><span class="w">      </span><span class="nt">&quot;displayName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-21" name="__codelineno-19-21"></a><span class="w">      </span><span class="nt">&quot;generator&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ninja&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-22" name="__codelineno-19-22"></a><span class="w">      </span><span class="nt">&quot;binaryDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${sourceDir}/build/release&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-23" name="__codelineno-19-23"></a><span class="w">      </span><span class="nt">&quot;cacheVariables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-19-24" name="__codelineno-19-24"></a><span class="w">        </span><span class="nt">&quot;CMAKE_BUILD_TYPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release&quot;</span>
-<a id="__codelineno-19-25" name="__codelineno-19-25"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-19-26" name="__codelineno-19-26"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-19-27" name="__codelineno-19-27"></a><span class="w">  </span><span class="p">],</span>
-<a id="__codelineno-19-28" name="__codelineno-19-28"></a><span class="w">  </span><span class="nt">&quot;buildPresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-19-29" name="__codelineno-19-29"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-19-30" name="__codelineno-19-30"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-31" name="__codelineno-19-31"></a><span class="w">      </span><span class="nt">&quot;configurePreset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span>
-<a id="__codelineno-19-32" name="__codelineno-19-32"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-19-33" name="__codelineno-19-33"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-19-34" name="__codelineno-19-34"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;release&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-35" name="__codelineno-19-35"></a><span class="w">      </span><span class="nt">&quot;configurePreset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;release&quot;</span>
-<a id="__codelineno-19-36" name="__codelineno-19-36"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-19-37" name="__codelineno-19-37"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-19-38" name="__codelineno-19-38"></a><span class="p">}</span>
+<span class="normal"><a href="#__codelineno-19-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="p">{</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="w">  </span><span class="nt">&quot;tasks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (debug preset)&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --preset debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Build (debug preset)&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --build --preset debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14"></a><span class="w">      </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15"></a><span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16"></a><span class="w">        </span><span class="nt">&quot;isDefault&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18"></a><span class="w">      </span><span class="nt">&quot;dependsOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (debug preset)&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$gcc&quot;</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (release preset)&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --preset release&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-19-28" name="__codelineno-19-28"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Build (release preset)&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-29" name="__codelineno-19-29"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-30" name="__codelineno-19-30"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --build --preset release&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-31" name="__codelineno-19-31"></a><span class="w">      </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-32" name="__codelineno-19-32"></a><span class="w">      </span><span class="nt">&quot;dependsOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CMake: Configure (release preset)&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-33" name="__codelineno-19-33"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$gcc&quot;</span>
+<a id="__codelineno-19-34" name="__codelineno-19-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-19-35" name="__codelineno-19-35"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-19-36" name="__codelineno-19-36"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakePresets.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span>
+<span class="normal"><a href="#__codelineno-20-11">11</a></span>
+<span class="normal"><a href="#__codelineno-20-12">12</a></span>
+<span class="normal"><a href="#__codelineno-20-13">13</a></span>
+<span class="normal"><a href="#__codelineno-20-14">14</a></span>
+<span class="normal"><a href="#__codelineno-20-15">15</a></span>
+<span class="normal"><a href="#__codelineno-20-16">16</a></span>
+<span class="normal"><a href="#__codelineno-20-17">17</a></span>
+<span class="normal"><a href="#__codelineno-20-18">18</a></span>
+<span class="normal"><a href="#__codelineno-20-19">19</a></span>
+<span class="normal"><a href="#__codelineno-20-20">20</a></span>
+<span class="normal"><a href="#__codelineno-20-21">21</a></span>
+<span class="normal"><a href="#__codelineno-20-22">22</a></span>
+<span class="normal"><a href="#__codelineno-20-23">23</a></span>
+<span class="normal"><a href="#__codelineno-20-24">24</a></span>
+<span class="normal"><a href="#__codelineno-20-25">25</a></span>
+<span class="normal"><a href="#__codelineno-20-26">26</a></span>
+<span class="normal"><a href="#__codelineno-20-27">27</a></span>
+<span class="normal"><a href="#__codelineno-20-28">28</a></span>
+<span class="normal"><a href="#__codelineno-20-29">29</a></span>
+<span class="normal"><a href="#__codelineno-20-30">30</a></span>
+<span class="normal"><a href="#__codelineno-20-31">31</a></span>
+<span class="normal"><a href="#__codelineno-20-32">32</a></span>
+<span class="normal"><a href="#__codelineno-20-33">33</a></span>
+<span class="normal"><a href="#__codelineno-20-34">34</a></span>
+<span class="normal"><a href="#__codelineno-20-35">35</a></span>
+<span class="normal"><a href="#__codelineno-20-36">36</a></span>
+<span class="normal"><a href="#__codelineno-20-37">37</a></span>
+<span class="normal"><a href="#__codelineno-20-38">38</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="p">{</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="w">  </span><span class="nt">&quot;cmakeMinimumRequired&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="w">    </span><span class="nt">&quot;major&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="w">    </span><span class="nt">&quot;minor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="w">    </span><span class="nt">&quot;patch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="w">  </span><span class="nt">&quot;configurePresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="w">      </span><span class="nt">&quot;displayName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12"></a><span class="w">      </span><span class="nt">&quot;generator&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ninja&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13"></a><span class="w">      </span><span class="nt">&quot;binaryDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${sourceDir}/build/debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14"></a><span class="w">      </span><span class="nt">&quot;cacheVariables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15"></a><span class="w">        </span><span class="nt">&quot;CMAKE_BUILD_TYPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span>
+<a id="__codelineno-20-16" name="__codelineno-20-16"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-20-19" name="__codelineno-20-19"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;release&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-20" name="__codelineno-20-20"></a><span class="w">      </span><span class="nt">&quot;displayName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-21" name="__codelineno-20-21"></a><span class="w">      </span><span class="nt">&quot;generator&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ninja&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-22" name="__codelineno-20-22"></a><span class="w">      </span><span class="nt">&quot;binaryDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${sourceDir}/build/release&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-23" name="__codelineno-20-23"></a><span class="w">      </span><span class="nt">&quot;cacheVariables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-24" name="__codelineno-20-24"></a><span class="w">        </span><span class="nt">&quot;CMAKE_BUILD_TYPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Release&quot;</span>
+<a id="__codelineno-20-25" name="__codelineno-20-25"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-20-26" name="__codelineno-20-26"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-20-27" name="__codelineno-20-27"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-20-28" name="__codelineno-20-28"></a><span class="w">  </span><span class="nt">&quot;buildPresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-20-29" name="__codelineno-20-29"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-20-30" name="__codelineno-20-30"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-31" name="__codelineno-20-31"></a><span class="w">      </span><span class="nt">&quot;configurePreset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug&quot;</span>
+<a id="__codelineno-20-32" name="__codelineno-20-32"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-20-33" name="__codelineno-20-33"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-20-34" name="__codelineno-20-34"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;release&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-35" name="__codelineno-20-35"></a><span class="w">      </span><span class="nt">&quot;configurePreset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;release&quot;</span>
+<a id="__codelineno-20-36" name="__codelineno-20-36"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-20-37" name="__codelineno-20-37"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-20-38" name="__codelineno-20-38"></a><span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 
 
