@@ -59,7 +59,7 @@ One interface, many implementations.
 - Avoiding memory leaks and dangling pointers
 
 ## Templates and Generic OOP (Advanced)
-- Template classes and functions
+- [Template classes and functions](templates/)
 - Combining OOP and templates
 - CRTP (Curiously Recurring Template Pattern)
 - Type traits (std::is_base_of, etc.)

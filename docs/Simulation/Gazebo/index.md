@@ -95,9 +95,22 @@ tags:
 </div>
 
 ## Running with nvidia
+
+!!! warning Remember that Gazebo uses the GPU mainly for:
+    
+    ✅ Rendering (camera sensors, GUI, shadows, lighting)
+    ✅ GPU LiDAR (if configured)
+    ❌ Physics (ODE, DART, Bullet, Simbody) usually runs on the CPU.
+
+    So even if the GPU is working, your CPU may still be the bottleneck.
+
 My laptop has two graphics card and it config to `on-demand` using **Prime profiles**
 
-for running gz sim with nvidia card switch to nvidia mode using `sudo prime-select nvidia` or using 
+for running gz sim with nvidia card switch to nvidia mode using 
+
+`sudo prime-select nvidia` 
+
+or 
 
 ```bash
 __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz sim
@@ -106,10 +119,13 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia gz sim
 !!! tip "check"
     using `nvidia-smi` to check that gz sim use nvidia card
 
+    ![alt text](images/nvidia_smi.png)
+
 
 <details>
 <summary>OpenGL Env variable</summary>
-```bash title="check OpenGL
+
+```bash title="check OpenGL"
 glxinfo | grep "OpenGL renderer"
 #
 OpenGL renderer string: Mesa Intel(R) Graphics (ARL)
@@ -120,11 +136,12 @@ xinfo | grep "OpenGL renderer"
 #
 OpenGL renderer string: NVIDIA GeForce RTX 5070 Laptop GPU/PCIe/SSE2
 ```
+
 </details>
 
 
 
-!!! tip "prime-select`
+!!! tip "prime-select"
     prime-select is an Ubuntu-specific utility used to manage hybrid graphics on laptops
 
     ```bash

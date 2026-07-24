@@ -27,8 +27,7 @@ flowchart LR
 ```
 
 ## Betaflight SITL port usage
-
-Source: [Betaflight SITL Autopilot Testing with Gazebo](https://betaflight.com/docs/development/autopilot/SITL_Autopilot_Testing_Gazebo)
+Source: [Betaflight SITL Autopilot Testing with Gazebo](https://betaflight.com/docs/development/autopilot/SITL_Autopilot_Testing_Gazebo){:target="_blank"}
 
 | Port | Protocol | Direction | Usage |
 | --- | --- | --- | --- |
