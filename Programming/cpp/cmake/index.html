@@ -686,6 +686,100 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-cmake-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The CMake idea
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-functionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main functionality
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#responsibility-cmake-ninja-make-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Responsibility: CMake, Ninja, Make, compiler
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-step-vs-build-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure step vs build step
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure step vs build step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configure-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build step
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-ninja-or-makefile-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Ninja or Makefile does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-learn-cmake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to learn CMake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -754,6 +848,167 @@
 
 </div>
 
+<hr />
+<h2 id="the-cmake-idea">The CMake idea</h2>
+<p>CMake is a build system generator.</p>
+<p>It does not usually compile your C++ code by itself. Instead, you describe your
+project in <code>CMakeLists.txt</code>, and CMake generates files for a real build tool,
+such as Makefiles, Ninja files, Visual Studio projects, or Xcode projects.</p>
+<p>The main idea is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>CMakeLists.txt -&gt; cmake configure -&gt; build files -&gt; cmake build -&gt; executable/library
+</code></pre></div></td></tr></table></div>
+<p>This lets the same C++ project build on different operating systems and with
+different compilers.</p>
+<h2 id="main-functionality">Main functionality</h2>
+<p>CMake is mainly used to:</p>
+<ul>
+<li>define executables with <code>add_executable</code></li>
+<li>define libraries with <code>add_library</code></li>
+<li>connect files, include folders, and compiler options to targets</li>
+<li>find external packages with <code>find_package</code></li>
+<li>link libraries with <code>target_link_libraries</code></li>
+<li>create build configurations such as Debug and Release</li>
+<li>organize tests, install rules, and generated files</li>
+</ul>
+<p>Modern CMake focuses on targets.</p>
+<p>A target is something CMake can build, like an executable or a library.</p>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.20</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nb">project</span><span class="p">(</span><span class="s">hello_cmake</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="s">17</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD_REQUIRED</span><span class="w"> </span><span class="s">ON</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">hello</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="s">main.cpp</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Build it:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build
+</code></pre></div></td></tr></table></div>
+<p>Meaning:</p>
+<ul>
+<li><code>-S .</code> means the source folder is the current folder</li>
+<li><code>-B build</code> means put generated build files in the <code>build</code> folder</li>
+<li><code>cmake --build build</code> asks CMake to run the real build tool</li>
+</ul>
+<h2 id="responsibility-cmake-ninja-make-compiler">Responsibility: CMake, Ninja, Make, compiler</h2>
+<p>CMake, Ninja, Make, and the compiler have different jobs.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[CMakeLists.txt] --&gt; B[Configure step&lt;br/&gt;cmake -S . -B build]
+    B --&gt; C[Generated build files&lt;br/&gt;build.ninja or Makefile]
+    C --&gt; D[Build step&lt;br/&gt;cmake --build build]
+    D --&gt; E[Ninja or Make runs commands]
+    E --&gt; F[Compiler creates object files]
+    F --&gt; G[Linker creates final binary]
+    G --&gt; H[Executable or library]</code></pre>
+<p>Short responsibility split:</p>
+<ul>
+<li><code>CMakeLists.txt</code>: describes the project</li>
+<li><code>cmake</code>: configures the project and generates build files</li>
+<li><code>Ninja</code> or <code>Make</code>: executes the build steps in the correct order</li>
+<li>compiler: turns <code>.cpp</code> files into object files</li>
+<li>linker: connects object files and libraries into the final binary</li>
+</ul>
+<p>CMake is the planner.</p>
+<p>Ninja or Make is the worker that follows the generated plan.</p>
+<p>The compiler and linker are the tools that actually create the binary.</p>
+<h2 id="configure-step-vs-build-step">Configure step vs build step</h2>
+<p>CMake usually has two main steps: configure and build.</p>
+<h3 id="configure-step">Configure step</h3>
+<p>Configure means: read the project description and prepare the build folder.</p>
+<p>Command:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build
+</code></pre></div></td></tr></table></div>
+<p>During configure, CMake:</p>
+<ul>
+<li>reads <code>CMakeLists.txt</code></li>
+<li>checks which compiler is available</li>
+<li>checks project options</li>
+<li>finds dependencies with <code>find_package</code></li>
+<li>creates generated build files, such as <code>build.ninja</code> or <code>Makefile</code></li>
+<li>writes cache values into <code>build/CMakeCache.txt</code></li>
+</ul>
+<p>Configure does not normally compile your <code>.cpp</code> files.</p>
+<h3 id="build-step">Build step</h3>
+<p>Build means: use the generated build files to compile and link the program.</p>
+<p>Command:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build
+</code></pre></div></td></tr></table></div>
+<p>During build, Ninja or Make:</p>
+<ul>
+<li>checks which source files changed</li>
+<li>compiles <code>.cpp</code> files into object files</li>
+<li>links object files into an executable or library</li>
+<li>runs only the commands needed for the current changes</li>
+</ul>
+<p>The short difference:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>configure = create the build plan
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>build     = execute the build plan
+</code></pre></div></td></tr></table></div>
+<h2 id="what-ninja-or-makefile-does">What Ninja or Makefile does</h2>
+<p>Ninja and Make are build tools.</p>
+<p>They read generated build files and decide which commands must run.</p>
+<p>Their main jobs are:</p>
+<ul>
+<li>compile only files that changed</li>
+<li>run build steps in the correct dependency order</li>
+<li>run multiple compile jobs in parallel when possible</li>
+<li>call the compiler with the right flags</li>
+<li>call the linker to create the final executable or library</li>
+</ul>
+<p>For example, if only <code>robot.cpp</code> changed, Ninja or Make should rebuild
+<code>robot.cpp</code>, then relink the final executable. It should not rebuild every file
+in the project.</p>
+<p>With CMake, you usually do not call Ninja or Make directly.</p>
+<p>Use:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build
+</code></pre></div></td></tr></table></div>
+<p>CMake will call the correct generated build tool for that build folder.</p>
+<h2 id="how-to-learn-cmake">How to learn CMake</h2>
+<p>Learn CMake in this order:</p>
+<ol>
+<li>Build one executable from one <code>main.cpp</code>.</li>
+<li>Add more <code>.cpp</code> and <code>.h</code> files to the same executable.</li>
+<li>Create a library with <code>add_library</code>.</li>
+<li>Link the library to an executable with <code>target_link_libraries</code>.</li>
+<li>Add include folders with <code>target_include_directories</code>.</li>
+<li>Learn Debug and Release builds.</li>
+<li>Learn <code>find_package</code> for external dependencies.</li>
+<li>Learn testing with CTest or GoogleTest.</li>
+<li>Learn <code>CMakePresets.json</code> after the basics are clear.</li>
+</ol>
+<p>For normal projects, focus first on these commands:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">cmake_minimum_required</span><span class="p">()</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nb">project</span><span class="p">()</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nb">add_executable</span><span class="p">()</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="nb">add_library</span><span class="p">()</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="nb">target_include_directories</span><span class="p">()</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="nb">target_link_libraries</span><span class="p">()</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="nb">target_compile_features</span><span class="p">()</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="nb">find_package</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<p>Avoid learning old global commands first, such as <code>include_directories()</code> and
+<code>link_libraries()</code>. Modern CMake usually prefers target-based commands because
+they keep settings attached to the library or executable that needs them.</p>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
