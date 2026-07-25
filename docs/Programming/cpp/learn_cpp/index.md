@@ -17,6 +17,11 @@ tags:
         <p>Files and streams</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="lambda_expression">
+        <p>Lambda expression</p>
+        </a>
+    </div>
 </div>
 
 ## more

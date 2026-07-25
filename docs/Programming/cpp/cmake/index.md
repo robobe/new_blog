@@ -19,8 +19,8 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="">
-        <p></p>
+        <a href="zero_to_hero">
+        <p>Zero to hero</p>
         </a>
     </div>
      

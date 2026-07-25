@@ -100,7 +100,7 @@ This animal is not a Dog
 
 ## Important rule
 
-`dynamic_cast` works for downcasting only when the base class is polymorphic.
+`dynamic_cast` works for **downcasting** only when the base class is polymorphic.
 
 That means the base class must have at least one `virtual` function.
 
@@ -115,6 +115,77 @@ public:
 
 This makes the class polymorphic and also allows safe deletion through a base
 class pointer.
+
+---
+
+## Downcasting
+
+Downcasting means converting from a base class pointer/reference to a derived
+class pointer/reference.
+
+Example:
+
+```cpp
+Animal* animal = new Dog();
+
+Dog* dog = dynamic_cast<Dog*>(animal);
+
+if (dog != nullptr) {
+    dog->fetch();
+}
+
+delete animal;
+```
+
+Meaning:
+
+- `animal` has type `Animal*`
+- the real object is a `Dog`
+- `dynamic_cast<Dog*>(animal)` checks the real type at runtime
+- because the object is really a `Dog`, the cast succeeds
+
+Failed downcast:
+
+```cpp
+Animal* animal = new Cat();
+
+Dog* dog = dynamic_cast<Dog*>(animal);
+
+if (dog == nullptr) {
+    std::cout << "animal is not a Dog\n";
+}
+
+delete animal;
+```
+
+Here the real object is a `Cat`, not a `Dog`, so the cast returns `nullptr`.
+
+Use `dynamic_cast` for downcasting because it is checked at runtime.
+
+## Upcasting
+
+Upcasting means converting from a derived class pointer/reference to a base class
+pointer/reference.
+
+Example:
+
+```cpp
+Dog dog;
+
+Animal* animal = &dog;
+```
+
+This is safe and automatic.
+
+You usually do not need any cast for upcasting.
+
+The compiler knows every `Dog` is also an `Animal`, because `Dog` inherits from
+`Animal`.
+
+
+Upcasting is commonly used when storing different derived objects behind one
+base interface.
+
 
 ---
 
