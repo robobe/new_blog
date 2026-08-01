@@ -59,4 +59,9 @@ tags:
         <p>5inch Build Guide</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="power_system">
+            <p>Power System</p>
+        </a>
+    </div>
 </div>

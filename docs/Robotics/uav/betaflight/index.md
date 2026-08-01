@@ -34,6 +34,11 @@ tags:
         <p>failsafe</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="altitude_hold">
+        <p>altitude hold</p>
+        </a>
+    </div>
 </div>
 
 {{ page_folder_links() }}
