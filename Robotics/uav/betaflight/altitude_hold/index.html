@@ -1,0 +1,1552 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/betaflight/altitude_hold/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Betaflight Altitude Hold with a Barometer - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-altitude-hold-controls" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Betaflight Altitude Hold with a Barometer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-altitude-hold-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Altitude Hold controls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#throttle-stick-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Throttle-stick behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-and-firmware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware and firmware requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protect-the-barometer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protect the barometer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#back-up-before-changing-anything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Back up before changing anything
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#confirm-the-correct-firmware-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confirm the correct firmware build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-the-accelerometer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the accelerometer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-the-barometer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the barometer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#force-barometer-only-altitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Force barometer-only altitude
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-mode-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure the mode switch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-the-osd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure the OSD
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understand-the-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understand the parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-the-real-hover-throttle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find the real hover throttle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-first-test-flight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Safety-first test flight
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-tuning-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical tuning order
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical tuning order">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-correct-engagement-with-ap_hover_throttle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Correct engagement with ap_hover_throttle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-adjust-climb-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Adjust climb response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-adjust-the-throttle-deadband-only-if-necessary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Adjust the throttle deadband only if necessary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-leave-altitude-gains-and-filters-for-logged-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Leave altitude gains and filters for logged tuning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore-the-original-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Restore the original configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-about-a-rangefinder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What about a rangefinder?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-step-blackbox-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next step: Blackbox tuning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">altitude-hold</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">barometer</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">betaflight</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">fpv</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">tuning</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Betaflight Altitude Hold with a Barometer</h1>
+
+<p>Betaflight Altitude Hold (<code>ALTHOLD</code>) automatically changes motor throttle to keep a quad near a target altitude. It is useful when the pilot wants to pause a climb or descent, reduce throttle workload during a steady shot, or gain time during an unexpected distraction.</p>
+<p>This guide covers a <strong>real, generic FPV quad using a barometer only</strong>. It targets the latest stable firmware at the time of writing, <strong>Betaflight 2025.12.5</strong>. It does not cover Position Hold, autonomous flight, GPS altitude, or rangefinder setup.</p>
+<div class="admonition danger">
+<p class="admonition-title">Altitude Hold is an aid, not an autonomous safety system</p>
+<p>The quad can still drift horizontally. Wind, prop wash, temperature changes, incorrect hover throttle, or bad sensor data can cause it to climb or descend. Test line of sight in an empty outdoor area and remain ready to disable the mode or disarm.</p>
+</div>
+<h2 id="what-altitude-hold-controls">What Altitude Hold controls</h2>
+<pre class="mermaid"><code>flowchart LR
+    baro["Barometer&lt;br/&gt;pressure altitude"] --&gt; estimate["Altitude estimate"]
+    acc["Accelerometer&lt;br/&gt;vertical motion"] --&gt; estimate
+    target["Target altitude"] --&gt; controller["Altitude controller"]
+    estimate --&gt; controller
+    hover["ap_hover_throttle&lt;br/&gt;starting point"] --&gt; controller
+    controller --&gt; motors["Throttle correction&lt;br/&gt;to motors"]</code></pre>
+<p>When the mode is engaged, Betaflight records the current altitude as the target. It starts near <code>ap_hover_throttle</code>, then the altitude controller adds or removes throttle to correct vertical error.</p>
+<p>Altitude Hold does <strong>not</strong> hold horizontal position. The pilot retains roll, pitch, and yaw control, and the quad can drift with wind. The mode uses self-level behavior, so the stick response differs from normal Acro flight.</p>
+<h2 id="throttle-stick-behavior">Throttle-stick behavior</h2>
+<table>
+<thead>
+<tr>
+<th>Throttle input</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inside the deadband around hover throttle</td>
+<td>Hold the current target altitude</td>
+</tr>
+<tr>
+<td>Above the deadband</td>
+<td>Climb; more stick produces a faster climb</td>
+</tr>
+<tr>
+<td>Below the deadband</td>
+<td>Descend</td>
+</tr>
+<tr>
+<td>All the way to zero while <code>ALTHOLD</code> remains active</td>
+<td>Hold altitude rather than stop the motors</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Take control when leaving Altitude Hold</p>
+<p>If the throttle stick is at zero when <code>ALTHOLD</code> is disabled, normal throttle control returns immediately and the quad can drop. Before disabling the mode, move the stick to approximately the manual hover position and be ready to correct it.</p>
+</div>
+<h2 id="hardware-and-firmware-requirements">Hardware and firmware requirements</h2>
+<ul>
+<li>A multirotor flight controller with a supported barometer.</li>
+<li>A working accelerometer with correct board alignment.</li>
+<li>Betaflight <code>2025.12.5</code> firmware built with <strong>Altitude Hold</strong> and the correct barometer driver.</li>
+<li>A spare AUX switch for the <code>ALTHOLD</code> mode.</li>
+<li>OSD flight-mode and altitude elements, strongly recommended.</li>
+<li>Enough open space to perform the first test line of sight.</li>
+</ul>
+<p>GPS and a magnetometer are not required for the barometer-only procedure.</p>
+<h2 id="protect-the-barometer">Protect the barometer</h2>
+<p>A barometer estimates altitude from atmospheric pressure. It cannot distinguish a real altitude change from a short pressure disturbance caused by prop wash, wind, or heat.</p>
+<p>Cover an exposed sensor with a small piece of clean, dry <strong>open-cell foam</strong>. The foam allows slow atmospheric-pressure changes through while reducing short pressure pulses.</p>
+<p>Do not:</p>
+<ul>
+<li>use closed-cell foam;</li>
+<li>seal the pressure port with tape or glue;</li>
+<li>compress the foam tightly against the sensor;</li>
+<li>apply conformal coating over the barometer port; or</li>
+<li>assume more foam is better when the board already has a protected barometer.</li>
+</ul>
+<p>The sensor must still respond when the quad is lifted by approximately one metre. Excessively dense or compressed foam can make it respond too slowly.</p>
+<h2 id="back-up-before-changing-anything">Back up before changing anything</h2>
+<p>Remove the propellers, connect the flight controller, open the CLI, and save the current configuration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>version
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>status
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>diff all
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>dump all
+</code></pre></div></td></tr></table></div>
+<p>Use the CLI <strong>Save to File</strong> function to store both <code>diff all</code> and <code>dump all</code>. The smaller <code>diff all</code> is normally the useful restore file; <code>dump all</code> is a complete reference.</p>
+<p>Record the current Altitude Hold settings separately:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>get altitude_source
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>get altitude_prefer_baro
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>get altitude_lpf
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>get altitude_d_lpf
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>get ap_hover_throttle
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>get ap_throttle_min
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>get ap_throttle_max
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>get ap_altitude
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>get alt_hold
+</code></pre></div></td></tr></table></div>
+<div class="admonition info">
+<p class="admonition-title">Screenshot: configuration backup</p>
+<p>Capture the CLI after <code>version</code> and <code>diff all</code>, including the firmware version and target. Save it as <code>images/01-cli-backup.png</code> when preparing the final hardware screenshots.</p>
+</div>
+<h2 id="confirm-the-correct-firmware-build">Confirm the correct firmware build</h2>
+<p>In the Firmware Flasher, select stable <code>2025.12.5</code>, choose the exact flight-controller target, and include:</p>
+<ul>
+<li><code>ALTITUDE_HOLD</code>;</li>
+<li>the accelerometer/gyro drivers required by the board; and</li>
+<li>the barometer driver required by the board.</li>
+</ul>
+<p>Do not flash until the current configuration is backed up and the exact target is confirmed.</p>
+<p>After flashing, reconnect and verify:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>version
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>status
+</code></pre></div></td></tr></table></div>
+<p>The <code>status</code> output should report both the accelerometer and barometer as detected.</p>
+<div class="admonition info">
+<p class="admonition-title">Screenshot: firmware build options</p>
+<p>Capture the Firmware Flasher with the target, stable version, <code>ALTITUDE_HOLD</code>, and barometer build options visible. Save it as <code>images/02-firmware-options.png</code>.</p>
+</div>
+<h2 id="verify-the-accelerometer">Verify the accelerometer</h2>
+<p>Place the quad on a truly level, motionless surface and calibrate the accelerometer from the Setup tab. Then lift and rotate the quad by hand. The 3D model must follow the real quad correctly on roll, pitch, and yaw.</p>
+<p>An incorrect board orientation or poor accelerometer calibration makes self-level modes unsafe. Correct that before testing Altitude Hold.</p>
+<div class="admonition info">
+<p class="admonition-title">Screenshot: Setup tab</p>
+<p>Capture the level quad in the Setup tab with the accelerometer and barometer indicators active. Save it as <code>images/03-setup-sensors.png</code>.</p>
+</div>
+<h2 id="verify-the-barometer">Verify the barometer</h2>
+<p>Open the Sensors tab, select the barometer/altitude trace, and leave the quad stationary for a few minutes.</p>
+<p>Check that:</p>
+<ul>
+<li>the altitude does not continuously run away while stationary;</li>
+<li>lifting the quad about one metre produces approximately one metre of change;</li>
+<li>returning it to the same surface brings the reading near its starting value; and</li>
+<li>gently moving air near the flight controller does not cause extreme spikes.</li>
+</ul>
+<p>Some noise and delay are normal. A strong response to air movement indicates that the barometer needs better protection.</p>
+<p>For a deeper check:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>set debug_mode = BARO
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>save
+</code></pre></div></td></tr></table></div>
+<p>The <code>BARO</code> debug mode exposes the sensor state, pressure, temperature, and barometer-only altitude. Restore the previous debug mode after testing if another feature uses it.</p>
+<div class="admonition info">
+<p class="admonition-title">Screenshot: barometer trace</p>
+<p>Capture the Sensors tab at rest and during a controlled one-metre lift. Save it as <code>images/04-baro-one-meter-test.png</code>.</p>
+</div>
+<h2 id="force-barometer-only-altitude">Force barometer-only altitude</h2>
+<p>For this guide, use the barometer as the only altitude source:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>set altitude_source = BARO_ONLY
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>save
+</code></pre></div></td></tr></table></div>
+<p>Confirm it after reconnecting:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>get altitude_source
+</code></pre></div></td></tr></table></div>
+<p><code>altitude_prefer_baro</code> only controls weighting when <code>altitude_source</code> is <code>DEFAULT</code> and both GPS and barometer data are available. It has no practical tuning role in this <code>BARO_ONLY</code> setup.</p>
+<h2 id="configure-the-mode-switch">Configure the mode switch</h2>
+<p>In the Modes tab:</p>
+<ol>
+<li>Find <code>ALTHOLD</code>.</li>
+<li>Assign it to an unused AUX channel.</li>
+<li>Set a range that activates only in the intended switch position.</li>
+<li>Confirm the indicator enters and leaves the range reliably.</li>
+<li>Keep <code>ALTHOLD</code> off while arming.</li>
+</ol>
+<p>A three-position switch is useful:</p>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Suggested function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Normal flight</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Angle mode for checking self-level behavior</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Altitude Hold</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Screenshot: Modes tab</p>
+<p>Capture the <code>ALTHOLD</code> AUX assignment with the switch marker inside the active range. Save it as <code>images/05-althold-mode.png</code>.</p>
+</div>
+<h2 id="configure-the-osd">Configure the OSD</h2>
+<p>Enable at least:</p>
+<ul>
+<li>flight mode;</li>
+<li>altitude;</li>
+<li>throttle position;</li>
+<li>warnings; and</li>
+<li>battery voltage.</li>
+</ul>
+<p>The flight-mode element confirms that <code>ALTHOLD</code> actually engaged. Altitude and throttle help diagnose the engagement response without looking away from the aircraft for long.</p>
+<div class="admonition info">
+<p class="admonition-title">Screenshot: OSD elements</p>
+<p>Capture the OSD tab with these elements highlighted. Save it as <code>images/06-osd-elements.png</code>.</p>
+</div>
+<h2 id="understand-the-parameters">Understand the parameters</h2>
+<p>Defaults and allowed ranges below are from the Betaflight <code>2025.12.5</code> source.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th style="text-align: right;">Default</th>
+<th>Purpose</th>
+<th>First-flight advice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ap_hover_throttle</code></td>
+<td style="text-align: right;"><code>1275</code></td>
+<td>Initial throttle used when hold engages</td>
+<td>Tune this first</td>
+</tr>
+<tr>
+<td><code>ap_throttle_min</code></td>
+<td style="text-align: right;"><code>1100</code></td>
+<td>Lowest throttle the controller may request</td>
+<td>Leave at default initially</td>
+</tr>
+<tr>
+<td><code>ap_throttle_max</code></td>
+<td style="text-align: right;"><code>1700</code></td>
+<td>Highest throttle the controller may request</td>
+<td>Leave at default initially</td>
+</tr>
+<tr>
+<td><code>alt_hold_climb_rate</code></td>
+<td style="text-align: right;"><code>50</code></td>
+<td>Maximum commanded vertical speed; <code>50</code> represents 5 m/s</td>
+<td>Reduce for gentler response if needed</td>
+</tr>
+<tr>
+<td><code>alt_hold_deadband</code></td>
+<td style="text-align: right;"><code>20</code></td>
+<td>Percentage of throttle travel around hover where altitude is held</td>
+<td>Leave at default initially</td>
+</tr>
+<tr>
+<td><code>ap_altitude_p</code></td>
+<td style="text-align: right;"><code>15</code></td>
+<td>Correction proportional to altitude error</td>
+<td>Leave at default until basic tests pass</td>
+</tr>
+<tr>
+<td><code>ap_altitude_i</code></td>
+<td style="text-align: right;"><code>15</code></td>
+<td>Corrects persistent altitude error</td>
+<td>Leave at default until logs are available</td>
+</tr>
+<tr>
+<td><code>ap_altitude_d</code></td>
+<td style="text-align: right;"><code>15</code></td>
+<td>Damps vertical motion</td>
+<td>Leave at default until logs are available</td>
+</tr>
+<tr>
+<td><code>ap_altitude_f</code></td>
+<td style="text-align: right;"><code>15</code></td>
+<td>Feed-forward contribution</td>
+<td>Leave at default until logs are available</td>
+</tr>
+<tr>
+<td><code>altitude_lpf</code></td>
+<td style="text-align: right;"><code>300</code></td>
+<td>Altitude low-pass cutoff, value divided by 100 Hz</td>
+<td>Default equals 3 Hz</td>
+</tr>
+<tr>
+<td><code>altitude_d_lpf</code></td>
+<td style="text-align: right;"><code>100</code></td>
+<td>Vertical-derivative low-pass cutoff, value divided by 100 Hz</td>
+<td>Default equals 1 Hz</td>
+</tr>
+</tbody>
+</table>
+<h2 id="find-the-real-hover-throttle">Find the real hover throttle</h2>
+<p><code>ap_hover_throttle</code> is the most important practical setting. If it is too low, the quad drops when Altitude Hold engages. If it is too high, the quad climbs.</p>
+<ol>
+<li>Use a normally charged battery—not a nearly empty or unusually fresh pack.</li>
+<li>Fly in calm conditions.</li>
+<li>Establish a stable manual hover in Angle mode.</li>
+<li>Observe the OSD throttle value for several seconds.</li>
+<li>Land and disarm.</li>
+<li>Use that value as the initial <code>ap_hover_throttle</code>.</li>
+</ol>
+<p>Example only:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>set ap_hover_throttle = 1275
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>save
+</code></pre></div></td></tr></table></div>
+<p>Do not copy <code>1275</code> blindly. A heavy quad, different propeller, battery voltage, throttle scaling, or motor-output limit changes the real hover point.</p>
+<h2 id="safety-first-test-flight">Safety-first test flight</h2>
+<p>Choose a large, empty outdoor area with flat ground, calm wind, no people nearby, and no obstacles above the test area. Use line of sight; do not begin through goggles.</p>
+<p>Before takeoff:</p>
+<ul>
+<li>confirm props, motor direction, controls, failsafe, and battery condition;</li>
+<li>confirm the barometer trace passed the stationary and one-metre tests;</li>
+<li>verify Angle mode self-leveling in a previous flight;</li>
+<li>verify the <code>ALTHOLD</code> switch begins off;</li>
+<li>rehearse which switch direction disables the mode; and</li>
+<li>decide on a safe disarm action if the quad accelerates unexpectedly.</li>
+</ul>
+<p>Test procedure:</p>
+<ol>
+<li>Arm with <code>ALTHOLD</code> off.</li>
+<li>Take off normally and establish a stable hover at approximately 2–3 m.</li>
+<li>Center the quad over an empty area and keep the throttle near manual hover.</li>
+<li>Enable <code>ALTHOLD</code> for one or two seconds.</li>
+<li>Disable immediately if the quad climbs, drops, oscillates, or tilts unexpectedly.</li>
+<li>If engagement is calm, leave it active briefly and make small roll, pitch, and yaw corrections.</li>
+<li>Test a small climb and descent using gentle throttle movement.</li>
+<li>Return the throttle to approximately manual hover before disabling <code>ALTHOLD</code>.</li>
+<li>Disable the mode, take over throttle smoothly, then land.</li>
+</ol>
+<p>Do not tune during the flight. Land, disarm, change one value, record it, and repeat.</p>
+<h2 id="practical-tuning-order">Practical tuning order</h2>
+<h3 id="1-correct-engagement-with-ap_hover_throttle">1. Correct engagement with <code>ap_hover_throttle</code></h3>
+<ul>
+<li>Immediate drop: increase <code>ap_hover_throttle</code> slightly.</li>
+<li>Immediate climb: decrease it slightly.</li>
+<li>No obvious bump: continue to the hold test.</li>
+</ul>
+<p>Use small changes, for example 10–20 units at a time, and repeat the same engagement test.</p>
+<h3 id="2-adjust-climb-response">2. Adjust climb response</h3>
+<p>If full-stick climb or descent is too fast for safe testing, reduce <code>alt_hold_climb_rate</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>set alt_hold_climb_rate = 30
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>save
+</code></pre></div></td></tr></table></div>
+<p>Here, <code>30</code> represents approximately 3 m/s at full command. Confirm the value supported by the connected firmware with <code>get alt_hold_climb_rate</code> before changing it.</p>
+<h3 id="3-adjust-the-throttle-deadband-only-if-necessary">3. Adjust the throttle deadband only if necessary</h3>
+<p>A larger <code>alt_hold_deadband</code> makes it easier to remain in hold but requires more stick movement to command a climb or descent. A smaller value feels more responsive but makes accidental altitude commands easier.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>set alt_hold_deadband = 20
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>save
+</code></pre></div></td></tr></table></div>
+<p>Keep the default for the first flights.</p>
+<h3 id="4-leave-altitude-gains-and-filters-for-logged-tuning">4. Leave altitude gains and filters for logged tuning</h3>
+<p>Do not use <code>ap_altitude_p/i/d/f</code>, <code>altitude_lpf</code>, or <code>altitude_d_lpf</code> to hide a bad barometer installation. First resolve airflow, temperature, vibration, calibration, and hover-throttle problems.</p>
+<p>Advanced gain and filter tuning should wait until a repeatable test and Blackbox data are available.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>First action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Drops as soon as <code>ALTHOLD</code> engages</td>
+<td><code>ap_hover_throttle</code> too low</td>
+<td>Increase it in small steps</td>
+</tr>
+<tr>
+<td>Climbs as soon as it engages</td>
+<td><code>ap_hover_throttle</code> too high</td>
+<td>Decrease it in small steps</td>
+</tr>
+<tr>
+<td>Altitude wanders slowly</td>
+<td>Temperature drift or pressure changes</td>
+<td>Warm up, inspect placement, repeat stationary test</td>
+</tr>
+<tr>
+<td>Altitude jumps in wind or prop wash</td>
+<td>Barometer exposed to turbulent air</td>
+<td>Add or improve open-cell foam protection</td>
+</tr>
+<tr>
+<td>Rapid vertical oscillation</td>
+<td>Noisy altitude/vertical-speed estimate or aggressive gains</td>
+<td>Stop testing; inspect sensor data before changing gains</td>
+</tr>
+<tr>
+<td>Hold responds too slowly</td>
+<td>Excessive filtering or low gains</td>
+<td>Record a log before adjusting advanced settings</td>
+</tr>
+<tr>
+<td>Cannot arm</td>
+<td><code>ALTHOLD</code> switch already active</td>
+<td>Disable it before arming</td>
+</tr>
+<tr>
+<td>Quad drops when mode is disabled</td>
+<td>Throttle stick was too low during handover</td>
+<td>Match manual hover throttle before disabling</td>
+</tr>
+<tr>
+<td>Mode is missing</td>
+<td>Firmware lacks <code>ALTITUDE_HOLD</code></td>
+<td>Rebuild for the exact target with the feature enabled</td>
+</tr>
+<tr>
+<td>Barometer is not detected</td>
+<td>Driver omitted, wrong bus configuration, or sensor needs LiPo power</td>
+<td>Remove props, verify build and test with required power</td>
+</tr>
+</tbody>
+</table>
+<h2 id="restore-the-original-configuration">Restore the original configuration</h2>
+<p>The safest restore method is to paste the previously saved <code>diff all</code> into the CLI and then run:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>save
+</code></pre></div></td></tr></table></div>
+<p>To restore only the settings changed by this guide, use the values recorded before starting:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>set altitude_source = &lt;original value&gt;
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>set ap_hover_throttle = &lt;original value&gt;
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>set alt_hold_climb_rate = &lt;original value&gt;
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>set alt_hold_deadband = &lt;original value&gt;
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>save
+</code></pre></div></td></tr></table></div>
+<h2 id="what-about-a-rangefinder">What about a rangefinder?</h2>
+<p>Betaflight 2026.6 documentation describes optical-flow and laser-rangefinder altitude hold with the Upixel UP-T1-001-Plus. That is a different estimator and hardware workflow from this stable <code>2025.12.5</code> barometer-only guide.</p>
+<p>A downward rangefinder measures distance to the surface beneath the quad, not barometric altitude relative to takeoff. Slopes, roofs, trees, water, sensor tilt, and the maximum measurement range all affect it. Treat rangefinder integration as a separate future guide and do not assume a seamless rangefinder-to-barometer transition without hardware testing.</p>
+<h2 id="next-step-blackbox-tuning">Next step: Blackbox tuning</h2>
+<p>Once several safe flights are repeatable, record Blackbox data containing altitude, barometer, accelerometer, throttle, motors, flight-mode flags, and altitude-controller debug fields. That data can support a separate advanced guide for tuning gains and filters instead of guessing from visual behavior.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://betaflight.com/docs/wiki/guides/current/Position-Hold-2025-12" target="_blank">Betaflight Position Hold and Altitude Hold guide</a></li>
+<li><a href="https://betaflight.com/docs/wiki/guides/current/Barometer" target="_blank">Betaflight Barometer guide</a></li>
+<li><a href="https://betaflight.com/docs/wiki/guides/current/Cli" target="_blank">Betaflight CLI reference</a></li>
+<li><a href="https://github.com/betaflight/betaflight/releases/tag/2025.12.5" target="_blank">Betaflight 2025.12.5 release</a></li>
+<li><a href="https://oscarliang.com/betaflight-position-hold/" target="_blank">Oscar Liang: Position Hold and Altitude Hold</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1287 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/fpv/power_system/companion_computer/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Companion Computer Power - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#working-diagnosis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Companion Computer Power
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#working-diagnosis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working diagnosis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current connection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-generic-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended generic topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-the-cable-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the cable matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isolation-test-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Isolation test sequence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Isolation test sequence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-1-cable-and-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 1: cable and load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-2-measure-at-the-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 2: measure at the load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-3-local-output-capacitance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 3: local output capacitance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-4-delayed-companion-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test 4: delayed companion startup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uart-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UART connection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grounding-and-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grounding and layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-flight-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-flight verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-to-record-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings to record next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">companion-computer</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">electronics</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">fpv</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">power</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">uart</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Companion Computer Power</h1>
+
+<p>A companion computer adds cameras, networking, autonomy, and high-level processing to an FPV quad, but it also adds a pulsed electrical load beside noise-sensitive flight electronics. A system that works when the computer has a separate supply can fail when both devices share the flight battery.</p>
+<p>This page develops a generic, measurement-first wiring pattern from a real test setup:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Test setup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Battery</td>
+<td>6S LiPo, up to 25.2 V when full</td>
+</tr>
+<tr>
+<td>ESC/FC</td>
+<td>iFlight F435 stack, with the final design intended to remain stack-independent</td>
+</tr>
+<tr>
+<td>Companion computer</td>
+<td>Radxa ZERO 3W</td>
+</tr>
+<tr>
+<td>Regulator</td>
+<td>Pololu D24V50F5, fixed 5 V, typical maximum 5 A</td>
+</tr>
+<tr>
+<td>Computer input</td>
+<td>USB 2.0 OTG/power USB-C port</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td>USB camera, approximately 100 mA expected load</td>
+</tr>
+<tr>
+<td>UART</td>
+<td>Radxa physical pin 8 TX, pin 10 RX, pin 6 GND</td>
+</tr>
+<tr>
+<td>Regulator input</td>
+<td>Directly from the ESC battery pads</td>
+</tr>
+<tr>
+<td>Cabling</td>
+<td>About 10 cm from battery pads to regulator and 30 cm from regulator to Radxa</td>
+</tr>
+</tbody>
+</table>
+<p>The observed failure is intermittent: sometimes the flight controller does not boot correctly, UART communication is unavailable, and connecting FC USB does not recover it. Battery power must be removed and reapplied. The Radxa has also occasionally failed to power. The FC works reliably when the Radxa uses a separate supply.</p>
+<div class="admonition danger">
+<p class="admonition-title">Bench-test without propellers</p>
+<p>Remove every propeller before changing power or UART wiring. Use a current-limited bench supply when possible. A wiring mistake on a 6S system can destroy the FC, ESC, computer, or USB host and can start a fire.</p>
+</div>
+<h2 id="working-diagnosis">Working diagnosis</h2>
+<p>The UART pin selection is valid: the Radxa uses 3.3 V GPIO, physical pin 8 is <code>UART2_TX_M0</code>, pin 10 is <code>UART2_RX_M0</code>, and pin 6 is ground. A level shifter is normally unnecessary when the selected FC UART is also 3.3 V.</p>
+<p>The strongest evidence points to the shared power path:</p>
+<ul>
+<li>The problem was seen even with UART disconnected.</li>
+<li>The FC boots when the Pololu remains on the battery pads with no Radxa load.</li>
+<li>The FC and UART work when the Radxa uses an independent supply while signal ground remains connected.</li>
+<li>The Radxa occasionally fails to start from the onboard regulator.</li>
+</ul>
+<p>That does not prove one specific fault. The main candidates are:</p>
+<ol>
+<li>A short 5 V dip during simultaneous FC and Radxa startup.</li>
+<li>Voltage loss through the cut 30 cm USB cable.</li>
+<li>High-frequency regulator ripple or switching noise coupled through the shared battery and ground.</li>
+<li>Battery-pad transients during connection.</li>
+<li>An intermittent USB-C power lead or solder joint.</li>
+<li>Startup inrush exceeding the regulator, cable, connector, or battery-pad path for a fraction of a second.</li>
+</ol>
+<p>A multimeter showing <code>5 V</code> does not rule these out. It usually averages the signal and can miss a millisecond-scale dip that resets a processor.</p>
+<h2 id="current-connection">Current connection</h2>
+<pre class="mermaid"><code>flowchart LR
+    BAT["6S LiPo&lt;br/&gt;up to 25.2 V"]
+    PAD["ESC battery pads"]
+    ESC["4-in-1 ESC"]
+    FC["Flight controller&lt;br/&gt;powered through stack connector"]
+    BUCK["Pololu D24V50F5&lt;br/&gt;5 V buck regulator"]
+    CABLE["Cut USB cable&lt;br/&gt;about 30 cm"]
+    RADXA["Radxa ZERO 3W"]
+    CAM["USB camera"]
+
+    BAT --&gt; PAD
+    PAD --&gt; ESC
+    ESC --&gt;|"stack power + motor signals"| FC
+    PAD --&gt;|"10 cm VBAT + GND"| BUCK
+    BUCK --&gt;|"5 V + GND"| CABLE
+    CABLE --&gt;|"USB-C OTG/power"| RADXA
+    RADXA --&gt; CAM
+
+    FC --&gt;|"TX → RX"| RADXA
+    RADXA --&gt;|"TX → RX"| FC
+    FC ---|"signal GND"| RADXA</code></pre>
+<p>The topology is reasonable, but it needs verified wiring, adequate conductors, local energy storage, and clean startup behavior.</p>
+<h2 id="recommended-generic-topology">Recommended generic topology</h2>
+<pre class="mermaid"><code>flowchart LR
+    BAT["6S LiPo"]
+    STAR["Battery/ESC pads&lt;br/&gt;power star point"]
+    CAPIN["ESC input capacitor&lt;br/&gt;short leads"]
+    ESC["ESC"]
+    FC["FC"]
+    FUSE["Companion branch&lt;br/&gt;fuse or resettable protection"]
+    FILTER["Optional input filter&lt;br/&gt;selected by measurement"]
+    REG["6S-rated 5 V regulator&lt;br/&gt;with current margin"]
+    CAPOUT["Local output capacitor&lt;br/&gt;per regulator guidance"]
+    PI["Companion computer"]
+    UART["3.3 V UART&lt;br/&gt;TX↔RX, RX↔TX, GND"]
+
+    BAT --&gt; STAR
+    STAR --- CAPIN
+    STAR --&gt; ESC
+    ESC --&gt; FC
+    STAR --&gt; FUSE --&gt; FILTER --&gt; REG
+    REG --&gt;|"short, low-resistance&lt;br/&gt;5 V + GND pair"| CAPOUT --&gt; PI
+    FC --- UART --- PI</code></pre>
+<p>Design goals:</p>
+<ul>
+<li>Branch the companion supply at the main battery/ESC pads, not through an FC 5 V rail.</li>
+<li>Keep companion load current out of FC traces and connectors.</li>
+<li>Run 5 V and ground together as a short, low-resistance pair.</li>
+<li>Put any added output capacitor close to the companion input, not only at the regulator.</li>
+<li>Keep the buck regulator and its power wiring away from the gyro, receiver antenna, GPS, magnetometer, and UART wiring.</li>
+<li>Cross noisy power wiring and signal wiring at right angles when separation is not possible.</li>
+<li>Use one intentional signal-ground connection between the FC and companion computer.</li>
+</ul>
+<h2 id="why-the-cable-matters">Why the cable matters</h2>
+<p>The Radxa documentation specifies a 5 V, 2 A supply. Its instantaneous demand can change during boot, CPU activity, Wi-Fi startup, and USB-camera initialization.</p>
+<p>The Pololu output is fixed at 5 V with 4% accuracy. At the low end, it can be close to 4.8 V before cable and connector losses. A thin or damaged USB cable can remove more voltage during a current pulse:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>voltage_drop = current × total_wire_resistance
+</code></pre></div></td></tr></table></div>
+<p>The total resistance includes both the 5 V conductor and the return conductor. Measuring only at the regulator can therefore show a healthy voltage while the Radxa sees a lower value.</p>
+<p>First replace the cut cable with a short, known-good USB power cable or a purpose-built lead rated for at least 3 A. Measure at the Radxa end while it remains connected.</p>
+<h2 id="isolation-test-sequence">Isolation test sequence</h2>
+<p>Change one condition at a time and record whether both devices boot correctly over at least ten power cycles.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["Props removed&lt;br/&gt;UART disconnected"] --&gt; B["Power FC only"]
+    B --&gt; C{"10/10 clean boots?"}
+    C -- No --&gt; C1["Repair FC/ESC power first"]
+    C -- Yes --&gt; D["Connect unloaded regulator"]
+    D --&gt; E{"10/10 clean boots?"}
+    E -- No --&gt; E1["Inspect regulator input wiring/noise"]
+    E -- Yes --&gt; F["Power Radxa with short known-good cable&lt;br/&gt;camera disconnected"]
+    F --&gt; G{"10/10 clean boots?"}
+    G -- No --&gt; G1["Measure 5 V at Radxa&lt;br/&gt;capture startup transient"]
+    G -- Yes --&gt; H["Connect USB camera"]
+    H --&gt; I{"10/10 clean boots?"}
+    I -- No --&gt; I1["Check added load and USB inrush"]
+    I -- Yes --&gt; J["Connect UART TX/RX/GND"]
+    J --&gt; K{"10/10 clean boots and UART works?"}
+    K -- No --&gt; K1["Check UART mapping, baud, back-power"]
+    K -- Yes --&gt; L["Proceed to restrained motor-noise test"]</code></pre>
+<h3 id="test-1-cable-and-load">Test 1: cable and load</h3>
+<ol>
+<li>Remove props and disconnect UART.</li>
+<li>Disconnect the USB camera.</li>
+<li>Replace the cut cable with the shortest known-good high-current lead available.</li>
+<li>Power-cycle at least ten times.</li>
+<li>Add the camera and repeat.</li>
+</ol>
+<p>If this changes the result, the original cable or connector is a major suspect.</p>
+<h3 id="test-2-measure-at-the-load">Test 2: measure at the load</h3>
+<p>Measure between Radxa 5 V and ground as close to the board as safely possible while it boots. Do not rely only on the regulator pads.</p>
+<p>Preferred tools, in order:</p>
+<ol>
+<li>Oscilloscope with a short ground spring.</li>
+<li>Multimeter with fast minimum-value capture.</li>
+<li>USB power meter with transient logging.</li>
+<li>Ordinary multimeter, useful for steady voltage but not decisive for startup dips.</li>
+</ol>
+<p>Record:</p>
+<ul>
+<li>minimum 5 V rail during connection;</li>
+<li>minimum during Radxa boot;</li>
+<li>change when the camera initializes;</li>
+<li>regulator temperature; and</li>
+<li>whether the FC 5 V rail changes at the same time.</li>
+</ul>
+<h3 id="test-3-local-output-capacitance">Test 3: local output capacitance</h3>
+<p>A capacitor close to the Radxa can supply brief current pulses that the cable cannot deliver quickly. Do not select a value by guesswork alone:</p>
+<ul>
+<li>confirm that the regulator permits the intended output capacitance;</li>
+<li>use a correctly polarized, low-ESR capacitor with adequate voltage rating;</li>
+<li>place it across 5 V and ground near the Radxa input;</li>
+<li>keep its leads short; and</li>
+<li>check inrush and startup behavior after installation.</li>
+</ul>
+<p>A common experimental range for a 5 V SBC rail is several hundred to about 1000 µF, combined with a smaller ceramic capacitor, but the final value must be validated with the actual regulator, cable, and load. Larger is not automatically safer because it increases startup inrush.</p>
+<h3 id="test-4-delayed-companion-startup">Test 4: delayed companion startup</h3>
+<p>The Pololu regulator is enabled by default and provides an <code>ENABLE</code> input that can shut it down when pulled low. Delaying the companion computer until the FC has completed its initial boot can separate two simultaneous inrush events.</p>
+<p>Use an open-drain/open-collector control or a correctly designed supervisor circuit; do not drive <code>ENABLE</code> high from a 3.3 V GPIO because the Pololu board pulls it toward its input supply. Validate the circuit on a bench before flight.</p>
+<p>Delayed startup is a useful diagnostic and may improve robustness, but it should not conceal inadequate wiring or a collapsing supply.</p>
+<h2 id="uart-connection">UART connection</h2>
+<p>For the Radxa ZERO 3W header:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Physical pin</th>
+<th>Function</th>
+<th>Connect to FC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">6</td>
+<td>GND</td>
+<td>FC ground</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td>UART2 TX</td>
+<td>FC UART RX</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td>UART2 RX</td>
+<td>FC UART TX</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart LR
+    FC_TX["FC UART TX"] --&gt; R_RX["Radxa pin 10&lt;br/&gt;UART2 RX"]
+    R_TX["Radxa pin 8&lt;br/&gt;UART2 TX"] --&gt; FC_RX["FC UART RX"]
+    FC_GND["FC GND"] --- R_GND["Radxa pin 6&lt;br/&gt;GND"]</code></pre>
+<p>Both sides must use 3.3 V logic. Verify the replacement FC rather than assuming every pad is identical.</p>
+<p>UART lines can back-power an unpowered device through its input-protection diodes. During testing:</p>
+<ul>
+<li>power both devices before enabling UART applications;</li>
+<li>avoid leaving one side driving while the other side is unpowered;</li>
+<li>check each TX line with a meter when its destination is off; and</li>
+<li>consider small series resistors or a UART buffer with power-off protection in the final design.</li>
+</ul>
+<p>Do not add a level shifter unless the actual logic levels require it; a poor auto-direction level shifter can break high-speed UART communication.</p>
+<h2 id="grounding-and-layout">Grounding and layout</h2>
+<p>The high-current Radxa return should run directly to the regulator and battery/ESC star point. Do not route Radxa supply current through an FC ground pad.</p>
+<p>The UART ground is a signal reference. Keep it short and route it beside TX/RX. Because all grounds eventually meet at the battery/ESC pads, the goal is not to create isolated grounds; it is to control where load current flows.</p>
+<p>Recommended physical arrangement:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>Battery/ESC pads
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>├── ESC and FC stack branch
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>└── protected regulator branch
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    ├── 5 V power pair → Radxa
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>    └── local capacitor → Radxa input
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>FC UART
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>├── TX → Radxa RX
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>├── RX ← Radxa TX
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>└── signal GND → Radxa GND
+</code></pre></div></td></tr></table></div>
+<h2 id="pre-flight-verification">Pre-flight verification</h2>
+<p>Do not install props until all checks pass:</p>
+<ul>
+<li>FC, Radxa, and camera complete at least ten clean cold boots.</li>
+<li>FC remains accessible over USB after shared-battery startup.</li>
+<li>UART communicates without frame or checksum errors.</li>
+<li>Radxa reports no undervoltage or storage errors.</li>
+<li>The 5 V rail remains within the computer's allowed range during boot and camera startup.</li>
+<li>Regulator, cable, and connectors remain cool.</li>
+<li>Receiver, GPS, compass, video, and radio-link performance do not degrade.</li>
+<li>With the airframe restrained safely, motor operation does not reset either computer.</li>
+<li>Failsafe works without companion-computer assistance.</li>
+</ul>
+<p>The companion computer must never be required for basic manual control or disarming.</p>
+<h2 id="findings-to-record-next">Findings to record next</h2>
+<p>The next physical test should collect:</p>
+<ol>
+<li>Voltage at the Radxa end of the cable during boot.</li>
+<li>Results with a short, known-good high-current USB lead.</li>
+<li>Ten-cycle results with and without the camera.</li>
+<li>FC <code>status</code> and arming-disable flags after any failed startup.</li>
+<li>Regulator and FC rail waveforms if an oscilloscope is available.</li>
+<li>The existing ESC input capacitor capacitance and voltage rating.</li>
+<li>Exact wire gauge and connector construction for the final airframe.</li>
+</ol>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.pololu.com/product/2851" target="_blank">Pololu D24V50F5 specifications</a></li>
+<li><a href="https://docs.radxa.com/en/zero/zero3/hardware-design/hardware-interface" target="_blank">Radxa ZERO 3W hardware interfaces and 40-pin header</a></li>
+<li><a href="https://docs.radxa.com/en/zero/zero3" target="_blank">Radxa ZERO 3 overview and 5 V/2 A power requirement</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>

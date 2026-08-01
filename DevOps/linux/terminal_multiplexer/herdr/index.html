@@ -1,0 +1,1450 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/DevOps/linux/terminal_multiplexer/herdr/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Herdr with Codex - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#herdr-with-codex" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Herdr with Codex
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-herdr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Herdr
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install Herdr">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux-or-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux or macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-herdr-for-codex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure Herdr for Codex
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage-with-codex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic usage with Codex
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic usage with Codex">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#herdr-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Herdr config
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Herdr config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed-prefix-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed prefix key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#useful-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detach-and-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detach and return
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-herdr-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Herdr configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional Herdr configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#terminator-style-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminator-style keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-quality-of-life-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended quality-of-life settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-altarrow-in-the-vs-code-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Alt+Arrow in the VS Code terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-practical-codex-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A practical Codex workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">ai-agent</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">codex</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">herdr</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">terminal-multiplexer</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="herdr-with-codex">Herdr with Codex</h1>
+<p><a href="https://herdr.dev/">Herdr</a> is a terminal multiplexer designed for AI coding
+agents. Like <code>tmux</code>, it keeps terminal processes alive after you disconnect, but
+it also detects agents such as Codex and shows whether each one is working,
+waiting for input, done, or idle.</p>
+<p>This makes Herdr useful when you:</p>
+<ul>
+<li>run Codex in more than one repository;</li>
+<li>want several long-running agent sessions in one terminal;</li>
+<li>connect to a development machine through SSH; or</li>
+<li>want to close the terminal and return to the same work later.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Herdr manages terminal sessions; it does not replace Codex. Codex still does
+the coding work, while Herdr organizes and preserves the terminal panes in
+which Codex runs.</p>
+</div>
+<p>This guide was inspired by <a href="https://youtu.be/2CR9tDNAzB0">this YouTube video</a>.
+The commands below follow the current <a href="https://herdr.dev/docs/">official Herdr documentation</a>.</p>
+<h2 id="concepts">Concepts</h2>
+<p>Herdr organizes the terminal in four levels:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Session</td>
+<td>The background Herdr server that survives detach/reattach</td>
+</tr>
+<tr>
+<td>Workspace</td>
+<td>A project or repository</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td>A group of related terminal panes inside a workspace</td>
+</tr>
+<tr>
+<td>Pane</td>
+<td>A real shell, Codex session, editor, log viewer, or other process</td>
+</tr>
+</tbody>
+</table>
+<p>The sidebar groups detected agents and displays their state. A Codex pane may be
+shown as <code>working</code>, <code>blocked</code>, <code>done</code>, or <code>idle</code>, making it easy to see which
+session needs attention.</p>
+<h2 id="install-herdr">Install Herdr</h2>
+<p>Herdr provides stable builds for Linux and macOS. Native Windows support is
+currently a preview.</p>
+<h3 id="linux-or-macos">Linux or macOS</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://herdr.dev/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div></td></tr></table></div>
+<p>Review remote install scripts before piping them into a shell. The alternative
+is to download the correct binary from the
+<a href="https://github.com/ogulcancelik/herdr/releases">Herdr releases page</a>, mark it
+executable, and place it on your <code>PATH</code>.</p>
+<h2 id="configure-herdr-for-codex">Configure Herdr for Codex</h2>
+<p>First, make sure Codex is already installed and has been run at least once:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>codex<span class="w"> </span>--version
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>codex
+</code></pre></div></td></tr></table></div>
+<p>Running Codex once creates its configuration directory (<code>~/.codex</code> by default).
+Exit Codex, then install the official Herdr integration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>herdr<span class="w"> </span>integration<span class="w"> </span>install<span class="w"> </span>codex
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>herdr<span class="w"> </span>integration<span class="w"> </span>status
+</code></pre></div></td></tr></table></div>
+<p>The installer updates the Codex hook configuration rather than your API or
+login credentials. It writes a Herdr hook under <code>~/.codex</code>, updates
+<code>~/.codex/hooks.json</code>, and enables Codex hooks in <code>~/.codex/config.toml</code>. If you
+set <code>CODEX_HOME</code>, Herdr uses that directory instead.</p>
+<p>The integration gives Herdr the native Codex session identity needed to resume
+the conversation after a Herdr server restart. Agent state detection still
+comes from what Codex displays in its terminal pane.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Herdr can detect a running <code>codex</code> process without the integration, but the
+integration provides better session restore behavior.</p>
+</div>
+<p>To remove the integration later:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>herdr<span class="w"> </span>integration<span class="w"> </span>uninstall<span class="w"> </span>codex
+</code></pre></div></td></tr></table></div>
+<p>See the official <a href="https://herdr.dev/docs/integrations/#codex">Codex integration details</a>
+for the files changed by the current Herdr release.</p>
+<h2 id="basic-usage-with-codex">Basic usage with Codex</h2>
+<p>Open a repository and start Herdr:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>~/projects/my-project
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>herdr
+</code></pre></div></td></tr></table></div>
+<p>Herdr creates or attaches to its background session. In a pane, start Codex as
+usual:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>codex
+</code></pre></div></td></tr></table></div>
+<p>Herdr detects Codex automatically and adds it to the agents section of the
+sidebar. You can now interact with Codex exactly as you would in a normal
+terminal.</p>
+<h3 id="herdr-config">Herdr config</h3>
+<p>Change Herdr’s prefix in its configuration file:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/herdr
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>nano<span class="w"> </span>~/.config/herdr/config.toml
+</code></pre></div></td></tr></table></div>
+<h4 id="changed-prefix-key">Changed prefix key</h4>
+<p>Add or update:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">[keys]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="na">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ctrl+a&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Reload the configuration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>herdr<span class="w"> </span>server<span class="w"> </span>reload-config
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="useful-keys">Useful keys</h3>
+<p>Herdr is mouse-friendly, but keyboard actions use a prefix. <code>prefix+c</code> means
+press <code>ctrl+b</code>, release both keys, and then press <code>c</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Default key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Show active keybindings</td>
+<td><code>prefix+?</code></td>
+</tr>
+<tr>
+<td>Split side by side</td>
+<td><code>prefix+v</code></td>
+</tr>
+<tr>
+<td>Split above/below</td>
+<td><code>prefix+minus</code></td>
+</tr>
+<tr>
+<td>Create a tab</td>
+<td><code>prefix+c</code></td>
+</tr>
+<tr>
+<td>Next / previous tab</td>
+<td><code>prefix+n</code> / <code>prefix+p</code></td>
+</tr>
+<tr>
+<td>Open workspace navigation</td>
+<td><code>prefix+w</code></td>
+</tr>
+<tr>
+<td>Create a workspace</td>
+<td><code>prefix+shift+n</code></td>
+</tr>
+<tr>
+<td>Zoom the focused pane</td>
+<td><code>prefix+z</code></td>
+</tr>
+<tr>
+<td>Close the focused pane</td>
+<td><code>prefix+x</code></td>
+</tr>
+<tr>
+<td>Detach</td>
+<td><code>prefix+q</code></td>
+</tr>
+</tbody>
+</table>
+<p>For example, use one pane for Codex and a second pane for tests or logs:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>Codex pane                         Test pane
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>-----------------------------     -----------------------------
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>codex                             pytest -q
+</code></pre></div></td></tr></table></div>
+<h3 id="detach-and-return">Detach and return</h3>
+<p>Press <code>prefix+q</code>, or close the terminal window. Herdr and Codex continue running
+in the background. Return later with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>herdr
+</code></pre></div></td></tr></table></div>
+<p>Detaching is different from stopping. To end the default Herdr session and all
+processes in its panes, run:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>herdr<span class="w"> </span>server<span class="w"> </span>stop
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Stopping the server exits the pane processes. Detach when you want Codex to
+continue working.</p>
+</div>
+<h2 id="optional-herdr-configuration">Optional Herdr configuration</h2>
+<p>Herdr works without a configuration file. Its Linux and macOS configuration is
+stored at <code>~/.config/herdr/config.toml</code>. Create the directory and open the file:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/herdr
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>nano<span class="w"> </span>~/.config/herdr/config.toml
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not run <code>herdr --default-config &gt; ~/.config/herdr/config.toml</code> when the
+file already exists: <code>&gt;</code> replaces all existing settings. Use
+<code>herdr --default-config</code> to inspect the defaults, or redirect it only when
+creating a new file.</p>
+</div>
+<h3 id="terminator-style-keys">Terminator-style keys</h3>
+<p>The following profile feels familiar to a Terminator user 
+.The direct shortcuts open and manage panes without
+first pressing a prefix. In particular, <code>ctrl+shift+x</code> zooms the current pane
+and pressing it again restores the complete layout.</p>
+<p><a href="code/herdr-config.toml" download>Download the Herdr configuration</a></p>
+<p>Install the downloaded file with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.config/herdr
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>cp<span class="w"> </span>~/Downloads/herdr-config.toml<span class="w"> </span>~/.config/herdr/config.toml
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>herdr<span class="w"> </span>server<span class="w"> </span>reload-config
+</code></pre></div></td></tr></table></div>
+<p>Review the destination before replacing an existing configuration.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.config/herdr/config.toml</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span>
+<span class="normal"><a href="#__codelineno-14-16">16</a></span>
+<span class="normal"><a href="#__codelineno-14-17">17</a></span>
+<span class="normal"><a href="#__codelineno-14-18">18</a></span>
+<span class="normal"><a href="#__codelineno-14-19">19</a></span>
+<span class="normal"><a href="#__codelineno-14-20">20</a></span>
+<span class="normal"><a href="#__codelineno-14-21">21</a></span>
+<span class="normal"><a href="#__codelineno-14-22">22</a></span>
+<span class="normal"><a href="#__codelineno-14-23">23</a></span>
+<span class="normal"><a href="#__codelineno-14-24">24</a></span>
+<span class="normal"><a href="#__codelineno-14-25">25</a></span>
+<span class="normal"><a href="#__codelineno-14-26">26</a></span>
+<span class="normal"><a href="#__codelineno-14-27">27</a></span>
+<span class="normal"><a href="#__codelineno-14-28">28</a></span>
+<span class="normal"><a href="#__codelineno-14-29">29</a></span>
+<span class="normal"><a href="#__codelineno-14-30">30</a></span>
+<span class="normal"><a href="#__codelineno-14-31">31</a></span>
+<span class="normal"><a href="#__codelineno-14-32">32</a></span>
+<span class="normal"><a href="#__codelineno-14-33">33</a></span>
+<span class="normal"><a href="#__codelineno-14-34">34</a></span>
+<span class="normal"><a href="#__codelineno-14-35">35</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="n">onboarding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="k">[terminal]</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="n">shell_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="n">new_cwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;follow&quot;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="k">[session]</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="n">resume_agents_on_restore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a>
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="k">[keys]</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ctrl+a&quot;</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a>
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="c1"># Terminator-style pane creation:</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="c1"># Ctrl+Shift+E opens a pane on the right.</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="c1"># Ctrl+Shift+O opens a pane below.</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="n">split_vertical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ctrl+shift+e&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17"></a><span class="n">split_horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+minus&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ctrl+shift+o&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18"></a>
+<a id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="c1"># Move between panes like Terminator, with tmux-style h/j/k/l as a fallback.</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20"></a><span class="n">focus_pane_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+h&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;alt+left&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21"></a><span class="n">focus_pane_down</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+j&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;alt+down&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22"></a><span class="n">focus_pane_up</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+k&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;alt+up&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23"></a><span class="n">focus_pane_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+l&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;alt+right&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24"></a>
+<a id="__codelineno-14-25" name="__codelineno-14-25"></a><span class="c1"># Pane and tab management.</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26"></a><span class="n">zoom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+z&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ctrl+shift+x&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27"></a><span class="n">close_pane</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ctrl+shift+w&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-28" name="__codelineno-14-28"></a><span class="n">new_tab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ctrl+shift+t&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29"></a><span class="n">next_tab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ctrl+shift+right&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30"></a><span class="n">previous_tab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;prefix+p&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ctrl+shift+left&quot;</span><span class="p">]</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31"></a>
+<a id="__codelineno-14-32" name="__codelineno-14-32"></a><span class="c1"># Session controls.</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33"></a><span class="n">detach</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;prefix+q&quot;</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34"></a><span class="n">help</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;prefix+?&quot;</span>
+<a id="__codelineno-14-35" name="__codelineno-14-35"></a><span class="n">toggle_sidebar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;prefix+b&quot;</span>
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Terminator-style shortcut</th>
+<th>Prefix fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open pane on the right</td>
+<td><code>ctrl+shift+e</code></td>
+<td><code>prefix+v</code></td>
+</tr>
+<tr>
+<td>Open pane below</td>
+<td><code>ctrl+shift+o</code></td>
+<td><code>prefix+minus</code></td>
+</tr>
+<tr>
+<td>Focus another pane</td>
+<td><code>alt+arrow</code></td>
+<td><code>prefix+h/j/k/l</code></td>
+</tr>
+<tr>
+<td>Zoom or restore one pane</td>
+<td><code>ctrl+shift+x</code></td>
+<td><code>prefix+z</code></td>
+</tr>
+<tr>
+<td>Close the focused pane</td>
+<td><code>ctrl+shift+w</code></td>
+<td><code>prefix+x</code></td>
+</tr>
+<tr>
+<td>Open a new tab</td>
+<td><code>ctrl+shift+t</code></td>
+<td><code>prefix+c</code></td>
+</tr>
+<tr>
+<td>Change tab</td>
+<td><code>ctrl+shift+left/right</code></td>
+<td><code>prefix+p/n</code></td>
+</tr>
+</tbody>
+</table>
+<p>Herdr calls a side-by-side split <code>split_vertical</code> because the dividing line is
+vertical. Terminator uses <code>ctrl+shift+e</code> for the same layout. Similarly,
+<code>split_horizontal</code> creates a pane above or below with <code>ctrl+shift+o</code>.</p>
+<h3 id="recommended-quality-of-life-settings">Recommended quality-of-life settings</h3>
+<p>For agent work, keeping the source pane's directory and restoring native Codex
+sessions are the most useful defaults:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span>
+<span class="normal"><a href="#__codelineno-15-6">6</a></span>
+<span class="normal"><a href="#__codelineno-15-7">7</a></span>
+<span class="normal"><a href="#__codelineno-15-8">8</a></span>
+<span class="normal"><a href="#__codelineno-15-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="k">[terminal]</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="n">shell_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="n">new_cwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;follow&quot;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="k">[session]</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="n">resume_agents_on_restore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="k">[worktrees]</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="n">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/.herdr/worktrees&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>The worktree directory is useful when multiple Codex agents work on the same
+repository: each agent can use a separate checkout instead of editing the same
+files. Herdr also supports completion and input-needed notifications; configure
+these through its settings screen because the best delivery method depends on
+whether the session is local or reached through SSH.</p>
+<p>Reload it without closing the panes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>herdr<span class="w"> </span>server<span class="w"> </span>reload-config
+</code></pre></div></td></tr></table></div>
+<p>The full configuration file is optional. If you only need the defaults, do not
+create it. Refer to the <a href="https://herdr.dev/docs/configuration/">configuration guide</a>
+before adding theme, notification, sidebar, worktree, or custom-key settings.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Direct shortcuts must pass through the desktop environment and outer
+terminal before Herdr can receive them. If a shortcut does nothing, remove
+the conflicting binding in Terminator, GNOME/KDE, or your current terminal,
+or choose another Herdr chord. Press <code>prefix+?</code> to confirm the active Herdr
+bindings.</p>
+<p>Terminator assigns ++alt+left++, ++alt+right++, ++alt+up++, and
+++alt+down++ to its own <code>go_left</code>, <code>go_right</code>, <code>go_up</code>, and <code>go_down</code>
+actions by default. To use those keys inside Herdr, open <strong>Terminator →
+Preferences → Keybindings</strong>, clear or reassign those four Terminator
+bindings, restart Terminator, and reload the Herdr configuration.</p>
+</div>
+<h3 id="using-altarrow-in-the-vs-code-terminal">Using Alt+Arrow in the VS Code terminal</h3>
+<p>When Herdr runs in VS Code's integrated terminal, mouse focus may work while
+++alt+arrow++ does not. This means VS Code is handling the shortcut before the
+terminal application receives it. Open <strong>Preferences: Open User Settings
+(JSON)</strong> from the Command Palette and add:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">settings.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="w">    </span><span class="nt">&quot;terminal.integrated.sendKeybindingsToShell&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">    </span><span class="nt">&quot;terminal.integrated.allowMnemonics&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Open a new integrated terminal, start Herdr, and try ++alt+arrow++ again. The
+first setting sends most keyboard shortcuts to the running program whenever the
+terminal has focus. Consequently, some VS Code shortcuts will no longer run
+while the terminal is focused; move focus back to an editor before using them.</p>
+<p>The <code>allowMnemonics</code> setting should remain <code>false</code>, otherwise Linux/Windows
+++alt++ combinations may activate VS Code menu mnemonics instead of reaching
+Herdr. See VS Code's
+<a href="https://code.visualstudio.com/docs/terminal/advanced#_keyboard-shortcuts-and-the-shell">keyboard shortcuts and the shell</a>
+documentation for selective alternatives.</p>
+<h2 id="a-practical-codex-workflow">A practical Codex workflow</h2>
+<ol>
+<li>Run <code>herdr</code> inside the repository.</li>
+<li>Start <code>codex</code> in the first pane and give it one focused task.</li>
+<li>Split a second pane for tests, a development server, or Git commands.</li>
+<li>Create another workspace for a different repository instead of mixing both
+   projects in one workspace.</li>
+<li>Watch the agents sidebar for a blocked or completed Codex session.</li>
+<li>Detach with <code>prefix+q</code> and reattach later with <code>herdr</code>.</li>
+</ol>
+<p>When running several Codex agents against the same repository, use separate Git
+worktrees or clearly separated tasks. Two agents editing the same files can
+overwrite or conflict with each other's work.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://herdr.dev/docs/">Herdr documentation</a></li>
+<li><a href="https://herdr.dev/docs/quick-start/">Herdr quick start</a></li>
+<li><a href="https://herdr.dev/docs/integrations/#codex">Herdr and Codex integration</a></li>
+<li><a href="https://herdr.dev/docs/configuration/">Herdr configuration</a></li>
+<li><a href="https://github.com/ogulcancelik/herdr">Herdr source code</a></li>
+<li><a href="https://youtu.be/2CR9tDNAzB0">YouTube video that inspired this post</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>

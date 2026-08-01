@@ -1,0 +1,1454 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/fpv/forces_and_design/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Quadcopter Forces and Design - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quadcopter-forces-and-design" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quadcopter Forces and Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-with-a-simple-hover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start With A Simple Hover
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#are-lift-and-drag-related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Are Lift And Drag Related?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-four-main-forces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Four Main Forces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Four Main Forces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#weight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thrust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thrust
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotor-torque" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotor Torque
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-hover-to-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Hover To Motion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From Hover To Motion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#forward-flight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forward Flight
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-four-motors-control-the-quad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Four Motors Control The Quad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-practical-design-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Practical Design Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A Practical Design Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-define-the-mission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Define The Mission
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-estimate-all-up-weight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Estimate All-Up Weight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-choose-a-thrust-to-weight-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Choose A Thrust-To-Weight Target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-calculate-thrust-per-motor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Calculate Thrust Per Motor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-match-the-propeller-motor-and-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Match The Propeller, Motor, And Voltage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-size-the-esc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Size The ESC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-size-the-battery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Size The Battery
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-a-1-kg-utility-quadcopter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Example: A 1 kg Utility Quadcopter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Worked Example: A 1 kg Utility Quadcopter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thrust-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thrust Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#illustrative-thrust-test-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Illustrative Thrust-Test Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resulting-requirements-based-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resulting Requirements-Based Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conditions-that-change-the-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditions That Change The Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">aerodynamics</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">design</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">drone</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">fpv</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">quadcopter</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="quadcopter-forces-and-design">Quadcopter Forces and Design</h1>
+<p>This tutorial starts with one simple question: what must a quadcopter do to hover? From there, it builds a practical method for choosing the propellers, motors, ESCs, and battery for a new design.</p>
+<h2 id="start-with-a-simple-hover">Start With A Simple Hover</h2>
+<p>Imagine a <code>1 kg</code> quadcopter sitting on the ground. Gravity pulls it downward with its weight:</p>
+<div class="arithmatex">\[
+W = mg = 1 \cdot 9.81 = 9.81\ \text{N}
+\]</div>
+<p>To hover, the four rotors must produce exactly the same force upward:</p>
+<div class="arithmatex">\[
+T_{total} = W = 9.81\ \text{N}
+\]</div>
+<p>If all four rotors share the load equally, each rotor produces:</p>
+<div class="arithmatex">\[
+T_{rotor} = \frac{9.81}{4} = 2.45\ \text{N} \approx 250\ \text{gf}
+\]</div>
+<p><code>gf</code> means gram-force. Motor test tables often use it even though newtons are the scientific unit. A useful conversion is:</p>
+<div class="arithmatex">\[
+1\ \text{N} \approx 102\ \text{gf}
+\]</div>
+<pre class="mermaid"><code>flowchart BT
+    G[Weight: 9.81 N downward] --&gt; Q[1 kg quadcopter]
+    Q --&gt; T[Total rotor thrust: 9.81 N upward]</code></pre>
+<p>The forces are balanced, so acceleration is zero. The quad can be stationary, but the motors are still doing work continuously to move air downward.</p>
+<h2 id="are-lift-and-drag-related">Are Lift And Drag Related?</h2>
+<p>Yes, but it helps to separate the <strong>propeller-blade view</strong> from the <strong>whole-aircraft view</strong>.</p>
+<p>A propeller blade is a rotating wing. As it moves through the air, its airfoil produces:</p>
+<ul>
+<li>Lift, mostly perpendicular to the blade's local airflow</li>
+<li>Drag, parallel and opposite to that airflow</li>
+</ul>
+<p>The useful parts of the blade forces combine into <strong>rotor thrust</strong>. Thrust pushes air downward, and the reaction force pushes the rotor and quadcopter upward. Blade drag resists rotation, so the motor must supply torque and electrical power to keep the propeller spinning.</p>
+<p>At the whole-aircraft level, we normally use these names:</p>
+<ul>
+<li><strong>Thrust:</strong> the combined force produced by the rotors, along the quadcopter's vertical body axis</li>
+<li><strong>Weight:</strong> gravity acting toward Earth</li>
+<li><strong>Aerodynamic drag:</strong> force opposing the quadcopter's motion relative to the air</li>
+</ul>
+<p>Therefore, lift and drag are related aerodynamic forces on each blade, but quadcopter calculations usually call the rotors' combined useful force <strong>thrust</strong>.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Airflow over a rotating blade] --&gt; B[Blade lift]
+    A --&gt; C[Blade drag]
+    B --&gt; D[Useful rotor thrust]
+    C --&gt; E[Resisting torque]
+    E --&gt; F[Motor power and heat]</code></pre>
+<h2 id="the-four-main-forces">The Four Main Forces</h2>
+<h3 id="weight">Weight</h3>
+<p>Weight depends on the complete flying mass, called <strong>all-up weight</strong> or <code>AUW</code>. Include the frame, motors, electronics, wiring, payload, propellers, and battery.</p>
+<div class="arithmatex">\[
+W = mg
+\]</div>
+<p>Adding payload or a larger battery increases the required hover thrust. A larger battery can provide more energy, but its extra mass also consumes some of that benefit.</p>
+<h3 id="thrust">Thrust</h3>
+<p>Thrust depends on the complete motor-propeller system, not on the motor alone. Important inputs include propeller diameter, pitch, blade count, motor size and KV, battery voltage, air density, and RPM.</p>
+<p>Use measured thrust-table data for the exact motor, propeller, and voltage combination whenever possible. The <a href="../props/">propeller</a> and <a href="../motors/">motor</a> pages explain these choices in more detail.</p>
+<h3 id="drag">Drag</h3>
+<p>The drag on the complete vehicle can be approximated by:</p>
+<div class="arithmatex">\[
+D = \frac{1}{2}\rho C_D A v^2
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\rho\)</span> is air density in <code>kg/m³</code></li>
+<li><span class="arithmatex">\(C_D\)</span> is the drag coefficient</li>
+<li><span class="arithmatex">\(A\)</span> is frontal area in <code>m²</code></li>
+<li><span class="arithmatex">\(v\)</span> is airspeed in <code>m/s</code></li>
+</ul>
+<p>Drag grows with the square of airspeed. Doubling airspeed creates approximately four times the drag when the other values stay constant. Wind matters because drag follows speed relative to the air, not speed relative to the ground.</p>
+<h3 id="rotor-torque">Rotor Torque</h3>
+<p>The motor must apply torque to turn a propeller against blade drag. The frame feels an equal reaction torque in the opposite direction. Two rotors turn clockwise and two turn counter-clockwise so their reaction torques approximately cancel during hover.</p>
+<h2 id="from-hover-to-motion">From Hover To Motion</h2>
+<p>Newton's second law connects unbalanced force to acceleration:</p>
+<div class="arithmatex">\[
+\sum F = ma
+\]</div>
+<ul>
+<li>If thrust equals weight, vertical acceleration is zero.</li>
+<li>If thrust is greater than weight, the quad accelerates upward.</li>
+<li>If thrust is less than weight, the quad accelerates downward.</li>
+</ul>
+<h3 id="forward-flight">Forward Flight</h3>
+<p>A quadcopter has no separate forward-facing engine. It tilts so part of its thrust points forward.</p>
+<pre class="mermaid"><code>flowchart TD
+    T[Total tilted thrust T] --&gt; V[Vertical part: T cos theta]
+    T --&gt; H[Horizontal part: T sin theta]
+    V --&gt; W[Balances weight]
+    H --&gt; D[Overcomes drag and accelerates forward]</code></pre>
+<p>For level flight at a constant altitude:</p>
+<div class="arithmatex">\[
+T\cos\theta = mg
+\]</div>
+<p>Therefore:</p>
+<div class="arithmatex">\[
+T = \frac{mg}{\cos\theta}
+\]</div>
+<p>At a tilt angle of <code>30°</code>, a <code>1 kg</code> quad needs:</p>
+<div class="arithmatex">\[
+T = \frac{9.81}{\cos 30^\circ} \approx 11.33\ \text{N}
+\]</div>
+<p>That is about <code>15.5%</code> more total thrust than hover just to maintain altitude. More thrust is needed while accelerating or fighting drag.</p>
+<h2 id="how-four-motors-control-the-quad">How Four Motors Control The Quad</h2>
+<p>The flight controller changes individual motor thrust while managing total thrust.</p>
+<ul>
+<li><strong>Throttle:</strong> all four motors increase or decrease together.</li>
+<li><strong>Roll:</strong> motors on one side speed up while motors on the other side slow down.</li>
+<li><strong>Pitch:</strong> rear motors and front motors change relative thrust.</li>
+<li><strong>Yaw:</strong> one rotation pair speeds up while the opposite pair slows down, changing net reaction torque.</li>
+</ul>
+<pre class="mermaid"><code>flowchart LR
+    FC[Flight controller command] --&gt; TH[Collective change: throttle]
+    FC --&gt; LR[Left/right difference: roll]
+    FC --&gt; FR[Front/rear difference: pitch]
+    FC --&gt; CW[CW/CCW torque difference: yaw]</code></pre>
+<p>This is why thrust margin matters. A motor already at maximum throttle cannot speed up to correct attitude or reject a wind disturbance.</p>
+<h2 id="a-practical-design-workflow">A Practical Design Workflow</h2>
+<pre class="mermaid"><code>flowchart TD
+    A[Define mission and payload] --&gt; B[Estimate all-up weight]
+    B --&gt; C[Choose thrust-to-weight target]
+    C --&gt; D[Calculate required thrust per motor]
+    D --&gt; E[Choose prop size and frame clearance]
+    E --&gt; F[Use motor-prop thrust-test data]
+    F --&gt; G[Size ESC from maximum current]
+    G --&gt; H[Size battery from hover current and flight time]
+    H --&gt; I[Update battery mass and repeat]
+    I --&gt; J[Bench test before flight]</code></pre>
+<h3 id="1-define-the-mission">1. Define The Mission</h3>
+<p>Write down the payload, desired flight time, maximum size, expected speed, wind, operating altitude, and whether the goal is efficiency or agility. These requirements determine the design; there is no universally best quadcopter.</p>
+<h3 id="2-estimate-all-up-weight">2. Estimate All-Up Weight</h3>
+<p>Make a mass budget before selecting parts. Keep a row for every component and a margin for fasteners, connectors, wires, and landing gear. Early estimates will be imperfect, so sizing is an iterative process.</p>
+<h3 id="3-choose-a-thrust-to-weight-target">3. Choose A Thrust-To-Weight Target</h3>
+<div class="arithmatex">\[
+Thrust\ Ratio = \frac{Maximum\ Total\ Thrust}{All\text{-}Up\ Weight}
+\]</div>
+<p>Useful starting points are:</p>
+<table>
+<thead>
+<tr>
+<th>Mission</th>
+<th>Starting target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Efficient hover or gentle cruising</td>
+<td><code>2:1</code> to <code>3:1</code></td>
+</tr>
+<tr>
+<td>Camera or utility quad</td>
+<td><code>2:1</code> to <code>4:1</code></td>
+</tr>
+<tr>
+<td>FPV freestyle</td>
+<td><code>4:1</code> to <code>8:1</code></td>
+</tr>
+<tr>
+<td>FPV racing</td>
+<td><code>6:1</code> to <code>10:1</code></td>
+</tr>
+</tbody>
+</table>
+<p>Higher ratios improve acceleration and control authority, but usually add current, heat, noise, and component mass.</p>
+<h3 id="4-calculate-thrust-per-motor">4. Calculate Thrust Per Motor</h3>
+<p>For a quadcopter:</p>
+<div class="arithmatex">\[
+T_{motor,max} = \frac{m g \cdot target\ ratio}{4}
+\]</div>
+<p>This value is a minimum performance requirement. Do not select a motor from KV or size alone.</p>
+<h3 id="5-match-the-propeller-motor-and-voltage">5. Match The Propeller, Motor, And Voltage</h3>
+<p>Start with the largest practical propeller for an efficiency-focused design, then choose a frame with safe prop clearance. Find measured data for the exact propeller, motor, and battery voltage.</p>
+<p>The test table must show:</p>
+<ul>
+<li>Thrust at the expected hover point</li>
+<li>Current and electrical power at hover</li>
+<li>Maximum thrust and current</li>
+<li>Motor and ESC temperature limits</li>
+<li>Efficiency, often shown as <code>g/W</code></li>
+</ul>
+<h3 id="6-size-the-esc">6. Size The ESC</h3>
+<p>A useful first estimate is:</p>
+<div class="arithmatex">\[
+I_{ESC,rated} \geq 1.2 \cdot I_{motor,max}
+\]</div>
+<p>Then verify the manufacturer's continuous-current conditions, burst rating, cooling, voltage rating, and ambient temperature. A rating printed on an ESC is not a substitute for thermal testing.</p>
+<h3 id="7-size-the-battery">7. Size The Battery</h3>
+<p>If total average current is known, ideal required capacity is:</p>
+<div class="arithmatex">\[
+C_{Ah} = \frac{I_{average} \cdot t_{hours}}{usable\ fraction}
+\]</div>
+<p>Using <code>0.8</code> as the usable fraction leaves a <code>20%</code> reserve. The battery must also supply maximum current:</p>
+<div class="arithmatex">\[
+I_{battery,max} \geq C_{Ah} \cdot C\text{-rating}
+\]</div>
+<p>Treat advertised C-ratings cautiously and add current margin. Verify battery voltage sag, connector rating, wire size, and temperature during testing.</p>
+<h2 id="worked-example-a-1-kg-utility-quadcopter">Worked Example: A 1 kg Utility Quadcopter</h2>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>All-up mass: <code>1.0 kg</code>, including payload and battery</li>
+<li>Desired flight time: <code>15 minutes</code></li>
+<li>Battery reserve: <code>20%</code></li>
+<li>Thrust-to-weight target: <code>2:1</code></li>
+<li>Four motors</li>
+<li>Operation near sea level in moderate conditions</li>
+</ul>
+<h3 id="thrust-requirements">Thrust Requirements</h3>
+<p>Hover thrust per motor:</p>
+<div class="arithmatex">\[
+T_{hover} = \frac{1 \cdot 9.81}{4} = 2.45\ \text{N} \approx 250\ \text{gf}
+\]</div>
+<p>Minimum maximum thrust per motor:</p>
+<div class="arithmatex">\[
+T_{max} = \frac{1 \cdot 9.81 \cdot 2}{4} = 4.91\ \text{N} \approx 500\ \text{gf}
+\]</div>
+<p>The motor-propeller combination must therefore produce at least <code>500 gf</code> per motor at the chosen battery voltage. A larger margin may be required for altitude, heat, wind, or aggressive maneuvering.</p>
+<h3 id="illustrative-thrust-test-data">Illustrative Thrust-Test Data</h3>
+<p>Suppose a candidate propeller and motor on <code>4S</code> has verified bench data like this:</p>
+<table>
+<thead>
+<tr>
+<th>Operating point</th>
+<th style="text-align: right;">Thrust per motor</th>
+<th style="text-align: right;">Current per motor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expected hover</td>
+<td style="text-align: right;"><code>250 gf</code></td>
+<td style="text-align: right;"><code>3 A</code></td>
+</tr>
+<tr>
+<td>Design maximum</td>
+<td style="text-align: right;"><code>500 gf</code></td>
+<td style="text-align: right;"><code>7 A</code></td>
+</tr>
+</tbody>
+</table>
+<p>These numbers are an educational example, not a recommendation for a specific product. Real component selection must use the manufacturer's data and your own bench test.</p>
+<p>The ESC estimate is:</p>
+<div class="arithmatex">\[
+I_{ESC,rated} \geq 1.2 \cdot 7 = 8.4\ \text{A}
+\]</div>
+<p>A higher standard rating, such as a <code>15 A</code> or <code>20 A</code> ESC with the correct voltage rating and cooling, provides practical margin.</p>
+<p>If avionics consume another <code>0.8 A</code>, estimated hover current is:</p>
+<div class="arithmatex">\[
+I_{hover,total} = 4 \cdot 3 + 0.8 = 12.8\ \text{A}
+\]</div>
+<p>Fifteen minutes is <code>0.25 hours</code>, so required capacity with a <code>20%</code> reserve is:</p>
+<div class="arithmatex">\[
+C = \frac{12.8 \cdot 0.25}{0.8} = 4.0\ \text{Ah}
+\]</div>
+<p>This suggests starting the mass iteration with a <code>4S 4000 mAh</code> battery. Estimated maximum system current is:</p>
+<div class="arithmatex">\[
+I_{max,total} = 4 \cdot 7 + 0.8 = 28.8\ \text{A}
+\]</div>
+<p>The mathematical minimum battery discharge rating is:</p>
+<div class="arithmatex">\[
+C\text{-rating}_{min} = \frac{28.8}{4.0} = 7.2C
+\]</div>
+<p>Choose a battery with credible margin above this result and verify it under load. Next, add its real mass to the mass budget. If the design now exceeds <code>1 kg</code>, recalculate hover thrust, current, and capacity until the estimates converge.</p>
+<h3 id="resulting-requirements-based-specification">Resulting Requirements-Based Specification</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Minimum design requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frame</td>
+<td>Fits the selected propellers with safe clearance and supports a <code>1 kg</code> AUW</td>
+</tr>
+<tr>
+<td>Propeller</td>
+<td>Efficient near <code>250 gf</code> per rotor and capable of at least <code>500 gf</code> with the selected motor</td>
+</tr>
+<tr>
+<td>Motor</td>
+<td>Meets both thrust points on <code>4S</code> without exceeding current or temperature limits</td>
+</tr>
+<tr>
+<td>ESC</td>
+<td>Correct for <code>4S</code>; at least <code>8.4 A</code> by calculation, with a higher practical continuous rating</td>
+</tr>
+<tr>
+<td>Battery</td>
+<td>Approximately <code>4S 4000 mAh</code>; credible discharge capability above <code>28.8 A</code></td>
+</tr>
+<tr>
+<td>Power wiring</td>
+<td>Connector and conductors rated above maximum measured system current</td>
+</tr>
+</tbody>
+</table>
+<p>This is enough to search real thrust-test tables and create a shortlist. It is not enough to buy parts blindly: the propeller diameter affects the <a href="../frame/">frame</a>, and every real motor-propeller combination must be checked together.</p>
+<h2 id="conditions-that-change-the-result">Conditions That Change The Result</h2>
+<ul>
+<li>High altitude and hot air reduce air density and available thrust.</li>
+<li>Wind increases required tilt, thrust, and energy.</li>
+<li>Propeller guards and payloads increase mass and drag.</li>
+<li>Ground effect can reduce hover power close to the ground, so it should not be used for normal-flight sizing.</li>
+<li>Battery voltage falls during flight, reducing maximum motor speed and thrust.</li>
+<li>Manufacturing data may use a fresh battery and short tests that do not reveal steady-state heating.</li>
+</ul>
+<h2 id="design-checklist">Design Checklist</h2>
+<p>Before committing to a design, confirm:</p>
+<ul>
+<li>The mass budget includes the battery, payload, wiring, and hardware.</li>
+<li>Hover and maximum thrust come from exact motor-propeller-voltage test data.</li>
+<li>The quad has enough thrust margin for tilted flight and control corrections.</li>
+<li>ESC, battery, connector, and wire current ratings include margin.</li>
+<li>Battery capacity meets flight time after accounting for reserve and voltage sag.</li>
+<li>The selected battery mass has been fed back into the calculations.</li>
+<li>Propellers have safe frame clearance.</li>
+<li>The complete power system will be bench-tested with guards and safe procedures.</li>
+</ul>
+<p>After the physics and requirements are clear, continue with the detailed <a href="../props/">propeller</a>, <a href="../motors/">motor</a>, <a href="../frame/">frame</a>, and <a href="../build_guide/">5-inch build guide</a> pages.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>
