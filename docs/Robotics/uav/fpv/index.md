@@ -7,6 +7,11 @@ tags:
 
 <div class="grid-container">
     <div class="grid-item">
+        <a href="forces_and_design">
+        <p>Forces and Design</p>
+        </a>
+    </div>
+    <div class="grid-item">
         <a href="props">
         <img src="images/props.svg" width="150" height="150">
         <p>Propellers</p>
@@ -55,4 +60,3 @@ tags:
         </a>
     </div>
 </div>
-

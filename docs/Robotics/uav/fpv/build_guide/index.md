@@ -5,6 +5,10 @@ tags:
     - build
 ---
 
+## from plate to drone
+- [I Design My Own FPV Drones, And It's Easier Than You Think (GIVEAWAY!) ](https://www.youtube.com/watch?v=U6zWFtaXNfw)
+
+# Read and watch
 - [ How To build a 7-Inch FPV Drone In 2026 ](https://youtu.be/WeniBTXIi9A)
 - [ DIY 3D Printed VTOL UAV | ArduPilot AET405WING + ELRS + IPC Digital FPV Build & Flight Test ](https://youtu.be/FE3cvICdO2A)
 - [ Build The Smallest ESP32 Brushless Rocket Drone | ESP-BLAST ](https://youtu.be/pUi1T12QYAU)

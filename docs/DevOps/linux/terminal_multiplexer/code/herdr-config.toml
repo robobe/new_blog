@@ -1,0 +1,40 @@
+# Herdr configuration for Codex users coming from Terminator and tmux.
+# Copy this file to: ~/.config/herdr/config.toml
+
+onboarding = false
+
+[terminal]
+shell_mode = "auto"
+new_cwd = "follow"
+
+[session]
+resume_agents_on_restore = true
+
+[keys]
+prefix = "ctrl+a"
+
+# Terminator-style pane creation.
+split_vertical = ["prefix+v", "ctrl+shift+e"]
+split_horizontal = ["prefix+minus", "ctrl+shift+o"]
+
+# Pane navigation with tmux-style prefix fallbacks.
+#
+# IMPORTANT: the outer terminal must pass Alt+Arrow to Herdr. In VS Code's
+# integrated terminal, set "terminal.integrated.sendKeybindingsToShell": true.
+# In Terminator, clear/reassign go_left, go_right, go_up, and go_down.
+focus_pane_left = ["prefix+h", "alt+left"]
+focus_pane_down = ["prefix+j", "alt+down"]
+focus_pane_up = ["prefix+k", "alt+up"]
+focus_pane_right = ["prefix+l", "alt+right"]
+
+# Pane and tab management.
+zoom = ["prefix+z", "ctrl+shift+x"]
+close_pane = ["prefix+x", "ctrl+shift+w"]
+new_tab = ["prefix+c", "ctrl+shift+t"]
+next_tab = ["prefix+n", "ctrl+shift+right"]
+previous_tab = ["prefix+p", "ctrl+shift+left"]
+
+# Session controls.
+detach = "prefix+q"
+help = "prefix+?"
+toggle_sidebar = "prefix+b"

@@ -41,6 +41,11 @@ tags:
         </a>
     </div>
     <div class="grid-item">
+        <a href="terminal_multiplexer/herdr">
+        <p>herdr</p>
+        </a>
+    </div>
+    <div class="grid-item">
         <a href="zellij">
         <p>zellij</p>
         </a>
