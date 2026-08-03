@@ -7,11 +7,12 @@ tags:
 ---
 
 ## Install
-I try
-- [armbian](): Base on ubuntu 24.04
-- [Ubuntu for various Rockchip single board computers](https://joshua-riek.github.io/ubuntu-rockchip-download/boards/radxa-zero3.html?utm_source=chatgpt.com) 
+I try:
+
+- [armbian](): Base on ubuntu 24.04  
+- [Ubuntu for various Rockchip single board computers](https://joshua-riek.github.io/ubuntu-rockchip-download/boards/radxa-zero3.html?utm_source=chatgpt.com)  
 - [Radxa document center](https://docs.radxa.com/en/zero/zero3/getting-started/install-os)
-[Downloads for the Radxa Zero 3 6.1 Kernel: radxa-zero3_bookworm_kde_b1](https://docs.radxa.com/en/zero/zero3/download)
+[Downloads for the Radxa Zero 3 6.1 Kernel: radxa-zero3_bookworm_kde_b1](https://docs.radxa.com/en/zero/zero3/download) 
 
 
 !!! tip "NPU Driver"

@@ -17,6 +17,11 @@
 ---
 
 <div class="grid-container">
+    <div class="grid-item">
+        <a href="yolo_metrics">
+        <img src="images/yolo-metrics.svg" width="150" height="150">
+        <p>Understanding YOLO Training Results</p></a>
+    </div>
     <!-- <div class="grid-item">
         <a href="math">
         <img src="images/math.png"  width="150" height="150">
