@@ -1,0 +1,1567 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Programming/ai/yolo_metrics/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Understanding YOLO Training Results - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-is-map50" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Understanding YOLO Training Results
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-map50" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is mAP50?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iou-does-the-predicted-box-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IoU: does the predicted box match?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#confidence-and-iou-are-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidence and IoU are different
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tp-fp-and-fn-for-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TP, FP, and FN for object detection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precision-recall-and-f1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precision, recall, and F1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Precision, recall, and F1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precision
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recall
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f1-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        F1 score
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ap-map50-and-map5095" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AP, mAP50, and mAP50–95
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-the-annotated-images-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read the annotated images first
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Read the annotated images first">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-batches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training batches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-labels-and-predictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation labels and predictions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understand-resultspng" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understand results.png
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understand results.png">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-losses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training losses
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-losses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation losses
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metric-curves-by-epoch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metric curves by epoch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-the-precisionrecall-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read the precision–recall curve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-the-f1-precision-and-recall-curves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read the F1, precision, and recall curves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-the-confusion-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read the confusion matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-and-label-plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset and label plots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-practical-review-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A practical review order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symptom-to-action-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symptom-to-action guide
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate-and-print-the-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validate and print the metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">computer-vision</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">machine-learning</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">metrics</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">object-detection</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">yolo</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Understanding YOLO Training Results</h1>
+
+<p>Training a YOLO detector creates many numbers, curves, matrices, and annotated images. None of them tells the whole story alone. This guide explains how to read them together, beginning with <code>mAP50</code> and the IoU matching rule underneath it.</p>
+<p>The exact filenames can vary by Ultralytics version and task. Detection plots commonly use the <code>Box</code> prefix, such as <code>BoxPR_curve.png</code>; segmentation and pose runs also produce <code>Mask</code> or <code>Pose</code> curves.</p>
+<h2 id="what-is-map50">What is mAP50?</h2>
+<p><code>mAP50</code> means <strong>mean Average Precision at an IoU threshold of 0.50</strong>.</p>
+<p>It answers this question:</p>
+<blockquote>
+<p>Across all classes, how well does the model rank correct detections ahead of false detections when a predicted box needs at least 50% IoU with a ground-truth box to match it?</p>
+</blockquote>
+<p>It is not ordinary classification accuracy, and <code>50</code> is not a confidence threshold.</p>
+<p><img alt="The five stages used to calculate mAP50" src="images/map50-pipeline.svg" /></p>
+<p>The calculation has five conceptual steps:</p>
+<ol>
+<li>Gather predictions for one class across the validation set.</li>
+<li>Sort them from highest to lowest confidence.</li>
+<li>Match predictions to ground-truth objects using <code>IoU ≥ 0.50</code>.</li>
+<li>Sweep down the ranked predictions to build a precision–recall curve and calculate its area, <code>AP50</code>.</li>
+<li>Average <code>AP50</code> equally over the evaluated classes to get <code>mAP50</code>.</li>
+</ol>
+<p>For three classes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>person AP50 = 0.92
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>car    AP50 = 0.81
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>dog    AP50 = 0.67
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>mAP50 = (0.92 + 0.81 + 0.67) / 3 = 0.80
+</code></pre></div></td></tr></table></div>
+<p>The class mean gives each class equal weight. A rare class can therefore reduce mAP as much as a common class.</p>
+<hr />
+<h2 id="iou-does-the-predicted-box-match">IoU: does the predicted box match?</h2>
+<p>Intersection over Union compares a predicted box with a ground-truth box:</p>
+<div class="arithmatex">\[
+IoU = \frac{\text{area of intersection}}{\text{area of union}}
+\]</div>
+<p><img alt="A labeled car detection illustrating ground truth, prediction, overlap, and IoU" src="images/iou-detection.svg" /></p>
+<p>Interpretation:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">IoU</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"><code>0.00</code></td>
+<td>No overlap</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>0.25</code></td>
+<td>Weak localization</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>0.50</code></td>
+<td>Passes the matching rule used by mAP50</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>0.75</code></td>
+<td>Good localization</td>
+</tr>
+<tr>
+<td style="text-align: right;"><code>1.00</code></td>
+<td>Identical boxes</td>
+</tr>
+</tbody>
+</table>
+<p>At IoU 0.50, a predicted detection becomes a true positive only if:</p>
+<ul>
+<li>its class is correct;</li>
+<li>its confidence passes the current confidence point in the evaluation sweep;</li>
+<li>its IoU with an unmatched label is at least 0.50; and</li>
+<li>that label has not already been assigned to a higher-confidence prediction.</li>
+</ul>
+<p>A duplicate box around an already matched object is a false positive. A correct class with IoU below 0.50 is also a false positive for mAP50, while the unmatched label contributes a false negative.</p>
+<hr />
+<h2 id="confidence-and-iou-are-different">Confidence and IoU are different</h2>
+<p>These thresholds answer different questions:</p>
+<table>
+<thead>
+<tr>
+<th>Threshold</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Confidence</td>
+<td>How certain must the model be before keeping a prediction?</td>
+</tr>
+<tr>
+<td>IoU evaluation threshold</td>
+<td>How closely must a prediction overlap a label to count as localized correctly?</td>
+</tr>
+<tr>
+<td>NMS IoU threshold</td>
+<td>How much may two predictions overlap before suppression treats them as duplicates?</td>
+</tr>
+</tbody>
+</table>
+<p>Do not interpret <code>mAP50</code> as “mAP with confidence set to 0.50.” The evaluator sweeps confidence to create the precision–recall curve; <code>0.50</code> describes the box-matching IoU.</p>
+<hr />
+<h2 id="tp-fp-and-fn-for-object-detection">TP, FP, and FN for object detection</h2>
+<p>Assume an image contains two labeled cars.</p>
+<ul>
+<li>A correct car prediction matching the first label: <strong>true positive (TP)</strong>.</li>
+<li>A second prediction on the same first car: <strong>false positive (FP)</strong>.</li>
+<li>A predicted truck on the second car: <strong>false positive for truck</strong> and the car remains missed.</li>
+<li>The unmatched second car: <strong>false negative (FN)</strong>.</li>
+</ul>
+<p>Object detection normally does not count true negatives in a useful way because an image contains an enormous number of possible background boxes.</p>
+<h2 id="precision-recall-and-f1">Precision, recall, and F1</h2>
+<h3 id="precision">Precision</h3>
+<div class="arithmatex">\[
+Precision = \frac{TP}{TP + FP}
+\]</div>
+<p>High precision means most reported detections are correct. Low precision means the model produces too many false alarms.</p>
+<h3 id="recall">Recall</h3>
+<div class="arithmatex">\[
+Recall = \frac{TP}{TP + FN}
+\]</div>
+<p>High recall means the model finds most labeled objects. Low recall means it misses many objects.</p>
+<h3 id="f1-score">F1 score</h3>
+<div class="arithmatex">\[
+F1 = 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}
+\]</div>
+<p>F1 summarizes the balance between precision and recall at a particular confidence threshold. The best F1 point is a useful initial operating threshold, not automatically the correct deployment threshold.</p>
+<hr />
+<h2 id="ap-map50-and-map5095">AP, mAP50, and mAP50–95</h2>
+<p><code>AP</code> is the area under a class's precision–recall curve. <code>mAP</code> is the mean AP across classes.</p>
+<p><img alt="Precision-recall area and a normalized confusion matrix" src="images/pr-confusion.svg" /></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Matching rule</th>
+<th>What it emphasizes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mAP50</code></td>
+<td>IoU = 0.50</td>
+<td>Finding and roughly localizing objects</td>
+</tr>
+<tr>
+<td><code>mAP75</code></td>
+<td>IoU = 0.75</td>
+<td>More accurate box placement</td>
+</tr>
+<tr>
+<td><code>mAP50-95</code></td>
+<td>Mean over IoU 0.50, 0.55, …, 0.95</td>
+<td>Overall detection and localization quality</td>
+</tr>
+</tbody>
+</table>
+<p><code>mAP50</code> is usually higher because its location requirement is forgiving. A large gap between <code>mAP50</code> and <code>mAP50-95</code> often means the model recognizes objects but places loose or inconsistent boxes.</p>
+<p>Do not compare mAP values unless the dataset split, label policy, image size, evaluator, class list, and IoU convention are the same.</p>
+<h2 id="read-the-annotated-images-first">Read the annotated images first</h2>
+<p>Before studying curves, inspect the actual training and validation images.</p>
+<h3 id="training-batches">Training batches</h3>
+<p><code>train_batch*.jpg</code> shows labels after augmentations such as scaling, flipping, color changes, and mosaic composition.</p>
+<p>Check for:</p>
+<ul>
+<li>missing boxes;</li>
+<li>boxes shifted away from objects;</li>
+<li>boxes that include too much background;</li>
+<li>wrong class names;</li>
+<li>objects cut into unrealistic fragments;</li>
+<li>augmentations that change the meaning of a class; and</li>
+<li>tiny objects becoming impossible to see.</li>
+</ul>
+<p>If labels are wrong here, longer training will teach the model the wrong problem.</p>
+<h3 id="validation-labels-and-predictions">Validation labels and predictions</h3>
+<p>Compare corresponding files:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>val_batch0_labels.jpg
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>val_batch0_pred.jpg
+</code></pre></div></td></tr></table></div>
+<p>The label image is the expected answer. The prediction image is the model output.</p>
+<p>For every object, ask:</p>
+<ol>
+<li>Is there a ground-truth box?</li>
+<li>Did the model produce a box?</li>
+<li>Is the predicted class correct?</li>
+<li>Is the box tight enough to achieve useful IoU?</li>
+<li>Is the confidence sensible?</li>
+<li>Are duplicate predictions present?</li>
+<li>Does the model detect background patterns as objects?</li>
+</ol>
+<p>Review easy and difficult samples: small objects, occlusion, clutter, unusual viewpoints, blur, bright sunlight, darkness, and rare classes.</p>
+<hr />
+<h2 id="understand-resultspng">Understand <code>results.png</code></h2>
+<p><code>results.png</code> plots values stored per epoch in <code>results.csv</code>. A detection run commonly includes training and validation losses plus precision, recall, mAP50, and mAP50-95.</p>
+<h3 id="training-losses">Training losses</h3>
+<table>
+<thead>
+<tr>
+<th>Plot</th>
+<th>Meaning</th>
+<th>Healthy pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>train/box_loss</code></td>
+<td>Bounding-box localization error</td>
+<td>Falls and then levels off</td>
+</tr>
+<tr>
+<td><code>train/cls_loss</code></td>
+<td>Class prediction error</td>
+<td>Falls and then levels off</td>
+</tr>
+<tr>
+<td><code>train/dfl_loss</code></td>
+<td>Distribution Focal Loss used for box coordinates</td>
+<td>Falls and then levels off</td>
+</tr>
+</tbody>
+</table>
+<p>Lower loss is useful only relative to the same model, configuration, and dataset. A low training loss does not prove good validation performance.</p>
+<h3 id="validation-losses">Validation losses</h3>
+<p>Validation losses measure the same kinds of error on data not used for weight updates.</p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Likely interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Train and validation losses both improve</td>
+<td>Learning useful patterns</td>
+</tr>
+<tr>
+<td>Train improves while validation worsens</td>
+<td>Possible overfitting or train/validation mismatch</td>
+</tr>
+<tr>
+<td>Both remain high</td>
+<td>Underfitting, label problems, inadequate model, or poor settings</td>
+</tr>
+<tr>
+<td>Curves are very noisy</td>
+<td>Small validation set, unstable labels, difficult data, or aggressive training</td>
+</tr>
+</tbody>
+</table>
+<h3 id="metric-curves-by-epoch">Metric curves by epoch</h3>
+<ul>
+<li>Precision rising: fewer false positives among retained detections.</li>
+<li>Recall rising: fewer labeled objects missed.</li>
+<li>mAP50 rising: better ranking and matching at IoU 0.50.</li>
+<li>mAP50-95 rising: better performance across strict localization thresholds.</li>
+</ul>
+<p>The best epoch is not necessarily the last epoch. Ultralytics saves <code>best.pt</code> according to its validation fitness calculation.</p>
+<h2 id="read-the-precisionrecall-curve">Read the precision–recall curve</h2>
+<p><code>BoxPR_curve.png</code> shows precision against recall while confidence changes.</p>
+<ul>
+<li>A curve near the top-right is strong.</li>
+<li>A sharp precision collapse at moderate recall indicates many false positives.</li>
+<li>A curve that ends at low recall means the model cannot find many objects even with a permissive confidence threshold.</li>
+<li>One weak class curve hidden by a strong mean curve needs class-specific investigation.</li>
+</ul>
+<p>The area under each class curve is AP. The mean of those areas at IoU 0.50 is mAP50.</p>
+<h2 id="read-the-f1-precision-and-recall-curves">Read the F1, precision, and recall curves</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Axes</th>
+<th>How to use it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BoxF1_curve.png</code></td>
+<td>F1 vs confidence</td>
+<td>Find a balanced initial confidence threshold</td>
+</tr>
+<tr>
+<td><code>BoxP_curve.png</code></td>
+<td>Precision vs confidence</td>
+<td>See how false alarms change as confidence increases</td>
+</tr>
+<tr>
+<td><code>BoxR_curve.png</code></td>
+<td>Recall vs confidence</td>
+<td>See how missed detections increase as confidence increases</td>
+</tr>
+</tbody>
+</table>
+<p>A safety-monitoring application may prefer recall and accept more false alarms. An automated action with an expensive false trigger may prioritize precision. Select the threshold from application costs, then validate it on representative test data.</p>
+<h2 id="read-the-confusion-matrix">Read the confusion matrix</h2>
+<p><code>confusion_matrix.png</code> contains counts. <code>confusion_matrix_normalized.png</code> uses proportions, making classes with different instance counts easier to compare.</p>
+<p>First verify the axis labels printed on the actual file; plotting conventions can differ between libraries and versions.</p>
+<p>Look for:</p>
+<ul>
+<li>strong diagonal cells: correct classifications;</li>
+<li>off-diagonal cells: one class confused with another;</li>
+<li>true class → background errors: missed objects;</li>
+<li>background → predicted class errors: false detections; and</li>
+<li>a class with few examples: percentages that may look dramatic but represent few objects.</li>
+</ul>
+<p>A confusion matrix answers “which classes are confused?” It does not show whether a correct-class box is precisely localized, so use it with IoU-based metrics and prediction images.</p>
+<hr />
+<h2 id="dataset-and-label-plots">Dataset and label plots</h2>
+<p>Depending on the Ultralytics version, training may create files such as <code>labels.jpg</code> or <code>labels_correlogram.jpg</code>.</p>
+<p>Use them to inspect:</p>
+<ul>
+<li>instances per class;</li>
+<li>box-center distribution;</li>
+<li>width and height distribution;</li>
+<li>class imbalance;</li>
+<li>labels concentrated near image borders; and</li>
+<li>suspicious repeated sizes or locations.</li>
+</ul>
+<p>These plots describe the dataset, not model quality. A balanced histogram also does not guarantee visual diversity.</p>
+<hr />
+<h2 id="a-practical-review-order">A practical review order</h2>
+<p>Use this order after every training run:</p>
+<ol>
+<li>Inspect <code>train_batch*.jpg</code> for label and augmentation errors.</li>
+<li>Compare <code>val_batch*_labels.jpg</code> with <code>val_batch*_pred.jpg</code>.</li>
+<li>Check instances per class and validation-set size.</li>
+<li>Read <code>results.png</code> for convergence and overfitting.</li>
+<li>Compare mAP50 with mAP50-95.</li>
+<li>Inspect per-class PR curves.</li>
+<li>Inspect raw and normalized confusion matrices.</li>
+<li>Choose a confidence threshold from F1, precision, recall, and application costs.</li>
+<li>Run inference on a separate test set and real deployment scenes.</li>
+<li>Review failures individually before changing the model.</li>
+</ol>
+<h2 id="symptom-to-action-guide">Symptom-to-action guide</h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Possible cause</th>
+<th>What to inspect next</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High mAP50, much lower mAP50-95</td>
+<td>Loose or inconsistent boxes</td>
+<td>Label tightness, image resolution, small objects</td>
+</tr>
+<tr>
+<td>High precision, low recall</td>
+<td>Conservative predictions</td>
+<td>Recall curve, missed labels, confidence threshold</td>
+</tr>
+<tr>
+<td>Low precision, high recall</td>
+<td>Many false positives</td>
+<td>Background examples, class ambiguity, confidence threshold</td>
+</tr>
+<tr>
+<td>Good metrics, poor real-world inference</td>
+<td>Validation leakage or domain mismatch</td>
+<td>Dataset split and deployment images</td>
+</tr>
+<tr>
+<td>One class has low AP</td>
+<td>Too few examples or class confusion</td>
+<td>Per-class PR curve and confusion matrix</td>
+</tr>
+<tr>
+<td>Training loss falls, validation loss rises</td>
+<td>Overfitting</td>
+<td>Dataset size, diversity, augmentation, stopping epoch</td>
+</tr>
+<tr>
+<td>Metrics jump strongly between epochs</td>
+<td>Small/noisy validation set</td>
+<td>Instance counts and label consistency</td>
+</tr>
+<tr>
+<td>Duplicate boxes</td>
+<td>NMS behavior or overlapping labels</td>
+<td>Prediction images and NMS IoU setting</td>
+</tr>
+</tbody>
+</table>
+<p>These are investigation directions, not automatic fixes. Change one factor at a time and keep the same test set for comparison.</p>
+<h2 id="validate-and-print-the-metrics">Validate and print the metrics</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">ultralytics</span><span class="w"> </span><span class="kn">import</span> <span class="n">YOLO</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="n">model</span> <span class="o">=</span> <span class="n">YOLO</span><span class="p">(</span><span class="s2">&quot;runs/detect/train/weights/best.pt&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="n">metrics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;data.yaml&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mAP50:    </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">map50</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mAP50-95: </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">map</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mAP75:    </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">map75</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;precision: </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">mp</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;recall:    </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">mr</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;per-class mAP50-95:&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">.</span><span class="n">box</span><span class="o">.</span><span class="n">maps</span><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;speed, ms/image:&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">.</span><span class="n">speed</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Always evaluate <code>best.pt</code> on a held-out test set before deployment. The validation set influenced model selection, so its score is not a final unbiased estimate.</p>
+<h2 id="common-mistakes">Common mistakes</h2>
+<ul>
+<li>Treating mAP50 as accuracy.</li>
+<li>Thinking <code>50</code> means confidence <code>0.50</code>.</li>
+<li>Reporting only the overall mean and hiding weak classes.</li>
+<li>Comparing runs that use different validation splits.</li>
+<li>Tuning the deployment threshold on the test set.</li>
+<li>Assuming low loss means good detection.</li>
+<li>Ignoring prediction images because the headline metric is high.</li>
+<li>Training longer before checking label quality.</li>
+<li>Using validation images that also appear in training.</li>
+<li>Choosing a confidence threshold without considering the cost of FP and FN.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://docs.ultralytics.com/guides/yolo-performance-metrics/" target="_blank">Ultralytics YOLO performance metrics</a></li>
+<li><a href="https://docs.ultralytics.com/guides/model-evaluation-insights/" target="_blank">Ultralytics model evaluation and metric access</a></li>
+<li><a href="https://docs.ultralytics.com/yolov5/tutorials/tips-for-best-training-results/" target="_blank">Ultralytics training-result and dataset-quality guidance</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>
