@@ -18,6 +18,7 @@ The `strategy` keyword allows you to define a strategy for running jobs in paral
 ### Example: Using Strategy
 - Run jobs in parallel with different configurations using a matrix strategy.
   
+{% raw %}
 ```yaml
 name: demos
 on: [workflow_dispatch]
@@ -31,10 +32,12 @@ jobs:
     steps:
       - run: echo "Running on ${{ matrix.os }}"
 ```
+{% endraw %}
 
 ## condition
 The `if` condition allows you to control whether a job or step runs based on the result of previous jobs or steps. This is useful for skipping jobs or steps that are not needed based on certain conditions.
 
+{% raw %}
 ```yaml title="if condition"
 name: demos
 on: [workflow_dispatch]
@@ -51,3 +54,4 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: echo "This step runs only on ubuntu-latest"
 ```
+{% endraw %}

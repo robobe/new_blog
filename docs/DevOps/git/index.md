@@ -392,6 +392,8 @@ Remove untracked files and folders:
 git clean -fd
 ```
 
+---
+
 ### Merge
 
 `git merge` combines changes from another branch into the branch you are currently on.
@@ -442,6 +444,7 @@ git add path/to/resolved-file
 git commit
 ```
 
+---
 
 ### Rebase
 
@@ -509,13 +512,307 @@ git pull --rebase
     If you rebase a pushed branch, you usually need `git push --force-with-lease`.
 
 
+---
 
-#TODO
-- git log
-- git stash
-- git cherry-pick
+### Diff
+
+Git provides several ways to compare files across commits and branches.
+
+#### Compare the same file between two commits
+
+```bash
+git diff <commit1> <commit2> -- path/to/file.cpp
+```
+
+Example:
+
+```bash
+git diff a1b2c3d f4e5a6b -- src/main.cpp
+```
+
+This shows how `src/main.cpp` changed from commit `a1b2c3d` to commit
+`f4e5a6b`.
+
+#### Compare the same file between two branches
+
+```bash
+git diff <branch1> <branch2> -- path/to/file.cpp
+```
+
+Example:
+
+```bash
+git diff main feature/navigation -- src/controller.cpp
+```
+
+#### Compare different files
+
+You can compare any two file versions using the `<revision>:<path>` syntax.
+The files can have different paths and can come from different branches:
+
+```bash
+git diff <branch1>:path/to/file1.cpp <branch2>:path/to/file2.cpp
+```
+
+Example:
+
+```bash
+git diff main:src/foo.cpp feature:src/bar.cpp
+```
+
+This is useful when a file was renamed or moved.
+
+#### Compare a working-tree file with a commit
+
+Compare the current working-tree version with the version from the previous
+commit:
+
+```bash
+git diff HEAD~1 -- src/main.cpp
+```
+
+Compare it with any arbitrary commit:
+
+```bash
+git diff a1b2c3d -- src/main.cpp
+```
+
+#### Compare files from arbitrary commits
+
+The file paths can be different, which is useful when a file was renamed or
+moved:
+
+```bash
+git diff <commit1>:path/to/file1.cpp <commit2>:path/to/file2.cpp
+```
+
+Example:
+
+```bash
+git diff HEAD~5:src/old.cpp HEAD:src/new.cpp
+```
+
+#### Open a graphical diff tool
+
+If a Git diff tool is configured:
+
+```bash
+git difftool main feature -- src/main.cpp
+```
+
+Or compare the file between two commits:
+
+```bash
+git difftool HEAD~1 HEAD -- src/main.cpp
+```
+
+Popular graphical diff tools include VS Code, Meld, KDiff3, and Beyond Compare.
+
+#### Find commit IDs
+
+Show the repository's commit hashes:
+
+```bash
+git log --oneline
+```
+
+Show only commits that changed a specific file:
+
+```bash
+git log --oneline -- path/to/file.cpp
+```
+
+#### Useful summary
+
+| Task | Command |
+| --- | --- |
+| Same file, two commits | `git diff c1 c2 -- file.cpp` |
+| Same file, two branches | `git diff branch1 branch2 -- file.cpp` |
+| Different files | `git diff branch1:file1.cpp branch2:file2.cpp` |
+| Working tree versus commit | `git diff HEAD -- file.cpp` |
+| Graphical diff | `git difftool c1 c2 -- file.cpp` |
+
+#### Compare with VS Code
+
+Compare two files that exist on disk:
+
+```bash
+code --diff <file1> <file2>
+```
+
+In Bash or Zsh, compare two versions stored in Git without checking out either
+branch:
+
+```bash
+code --wait --diff \
+    <(git show main:src/foo.cpp) \
+    <(git show feature:src/foo.cpp)
+```
+
+This opens VS Code's side-by-side diff editor. The `<(command)` syntax is
+shell process substitution and works in Bash and Zsh.
+
+---
+
+### Log
+
+`git log` shows commit history. It helps you find commit IDs, understand recent
+work, and locate when a file changed.
+
+Show a compact history:
+
+```bash
+git log --oneline
+```
+
+Use the commit IDs with commands such as `git diff`, `git show`, `git revert`,
+and `git cherry-pick`.
+
+Show branches and merges as a graph:
+
+```bash
+git log --oneline --graph --decorate --all
+```
+
+This gives a quick view of the branch structure and the current `HEAD`.
+
+Show commits that changed a file, including history before a rename:
+
+```bash
+git log --follow --oneline -- path/to/file.cpp
+```
+
+Use this to find when a file changed or which commit introduced a problem.
+
+Find commits by author or by commit-message text:
+
+```bash
+git log --oneline --author="name"
+git log --oneline --grep="bug fix"
+```
+
+These filters help locate relevant work in a large history.
+
+Show commits on the current branch that are not on `main`:
+
+```bash
+git log --oneline main..HEAD
+```
+
+Use this before opening a pull request to confirm which commits it will contain.
+
+---
+
+### Stash
+
+`git stash` temporarily stores uncommitted work and returns the working tree to
+a clean state. It is useful when you must switch branches or pull changes before
+your current work is ready to commit.
+
+Save tracked changes with a descriptive name:
+
+```bash
+git stash push -m "work in progress: login form"
+```
+
+Include untracked files when they are part of the work:
+
+```bash
+git stash push -u -m "work in progress: login form"
+```
+
+List saved stashes:
+
+```bash
+git stash list
+```
+
+Review a stash before restoring it:
+
+```bash
+git stash show --patch 'stash@{0}'
+```
+
+Restore the newest stash and remove it from the stash list:
+
+```bash
+git stash pop
+```
+
+Use `apply` instead when you want to keep the saved stash as a backup:
+
+```bash
+git stash apply 'stash@{0}'
+```
+
+Delete a stash only after confirming it is no longer needed:
+
+```bash
+git stash drop 'stash@{0}'
+```
+
+!!! note
+    Applying a stash can cause conflicts when the same lines changed after the
+    stash was created. Resolve the conflicts as you would during a merge.
+
+---
+
+### Cherry-pick
+
+`git cherry-pick` copies a specific commit onto the current branch as a new
+commit. It is useful for bringing over a focused bug fix without merging the
+entire source branch.
+
+First, switch to the branch that should receive the change and confirm it:
+
+```bash
+git switch main
+git status
+```
+
+Find the required commit and apply it:
+
+```bash
+git log --oneline --all
+git cherry-pick a1b2c3d
+```
+
+Apply several specific commits in the given order:
+
+```bash
+git cherry-pick a1b2c3d e4f5a6b
+```
+
+Review the result after cherry-picking:
+
+```bash
+git show --stat
+```
+
+If conflicts occur, resolve the files, stage them, and continue:
+
+```bash
+git add path/to/resolved-file
+git cherry-pick --continue
+```
+
+Abort the operation and return to the state before the cherry-pick:
+
+```bash
+git cherry-pick --abort
+```
+
+!!! warning
+    Cherry-picking creates a new commit with a different ID. Avoid copying the
+    same change through both cherry-pick and a later merge, because this can
+    duplicate work or cause conflicts.
+
+---
+
+# TODO
 - git reset
 - git revert
+
 ---
 
 

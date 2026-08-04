@@ -103,6 +103,7 @@ jobs:
 ```
 
 
+{% raw %}
 ```yaml title="actions/action_with_args/action.yaml"  linenums="1" hl_lines="3-10"
 name: "my Action with args"
 description: "My Action"
@@ -124,6 +125,7 @@ runs:
       run: 'echo "print arg2 value: ${{ inputs.arg2 }} "'
       shell: bash
 ```
+{% endraw %}
 
 ---
 
@@ -140,6 +142,7 @@ runs:
         └── demo.yml
 ```
 
+{% raw %}
 ```yaml title="workflows/demo.yml" linenums="1" hl_lines="8 11"
 name: demos
 on: [workflow_dispatch]
@@ -154,6 +157,7 @@ jobs:
         run: 'echo "print output value: ${{ steps.call_action.outputs.my_output }} "'
         shell: bash
 ```
+{% endraw %}
 
 ```yaml title="actions/action_output/action.yaml"  linenums="1" hl_lines="3-4 11"
 name: "my output demo"

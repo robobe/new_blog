@@ -222,7 +222,7 @@ Important topics to know:
 
 ---
 
-## iftop bandwidth by port {#iftop-bandwidth}
+## iftop bandwidth by port 
 
 `tcpdump` captures packets. For live bandwidth or traffic rate, `iftop` is often
 easier.

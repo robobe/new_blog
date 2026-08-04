@@ -7,6 +7,13 @@ tags:
     - skills
 ---
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="grill_skills/">
+            <p>Grill Me Skills</p>
+        </a>
+    </div>
+</div>
 
 ## Skills
 Skills help Codex behave consistently for repeatable tasks in your repository. Think of skills as teaching Codex domain-specific expertise that it can apply autonomously whenever the situation calls for it.

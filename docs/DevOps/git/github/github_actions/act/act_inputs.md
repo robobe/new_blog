@@ -33,6 +33,7 @@ command-line arguments for act so you don't have to type them every time.
 
 ### Demo
 
+{% raw %}
 ```yaml
 name: demos
 on: 
@@ -50,6 +51,7 @@ jobs:
       - name: echo title
         run: echo "---> ${{ github.event.inputs.TITLE }}"
 ```
+{% endraw %}
 
 ### usage
 
@@ -61,6 +63,7 @@ act -j simple_input --pull=false --input TITLE="hello world"
 
 ### Skip job and step using input ans if condition
 
+{% raw %}
 ```yaml title="skip step"
 name: demos
 on: 
@@ -83,6 +86,7 @@ jobs:
       - name: step3
         run: echo "---> step 3"
 ```
+{% endraw %}
 
 ### usage
 
@@ -92,6 +96,7 @@ act -j simple_skip --pull=false --input SKIP=false
 ```
 
 
+{% raw %}
 ```yaml title="skip job"
 name: demos
 on: 
@@ -114,6 +119,7 @@ jobs:
       - name: step3
         run: echo "---> step 3"
 ```
+{% endraw %}
 
 ### usage
 
