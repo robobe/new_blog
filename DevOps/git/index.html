@@ -763,6 +763,155 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diff
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Diff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compare-the-same-file-between-two-commits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare the same file between two commits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-the-same-file-between-two-branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare the same file between two branches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-different-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare different files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-a-working-tree-file-with-a-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare a working-tree file with a commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-files-from-arbitrary-commits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare files from arbitrary commits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-a-graphical-diff-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open a graphical diff tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-commit-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find commit IDs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#useful-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare with VS Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stash
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cherry-pick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cherry-pick
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1052,6 +1201,7 @@ Make sure you do not need the changes before running them.</p>
 <p>Remove untracked files and folders:</p>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">remove untracked files and folders</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1"></a>git<span class="w"> </span>clean<span class="w"> </span>-fd
 </code></pre></div></td></tr></table></div>
+<hr />
 <h3 id="merge">Merge</h3>
 <p><code>git merge</code> combines changes from another branch into the branch you are currently on.
 For example, if you are on <code>main</code> and merge <code>feature/login</code>, Git brings the commits from <code>feature/login</code> into <code>main</code>.</p>
@@ -1089,6 +1239,7 @@ If both branches have new commits, Git creates a merge commit.</p>
 <a id="__codelineno-48-2" name="__codelineno-48-2"></a>git<span class="w"> </span>add<span class="w"> </span>path/to/resolved-file
 <a id="__codelineno-48-3" name="__codelineno-48-3"></a>git<span class="w"> </span>commit
 </code></pre></div></td></tr></table></div>
+<hr />
 <h3 id="rebase">Rebase</h3>
 <p><code>git rebase</code> moves your branch commits so they start from a newer base commit.
 It is commonly used to update a feature branch with the latest changes from <code>main</code> while keeping a linear history.</p>
@@ -1137,11 +1288,204 @@ It is commonly used to update a feature branch with the latest changes from <cod
 Avoid rebasing commits that were already pushed to a shared branch unless your team expects that workflow.
 If you rebase a pushed branch, you usually need <code>git push --force-with-lease</code>.</p>
 </div>
+<hr />
+<h3 id="diff">Diff</h3>
+<p>Git provides several ways to compare files across commits and branches.</p>
+<h4 id="compare-the-same-file-between-two-commits">Compare the same file between two commits</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-56-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1"></a>git<span class="w"> </span>diff<span class="w"> </span>&lt;commit1&gt;<span class="w"> </span>&lt;commit2&gt;<span class="w"> </span>--<span class="w"> </span>path/to/file.cpp
+</code></pre></div></td></tr></table></div>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-57-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1"></a>git<span class="w"> </span>diff<span class="w"> </span>a1b2c3d<span class="w"> </span>f4e5a6b<span class="w"> </span>--<span class="w"> </span>src/main.cpp
+</code></pre></div></td></tr></table></div>
+<p>This shows how <code>src/main.cpp</code> changed from commit <code>a1b2c3d</code> to commit
+<code>f4e5a6b</code>.</p>
+<h4 id="compare-the-same-file-between-two-branches">Compare the same file between two branches</h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-58-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1"></a>git<span class="w"> </span>diff<span class="w"> </span>&lt;branch1&gt;<span class="w"> </span>&lt;branch2&gt;<span class="w"> </span>--<span class="w"> </span>path/to/file.cpp
+</code></pre></div></td></tr></table></div>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-59-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1"></a>git<span class="w"> </span>diff<span class="w"> </span>main<span class="w"> </span>feature/navigation<span class="w"> </span>--<span class="w"> </span>src/controller.cpp
+</code></pre></div></td></tr></table></div>
+<h4 id="compare-different-files">Compare different files</h4>
+<p>You can compare any two file versions using the <code>&lt;revision&gt;:&lt;path&gt;</code> syntax.
+The files can have different paths and can come from different branches:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-60-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1"></a>git<span class="w"> </span>diff<span class="w"> </span>&lt;branch1&gt;:path/to/file1.cpp<span class="w"> </span>&lt;branch2&gt;:path/to/file2.cpp
+</code></pre></div></td></tr></table></div>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-61-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1"></a>git<span class="w"> </span>diff<span class="w"> </span>main:src/foo.cpp<span class="w"> </span>feature:src/bar.cpp
+</code></pre></div></td></tr></table></div>
+<p>This is useful when a file was renamed or moved.</p>
+<h4 id="compare-a-working-tree-file-with-a-commit">Compare a working-tree file with a commit</h4>
+<p>Compare the current working-tree version with the version from the previous
+commit:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-62-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1"></a>git<span class="w"> </span>diff<span class="w"> </span>HEAD~1<span class="w"> </span>--<span class="w"> </span>src/main.cpp
+</code></pre></div></td></tr></table></div>
+<p>Compare it with any arbitrary commit:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-63-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1"></a>git<span class="w"> </span>diff<span class="w"> </span>a1b2c3d<span class="w"> </span>--<span class="w"> </span>src/main.cpp
+</code></pre></div></td></tr></table></div>
+<h4 id="compare-files-from-arbitrary-commits">Compare files from arbitrary commits</h4>
+<p>The file paths can be different, which is useful when a file was renamed or
+moved:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-64-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1"></a>git<span class="w"> </span>diff<span class="w"> </span>&lt;commit1&gt;:path/to/file1.cpp<span class="w"> </span>&lt;commit2&gt;:path/to/file2.cpp
+</code></pre></div></td></tr></table></div>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-65-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1"></a>git<span class="w"> </span>diff<span class="w"> </span>HEAD~5:src/old.cpp<span class="w"> </span>HEAD:src/new.cpp
+</code></pre></div></td></tr></table></div>
+<h4 id="open-a-graphical-diff-tool">Open a graphical diff tool</h4>
+<p>If a Git diff tool is configured:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-66-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1"></a>git<span class="w"> </span>difftool<span class="w"> </span>main<span class="w"> </span>feature<span class="w"> </span>--<span class="w"> </span>src/main.cpp
+</code></pre></div></td></tr></table></div>
+<p>Or compare the file between two commits:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-67-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1"></a>git<span class="w"> </span>difftool<span class="w"> </span>HEAD~1<span class="w"> </span>HEAD<span class="w"> </span>--<span class="w"> </span>src/main.cpp
+</code></pre></div></td></tr></table></div>
+<p>Popular graphical diff tools include VS Code, Meld, KDiff3, and Beyond Compare.</p>
+<h4 id="find-commit-ids">Find commit IDs</h4>
+<p>Show the repository's commit hashes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-68-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline
+</code></pre></div></td></tr></table></div>
+<p>Show only commits that changed a specific file:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-69-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--<span class="w"> </span>path/to/file.cpp
+</code></pre></div></td></tr></table></div>
+<h4 id="useful-summary">Useful summary</h4>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same file, two commits</td>
+<td><code>git diff c1 c2 -- file.cpp</code></td>
+</tr>
+<tr>
+<td>Same file, two branches</td>
+<td><code>git diff branch1 branch2 -- file.cpp</code></td>
+</tr>
+<tr>
+<td>Different files</td>
+<td><code>git diff branch1:file1.cpp branch2:file2.cpp</code></td>
+</tr>
+<tr>
+<td>Working tree versus commit</td>
+<td><code>git diff HEAD -- file.cpp</code></td>
+</tr>
+<tr>
+<td>Graphical diff</td>
+<td><code>git difftool c1 c2 -- file.cpp</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="compare-with-vs-code">Compare with VS Code</h4>
+<p>Compare two files that exist on disk:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-70-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1"></a>code<span class="w"> </span>--diff<span class="w"> </span>&lt;file1&gt;<span class="w"> </span>&lt;file2&gt;
+</code></pre></div></td></tr></table></div>
+<p>In Bash or Zsh, compare two versions stored in Git without checking out either
+branch:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-71-1">1</a></span>
+<span class="normal"><a href="#__codelineno-71-2">2</a></span>
+<span class="normal"><a href="#__codelineno-71-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1"></a>code<span class="w"> </span>--wait<span class="w"> </span>--diff<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-71-2" name="__codelineno-71-2"></a><span class="w">    </span>&lt;<span class="o">(</span>git<span class="w"> </span>show<span class="w"> </span>main:src/foo.cpp<span class="o">)</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-71-3" name="__codelineno-71-3"></a><span class="w">    </span>&lt;<span class="o">(</span>git<span class="w"> </span>show<span class="w"> </span>feature:src/foo.cpp<span class="o">)</span>
+</code></pre></div></td></tr></table></div>
+<p>This opens VS Code's side-by-side diff editor. The <code>&lt;(command)</code> syntax is
+shell process substitution and works in Bash and Zsh.</p>
+<hr />
+<h3 id="log">Log</h3>
+<p><code>git log</code> shows commit history. It helps you find commit IDs, understand recent
+work, and locate when a file changed.</p>
+<p>Show a compact history:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-72-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline
+</code></pre></div></td></tr></table></div>
+<p>Use the commit IDs with commands such as <code>git diff</code>, <code>git show</code>, <code>git revert</code>,
+and <code>git cherry-pick</code>.</p>
+<p>Show branches and merges as a graph:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-73-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--decorate<span class="w"> </span>--all
+</code></pre></div></td></tr></table></div>
+<p>This gives a quick view of the branch structure and the current <code>HEAD</code>.</p>
+<p>Show commits that changed a file, including history before a rename:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-74-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1"></a>git<span class="w"> </span>log<span class="w"> </span>--follow<span class="w"> </span>--oneline<span class="w"> </span>--<span class="w"> </span>path/to/file.cpp
+</code></pre></div></td></tr></table></div>
+<p>Use this to find when a file changed or which commit introduced a problem.</p>
+<p>Find commits by author or by commit-message text:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-75-1">1</a></span>
+<span class="normal"><a href="#__codelineno-75-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--author<span class="o">=</span><span class="s2">&quot;name&quot;</span>
+<a id="__codelineno-75-2" name="__codelineno-75-2"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--grep<span class="o">=</span><span class="s2">&quot;bug fix&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>These filters help locate relevant work in a large history.</p>
+<p>Show commits on the current branch that are not on <code>main</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-76-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>main..HEAD
+</code></pre></div></td></tr></table></div>
+<p>Use this before opening a pull request to confirm which commits it will contain.</p>
+<hr />
+<h3 id="stash">Stash</h3>
+<p><code>git stash</code> temporarily stores uncommitted work and returns the working tree to
+a clean state. It is useful when you must switch branches or pull changes before
+your current work is ready to commit.</p>
+<p>Save tracked changes with a descriptive name:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-77-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1"></a>git<span class="w"> </span>stash<span class="w"> </span>push<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;work in progress: login form&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Include untracked files when they are part of the work:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-78-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-78-1" name="__codelineno-78-1"></a>git<span class="w"> </span>stash<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;work in progress: login form&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>List saved stashes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-79-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-79-1" name="__codelineno-79-1"></a>git<span class="w"> </span>stash<span class="w"> </span>list
+</code></pre></div></td></tr></table></div>
+<p>Review a stash before restoring it:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-80-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-80-1" name="__codelineno-80-1"></a>git<span class="w"> </span>stash<span class="w"> </span>show<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;stash@{0}&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Restore the newest stash and remove it from the stash list:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-81-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-81-1" name="__codelineno-81-1"></a>git<span class="w"> </span>stash<span class="w"> </span>pop
+</code></pre></div></td></tr></table></div>
+<p>Use <code>apply</code> instead when you want to keep the saved stash as a backup:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-82-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-82-1" name="__codelineno-82-1"></a>git<span class="w"> </span>stash<span class="w"> </span>apply<span class="w"> </span><span class="s1">&#39;stash@{0}&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Delete a stash only after confirming it is no longer needed:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-83-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-83-1" name="__codelineno-83-1"></a>git<span class="w"> </span>stash<span class="w"> </span>drop<span class="w"> </span><span class="s1">&#39;stash@{0}&#39;</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Applying a stash can cause conflicts when the same lines changed after the
+stash was created. Resolve the conflicts as you would during a merge.</p>
+</div>
+<hr />
+<h3 id="cherry-pick">Cherry-pick</h3>
+<p><code>git cherry-pick</code> copies a specific commit onto the current branch as a new
+commit. It is useful for bringing over a focused bug fix without merging the
+entire source branch.</p>
+<p>First, switch to the branch that should receive the change and confirm it:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-84-1">1</a></span>
+<span class="normal"><a href="#__codelineno-84-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-84-1" name="__codelineno-84-1"></a>git<span class="w"> </span>switch<span class="w"> </span>main
+<a id="__codelineno-84-2" name="__codelineno-84-2"></a>git<span class="w"> </span>status
+</code></pre></div></td></tr></table></div>
+<p>Find the required commit and apply it:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-85-1">1</a></span>
+<span class="normal"><a href="#__codelineno-85-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-85-1" name="__codelineno-85-1"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--all
+<a id="__codelineno-85-2" name="__codelineno-85-2"></a>git<span class="w"> </span>cherry-pick<span class="w"> </span>a1b2c3d
+</code></pre></div></td></tr></table></div>
+<p>Apply several specific commits in the given order:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-86-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-86-1" name="__codelineno-86-1"></a>git<span class="w"> </span>cherry-pick<span class="w"> </span>a1b2c3d<span class="w"> </span>e4f5a6b
+</code></pre></div></td></tr></table></div>
+<p>Review the result after cherry-picking:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-87-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-87-1" name="__codelineno-87-1"></a>git<span class="w"> </span>show<span class="w"> </span>--stat
+</code></pre></div></td></tr></table></div>
+<p>If conflicts occur, resolve the files, stage them, and continue:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-88-1">1</a></span>
+<span class="normal"><a href="#__codelineno-88-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-88-1" name="__codelineno-88-1"></a>git<span class="w"> </span>add<span class="w"> </span>path/to/resolved-file
+<a id="__codelineno-88-2" name="__codelineno-88-2"></a>git<span class="w"> </span>cherry-pick<span class="w"> </span>--continue
+</code></pre></div></td></tr></table></div>
+<p>Abort the operation and return to the state before the cherry-pick:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-89-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-89-1" name="__codelineno-89-1"></a>git<span class="w"> </span>cherry-pick<span class="w"> </span>--abort
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Cherry-picking creates a new commit with a different ID. Avoid copying the
+same change through both cherry-pick and a later merge, because this can
+duplicate work or cause conflicts.</p>
+</div>
+<hr />
 <h1 id="todo">TODO</h1>
 <ul>
-<li>git log</li>
-<li>git stash</li>
-<li>git cherry-pick</li>
 <li>git reset</li>
 <li>git revert</li>
 </ul>

@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#macro-syntax-error" class="md-skip">
+        <a href="#tcpdump" class="md-skip">
           Skip to content
         </a>
       
@@ -679,6 +679,102 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#useful-basic-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful basic options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-packets-to-a-pcap-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save packets to a pcap file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-a-pcap-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read a pcap file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packet filters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-with-multiple-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter with multiple conditions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-tcpdump-usages-to-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common tcpdump usages to learn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iftop-bandwidth-by-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iftop bandwidth by port
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick cheat sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -743,11 +839,232 @@
   
 
 
-<h1 id="macro-syntax-error"><em>Macro Syntax Error</em></h1>
-<p><em>File</em>: <code>DevOps/linux/networking/tcpdump/index.md</code></p>
-<p><em>Line 214 in Markdown file:</em> <strong>Missing end of comment tag</strong>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="gu">## iftop bandwidth by port {#iftop-bandwidth}</span>
-</code></pre></div></td></tr></table></div></p>
+<h1 id="tcpdump">tcpdump</h1>
+<p><code>tcpdump</code> is a command-line packet capture tool.</p>
+<p>It listens on a network interface and prints packets that match a filter.</p>
+<p>Use it when you need to debug:</p>
+<ul>
+<li>traffic reaching or leaving a machine</li>
+<li>UDP/TCP ports</li>
+<li>source and destination addresses</li>
+<li>DNS, ICMP, ARP, DHCP, and other network protocols</li>
+<li>routing, firewall, or NAT problems</li>
+</ul>
+<p>Basic capture:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0
+</code></pre></div></td></tr></table></div>
+<p>Meaning:</p>
+<ul>
+<li><code>sudo</code>: packet capture usually needs root permissions</li>
+<li><code>-i eth0</code>: capture packets on interface <code>eth0</code></li>
+</ul>
+<p>Show available interfaces:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-D
+</code></pre></div></td></tr></table></div>
+<p>Capture on any interface:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>any
+</code></pre></div></td></tr></table></div>
+<h2 id="useful-basic-options">Useful basic options</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>-vv
+</code></pre></div></td></tr></table></div>
+<p>Common options:</p>
+<ul>
+<li><code>-i &lt;interface&gt;</code>: select network interface</li>
+<li><code>-n</code>: do not resolve host names</li>
+<li><code>-nn</code>: do not resolve host names or port names</li>
+<li><code>-v</code>, <code>-vv</code>, <code>-vvv</code>: show more packet details</li>
+<li><code>-c &lt;count&gt;</code>: stop after a number of packets</li>
+<li><code>-s 0</code>: capture the full packet, not only the default snapshot size</li>
+<li><code>-X</code>: print packet data in hex and ASCII</li>
+<li><code>-A</code>: print packet data as ASCII</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>-c<span class="w"> </span><span class="m">10</span>
+</code></pre></div></td></tr></table></div>
+<p>This captures 10 packets and then stops.</p>
+<h2 id="save-packets-to-a-pcap-file">Save packets to a pcap file</h2>
+<p>Use <code>-w</code> to write packets to a <code>.pcap</code> file.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>-s<span class="w"> </span><span class="m">0</span><span class="w"> </span>-w<span class="w"> </span>capture.pcap
+</code></pre></div></td></tr></table></div>
+<p>Important:</p>
+<ul>
+<li><code>-w capture.pcap</code> saves packets to a file</li>
+<li><code>-s 0</code> captures the full packet</li>
+<li>the terminal will not print decoded packets while writing with <code>-w</code></li>
+</ul>
+<p>Stop the capture with <code>Ctrl+C</code>.</p>
+<p>You can later open the file with:</p>
+<ul>
+<li><code>tcpdump</code></li>
+<li>Wireshark</li>
+<li>tshark</li>
+</ul>
+<h2 id="read-a-pcap-file">Read a pcap file</h2>
+<p>Use <code>-r</code> to read packets from a saved <code>.pcap</code> file.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-r<span class="w"> </span>capture.pcap
+</code></pre></div></td></tr></table></div>
+<p>Read with more details:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-vv<span class="w"> </span>-r<span class="w"> </span>capture.pcap
+</code></pre></div></td></tr></table></div>
+<p>Read and print packet payload:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-A<span class="w"> </span>-r<span class="w"> </span>capture.pcap
+</code></pre></div></td></tr></table></div>
+<p>You can also apply filters while reading:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-r<span class="w"> </span>capture.pcap<span class="w"> </span>udp<span class="w"> </span>port<span class="w"> </span><span class="m">5600</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="packet-filters">Packet filters</h2>
+<p>tcpdump uses BPF filters.</p>
+<p>A filter selects which packets to capture or display.</p>
+<p>Common filter parts:</p>
+<ul>
+<li>protocol: <code>tcp</code>, <code>udp</code>, <code>icmp</code>, <code>arp</code></li>
+<li>host: <code>host 192.168.1.10</code></li>
+<li>source host: <code>src host 192.168.1.10</code></li>
+<li>destination host: <code>dst host 192.168.1.20</code></li>
+<li>port: <code>port 5600</code></li>
+<li>source port: <code>src port 5600</code></li>
+<li>destination port: <code>dst port 5600</code></li>
+<li>network: <code>net 192.168.1.0/24</code></li>
+</ul>
+<p>Examples:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>udp
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>host<span class="w"> </span><span class="m">192</span>.168.1.10
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>icmp
+</code></pre></div></td></tr></table></div>
+<h2 id="filter-with-multiple-conditions">Filter with multiple conditions</h2>
+<p>Use <code>and</code>, <code>or</code>, and <code>not</code> to combine conditions.</p>
+<p>Example: capture UDP traffic on port <code>5600</code> from source address
+<code>192.168.1.50</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span><span class="s1">&#39;udp and src host 192.168.1.50 and port 5600&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>More specific version: source address <code>192.168.1.50</code>, UDP destination port
+<code>5600</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span><span class="s1">&#39;udp and src host 192.168.1.50 and dst port 5600&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Save the same filtered traffic to a pcap file:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>-s<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">  </span><span class="s1">&#39;udp and src host 192.168.1.50 and dst port 5600&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">  </span>-w<span class="w"> </span>udp_5600_from_192_168_1_50.pcap
+</code></pre></div></td></tr></table></div>
+<p>Read only matching packets from the pcap:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-r<span class="w"> </span>udp_5600_from_192_168_1_50.pcap<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="w">  </span><span class="s1">&#39;udp and src host 192.168.1.50 and dst port 5600&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Example with <code>or</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span><span class="s1">&#39;udp port 5600 or udp port 14550&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Example with <code>not</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span><span class="s1">&#39;not port 22&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>This avoids showing SSH traffic while you debug from a remote shell.</p>
+<h2 id="common-tcpdump-usages-to-learn">Common tcpdump usages to learn</h2>
+<p>Important topics to know:</p>
+<ul>
+<li>capture by interface with <code>-i</code></li>
+<li>disable name resolution with <code>-nn</code></li>
+<li>limit packet count with <code>-c</code></li>
+<li>save and read pcap files with <code>-w</code> and <code>-r</code></li>
+<li>capture full packets with <code>-s 0</code></li>
+<li>filter by protocol, host, network, and port</li>
+<li>combine filters with <code>and</code>, <code>or</code>, <code>not</code></li>
+<li>inspect payloads with <code>-A</code> and <code>-X</code></li>
+<li>debug DNS with <code>udp port 53</code></li>
+<li>debug ping with <code>icmp</code></li>
+<li>debug ARP with <code>arp</code></li>
+<li>debug TCP handshakes with <code>tcp</code></li>
+<li>avoid capturing SSH noise with <code>not port 22</code></li>
+<li>open pcap files in Wireshark for visual analysis</li>
+</ul>
+<hr />
+<h2 id="iftop-bandwidth-by-port">iftop bandwidth by port</h2>
+<p><code>tcpdump</code> captures packets. For live bandwidth or traffic rate, <code>iftop</code> is often
+easier.</p>
+<p><code>iftop</code> shows live traffic between hosts and can use packet filters like
+<code>tcpdump</code>.</p>
+<p>Install:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>iftop
+</code></pre></div></td></tr></table></div>
+<p>Measure traffic for a specific port:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>sudo<span class="w"> </span>iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;port 5600&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Only UDP port <code>5600</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>sudo<span class="w"> </span>iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;udp port 5600&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Only UDP traffic from source IP <code>192.168.1.50</code> to destination port <code>5600</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>sudo<span class="w"> </span>iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w"> </span>-P<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="w">  </span>-f<span class="w"> </span><span class="s1">&#39;udp and src host 192.168.1.50 and dst port 5600&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>Useful options:</p>
+<ul>
+<li><code>-i eth0</code>: listen on interface <code>eth0</code></li>
+<li><code>-n</code>: do not resolve hostnames</li>
+<li><code>-P</code>: show ports</li>
+<li><code>-f '&lt;filter&gt;'</code>: apply a packet filter</li>
+</ul>
+<p>In the <code>iftop</code> screen:</p>
+<ul>
+<li><code>=&gt;</code> and <code>&lt;=</code> show traffic direction</li>
+<li>the rate columns show recent traffic averages</li>
+<li>the columns are commonly <code>2s</code>, <code>10s</code>, and <code>40s</code> averages</li>
+</ul>
+<p>Use <code>iftop</code> when you want a live bandwidth view. Use <code>tcpdump</code> when you need to
+save packets, inspect packet contents, or debug protocol details.</p>
+<hr />
+<h2 id="quick-cheat-sheet">Quick cheat sheet</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-24-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-24-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-24-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-24-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-24-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-24-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-24-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-24-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-24-10">10</a></span>
+<span class="normal"><a href="#__codelineno-24-11">11</a></span>
+<span class="normal"><a href="#__codelineno-24-12">12</a></span>
+<span class="normal"><a href="#__codelineno-24-13">13</a></span>
+<span class="normal"><a href="#__codelineno-24-14">14</a></span>
+<span class="normal"><a href="#__codelineno-24-15">15</a></span>
+<span class="normal"><a href="#__codelineno-24-16">16</a></span>
+<span class="normal"><a href="#__codelineno-24-17">17</a></span>
+<span class="normal"><a href="#__codelineno-24-18">18</a></span>
+<span class="normal"><a href="#__codelineno-24-19">19</a></span>
+<span class="normal"><a href="#__codelineno-24-20">20</a></span>
+<span class="normal"><a href="#__codelineno-24-21">21</a></span>
+<span class="normal"><a href="#__codelineno-24-22">22</a></span>
+<span class="normal"><a href="#__codelineno-24-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="c1"># Capture on eth0</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4"></a><span class="c1"># Capture 20 packets</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>-c<span class="w"> </span><span class="m">20</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7"></a><span class="c1"># Capture UDP port 5600</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span><span class="s1">&#39;udp port 5600&#39;</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9"></a>
+<a id="__codelineno-24-10" name="__codelineno-24-10"></a><span class="c1"># Capture from one source address</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span><span class="s1">&#39;src host 192.168.1.50&#39;</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12"></a>
+<a id="__codelineno-24-13" name="__codelineno-24-13"></a><span class="c1"># Capture UDP destination port 5600 from one source</span>
+<a id="__codelineno-24-14" name="__codelineno-24-14"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span><span class="s1">&#39;udp and src host 192.168.1.50 and dst port 5600&#39;</span>
+<a id="__codelineno-24-15" name="__codelineno-24-15"></a>
+<a id="__codelineno-24-16" name="__codelineno-24-16"></a><span class="c1"># Save to pcap</span>
+<a id="__codelineno-24-17" name="__codelineno-24-17"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-nn<span class="w"> </span>-s<span class="w"> </span><span class="m">0</span><span class="w"> </span>-w<span class="w"> </span>capture.pcap
+<a id="__codelineno-24-18" name="__codelineno-24-18"></a>
+<a id="__codelineno-24-19" name="__codelineno-24-19"></a><span class="c1"># Read pcap</span>
+<a id="__codelineno-24-20" name="__codelineno-24-20"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-r<span class="w"> </span>capture.pcap
+<a id="__codelineno-24-21" name="__codelineno-24-21"></a>
+<a id="__codelineno-24-22" name="__codelineno-24-22"></a><span class="c1"># Read pcap and filter</span>
+<a id="__codelineno-24-23" name="__codelineno-24-23"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-r<span class="w"> </span>capture.pcap<span class="w"> </span><span class="s1">&#39;udp port 5600&#39;</span>
+</code></pre></div></td></tr></table></div>
 
 
 
