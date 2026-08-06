@@ -12,4 +12,9 @@ tags:
             <p>Companion Computer Power</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="inrush_current">
+            <p>Inrush Current</p>
+        </a>
+    </div>
 </div>

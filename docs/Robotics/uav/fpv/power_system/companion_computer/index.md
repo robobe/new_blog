@@ -280,6 +280,7 @@ The next physical test should collect:
 
 ## References
 
+- [Inrush Current in FPV Power Systems](../inrush_current/index.md)
 - [Pololu D24V50F5 specifications](https://www.pololu.com/product/2851){:target="_blank"}
 - [Radxa ZERO 3W hardware interfaces and 40-pin header](https://docs.radxa.com/en/zero/zero3/hardware-design/hardware-interface){:target="_blank"}
 - [Radxa ZERO 3 overview and 5 V/2 A power requirement](https://docs.radxa.com/en/zero/zero3){:target="_blank"}
