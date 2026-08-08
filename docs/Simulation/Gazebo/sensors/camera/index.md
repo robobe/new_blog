@@ -25,6 +25,14 @@ tags:
 --8<-- "docs/Simulation/Gazebo/sensors/camera/code/rgb_camera_sensor.xml"
 ```     
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="gazebo_camera">
+        <p>more about camera sensor</p>
+        </a>
+    </div>
+</div>
+
 ---
 
 ## Demo:

@@ -16,6 +16,11 @@ tags:
 - [ I let AI design a FPV drone... and then I built it ](https://youtu.be/epIpA25tg1Q)
 
 
+## 250 g
+
+- [Building a sub 250g Autonomous Drone with Ardupilot and ExpressLRS AirPort Telemetry ](https://youtu.be/u_ArriXbrR0)
+  - [Sub 250g Autonomous Drone Platform](https://www.thingiverse.com/thing:6699961)
+
 ## 5 inch
 
 ### frame

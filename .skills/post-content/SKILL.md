@@ -5,91 +5,105 @@ description: Use when adding or updating post content in this MkDocs blog, inclu
 
 # Post Content Guide
 
-## Scope
+Create and update practical MkDocs Material pages under `docs/`.
 
-Use this skill when creating or editing pages in this blog workspace.
+## Version
 
-The blog is an MkDocs Material site. Content lives under `docs/`. Each subject or topic usually has an `index.md` file, optional `images/` subfolder, and optional `code/` subfolder.
+Current version: `1.0.0`.
 
-## Before Editing
+!!! warning "Record the skill version"
+    Add `<!-- post-content-skill: 1.0.0 -->` as the final line of every post
+    created or substantially revised with this skill. Do not add it for a
+    trivial typo or formatting correction.
 
-Inspect nearby pages before writing new content:
+## Workflow
 
-- Read the target `index.md`.
-- Check sibling pages for style, grid menus, frontmatter, and asset naming.
-- Prefer the existing folder pattern over inventing a new structure.
-- Keep unrelated files unchanged.
+1. Read the target page and nearby pages.
+2. Match their folder structure, frontmatter, menus, naming, and visual style.
+3. Write a short explanation followed by practical examples.
+4. Add only the assets and navigation links the page needs.
+5. Build MkDocs and fix warnings introduced by the change.
 
-## Page Structure
+!!! tip "Match the local pattern"
+    Prefer the nearest sibling page's structure over inventing a new layout.
+    Keep unrelated files unchanged.
 
-Every content page should start with YAML frontmatter:
+## Page structure
+
+Start every content page with:
 
 ```yaml
 ---
 title: Page Title
 tags:
-    - tag1
-    - tag2
+    - tag-one
+    - tag-two
 ---
 ```
 
-Use `##` headings for main sections. Put the section content directly under the heading.
+Use `##` for main sections. Put content directly below each heading.
 
-Prefer clear technical notes:
+A useful section normally contains:
 
-- Short explanation first
-- Practical commands or examples next
-- Notes, warnings, or tips when useful
-- Links and references near the related content
+1. A concise explanation
+2. A command, configuration, or example
+3. A tip or warning when needed
+4. Relevant links or references
 
-Use MkDocs admonitions when they improve readability:
+!!! danger "Required"
+    Every content page must have valid YAML frontmatter. Do not silently change
+    unrelated pages while adding or editing a topic.
+
+## Highlight important instructions
+
+Use MkDocs admonitions for information readers must notice:
 
 ```md
 !!! tip
-    Short practical advice.
+    Practical advice that improves the result.
+
+!!! warning
+    A condition that can cause failure or incorrect behavior.
+
+!!! danger
+    A safety risk, destructive action, or non-negotiable requirement.
 ```
 
-## Images
+Keep admonitions short. Put the required action first.
 
-If a topic needs an image, diagram, screenshot, or visual explanation:
+## Images and diagrams
 
-- Create an `images/` folder next to the page if it does not exist.
-- Put image files under that local `images/` folder.
-- Use lowercase names with underscores, for example `motor_direction.png`.
-- Reference images with relative paths:
+Store page-specific visuals in an `images/` folder beside the page. Use
+lowercase underscore-separated names:
 
 ```md
 ![Motor direction](images/motor_direction.png)
 ```
 
-Use downloaded images only when licensing and source are appropriate. Prefer screenshots, user-provided images, generated bitmap images, or simple diagrams created specifically for the page.
+Prefer user-provided images, screenshots, generated visuals, or original
+diagrams. Use downloaded images only when their source and license are
+appropriate.
 
-When creating a generated image, save it under the page-local `images/` folder and reference it from the document. Do not place page-specific images in global asset folders unless they are reused across many pages.
+!!! warning "Image rules"
+    Do not include binary images with `--8<--`; snippets are for text files.
+    Do not place page-specific images in global or unrelated asset folders.
 
-Never include binary image files with the snippet directive:
+Use Mermaid for small flow, state, sequence, and architecture diagrams:
 
-```md
---8<-- "path/to/image.png"
+```mermaid
+flowchart TD
+    A[Read sensors] --> B[Compute control]
+    B --> C[Send commands]
 ```
 
-The snippet directive is only for text files. Use normal Markdown image syntax for images.
+Split diagrams when labels become crowded or unreadable on mobile.
 
-## Code Examples
+## Code examples
 
-Short code examples can be written directly in the document:
+Keep short examples inline. Put code in a local `code/` folder when it is
+runnable, long, multi-file, or represents a complete script or configuration.
 
-```python
-print("hello")
-```
-
-Use a local `code/` subfolder when:
-
-- The example is long
-- The example should be runnable
-- Multiple files are needed
-- The page explains a complete project, launch file, config, or script
-
-Reference code files with `pymdownx.snippets`:
+Embed text files with a repository-root snippet path:
 
 ````md
 ```python title="example.py"
@@ -97,184 +111,103 @@ Reference code files with `pymdownx.snippets`:
 ```
 ````
 
-Keep snippet paths relative to the repository root, matching the existing blog style.
+Link to runnable files near their usage example:
 
-Use descriptive file names:
-
-- `publisher.py`
-- `docker-compose.yml`
-- `camera_demo.cpp`
-- `config.yaml`
-
-Do not provide absolute local filesystem paths in Markdown links, snippet paths, or command examples. Link to the local code file near the usage example, then show usage as if the reader downloaded the script from the post and runs it from their local working directory. Do not use `cd` in usage examples unless changing directories is the point of the example.
-
-This is bad example:
+````md
+[Download script](code/download_data.sh)
 
 ```bash
-cd /home/user/projects/new_blog/docs/Simulation/Gazebo/demo_worlds/dem_terrain/code
-./download_usgs10m_2km.sh "$CENTER_LAT" "$CENTER_LON"
+./download_data.sh
 ```
+````
 
-This is better:
-
-[Download script](code/download_usgs10m_2km.sh)
-
-```bash
-./download_usgs10m_2km.sh "$CENTER_LAT" "$CENTER_LON"
-```
+!!! warning "Portable examples"
+    Do not put absolute local filesystem paths in posts, links, snippets, or
+    commands. Avoid `cd` unless changing directories is the lesson.
 
 ## Math
 
-Use LaTeX for equations.
-
-Inline math:
+Use LaTeX and define non-obvious symbols immediately:
 
 ```md
 The thrust is proportional to \( \omega^2 \).
-```
 
-Block math:
-
-```md
 \[
 F = k_f \omega^2
 \]
 ```
 
-Define symbols immediately after the equation when the meaning is not obvious.
-
-## Flow Diagrams
-
-Use Mermaid for flow diagrams, state diagrams, and simple architecture diagrams.
-
-```mermaid
-flowchart TD
-    A[Start] --> B[Read sensors]
-    B --> C[Compute control]
-    C --> D[Send motor commands]
-    D --> B
-```
-
-Keep Mermaid diagrams small enough to read on mobile. For complex systems, split the diagram into multiple sections.
-
 ## Links
 
-Use relative links for local pages:
+Use relative links for local content:
 
 ```md
 [GPIO](../../RPI/gpio/)
 ```
 
-Use direct external links for references, and make every external link open in a new window/tab:
+Open external references in a new tab:
 
 ```md
 [PX4 documentation](https://docs.px4.io/){:target="_blank" rel="noopener noreferrer"}
 ```
 
-Do not add `target="_blank"` to local relative links.
+!!! warning "Link rules"
+    Do not add `target="_blank"` to local links. Check every changed local page,
+    image, and code link during the MkDocs build.
 
-Check local image and page links when possible with MkDocs.
+## Menus and navigation
 
-## Writing Style
+When adding a child page, update its parent menu unless the parent already
+generates child links automatically.
 
-Write practical engineering documentation:
+Use the existing grid-card pattern and include a concise collapsible summary:
+
+```html
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="control_video_bandwidth/">
+            <p>Control Video Bandwidth</p>
+        </a>
+        <details>
+            <summary>More...</summary>
+            <p>
+                Control crop presets, frame rate, encoder bitrate, keyframe
+                interval, and measured RTP bandwidth.
+            </p>
+        </details>
+    </div>
+</div>
+```
+
+!!! tip "Menu summaries"
+    Describe what the reader will learn. Keep the title link clickable and the
+    summary brief.
+
+## Writing style
 
 - Use simple technical English.
-- Prefer examples over abstract explanation.
-- Explain what a command or concept is used for.
-- Avoid marketing language.
-- Keep headings specific.
-- Use lists for procedures and tradeoffs.
+- Lead with the outcome or concept.
+- Prefer practical examples over abstract explanation.
+- Explain what each important command does and why it matters.
+- Avoid marketing language and unnecessary repetition.
+- Use lists for procedures and trade-offs.
 
-For pros and cons, use explicit sections:
-
-```md
-## Option Name
-
-Pros:
-
-- ...
-
-Cons:
-
-- ...
-```
+For comparisons, use explicit `Pros` and `Cons` labels.
 
 ## Validation
 
-After editing, run:
+Run:
 
 ```bash
 ./venv/bin/mkdocs build
 ```
 
-For stricter validation, run:
+Use strict mode when helpful:
 
 ```bash
 ./venv/bin/mkdocs build --strict
 ```
 
-This repository currently has existing site-wide strict warnings. If strict mode fails, check whether the new or changed page appears in the warning output. Fix warnings caused by the current change, but do not clean unrelated warnings unless requested.
-
-## Common Mistakes To Avoid
-
-- Do not put binary images inside snippet includes.
-- Do not place page-specific images in unrelated folders.
-- Do not use absolute local filesystem paths in Markdown links.
-- Do not add large code blocks when a runnable `code/` file is clearer.
-- Do not change unrelated pages while adding a new topic.
-- Do not create a new visual style when sibling pages already show a pattern.
-
-
-## menu and navigation
-
-- use the pattern to add menu and menu item
-
-```
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="design_patterns/">
-        <p>Design patterns</p>
-        </a>
-        <details>
-            <summary>More ..</summary>
-            <p>
-                Demo application for controlling video bandwidth with crop
-                presets, FPS, encoder bitrate, keyframe interval, and measured
-                RTP bandwidth from the running pipeline.
-            </p>
-        </details>
-    </div>
-    <div class="grid-item">
-        <a href="plugin">
-        <p>Plugin</p>
-        </a>
-        <details>
-            <summary>More ..</summary>
-            <p>
-                Demo application for controlling video bandwidth with crop
-                presets, FPS, encoder bitrate, keyframe interval, and measured
-                RTP bandwidth from the running pipeline.
-            </p>
-        </details>
-    </div>
-</div>
-```
-
-- Add a summary section for each menu item, and add a link to the page for more details. the summary section should be a collapsible section, and the link should be a clickable link to the page.
-
-```
-<div class="grid-item">
-    <a href="control_video_bandwidth">
-        <p>Control Video Bandwidth</p>
-    </a>
-    <details>
-        <summary>More ..</summary>
-        <p>
-            Demo application for controlling video bandwidth with crop
-            presets, FPS, encoder bitrate, keyframe interval, and measured
-            RTP bandwidth from the running pipeline.
-        </p>
-    </details>
-</div>
-```
+!!! danger "Do not skip validation"
+    Fix every warning caused by the changed page. Existing site-wide strict
+    warnings may remain; do not modify unrelated content unless requested.
