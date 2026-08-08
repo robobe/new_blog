@@ -25,7 +25,7 @@
     
     
       
-        <title>Camera sensor - Nodes and Pipes</title>
+        <title>The Pinhole Camera Model - Nodes and Pipes</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#focal-length-f_x-f_y" class="md-skip">
+        <a href="#1-the-physical-pinhole-camera" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Camera sensor
+              The Pinhole Camera Model
             
           </span>
         </div>
@@ -684,10 +684,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#focal-length-f_x-f_y" class="md-nav__link">
+  <a href="#1-the-physical-pinhole-camera" class="md-nav__link">
     <span class="md-ellipsis">
       
-        focal length $ f_{x}, f_{y}$
+        1. The physical pinhole camera
       
     </span>
   </a>
@@ -695,10 +695,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#principal-point-c_x-c_y" class="md-nav__link">
+  <a href="#2-why-computer-vision-uses-a-virtual-image-plane" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Principal Point $ c_{x}, c_{y}$
+        2. Why computer vision uses a virtual image plane
       
     </span>
   </a>
@@ -706,22 +706,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#intrinsic" class="md-nav__link">
+  <a href="#3-coordinate-frames-are-different-viewpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Intrinsic
+        3. Coordinate frames are different viewpoints
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Intrinsic">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-extrinsics-move-from-world-to-camera-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Extrinsics: move from world to camera coordinates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Extrinsics: move from world to camera coordinates">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#minimal" class="md-nav__link">
+  <a href="#example-a-translation-first" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Minimal
+        Example A: translation first
       
     </span>
   </a>
@@ -729,10 +740,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#general" class="md-nav__link">
+  <a href="#example-b-include-camera-orientation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        General
+        Example B: include camera orientation
       
     </span>
   </a>
@@ -745,10 +756,110 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fov-field-of-view" class="md-nav__link">
+  <a href="#5-perspective-projection-depth-makes-things-smaller" class="md-nav__link">
     <span class="md-ellipsis">
       
-        FOV (Field Of View)
+        5. Perspective projection: depth makes things smaller
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Perspective projection: depth makes things smaller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-far-objects-look-smaller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why far objects look smaller
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-intrinsics-move-from-normalized-coordinates-to-pixels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Intrinsics: move from normalized coordinates to pixels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-put-the-geometry-into-matrices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Put the geometry into matrices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Put the geometry into matrices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-add-a-fourth-coordinate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why add a fourth coordinate?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-reverse-projection-pixel-to-a-3d-ray" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Reverse projection: pixel to a 3D ray
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-run-the-complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Run the complete example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-check-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Check your understanding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-pipeline-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete pipeline summary
       
     </span>
   </a>
@@ -776,6 +887,13 @@
       
       
       
+        <span class="md-tag">calibration</span>
+      
+    
+      
+      
+      
+      
         <span class="md-tag">camera</span>
       
     
@@ -783,7 +901,21 @@
       
       
       
-        <span class="md-tag">sensor</span>
+        <span class="md-tag">computer-vision</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">geometry</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">projection</span>
       
     
   </nav>
@@ -793,39 +925,486 @@
   
 
 
-  <h1>Camera sensor</h1>
+  <h1>The Pinhole Camera Model</h1>
 
-<p><a href="/Robotics/">Robotics</a> / <a href="/Robotics/sensors/">sensors</a></p>
-<h2 id="focal-length-f_x-f_y">focal length $ f_{x}, f_{y}$</h2>
-<p>Focal length is the distance from the lens’s optical center (or principal point) to the image sensor when the subject is in focus. in true pinhole camera <span class="arithmatex">\(f_{x} = f_{y}\)</span></p>
-<p>$
-f_{x} = \frac{\frac{W}{2}}{tan(\frac{hfov}{2})}
-$</p>
-<p>$
-f_{y} = \frac{\frac{H}{2}}{tan(\frac{vfov}{2})}
-$</p>
-<h2 id="principal-point-c_x-c_y">Principal Point $ c_{x}, c_{y}$</h2>
-<p>pixel location where the optical axis hits the sensor. Often close to the image center, but not necessarily exactly , <span class="arithmatex">\(\frac{W}{2}, \frac{H}{2}\)</span></p>
-<h2 id="intrinsic">Intrinsic</h2>
-<p>Camera internal parameters</p>
-<h4 id="minimal">Minimal</h4>
-<p>$
-k=\begin{bmatrix}
- f &amp; 0 &amp; c_{x} \
- 0 &amp; f &amp; c_{y} \
- 0 &amp; 0 &amp; 1 \
+<p>A camera turns points in a three-dimensional world into pixels on a flat
+two-dimensional image. This page builds that process one step at a time—from a
+light ray passing through a tiny hole to the matrices used by OpenCV and
+robotics software.</p>
+<p>No previous computer-vision or matrix knowledge is required.</p>
+<figure markdown="span">
+  <img src="images/pinhole_overview.svg"
+       alt="Complete world-to-pixel camera pipeline"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>The complete pipeline that this lesson will unpack.</b></span></figcaption>
+</figure>
+
+<p>The three main operations are:</p>
+<ol>
+<li><strong>Extrinsics</strong> describe where the camera is and which direction it faces.</li>
+<li><strong>Perspective projection</strong> turns a 3D camera point into a 2D direction.</li>
+<li><strong>Intrinsics</strong> convert that direction into pixel coordinates.</li>
+</ol>
+<p>In compact form:</p>
+<div class="arithmatex">\[
+P_w \xrightarrow{R,t} P_c
+\xrightarrow{\text{divide by }Z_c} (x,y)
+\xrightarrow{K} (u,v)
+\]</div>
+<hr />
+<h2 id="1-the-physical-pinhole-camera">1. The physical pinhole camera</h2>
+<p>Imagine a closed box with a tiny hole in one side. Light travels in straight
+lines. Only a narrow ray from each point can pass through the hole, so the rays
+cross and form an upside-down image on the sensor behind it.</p>
+<figure markdown="span">
+  <img src="images/physical_pinhole.svg"
+       alt="Physical pinhole camera with an inverted image"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>Rays cross at the pinhole and create an inverted physical image.</b></span></figcaption>
+</figure>
+
+<p>The pinhole is called the <strong>camera center</strong> or <strong>optical center</strong>, written as
+<span class="arithmatex">\(C\)</span>. The straight line pointing out of the camera is the <strong>optical axis</strong>.</p>
+<p>Real cameras use lenses because a pinhole admits very little light. The
+pinhole model is still useful because it approximates the geometry of an ideal
+calibrated camera.</p>
+<hr />
+<h2 id="2-why-computer-vision-uses-a-virtual-image-plane">2. Why computer vision uses a virtual image plane</h2>
+<p>Working with an upside-down image behind the camera is inconvenient. We draw an
+imaginary plane in front of the camera instead. It intersects the same ray and
+produces an upright diagram.</p>
+<figure markdown="span">
+  <img src="images/virtual_image_plane.svg"
+       alt="Virtual image plane in front of the camera"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>The virtual plane changes the drawing, not the measured pixel.</b></span></figcaption>
+</figure>
+
+<p>The plane is placed at <span class="arithmatex">\(Z_c=f\)</span>, where <span class="arithmatex">\(f\)</span> is the focal length. This is a
+mathematical tool; the physical sensor remains behind the lens.</p>
+<div class="admonition tip">
+<p class="admonition-title">Keep this mental model</p>
+<p>A pixel is where a ray crosses the virtual image plane. Projection records
+the ray's direction, so it loses the point's distance from the camera.</p>
+</div>
+<hr />
+<h2 id="3-coordinate-frames-are-different-viewpoints">3. Coordinate frames are different viewpoints</h2>
+<p>A coordinate frame is an origin plus three axes. The same point has different
+numbers when described from different frames—just as directions from your desk
+differ from directions from the classroom door.</p>
+<p>This tutorial uses realistic conventions:</p>
+<ul>
+<li><strong>Robot/world frame</strong>: <span class="arithmatex">\(X_w\)</span> forward, <span class="arithmatex">\(Y_w\)</span> left, <span class="arithmatex">\(Z_w\)</span> up.</li>
+<li><strong>OpenCV optical frame</strong>: <span class="arithmatex">\(X_c\)</span> right, <span class="arithmatex">\(Y_c\)</span> down, <span class="arithmatex">\(Z_c\)</span> forward.</li>
+<li><strong>Image frame</strong>: <span class="arithmatex">\(u\)</span> right and <span class="arithmatex">\(v\)</span> down, starting at the top-left pixel.</li>
+</ul>
+<figure markdown="span">
+  <img src="images/coordinate_frames.svg"
+       alt="World and OpenCV camera coordinate conventions"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>Robotics and OpenCV commonly use different axis directions.</b></span></figcaption>
+</figure>
+
+<p>The subscripts tell us which frame owns the coordinates: <span class="arithmatex">\(P_w\)</span> is a point in
+the world frame and <span class="arithmatex">\(P_c\)</span> is the same point in the camera frame.</p>
+<hr />
+<h2 id="4-extrinsics-move-from-world-to-camera-coordinates">4. Extrinsics: move from world to camera coordinates</h2>
+<p>Extrinsic parameters describe the camera's <strong>position</strong> and <strong>orientation</strong> in
+the world. They do not describe the lens.</p>
+<h3 id="example-a-translation-first">Example A: translation first</h3>
+<p>If the teaching frames temporarily point in the same directions, subtract the
+camera position <span class="arithmatex">\(C_w\)</span> from the world point:</p>
+<div class="arithmatex">\[
+P_c = P_w - C_w
+\]</div>
+<figure markdown="span">
+  <img src="images/world_to_camera.svg"
+       alt="Subtract camera position from world point"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>Subtraction describes the point relative to the camera.</b></span></figcaption>
+</figure>
+
+<p>For example, if <span class="arithmatex">\(P_w=(5,2,4)\)</span> and <span class="arithmatex">\(C_w=(1,1,1)\)</span>, then:</p>
+<div class="arithmatex">\[
+P_c=(5,2,4)-(1,1,1)=(4,1,3)
+\]</div>
+<h3 id="example-b-include-camera-orientation">Example B: include camera orientation</h3>
+<p>A real robot camera may face a different direction from the world axes. After
+subtracting its position, rotate the relative vector into the optical frame:</p>
+<div class="arithmatex">\[
+P_c = R_{cw}(P_w-C_w)
+\]</div>
+<figure markdown="span">
+  <img src="images/camera_rotation.svg"
+       alt="Rotate a world-relative vector into the camera frame"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>Rotation changes the coordinates, not the physical point.</b></span></figcaption>
+</figure>
+
+<p><span class="arithmatex">\(R_{cw}\)</span> means “rotate coordinates from world to camera.” Be careful: many
+systems store the opposite rotation <span class="arithmatex">\(R_{wc}\)</span>. For a rotation matrix,
+<span class="arithmatex">\(R^{-1}=R^T\)</span>, so transposing reverses its direction.</p>
+<p>The same transformation is often written as:</p>
+<div class="arithmatex">\[
+P_c=R_{cw}P_w+t_{cw}, \qquad t_{cw}=-R_{cw}C_w
+\]</div>
+<div class="admonition warning">
+<p class="admonition-title">Position and translation are not identical</p>
+<p><span class="arithmatex">\(C_w\)</span> is the camera position expressed in world coordinates. The extrinsic
+translation <span class="arithmatex">\(t_{cw}\)</span> is the world origin expressed in camera coordinates.
+In general, <span class="arithmatex">\(t_{cw}\ne C_w\)</span>.</p>
+</div>
+<hr />
+<h2 id="5-perspective-projection-depth-makes-things-smaller">5. Perspective projection: depth makes things smaller</h2>
+<p>Suppose the camera-frame point is:</p>
+<div class="arithmatex">\[
+P_c=(X_c,Y_c,Z_c)
+\]</div>
+<p>Similar triangles give the coordinates on the normalized image plane:</p>
+<details style="border: 2px solid #333; padding: 10px; border-radius: 6px;">
+<summary>Similar triangles</summary>
+
+![alt text](images/similer_triangle.png)
+</details>
+
+<p>So similar triangles are the geometric reason behind normalized image coordinates</p>
+<div class="arithmatex">\[
+x=\frac{X_c}{Z_c}, \qquad y=\frac{Y_c}{Z_c}
+\]</div>
+<figure markdown="span">
+  <img src="images/perspective_division.svg"
+       alt="Perspective division by camera depth"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>Dividing by depth preserves direction and removes distance.</b></span></figcaption>
+</figure>
+
+<p>For <span class="arithmatex">\(P_c=(1,1,4)\)</span>:</p>
+<div class="arithmatex">\[
+(x,y)=\left(\frac{1}{4},\frac{1}{4}\right)=(0.25,0.25)
+\]</div>
+<p>If every coordinate doubles to <span class="arithmatex">\((2,2,8)\)</span>, the normalized coordinates remain
+<span class="arithmatex">\((0.25,0.25)\)</span>. Both points lie on the same viewing ray and therefore reach the
+same pixel.</p>
+<div class="admonition warning">
+<p class="admonition-title">Points must be in front of the camera</p>
+<p>In the OpenCV optical frame, a visible point must normally have <span class="arithmatex">\(Z_c&gt;0\)</span>.
+Projection becomes undefined at <span class="arithmatex">\(Z_c=0\)</span>.</p>
+</div>
+<h3 id="why-far-objects-look-smaller">Why far objects look smaller</h3>
+<p><img alt="alt text" src="image-1.png" /></p>
+<p><strong>The key idea</strong>
+- The camera measures angles, not physical size.
+- A nearby object occupies a large angle, so it appears large.
+- A distant object occupies a small angle, so it appears small.</p>
+<hr />
+<h2 id="6-intrinsics-move-from-normalized-coordinates-to-pixels">6. Intrinsics: move from normalized coordinates to pixels</h2>
+<p>Normalized coordinates do not yet tell us a pixel location. The camera's
+intrinsic parameters perform two operations:</p>
+<ul>
+<li><span class="arithmatex">\(f_x,f_y\)</span> scale the coordinates using focal length measured in pixels;</li>
+<li><span class="arithmatex">\(c_x,c_y\)</span> shift the origin to the principal point, normally near the image
+  center.</li>
+</ul>
+<div class="arithmatex">\[
+u=f_xx+c_x, \qquad v=f_yy+c_y
+\]</div>
+<figure markdown="span">
+  <img src="images/pixel_mapping.svg"
+       alt="Scale and shift normalized coordinates into pixels"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>Intrinsics scale a direction and shift it into the pixel grid.</b></span></figcaption>
+</figure>
+
+<p>For a <code>640 x 480</code> camera, let:</p>
+<div class="arithmatex">\[
+f_x=f_y=500, \qquad (c_x,c_y)=(320,240)
+\]</div>
+<p>Our normalized point <span class="arithmatex">\((0.25,0.25)\)</span> becomes:</p>
+<div class="arithmatex">\[
+u=500(0.25)+320=445
+\]</div>
+<div class="arithmatex">\[
+v=500(0.25)+240=365
+\]</div>
+<p>So the world point appears at pixel <span class="arithmatex">\((445,365)\)</span>.</p>
+<p>The intrinsic matrix stores the same operation:</p>
+<div class="arithmatex">\[
+K=\begin{bmatrix}
+f_x&amp;s&amp;c_x\\
+0&amp;f_y&amp;c_y\\
+0&amp;0&amp;1
 \end{bmatrix}
-$</p>
-<h4 id="general">General</h4>
-<p>$
-k=\begin{bmatrix}
- f_{x} &amp; s &amp; c_{x} \
- 0 &amp; f_{y} &amp; c_{y} \
- 0 &amp; 0 &amp; 1 \
-\end{bmatrix}
-$</p>
-<h2 id="fov-field-of-view">FOV (Field Of View)</h2>
-<p>The angular extent of the scene captured by the lens</p>
+\]</div>
+<p>The skew <span class="arithmatex">\(s\)</span> is normally zero for modern cameras.</p>
+<hr />
+<h2 id="7-put-the-geometry-into-matrices">7. Put the geometry into matrices</h2>
+<p>The ordinary equations explain the geometry. Matrices let software perform the
+same operations consistently.</p>
+<h3 id="why-add-a-fourth-coordinate">Why add a fourth coordinate?</h3>
+<p>Rotation is easy to express with a <span class="arithmatex">\(3\times3\)</span> matrix, but translation is an
+addition. <strong>Homogeneous coordinates</strong> add a final <code>1</code>, allowing one matrix to
+represent both:</p>
+<div class="arithmatex">\[
+\tilde P_w=\begin{bmatrix}X_w\\Y_w\\Z_w\\1\end{bmatrix}
+\]</div>
+<div class="arithmatex">\[
+T_{cw}=\begin{bmatrix}
+ &amp; &amp; &amp; t_x\\
+ &amp; R_{cw} &amp; &amp; t_y\\
+ &amp; &amp; &amp; t_z\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}, \qquad
+\tilde P_c=T_{cw}\tilde P_w
+\]</div>
+<p>The full ideal projection can be written compactly as:</p>
+<div class="arithmatex">\[
+\lambda
+\begin{bmatrix}u\\v\\1\end{bmatrix}
+=
+K
+\begin{bmatrix}R_{cw}&amp;t_{cw}\end{bmatrix}
+\begin{bmatrix}X_w\\Y_w\\Z_w\\1\end{bmatrix}
+\]</div>
+<p>The unknown scale <span class="arithmatex">\(\lambda\)</span> is related to depth. After multiplication, divide
+the first two homogeneous image values by the third to obtain <span class="arithmatex">\((u,v)\)</span>.</p>
+<p>This ideal lesson intentionally leaves out lens distortion. Distortion acts
+between normalized projection and pixel mapping and will be covered in a more
+advanced post.</p>
+<hr />
+<h2 id="8-reverse-projection-pixel-to-a-3d-ray">8. Reverse projection: pixel to a 3D ray</h2>
+<p>Start from a pixel in homogeneous form:</p>
+<div class="arithmatex">\[
+\tilde p=\begin{bmatrix}u\\v\\1\end{bmatrix}
+\]</div>
+<p>Undo the intrinsics to recover a camera-frame direction:</p>
+<div class="arithmatex">\[
+d_c=K^{-1}\tilde p
+\]</div>
+<p>This is a ray, not a complete 3D point:</p>
+<div class="arithmatex">\[
+P_c(Z)=Z d_c
+\]</div>
+<figure markdown="span">
+  <img src="images/reverse_ray_depth.svg"
+       alt="A reverse-projected pixel creates a ray with unknown depth"
+       width="700">
+  <figcaption align="center">
+  <span style="font-size:12px;">
+  <b>Many 3D points along one ray produce exactly the same pixel.</b></span></figcaption>
+</figure>
+
+<p>Once a depth <span class="arithmatex">\(Z\)</span> is known, transform the camera point back to the world:</p>
+<div class="arithmatex">\[
+P_w=R_{cw}^{T}P_c+C_w
+\]</div>
+<p>Depth can come from stereo cameras, a depth camera, LiDAR, a rangefinder,
+multiple views, a known plane, or a known object size. Without such information,
+one image pixel cannot identify one unique 3D point.</p>
+<hr />
+<h2 id="9-run-the-complete-example">9. Run the complete example</h2>
+<p>The manual NumPy example follows the complete forward pipeline and then
+reverse-projects the pixel into a unit camera ray.</p>
+<p><a href="code/pinhole_projection.py">Download <code>pinhole_projection.py</code></a></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pinhole_projection.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="sd">&quot;&quot;&quot;Project a world point to a pixel and recover its camera ray.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="c1"># Robot world axes: X forward, Y left, Z up.</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="c1"># OpenCV camera axes: X right, Y down, Z forward.</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="n">camera_position_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="n">rotation_cw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>        <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>    <span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>    <span class="c1"># Intrinsics for a 640 x 480 image.</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>    <span class="n">intrinsic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>        <span class="p">[[</span><span class="mf">500.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">320.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">500.0</span><span class="p">,</span> <span class="mf">240.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>    <span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>    <span class="n">point_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="c1"># World -&gt; camera: subtract the camera position, then rotate.</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="n">point_c</span> <span class="o">=</span> <span class="n">rotation_cw</span> <span class="o">@</span> <span class="p">(</span><span class="n">point_w</span> <span class="o">-</span> <span class="n">camera_position_w</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    <span class="k">if</span> <span class="n">point_c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The point is behind the camera&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="n">normalized</span> <span class="o">=</span> <span class="n">point_c</span> <span class="o">/</span> <span class="n">point_c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="n">homogeneous_pixel</span> <span class="o">=</span> <span class="n">intrinsic</span> <span class="o">@</span> <span class="n">normalized</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    <span class="n">pixel</span> <span class="o">=</span> <span class="n">homogeneous_pixel</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">homogeneous_pixel</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="c1"># Pixel -&gt; ray: K^-1 recovers a direction, but not the original depth.</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="n">ray_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">intrinsic</span><span class="p">)</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pixel</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pixel</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">])</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="n">ray_c</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ray_c</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;World point:       </span><span class="si">{</span><span class="n">point_w</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Camera point:      </span><span class="si">{</span><span class="n">point_c</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Normalized point:  </span><span class="si">{</span><span class="n">normalized</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pixel (u, v):      </span><span class="si">{</span><span class="n">pixel</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unit camera ray:   </span><span class="si">{</span><span class="n">ray_c</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A depth value is still required to recover a unique 3D point.&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+<p>Run it with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>python3<span class="w"> </span>code/pinhole_projection.py
+</code></pre></div></td></tr></table></div>
+<p>OpenCV can perform the projection using <code>cv2.projectPoints</code>:</p>
+<p><a href="code/opencv_projection.py">Download <code>opencv_projection.py</code></a></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">opencv_projection.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="ch">#!/usr/bin/env python3</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="sd">&quot;&quot;&quot;Project a 3D point with OpenCV&#39;s projectPoints function.&quot;&quot;&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="n">object_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">5.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="n">camera_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="p">[[</span><span class="mf">500.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">320.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">500.0</span><span class="p">,</span> <span class="mf">240.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="c1"># OpenCV transforms a world point as Xc = Rcw * Xw + t, where t = -Rcw*Cw.</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="n">rotation_cw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="n">camera_position_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="n">rotation_vector</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Rodrigues</span><span class="p">(</span><span class="n">rotation_cw</span><span class="p">)</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a><span class="n">translation_vector</span> <span class="o">=</span> <span class="o">-</span><span class="n">rotation_cw</span> <span class="o">@</span> <span class="n">camera_position_w</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a><span class="n">distortion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a><span class="n">image_points</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">projectPoints</span><span class="p">(</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>    <span class="n">object_points</span><span class="p">,</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    <span class="n">rotation_vector</span><span class="p">,</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    <span class="n">translation_vector</span><span class="p">,</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    <span class="n">camera_matrix</span><span class="p">,</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>    <span class="n">distortion</span><span class="p">,</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a><span class="p">)</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pixel (u, v): </span><span class="si">{</span><span class="n">image_points</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>The two programs should report pixel <code>(445, 365)</code>.</p>
+<hr />
+<h2 id="10-check-your-understanding">10. Check your understanding</h2>
+<details class="question">
+<summary>If an object's depth doubles, what happens to its pixel size?</summary>
+<p>Its pixel size becomes approximately half as large because projected size
+is proportional to <span class="arithmatex">\(1/Z_c\)</span>.</p>
+</details>
+<details class="question">
+<summary>Can one pixel identify a unique 3D point without depth?</summary>
+<p>No. It identifies a viewing ray. Every point along that ray projects to the
+same pixel.</p>
+</details>
+<details class="question">
+<summary>What happens when the principal point cx increases?</summary>
+<p>Every projected horizontal pixel coordinate <span class="arithmatex">\(u\)</span> shifts to the right by the
+same amount. Changing <span class="arithmatex">\(c_y\)</span> similarly shifts pixels downward.</p>
+</details>
+<hr />
+<h2 id="complete-pipeline-summary">Complete pipeline summary</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>Forward:
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>Pw --extrinsics--&gt; Pc --divide by Zc--&gt; (x,y) --K--&gt; pixel (u,v)
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>Reverse:
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>pixel (u,v) --K inverse--&gt; camera ray --add depth--&gt; Pc
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>             --inverse extrinsics--&gt; Pw
+</code></pre></div></td></tr></table></div>
+<p>The <a href="distance_estimation/">distance-estimation demo</a> is a practical example
+of recovering depth by supplying the known physical width of an object.</p>
+<!-- post-content-skill: 1.0.0 -->
 
 
 

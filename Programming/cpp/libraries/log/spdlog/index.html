@@ -1,0 +1,1917 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Programming/cpp/libraries/log/spdlog/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>spdlog for C++ - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install-on-ubuntu-2404" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              spdlog for C++
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-on-ubuntu-2404" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install on Ubuntu 24.04
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-four-concepts-to-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The four concepts to know
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimal-cmake-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal CMake example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log levels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#console-and-rotating-file-sinks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Console and rotating-file sinks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-levels-from-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control levels from the environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#control-formatting-per-sink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control formatting per sink
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-configured-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete configured example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-spdlog-for-csv-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use spdlog for CSV telemetry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synchronous-versus-asynchronous-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synchronous versus asynchronous logging
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synchronous versus asynchronous logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asynchronous-pros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asynchronous pros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asynchronous-cons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asynchronous cons
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-fetchcontent-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional FetchContent setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">cmake</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">cpp</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">logging</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">spdlog</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">telemetry</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>spdlog for C++</h1>
+
+<p><code>spdlog</code> is a C++ logging library with <code>{fmt}</code>-style formatting, named loggers,
+runtime log levels, multiple output sinks, rotating files, and synchronous or
+asynchronous operation. This tutorial starts with a minimal Ubuntu 24.04
+program, then builds a synchronous component logger controlled by environment
+variables and a separate CSV telemetry writer.</p>
+<h2 id="install-on-ubuntu-2404">Install on Ubuntu 24.04</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>libspdlog-dev
+</code></pre></div></td></tr></table></div>
+<p>Ubuntu 24.04 supplies spdlog <code>1.12.0</code> and its <code>{fmt}</code> dependency. Confirm the
+installed version with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>dpkg-query<span class="w"> </span>-W<span class="w"> </span>libspdlog-dev
+</code></pre></div></td></tr></table></div>
+<p>The examples use only the Ubuntu package. No manual installation is required.</p>
+<hr />
+<h2 id="the-four-concepts-to-know">The four concepts to know</h2>
+<ul>
+<li>A <strong>log record</strong> is one event: level, time, logger name, and message.</li>
+<li>A <strong>logger</strong> receives records from one application component, such as
+  <code>camera</code> or <code>network</code>.</li>
+<li>A <strong>sink</strong> sends records to a destination, such as the console or a file.</li>
+<li>A <strong>pattern</strong> controls how a sink converts each record to text.</li>
+</ul>
+<p>One logger can share several sinks:</p>
+<pre class="mermaid"><code>flowchart LR
+    C[camera logger] --&gt; O[colored console sink]
+    C --&gt; F[rotating file sink]
+    N[network logger] --&gt; O
+    N --&gt; F
+    T[telemetry logger] --&gt; CSV[CSV file sink]</code></pre>
+<p>The diagnostic log explains what the program is doing. Telemetry stores
+fixed-schema measurements for analysis. They are related, but they are not the
+same data product.</p>
+<hr />
+<h2 id="minimal-cmake-example">Minimal CMake example</h2>
+<p><a href="code/minimal/main.cpp">Download <code>main.cpp</code></a> and
+<a href="code/minimal/CMakeLists.txt"><code>CMakeLists.txt</code></a>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/spdlog.h&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="p">{</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">set_level</span><span class="p">(</span><span class="n">spdlog</span><span class="o">::</span><span class="n">level</span><span class="o">::</span><span class="n">debug</span><span class="p">);</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">set_pattern</span><span class="p">(</span><span class="s">&quot;[%H:%M:%S.%e] [%^%l%$] %v&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Connecting to camera {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Application started&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;This is a warning&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Example error code: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">);</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span>
+<span class="normal"><a href="#__codelineno-3-7">7</a></span>
+<span class="normal"><a href="#__codelineno-3-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.16</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nb">project</span><span class="p">(</span><span class="s">spdlog_minimal</span><span class="w"> </span><span class="s">LANGUAGES</span><span class="w"> </span><span class="s">CXX</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">spdlog</span><span class="w"> </span><span class="s">CONFIG</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">spdlog_minimal</span><span class="w"> </span><span class="s">main.cpp</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="nb">target_compile_features</span><span class="p">(</span><span class="s">spdlog_minimal</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">cxx_std_17</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">spdlog_minimal</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">spdlog::spdlog</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Build and run from the downloaded example directory:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>./build/spdlog_minimal
+</code></pre></div></td></tr></table></div>
+<p><code>%^</code> and <code>%$</code> mark the colored portion of the console pattern. They have an
+effect only when the sink supports colors.</p>
+<hr />
+<h2 id="log-levels">Log levels</h2>
+<p>From most detailed to most severe, spdlog levels are:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>trace</code></td>
+<td>Very detailed execution flow.</td>
+</tr>
+<tr>
+<td><code>debug</code></td>
+<td>Values useful while developing or diagnosing.</td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td>Normal lifecycle events.</td>
+</tr>
+<tr>
+<td><code>warn</code></td>
+<td>Unexpected condition from which the program can recover.</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>An operation failed.</td>
+</tr>
+<tr>
+<td><code>critical</code></td>
+<td>The process or an essential subsystem cannot continue safely.</td>
+</tr>
+<tr>
+<td><code>off</code></td>
+<td>Disable the logger.</td>
+</tr>
+</tbody>
+</table>
+<p>A logger emits a record only when its level is at least as severe as its
+configured threshold. With an <code>info</code> threshold, <code>trace</code> and <code>debug</code> records are
+filtered out.</p>
+<div class="admonition note">
+<p class="admonition-title">Runtime and compile-time filtering differ</p>
+<p>The examples call logger methods such as <code>camera-&gt;debug(...)</code>, which remain
+available for runtime filtering. Projects using macros such as
+<code>SPDLOG_DEBUG</code> must also set <code>SPDLOG_ACTIVE_LEVEL</code> at compile time if they
+want lower-level macro calls compiled into the binary.</p>
+</div>
+<hr />
+<h2 id="console-and-rotating-file-sinks">Console and rotating-file sinks</h2>
+<p>The configured example creates one colored console sink and one rotating-file
+sink. All three component loggers share them:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>camera  ─┬─&gt; console
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>network ─┼─&gt; console
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>control ─┘
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>camera  ─┬─&gt; logs/application.log
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>network ─┼─&gt; logs/application.log
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>control ─┘
+</code></pre></div></td></tr></table></div>
+<p>The file rotates after <code>5 MiB</code> and retains three older files:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>application.log
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>application.1.log
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>application.2.log
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>application.3.log
+</code></pre></div></td></tr></table></div>
+<p>Rotation limits storage growth. It does not archive logs permanently; the
+oldest rotated file is deleted.</p>
+<hr />
+<h2 id="control-levels-from-the-environment">Control levels from the environment</h2>
+<p>The configured program calls:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">spdlog</span><span class="o">::</span><span class="n">cfg</span><span class="o">::</span><span class="n">load_env_levels</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<p>Set one global level:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nv">SPDLOG_LEVEL</span><span class="o">=</span>debug<span class="w"> </span>./build/spdlog_configured
+</code></pre></div></td></tr></table></div>
+<p>Set a global level and override individual components:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nv">SPDLOG_LEVEL</span><span class="o">=</span><span class="s2">&quot;info,camera=debug,network=warn,control=off&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span>./build/spdlog_configured
+</code></pre></div></td></tr></table></div>
+<p>This configuration means:</p>
+<ul>
+<li><code>camera</code> emits <code>debug</code> and more severe records;</li>
+<li><code>network</code> starts at <code>warn</code>;</li>
+<li><code>control</code> emits nothing;</li>
+<li>every other diagnostic logger uses <code>info</code>.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Unlisted components inherit the global level</p>
+<p>In <code>SPDLOG_LEVEL="info,camera=debug"</code>, <code>network</code> and <code>control</code> inherit
+<code>info</code>. A component is disabled only when it is explicitly assigned <code>off</code>
+or the global level is <code>off</code>.</p>
+</div>
+<p>The example validates configuration before passing it to spdlog. Unknown
+components, duplicate entries, empty tokens, and invalid levels stop startup:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nv">SPDLOG_LEVEL</span><span class="o">=</span><span class="s2">&quot;info,camrea=debug&quot;</span><span class="w"> </span>./build/spdlog_configured
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>Logging configuration error: unknown logging component: camrea
+</code></pre></div></td></tr></table></div>
+<p>This validation matters because spdlog's native environment parser ignores
+unrecognized levels instead of reporting them as errors.</p>
+<hr />
+<h2 id="control-formatting-per-sink">Control formatting per sink</h2>
+<p>The console should be compact and easy to scan. The file should preserve more
+context. The program therefore reads two environment variables:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APP_CONSOLE_LOG_PATTERN</span><span class="o">=</span><span class="s2">&quot;[%H:%M:%S.%e] [%^%l%</span>$<span class="s2">] [%n] %v&quot;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APP_FILE_LOG_PATTERN</span><span class="o">=</span><span class="s2">&quot;[%Y-%m-%d %H:%M:%S.%e] [%l] [%n] [thread %t] %v&quot;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>./build/spdlog_configured
+</code></pre></div></td></tr></table></div>
+<p>Common flags are:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%Y-%m-%d</code></td>
+<td>Date.</td>
+</tr>
+<tr>
+<td><code>%H:%M:%S</code></td>
+<td>Time.</td>
+</tr>
+<tr>
+<td><code>%e</code></td>
+<td>Milliseconds.</td>
+</tr>
+<tr>
+<td><code>%l</code></td>
+<td>Log level.</td>
+</tr>
+<tr>
+<td><code>%n</code></td>
+<td>Logger or component name.</td>
+</tr>
+<tr>
+<td><code>%t</code></td>
+<td>Thread ID.</td>
+</tr>
+<tr>
+<td><code>%v</code></td>
+<td>User message.</td>
+</tr>
+<tr>
+<td><code>%^ ... %$</code></td>
+<td>Start and end console color range.</td>
+</tr>
+</tbody>
+</table>
+<p>If a variable is unset, the application uses the pattern shown above as its
+default. If a supplied pattern is invalid, <code>set_pattern</code> throws and the program
+exits with a configuration error.</p>
+<hr />
+<h2 id="complete-configured-example">Complete configured example</h2>
+<p><a href="code/configured/main.cpp">Download <code>main.cpp</code></a> and
+<a href="code/configured/CMakeLists.txt"><code>CMakeLists.txt</code></a>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span>
+<span class="normal"><a href="#__codelineno-13-7">7</a></span>
+<span class="normal"><a href="#__codelineno-13-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.16</span><span class="p">)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="nb">project</span><span class="p">(</span><span class="s">spdlog_configured</span><span class="w"> </span><span class="s">LANGUAGES</span><span class="w"> </span><span class="s">CXX</span><span class="p">)</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">spdlog</span><span class="w"> </span><span class="s">CONFIG</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">spdlog_configured</span><span class="w"> </span><span class="s">main.cpp</span><span class="p">)</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="nb">target_compile_features</span><span class="p">(</span><span class="s">spdlog_configured</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">cxx_std_17</span><span class="p">)</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">spdlog_configured</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">spdlog::spdlog</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-14-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-14-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-14-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-14-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-14-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-14-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-14-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-14-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-14-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-14-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-14-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-14-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-14-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-14-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-14-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-14-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-14-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-14-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-14-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-14-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-14-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-14-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-14-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-14-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-14-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-14-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-14-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-14-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-14-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-14-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-14-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-14-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-14-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-14-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-14-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-14-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-14-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-14-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-14-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-14-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-14-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-14-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-14-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-14-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-14-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-14-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-14-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-14-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-14-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-14-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-14-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-14-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-14-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-14-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-14-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-14-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-14-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-14-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-14-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-14-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-14-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-14-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-14-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-14-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-14-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-14-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-14-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-14-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-14-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-14-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-14-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-14-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-14-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-14-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-14-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-14-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-14-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-14-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-14-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-14-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-14-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-14-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-14-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-14-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-14-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-14-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-14-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-14-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-14-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-14-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-14-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-14-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-14-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-14-100">100</a></span>
+<span class="normal"><a href="#__codelineno-14-101">101</a></span>
+<span class="normal"><a href="#__codelineno-14-102">102</a></span>
+<span class="normal"><a href="#__codelineno-14-103">103</a></span>
+<span class="normal"><a href="#__codelineno-14-104">104</a></span>
+<span class="normal"><a href="#__codelineno-14-105">105</a></span>
+<span class="normal"><a href="#__codelineno-14-106">106</a></span>
+<span class="normal"><a href="#__codelineno-14-107">107</a></span>
+<span class="normal"><a href="#__codelineno-14-108">108</a></span>
+<span class="normal"><a href="#__codelineno-14-109">109</a></span>
+<span class="normal"><a href="#__codelineno-14-110">110</a></span>
+<span class="normal"><a href="#__codelineno-14-111">111</a></span>
+<span class="normal"><a href="#__codelineno-14-112">112</a></span>
+<span class="normal"><a href="#__codelineno-14-113">113</a></span>
+<span class="normal"><a href="#__codelineno-14-114">114</a></span>
+<span class="normal"><a href="#__codelineno-14-115">115</a></span>
+<span class="normal"><a href="#__codelineno-14-116">116</a></span>
+<span class="normal"><a href="#__codelineno-14-117">117</a></span>
+<span class="normal"><a href="#__codelineno-14-118">118</a></span>
+<span class="normal"><a href="#__codelineno-14-119">119</a></span>
+<span class="normal"><a href="#__codelineno-14-120">120</a></span>
+<span class="normal"><a href="#__codelineno-14-121">121</a></span>
+<span class="normal"><a href="#__codelineno-14-122">122</a></span>
+<span class="normal"><a href="#__codelineno-14-123">123</a></span>
+<span class="normal"><a href="#__codelineno-14-124">124</a></span>
+<span class="normal"><a href="#__codelineno-14-125">125</a></span>
+<span class="normal"><a href="#__codelineno-14-126">126</a></span>
+<span class="normal"><a href="#__codelineno-14-127">127</a></span>
+<span class="normal"><a href="#__codelineno-14-128">128</a></span>
+<span class="normal"><a href="#__codelineno-14-129">129</a></span>
+<span class="normal"><a href="#__codelineno-14-130">130</a></span>
+<span class="normal"><a href="#__codelineno-14-131">131</a></span>
+<span class="normal"><a href="#__codelineno-14-132">132</a></span>
+<span class="normal"><a href="#__codelineno-14-133">133</a></span>
+<span class="normal"><a href="#__codelineno-14-134">134</a></span>
+<span class="normal"><a href="#__codelineno-14-135">135</a></span>
+<span class="normal"><a href="#__codelineno-14-136">136</a></span>
+<span class="normal"><a href="#__codelineno-14-137">137</a></span>
+<span class="normal"><a href="#__codelineno-14-138">138</a></span>
+<span class="normal"><a href="#__codelineno-14-139">139</a></span>
+<span class="normal"><a href="#__codelineno-14-140">140</a></span>
+<span class="normal"><a href="#__codelineno-14-141">141</a></span>
+<span class="normal"><a href="#__codelineno-14-142">142</a></span>
+<span class="normal"><a href="#__codelineno-14-143">143</a></span>
+<span class="normal"><a href="#__codelineno-14-144">144</a></span>
+<span class="normal"><a href="#__codelineno-14-145">145</a></span>
+<span class="normal"><a href="#__codelineno-14-146">146</a></span>
+<span class="normal"><a href="#__codelineno-14-147">147</a></span>
+<span class="normal"><a href="#__codelineno-14-148">148</a></span>
+<span class="normal"><a href="#__codelineno-14-149">149</a></span>
+<span class="normal"><a href="#__codelineno-14-150">150</a></span>
+<span class="normal"><a href="#__codelineno-14-151">151</a></span>
+<span class="normal"><a href="#__codelineno-14-152">152</a></span>
+<span class="normal"><a href="#__codelineno-14-153">153</a></span>
+<span class="normal"><a href="#__codelineno-14-154">154</a></span>
+<span class="normal"><a href="#__codelineno-14-155">155</a></span>
+<span class="normal"><a href="#__codelineno-14-156">156</a></span>
+<span class="normal"><a href="#__codelineno-14-157">157</a></span>
+<span class="normal"><a href="#__codelineno-14-158">158</a></span>
+<span class="normal"><a href="#__codelineno-14-159">159</a></span>
+<span class="normal"><a href="#__codelineno-14-160">160</a></span>
+<span class="normal"><a href="#__codelineno-14-161">161</a></span>
+<span class="normal"><a href="#__codelineno-14-162">162</a></span>
+<span class="normal"><a href="#__codelineno-14-163">163</a></span>
+<span class="normal"><a href="#__codelineno-14-164">164</a></span>
+<span class="normal"><a href="#__codelineno-14-165">165</a></span>
+<span class="normal"><a href="#__codelineno-14-166">166</a></span>
+<span class="normal"><a href="#__codelineno-14-167">167</a></span>
+<span class="normal"><a href="#__codelineno-14-168">168</a></span>
+<span class="normal"><a href="#__codelineno-14-169">169</a></span>
+<span class="normal"><a href="#__codelineno-14-170">170</a></span>
+<span class="normal"><a href="#__codelineno-14-171">171</a></span>
+<span class="normal"><a href="#__codelineno-14-172">172</a></span>
+<span class="normal"><a href="#__codelineno-14-173">173</a></span>
+<span class="normal"><a href="#__codelineno-14-174">174</a></span>
+<span class="normal"><a href="#__codelineno-14-175">175</a></span>
+<span class="normal"><a href="#__codelineno-14-176">176</a></span>
+<span class="normal"><a href="#__codelineno-14-177">177</a></span>
+<span class="normal"><a href="#__codelineno-14-178">178</a></span>
+<span class="normal"><a href="#__codelineno-14-179">179</a></span>
+<span class="normal"><a href="#__codelineno-14-180">180</a></span>
+<span class="normal"><a href="#__codelineno-14-181">181</a></span>
+<span class="normal"><a href="#__codelineno-14-182">182</a></span>
+<span class="normal"><a href="#__codelineno-14-183">183</a></span>
+<span class="normal"><a href="#__codelineno-14-184">184</a></span>
+<span class="normal"><a href="#__codelineno-14-185">185</a></span>
+<span class="normal"><a href="#__codelineno-14-186">186</a></span>
+<span class="normal"><a href="#__codelineno-14-187">187</a></span>
+<span class="normal"><a href="#__codelineno-14-188">188</a></span>
+<span class="normal"><a href="#__codelineno-14-189">189</a></span>
+<span class="normal"><a href="#__codelineno-14-190">190</a></span>
+<span class="normal"><a href="#__codelineno-14-191">191</a></span>
+<span class="normal"><a href="#__codelineno-14-192">192</a></span>
+<span class="normal"><a href="#__codelineno-14-193">193</a></span>
+<span class="normal"><a href="#__codelineno-14-194">194</a></span>
+<span class="normal"><a href="#__codelineno-14-195">195</a></span>
+<span class="normal"><a href="#__codelineno-14-196">196</a></span>
+<span class="normal"><a href="#__codelineno-14-197">197</a></span>
+<span class="normal"><a href="#__codelineno-14-198">198</a></span>
+<span class="normal"><a href="#__codelineno-14-199">199</a></span>
+<span class="normal"><a href="#__codelineno-14-200">200</a></span>
+<span class="normal"><a href="#__codelineno-14-201">201</a></span>
+<span class="normal"><a href="#__codelineno-14-202">202</a></span>
+<span class="normal"><a href="#__codelineno-14-203">203</a></span>
+<span class="normal"><a href="#__codelineno-14-204">204</a></span>
+<span class="normal"><a href="#__codelineno-14-205">205</a></span>
+<span class="normal"><a href="#__codelineno-14-206">206</a></span>
+<span class="normal"><a href="#__codelineno-14-207">207</a></span>
+<span class="normal"><a href="#__codelineno-14-208">208</a></span>
+<span class="normal"><a href="#__codelineno-14-209">209</a></span>
+<span class="normal"><a href="#__codelineno-14-210">210</a></span>
+<span class="normal"><a href="#__codelineno-14-211">211</a></span>
+<span class="normal"><a href="#__codelineno-14-212">212</a></span>
+<span class="normal"><a href="#__codelineno-14-213">213</a></span>
+<span class="normal"><a href="#__codelineno-14-214">214</a></span>
+<span class="normal"><a href="#__codelineno-14-215">215</a></span>
+<span class="normal"><a href="#__codelineno-14-216">216</a></span>
+<span class="normal"><a href="#__codelineno-14-217">217</a></span>
+<span class="normal"><a href="#__codelineno-14-218">218</a></span>
+<span class="normal"><a href="#__codelineno-14-219">219</a></span>
+<span class="normal"><a href="#__codelineno-14-220">220</a></span>
+<span class="normal"><a href="#__codelineno-14-221">221</a></span>
+<span class="normal"><a href="#__codelineno-14-222">222</a></span>
+<span class="normal"><a href="#__codelineno-14-223">223</a></span>
+<span class="normal"><a href="#__codelineno-14-224">224</a></span>
+<span class="normal"><a href="#__codelineno-14-225">225</a></span>
+<span class="normal"><a href="#__codelineno-14-226">226</a></span>
+<span class="normal"><a href="#__codelineno-14-227">227</a></span>
+<span class="normal"><a href="#__codelineno-14-228">228</a></span>
+<span class="normal"><a href="#__codelineno-14-229">229</a></span>
+<span class="normal"><a href="#__codelineno-14-230">230</a></span>
+<span class="normal"><a href="#__codelineno-14-231">231</a></span>
+<span class="normal"><a href="#__codelineno-14-232">232</a></span>
+<span class="normal"><a href="#__codelineno-14-233">233</a></span>
+<span class="normal"><a href="#__codelineno-14-234">234</a></span>
+<span class="normal"><a href="#__codelineno-14-235">235</a></span>
+<span class="normal"><a href="#__codelineno-14-236">236</a></span>
+<span class="normal"><a href="#__codelineno-14-237">237</a></span>
+<span class="normal"><a href="#__codelineno-14-238">238</a></span>
+<span class="normal"><a href="#__codelineno-14-239">239</a></span>
+<span class="normal"><a href="#__codelineno-14-240">240</a></span>
+<span class="normal"><a href="#__codelineno-14-241">241</a></span>
+<span class="normal"><a href="#__codelineno-14-242">242</a></span>
+<span class="normal"><a href="#__codelineno-14-243">243</a></span>
+<span class="normal"><a href="#__codelineno-14-244">244</a></span>
+<span class="normal"><a href="#__codelineno-14-245">245</a></span>
+<span class="normal"><a href="#__codelineno-14-246">246</a></span>
+<span class="normal"><a href="#__codelineno-14-247">247</a></span>
+<span class="normal"><a href="#__codelineno-14-248">248</a></span>
+<span class="normal"><a href="#__codelineno-14-249">249</a></span>
+<span class="normal"><a href="#__codelineno-14-250">250</a></span>
+<span class="normal"><a href="#__codelineno-14-251">251</a></span>
+<span class="normal"><a href="#__codelineno-14-252">252</a></span>
+<span class="normal"><a href="#__codelineno-14-253">253</a></span>
+<span class="normal"><a href="#__codelineno-14-254">254</a></span>
+<span class="normal"><a href="#__codelineno-14-255">255</a></span>
+<span class="normal"><a href="#__codelineno-14-256">256</a></span>
+<span class="normal"><a href="#__codelineno-14-257">257</a></span>
+<span class="normal"><a href="#__codelineno-14-258">258</a></span>
+<span class="normal"><a href="#__codelineno-14-259">259</a></span>
+<span class="normal"><a href="#__codelineno-14-260">260</a></span>
+<span class="normal"><a href="#__codelineno-14-261">261</a></span>
+<span class="normal"><a href="#__codelineno-14-262">262</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/cfg/env.h&gt;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/logger.h&gt;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/sinks/basic_file_sink.h&gt;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/sinks/rotating_file_sink.h&gt;</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/sinks/stdout_color_sinks.h&gt;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/spdlog.h&gt;</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;array&gt;</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cctype&gt;</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdlib&gt;</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;filesystem&gt;</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iomanip&gt;</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;set&gt;</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sstream&gt;</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdexcept&gt;</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22"></a>
+<a id="__codelineno-14-23" name="__codelineno-14-23"></a><span class="k">namespace</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24"></a><span class="p">{</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25"></a><span class="k">constexpr</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">component_names</span><span class="p">{</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26"></a><span class="w">    </span><span class="s">&quot;camera&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;network&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;control&quot;</span><span class="p">};</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27"></a>
+<a id="__codelineno-14-28" name="__codelineno-14-28"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">trim</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29"></a><span class="p">{</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="n">find_first_not_of</span><span class="p">(</span><span class="s">&quot; </span><span class="se">\t\r\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">first</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">npos</span><span class="p">)</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{};</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-35" name="__codelineno-14-35"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="n">find_last_not_of</span><span class="p">(</span><span class="s">&quot; </span><span class="se">\t\r\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-36" name="__codelineno-14-36"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">first</span><span class="p">,</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-14-37" name="__codelineno-14-37"></a><span class="p">}</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38"></a>
+<a id="__codelineno-14-39" name="__codelineno-14-39"></a><span class="kt">bool</span><span class="w"> </span><span class="nf">known_component</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-14-40" name="__codelineno-14-40"></a><span class="p">{</span>
+<a id="__codelineno-14-41" name="__codelineno-14-41"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">component_names</span><span class="p">)</span>
+<a id="__codelineno-14-42" name="__codelineno-14-42"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-43" name="__codelineno-14-43"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">component</span><span class="p">)</span>
+<a id="__codelineno-14-44" name="__codelineno-14-44"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-45" name="__codelineno-14-45"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-14-46" name="__codelineno-14-46"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-47" name="__codelineno-14-47"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-48" name="__codelineno-14-48"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-14-49" name="__codelineno-14-49"></a><span class="p">}</span>
+<a id="__codelineno-14-50" name="__codelineno-14-50"></a>
+<a id="__codelineno-14-51" name="__codelineno-14-51"></a><span class="kt">bool</span><span class="w"> </span><span class="nf">known_level</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="n">level</span><span class="p">)</span>
+<a id="__codelineno-14-52" name="__codelineno-14-52"></a><span class="p">{</span>
+<a id="__codelineno-14-53" name="__codelineno-14-53"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">levels</span><span class="p">{</span>
+<a id="__codelineno-14-54" name="__codelineno-14-54"></a><span class="w">        </span><span class="s">&quot;trace&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;debug&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;info&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;warn&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;warning&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;error&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;err&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-55" name="__codelineno-14-55"></a><span class="w">        </span><span class="s">&quot;critical&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;off&quot;</span><span class="p">};</span>
+<a id="__codelineno-14-56" name="__codelineno-14-56"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">levels</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">level</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-14-57" name="__codelineno-14-57"></a><span class="p">}</span>
+<a id="__codelineno-14-58" name="__codelineno-14-58"></a>
+<a id="__codelineno-14-59" name="__codelineno-14-59"></a><span class="kt">void</span><span class="w"> </span><span class="nf">validate_level_environment</span><span class="p">()</span>
+<a id="__codelineno-14-60" name="__codelineno-14-60"></a><span class="p">{</span>
+<a id="__codelineno-14-61" name="__codelineno-14-61"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">raw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;SPDLOG_LEVEL&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-62" name="__codelineno-14-62"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">raw</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="p">(</span><span class="n">raw</span><span class="p">).</span><span class="n">empty</span><span class="p">())</span>
+<a id="__codelineno-14-63" name="__codelineno-14-63"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-64" name="__codelineno-14-64"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-14-65" name="__codelineno-14-65"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-66" name="__codelineno-14-66"></a>
+<a id="__codelineno-14-67" name="__codelineno-14-67"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">istringstream</span><span class="w"> </span><span class="n">input</span><span class="p">(</span><span class="n">raw</span><span class="p">);</span>
+<a id="__codelineno-14-68" name="__codelineno-14-68"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">token</span><span class="p">;</span>
+<a id="__codelineno-14-69" name="__codelineno-14-69"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">found_global</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-14-70" name="__codelineno-14-70"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">configured_components</span><span class="p">;</span>
+<a id="__codelineno-14-71" name="__codelineno-14-71"></a>
+<a id="__codelineno-14-72" name="__codelineno-14-72"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">token</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;,&#39;</span><span class="p">))</span>
+<a id="__codelineno-14-73" name="__codelineno-14-73"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-74" name="__codelineno-14-74"></a><span class="w">        </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trim</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
+<a id="__codelineno-14-75" name="__codelineno-14-75"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+<a id="__codelineno-14-76" name="__codelineno-14-76"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-77" name="__codelineno-14-77"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;SPDLOG_LEVEL contains an empty entry&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-78" name="__codelineno-14-78"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-79" name="__codelineno-14-79"></a>
+<a id="__codelineno-14-80" name="__codelineno-14-80"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">separator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">token</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="sc">&#39;=&#39;</span><span class="p">);</span>
+<a id="__codelineno-14-81" name="__codelineno-14-81"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">separator</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">npos</span><span class="p">)</span>
+<a id="__codelineno-14-82" name="__codelineno-14-82"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-83" name="__codelineno-14-83"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">found_global</span><span class="p">)</span>
+<a id="__codelineno-14-84" name="__codelineno-14-84"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-14-85" name="__codelineno-14-85"></a><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
+<a id="__codelineno-14-86" name="__codelineno-14-86"></a><span class="w">                    </span><span class="s">&quot;SPDLOG_LEVEL contains more than one global level&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-87" name="__codelineno-14-87"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-14-88" name="__codelineno-14-88"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">known_level</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+<a id="__codelineno-14-89" name="__codelineno-14-89"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-14-90" name="__codelineno-14-90"></a><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;unknown global log level: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">token</span><span class="p">);</span>
+<a id="__codelineno-14-91" name="__codelineno-14-91"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-14-92" name="__codelineno-14-92"></a><span class="w">            </span><span class="n">found_global</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-14-93" name="__codelineno-14-93"></a><span class="w">            </span><span class="k">continue</span><span class="p">;</span>
+<a id="__codelineno-14-94" name="__codelineno-14-94"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-95" name="__codelineno-14-95"></a>
+<a id="__codelineno-14-96" name="__codelineno-14-96"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trim</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">separator</span><span class="p">));</span>
+<a id="__codelineno-14-97" name="__codelineno-14-97"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trim</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">separator</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<a id="__codelineno-14-98" name="__codelineno-14-98"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">known_component</span><span class="p">(</span><span class="n">component</span><span class="p">))</span>
+<a id="__codelineno-14-99" name="__codelineno-14-99"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-100" name="__codelineno-14-100"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;unknown logging component: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">component</span><span class="p">);</span>
+<a id="__codelineno-14-101" name="__codelineno-14-101"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-102" name="__codelineno-14-102"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">known_level</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<a id="__codelineno-14-103" name="__codelineno-14-103"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-104" name="__codelineno-14-104"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
+<a id="__codelineno-14-105" name="__codelineno-14-105"></a><span class="w">                </span><span class="s">&quot;unknown log level for &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">level</span><span class="p">);</span>
+<a id="__codelineno-14-106" name="__codelineno-14-106"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-107" name="__codelineno-14-107"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">configured_components</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">component</span><span class="p">).</span><span class="n">second</span><span class="p">)</span>
+<a id="__codelineno-14-108" name="__codelineno-14-108"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-109" name="__codelineno-14-109"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span>
+<a id="__codelineno-14-110" name="__codelineno-14-110"></a><span class="w">                </span><span class="s">&quot;duplicate SPDLOG_LEVEL component: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">component</span><span class="p">);</span>
+<a id="__codelineno-14-111" name="__codelineno-14-111"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-112" name="__codelineno-14-112"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-113" name="__codelineno-14-113"></a><span class="p">}</span>
+<a id="__codelineno-14-114" name="__codelineno-14-114"></a>
+<a id="__codelineno-14-115" name="__codelineno-14-115"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">environment_or</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">fallback</span><span class="p">)</span>
+<a id="__codelineno-14-116" name="__codelineno-14-116"></a><span class="p">{</span>
+<a id="__codelineno-14-117" name="__codelineno-14-117"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">getenv</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<a id="__codelineno-14-118" name="__codelineno-14-118"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="p">(</span><span class="n">value</span><span class="p">).</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">fallback</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<a id="__codelineno-14-119" name="__codelineno-14-119"></a><span class="p">}</span>
+<a id="__codelineno-14-120" name="__codelineno-14-120"></a>
+<a id="__codelineno-14-121" name="__codelineno-14-121"></a><span class="kt">void</span><span class="w"> </span><span class="nf">validate_pattern</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pattern</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">variable</span><span class="p">)</span>
+<a id="__codelineno-14-122" name="__codelineno-14-122"></a><span class="p">{</span>
+<a id="__codelineno-14-123" name="__codelineno-14-123"></a><span class="w">    </span><span class="k">constexpr</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-14-124" name="__codelineno-14-124"></a><span class="w">        </span><span class="s">&quot;+nlLtvaAbhBcCYDxmdHIMSefFEprRTXzP^$@sg#!%uioO&quot;</span><span class="p">;</span>
+<a id="__codelineno-14-125" name="__codelineno-14-125"></a>
+<a id="__codelineno-14-126" name="__codelineno-14-126"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">pattern</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">index</span><span class="p">)</span>
+<a id="__codelineno-14-127" name="__codelineno-14-127"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-128" name="__codelineno-14-128"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;%&#39;</span><span class="p">)</span>
+<a id="__codelineno-14-129" name="__codelineno-14-129"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-130" name="__codelineno-14-130"></a><span class="w">            </span><span class="k">continue</span><span class="p">;</span>
+<a id="__codelineno-14-131" name="__codelineno-14-131"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-132" name="__codelineno-14-132"></a><span class="w">        </span><span class="o">++</span><span class="n">index</span><span class="p">;</span>
+<a id="__codelineno-14-133" name="__codelineno-14-133"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">pattern</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+<a id="__codelineno-14-134" name="__codelineno-14-134"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-135" name="__codelineno-14-135"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-14-136" name="__codelineno-14-136"></a><span class="w">                                     </span><span class="s">&quot; ends with an incomplete % flag&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-137" name="__codelineno-14-137"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-138" name="__codelineno-14-138"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;=&#39;</span><span class="p">)</span>
+<a id="__codelineno-14-139" name="__codelineno-14-139"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-140" name="__codelineno-14-140"></a><span class="w">            </span><span class="o">++</span><span class="n">index</span><span class="p">;</span>
+<a id="__codelineno-14-141" name="__codelineno-14-141"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-142" name="__codelineno-14-142"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">pattern</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<a id="__codelineno-14-143" name="__codelineno-14-143"></a><span class="w">               </span><span class="n">std</span><span class="o">::</span><span class="n">isdigit</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="p">])))</span>
+<a id="__codelineno-14-144" name="__codelineno-14-144"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-145" name="__codelineno-14-145"></a><span class="w">            </span><span class="o">++</span><span class="n">index</span><span class="p">;</span>
+<a id="__codelineno-14-146" name="__codelineno-14-146"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-147" name="__codelineno-14-147"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">pattern</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;!&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<a id="__codelineno-14-148" name="__codelineno-14-148"></a><span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">isdigit</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">])))</span>
+<a id="__codelineno-14-149" name="__codelineno-14-149"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-150" name="__codelineno-14-150"></a><span class="w">            </span><span class="o">++</span><span class="n">index</span><span class="p">;</span>
+<a id="__codelineno-14-151" name="__codelineno-14-151"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-152" name="__codelineno-14-152"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">pattern</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">flags</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="p">])</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">flags</span><span class="p">.</span><span class="n">npos</span><span class="p">)</span>
+<a id="__codelineno-14-153" name="__codelineno-14-153"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-154" name="__codelineno-14-154"></a><span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">bad_flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">pattern</span><span class="p">.</span><span class="n">size</span><span class="p">()</span>
+<a id="__codelineno-14-155" name="__codelineno-14-155"></a><span class="w">                                      </span><span class="o">?</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&quot;&lt;missing&gt;&quot;</span><span class="p">)</span>
+<a id="__codelineno-14-156" name="__codelineno-14-156"></a><span class="w">                                      </span><span class="o">:</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="p">[</span><span class="n">index</span><span class="p">]);</span>
+<a id="__codelineno-14-157" name="__codelineno-14-157"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-14-158" name="__codelineno-14-158"></a><span class="w">                                     </span><span class="s">&quot; contains unknown flag %&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bad_flag</span><span class="p">);</span>
+<a id="__codelineno-14-159" name="__codelineno-14-159"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-160" name="__codelineno-14-160"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-161" name="__codelineno-14-161"></a><span class="p">}</span>
+<a id="__codelineno-14-162" name="__codelineno-14-162"></a>
+<a id="__codelineno-14-163" name="__codelineno-14-163"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">run_timestamp</span><span class="p">()</span>
+<a id="__codelineno-14-164" name="__codelineno-14-164"></a><span class="p">{</span>
+<a id="__codelineno-14-165" name="__codelineno-14-165"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+<a id="__codelineno-14-166" name="__codelineno-14-166"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">to_time_t</span><span class="p">(</span><span class="n">now</span><span class="p">);</span>
+<a id="__codelineno-14-167" name="__codelineno-14-167"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">tm</span><span class="w"> </span><span class="n">local</span><span class="p">{};</span>
+<a id="__codelineno-14-168" name="__codelineno-14-168"></a><span class="w">    </span><span class="n">localtime_r</span><span class="p">(</span><span class="o">&amp;</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">local</span><span class="p">);</span>
+<a id="__codelineno-14-169" name="__codelineno-14-169"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">ostringstream</span><span class="w"> </span><span class="n">output</span><span class="p">;</span>
+<a id="__codelineno-14-170" name="__codelineno-14-170"></a><span class="w">    </span><span class="n">output</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">put_time</span><span class="p">(</span><span class="o">&amp;</span><span class="n">local</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%d_%H-%M-%S&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-171" name="__codelineno-14-171"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<a id="__codelineno-14-172" name="__codelineno-14-172"></a><span class="p">}</span>
+<a id="__codelineno-14-173" name="__codelineno-14-173"></a>
+<a id="__codelineno-14-174" name="__codelineno-14-174"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">csv_timestamp</span><span class="p">()</span>
+<a id="__codelineno-14-175" name="__codelineno-14-175"></a><span class="p">{</span>
+<a id="__codelineno-14-176" name="__codelineno-14-176"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+<a id="__codelineno-14-177" name="__codelineno-14-177"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">to_time_t</span><span class="p">(</span><span class="n">now</span><span class="p">);</span>
+<a id="__codelineno-14-178" name="__codelineno-14-178"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">tm</span><span class="w"> </span><span class="n">local</span><span class="p">{};</span>
+<a id="__codelineno-14-179" name="__codelineno-14-179"></a><span class="w">    </span><span class="n">localtime_r</span><span class="p">(</span><span class="o">&amp;</span><span class="n">time</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">local</span><span class="p">);</span>
+<a id="__codelineno-14-180" name="__codelineno-14-180"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">ostringstream</span><span class="w"> </span><span class="n">output</span><span class="p">;</span>
+<a id="__codelineno-14-181" name="__codelineno-14-181"></a><span class="w">    </span><span class="n">output</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">put_time</span><span class="p">(</span><span class="o">&amp;</span><span class="n">local</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%Y-%m-%dT%H:%M:%S&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-182" name="__codelineno-14-182"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<a id="__codelineno-14-183" name="__codelineno-14-183"></a><span class="p">}</span>
+<a id="__codelineno-14-184" name="__codelineno-14-184"></a>
+<a id="__codelineno-14-185" name="__codelineno-14-185"></a><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">sink_ptr</span><span class="o">&gt;</span><span class="w"> </span><span class="n">make_diagnostic_sinks</span><span class="p">()</span>
+<a id="__codelineno-14-186" name="__codelineno-14-186"></a><span class="p">{</span>
+<a id="__codelineno-14-187" name="__codelineno-14-187"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">console_pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">environment_or</span><span class="p">(</span>
+<a id="__codelineno-14-188" name="__codelineno-14-188"></a><span class="w">        </span><span class="s">&quot;APP_CONSOLE_LOG_PATTERN&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[%H:%M:%S.%e] [%^%l%$] [%n] %v&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-189" name="__codelineno-14-189"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">file_pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">environment_or</span><span class="p">(</span>
+<a id="__codelineno-14-190" name="__codelineno-14-190"></a><span class="w">        </span><span class="s">&quot;APP_FILE_LOG_PATTERN&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-191" name="__codelineno-14-191"></a><span class="w">        </span><span class="s">&quot;[%Y-%m-%d %H:%M:%S.%e] [%l] [%n] [thread %t] %v&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-192" name="__codelineno-14-192"></a><span class="w">    </span><span class="n">validate_pattern</span><span class="p">(</span><span class="n">console_pattern</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;APP_CONSOLE_LOG_PATTERN&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-193" name="__codelineno-14-193"></a><span class="w">    </span><span class="n">validate_pattern</span><span class="p">(</span><span class="n">file_pattern</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;APP_FILE_LOG_PATTERN&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-194" name="__codelineno-14-194"></a>
+<a id="__codelineno-14-195" name="__codelineno-14-195"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">console</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">sinks</span><span class="o">::</span><span class="n">stdout_color_sink_mt</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-14-196" name="__codelineno-14-196"></a><span class="w">    </span><span class="n">console</span><span class="o">-&gt;</span><span class="n">set_pattern</span><span class="p">(</span><span class="n">console_pattern</span><span class="p">);</span>
+<a id="__codelineno-14-197" name="__codelineno-14-197"></a>
+<a id="__codelineno-14-198" name="__codelineno-14-198"></a><span class="w">    </span><span class="k">constexpr</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">five_megabytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">;</span>
+<a id="__codelineno-14-199" name="__codelineno-14-199"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">sinks</span><span class="o">::</span><span class="n">rotating_file_sink_mt</span><span class="o">&gt;</span><span class="p">(</span>
+<a id="__codelineno-14-200" name="__codelineno-14-200"></a><span class="w">        </span><span class="s">&quot;logs/application.log&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">five_megabytes</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<a id="__codelineno-14-201" name="__codelineno-14-201"></a><span class="w">    </span><span class="n">file</span><span class="o">-&gt;</span><span class="n">set_pattern</span><span class="p">(</span><span class="n">file_pattern</span><span class="p">);</span>
+<a id="__codelineno-14-202" name="__codelineno-14-202"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">console</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">};</span>
+<a id="__codelineno-14-203" name="__codelineno-14-203"></a><span class="p">}</span>
+<a id="__codelineno-14-204" name="__codelineno-14-204"></a>
+<a id="__codelineno-14-205" name="__codelineno-14-205"></a><span class="kt">void</span><span class="w"> </span><span class="n">register_component_loggers</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">sink_ptr</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sinks</span><span class="p">)</span>
+<a id="__codelineno-14-206" name="__codelineno-14-206"></a><span class="p">{</span>
+<a id="__codelineno-14-207" name="__codelineno-14-207"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">component_names</span><span class="p">)</span>
+<a id="__codelineno-14-208" name="__codelineno-14-208"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-209" name="__codelineno-14-209"></a><span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">logger</span><span class="o">&gt;</span><span class="p">(</span>
+<a id="__codelineno-14-210" name="__codelineno-14-210"></a><span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="w"> </span><span class="n">sinks</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">sinks</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<a id="__codelineno-14-211" name="__codelineno-14-211"></a><span class="w">        </span><span class="n">logger</span><span class="o">-&gt;</span><span class="n">set_level</span><span class="p">(</span><span class="n">spdlog</span><span class="o">::</span><span class="n">level</span><span class="o">::</span><span class="n">info</span><span class="p">);</span>
+<a id="__codelineno-14-212" name="__codelineno-14-212"></a><span class="w">        </span><span class="n">logger</span><span class="o">-&gt;</span><span class="n">flush_on</span><span class="p">(</span><span class="n">spdlog</span><span class="o">::</span><span class="n">level</span><span class="o">::</span><span class="n">warn</span><span class="p">);</span>
+<a id="__codelineno-14-213" name="__codelineno-14-213"></a><span class="w">        </span><span class="n">spdlog</span><span class="o">::</span><span class="n">register_logger</span><span class="p">(</span><span class="n">logger</span><span class="p">);</span>
+<a id="__codelineno-14-214" name="__codelineno-14-214"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-215" name="__codelineno-14-215"></a><span class="p">}</span>
+<a id="__codelineno-14-216" name="__codelineno-14-216"></a>
+<a id="__codelineno-14-217" name="__codelineno-14-217"></a><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">logger</span><span class="o">&gt;</span><span class="w"> </span><span class="n">make_telemetry_logger</span><span class="p">()</span>
+<a id="__codelineno-14-218" name="__codelineno-14-218"></a><span class="p">{</span>
+<a id="__codelineno-14-219" name="__codelineno-14-219"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">create_directories</span><span class="p">(</span><span class="s">&quot;logs&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-220" name="__codelineno-14-220"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;logs/telemetry_&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">run_timestamp</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.csv&quot;</span><span class="p">;</span>
+<a id="__codelineno-14-221" name="__codelineno-14-221"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">sink</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">sinks</span><span class="o">::</span><span class="n">basic_file_sink_mt</span><span class="o">&gt;</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-14-222" name="__codelineno-14-222"></a><span class="w">    </span><span class="n">sink</span><span class="o">-&gt;</span><span class="n">set_pattern</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-223" name="__codelineno-14-223"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">spdlog</span><span class="o">::</span><span class="n">logger</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;telemetry&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sink</span><span class="p">);</span>
+<a id="__codelineno-14-224" name="__codelineno-14-224"></a><span class="w">    </span><span class="n">logger</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;timestamp,component,sequence,fps,latency_ms&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-225" name="__codelineno-14-225"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">logger</span><span class="p">;</span>
+<a id="__codelineno-14-226" name="__codelineno-14-226"></a><span class="p">}</span>
+<a id="__codelineno-14-227" name="__codelineno-14-227"></a><span class="p">}</span><span class="w"> </span><span class="c1">// namespace</span>
+<a id="__codelineno-14-228" name="__codelineno-14-228"></a>
+<a id="__codelineno-14-229" name="__codelineno-14-229"></a><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span>
+<a id="__codelineno-14-230" name="__codelineno-14-230"></a><span class="p">{</span>
+<a id="__codelineno-14-231" name="__codelineno-14-231"></a><span class="w">    </span><span class="k">try</span>
+<a id="__codelineno-14-232" name="__codelineno-14-232"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-233" name="__codelineno-14-233"></a><span class="w">        </span><span class="n">validate_level_environment</span><span class="p">();</span>
+<a id="__codelineno-14-234" name="__codelineno-14-234"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">sinks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_diagnostic_sinks</span><span class="p">();</span>
+<a id="__codelineno-14-235" name="__codelineno-14-235"></a><span class="w">        </span><span class="n">register_component_loggers</span><span class="p">(</span><span class="n">sinks</span><span class="p">);</span>
+<a id="__codelineno-14-236" name="__codelineno-14-236"></a><span class="w">        </span><span class="n">spdlog</span><span class="o">::</span><span class="n">cfg</span><span class="o">::</span><span class="n">load_env_levels</span><span class="p">();</span>
+<a id="__codelineno-14-237" name="__codelineno-14-237"></a>
+<a id="__codelineno-14-238" name="__codelineno-14-238"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">camera</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spdlog</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;camera&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-239" name="__codelineno-14-239"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">network</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spdlog</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;network&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-240" name="__codelineno-14-240"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spdlog</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;control&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-241" name="__codelineno-14-241"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">telemetry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_telemetry_logger</span><span class="p">();</span>
+<a id="__codelineno-14-242" name="__codelineno-14-242"></a>
+<a id="__codelineno-14-243" name="__codelineno-14-243"></a><span class="w">        </span><span class="n">camera</span><span class="o">-&gt;</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Opening camera {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-14-244" name="__codelineno-14-244"></a><span class="w">        </span><span class="n">camera</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Camera stream started at {} FPS&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">);</span>
+<a id="__codelineno-14-245" name="__codelineno-14-245"></a><span class="w">        </span><span class="n">network</span><span class="o">-&gt;</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Packet delay is {} ms&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">18.4</span><span class="p">);</span>
+<a id="__codelineno-14-246" name="__codelineno-14-246"></a><span class="w">        </span><span class="n">control</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Control loop ready&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-247" name="__codelineno-14-247"></a>
+<a id="__codelineno-14-248" name="__codelineno-14-248"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">sequence</span><span class="p">)</span>
+<a id="__codelineno-14-249" name="__codelineno-14-249"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-250" name="__codelineno-14-250"></a><span class="w">            </span><span class="n">telemetry</span><span class="o">-&gt;</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;{},{},{},{:.2f},{:.2f}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">csv_timestamp</span><span class="p">(),</span>
+<a id="__codelineno-14-251" name="__codelineno-14-251"></a><span class="w">                            </span><span class="s">&quot;camera&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sequence</span><span class="p">,</span><span class="w"> </span><span class="mf">29.97</span><span class="p">,</span><span class="w"> </span><span class="mf">8.4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sequence</span><span class="p">);</span>
+<a id="__codelineno-14-252" name="__codelineno-14-252"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-253" name="__codelineno-14-253"></a><span class="w">        </span><span class="n">telemetry</span><span class="o">-&gt;</span><span class="n">flush</span><span class="p">();</span>
+<a id="__codelineno-14-254" name="__codelineno-14-254"></a><span class="w">        </span><span class="n">spdlog</span><span class="o">::</span><span class="n">shutdown</span><span class="p">();</span>
+<a id="__codelineno-14-255" name="__codelineno-14-255"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-256" name="__codelineno-14-256"></a><span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">exception</span><span class="w"> </span><span class="o">&amp;</span><span class="n">error</span><span class="p">)</span>
+<a id="__codelineno-14-257" name="__codelineno-14-257"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-14-258" name="__codelineno-14-258"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Logging configuration error: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">error</span><span class="p">.</span><span class="n">what</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-14-259" name="__codelineno-14-259"></a><span class="w">        </span><span class="n">spdlog</span><span class="o">::</span><span class="n">shutdown</span><span class="p">();</span>
+<a id="__codelineno-14-260" name="__codelineno-14-260"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-14-261" name="__codelineno-14-261"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-262" name="__codelineno-14-262"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Build and run:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="nv">SPDLOG_LEVEL</span><span class="o">=</span><span class="s2">&quot;info,camera=debug,control=off&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">  </span>./build/spdlog_configured
+</code></pre></div></td></tr></table></div>
+<p>The example is synchronous: the calling thread formats each accepted record and
+writes it to its sinks before returning.</p>
+<hr />
+<h2 id="use-spdlog-for-csv-telemetry">Use spdlog for CSV telemetry</h2>
+<p>spdlog can write CSV lines, but it is not a CSV database or schema library. The
+application owns:</p>
+<ul>
+<li>the filename and schema;</li>
+<li>the header and column order;</li>
+<li>value formatting and units;</li>
+<li>quoting and escaping;</li>
+<li>flushing and retention.</li>
+</ul>
+<p>The configured example creates one file per run:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>logs/telemetry_2026-08-08_14-32-10.csv
+</code></pre></div></td></tr></table></div>
+<p>It uses a dedicated file-only logger whose pattern is <code>%v</code>, so spdlog does not
+add a level or logger name around the CSV row:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>timestamp,component,sequence,fps,latency_ms
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>2026-08-08T14:32:10,camera,0,29.97,8.40
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>2026-08-08T14:32:10,camera,1,29.97,9.40
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a>2026-08-08T14:32:10,camera,2,29.97,10.40
+</code></pre></div></td></tr></table></div>
+<p>The sequence column helps detect missing samples. The component column records
+which subsystem produced the measurement.</p>
+<div class="admonition warning">
+<p class="admonition-title">CSV strings must be escaped</p>
+<p>The example uses a fixed component name and numeric values, none of which
+contains commas, quotes, or newlines. General text fields require correct
+CSV quoting. A pattern such as <code>"{},{},{}"</code> does not escape arbitrary input
+safely.</p>
+</div>
+<p>The telemetry logger is intentionally separate from the registered diagnostic
+loggers, so <code>SPDLOG_LEVEL</code> cannot accidentally disable measurement collection.
+It writes the header once, appends data rows, and flushes before shutdown.</p>
+<hr />
+<h2 id="synchronous-versus-asynchronous-logging">Synchronous versus asynchronous logging</h2>
+<p>Synchronous flow:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>application thread -&gt; format -&gt; write sinks -&gt; continue
+</code></pre></div></td></tr></table></div>
+<p>Asynchronous flow:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>application thread -&gt; queue -&gt; continue
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a>                              background worker -&gt; format -&gt; write sinks
+</code></pre></div></td></tr></table></div>
+<h3 id="asynchronous-pros">Asynchronous pros</h3>
+<ul>
+<li>Reduces time spent doing file I/O on application threads.</li>
+<li>Can reduce latency spikes when the disk is temporarily slow.</li>
+<li>Helps applications producing many diagnostic records from several threads.</li>
+</ul>
+<h3 id="asynchronous-cons">Asynchronous cons</h3>
+<ul>
+<li>Requires a thread pool, bounded queue, overflow policy, and careful shutdown.</li>
+<li>Queued records may be lost if the process crashes.</li>
+<li>Background errors are harder to report to the application.</li>
+<li>Queueing adds overhead and may not help at low log rates.</li>
+<li>More than one worker can complicate ordering.</li>
+</ul>
+<p>When the queue is full, a blocking policy preserves records but can stall the
+producer. <code>overrun_oldest</code> keeps the producer moving by discarding older
+records.</p>
+<div class="admonition danger">
+<p class="admonition-title">Do not silently discard required telemetry</p>
+<p><code>overrun_oldest</code> may be acceptable for verbose diagnostic messages. It is a
+dangerous default for CSV telemetry because missing rows can invalidate
+analysis. Keep telemetry synchronous or use a blocking queue when every
+sample matters.</p>
+</div>
+<p>Start with synchronous logging. Move diagnostics to async only after measuring
+a real logging bottleneck. Always flush important loggers and call
+<code>spdlog::shutdown()</code> during normal application exit.</p>
+<hr />
+<h2 id="optional-fetchcontent-setup">Optional FetchContent setup</h2>
+<p>Ubuntu packages are the supported path for these examples. A project that must
+pin and build another spdlog release can use CMake <code>FetchContent</code> instead:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="nb">include</span><span class="p">(</span><span class="s">FetchContent</span><span class="p">)</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="w">    </span><span class="s">spdlog</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/gabime/spdlog.git</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="w">    </span><span class="s">GIT_TAG</span><span class="w"> </span><span class="s">v1.17.0</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="p">)</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">spdlog</span><span class="p">)</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a>
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">my_application</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">spdlog::spdlog</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Pin a tag rather than following a moving branch. Do not combine the Ubuntu
+spdlog target and a fetched spdlog target in the same executable.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://github.com/gabime/spdlog" rel="noopener noreferrer" target="_blank">spdlog project and examples</a></li>
+<li><a href="https://github.com/gabime/spdlog/wiki/3.-Custom-formatting" rel="noopener noreferrer" target="_blank">spdlog formatting patterns</a></li>
+<li><a href="https://packages.ubuntu.com/noble/libspdlog-dev" rel="noopener noreferrer" target="_blank">Ubuntu 24.04 <code>libspdlog-dev</code> package</a></li>
+</ul>
+<!-- post-content-skill: 1.0.0 -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>

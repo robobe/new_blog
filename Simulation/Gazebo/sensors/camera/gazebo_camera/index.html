@@ -1,0 +1,1727 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Simulation/Gazebo/sensors/camera/gazebo_camera/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Simulating a Real Camera in Gazebo - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#run-the-example" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Simulating a Real Camera in Gazebo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run the example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera-configuration-has-two-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera configuration has two layers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera configuration has two layers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensor-control-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor-control tags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-formation-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image-formation tags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grayscale-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grayscale output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#approximate-image-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approximate image noise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#brown-lens-distortion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Brown lens distortion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Brown lens distortion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ogre-versus-ogre2-in-harmonic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ogre versus Ogre2 in Harmonic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#separate-camera-info-topics-require-sdf-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Separate camera-info topics require SDF 1.7
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read-an-image-with-python-and-opencv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read an image with Python and OpenCV
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Read an image with Python and OpenCV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-row-stride" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        step / row stride
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distortion-and-camera-matrices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distortion and camera matrices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distortion and camera matrices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distortion-model-and-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distortion model and D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intrinsic-matrix-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intrinsic matrix K
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#projection-matrix-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projection matrix P
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rectify-the-distorted-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rectify the distorted image
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#map-a-real-calibration-into-sdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Map a real calibration into SDF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate-the-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validate the result
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Validate the result">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimum-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimum validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-fidelity-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-fidelity validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">calibration</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">camera</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">gazebo</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">simulation</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>Simulating a Real Camera in Gazebo</h1>
+
+<p>This tutorial builds one Gazebo Sim Harmonic world that compares four views of
+the same scene:</p>
+<ul>
+<li>an ideal RGB camera;</li>
+<li>an <code>L8</code> grayscale camera;</li>
+<li>a camera with approximate Gaussian noise;</li>
+<li>a camera with Brown lens distortion.</li>
+</ul>
+<p>The goal is not only to learn camera tags. The goal is to understand how a
+physical camera's measurable properties map into simulation. Depth, thermal,
+RGB-D, segmentation, and other camera types are intentionally left for later
+tutorials.</p>
+<p>The complete runnable example is <a href="code/camera.sdf"><code>code/camera.sdf</code></a>.</p>
+<h2 id="run-the-example">Run the example</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>gz<span class="w"> </span>sim<span class="w"> </span>-r<span class="w"> </span>code/camera.sdf<span class="w"> </span>-v<span class="w"> </span><span class="m">4</span>
+</code></pre></div></td></tr></table></div>
+<p><img alt="" src="images/gazebo_demo.png" /></p>
+<p>The high-contrast red box and straight reference line make differences between
+the outputs easier to see. All four sensors belong to the same link and have no
+individual pose, so they observe the scene from the same viewpoint.</p>
+<p>Inspect the published topics with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>gz<span class="w"> </span>topic<span class="w"> </span>-l
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>gz<span class="w"> </span>topic<span class="w"> </span>-i<span class="w"> </span>-t<span class="w"> </span>camera
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>gz<span class="w"> </span>topic<span class="w"> </span>-e<span class="w"> </span>-t<span class="w"> </span>camera_distortion/camera_info
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="camera-configuration-has-two-layers">Camera configuration has two layers</h2>
+<p>A camera sensor is easier to understand when its tags are divided into two
+groups.</p>
+<h3 id="sensor-control-tags">Sensor-control tags</h3>
+<p>These tags belong directly under <code>&lt;sensor&gt;</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span>
+<span class="normal"><a href="#__codelineno-2-8">8</a></span>
+<span class="normal"><a href="#__codelineno-2-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="nt">&lt;sensor</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;camera&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;camera&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">&lt;always_on&gt;</span>true<span class="nt">&lt;/always_on&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nt">&lt;update_rate&gt;</span>30<span class="nt">&lt;/update_rate&gt;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="nt">&lt;topic&gt;</span>camera<span class="nt">&lt;/topic&gt;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="nt">&lt;camera&gt;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="cm">&lt;!-- Image-formation settings go here. --&gt;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">  </span><span class="nt">&lt;/camera&gt;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="nt">&lt;/sensor&gt;</span>
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Identifies the sensor inside its parent link.</td>
+</tr>
+<tr>
+<td><code>type="camera"</code></td>
+<td>Selects the ordinary image camera sensor.</td>
+</tr>
+<tr>
+<td><code>&lt;pose&gt;</code></td>
+<td>Positions and rotates the sensor relative to its parent link.</td>
+</tr>
+<tr>
+<td><code>&lt;always_on&gt;</code></td>
+<td>Keeps the sensor active.</td>
+</tr>
+<tr>
+<td><code>&lt;update_rate&gt;</code></td>
+<td>Requested publication frequency in Hz. A value of <code>0</code> means every simulation cycle.</td>
+</tr>
+<tr>
+<td><code>&lt;visualize&gt;</code></td>
+<td>Makes the sensor available to Gazebo's GUI visualization.</td>
+</tr>
+<tr>
+<td><code>&lt;topic&gt;</code></td>
+<td>Selects the Gazebo Transport image topic.</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;update_rate&gt;</code> is a requested rate, not proof of the achieved rate. Rendering
+load, image size, and available hardware can reduce the observed publication
+frequency.</p>
+<h3 id="image-formation-tags">Image-formation tags</h3>
+<p>These tags belong under <code>&lt;camera&gt;</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">&lt;camera&gt;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="w">  </span><span class="nt">&lt;camera_info_topic&gt;</span>camera/camera_info<span class="nt">&lt;/camera_info_topic&gt;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="nt">&lt;horizontal_fov&gt;</span>1.047<span class="nt">&lt;/horizontal_fov&gt;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="nt">&lt;image&gt;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">    </span><span class="nt">&lt;width&gt;</span>320<span class="nt">&lt;/width&gt;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">    </span><span class="nt">&lt;height&gt;</span>240<span class="nt">&lt;/height&gt;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="nt">&lt;format&gt;</span>R8G8B8<span class="nt">&lt;/format&gt;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">  </span><span class="nt">&lt;/image&gt;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span><span class="nt">&lt;clip&gt;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="nt">&lt;near&gt;</span>0.1<span class="nt">&lt;/near&gt;</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="nt">&lt;far&gt;</span>100<span class="nt">&lt;/far&gt;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">  </span><span class="nt">&lt;/clip&gt;</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="nt">&lt;/camera&gt;</span>
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;horizontal_fov&gt;</code></td>
+<td>Horizontal field of view in radians. <code>1.047</code> is approximately 60 degrees.</td>
+</tr>
+<tr>
+<td><code>&lt;image&gt;/&lt;width&gt;</code></td>
+<td>Image width in pixels.</td>
+</tr>
+<tr>
+<td><code>&lt;image&gt;/&lt;height&gt;</code></td>
+<td>Image height in pixels.</td>
+</tr>
+<tr>
+<td><code>&lt;image&gt;/&lt;format&gt;</code></td>
+<td>Pixel format. <code>R8G8B8</code> is RGB and <code>L8</code> is 8-bit grayscale.</td>
+</tr>
+<tr>
+<td><code>&lt;clip&gt;/&lt;near&gt;</code></td>
+<td>Objects closer than this distance are not rendered.</td>
+</tr>
+<tr>
+<td><code>&lt;clip&gt;/&lt;far&gt;</code></td>
+<td>Objects farther than this distance are not rendered.</td>
+</tr>
+<tr>
+<td><code>&lt;camera_info_topic&gt;</code></td>
+<td>Topic carrying dimensions, intrinsics, distortion, and projection metadata.</td>
+</tr>
+</tbody>
+</table>
+<p>Choose the near plane as large as the application permits. An unnecessarily
+small near plane combined with a very large far plane reduces depth-buffer
+precision.</p>
+<hr />
+<h2 id="grayscale-output">Grayscale output</h2>
+<p>The grayscale sensor changes only the image format:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">&lt;image&gt;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span><span class="nt">&lt;width&gt;</span>320<span class="nt">&lt;/width&gt;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="w">  </span><span class="nt">&lt;height&gt;</span>240<span class="nt">&lt;/height&gt;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">&lt;format&gt;</span>L8<span class="nt">&lt;/format&gt;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="nt">&lt;/image&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Its topic is <code>camera_gray</code>. The field of view, clipping range, frame rate, and
+pose remain equal to the RGB camera, which makes the comparison fair.</p>
+<hr />
+<h2 id="approximate-image-noise">Approximate image noise</h2>
+<p>Gazebo can apply independent Gaussian noise to the generated pixels:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">&lt;noise&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="nt">&lt;type&gt;</span>gaussian<span class="nt">&lt;/type&gt;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span><span class="nt">&lt;mean&gt;</span>0.0<span class="nt">&lt;/mean&gt;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">  </span><span class="nt">&lt;stddev&gt;</span>0.20<span class="nt">&lt;/stddev&gt;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="nt">&lt;/noise&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><code>mean</code> shifts the average noise value.</li>
+<li><code>stddev</code> controls the random variation.</li>
+</ul>
+<p>This is an approximation, not a complete physical camera-noise model. Real
+cameras can also contain shot noise, fixed-pattern noise, exposure and gain
+effects, hot pixels, and compression artifacts. Use this model when controlled
+random pixel variation is sufficient; do not claim that it completely
+calibrates a physical sensor.</p>
+<hr />
+<h2 id="brown-lens-distortion">Brown lens distortion</h2>
+<p>The distorted sensor uses the Brown model:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span>
+<span class="normal"><a href="#__codelineno-6-6">6</a></span>
+<span class="normal"><a href="#__codelineno-6-7">7</a></span>
+<span class="normal"><a href="#__codelineno-6-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="nt">&lt;distortion&gt;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="nt">&lt;k1&gt;</span>-0.4<span class="nt">&lt;/k1&gt;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span><span class="nt">&lt;k2&gt;</span>0.2<span class="nt">&lt;/k2&gt;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">  </span><span class="nt">&lt;k3&gt;</span>0.0<span class="nt">&lt;/k3&gt;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">  </span><span class="nt">&lt;p1&gt;</span>0.02<span class="nt">&lt;/p1&gt;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">  </span><span class="nt">&lt;p2&gt;</span>-0.02<span class="nt">&lt;/p2&gt;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">  </span><span class="nt">&lt;center&gt;</span>0.5<span class="w"> </span>0.5<span class="nt">&lt;/center&gt;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="nt">&lt;/distortion&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p><code>k1</code>, <code>k2</code>, and <code>k3</code> are radial coefficients. They bend straight features more
+strongly as the features move away from the principal point. <code>p1</code> and <code>p2</code> are
+tangential coefficients that model decentering between the lens and image
+plane. <code>center</code> is normalized: <code>0.5 0.5</code> places the distortion center in the
+middle of the image.</p>
+<p>For a teaching example, place straight lines near the image boundaries. A line
+through the optical center may show little visible radial distortion even when
+the coefficients are active.</p>
+<h3 id="ogre-versus-ogre2-in-harmonic">Ogre versus Ogre2 in Harmonic</h3>
+<p>The Sensors system in this example deliberately uses Ogre:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nt">&lt;plugin</span><span class="w"> </span><span class="na">filename=</span><span class="s">&quot;gz-sim-sensors-system&quot;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">        </span><span class="na">name=</span><span class="s">&quot;gz::sim::systems::Sensors&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">  </span><span class="nt">&lt;render_engine&gt;</span>ogre<span class="nt">&lt;/render_engine&gt;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="nt">&lt;/plugin&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Ogre2 is the newer backend and generally offers more modern rendering features.
+However, the tested Gazebo Harmonic installation does not register the Brown
+<code>DistortionPass</code> for Ogre2. The world loads and publishes an image, but the
+image remains undistorted and the verbose log reports:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>RenderPass ... DistortionPass ... is not registered
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>ImageBrownDistortionModel is not supported in ogre2
+</code></pre></div></td></tr></table></div>
+<p>Increasing <code>k1</code> cannot fix an unsupported render pass. Use Ogre for this
+example and always check both the image and startup log when changing Gazebo or
+rendering-engine versions. A newer Gazebo release should not be assumed to fix
+this automatically; verify it in that release.</p>
+<hr />
+<h2 id="separate-camera-info-topics-require-sdf-17">Separate camera-info topics require SDF 1.7</h2>
+<p><code>&lt;camera_info_topic&gt;</code> was introduced in SDF 1.7 and remains available in later
+versions. It is unavailable in SDF 1.6, so this world declares:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">&lt;sdf</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.7&quot;</span><span class="nt">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Every camera uses a distinct metadata topic:</p>
+<table>
+<thead>
+<tr>
+<th>Image topic</th>
+<th>Camera-info topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>camera</code></td>
+<td><code>camera/camera_info</code></td>
+</tr>
+<tr>
+<td><code>camera_gray</code></td>
+<td><code>camera_gray/camera_info</code></td>
+</tr>
+<tr>
+<td><code>camera_noise</code></td>
+<td><code>camera_noise/camera_info</code></td>
+</tr>
+<tr>
+<td><code>camera_distortion</code></td>
+<td><code>camera_distortion/camera_info</code></td>
+</tr>
+</tbody>
+</table>
+<p>This naming is a convention created by our SDF. It is not inferred by Gazebo
+from the image topic. The Python example can derive the name because the world
+uses this convention.</p>
+<hr />
+<h2 id="read-an-image-with-python-and-opencv">Read an image with Python and OpenCV</h2>
+<p>Gazebo's Python bindings are installed system-wide. Create a <code>uv</code> environment
+that can see them, then install only the Python image dependencies into the
+environment:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span>/usr/bin/python3<span class="w"> </span>--system-site-packages<span class="w"> </span>.venv
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>opencv-python
+</code></pre></div></td></tr></table></div>
+<div class="admonition info">
+<p class="admonition-title">system-site-packages</p>
+<p>Selecting <code>/usr/bin/python3</code> keeps the virtual environment on the same Python
+version as Ubuntu's Gazebo bindings. The <code>--system-site-packages</code> option is
+required here because the Harmonic
+<code>gz-transport13</code> and <code>gz-msgs10</code> bindings come from the operating-system
+packages rather than this project's Python environment.</p>
+</div>
+<p><a href="code/display_camera.py"><code>display_camera.py</code></a> subscribes to <code>gz.msgs.Image</code> and
+the matching <code>gz.msgs.CameraInfo</code> topic. It displays the measured FPS, image
+size, pixel format, row step, distortion model and coefficients, intrinsic
+matrix, and projection matrix beside the image. It also handles row stride and
+RGB/grayscale pixel formats before converting the image to a NumPy array:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>python3<span class="w"> </span>code/display_camera.py
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>python3<span class="w"> </span>code/display_camera.py<span class="w"> </span>camera_gray
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>python3<span class="w"> </span>code/display_camera.py<span class="w"> </span>camera_noise
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>python3<span class="w"> </span>code/display_camera.py<span class="w"> </span>camera_distortion
+</code></pre></div></td></tr></table></div>
+<div class="admonition info">
+<p class="admonition-title">camera_info</p>
+<p>By default, the script derives the metadata topic as <code>&lt;image topic&gt;/camera_info</code>.</p>
+</div>
+<p><img alt="alt text" src="images/gazebo_image_viewer.png" /></p>
+<h3 id="step-row-stride">step / row stride</h3>
+<p>The number of bytes used one complete image row in memory</p>
+<p>For example, an RGB image with 320 pixels per row normally needs:</p>
+<p>$  320 \times 3 = 960\ \text{bytes}$</p>
+<p>So its metadata may report:</p>
+<p>width: 320
+  format: RGB_INT8
+  step: 960 bytes</p>
+<p>Sometimes a system adds padding bytes to align each row efficiently in memory:</p>
+<p>Pixel data: 960 bytes
+  Padding:      64 bytes
+  Step:       1024 bytes</p>
+<p>The next row begins after step bytes—not necessarily immediately after the visible pixels.</p>
+<p>Why it matters:</p>
+<ul>
+<li>Locates the beginning of each image row.</li>
+<li>Handles memory alignment and padding correctly.</li>
+<li>Prevents distorted, shifted, or diagonally torn images.</li>
+<li>Helps transfer images between Gazebo, OpenCV, cameras, GPUs, and middleware.</li>
+</ul>
+<h3 id="distortion-and-camera-matrices">Distortion and camera matrices</h3>
+<p><img alt="Gazebo camera viewer showing image metadata" src="images/gazebo_image_viewer.png" /></p>
+<p>The <code>D</code>, <code>K</code>, and <code>P</code> values describe how a point in the 3D camera frame is
+projected into the image and how the lens changes its pixel position.</p>
+<h4 id="distortion-model-and-d">Distortion model and <code>D</code></h4>
+<p><code>PLUMB_BOB</code> is the Brown-Conrady distortion model commonly used by OpenCV. It
+represents two effects:</p>
+<ul>
+<li>radial distortion, which bends straight lines toward or away from the image
+  edges;</li>
+<li>tangential distortion, which approximates misalignment between the lens and
+  image sensor.</li>
+</ul>
+<p>Its distortion vector is:</p>
+<div class="arithmatex">\[
+D = [k_1, k_2, p_1, p_2, k_3]
+\]</div>
+<p>The coefficients <span class="arithmatex">\(k_1\)</span>, <span class="arithmatex">\(k_2\)</span>, and <span class="arithmatex">\(k_3\)</span> control radial distortion. The
+coefficients <span class="arithmatex">\(p_1\)</span> and <span class="arithmatex">\(p_2\)</span> control tangential distortion. The screenshot
+shows:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>D: [0, 0, 0, 0, 0]
+</code></pre></div></td></tr></table></div>
+<p>This means the camera uses the <code>PLUMB_BOB</code> model but has no configured lens
+distortion. A distorted camera could instead report values such as:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>D: [-0.4, 0.2, 0.02, -0.02, 0]
+</code></pre></div></td></tr></table></div>
+<h4 id="intrinsic-matrix-k">Intrinsic matrix <code>K</code></h4>
+<p><code>K</code> describes the internal camera geometry:</p>
+<div class="arithmatex">\[
+K = \begin{bmatrix}
+f_x &amp; s &amp; c_x \\
+0 &amp; f_y &amp; c_y \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]</div>
+<p>The screenshot contains:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>K: [277,   0, 160,
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>       0, 277, 120,
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>       0,   0,   1]
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><span class="arithmatex">\(f_x = 277\)</span> and <span class="arithmatex">\(f_y = 277\)</span> are the focal lengths in pixels.</li>
+<li><span class="arithmatex">\(c_x = 160\)</span> and <span class="arithmatex">\(c_y = 120\)</span> are the principal-point coordinates.</li>
+<li><span class="arithmatex">\(s = 0\)</span> means that the image axes have no skew.</li>
+</ul>
+<p>For this <code>320 x 240</code> image, <code>(160, 120)</code> is exactly the image center. An
+undistorted 3D point <span class="arithmatex">\((X,Y,Z)\)</span> is projected to a pixel with:</p>
+<div class="arithmatex">\[
+u = f_x\frac{X}{Z} + c_x, \qquad
+v = f_y\frac{Y}{Z} + c_y
+\]</div>
+<p>A point on the optical axis has <span class="arithmatex">\(X=0\)</span> and <span class="arithmatex">\(Y=0\)</span>, so it appears at the principal
+point <code>(160, 120)</code>.</p>
+<h4 id="projection-matrix-p">Projection matrix <code>P</code></h4>
+<p><code>P</code> is the complete <span class="arithmatex">\(3 \times 4\)</span> projection matrix:</p>
+<div class="arithmatex">\[
+P = \begin{bmatrix}
+f'_x &amp; 0 &amp; c'_x &amp; T_x \\
+0 &amp; f'_y &amp; c'_y &amp; T_y \\
+0 &amp; 0 &amp; 1 &amp; T_z
+\end{bmatrix}
+\]</div>
+<p>For this monocular camera, it is approximately:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>P: [277,   0, 160, 0,
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>       0, 277, 120, 0,
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>       0,   0,   1, 0]
+</code></pre></div></td></tr></table></div>
+<p>The zero fourth column means there is no stereo-camera translation. <code>P</code>
+transforms a homogeneous 3D point into image coordinates:</p>
+<div class="arithmatex">\[
+\begin{bmatrix}u' \\ v' \\ w'\end{bmatrix}
+=
+P
+\begin{bmatrix}X \\ Y \\ Z \\ 1\end{bmatrix},
+\qquad
+u=\frac{u'}{w'}, \quad v=\frac{v'}{w'}
+\]</div>
+<p>The practical image-formation order is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>3D point -&gt; projection using K/P -&gt; lens distortion using D -&gt; image pixel
+</code></pre></div></td></tr></table></div>
+<p>OpenCV rectification uses <code>K</code> and <code>D</code> to reverse the distortion and create a
+corrected image.</p>
+<hr />
+<h2 id="rectify-the-distorted-image">Rectify the distorted image</h2>
+<p>Camera info does not rectify an image by itself. It supplies the parameters
+that OpenCV needs:</p>
+<div class="arithmatex">\[
+K = \begin{bmatrix}
+f_x &amp; s &amp; c_x \\
+0 &amp; f_y &amp; c_y \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]</div>
+<ul>
+<li><code>K</code> / <code>intrinsics.k</code> contains the <span class="arithmatex">\(3 \times 3\)</span> intrinsic matrix.</li>
+<li><code>D</code> / <code>distortion.k</code> uses the OpenCV plumb-bob order
+  <code>[k1, k2, p1, p2, k3]</code>.</li>
+<li><code>width</code> and <code>height</code> identify the image size for which the calibration is
+  valid.</li>
+</ul>
+<p><img alt="alt text" src="images/distortion.png" /></p>
+<p><a href="code/rectify_camera.py"><code>rectify_camera.py</code></a> subscribes to <code>camera_distortion</code>, derives <code>camera_distortion/camera_info</code>, checks that the dimensions agree, builds OpenCV remap tables, and displays raw and rectified images side by side:</p>
+<p><img alt="" src="images/rectify.png" /></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>python3<span class="w"> </span>code/rectify_camera.py<span class="w"> </span>camera_distortion
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p>Rectification usually removes invalid pixels near the image boundary or changes
+the usable field of view. A rectified image is therefore not expected to retain
+every raw pixel.</p>
+</div>
+<hr />
+<h2 id="map-a-real-calibration-into-sdf">Map a real calibration into SDF</h2>
+<p>Calibrate the physical camera at the resolution and focus setting that will be
+used on the robot. A typical OpenCV calibration provides:</p>
+<ul>
+<li>image width and height;</li>
+<li><code>fx</code>, <code>fy</code>, <code>cx</code>, <code>cy</code>, and optionally skew <code>s</code>;</li>
+<li><code>k1</code>, <code>k2</code>, <code>p1</code>, <code>p2</code>, and <code>k3</code>;</li>
+<li>a reprojection error used to judge the calibration quality.</li>
+</ul>
+<p>Map those measurements into the ordinary camera configuration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-18-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-18-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-18-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-18-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-18-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-18-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-18-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-18-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-18-10">10</a></span>
+<span class="normal"><a href="#__codelineno-18-11">11</a></span>
+<span class="normal"><a href="#__codelineno-18-12">12</a></span>
+<span class="normal"><a href="#__codelineno-18-13">13</a></span>
+<span class="normal"><a href="#__codelineno-18-14">14</a></span>
+<span class="normal"><a href="#__codelineno-18-15">15</a></span>
+<span class="normal"><a href="#__codelineno-18-16">16</a></span>
+<span class="normal"><a href="#__codelineno-18-17">17</a></span>
+<span class="normal"><a href="#__codelineno-18-18">18</a></span>
+<span class="normal"><a href="#__codelineno-18-19">19</a></span>
+<span class="normal"><a href="#__codelineno-18-20">20</a></span>
+<span class="normal"><a href="#__codelineno-18-21">21</a></span>
+<span class="normal"><a href="#__codelineno-18-22">22</a></span>
+<span class="normal"><a href="#__codelineno-18-23">23</a></span>
+<span class="normal"><a href="#__codelineno-18-24">24</a></span>
+<span class="normal"><a href="#__codelineno-18-25">25</a></span>
+<span class="normal"><a href="#__codelineno-18-26">26</a></span>
+<span class="normal"><a href="#__codelineno-18-27">27</a></span>
+<span class="normal"><a href="#__codelineno-18-28">28</a></span>
+<span class="normal"><a href="#__codelineno-18-29">29</a></span>
+<span class="normal"><a href="#__codelineno-18-30">30</a></span>
+<span class="normal"><a href="#__codelineno-18-31">31</a></span>
+<span class="normal"><a href="#__codelineno-18-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="nt">&lt;camera&gt;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="w">  </span><span class="nt">&lt;camera_info_topic&gt;</span>camera/camera_info<span class="nt">&lt;/camera_info_topic&gt;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">  </span><span class="nt">&lt;horizontal_fov&gt;</span>1.047<span class="nt">&lt;/horizontal_fov&gt;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="w">  </span><span class="nt">&lt;image&gt;</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">    </span><span class="nt">&lt;width&gt;</span>1280<span class="nt">&lt;/width&gt;</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">    </span><span class="nt">&lt;height&gt;</span>720<span class="nt">&lt;/height&gt;</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">    </span><span class="nt">&lt;format&gt;</span>R8G8B8<span class="nt">&lt;/format&gt;</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="w">  </span><span class="nt">&lt;/image&gt;</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="w">  </span><span class="nt">&lt;clip&gt;</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="w">    </span><span class="nt">&lt;near&gt;</span>0.1<span class="nt">&lt;/near&gt;</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11"></a><span class="w">    </span><span class="nt">&lt;far&gt;</span>100<span class="nt">&lt;/far&gt;</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="w">  </span><span class="nt">&lt;/clip&gt;</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="w">  </span><span class="nt">&lt;distortion&gt;</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14"></a><span class="w">    </span><span class="nt">&lt;k1&gt;</span>-0.21<span class="nt">&lt;/k1&gt;</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15"></a><span class="w">    </span><span class="nt">&lt;k2&gt;</span>0.08<span class="nt">&lt;/k2&gt;</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16"></a><span class="w">    </span><span class="nt">&lt;k3&gt;</span>0.0<span class="nt">&lt;/k3&gt;</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17"></a><span class="w">    </span><span class="nt">&lt;p1&gt;</span>0.001<span class="nt">&lt;/p1&gt;</span>
+<a id="__codelineno-18-18" name="__codelineno-18-18"></a><span class="w">    </span><span class="nt">&lt;p2&gt;</span>-0.002<span class="nt">&lt;/p2&gt;</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19"></a><span class="w">    </span><span class="nt">&lt;center&gt;</span>0.5<span class="w"> </span>0.5<span class="nt">&lt;/center&gt;</span>
+<a id="__codelineno-18-20" name="__codelineno-18-20"></a><span class="w">  </span><span class="nt">&lt;/distortion&gt;</span>
+<a id="__codelineno-18-21" name="__codelineno-18-21"></a><span class="w">  </span><span class="nt">&lt;lens&gt;</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22"></a><span class="w">    </span><span class="nt">&lt;type&gt;</span>gnomonical<span class="nt">&lt;/type&gt;</span>
+<a id="__codelineno-18-23" name="__codelineno-18-23"></a><span class="w">    </span><span class="nt">&lt;scale_to_hfov&gt;</span>true<span class="nt">&lt;/scale_to_hfov&gt;</span>
+<a id="__codelineno-18-24" name="__codelineno-18-24"></a><span class="w">    </span><span class="nt">&lt;intrinsics&gt;</span>
+<a id="__codelineno-18-25" name="__codelineno-18-25"></a><span class="w">      </span><span class="nt">&lt;fx&gt;</span>910.4<span class="nt">&lt;/fx&gt;</span>
+<a id="__codelineno-18-26" name="__codelineno-18-26"></a><span class="w">      </span><span class="nt">&lt;fy&gt;</span>908.7<span class="nt">&lt;/fy&gt;</span>
+<a id="__codelineno-18-27" name="__codelineno-18-27"></a><span class="w">      </span><span class="nt">&lt;cx&gt;</span>638.2<span class="nt">&lt;/cx&gt;</span>
+<a id="__codelineno-18-28" name="__codelineno-18-28"></a><span class="w">      </span><span class="nt">&lt;cy&gt;</span>361.1<span class="nt">&lt;/cy&gt;</span>
+<a id="__codelineno-18-29" name="__codelineno-18-29"></a><span class="w">      </span><span class="nt">&lt;s&gt;</span>0.0<span class="nt">&lt;/s&gt;</span>
+<a id="__codelineno-18-30" name="__codelineno-18-30"></a><span class="w">    </span><span class="nt">&lt;/intrinsics&gt;</span>
+<a id="__codelineno-18-31" name="__codelineno-18-31"></a><span class="w">  </span><span class="nt">&lt;/lens&gt;</span>
+<a id="__codelineno-18-32" name="__codelineno-18-32"></a><span class="nt">&lt;/camera&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Replace every example number with values from the real calibration. Explicit
+<code>fx</code> overrides the projection derived from <code>horizontal_fov</code>; keep the FOV tag
+because it is required by this SDF camera schema, but treat the calibrated
+intrinsics as authoritative.</p>
+<p>OpenCV and Gazebo use the same five common Brown coefficients, but the SDF tags
+are grouped differently. The mapping is:</p>
+<table>
+<thead>
+<tr>
+<th>OpenCV <code>D</code> index</th>
+<th>SDF tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>D[0]</code></td>
+<td><code>&lt;k1&gt;</code></td>
+</tr>
+<tr>
+<td><code>D[1]</code></td>
+<td><code>&lt;k2&gt;</code></td>
+</tr>
+<tr>
+<td><code>D[2]</code></td>
+<td><code>&lt;p1&gt;</code></td>
+</tr>
+<tr>
+<td><code>D[3]</code></td>
+<td><code>&lt;p2&gt;</code></td>
+</tr>
+<tr>
+<td><code>D[4]</code></td>
+<td><code>&lt;k3&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>The camera's measured mounting transform is separate from its intrinsics. Put
+that translation and rotation in the sensor <code>&lt;pose&gt;</code> relative to the robot link:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="nt">&lt;sensor</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;front_camera&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;camera&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="w">  </span><span class="nt">&lt;pose&gt;</span>0.20<span class="w"> </span>0<span class="w"> </span>0.12<span class="w"> </span>0<span class="w"> </span>0<span class="w"> </span>0<span class="nt">&lt;/pose&gt;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="w">  </span><span class="cm">&lt;!-- camera configuration --&gt;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="nt">&lt;/sensor&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Calibration target poses estimated by OpenCV are observations of the target;
+they are not the robot mounting pose.</p>
+<hr />
+<h2 id="validate-the-result">Validate the result</h2>
+<h3 id="minimum-validation">Minimum validation</h3>
+<ol>
+<li>Confirm image width, height, and pixel format.</li>
+<li>Confirm <code>K</code> and <code>D</code> on the camera-info topic match the intended values.</li>
+<li>Run with verbose logging and confirm there is no unsupported-distortion
+   warning.</li>
+<li>Compare checkerboard lines near the center and image edges.</li>
+<li>Confirm the camera pose matches its measured robot mounting pose.</li>
+</ol>
+<p>These checks show that the intended configuration is active and broadly
+correct.</p>
+<h3 id="high-fidelity-validation">High-fidelity validation</h3>
+<ol>
+<li>Measure the achieved image publication rate.</li>
+<li>Capture checkerboards at several known distances and orientations.</li>
+<li>Compare real and simulated detected corner coordinates numerically.</li>
+<li>Compare horizontal and vertical field of view.</li>
+<li>Record reprojection error instead of relying only on visual similarity.</li>
+<li>Estimate real pixel-noise statistics from repeated images of a static,
+   evenly lit target, while keeping Gazebo's Gaussian model limitations clear.</li>
+</ol>
+<p>Matching parameter text is not sufficient if the renderer ignores a feature.
+Validation must inspect the generated image.</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<p>A useful real-camera simulation combines several independent controls:</p>
+<ul>
+<li>sensor control: pose, activation, publication rate, visualization, and topic;</li>
+<li>image geometry: resolution, FOV or calibrated intrinsics, and clipping;</li>
+<li>output representation: RGB or grayscale format;</li>
+<li>approximate imperfections: Gaussian noise and Brown distortion;</li>
+<li>metadata: a unique camera-info topic carrying <code>K</code>, <code>D</code>, and image dimensions;</li>
+<li>verification: logs, image comparisons, and checkerboard measurements.</li>
+</ul>
+<p>The next camera tutorials can build on this ordinary calibrated camera before
+introducing depth, thermal, RGB-D, segmentation, or other sensor types.</p>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a href="http://sdformat.org/spec?ver=1.7&amp;elem=sensor#sensor_camera">SDFormat 1.7 camera sensor specification</a></li>
+<li><a href="https://gazebosim.org/docs/harmonic/sensors/">Gazebo Harmonic sensor tutorial</a></li>
+<li><a href="https://gazebosim.org/api/transport/13/installation.html">Gazebo Transport 13 installation and Python bindings</a></li>
+</ul>
+<!-- post-content-skill: 1.0.0 -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>
