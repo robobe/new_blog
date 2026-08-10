@@ -50,8 +50,32 @@ tags:
         <p>msgpack</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="libraries/yaml_cpp/">
+            <p>yaml-cpp</p>
+        </a>
+        <details>
+            <summary>More...</summary>
+            <p>
+                Install yaml-cpp on Ubuntu and read mappings, scalar values,
+                and sequences from a YAML configuration file with CMake.
+            </p>
+        </details>
+    </div>
+    <div class="grid-item">
+        <a href="libraries/cli11/">
+            <p>CLI11</p>
+        </a>
+        <details>
+            <summary>More...</summary>
+            <p>
+                Install CLI11 on Ubuntu and create a typed command-line option
+                with generated help output and CMake integration.
+            </p>
+        </details>
+    </div>
    <div class="grid-item">
-        <a href="log/spdlog/">
+        <a href="libraries/log/spdlog/">
             <p>spdlog</p>
         </a>
         <details>

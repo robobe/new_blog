@@ -59,15 +59,31 @@ same data product.
 
 ## Minimal CMake example
 
-[Download `main.cpp`](code/minimal/main.cpp) and
-[`CMakeLists.txt`](code/minimal/CMakeLists.txt).
-
 ```cpp title="main.cpp"
---8<-- "docs/Programming/cpp/libraries/log/spdlog/code/minimal/main.cpp"
+#include <spdlog/spdlog.h>
+
+int main()
+{
+    spdlog::set_level(spdlog::level::debug);
+    spdlog::set_pattern("[%H:%M:%S.%e] [%^%l%$] %v");
+
+    spdlog::debug("Connecting to camera {}", 0);
+    spdlog::info("Application started");
+    spdlog::warn("This is a warning");
+    spdlog::error("Example error code: {}", 42);
+}
 ```
 
 ```cmake title="CMakeLists.txt"
---8<-- "docs/Programming/cpp/libraries/log/spdlog/code/minimal/CMakeLists.txt"
+cmake_minimum_required(VERSION 3.16)
+project(spdlog_minimal LANGUAGES CXX)
+
+find_package(spdlog CONFIG REQUIRED)
+
+add_executable(spdlog_minimal main.cpp)
+target_compile_features(spdlog_minimal PRIVATE cxx_std_17)
+target_link_libraries(spdlog_minimal PRIVATE spdlog::spdlog)
+
 ```
 
 Build and run from the downloaded example directory:
@@ -78,8 +94,9 @@ cmake --build build
 ./build/spdlog_minimal
 ```
 
-`%^` and `%$` mark the colored portion of the console pattern. They have an
-effect only when the sink supports colors.
+!!! tip "color section"
+    `%^` and `%$` mark the colored portion of the console pattern. They have an
+    effect only when the sink supports colors.
 
 ---
 
