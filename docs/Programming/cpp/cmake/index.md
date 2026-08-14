@@ -39,8 +39,12 @@ such as Makefiles, Ninja files, Visual Studio projects, or Xcode projects.
 
 The main idea is:
 
-```text
-CMakeLists.txt -> cmake configure -> build files -> cmake build -> executable/library
+```mermaid
+flowchart LR
+    A[CMakeLists.txt] --> B[cmake configure]
+    B --> C[build files]
+    C --> D[cmake build]
+    D --> E[executable/library]
 ```
 
 This lets the same C++ project build on different operating systems and with
@@ -75,6 +79,10 @@ add_executable(hello
     main.cpp
 )
 ```
+
+!!! warning "modern cmake"
+    The CMakeLists file is not a modern cmake design guideline
+    The modern cmake design is target base [check](#modern_cmake)
 
 Build it:
 
