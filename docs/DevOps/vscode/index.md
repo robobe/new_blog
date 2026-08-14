@@ -46,14 +46,14 @@ tags:
 
 
 ## My settings
+### settings
+- [keyboard first minimal ui](my_dev_setup)
 ### snippets
 - [markdown](code/markdown.code-snippets){:target="_blank"}
 - [Keybindings](code/keybindings.json){:target="_blank"}
 
 ## Video and posts
 - [Code Customization 101: Supercharge VS Code with Profiles](https://youtu.be/QjvvqR9KyVo)
-
-
 
 ---
 

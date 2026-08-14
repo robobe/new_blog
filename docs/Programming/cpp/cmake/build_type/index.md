@@ -115,7 +115,9 @@ cmake --build build/release~
 
 ## Tips
 
-```
+### if condition
+
+```cmake
   target_compile_options(my_app PRIVATE
       $<$<CONFIG:Debug>:-Wall -Wextra>
   )

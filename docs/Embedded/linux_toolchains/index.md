@@ -76,7 +76,23 @@ file hello-static
 ldd hello-static
 ```
 
+---
+
+
+
 ## glibc vs musl
+
+The C standard library (libc) provides programs with common functions for memory allocation, file and network I/O, string handling, and process management. It also acts as the main interface between most C programs and the Linux kernel, so the libc used by a toolchain affects compatibility, binary size, and deployment requirements.
+
+C++ programs normally depend on libc as well. The C++ standard library
+(`libstdc++` with GCC or `libc++` with Clang) provides C++ features such as
+containers, streams, and exceptions, while libc provides lower-level services
+such as memory allocation, file I/O, threads, and system-call wrappers. A
+dynamically linked C++ executable therefore usually requires both a C++
+standard library and the target system's libc. Static linking can include these
+libraries in the executable, but the selected libc still affects compatibility
+and behavior.
+
 
 | libc | common use |
 |---|---|
@@ -86,6 +102,8 @@ ldd hello-static
 glibc is common and very compatible with normal Linux distributions.
 
 musl is designed to be small, simple, and friendly to static linking. It is useful when you want one binary that is easy to copy to an embedded target.
+
+---
 
 ## Static compiler
 
@@ -139,7 +157,77 @@ aarch64-linux-gnu-g++ code/hello.cpp -static -o hello-aarch64-glibc-static
 file hello-aarch64-glibc-dynamic hello-aarch64-glibc-static
 ```
 
-Useful package names for other targets:
+### Demo: hello cross compiler
+Build cpp app using cmake and cross compiler
+
+```bash
+project/
+├── CMakeLists.txt
+├── cmake/
+│   └── toolchain-aarch64.cmake
+└── build/
+    ├── native/
+    └── arm64/
+```
+
+```c title="toolchain-aarch64.cmake"
+# cmake/toolchain-aarch64.cmake
+
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
+
+set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+```
+
+```c title="CMakeLists.txt"
+cmake_minimum_required(VERSION 3.20)
+
+project(hello LANGUAGES CXX)
+
+add_executable(hello main.cpp)
+```
+
+```cpp title="main.cpp"
+#include <iostream>
+
+int main()
+{
+    std::cout << "Hello ARM64\n";
+    return 0;
+}
+```
+
+```bash
+cmake -S . -B build-arm \
+    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-aarch64.cmake
+```
+
+```bash
+cmake --build build-arm
+```
+
+
+!!! tip "modern cmake"
+
+    Modern CMake describes targets and their usage requirements instead of
+    setting global compiler flags or include paths. Prefer commands such as
+    `add_library`, `add_executable`, `target_link_libraries`, and
+    `target_include_directories`, with `PRIVATE`, `PUBLIC`, or `INTERFACE` to
+    control which requirements are propagated to dependent targets.
+
+    Use CMake's separate workflow commands for each stage:
+
+    ```bash
+    cmake -S . -B build                         # Configure and generate
+    cmake --build build                         # Compile
+    cmake --install build --prefix ./install    # Install
+    ctest --test-dir build --output-on-failure  # Run tests
+    ```
+    
+---
+
+Useful compilers for other architecture targets:
 
 | target | packages |
 |---|---|
@@ -148,9 +236,11 @@ Useful package names for other targets:
 | ARM soft-float | `gcc-arm-linux-gnueabi g++-arm-linux-gnueabi` |
 | x86_64 | `gcc-x86-64-linux-gnu g++-x86-64-linux-gnu` |
 
+---
+
 ## Install musl cross compiler from musl.cc
 
-[musl.cc](https://musl.cc/) provides prebuilt musl toolchains. It is a community source, not the official musl project.
+The site [musl.cc](https://musl.cc/) provides prebuilt musl toolchains. It is a community source, not the official musl project.
 
 Choose the archive by the target CPU, not by the host CPU.
 

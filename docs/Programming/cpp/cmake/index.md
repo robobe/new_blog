@@ -14,8 +14,8 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="gtest">
-            <p>gtest</p>
+        <a href="build_type">
+            <p>build type</p>
         </a>
     </div>
     <div class="grid-item">
