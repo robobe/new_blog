@@ -1,0 +1,1716 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Programming/cpp/learn_cpp/mastery/01_toolchain_and_debugging/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>C++ Toolchain and Debugging - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#prerequisites-and-goals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              C++ Toolchain and Debugging
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites-and-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites and goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-complete-toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The complete toolchain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The complete toolchain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-preprocessor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Preprocessor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Compiler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-assembler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Assembler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-linker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Linker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-loader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Loader
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#translation-units-and-multi-file-programs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Translation units and multi-file programs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Translation units and multi-file programs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#declaration-in-the-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaration in the header
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#definition-in-one-source-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definition in one source file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-declaration-from-another-source-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use the declaration from another source file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Namespaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-one-definition-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The One Definition Rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-targets-with-cmake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build targets with CMake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-versus-release-builds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug versus release builds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-with-gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug with GDB
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug with VS Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quiz
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-predict-the-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Predict the result
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-concept-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Concept check
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-find-the-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Find the bug
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-coding-exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Coding exercise
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-mission-multi-file-hello-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase mission: multi-file hello application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">cmake</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">compiler</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">cpp</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">cpp20</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">gdb</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">linker</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>C++ Toolchain and Debugging</h1>
+
+<p>A C++ source file is not executed directly. It passes through several tools
+that transform text into machine code, combine multiple translation units, and
+load the resulting executable into memory. Understanding that path makes
+compiler, linker, and debugger errors much less mysterious.</p>
+<h2 id="prerequisites-and-goals">Prerequisites and goals</h2>
+<p>Prerequisites:</p>
+<ul>
+<li>basic variables and functions;</li>
+<li>a terminal on Ubuntu 24.04;</li>
+<li>GCC, CMake, and GDB.</li>
+</ul>
+<p>Install the required tools with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>gdb
+</code></pre></div></td></tr></table></div>
+<p>After this lesson, you should be able to:</p>
+<ul>
+<li>explain preprocessing, compilation, assembly, linking, and loading;</li>
+<li>divide a program into headers and source files;</li>
+<li>distinguish declarations from definitions;</li>
+<li>recognize common One Definition Rule mistakes;</li>
+<li>build and test a multi-target CMake project;</li>
+<li>stop inside a function and inspect program state with GDB or VS Code.</li>
+</ul>
+<hr />
+<h2 id="the-complete-toolchain">The complete toolchain</h2>
+<pre class="mermaid"><code>flowchart LR
+    A[main.cpp] --&gt;|preprocessor| B[main.ii]
+    B --&gt;|compiler| C[main.s]
+    C --&gt;|assembler| D[main.o]
+    E[greeter.cpp] --&gt;|same stages| F[greeter.o]
+    D --&gt;|linker| G[executable]
+    F --&gt;|linker| G
+    G --&gt;|loader| H[running process]</code></pre>
+<h3 id="1-preprocessor">1. Preprocessor</h3>
+<p>The preprocessor handles directives beginning with <code>#</code>. For example:</p>
+<ul>
+<li><code>#include</code> inserts declarations from another file;</li>
+<li><code>#define</code> creates a macro;</li>
+<li><code>#if</code>, <code>#ifdef</code>, and <code>#endif</code> select source conditionally.</li>
+</ul>
+<p><a href="code/preprocessor_demo.cpp">Download <code>preprocessor_demo.cpp</code></a>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">preprocessor_demo.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="cp">#define APPLICATION_NAME &quot;toolchain-demo&quot;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="p">{</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Application: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">APPLICATION_NAME</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="cp">#ifdef NDEBUG</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Build mode: Release</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="cp">#else</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Build mode: Debug</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="cp">#endif</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>View the preprocessed source without compiling it:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>g++<span class="w"> </span>-std<span class="o">=</span>c++20<span class="w"> </span>-E<span class="w"> </span>preprocessor_demo.cpp<span class="w"> </span>-o<span class="w"> </span>preprocessor_demo.ii
+</code></pre></div></td></tr></table></div>
+<p>The <code>.ii</code> file is large because it contains the expanded standard-library
+headers. <code>APPLICATION_NAME</code> has been replaced by its macro value, and only the
+selected conditional branch remains.</p>
+<div class="admonition warning">
+<p class="admonition-title">Macros are text substitution</p>
+<p>A macro has no C++ type or namespace. Prefer constants, functions, and
+templates for normal C++ logic. Macros remain useful for conditional
+compilation and build-generated values.</p>
+</div>
+<h3 id="2-compiler">2. Compiler</h3>
+<p>The compiler parses and type-checks the preprocessed C++ program, diagnoses
+language errors, optimizes it, and produces assembly language:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>g++<span class="w"> </span>-std<span class="o">=</span>c++20<span class="w"> </span>-S<span class="w"> </span>preprocessor_demo.ii<span class="w"> </span>-o<span class="w"> </span>preprocessor_demo.s
+</code></pre></div></td></tr></table></div>
+<p>A compiler error normally points to invalid C++ in one translation unit: wrong
+types, missing declarations, syntax mistakes, or inaccessible members.</p>
+<h3 id="3-assembler">3. Assembler</h3>
+<p>The assembler turns assembly instructions into an object file containing
+machine code plus symbol and relocation information:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>g++<span class="w"> </span>-c<span class="w"> </span>preprocessor_demo.s<span class="w"> </span>-o<span class="w"> </span>preprocessor_demo.o
+</code></pre></div></td></tr></table></div>
+<p>An object file is not normally runnable. Calls to functions in other object
+files or libraries may still be unresolved.</p>
+<h3 id="4-linker">4. Linker</h3>
+<p>The linker combines object files and libraries, resolves symbol references, and
+creates an executable:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>g++<span class="w"> </span>preprocessor_demo.o<span class="w"> </span>-o<span class="w"> </span>preprocessor_demo
+</code></pre></div></td></tr></table></div>
+<p>A linker error often means that something was declared and used but no matching
+definition was linked:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>undefined reference to `greeter::make_greeting(...)`
+</code></pre></div></td></tr></table></div>
+<p>The opposite error—multiple definitions—means more than one linked translation
+unit supplied a forbidden duplicate definition.</p>
+<h3 id="5-loader">5. Loader</h3>
+<p>When the executable starts, the operating-system loader maps it into memory,
+loads required shared libraries, prepares the process, and transfers control to
+the program startup code that eventually calls <code>main</code>.</p>
+<p>Inspect dynamic dependencies with:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>ldd<span class="w"> </span>./preprocessor_demo
+</code></pre></div></td></tr></table></div>
+<p>The loader works at runtime. The compiler and linker have already finished.</p>
+<hr />
+<h2 id="translation-units-and-multi-file-programs">Translation units and multi-file programs</h2>
+<p>After preprocessing, each <code>.cpp</code> file becomes one <strong>translation unit</strong> and is
+compiled independently. A header shares declarations between translation units;
+it is not usually compiled by itself.</p>
+<p>The example uses this layout:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>code/
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>├── CMakeLists.txt
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>├── include/greeter/greeter.hpp
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>└── src/
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>    ├── greeter.cpp
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>    └── main.cpp
+</code></pre></div></td></tr></table></div>
+<h3 id="declaration-in-the-header">Declaration in the header</h3>
+<p><a href="code/include/greeter/greeter.hpp">Download <code>greeter.hpp</code></a>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">include/greeter/greeter.hpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="cp">#pragma once</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">greeter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">make_greeting</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="p">}</span><span class="w"> </span><span class="c1">// namespace greeter</span>
+</code></pre></div></td></tr></table></div>
+<p>The function declaration tells each caller its name, parameters, return type,
+and namespace. <code>#pragma once</code> prevents repeated inclusion within one translation
+unit.</p>
+<h3 id="definition-in-one-source-file">Definition in one source file</h3>
+<p><a href="code/src/greeter.cpp">Download <code>greeter.cpp</code></a>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">src/greeter.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;greeter/greeter.hpp&quot;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">greeter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">make_greeting</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="p">{</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Hello, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">;</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="p">}</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="p">}</span><span class="w"> </span><span class="c1">// namespace greeter</span>
+</code></pre></div></td></tr></table></div>
+<p>This definition contains the executable function body. The program provides it
+in exactly one <code>.cpp</code> file.</p>
+<h3 id="use-the-declaration-from-another-source-file">Use the declaration from another source file</h3>
+<p><a href="code/src/main.cpp">Download <code>main.cpp</code></a>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">src/main.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;greeter/greeter.hpp&quot;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="p">{</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argc</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">;</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">greeter</span><span class="o">::</span><span class="n">make_greeting</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p><code>main.cpp</code> can compile after seeing the declaration. The linker later connects
+its function call to the definition compiled from <code>greeter.cpp</code>.</p>
+<h3 id="namespaces">Namespaces</h3>
+<p>Both declaration and definition use <code>namespace greeter</code>. Namespaces group names
+and reduce collisions:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">greeter</span><span class="o">::</span><span class="n">make_greeting</span><span class="p">(</span><span class="s">&quot;Ada&quot;</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div>
+<p>The declaration and definition must match, including their namespace, parameter
+types, return type, and relevant qualifiers.</p>
+<hr />
+<h2 id="the-one-definition-rule">The One Definition Rule</h2>
+<p>The One Definition Rule, usually shortened to <strong>ODR</strong>, controls which entities
+may be defined more than once across a program.</p>
+<p>A common mistake is defining a normal function in a header:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1">// bad_header.hpp</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">greeting</span><span class="p">()</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="p">{</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>If two <code>.cpp</code> files include this header, the linker may see two definitions of
+<code>greeting</code>. Prefer a declaration in the header and one definition in a <code>.cpp</code>
+file.</p>
+<p>Small header-defined functions may be marked <code>inline</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">greeting</span><span class="p">()</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="p">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Templates are also normally defined in headers because the compiler needs their
+definitions when instantiating them.</p>
+<div class="admonition tip">
+<p class="admonition-title">First question for an undefined reference</p>
+<p>Ask whether the definition exists, whether its signature exactly matches
+the declaration, and whether the object file or library containing it is
+part of the link command.</p>
+</div>
+<hr />
+<h2 id="build-targets-with-cmake">Build targets with CMake</h2>
+<p><a href="code/CMakeLists.txt">Download <code>CMakeLists.txt</code></a>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span>
+<span class="normal"><a href="#__codelineno-15-18">18</a></span>
+<span class="normal"><a href="#__codelineno-15-19">19</a></span>
+<span class="normal"><a href="#__codelineno-15-20">20</a></span>
+<span class="normal"><a href="#__codelineno-15-21">21</a></span>
+<span class="normal"><a href="#__codelineno-15-22">22</a></span>
+<span class="normal"><a href="#__codelineno-15-23">23</a></span>
+<span class="normal"><a href="#__codelineno-15-24">24</a></span>
+<span class="normal"><a href="#__codelineno-15-25">25</a></span>
+<span class="normal"><a href="#__codelineno-15-26">26</a></span>
+<span class="normal"><a href="#__codelineno-15-27">27</a></span>
+<span class="normal"><a href="#__codelineno-15-28">28</a></span>
+<span class="normal"><a href="#__codelineno-15-29">29</a></span>
+<span class="normal"><a href="#__codelineno-15-30">30</a></span>
+<span class="normal"><a href="#__codelineno-15-31">31</a></span>
+<span class="normal"><a href="#__codelineno-15-32">32</a></span>
+<span class="normal"><a href="#__codelineno-15-33">33</a></span>
+<span class="normal"><a href="#__codelineno-15-34">34</a></span>
+<span class="normal"><a href="#__codelineno-15-35">35</a></span>
+<span class="normal"><a href="#__codelineno-15-36">36</a></span>
+<span class="normal"><a href="#__codelineno-15-37">37</a></span>
+<span class="normal"><a href="#__codelineno-15-38">38</a></span>
+<span class="normal"><a href="#__codelineno-15-39">39</a></span>
+<span class="normal"><a href="#__codelineno-15-40">40</a></span>
+<span class="normal"><a href="#__codelineno-15-41">41</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.16</span><span class="p">)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="nb">project</span><span class="p">(</span><span class="s">toolchain_and_debugging</span><span class="w"> </span><span class="s">LANGUAGES</span><span class="w"> </span><span class="s">CXX</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="nb">include</span><span class="p">(</span><span class="s">CTest</span><span class="p">)</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="nb">add_library</span><span class="p">(</span><span class="s">greeter</span><span class="w"> </span><span class="s">STATIC</span><span class="w"> </span><span class="s">src/greeter.cpp</span><span class="p">)</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">greeter</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">include</span><span class="p">)</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="nb">target_compile_features</span><span class="p">(</span><span class="s">greeter</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">cxx_std_20</span><span class="p">)</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">toolchain_demo</span><span class="w"> </span><span class="s">src/main.cpp</span><span class="p">)</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">toolchain_demo</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">greeter</span><span class="p">)</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">preprocessor_demo</span><span class="w"> </span><span class="s">preprocessor_demo.cpp</span><span class="p">)</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a><span class="nb">target_compile_features</span><span class="p">(</span><span class="s">preprocessor_demo</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">cxx_std_20</span><span class="p">)</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">exercise_starter</span><span class="w"> </span><span class="s">exercise_starter.cpp</span><span class="p">)</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18"></a><span class="nb">target_compile_features</span><span class="p">(</span><span class="s">exercise_starter</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">cxx_std_20</span><span class="p">)</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19"></a>
+<a id="__codelineno-15-20" name="__codelineno-15-20"></a><span class="nb">foreach</span><span class="p">(</span><span class="s">target</span><span class="w"> </span><span class="s">greeter</span><span class="w"> </span><span class="s">toolchain_demo</span><span class="w"> </span><span class="s">preprocessor_demo</span><span class="w"> </span><span class="s">exercise_starter</span><span class="p">)</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21"></a><span class="w">    </span><span class="nb">if</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER_ID</span><span class="w"> </span><span class="s">MATCHES</span><span class="w"> </span><span class="s2">&quot;GNU|Clang&quot;</span><span class="p">)</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22"></a><span class="w">        </span><span class="nb">target_compile_options</span><span class="p">(</span><span class="o">${</span><span class="nv">target</span><span class="o">}</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">-Wall</span><span class="w"> </span><span class="s">-Wextra</span><span class="w"> </span><span class="s">-Wpedantic</span><span class="p">)</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23"></a><span class="w">    </span><span class="nb">endif</span><span class="p">()</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24"></a><span class="nb">endforeach</span><span class="p">()</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25"></a>
+<a id="__codelineno-15-26" name="__codelineno-15-26"></a><span class="nb">add_test</span><span class="p">(</span><span class="s">NAME</span><span class="w"> </span><span class="s">greeting_default</span><span class="w"> </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">toolchain_demo</span><span class="p">)</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27"></a><span class="nb">set_tests_properties</span><span class="p">(</span><span class="s">greeting_default</span><span class="w"> </span><span class="s">PROPERTIES</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28"></a><span class="w">    </span><span class="s">PASS_REGULAR_EXPRESSION</span><span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29"></a><span class="p">)</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30"></a>
+<a id="__codelineno-15-31" name="__codelineno-15-31"></a><span class="nb">add_test</span><span class="p">(</span><span class="s">NAME</span><span class="w"> </span><span class="s">greeting_name</span><span class="w"> </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">toolchain_demo</span><span class="w"> </span><span class="s">Ada</span><span class="p">)</span>
+<a id="__codelineno-15-32" name="__codelineno-15-32"></a><span class="nb">set_tests_properties</span><span class="p">(</span><span class="s">greeting_name</span><span class="w"> </span><span class="s">PROPERTIES</span>
+<a id="__codelineno-15-33" name="__codelineno-15-33"></a><span class="w">    </span><span class="s">PASS_REGULAR_EXPRESSION</span><span class="w"> </span><span class="s2">&quot;Hello, Ada!&quot;</span>
+<a id="__codelineno-15-34" name="__codelineno-15-34"></a><span class="p">)</span>
+<a id="__codelineno-15-35" name="__codelineno-15-35"></a>
+<a id="__codelineno-15-36" name="__codelineno-15-36"></a><span class="nb">add_test</span><span class="p">(</span><span class="s">NAME</span><span class="w"> </span><span class="s">preprocessor_application_name</span><span class="w"> </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">preprocessor_demo</span><span class="p">)</span>
+<a id="__codelineno-15-37" name="__codelineno-15-37"></a><span class="nb">set_tests_properties</span><span class="p">(</span><span class="s">preprocessor_application_name</span><span class="w"> </span><span class="s">PROPERTIES</span>
+<a id="__codelineno-15-38" name="__codelineno-15-38"></a><span class="w">    </span><span class="s">PASS_REGULAR_EXPRESSION</span><span class="w"> </span><span class="s2">&quot;Application: toolchain-demo&quot;</span>
+<a id="__codelineno-15-39" name="__codelineno-15-39"></a><span class="p">)</span>
+<a id="__codelineno-15-40" name="__codelineno-15-40"></a>
+<a id="__codelineno-15-41" name="__codelineno-15-41"></a><span class="nb">add_test</span><span class="p">(</span><span class="s">NAME</span><span class="w"> </span><span class="s">exercise_starter_runs</span><span class="w"> </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">exercise_starter</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Important target relationships are:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span>
+<span class="normal"><a href="#__codelineno-16-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="nb">add_library</span><span class="p">(</span><span class="s">greeter</span><span class="w"> </span><span class="s">STATIC</span><span class="w"> </span><span class="s">src/greeter.cpp</span><span class="p">)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">greeter</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">include</span><span class="p">)</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="nb">target_compile_features</span><span class="p">(</span><span class="s">greeter</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">cxx_std_20</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">toolchain_demo</span><span class="w"> </span><span class="s">src/main.cpp</span><span class="p">)</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">toolchain_demo</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">greeter</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><code>greeter</code> is a static-library target.</li>
+<li><code>PUBLIC include</code> lets both the library and its consumers find
+  <code>greeter/greeter.hpp</code>.</li>
+<li>Public C++20 usage propagates to consumers.</li>
+<li>Linking <code>toolchain_demo</code> to <code>greeter</code> supplies the compiled definition.</li>
+</ul>
+<p>Configure a debug build, compile it, and run its tests:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Debug
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build<span class="w"> </span>--output-on-failure
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a>./build/toolchain_demo<span class="w"> </span>Ada
+</code></pre></div></td></tr></table></div>
+<p>Expected output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>Hello, Ada!
+</code></pre></div></td></tr></table></div>
+<p>CTest verifies the default greeting, named greeting, preprocessor example, and
+compiling exercise starter.</p>
+<hr />
+<h2 id="debug-versus-release-builds">Debug versus release builds</h2>
+<p>A debug build keeps source-level information and normally avoids aggressive
+optimization:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build-debug<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Debug
+</code></pre></div></td></tr></table></div>
+<p>A release build enables optimization and usually defines <code>NDEBUG</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build-release<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release
+</code></pre></div></td></tr></table></div>
+<p>Optimization can reorder, combine, or remove operations, making source-level
+stepping surprising. Begin diagnosis with a debug build.</p>
+<div class="admonition warning">
+<p class="admonition-title">Debug is not the same as safe</p>
+<p>Compiler warnings, tests, and sanitizers still matter. Debug symbols help
+you observe a failure; they do not prevent one.</p>
+</div>
+<hr />
+<h2 id="debug-with-gdb">Debug with GDB</h2>
+<p>Build the example in Debug mode, then start GDB:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>gdb<span class="w"> </span>./build/toolchain_demo
+</code></pre></div></td></tr></table></div>
+<p>Useful commands:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span>
+<span class="normal"><a href="#__codelineno-22-5">5</a></span>
+<span class="normal"><a href="#__codelineno-22-6">6</a></span>
+<span class="normal"><a href="#__codelineno-22-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>break greeter::make_greeting
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a>run Ada
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a>print name
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a>backtrace
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a>next
+<a id="__codelineno-22-6" name="__codelineno-22-6"></a>continue
+<a id="__codelineno-22-7" name="__codelineno-22-7"></a>quit
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>break</code></td>
+<td>Stop when a source line or function is reached.</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>Start the program with optional arguments.</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td>Execute the next source line without entering called functions.</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>Execute the next source line and enter called functions.</td>
+</tr>
+<tr>
+<td><code>print</code></td>
+<td>Evaluate a variable or expression.</td>
+</tr>
+<tr>
+<td><code>backtrace</code></td>
+<td>Display the active call stack.</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>Resume until another breakpoint or program exit.</td>
+</tr>
+</tbody>
+</table>
+<p>At the breakpoint, <code>name</code> is a <code>std::string_view</code>. Inspect its value and use
+<code>backtrace</code> to see that <code>main</code> called <code>greeter::make_greeting</code>.</p>
+<hr />
+<h2 id="debug-with-vs-code">Debug with VS Code</h2>
+<p>The example includes downloadable task and launch configurations:</p>
+<ul>
+<li><a href="code/vscode/tasks.json"><code>tasks.json</code></a></li>
+<li><a href="code/vscode/launch.json"><code>launch.json</code></a></li>
+</ul>
+<p>Place both downloaded files in a <code>.vscode/</code> directory inside the downloaded
+<code>code</code> directory, then open <code>code</code> as the VS Code workspace. Select
+<strong>Debug toolchain_demo</strong> and press F5. The build task configures a debug build,
+then the debugger launches the program with <code>Ada</code> as its argument.</p>
+<p>Set a breakpoint on the return statement in <code>src/greeter.cpp</code>. Inspect <code>name</code>,
+step back to <code>main</code>, and compare the editor's call-stack view with GDB's
+<code>backtrace</code> output.</p>
+<hr />
+<h2 id="exercise">Exercise</h2>
+<p><a href="code/exercise_starter.cpp">Download <code>exercise_starter.cpp</code></a>. It compiles but
+does not yet meet its requirement.</p>
+<p>Change <code>make_farewell</code> so this command:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>./build/exercise_starter
+</code></pre></div></td></tr></table></div>
+<p>prints:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>Goodbye, Ada!
+</code></pre></div></td></tr></table></div>
+<p>Then add a CTest assertion for that output.</p>
+<details class="success">
+<summary>Exercise solution</summary>
+<p>Update the function:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">make_farewell</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="p">{</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Goodbye, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">;</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Add this after the existing exercise test:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
+<span class="normal"><a href="#__codelineno-26-2">2</a></span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="nb">set_tests_properties</span><span class="p">(</span><span class="s">exercise_starter_runs</span><span class="w"> </span><span class="s">PROPERTIES</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="w">    </span><span class="s">PASS_REGULAR_EXPRESSION</span><span class="w"> </span><span class="s2">&quot;Goodbye, Ada!&quot;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<hr />
+<h2 id="quiz">Quiz</h2>
+<h3 id="1-predict-the-result">1. Predict the result</h3>
+<p><code>main.cpp</code> calls a declared function, but <code>greeter.cpp</code> is removed from the
+<code>greeter</code> target. Does the failure occur during compilation or linking?</p>
+<details class="success">
+<summary>Answer</summary>
+<p>Linking fails with an undefined reference. <code>main.cpp</code> can compile because
+it sees a valid declaration. No linked object file supplies the definition.</p>
+</details>
+<h3 id="2-concept-check">2. Concept check</h3>
+<p>What is the difference between a declaration and a definition?</p>
+<details class="success">
+<summary>Answer</summary>
+<p>A declaration introduces a name and its type so other code can use it. A
+definition provides the entity itself—for a function, its body. A
+definition is also a declaration, but a declaration is not always a
+definition.</p>
+</details>
+<h3 id="3-find-the-bug">3. Find the bug</h3>
+<p>Why can this header cause a multiple-definition linker error?</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span>
+<span class="normal"><a href="#__codelineno-27-3">3</a></span>
+<span class="normal"><a href="#__codelineno-27-4">4</a></span>
+<span class="normal"><a href="#__codelineno-27-5">5</a></span>
+<span class="normal"><a href="#__codelineno-27-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="cp">#pragma once</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">answer</span><span class="p">()</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="p">{</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<details class="success">
+<summary>Answer</summary>
+<p>Every translation unit including the header defines a normal external
+function. Move the definition to one <code>.cpp</code> file and keep only a declaration
+in the header, or mark this small header-defined function <code>inline</code>.</p>
+</details>
+<h3 id="4-coding-exercise">4. Coding exercise</h3>
+<p>Create a <code>math</code> static library with a header declaring <code>int square(int)</code>, one
+source file defining it, and an executable printing <code>square(5)</code>. Add a CTest
+that expects <code>25</code>.</p>
+<details class="success">
+<summary>Answer outline</summary>
+<p>The header contains <code>int square(int value);</code> inside a namespace. The source
+includes that header and returns <code>value * value</code>. CMake creates a static
+library, publishes its include directory, links it to the executable, and
+adds a test with <code>PASS_REGULAR_EXPRESSION "25"</code>.</p>
+</details>
+<hr />
+<h2 id="phase-mission-multi-file-hello-application">Phase mission: multi-file hello application</h2>
+<p>Create a new program with one executable and one reusable library. Do not copy
+the finished example unchanged.</p>
+<p>Requirements:</p>
+<ul>
+<li>at least one public header and two <code>.cpp</code> translation units;</li>
+<li>a namespace for the library API;</li>
+<li>C++20 and <code>-Wall -Wextra -Wpedantic</code>;</li>
+<li>Debug and Release configurations;</li>
+<li>at least three CTest tests;</li>
+<li>one deliberate compiler error and one deliberate linker error recorded in a
+  short <code>mistakes.md</code> with their fixes;</li>
+<li>a GDB breakpoint inside the library with the inspected variable and
+  backtrace recorded in <code>debugging.md</code>.</li>
+</ul>
+<p>Hints:</p>
+<ul>
+<li>Keep declarations in headers and ordinary definitions in source files.</li>
+<li>Make include directories part of the library target.</li>
+<li>Remove a source file from <code>add_library</code> to reproduce an undefined reference.</li>
+</ul>
+<p>Acceptance criteria:</p>
+<ul>
+<li>A clean clone configures, builds, and passes CTest.</li>
+<li>Both Debug and Release executables run.</li>
+<li>The documentation correctly identifies which pipeline stage produced each
+  deliberate error.</li>
+<li>No full mission solution is provided by this lesson.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://gcc.gnu.org/onlinedocs/gcc/Overall-Options.html" rel="noopener noreferrer" target="_blank">GCC overall options and compilation stages</a></li>
+<li><a href="https://sourceware.org/gdb/documentation/" rel="noopener noreferrer" target="_blank">GDB documentation</a></li>
+<li><a href="https://cmake.org/cmake/help/latest/guide/tutorial/index.html" rel="noopener noreferrer" target="_blank">CMake tutorial</a></li>
+</ul>
+<!-- post-content-skill: 1.0.0 -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>
