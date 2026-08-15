@@ -760,6 +760,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Install glibc cross compiler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-hello-cross-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: hello cross compiler
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -939,7 +956,17 @@
 <span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>file<span class="w"> </span>hello-static
 <a id="__codelineno-4-2" name="__codelineno-4-2"></a>ldd<span class="w"> </span>hello-static
 </code></pre></div></td></tr></table></div>
+<hr />
 <h2 id="glibc-vs-musl">glibc vs musl</h2>
+<p>The C standard library (libc) provides programs with common functions for memory allocation, file and network I/O, string handling, and process management. It also acts as the main interface between most C programs and the Linux kernel, so the libc used by a toolchain affects compatibility, binary size, and deployment requirements.</p>
+<p>C++ programs normally depend on libc as well. The C++ standard library
+(<code>libstdc++</code> with GCC or <code>libc++</code> with Clang) provides C++ features such as
+containers, streams, and exceptions, while libc provides lower-level services
+such as memory allocation, file I/O, threads, and system-call wrappers. A
+dynamically linked C++ executable therefore usually requires both a C++
+standard library and the target system's libc. Static linking can include these
+libraries in the executable, but the selected libc still affects compatibility
+and behavior.</p>
 <table>
 <thead>
 <tr>
@@ -960,6 +987,7 @@
 </table>
 <p>glibc is common and very compatible with normal Linux distributions.</p>
 <p>musl is designed to be small, simple, and friendly to static linking. It is useful when you want one binary that is easy to copy to an embedded target.</p>
+<hr />
 <h2 id="static-compiler">Static compiler</h2>
 <p>"Static compiler" usually means a compiler toolchain or build command that creates a statically linked binary.</p>
 <p>It is not a different C++ language. The main difference is the link step:</p>
@@ -998,7 +1026,85 @@
 <a id="__codelineno-10-2" name="__codelineno-10-2"></a>aarch64-linux-gnu-g++<span class="w"> </span>code/hello.cpp<span class="w"> </span>-static<span class="w"> </span>-o<span class="w"> </span>hello-aarch64-glibc-static
 <a id="__codelineno-10-3" name="__codelineno-10-3"></a>file<span class="w"> </span>hello-aarch64-glibc-dynamic<span class="w"> </span>hello-aarch64-glibc-static
 </code></pre></div></td></tr></table></div>
-<p>Useful package names for other targets:</p>
+<h3 id="demo-hello-cross-compiler">Demo: hello cross compiler</h3>
+<p>Build cpp app using cmake and cross compiler</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span>
+<span class="normal"><a href="#__codelineno-11-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>project/
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>├──<span class="w"> </span>CMakeLists.txt
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>├──<span class="w"> </span>cmake/
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>│<span class="w">   </span>└──<span class="w"> </span>toolchain-aarch64.cmake
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>└──<span class="w"> </span>build/
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">    </span>├──<span class="w"> </span>native/
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">    </span>└──<span class="w"> </span>arm64/
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">toolchain-aarch64.cmake</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span>
+<span class="normal"><a href="#__codelineno-12-6">6</a></span>
+<span class="normal"><a href="#__codelineno-12-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="cp"># cmake/toolchain-aarch64.cmake</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_SYSTEM_NAME</span><span class="w"> </span><span class="n">Linux</span><span class="p">)</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_SYSTEM_PROCESSOR</span><span class="w"> </span><span class="n">aarch64</span><span class="p">)</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_C_COMPILER</span><span class="w"> </span><span class="n">aarch64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">-</span><span class="n">gcc</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_COMPILER</span><span class="w"> </span><span class="n">aarch64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">-</span><span class="n">g</span><span class="o">++</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">cmake_minimum_required</span><span class="p">(</span><span class="n">VERSION</span><span class="w"> </span><span class="mf">3.20</span><span class="p">)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="n">project</span><span class="p">(</span><span class="n">hello</span><span class="w"> </span><span class="n">LANGUAGES</span><span class="w"> </span><span class="n">CXX</span><span class="p">)</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="n">add_executable</span><span class="p">(</span><span class="n">hello</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">cpp</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">6</a></span>
+<span class="normal"><a href="#__codelineno-14-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="p">{</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello ARM64</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build-arm<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">    </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>cmake/toolchain-aarch64.cmake
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build-arm
+</code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">modern cmake</p>
+<p>Modern CMake describes targets and their usage requirements instead of
+setting global compiler flags or include paths. Prefer commands such as
+<code>add_library</code>, <code>add_executable</code>, <code>target_link_libraries</code>, and
+<code>target_include_directories</code>, with <code>PRIVATE</code>, <code>PUBLIC</code>, or <code>INTERFACE</code> to
+control which requirements are propagated to dependent targets.</p>
+<p>Use CMake's separate workflow commands for each stage:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build<span class="w">                         </span><span class="c1"># Configure and generate</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w">                         </span><span class="c1"># Compile</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>cmake<span class="w"> </span>--install<span class="w"> </span>build<span class="w"> </span>--prefix<span class="w"> </span>./install<span class="w">    </span><span class="c1"># Install</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build<span class="w"> </span>--output-on-failure<span class="w">  </span><span class="c1"># Run tests</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<hr />
+<p>Useful compilers for other architecture targets:</p>
 <table>
 <thead>
 <tr>
@@ -1025,57 +1131,58 @@
 </tr>
 </tbody>
 </table>
+<hr />
 <h2 id="install-musl-cross-compiler-from-muslcc">Install musl cross compiler from musl.cc</h2>
-<p><a href="https://musl.cc/">musl.cc</a> provides prebuilt musl toolchains. It is a community source, not the official musl project.</p>
+<p>The site <a href="https://musl.cc/">musl.cc</a> provides prebuilt musl toolchains. It is a community source, not the official musl project.</p>
 <p>Choose the archive by the target CPU, not by the host CPU.</p>
 <p>For an x86_64 Ubuntu host building for AArch64 Linux, use:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>aarch64-linux-musl-cross.tgz
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>aarch64-linux-musl-cross.tgz
 </code></pre></div></td></tr></table></div>
 <p>Do not use this unless the target is x86_64 Linux with musl:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>x86_64-linux-musl-cross.tgz
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>x86_64-linux-musl-cross.tgz
 </code></pre></div></td></tr></table></div>
 <p>Download and install in <code>/opt</code>:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
-<span class="normal"><a href="#__codelineno-13-2">2</a></span>
-<span class="normal"><a href="#__codelineno-13-3">3</a></span>
-<span class="normal"><a href="#__codelineno-13-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="nb">cd</span><span class="w"> </span>/tmp
-<a id="__codelineno-13-2" name="__codelineno-13-2"></a>wget<span class="w"> </span>https://musl.cc/aarch64-linux-musl-cross.tgz
-<a id="__codelineno-13-3" name="__codelineno-13-3"></a>tar<span class="w"> </span>-xf<span class="w"> </span>aarch64-linux-musl-cross.tgz
-<a id="__codelineno-13-4" name="__codelineno-13-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>aarch64-linux-musl-cross<span class="w"> </span>/opt/
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="nb">cd</span><span class="w"> </span>/tmp
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a>wget<span class="w"> </span>https://musl.cc/aarch64-linux-musl-cross.tgz
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a>tar<span class="w"> </span>-xf<span class="w"> </span>aarch64-linux-musl-cross.tgz
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>aarch64-linux-musl-cross<span class="w"> </span>/opt/
 </code></pre></div></td></tr></table></div>
 <p>Add it to the shell path:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
-<span class="normal"><a href="#__codelineno-14-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=/opt/aarch64-linux-musl-cross/bin:$PATH&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
-<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=/opt/aarch64-linux-musl-cross/bin:$PATH&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
 </code></pre></div></td></tr></table></div>
 <p>Verify:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
-<span class="normal"><a href="#__codelineno-15-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>which<span class="w"> </span>aarch64-linux-musl-g++
-<a id="__codelineno-15-2" name="__codelineno-15-2"></a>aarch64-linux-musl-g++<span class="w"> </span>--version
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>which<span class="w"> </span>aarch64-linux-musl-g++
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a>aarch64-linux-musl-g++<span class="w"> </span>--version
 </code></pre></div></td></tr></table></div>
 <h2 id="build-with-musl-cross-compiler">Build with musl cross compiler</h2>
 <p>Dynamic musl build:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
-<span class="normal"><a href="#__codelineno-16-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>aarch64-linux-musl-g++<span class="w"> </span>code/hello.cpp<span class="w"> </span>-o<span class="w"> </span>hello-aarch64-musl-dynamic
-<a id="__codelineno-16-2" name="__codelineno-16-2"></a>file<span class="w"> </span>hello-aarch64-musl-dynamic
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>aarch64-linux-musl-g++<span class="w"> </span>code/hello.cpp<span class="w"> </span>-o<span class="w"> </span>hello-aarch64-musl-dynamic
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a>file<span class="w"> </span>hello-aarch64-musl-dynamic
 </code></pre></div></td></tr></table></div>
 <p>Static musl build:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
-<span class="normal"><a href="#__codelineno-17-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>aarch64-linux-musl-g++<span class="w"> </span>-static<span class="w"> </span>code/hello.cpp<span class="w"> </span>-o<span class="w"> </span>hello-aarch64-musl-static
-<a id="__codelineno-17-2" name="__codelineno-17-2"></a>file<span class="w"> </span>hello-aarch64-musl-static
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>aarch64-linux-musl-g++<span class="w"> </span>-static<span class="w"> </span>code/hello.cpp<span class="w"> </span>-o<span class="w"> </span>hello-aarch64-musl-static
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a>file<span class="w"> </span>hello-aarch64-musl-static
 </code></pre></div></td></tr></table></div>
 <p>Static musl binaries are useful for embedded targets because they do not require the target root filesystem to provide matching shared libc files.</p>
 <h2 id="test-aarch64-binary-on-x86_64-host">Test AArch64 binary on x86_64 host</h2>
 <p>Install QEMU user emulation:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
-<span class="normal"><a href="#__codelineno-18-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
-<a id="__codelineno-18-2" name="__codelineno-18-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-user
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-user
 </code></pre></div></td></tr></table></div>
 <p>Run the static binary:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>qemu-aarch64<span class="w"> </span>./hello-aarch64-musl-static
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a>qemu-aarch64<span class="w"> </span>./hello-aarch64-musl-static
 </code></pre></div></td></tr></table></div>
 <p>Expected output:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>hello toolchain
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a>hello toolchain
 </code></pre></div></td></tr></table></div>
 
 
