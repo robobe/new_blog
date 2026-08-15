@@ -719,6 +719,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-in-the-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What in the package
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#glibc-vs-musl" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -780,10 +791,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-musl-cross-compiler-from-muslcc" class="md-nav__link">
+  <a href="#install-musl-cross-compiler-from-muslcc-web-site" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install musl cross compiler from musl.cc
+        Install musl cross compiler from musl.cc web site
       
     </span>
   </a>
@@ -798,6 +809,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Build with musl cross compiler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-using-musl-with-cmake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: using musl with cmake
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -956,6 +984,104 @@
 <span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>file<span class="w"> </span>hello-static
 <a id="__codelineno-4-2" name="__codelineno-4-2"></a>ldd<span class="w"> </span>hello-static
 </code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="what-in-the-package">What in the package</h2>
+<p>A compiler or cross-compiler package usually contains several programs. Cross
+tools use a target prefix such as <code>aarch64-linux-gnu-</code> or
+<code>aarch64-linux-musl-</code>; native tools normally have no prefix.</p>
+<table>
+<thead>
+<tr>
+<th>Binary</th>
+<th>Short description</th>
+<th>Role in the build process</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*-gcc</code> / <code>*-cc</code></td>
+<td>C compiler driver</td>
+<td>Preprocesses and compiles C, then calls the assembler and linker when needed.</td>
+</tr>
+<tr>
+<td><code>*-g++</code> / <code>*-c++</code></td>
+<td>C++ compiler driver</td>
+<td>Compiles C++ and automatically links the C++ standard library.</td>
+</tr>
+<tr>
+<td><code>*-cpp</code></td>
+<td>C preprocessor</td>
+<td>Expands headers, macros, and conditional compilation directives.</td>
+</tr>
+<tr>
+<td><code>*-as</code></td>
+<td>Assembler</td>
+<td>Converts assembly source into object files.</td>
+</tr>
+<tr>
+<td><code>*-ld</code></td>
+<td>Linker</td>
+<td>Combines object files and libraries into an executable or shared library.</td>
+</tr>
+<tr>
+<td><code>*-ar</code></td>
+<td>Archive manager</td>
+<td>Creates and updates static libraries such as <code>libexample.a</code>.</td>
+</tr>
+<tr>
+<td><code>*-ranlib</code></td>
+<td>Archive indexer</td>
+<td>Adds or refreshes the symbol index in a static library.</td>
+</tr>
+<tr>
+<td><code>*-nm</code></td>
+<td>Symbol viewer</td>
+<td>Lists symbols defined or referenced by object files and binaries.</td>
+</tr>
+<tr>
+<td><code>*-objcopy</code></td>
+<td>Object-file converter</td>
+<td>Copies or converts object formats and can produce raw binary or Intel HEX images.</td>
+</tr>
+<tr>
+<td><code>*-objdump</code></td>
+<td>Object-file inspector</td>
+<td>Displays headers, symbols, sections, and disassembled machine code.</td>
+</tr>
+<tr>
+<td><code>*-readelf</code></td>
+<td>ELF inspector</td>
+<td>Displays ELF headers, sections, segments, symbols, and dependencies.</td>
+</tr>
+<tr>
+<td><code>*-strip</code></td>
+<td>Debug-symbol remover</td>
+<td>Reduces the size of the final binary by removing symbols and debug data.</td>
+</tr>
+<tr>
+<td><code>*-size</code></td>
+<td>Section-size reporter</td>
+<td>Shows the code, data, and BSS sizes of an object file or executable.</td>
+</tr>
+<tr>
+<td><code>*-strings</code></td>
+<td>Printable-text finder</td>
+<td>Extracts readable strings from object files and binaries.</td>
+</tr>
+<tr>
+<td><code>*-addr2line</code></td>
+<td>Address lookup tool</td>
+<td>Maps machine-code addresses back to source files and line numbers.</td>
+</tr>
+<tr>
+<td><code>*-c++filt</code></td>
+<td>C++ symbol demangler</td>
+<td>Converts encoded C++ symbol names into readable names.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>*</code> represents the target prefix. For example,
+<code>aarch64-linux-musl-g++</code> creates AArch64 Linux programs that use musl.</p>
 <hr />
 <h2 id="glibc-vs-musl">glibc vs musl</h2>
 <p>The C standard library (libc) provides programs with common functions for memory allocation, file and network I/O, string handling, and process management. It also acts as the main interface between most C programs and the Linux kernel, so the libc used by a toolchain affects compatibility, binary size, and deployment requirements.</p>
@@ -1132,7 +1258,7 @@ control which requirements are propagated to dependent targets.</p>
 </tbody>
 </table>
 <hr />
-<h2 id="install-musl-cross-compiler-from-muslcc">Install musl cross compiler from musl.cc</h2>
+<h2 id="install-musl-cross-compiler-from-muslcc-web-site">Install musl cross compiler from musl.cc web site</h2>
 <p>The site <a href="https://musl.cc/">musl.cc</a> provides prebuilt musl toolchains. It is a community source, not the official musl project.</p>
 <p>Choose the archive by the target CPU, not by the host CPU.</p>
 <p>For an x86_64 Ubuntu host building for AArch64 Linux, use:</p>
@@ -1160,6 +1286,7 @@ control which requirements are propagated to dependent targets.</p>
 <span class="normal"><a href="#__codelineno-22-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>which<span class="w"> </span>aarch64-linux-musl-g++
 <a id="__codelineno-22-2" name="__codelineno-22-2"></a>aarch64-linux-musl-g++<span class="w"> </span>--version
 </code></pre></div></td></tr></table></div>
+<hr />
 <h2 id="build-with-musl-cross-compiler">Build with musl cross compiler</h2>
 <p>Dynamic musl build:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
@@ -1172,17 +1299,85 @@ control which requirements are propagated to dependent targets.</p>
 <a id="__codelineno-24-2" name="__codelineno-24-2"></a>file<span class="w"> </span>hello-aarch64-musl-static
 </code></pre></div></td></tr></table></div>
 <p>Static musl binaries are useful for embedded targets because they do not require the target root filesystem to provide matching shared libc files.</p>
+<h3 id="demo-using-musl-with-cmake">Demo: using musl with cmake</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span>
+<span class="normal"><a href="#__codelineno-25-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>├── build-musl
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a>├── cmake
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a>│   └── musl-toolchain.cmake
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a>├── CMakeLists.txt
+<a id="__codelineno-25-5" name="__codelineno-25-5"></a>└── main.cpp
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">main.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
+<span class="normal"><a href="#__codelineno-26-2">2</a></span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span>
+<span class="normal"><a href="#__codelineno-26-4">4</a></span>
+<span class="normal"><a href="#__codelineno-26-5">5</a></span>
+<span class="normal"><a href="#__codelineno-26-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello, musl!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span>
+<span class="normal"><a href="#__codelineno-27-3">3</a></span>
+<span class="normal"><a href="#__codelineno-27-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="n">cmake_minimum_required</span><span class="p">(</span><span class="n">VERSION</span><span class="w"> </span><span class="mf">3.16</span><span class="p">)</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a><span class="n">project</span><span class="p">(</span><span class="n">my_app</span><span class="w"> </span><span class="n">LANGUAGES</span><span class="w"> </span><span class="n">CXX</span><span class="p">)</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3"></a>
+<a id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="n">add_executable</span><span class="p">(</span><span class="n">my_app</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">cpp</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">cmake/musl-toolchain.cmake</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span>
+<span class="normal"><a href="#__codelineno-28-2">2</a></span>
+<span class="normal"><a href="#__codelineno-28-3">3</a></span>
+<span class="normal"><a href="#__codelineno-28-4">4</a></span>
+<span class="normal"><a href="#__codelineno-28-5">5</a></span>
+<span class="normal"><a href="#__codelineno-28-6">6</a></span>
+<span class="normal"><a href="#__codelineno-28-7">7</a></span>
+<span class="normal"><a href="#__codelineno-28-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_SYSTEM_NAME</span><span class="w"> </span><span class="n">Linux</span><span class="p">)</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_SYSTEM_PROCESSOR</span><span class="w"> </span><span class="n">aarch64</span><span class="p">)</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3"></a>
+<a id="__codelineno-28-4" name="__codelineno-28-4"></a><span class="n">find_program</span><span class="p">(</span><span class="n">MUSL_CC</span><span class="w"> </span><span class="n">aarch64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">musl</span><span class="o">-</span><span class="n">gcc</span><span class="w"> </span><span class="n">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5"></a><span class="n">find_program</span><span class="p">(</span><span class="n">MUSL_CXX</span><span class="w"> </span><span class="n">aarch64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">musl</span><span class="o">-</span><span class="n">g</span><span class="o">++</span><span class="w"> </span><span class="n">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_C_COMPILER</span><span class="w"> </span><span class="n">$</span><span class="p">{</span><span class="n">MUSL_CC</span><span class="p">})</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7"></a><span class="n">set</span><span class="p">(</span><span class="n">CMAKE_CXX_COMPILER</span><span class="w"> </span><span class="n">$</span><span class="p">{</span><span class="n">MUSL_CXX</span><span class="p">}</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition tip">
+<p class="admonition-title">find_program</p>
+<p>find_program() searches the system’s PATH for an executable and stores its full path in a CMake variable.</p>
+<p><code>find_program(MUSL_CC aarch64-linux-musl-gcc REQUIRED)</code></p>
+<ul>
+<li>MUSL_CC: variable receiving the executable path.</li>
+<li>aarch64-linux-musl-gcc: program to find.</li>
+<li>REQUIRED: stops configuration if it is not found.</li>
+</ul>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span>
+<span class="normal"><a href="#__codelineno-29-2">2</a></span>
+<span class="normal"><a href="#__codelineno-29-3">3</a></span>
+<span class="normal"><a href="#__codelineno-29-4">4</a></span>
+<span class="normal"><a href="#__codelineno-29-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-B<span class="w"> </span>build-musl<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2"></a><span class="w">    </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>cmake/musl-toolchain.cmake
+<a id="__codelineno-29-3" name="__codelineno-29-3"></a>
+<a id="__codelineno-29-4" name="__codelineno-29-4"></a><span class="c1"># build</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build-musl
+</code></pre></div></td></tr></table></div>
+<hr />
 <h2 id="test-aarch64-binary-on-x86_64-host">Test AArch64 binary on x86_64 host</h2>
 <p>Install QEMU user emulation:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
-<span class="normal"><a href="#__codelineno-25-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
-<a id="__codelineno-25-2" name="__codelineno-25-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-user
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span>
+<span class="normal"><a href="#__codelineno-30-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-30-2" name="__codelineno-30-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qemu-user
 </code></pre></div></td></tr></table></div>
 <p>Run the static binary:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a>qemu-aarch64<span class="w"> </span>./hello-aarch64-musl-static
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1"></a>qemu-aarch64<span class="w"> </span>./hello-aarch64-musl-static
 </code></pre></div></td></tr></table></div>
 <p>Expected output:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a>hello toolchain
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1"></a>hello toolchain
 </code></pre></div></td></tr></table></div>
 
 
