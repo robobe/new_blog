@@ -57,6 +57,31 @@ This setup keeps VS Code focused on the code by hiding space-consuming UI elemen
     Press `Ctrl+W`.
 
 ---
+## Custom key binding
+
+### Toggle Maximized Panel
+
+```
+View: Toggle Maximized Panel
+```
+
+Add custom `ctrl+shift+x` (the idea from terminator) to maximum the terminal view or the code view in group split
+
+
+```json title="keybinding.json"
+    {
+        "key": "ctrl+shift+x",
+        "command": "workbench.action.toggleMaximizedPanel",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+x",
+        "command": "workbench.action.toggleMaximizeEditorGroup",
+        "when": "editorTextFocus"
+    }
+```
+
+---
 
 ## Full screen and Zen Mode
 
@@ -84,3 +109,19 @@ Split the editor when you want to view or edit multiple files at the same time.
 | `Ctrl+1`, `Ctrl+2`, `Ctrl+3` | Focus the first, second, or third editor pane. |
 
 You can also open the Command Palette with `Ctrl+Shift+P` and run **View: Split Editor Right** or **View: Split Editor Down** to choose the split direction explicitly. After creating panes, use `Ctrl+1`, `Ctrl+2`, and so on to move between them without using the mouse.
+
+
+---
+
+## workbench color
+
+When working with multiple VS Code windows at once, using a different title bar color for each workspace makes them easier to distinguish.
+
+```json
+"workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#16115a",
+        "titleBar.activeForeground": "#FFFFFF",
+        "titleBar.inactiveBackground": "#2A2A2A",
+        "titleBar.inactiveForeground": "#CCCCCC"
+    },
+```
