@@ -7,7 +7,7 @@ tags:
     - keyboard navigation
 ---
 
-This setup keeps VS Code focused on the code by hiding space-consuming UI elements and relying on keyboard shortcuts for navigation. The settings below maximize the editor area, while the shortcut reference makes it easy to move between files, symbols, definitions, and tools without reaching for the mouse.
+This setup keeps VS Code focused on the **code** by hiding space-consuming UI elements and relying on **keyboard shortcuts** for navigation. The settings below maximize the editor area, while the shortcut reference makes it easy to move between files, symbols, definitions, and tools without reaching for the mouse.
 
 ```json
 {
@@ -20,7 +20,7 @@ This setup keeps VS Code focused on the code by hiding space-consuming UI elemen
 
     "window.menuBarVisibility": "compact",
 
-    "workbench.statusBar.visible": true,
+    "workbench.statusBar.visible": false,
     #When enabled, VS Code keeps the surrounding function/class/scope names visible at the top of the editor while you scroll down
     "editor.stickyScroll.enabled": false
 }

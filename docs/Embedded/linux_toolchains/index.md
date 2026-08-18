@@ -78,7 +78,35 @@ ldd hello-static
 
 ---
 
+## What in the package
 
+A compiler or cross-compiler package usually contains several programs. Cross
+tools use a target prefix such as `aarch64-linux-gnu-` or
+`aarch64-linux-musl-`; native tools normally have no prefix.
+
+| Binary | Short description | Role in the build process |
+|---|---|---|
+| `*-gcc` / `*-cc` | C compiler driver | Preprocesses and compiles C, then calls the assembler and linker when needed. |
+| `*-g++` / `*-c++` | C++ compiler driver | Compiles C++ and automatically links the C++ standard library. |
+| `*-cpp` | C preprocessor | Expands headers, macros, and conditional compilation directives. |
+| `*-as` | Assembler | Converts assembly source into object files. |
+| `*-ld` | Linker | Combines object files and libraries into an executable or shared library. |
+| `*-ar` | Archive manager | Creates and updates static libraries such as `libexample.a`. |
+| `*-ranlib` | Archive indexer | Adds or refreshes the symbol index in a static library. |
+| `*-nm` | Symbol viewer | Lists symbols defined or referenced by object files and binaries. |
+| `*-objcopy` | Object-file converter | Copies or converts object formats and can produce raw binary or Intel HEX images. |
+| `*-objdump` | Object-file inspector | Displays headers, symbols, sections, and disassembled machine code. |
+| `*-readelf` | ELF inspector | Displays ELF headers, sections, segments, symbols, and dependencies. |
+| `*-strip` | Debug-symbol remover | Reduces the size of the final binary by removing symbols and debug data. |
+| `*-size` | Section-size reporter | Shows the code, data, and BSS sizes of an object file or executable. |
+| `*-strings` | Printable-text finder | Extracts readable strings from object files and binaries. |
+| `*-addr2line` | Address lookup tool | Maps machine-code addresses back to source files and line numbers. |
+| `*-c++filt` | C++ symbol demangler | Converts encoded C++ symbol names into readable names. |
+
+The `*` represents the target prefix. For example,
+`aarch64-linux-musl-g++` creates AArch64 Linux programs that use musl.
+
+---
 
 ## glibc vs musl
 
@@ -238,7 +266,7 @@ Useful compilers for other architecture targets:
 
 ---
 
-## Install musl cross compiler from musl.cc
+## Install musl cross compiler from musl.cc web site
 
 The site [musl.cc](https://musl.cc/) provides prebuilt musl toolchains. It is a community source, not the official musl project.
 
@@ -279,6 +307,8 @@ which aarch64-linux-musl-g++
 aarch64-linux-musl-g++ --version
 ```
 
+---
+
 ## Build with musl cross compiler
 
 Dynamic musl build:
@@ -296,6 +326,64 @@ file hello-aarch64-musl-static
 ```
 
 Static musl binaries are useful for embedded targets because they do not require the target root filesystem to provide matching shared libc files.
+
+
+### Demo: using musl with cmake
+
+```
+├── build-musl
+├── cmake
+│   └── musl-toolchain.cmake
+├── CMakeLists.txt
+└── main.cpp
+```
+
+```cpp title="main.cpp"
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, musl!" << std::endl;
+    return 0;
+}
+```
+
+```c title="CMakeLists.txt"
+cmake_minimum_required(VERSION 3.16)
+project(my_app LANGUAGES CXX)
+
+add_executable(my_app main.cpp)
+```
+
+```c title="cmake/musl-toolchain.cmake"
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
+
+find_program(MUSL_CC aarch64-linux-musl-gcc REQUIRED)
+find_program(MUSL_CXX aarch64-linux-musl-g++ REQUIRED)
+set(CMAKE_C_COMPILER ${MUSL_CC})
+set(CMAKE_CXX_COMPILER ${MUSL_CXX}
+)
+```
+
+!!! tip "find_program"
+    find_program() searches the system’s PATH for an executable and stores its full path in a CMake variable.
+
+    `find_program(MUSL_CC aarch64-linux-musl-gcc REQUIRED)`
+
+    - MUSL_CC: variable receiving the executable path.
+    - aarch64-linux-musl-gcc: program to find.
+    - REQUIRED: stops configuration if it is not found.
+    
+
+```bash
+cmake -S . -B build-musl \
+    -DCMAKE_TOOLCHAIN_FILE=cmake/musl-toolchain.cmake
+
+# build
+cmake --build build-musl
+```
+
+---
 
 ## Test AArch64 binary on x86_64 host
 
