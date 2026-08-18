@@ -25,7 +25,7 @@
     
     
       
-        <title>Rockchip - Nodes and Pipes</title>
+        <title>Radxa zero 3w - Nodes and Pipes</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#install" class="md-skip">
+        <a href="#os" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Rockchip
+              Radxa zero 3w
             
           </span>
         </div>
@@ -684,15 +684,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install" class="md-nav__link">
+  <a href="#os" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install
+        OS
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Install">
+    <nav class="md-nav" aria-label="OS">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -765,6 +765,107 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="gpio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#40-pin-gpio-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        40-pin GPIO interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="40-pin GPIO interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-15-and-pin-multiplexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Function 1–5 and pin multiplexing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switch-a-pin-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Switch a pin function
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-uarts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enable uarts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enable uarts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enable-other-uarts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        enable other uart's
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="enable other uart&#39;s">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#demo-enable-uart9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: enable uart9
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -823,9 +924,9 @@
   
 
 
-  <h1>Rockchip</h1>
+  <h1>Radxa zero 3w</h1>
 
-<h2 id="install">Install</h2>
+<h2 id="os">OS</h2>
 <p>I try:</p>
 <ul>
 <li><a href="">armbian</a>: Base on ubuntu 24.04  </li>
@@ -904,8 +1005,590 @@
 </div>
 <hr />
 <h2 id="gpio">gpio</h2>
-<p><img alt="alt text" src="images/radxa_zero_3w.png" />
-<img alt="alt text" src="images/gpio_pinout.png" /></p>
+<p><a href="https://docs.radxa.com/en/zero/zero3/hardware-design/hardware-interface?utm_source=chatgpt.com">radxa document center</a></p>
+<p><img alt="alt text" src="images/radxa_zero_3w.png" /></p>
+<h3 id="40-pin-gpio-interface">40-pin GPIO interface</h3>
+<p>The header exposes power, ground, GPIO, UART, PWM, I2C, I2S, and SPI signals.
+Each signal can only use the alternate functions supported by its row.</p>
+<h4 id="function-15-and-pin-multiplexing">Function 1–5 and pin multiplexing</h4>
+<p><code>Function 1</code> through <code>Function 5</code> are the hardware roles available through the
+SoC's pin multiplexer, usually called <strong>pinmux</strong>. They are selector positions,
+not priority levels. Only one function can control a physical pin at a time.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function 1</td>
+<td>Normally the basic GPIO signal, such as <code>GPIO4_C3</code>.</td>
+</tr>
+<tr>
+<td>Function 2–5</td>
+<td>Alternate peripheral signals such as UART, I2C, SPI, PWM, or I2S.</td>
+</tr>
+<tr>
+<td>Empty cell</td>
+<td>That selector position is not available on the pin.</td>
+</tr>
+</tbody>
+</table>
+<p>For example, physical pin 19 can operate as <code>GPIO4_C3</code>, <code>SPI3_MOSI_M1</code>,
+<code>I2S3_SCLK_M1</code>, or <code>PWM15_IR_M1</code>. Selecting SPI disconnects the normal GPIO
+function from that pin and connects the SPI controller instead.</p>
+<h4 id="switch-a-pin-function">Switch a pin function</h4>
+<p>On an official Radxa OS image, first check whether Radxa provides an overlay
+for the required peripheral:</p>
+<ol>
+<li>Run <code>sudo rsetup</code>.</li>
+<li>Open <strong>Overlays</strong> -&gt; <strong>Manage overlays</strong>.</li>
+<li>Press Space to enable the desired UART, I2C, SPI, PWM, or other overlay.</li>
+<li>Disable any overlay that assigns a conflicting function to the same pins.</li>
+<li>Confirm the selection, exit <code>rsetup</code>, and reboot with <code>sudo reboot</code>.</li>
+</ol>
+<p>Available overlays depend on the board and OS image. Use <strong>View overlays info</strong>
+to inspect which physical pins an overlay configures. If the required mapping
+is not offered, create or adapt a device-tree overlay (<code>.dts</code>/<code>.dtbo</code>) and load
+it through <strong>Overlays</strong> -&gt; <strong>Install 3rd party overlay</strong>. See Radxa's
+<a href="https://docs.radxa.com/en/template/tcm/os-config/rsetup/devicetree">device-tree overlay instructions</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">GPIO level control is different from pinmux</p>
+<p>A GPIO command or library changes a pin's input/output direction and logic
+level after it is configured as GPIO. It does not turn the pin into UART,
+SPI, I2C, PWM, or I2S. Peripheral selection belongs in the device tree so
+the kernel can reserve the pins and bind the correct driver.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">I2C pull-up resistors</p>
+<p>Physical pins 3, 5, 27, and 28 have additional pull-up resistors for I2C.
+They may not behave normally when configured as general-purpose GPIOs.</p>
+</div>
+<style>
+.gpio-pin {
+    display: inline-block;
+    min-width: 2.2em;
+    padding: 0.1em 0.35em;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+}
+.gpio-pin-3v3 { background: #ffff00; color: black; }
+.gpio-pin-5v  { background: #ff0000; }
+.gpio-pin-gnd { background: #000000; }
+.gpio-pin-io  { background: #008000; }
+.gpio-pin-i2c { background: #0000ff; }
+</style>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">GPIO</th>
+<th>Function 5</th>
+<th>Function 4</th>
+<th>Function 3</th>
+<th>Function 2</th>
+<th>Function 1</th>
+<th style="text-align: right;">Pin</th>
+<th style="text-align: right;">Pin</th>
+<th>Function 1</th>
+<th>Function 2</th>
+<th>Function 3</th>
+<th>Function 4</th>
+<th>Function 5</th>
+<th style="text-align: right;">GPIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>+3.3 V</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-3v3">1</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-5v">2</span></td>
+<td>+5.0 V</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">32</td>
+<td></td>
+<td></td>
+<td></td>
+<td>UART3_RX_M0</td>
+<td>GPIO1_A0</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">3</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-5v">4</span></td>
+<td>+5.0 V</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">33</td>
+<td></td>
+<td></td>
+<td></td>
+<td>UART3_TX_M0</td>
+<td>GPIO1_A1</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">5</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">6</span></td>
+<td>GND</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">116</td>
+<td></td>
+<td>PWM14_M0</td>
+<td></td>
+<td></td>
+<td>GPIO3_C4</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">7</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">8</span></td>
+<td>GPIO0_D1</td>
+<td>UART2_TX_M0</td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr>
+<td style="text-align: right;"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>GND</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">9</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">10</span></td>
+<td>GPIO0_D0</td>
+<td>UART2_RX_M0</td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr>
+<td style="text-align: right;">97</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>GPIO3_A1</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">11</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">12</span></td>
+<td>GPIO3_A3</td>
+<td></td>
+<td></td>
+<td></td>
+<td>I2S3_SCLK_M0</td>
+<td style="text-align: right;">99</td>
+</tr>
+<tr>
+<td style="text-align: right;">98</td>
+<td></td>
+<td>I2S3_MCLK_M0</td>
+<td></td>
+<td></td>
+<td>GPIO3_A2</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">13</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">14</span></td>
+<td>GND</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">104</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>GPIO3_B0</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">15</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">16</span></td>
+<td>GPIO3_B1</td>
+<td>UART4_RX_M1</td>
+<td>PWM8_M0</td>
+<td></td>
+<td></td>
+<td style="text-align: right;">105</td>
+</tr>
+<tr>
+<td style="text-align: right;"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>+3.3 V</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-3v3">17</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">18</span></td>
+<td>GPIO3_B2</td>
+<td>UART4_TX_M1</td>
+<td>PWM9_M0</td>
+<td></td>
+<td></td>
+<td style="text-align: right;">106</td>
+</tr>
+<tr>
+<td style="text-align: right;">147</td>
+<td></td>
+<td>PWM15_IR_M1</td>
+<td>I2S3_SCLK_M1</td>
+<td>SPI3_MOSI_M1</td>
+<td>GPIO4_C3</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">19</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">20</span></td>
+<td>GND</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">149</td>
+<td>UART9_TX_M1</td>
+<td>PWM12_M1</td>
+<td>I2S3_SDO_M1</td>
+<td>SPI3_MISO_M1</td>
+<td>GPIO4_C5</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">21</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">22</span></td>
+<td>GPIO3_C1</td>
+<td></td>
+<td></td>
+<td></td>
+<td>I2S1_SDO2_M2</td>
+<td style="text-align: right;">113</td>
+</tr>
+<tr>
+<td style="text-align: right;">146</td>
+<td></td>
+<td>PWM14_M1</td>
+<td>I2S3_MCLK_M1</td>
+<td>SPI3_CLK_M1</td>
+<td>GPIO4_C2</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">23</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">24</span></td>
+<td>GPIO4_C6</td>
+<td>SPI3_CS0_M1</td>
+<td>PWM13_M1</td>
+<td>UART9_RX_M1</td>
+<td>I2S3_SDI_M1</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr>
+<td style="text-align: right;"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>GND</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">25</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">26</span></td>
+<td>NC</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">138</td>
+<td></td>
+<td>I2C4_SDA_M0</td>
+<td>I2S2_SDI_M1</td>
+<td></td>
+<td>GPIO4_B2</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-i2c">27</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-i2c">28</span></td>
+<td>GPIO4_B3</td>
+<td></td>
+<td></td>
+<td>I2C4_SCL_M0</td>
+<td>I2S2_SDO_M1</td>
+<td style="text-align: right;">139</td>
+</tr>
+<tr>
+<td style="text-align: right;">107</td>
+<td></td>
+<td>I2C5_SCL_M0</td>
+<td></td>
+<td></td>
+<td>GPIO3_B3</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">29</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">30</span></td>
+<td>GND</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">108</td>
+<td></td>
+<td>I2C5_SDA_M0</td>
+<td></td>
+<td></td>
+<td>GPIO3_B4</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">31</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">32</span></td>
+<td>GPIO3_C2</td>
+<td>UART5_TX_M1</td>
+<td></td>
+<td></td>
+<td>I2S1_SDO3_M2</td>
+<td style="text-align: right;">114</td>
+</tr>
+<tr>
+<td style="text-align: right;">115</td>
+<td>UART5_RX_M1</td>
+<td></td>
+<td>I2S1_SCLK_RX_M2</td>
+<td></td>
+<td>GPIO3_C3</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">33</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">34</span></td>
+<td>GND</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">100</td>
+<td></td>
+<td></td>
+<td>I2S3_LRCK_M0</td>
+<td></td>
+<td>GPIO3_A4</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">35</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">36</span></td>
+<td>GPIO3_A7</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;">103</td>
+</tr>
+<tr>
+<td style="text-align: right;">36</td>
+<td></td>
+<td></td>
+<td>I2S1_SCLK_RX_M0</td>
+<td></td>
+<td>GPIO1_A4</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">37</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">38</span></td>
+<td>GPIO3_A6</td>
+<td></td>
+<td></td>
+<td></td>
+<td>I2S3_SDI_M0</td>
+<td style="text-align: right;">102</td>
+</tr>
+<tr>
+<td style="text-align: right;"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>GND</td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-gnd">39</span></td>
+<td style="text-align: right;"><span class="gpio-pin gpio-pin-io">40</span></td>
+<td>GPIO3_A5</td>
+<td></td>
+<td></td>
+<td></td>
+<td>I2S3_SDO_M0</td>
+<td style="text-align: right;">101</td>
+</tr>
+</tbody>
+</table>
+<p>Pinout data adapted from the
+<a href="https://docs.radxa.com/en/zero/zero3/hardware-design/hardware-interface">Radxa ZERO 3 hardware interface documentation</a>,
+licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<h3 id="enable-uarts">Enable uarts</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>sudo<span class="w"> </span>rsetup
+</code></pre></div></td></tr></table></div>
+<p><img alt="" src="images/rsetup_uart3.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Don't forget to reboot</p>
+</div>
+<h4 id="check-it">Check it</h4>
+<p>jumper pin 3 to 5</p>
+<p>!!! tip Don't forget to jumper the pins</p>
+<p>and check it using minicom</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>minicom
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">run it</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>sudo<span class="w"> </span>minicom<span class="w"> </span>-D<span class="w"> </span>/dev/ttyS3<span class="w"> </span>-b<span class="w"> </span><span class="m">115200</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning">
+<p class="admonition-title">check minicom configuration</p>
+<p>Disable uart Hardware Flow Control</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>ctrl-a o
+</code></pre></div></td></tr></table></div>
+<p><img alt="" src="images/minicom_1.png" /></p>
+<p>Then press <code>f</code> 
+<img alt="" src="images/minicom_2.png" /></p>
+<ul>
+<li>Exit using <code>esc</code></li>
+<li>Press any key and get echo on screen</li>
+</ul>
+<h4 id="enable-other-uarts">enable other uart's</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Physical pin</th>
+<th>GPIO</th>
+<th>Alternate function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">3</td>
+<td>GPIO1_A0</td>
+<td><strong>UART3_RX_M0</strong></td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td>GPIO1_A1</td>
+<td><strong>UART3_TX_M0</strong></td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td>GPIO0_D1</td>
+<td>UART2_TX_M0</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td>GPIO0_D0</td>
+<td>UART2_RX_M0</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td>GPIO3_B1</td>
+<td>UART4_RX_M1</td>
+</tr>
+<tr>
+<td style="text-align: right;">18</td>
+<td>GPIO3_B2</td>
+<td>UART4_TX_M1</td>
+</tr>
+<tr>
+<td style="text-align: right;">21</td>
+<td>GPIO4_C5</td>
+<td>UART9_TX_M1</td>
+</tr>
+<tr>
+<td style="text-align: right;">24</td>
+<td>GPIO4_C6</td>
+<td>UART9_RX_M1</td>
+</tr>
+<tr>
+<td style="text-align: right;">32</td>
+<td>GPIO3_C2</td>
+<td>UART5_TX_M1</td>
+</tr>
+<tr>
+<td style="text-align: right;">33</td>
+<td>GPIO3_C3</td>
+<td>UART5_RX_M1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Uart linux device mapping</strong></p>
+<table>
+<thead>
+<tr>
+<th>RK3566 UART</th>
+<th>Linux device</th>
+<th>Zero 3W header pins</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UART2</td>
+<td><code>/dev/ttyS2</code></td>
+<td>TX <strong>8</strong>, RX <strong>10</strong></td>
+</tr>
+<tr>
+<td>UART3</td>
+<td><code>/dev/ttyS3</code></td>
+<td>RX <strong>3</strong>, TX <strong>5</strong></td>
+</tr>
+<tr>
+<td>UART4</td>
+<td><code>/dev/ttyS4</code></td>
+<td>RX <strong>16</strong>, TX <strong>18</strong></td>
+</tr>
+<tr>
+<td>UART5</td>
+<td><code>/dev/ttyS5</code></td>
+<td>TX <strong>32</strong>, RX <strong>33</strong></td>
+</tr>
+<tr>
+<td>UART9</td>
+<td><code>/dev/ttyS9</code></td>
+<td>TX <strong>21</strong>, RX <strong>24</strong></td>
+</tr>
+</tbody>
+</table>
+<h5 id="demo-enable-uart9">Demo: enable uart9</h5>
+<ul>
+<li>Run rsetup</li>
+<li>Manage overlays</li>
+<li>Enable uart9</li>
+<li>Save</li>
+<li>Reboot</li>
+</ul>
+<p><img alt="" src="images/rsetup-uart9.png" /></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">check after boot</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>ls -l /dev/ttyS*
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>crw-rw---- 1 root dialout 4, 65 Aug 18 16:43 /dev/ttyS1
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>crw-rw---- 1 root dialout 4, 67 Aug 18 16:43 /dev/ttyS3
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>crw-rw---- 1 root dialout 4, 73 Aug 18 16:43 /dev/ttyS9
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">minicom</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>sudo<span class="w"> </span>minicom<span class="w"> </span>-D<span class="w"> </span>/dev/ttyS9<span class="w"> </span>-b<span class="w"> </span><span class="m">115200</span>
+</code></pre></div></td></tr></table></div>
+<div class="admonition warning check minicom configuration">
+<p class="admonition-title">Warning</p>
+<p>Disable uart <code>Hardware Flow Control</code></p>
+<ul>
+<li><code>ctrl-a o</code></li>
+<li>select <strong>Serial port setup</strong></li>
+<li>press <code>f</code></li>
+</ul>
+</div>
+<div class="admonition tip add user to dialout">
+<p class="admonition-title">Tip</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>dialout<span class="w"> </span><span class="nv">$USER</span>
+</code></pre></div></td></tr></table></div>
+<p>boot or logout/login</p>
+<p>check using <code>id</code> command</p>
+</div>
 <hr />
 <h2 id="reference">Reference</h2>
 <ul>
