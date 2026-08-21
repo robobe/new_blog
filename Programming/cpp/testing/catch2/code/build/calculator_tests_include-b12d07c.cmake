@@ -1,0 +1,5 @@
+if(EXISTS "/home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build/calculator_tests_tests-b12d07c.cmake")
+  include("/home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build/calculator_tests_tests-b12d07c.cmake")
+else()
+  add_test(calculator_tests_NOT_BUILT-b12d07c calculator_tests_NOT_BUILT-b12d07c)
+endif()

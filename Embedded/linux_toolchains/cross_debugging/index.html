@@ -1,0 +1,2041 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Embedded/linux_toolchains/cross_debugging/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Remote cross-debugging with GDB and VS Code - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#remote-cross-debugging-with-gdb-and-vs-code" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Remote cross-debugging with GDB and VS Code
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Programming/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Programming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-remote-debugging-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How remote debugging works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-host-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install host tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-target-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install target tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-c-runtime-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check C++ runtime compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example project
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmake-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMake project
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-and-inspect-the-executable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build and inspect the executable
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-from-the-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug from the command line
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debug from the command line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-start-gdbserver-on-the-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Start gdbserver on the target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-open-the-matching-executable-in-gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Open the matching executable in GDB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-connect-stop-and-inspect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Connect, stop, and inspect
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#must-have-gdb-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Must-have GDB commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Must-have GDB commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source-breakpoints-and-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source, breakpoints, and execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variables-and-stack-frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables and stack frames
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#threads-memory-and-session-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threads, memory, and session control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automate-the-workflow-with-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automate the workflow with VS Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automate the workflow with VS Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-upload-and-server-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build, upload, and server tasks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugger-launch-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debugger launch configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-vs-code-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run the VS Code session
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attach-to-an-existing-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attach to an existing process
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#completion-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Completion checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">arm64</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">cross-compile</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">debugging</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">gdb</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">gdbserver</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">vscode</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+<h1 id="remote-cross-debugging-with-gdb-and-vs-code">Remote cross-debugging with GDB and VS Code</h1>
+<p>This tutorial builds a C++ program on an x86-64 Ubuntu/Debian host, runs it on
+an ARM64 Linux target, and debugs it remotely with <code>gdb-multiarch</code> and
+<code>gdbserver</code>. The command-line workflow comes first so that the VS Code
+automation is easy to understand rather than a collection of unexplained JSON.</p>
+<p>The Radxa ZERO 3 is used as the example target, but the same workflow applies
+to other ARM64 Linux boards with SSH access.</p>
+<p>By the end, you will be able to:</p>
+<ul>
+<li>explain which debugging components run on the host and target</li>
+<li>create an ARM64 Debug build with CMake</li>
+<li>deploy and debug the application from a GDB terminal</li>
+<li>inspect variables, stack frames, threads, memory, and breakpoints</li>
+<li>automate build, upload, and remote debugging with VS Code</li>
+<li>attach <code>gdbserver</code> to an already-running application</li>
+</ul>
+<p>The complete example is available in the
+<a href="https://github.com/robobe/new_blog/tree/master/docs/Embedded/linux_toolchains/cross_debugging/code"><code>code</code> directory</a>.</p>
+<h2 id="how-remote-debugging-works">How remote debugging works</h2>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Host["x86-64 development host"]
+        SRC["C++ source"]
+        ELF["Local ARM64 ELF&lt;br/&gt;debug symbols"]
+        GDB["gdb-multiarch&lt;br/&gt;or VS Code"]
+        SRC --&gt; ELF
+        ELF --&gt; GDB
+    end
+
+    subgraph Target["ARM64 Linux target"]
+        SERVER["gdbserver :1234"]
+        PROCESS["Deployed ARM64 process"]
+        SERVER --&gt;|controls| PROCESS
+    end
+
+    GDB &lt;--&gt;|"GDB remote protocol&lt;br/&gt;TCP 1234"| SERVER
+    ELF -. "scp over SSH" .-&gt; PROCESS</code></pre>
+<p>The target runs the application and <code>gdbserver</code>. The host runs
+<code>gdb-multiarch</code>, reads the source code, and uses the <strong>local</strong> ARM64 executable
+for debug symbols. The local executable must be the exact build deployed to
+the target; otherwise source lines, variables, and breakpoints may be wrong.</p>
+<p><code>gdbserver</code> is deliberately small. It controls the target process and sends
+register, memory, signal, and stop information to GDB, but it does not need a
+copy of the source tree.</p>
+<div class="admonition warning">
+<p class="admonition-title">Use a trusted development network</p>
+<p>The GDB remote protocol does not provide authentication or encryption.
+Do not expose port <code>1234</code> to the internet or an untrusted network. Restrict
+it with a firewall or use an SSH tunnel when debugging outside a trusted
+lab network.</p>
+</div>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This tutorial assumes:</p>
+<ul>
+<li>an x86-64 Ubuntu/Debian development host</li>
+<li>an ARM64 Linux target using glibc</li>
+<li>host-to-target SSH connectivity</li>
+<li>permission to install packages on both machines</li>
+</ul>
+<h3 id="install-host-tools">Install host tools</h3>
+<p>Install the build tools, ARM64 cross-compiler, debugger, and SSH client:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Development host</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span>cmake<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span>ninja-build<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span>g++-aarch64-linux-gnu<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span>gdb-multiarch<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span>openssh-client
+</code></pre></div></td></tr></table></div>
+<p>Install Visual Studio Code and these extensions for the VS Code section:</p>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">C/C++</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools">CMake Tools</a></li>
+</ul>
+<p>Verify the tools:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>aarch64-linux-gnu-g++<span class="w"> </span>--version
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>gdb-multiarch<span class="w"> </span>--version
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>cmake<span class="w"> </span>--version
+</code></pre></div></td></tr></table></div>
+<h3 id="install-target-tools">Install target tools</h3>
+<p>On the ARM64 target:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ARM64 target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gdbserver<span class="w"> </span>openssh-server
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>ssh
+</code></pre></div></td></tr></table></div>
+<p>Replace <code>USER</code> and <code>HOST</code> in this tutorial with the target login and address,
+then verify the connection and architecture from the host:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Development host</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>ssh<span class="w"> </span>USER@HOST<span class="w"> </span>uname<span class="w"> </span>-m
+</code></pre></div></td></tr></table></div>
+<p>Expected output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>aarch64
+</code></pre></div></td></tr></table></div>
+<p>This proves that SSH works and the target architecture matches the compiler
+prefix <code>aarch64-linux-gnu-</code>.</p>
+<h3 id="check-c-runtime-compatibility">Check C++ runtime compatibility</h3>
+<p>The compiler package is intentionally unversioned: the correct compiler is the
+one whose generated program is compatible with the target image. A sysroot or
+vendor SDK is preferable when the host distribution is newer than the target.</p>
+<p>Check the newest C++ ABI version supplied by the target:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ARM64 target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>strings<span class="w"> </span>/usr/lib/aarch64-linux-gnu/libstdc++.so.6<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^GLIBCXX_&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-V<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1
+</code></pre></div></td></tr></table></div>
+<p>After building, compare it with the executable requirement:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Development host</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>aarch64-linux-gnu-readelf<span class="w"> </span>--version-info<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">    </span>build/arm64-debug/remote_debug_demo<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;GLIBCXX_&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-V<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1
+</code></pre></div></td></tr></table></div>
+<p>The executable requirement must not be newer than the version provided by the
+target. If it is newer, select an older compatible cross-toolchain or use the
+target vendor's SDK. Do not replace the target's system <code>libstdc++.so.6</code> by
+copying an arbitrary host library.</p>
+<h2 id="example-project">Example project</h2>
+<p>The companion project has this structure:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>code/
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>├── .vscode/
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>│   ├── extensions.json
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>│   ├── launch.json
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>│   ├── settings.json
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>│   └── tasks.json
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>├── cmake/
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>│   └── toolchain-aarch64.cmake
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>├── src/
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>│   └── main.cpp
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>├── .gitignore
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>├── CMakeLists.txt
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>└── CMakePresets.json
+</code></pre></div></td></tr></table></div>
+<h3 id="application">Application</h3>
+<p>The value <code>answer</code> gives us a simple variable to inspect:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">src/main.cpp</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">answer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="c1">// Put a breakpoint here.</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello from the remote target. Answer: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">answer</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="cmake-project">CMake project</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakeLists.txt</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.20</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nb">project</span><span class="p">(</span><span class="s">remote_debug_demo</span><span class="w"> </span><span class="s">LANGUAGES</span><span class="w"> </span><span class="s">CXX</span><span class="p">)</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">remote_debug_demo</span><span class="w"> </span><span class="s">src/main.cpp</span><span class="p">)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="nb">target_compile_features</span><span class="p">(</span><span class="s">remote_debug_demo</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">cxx_std_17</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="nb">target_compile_options</span><span class="p">(</span><span class="s">remote_debug_demo</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">-Wall</span><span class="w"> </span><span class="s">-Wextra</span><span class="w"> </span><span class="s">-Wpedantic</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>The toolchain file declares a Linux ARM64 target and locates the unversioned
+cross-compiler:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">cmake/toolchain-aarch64.cmake</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_NAME</span><span class="w"> </span><span class="s">Linux</span><span class="p">)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_SYSTEM_PROCESSOR</span><span class="w"> </span><span class="s">aarch64</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nb">find_program</span><span class="p">(</span><span class="s">AARCH64_CXX</span><span class="w"> </span><span class="s">aarch64-linux-gnu-g++</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_COMPILER</span><span class="w"> </span><span class="s2">&quot;${AARCH64_CXX}&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>The Debug preset creates a separate build tree with debug information:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">CMakePresets.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span>
+<span class="normal"><a href="#__codelineno-11-21">21</a></span>
+<span class="normal"><a href="#__codelineno-11-22">22</a></span>
+<span class="normal"><a href="#__codelineno-11-23">23</a></span>
+<span class="normal"><a href="#__codelineno-11-24">24</a></span>
+<span class="normal"><a href="#__codelineno-11-25">25</a></span>
+<span class="normal"><a href="#__codelineno-11-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">  </span><span class="nt">&quot;cmakeMinimumRequired&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">    </span><span class="nt">&quot;major&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">    </span><span class="nt">&quot;minor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">    </span><span class="nt">&quot;patch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">  </span><span class="nt">&quot;configurePresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arm64-debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">      </span><span class="nt">&quot;displayName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ARM64 Debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="w">      </span><span class="nt">&quot;generator&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ninja&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">      </span><span class="nt">&quot;binaryDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${sourceDir}/build/arm64-debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">      </span><span class="nt">&quot;toolchainFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${sourceDir}/cmake/toolchain-aarch64.cmake&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="w">      </span><span class="nt">&quot;cacheVariables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">        </span><span class="nt">&quot;CMAKE_BUILD_TYPE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Debug&quot;</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a><span class="w">  </span><span class="nt">&quot;buildPresets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arm64-debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23"></a><span class="w">      </span><span class="nt">&quot;configurePreset&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arm64-debug&quot;</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="build-and-inspect-the-executable">Build and inspect the executable</h2>
+<p>Run from the companion <code>code/</code> directory:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>cmake<span class="w"> </span>--preset<span class="w"> </span>arm64-debug
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class="w"> </span>arm64-debug
+</code></pre></div></td></tr></table></div>
+<p>Verify its architecture and debug information:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>file<span class="w"> </span>build/arm64-debug/remote_debug_demo
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>aarch64-linux-gnu-readelf<span class="w"> </span>-S<span class="w"> </span>build/arm64-debug/remote_debug_demo<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;\.debug_(info|line)&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p><code>file</code> must report an ARM AArch64 executable that is not stripped, and
+<code>readelf</code> must list debug sections. This proves the host produced a debuggable
+target executable rather than a native x86-64 program.</p>
+<p>Upload and run it once before introducing the debugger:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>scp<span class="w"> </span>build/arm64-debug/remote_debug_demo<span class="w"> </span>USER@HOST:/tmp/
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>ssh<span class="w"> </span>USER@HOST<span class="w"> </span>/tmp/remote_debug_demo
+</code></pre></div></td></tr></table></div>
+<p>Expected output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>Hello from the remote target. Answer: 42
+</code></pre></div></td></tr></table></div>
+<p>If the application cannot run normally, fix deployment or ABI compatibility
+before debugging it.</p>
+<h2 id="debug-from-the-command-line">Debug from the command line</h2>
+<h3 id="1-start-gdbserver-on-the-target">1. Start gdbserver on the target</h3>
+<p>Open a target SSH terminal and run:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ARM64 target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>gdbserver<span class="w"> </span>:1234<span class="w"> </span>/tmp/remote_debug_demo
+</code></pre></div></td></tr></table></div>
+<p>Expected output includes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>Process /tmp/remote_debug_demo created; pid = ...
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>Listening on port 1234
+</code></pre></div></td></tr></table></div>
+<p>Leave this terminal open. The application is paused before its first
+instruction until a debugger connects.</p>
+<h3 id="2-open-the-matching-executable-in-gdb">2. Open the matching executable in GDB</h3>
+<p>From the companion project directory on the host:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Development host</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>gdb-multiarch<span class="w"> </span>build/arm64-debug/remote_debug_demo
+</code></pre></div></td></tr></table></div>
+<p>The argument is the local ARM64 executable containing source and symbols. Do
+not point GDB at the copy in <code>/tmp</code> on the target.</p>
+<h3 id="3-connect-stop-and-inspect">3. Connect, stop, and inspect</h3>
+<p>Enter these commands at the <code>(gdb)</code> prompt:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span>
+<span class="normal"><a href="#__codelineno-19-5">5</a></span>
+<span class="normal"><a href="#__codelineno-19-6">6</a></span>
+<span class="normal"><a href="#__codelineno-19-7">7</a></span>
+<span class="normal"><a href="#__codelineno-19-8">8</a></span>
+<span class="normal"><a href="#__codelineno-19-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>target remote HOST:1234
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a>break main
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a>continue
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a>next
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a>print answer
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a>info locals
+<a id="__codelineno-19-7" name="__codelineno-19-7"></a>backtrace
+<a id="__codelineno-19-8" name="__codelineno-19-8"></a>continue
+<a id="__codelineno-19-9" name="__codelineno-19-9"></a>quit
+</code></pre></div></td></tr></table></div>
+<p>What each command proves:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target remote HOST:1234</code></td>
+<td>Connects local GDB to <code>gdbserver</code>.</td>
+</tr>
+<tr>
+<td><code>break main</code></td>
+<td>Creates a breakpoint using the local symbols.</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>Runs the remote process until the breakpoint.</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td>Executes the current source line without entering called functions.</td>
+</tr>
+<tr>
+<td><code>print answer</code></td>
+<td>Evaluates the variable; the checkpoint value is <code>42</code>.</td>
+</tr>
+<tr>
+<td><code>info locals</code></td>
+<td>Lists local variables in the selected stack frame.</td>
+</tr>
+<tr>
+<td><code>backtrace</code></td>
+<td>Displays the active call stack.</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>Lets the target application finish.</td>
+</tr>
+<tr>
+<td><code>quit</code></td>
+<td>Closes GDB.</td>
+</tr>
+</tbody>
+</table>
+<p><code>gdbserver</code> normally exits when the application or debug session ends. Start
+it again before opening another session.</p>
+<h2 id="must-have-gdb-commands">Must-have GDB commands</h2>
+<h3 id="source-breakpoints-and-execution">Source, breakpoints, and execution</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>list</code></td>
+<td>Show source around the current line.</td>
+</tr>
+<tr>
+<td><code>break LOCATION</code></td>
+<td>Stop at a function, file and line, or address.</td>
+</tr>
+<tr>
+<td><code>tbreak LOCATION</code></td>
+<td>Create a breakpoint that deletes itself after one hit.</td>
+</tr>
+<tr>
+<td><code>condition N EXPR</code></td>
+<td>Stop at breakpoint <code>N</code> only when the expression is true.</td>
+</tr>
+<tr>
+<td><code>info breakpoints</code></td>
+<td>List breakpoints and watchpoints.</td>
+</tr>
+<tr>
+<td><code>disable N</code> / <code>enable N</code></td>
+<td>Temporarily disable or enable breakpoint <code>N</code>.</td>
+</tr>
+<tr>
+<td><code>delete N</code></td>
+<td>Remove breakpoint <code>N</code>.</td>
+</tr>
+<tr>
+<td><code>continue</code> or <code>c</code></td>
+<td>Resume execution until the next stop.</td>
+</tr>
+<tr>
+<td><code>next</code> or <code>n</code></td>
+<td>Execute one source line, stepping over function calls.</td>
+</tr>
+<tr>
+<td><code>step</code> or <code>s</code></td>
+<td>Execute one source line, entering function calls.</td>
+</tr>
+<tr>
+<td><code>finish</code></td>
+<td>Run until the current function returns.</td>
+</tr>
+<tr>
+<td><code>until LOCATION</code></td>
+<td>Run until a later source line or address.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="variables-and-stack-frames">Variables and stack frames</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>print EXPR</code> or <code>p EXPR</code></td>
+<td>Evaluate an expression or variable.</td>
+</tr>
+<tr>
+<td><code>display EXPR</code></td>
+<td>Print an expression automatically whenever execution stops.</td>
+</tr>
+<tr>
+<td><code>info locals</code></td>
+<td>Show local variables in the selected frame.</td>
+</tr>
+<tr>
+<td><code>info args</code></td>
+<td>Show function arguments in the selected frame.</td>
+</tr>
+<tr>
+<td><code>whatis EXPR</code></td>
+<td>Show the declared type of an expression.</td>
+</tr>
+<tr>
+<td><code>ptype TYPE</code></td>
+<td>Show the detailed definition of a type.</td>
+</tr>
+<tr>
+<td><code>set variable NAME=VALUE</code></td>
+<td>Change a program variable while stopped.</td>
+</tr>
+<tr>
+<td><code>backtrace</code> or <code>bt</code></td>
+<td>Show the call stack.</td>
+</tr>
+<tr>
+<td><code>frame N</code></td>
+<td>Select stack frame <code>N</code>.</td>
+</tr>
+<tr>
+<td><code>up</code> / <code>down</code></td>
+<td>Move through callers and callees in the stack.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="threads-memory-and-session-control">Threads, memory, and session control</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>info threads</code></td>
+<td>List all known threads.</td>
+</tr>
+<tr>
+<td><code>thread N</code></td>
+<td>Select thread <code>N</code>.</td>
+</tr>
+<tr>
+<td><code>thread apply all backtrace</code></td>
+<td>Print a stack trace for every thread.</td>
+</tr>
+<tr>
+<td><code>watch EXPR</code></td>
+<td>Stop when an expression is written and changes value.</td>
+</tr>
+<tr>
+<td><code>rwatch EXPR</code></td>
+<td>Stop when an expression is read.</td>
+</tr>
+<tr>
+<td><code>awatch EXPR</code></td>
+<td>Stop when an expression is read or written.</td>
+</tr>
+<tr>
+<td><code>x/16xb ADDRESS</code></td>
+<td>Examine 16 bytes of memory in hexadecimal.</td>
+</tr>
+<tr>
+<td><code>disassemble /m FUNCTION</code></td>
+<td>Show source lines mixed with assembly for a function.</td>
+</tr>
+<tr>
+<td><code>detach</code></td>
+<td>Disconnect while allowing an attached process to continue.</td>
+</tr>
+<tr>
+<td><code>kill</code></td>
+<td>Terminate the process controlled by <code>gdbserver</code>.</td>
+</tr>
+<tr>
+<td><code>quit</code></td>
+<td>Exit GDB; GDB asks what to do if the process is still active.</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>help COMMAND</code> inside GDB for the complete syntax of any command.</p>
+<h2 id="automate-the-workflow-with-vs-code">Automate the workflow with VS Code</h2>
+<p>VS Code uses the same executable, debugger, port, and GDB remote protocol. A
+pre-launch task performs three operations in order:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>Build ARM64 Debug -&gt; Upload to remote -&gt; Start remote gdbserver -&gt; Connect GDB
+</code></pre></div></td></tr></table></div>
+<h3 id="build-upload-and-server-tasks">Build, upload, and server tasks</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/tasks.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-21-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-21-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-21-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-21-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-21-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-21-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-21-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-21-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-21-10">10</a></span>
+<span class="normal"><a href="#__codelineno-21-11">11</a></span>
+<span class="normal"><a href="#__codelineno-21-12">12</a></span>
+<span class="normal"><a href="#__codelineno-21-13">13</a></span>
+<span class="normal"><a href="#__codelineno-21-14">14</a></span>
+<span class="normal"><a href="#__codelineno-21-15">15</a></span>
+<span class="normal"><a href="#__codelineno-21-16">16</a></span>
+<span class="normal"><a href="#__codelineno-21-17">17</a></span>
+<span class="normal"><a href="#__codelineno-21-18">18</a></span>
+<span class="normal"><a href="#__codelineno-21-19">19</a></span>
+<span class="normal"><a href="#__codelineno-21-20">20</a></span>
+<span class="normal"><a href="#__codelineno-21-21">21</a></span>
+<span class="normal"><a href="#__codelineno-21-22">22</a></span>
+<span class="normal"><a href="#__codelineno-21-23">23</a></span>
+<span class="normal"><a href="#__codelineno-21-24">24</a></span>
+<span class="normal"><a href="#__codelineno-21-25">25</a></span>
+<span class="normal"><a href="#__codelineno-21-26">26</a></span>
+<span class="normal"><a href="#__codelineno-21-27">27</a></span>
+<span class="normal"><a href="#__codelineno-21-28">28</a></span>
+<span class="normal"><a href="#__codelineno-21-29">29</a></span>
+<span class="normal"><a href="#__codelineno-21-30">30</a></span>
+<span class="normal"><a href="#__codelineno-21-31">31</a></span>
+<span class="normal"><a href="#__codelineno-21-32">32</a></span>
+<span class="normal"><a href="#__codelineno-21-33">33</a></span>
+<span class="normal"><a href="#__codelineno-21-34">34</a></span>
+<span class="normal"><a href="#__codelineno-21-35">35</a></span>
+<span class="normal"><a href="#__codelineno-21-36">36</a></span>
+<span class="normal"><a href="#__codelineno-21-37">37</a></span>
+<span class="normal"><a href="#__codelineno-21-38">38</a></span>
+<span class="normal"><a href="#__codelineno-21-39">39</a></span>
+<span class="normal"><a href="#__codelineno-21-40">40</a></span>
+<span class="normal"><a href="#__codelineno-21-41">41</a></span>
+<span class="normal"><a href="#__codelineno-21-42">42</a></span>
+<span class="normal"><a href="#__codelineno-21-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="w">  </span><span class="nt">&quot;tasks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Build ARM64 Debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cmake --preset arm64-debug &amp;&amp; cmake --build --preset arm64-debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8"></a><span class="w">      </span><span class="nt">&quot;group&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9"></a><span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10"></a><span class="w">        </span><span class="nt">&quot;isDefault&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$gcc&quot;</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upload to remote&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-16" name="__codelineno-21-16"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-17" name="__codelineno-21-17"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;scp build/arm64-debug/remote_debug_demo ${input:remoteUser}@${input:remoteHost}:/tmp/remote_debug_demo&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-18" name="__codelineno-21-18"></a><span class="w">      </span><span class="nt">&quot;dependsOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Build ARM64 Debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-19" name="__codelineno-21-19"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-21-20" name="__codelineno-21-20"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-21-21" name="__codelineno-21-21"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-21-22" name="__codelineno-21-22"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Start remote gdbserver&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-23" name="__codelineno-21-23"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-24" name="__codelineno-21-24"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ssh ${input:remoteUser}@${input:remoteHost} &#39;pkill -x gdbserver 2&gt;/dev/null || true; nohup gdbserver --once :1234 /tmp/remote_debug_demo &gt;/tmp/gdbserver.log 2&gt;&amp;1 &amp;&#39;&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-25" name="__codelineno-21-25"></a><span class="w">      </span><span class="nt">&quot;dependsOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Upload to remote&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-26" name="__codelineno-21-26"></a><span class="w">      </span><span class="nt">&quot;problemMatcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-21-27" name="__codelineno-21-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-21-28" name="__codelineno-21-28"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-21-29" name="__codelineno-21-29"></a><span class="w">  </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-21-30" name="__codelineno-21-30"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-21-31" name="__codelineno-21-31"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;remoteUser&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-32" name="__codelineno-21-32"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;promptString&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-33" name="__codelineno-21-33"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Remote SSH user&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-34" name="__codelineno-21-34"></a><span class="w">      </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;radxa&quot;</span>
+<a id="__codelineno-21-35" name="__codelineno-21-35"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-21-36" name="__codelineno-21-36"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-21-37" name="__codelineno-21-37"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;remoteHost&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-38" name="__codelineno-21-38"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;promptString&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-39" name="__codelineno-21-39"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Remote host or IP&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-40" name="__codelineno-21-40"></a><span class="w">      </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192.168.1.50&quot;</span>
+<a id="__codelineno-21-41" name="__codelineno-21-41"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-21-42" name="__codelineno-21-42"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-21-43" name="__codelineno-21-43"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dependsOn</code></td>
+<td>Forms the required build, upload, and server-start sequence.</td>
+</tr>
+<tr>
+<td><code>${input:remoteUser}</code></td>
+<td>Prompts for the target SSH account.</td>
+</tr>
+<tr>
+<td><code>${input:remoteHost}</code></td>
+<td>Prompts for the target address instead of hardcoding it.</td>
+</tr>
+<tr>
+<td><code>pkill -x gdbserver</code></td>
+<td>Removes a stale demo server before starting a new session.</td>
+</tr>
+<tr>
+<td><code>nohup ... &amp;</code></td>
+<td>Leaves <code>gdbserver</code> running after the SSH command returns.</td>
+</tr>
+<tr>
+<td><code>/tmp/gdbserver.log</code></td>
+<td>Captures target-side startup and error messages.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition caution">
+<p class="admonition-title">Dedicated development target</p>
+<p><code>pkill -x gdbserver</code> stops every process named <code>gdbserver</code> on the target.
+Use this automation only on a dedicated development target where it cannot
+interrupt another developer's debug session.</p>
+</div>
+<h3 id="debugger-launch-configuration">Debugger launch configuration</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">.vscode/launch.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-22-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-22-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-22-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-22-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-22-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-22-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-22-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-22-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-22-10">10</a></span>
+<span class="normal"><a href="#__codelineno-22-11">11</a></span>
+<span class="normal"><a href="#__codelineno-22-12">12</a></span>
+<span class="normal"><a href="#__codelineno-22-13">13</a></span>
+<span class="normal"><a href="#__codelineno-22-14">14</a></span>
+<span class="normal"><a href="#__codelineno-22-15">15</a></span>
+<span class="normal"><a href="#__codelineno-22-16">16</a></span>
+<span class="normal"><a href="#__codelineno-22-17">17</a></span>
+<span class="normal"><a href="#__codelineno-22-18">18</a></span>
+<span class="normal"><a href="#__codelineno-22-19">19</a></span>
+<span class="normal"><a href="#__codelineno-22-20">20</a></span>
+<span class="normal"><a href="#__codelineno-22-21">21</a></span>
+<span class="normal"><a href="#__codelineno-22-22">22</a></span>
+<span class="normal"><a href="#__codelineno-22-23">23</a></span>
+<span class="normal"><a href="#__codelineno-22-24">24</a></span>
+<span class="normal"><a href="#__codelineno-22-25">25</a></span>
+<span class="normal"><a href="#__codelineno-22-26">26</a></span>
+<span class="normal"><a href="#__codelineno-22-27">27</a></span>
+<span class="normal"><a href="#__codelineno-22-28">28</a></span>
+<span class="normal"><a href="#__codelineno-22-29">29</a></span>
+<span class="normal"><a href="#__codelineno-22-30">30</a></span>
+<span class="normal"><a href="#__codelineno-22-31">31</a></span>
+<span class="normal"><a href="#__codelineno-22-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="p">{</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ARM64 remote debug&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cppdbg&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7"></a><span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8"></a><span class="w">      </span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/build/arm64-debug/remote_debug_demo&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10"></a><span class="w">      </span><span class="nt">&quot;MIMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gdb&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11"></a><span class="w">      </span><span class="nt">&quot;miDebuggerPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/usr/bin/gdb-multiarch&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12"></a><span class="w">      </span><span class="nt">&quot;miDebuggerServerAddress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${input:remoteHost}:1234&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13"></a><span class="w">      </span><span class="nt">&quot;stopAtEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14"></a><span class="w">      </span><span class="nt">&quot;preLaunchTask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Start remote gdbserver&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15"></a><span class="w">      </span><span class="nt">&quot;setupCommands&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-22-17" name="__codelineno-22-17"></a><span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Enable GDB pretty-printing&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-18" name="__codelineno-22-18"></a><span class="w">          </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-enable-pretty-printing&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-19" name="__codelineno-22-19"></a><span class="w">          </span><span class="nt">&quot;ignoreFailures&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-22-20" name="__codelineno-22-20"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-22-21" name="__codelineno-22-21"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-22-22" name="__codelineno-22-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-22-23" name="__codelineno-22-23"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-22-24" name="__codelineno-22-24"></a><span class="w">  </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-22-25" name="__codelineno-22-25"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-22-26" name="__codelineno-22-26"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;remoteHost&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-27" name="__codelineno-22-27"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;promptString&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-28" name="__codelineno-22-28"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Remote host or IP&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-29" name="__codelineno-22-29"></a><span class="w">      </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192.168.1.50&quot;</span>
+<a id="__codelineno-22-30" name="__codelineno-22-30"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-22-31" name="__codelineno-22-31"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-22-32" name="__codelineno-22-32"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>program</code></td>
+<td>Supplies the matching local ARM64 executable and debug symbols.</td>
+</tr>
+<tr>
+<td><code>MIMode</code></td>
+<td>Tells the C/C++ extension to communicate with GDB through MI.</td>
+</tr>
+<tr>
+<td><code>miDebuggerPath</code></td>
+<td>Selects the host's multi-architecture GDB.</td>
+</tr>
+<tr>
+<td><code>miDebuggerServerAddress</code></td>
+<td>Connects GDB to port 1234 on the target.</td>
+</tr>
+<tr>
+<td><code>preLaunchTask</code></td>
+<td>Builds, uploads, and starts the server before GDB connects.</td>
+</tr>
+<tr>
+<td><code>stopAtEntry</code></td>
+<td>Leaves stopping behavior to the breakpoints you set.</td>
+</tr>
+</tbody>
+</table>
+<p>The host value is requested once by the task and again by the launch
+configuration; enter the same target address both times.</p>
+<h3 id="run-the-vs-code-session">Run the VS Code session</h3>
+<ol>
+<li>Open the companion <code>code/</code> directory in VS Code.</li>
+<li>Put a breakpoint on <code>const int answer = 6 * 7;</code> in <code>src/main.cpp</code>.</li>
+<li>Open <strong>Run and Debug</strong> and select <strong>ARM64 remote debug</strong>.</li>
+<li>Press <strong>F5</strong> and enter the remote user and host when prompted.</li>
+<li>When execution stops, confirm that <code>answer</code> appears in the Variables panel.</li>
+<li>Use <strong>Step Over</strong>, then continue the program.</li>
+</ol>
+<p>The resolved breakpoint and visible variable prove that VS Code connected to
+the target process while using the matching symbols and source on the host.</p>
+<h2 id="attach-to-an-existing-process">Attach to an existing process</h2>
+<p>Launch mode starts the application under <code>gdbserver</code>. Attach mode is useful
+when the process is already running.</p>
+<p>Find its PID on the target:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ARM64 target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>pgrep<span class="w"> </span>-a<span class="w"> </span>remote_debug_demo
+</code></pre></div></td></tr></table></div>
+<p>Attach <code>gdbserver</code>, replacing <code>PID</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ARM64 target</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>gdbserver<span class="w"> </span>--attach<span class="w"> </span>:1234<span class="w"> </span>PID
+</code></pre></div></td></tr></table></div>
+<p>Connect from the project directory on the host:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>gdb-multiarch<span class="w"> </span>build/arm64-debug/remote_debug_demo
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
+<span class="normal"><a href="#__codelineno-26-2">2</a></span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span>
+<span class="normal"><a href="#__codelineno-26-4">4</a></span>
+<span class="normal"><a href="#__codelineno-26-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a>target remote HOST:1234
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a>backtrace
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a>info threads
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a>detach
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a>quit
+</code></pre></div></td></tr></table></div>
+<p>Attaching may require the same user as the process, appropriate <code>ptrace</code>
+permissions, or root privileges. Prefer <code>detach</code> when the application must keep
+running; <code>kill</code> terminates it.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Diagnostic or fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Exec format error</code></td>
+<td>The executable architecture is wrong.</td>
+<td>Run <code>file build/arm64-debug/remote_debug_demo</code>; it must report AArch64.</td>
+</tr>
+<tr>
+<td><code>GLIBCXX_* not found</code></td>
+<td>The executable requires a newer target <code>libstdc++</code>.</td>
+<td>Compare the maximum required and provided <code>GLIBCXX_*</code> values; use a compatible toolchain or SDK.</td>
+</tr>
+<tr>
+<td><code>Connection timed out</code></td>
+<td>Routing or a firewall blocks TCP 1234.</td>
+<td>Check <code>ping HOST</code>, firewall rules, and that port 1234 is restricted to the trusted LAN.</td>
+</tr>
+<tr>
+<td><code>Connection refused</code></td>
+<td><code>gdbserver</code> is not listening or has exited.</td>
+<td>Restart it and inspect <code>/tmp/gdbserver.log</code>.</td>
+</tr>
+<tr>
+<td><code>Address already in use</code></td>
+<td>A stale server owns port 1234.</td>
+<td>On a dedicated target, run <code>pkill -x gdbserver</code>, then restart it.</td>
+</tr>
+<tr>
+<td>Breakpoint is pending or hollow</td>
+<td>Symbols are absent or source and target binaries differ.</td>
+<td>Rebuild the Debug preset, upload that exact file, and verify it is not stripped.</td>
+</tr>
+<tr>
+<td>Variables show <code>&lt;optimized out&gt;</code></td>
+<td>The program was built with optimization or without useful debug information.</td>
+<td>Use the Debug preset and confirm <code>.debug_info</code> exists.</td>
+</tr>
+<tr>
+<td>SSH requests a password during F5</td>
+<td>Passwordless SSH is not configured.</td>
+<td>Run <code>ssh-copy-id USER@HOST</code>, then verify <code>ssh USER@HOST true</code>.</td>
+</tr>
+<tr>
+<td>VS Code connects to the wrong host</td>
+<td>The two host prompts received different values.</td>
+<td>Enter the same address for the task and launch prompts.</td>
+</tr>
+</tbody>
+</table>
+<p>Useful target-side checks:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span>
+<span class="normal"><a href="#__codelineno-27-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a>pgrep<span class="w"> </span>-a<span class="w"> </span>gdbserver
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a>ss<span class="w"> </span>-ltnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;:1234&#39;</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3"></a>cat<span class="w"> </span>/tmp/gdbserver.log
+</code></pre></div></td></tr></table></div>
+<p>Useful host-side checks:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span>
+<span class="normal"><a href="#__codelineno-28-2">2</a></span>
+<span class="normal"><a href="#__codelineno-28-3">3</a></span>
+<span class="normal"><a href="#__codelineno-28-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a>file<span class="w"> </span>build/arm64-debug/remote_debug_demo
+<a id="__codelineno-28-2" name="__codelineno-28-2"></a>ssh<span class="w"> </span>USER@HOST<span class="w"> </span>file<span class="w"> </span>/tmp/remote_debug_demo
+<a id="__codelineno-28-3" name="__codelineno-28-3"></a>cmp<span class="w"> </span>build/arm64-debug/remote_debug_demo<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4"></a><span class="w">    </span>&lt;<span class="o">(</span>ssh<span class="w"> </span>USER@HOST<span class="w"> </span>cat<span class="w"> </span>/tmp/remote_debug_demo<span class="o">)</span>
+</code></pre></div></td></tr></table></div>
+<p>The final <code>cmp</code> command produces no output when the local and deployed files
+are identical.</p>
+<h2 id="completion-checklist">Completion checklist</h2>
+<ul>
+<li>The target reports <code>aarch64</code>.</li>
+<li>The executable is an AArch64 Debug build and is not stripped.</li>
+<li>The executable runs normally on the target before debugging.</li>
+<li>Command-line GDB stops at <code>main</code> and <code>print answer</code> displays <code>42</code>.</li>
+<li>VS Code builds, uploads, starts <code>gdbserver</code>, and resolves the breakpoint.</li>
+<li>Port 1234 is limited to a trusted development network.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://sourceware.org/gdb/current/onlinedocs/gdb.html/Remote-Debugging.html">Debugging Remote Programs with GDB</a></li>
+<li><a href="https://sourceware.org/gdb/current/onlinedocs/gdb.html/gdbserver-man.html"><code>gdbserver</code> manual</a></li>
+<li><a href="https://code.visualstudio.com/docs/cpp/cpp-debug">VS Code C++ debugging documentation</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>

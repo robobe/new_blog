@@ -1,0 +1,7 @@
+add_test( [==[add two numbers]==] /home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build/calculator_tests [==[add two numbers]==]  )
+set_tests_properties( [==[add two numbers]==] PROPERTIES WORKING_DIRECTORY /home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build)
+add_test( [==[divide two numbers]==] /home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build/calculator_tests [==[divide two numbers]==]  )
+set_tests_properties( [==[divide two numbers]==] PROPERTIES WORKING_DIRECTORY /home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build)
+add_test( [==[division by zero throws]==] /home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build/calculator_tests [==[division by zero throws]==]  )
+set_tests_properties( [==[division by zero throws]==] PROPERTIES WORKING_DIRECTORY /home/user/projects/new_blog/docs/Programming/cpp/testing/catch2/code/build)
+set( calculator_tests_TESTS [==[add two numbers]==] [==[divide two numbers]==] [==[division by zero throws]==])
