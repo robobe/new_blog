@@ -9,12 +9,18 @@ tags:
 # VSCode CPP dev environment
 
 <div class="grid-container">
-    <div class="grid-item">
-        <a href="#clang">
-        <p>Clang</p>
-        </a>
-    </div>
+  <div class="grid-item">
+      <a href="#clang">
+      <p>Clang</p>
+      </a>
   </div>
+  <div class="grid-item">
+      <a href="project_struct">
+      <p>Project / Multiple libraries</p>
+      </a>
+  </div>
+
+</div>
 
 
 ## Build

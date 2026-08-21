@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build ARM64 Debug",
+      "type": "shell",
+      "command": "cmake --preset arm64-debug && cmake --build --preset arm64-debug",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "Upload to remote",
+      "type": "shell",
+      "command": "scp build/arm64-debug/remote_debug_demo ${input:remoteUser}@${input:remoteHost}:/tmp/remote_debug_demo",
+      "dependsOn": "Build ARM64 Debug",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start remote gdbserver",
+      "type": "shell",
+      "command": "ssh ${input:remoteUser}@${input:remoteHost} 'pkill -x gdbserver 2>/dev/null || true; nohup gdbserver --once :1234 /tmp/remote_debug_demo >/tmp/gdbserver.log 2>&1 &'",
+      "dependsOn": "Upload to remote",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "remoteUser",
+      "type": "promptString",
+      "description": "Remote SSH user",
+      "default": "radxa"
+    },
+    {
+      "id": "remoteHost",
+      "type": "promptString",
+      "description": "Remote host or IP",
+      "default": "192.168.1.50"
+    }
+  ]
+}

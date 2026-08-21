@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ARM64 remote debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/arm64-debug/remote_debug_demo",
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb-multiarch",
+      "miDebuggerServerAddress": "${input:remoteHost}:1234",
+      "stopAtEntry": false,
+      "preLaunchTask": "Start remote gdbserver",
+      "setupCommands": [
+        {
+          "description": "Enable GDB pretty-printing",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "remoteHost",
+      "type": "promptString",
+      "description": "Remote host or IP",
+      "default": "192.168.1.50"
+    }
+  ]
+}

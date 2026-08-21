@@ -266,6 +266,21 @@ Useful compilers for other architecture targets:
 
 ---
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="build_with_rootfs">
+            <p>Cross compiler and ROOTFS</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="cross_debugging">
+            <p>Debug remote with gdb</p>
+        </a>
+    </div>
+</div>
+
+---
+
 ## Install musl cross compiler from musl.cc web site
 
 The site [musl.cc](https://musl.cc/) provides prebuilt musl toolchains. It is a community source, not the official musl project.

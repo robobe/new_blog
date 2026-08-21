@@ -21,9 +21,9 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="gtest">
+        <a href="testing/index.md">
             <img src="images/gtest.png" width="150" height="150">
-            <p>gtest</p>
+            <p>Testing</p>
         </a>
     </div>
     <div class="grid-item">

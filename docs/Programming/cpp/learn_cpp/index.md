@@ -262,7 +262,7 @@ find mistakes humans miss.
 | --- | --- | --- |
 | Assertions, exceptions, and error boundaries | Missing | Explain when to throw and when not to. |
 | Error values and `std::expected` | Missing | Cover C++23 `std::expected`. |
-| Unit tests and fixtures | Available | [GoogleTest](../gtest/index.md) |
+| Unit tests and fixtures | Available | [GoogleTest](../testing/gtest/index.md) |
 | Test design, integration tests, and fakes | Missing | Focus on behavior and failure paths. |
 | Undefined behavior | Missing | Cover lifetime, bounds, overflow, races, and invalid shifts. |
 | Address/Undefined/Thread sanitizers | Missing | Add compiler flags and failure examples. |

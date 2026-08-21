@@ -28,11 +28,11 @@ tags:
 Minimal gtest and CMakeList, for simplicity add the function on test to the test file
 
 ```cpp title="test/test_demo.cpp"
---8<-- "docs/Programming/cpp/gtest/code/test/test_demo.cpp"
+--8<-- "docs/Programming/cpp/testing/gtest/code/test/test_demo.cpp"
 ```
 
 ```cmake
---8<-- "docs/Programming/cpp/gtest/code/CMakeLists.txt"
+--8<-- "docs/Programming/cpp/testing/gtest/code/CMakeLists.txt"
 ```
 
 ### usage
