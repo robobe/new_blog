@@ -54,6 +54,8 @@ The ESC is the lower board with the large battery and motor pads. The flight con
 
 ![Top view of the F722 Mini flight controller and ESC](f722-mini-board-layout.webp)
 
+![alt text](images/minif722_pinout.png)
+
 *Product image from the [AliExpress listing](https://www.aliexpress.com/item/1005009474189574.html). Always follow the labels printed on the received board.*
 
 !!! warning "Verify before soldering"

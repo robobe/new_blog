@@ -48,4 +48,9 @@
                 <p>quaternion</p>
             </a>
     </div>
+    <div class="grid-item">
+        <a href="visual">
+            <p>Visual Navigation</p>
+        </a>
+    </div>
 </div>
