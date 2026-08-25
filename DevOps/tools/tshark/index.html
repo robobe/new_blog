@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/fpv/build_guide/build_5_inch/">
+        <link rel="canonical" href="https://robobe.github.io/DevOps/tools/tshark/">
       
       
       
@@ -20,19 +20,19 @@
         
       
       
-      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>5-inch FPV build — frame and flight stack - Nodes and Pipes</title>
+        <title>tshark - Filter and Display Packet Fields - Nodes and Pipes</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,13 +51,13 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../extra.css">
+      <link rel="stylesheet" href="../../../extra.css">
     
-      <link rel="stylesheet" href="../../../../../assets/mermaid-viewer.css">
+      <link rel="stylesheet" href="../../../assets/mermaid-viewer.css">
     
-      <link rel="stylesheet" href="../../../../../assets/cpp.css">
+      <link rel="stylesheet" href="../../../assets/cpp.css">
     
-    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#parts-used-in-this-stage" class="md-skip">
+        <a href="#install" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+    <a href="../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              5-inch FPV build — frame and flight stack
+              tshark - Filter and Display Packet Fields
             
           </span>
         </div>
@@ -206,7 +206,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -225,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../ROS/" class="md-tabs__link">
+      <a href="../../../ROS/" class="md-tabs__link">
         
   
   
@@ -244,7 +244,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Simulation/" class="md-tabs__link">
+      <a href="../../../Simulation/" class="md-tabs__link">
         
   
   
@@ -263,7 +263,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../" class="md-tabs__link">
+      <a href="../../../Robotics/" class="md-tabs__link">
         
   
   
@@ -282,7 +282,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Programming/" class="md-tabs__link">
+      <a href="../../../Programming/" class="md-tabs__link">
         
   
   
@@ -301,7 +301,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Embedded/" class="md-tabs__link">
+      <a href="../../../Embedded/" class="md-tabs__link">
         
   
   
@@ -320,7 +320,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../DevOps/" class="md-tabs__link">
+      <a href="../../" class="md-tabs__link">
         
   
   
@@ -339,7 +339,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../Other/" class="md-tabs__link">
+      <a href="../../../Other/" class="md-tabs__link">
         
   
   
@@ -358,7 +358,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../projects/" class="md-tabs__link">
+      <a href="../../../projects/" class="md-tabs__link">
         
   
   
@@ -393,7 +393,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+    <a href="../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -423,7 +423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -450,7 +450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../ROS/" class="md-nav__link">
+      <a href="../../../ROS/" class="md-nav__link">
         
   
   
@@ -477,7 +477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Simulation/" class="md-nav__link">
+      <a href="../../../Simulation/" class="md-nav__link">
         
   
   
@@ -504,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../" class="md-nav__link">
+      <a href="../../../Robotics/" class="md-nav__link">
         
   
   
@@ -531,7 +531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Programming/" class="md-nav__link">
+      <a href="../../../Programming/" class="md-nav__link">
         
   
   
@@ -558,7 +558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Embedded/" class="md-nav__link">
+      <a href="../../../Embedded/" class="md-nav__link">
         
   
   
@@ -585,7 +585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../DevOps/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -612,7 +612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Other/" class="md-nav__link">
+      <a href="../../../Other/" class="md-nav__link">
         
   
   
@@ -639,7 +639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../projects/" class="md-nav__link">
+      <a href="../../../projects/" class="md-nav__link">
         
   
   
@@ -684,10 +684,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#parts-used-in-this-stage" class="md-nav__link">
+  <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parts used in this stage
+        Install
       
     </span>
   </a>
@@ -695,54 +695,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#assemble-the-frame" class="md-nav__link">
+  <a href="#capture-mavlink-and-print-selected-fields" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Assemble the frame
+        Capture MAVLink and print selected fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capture MAVLink and print selected fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tcpdump-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        tcpdump options
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#inspect-and-dry-fit-the-flight-stack" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#tshark-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Inspect and dry-fit the flight stack
+        tshark options
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#connect-the-main-power-lead" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Connect the main power lead
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#checkpoint" class="md-nav__link">
+  <a href="#add-a-tshark-display-filter" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Checkpoint
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reference
+        Add a tshark display filter
       
     </span>
   </a>
@@ -770,21 +765,35 @@
       
       
       
-        <span class="md-tag">5-inch</span>
+        <span class="md-tag">mavlink</span>
       
     
       
       
       
       
-        <span class="md-tag">build</span>
+        <span class="md-tag">networking</span>
       
     
       
       
       
       
-        <span class="md-tag">fpv</span>
+        <span class="md-tag">tcpdump</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">tshark</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">wireshark</span>
       
     
   </nav>
@@ -794,79 +803,153 @@
   
 
 
-  <h1>5-inch FPV build — frame and flight stack</h1>
+  <h1>tshark - Filter and Display Packet Fields</h1>
 
-<p>This is a step-by-step build log for my first 5-inch FPV quad. This part covers assembling the Apex 5-inch frame, mounting the flight-controller stack, and connecting its main power lead.</p>
-<div class="admonition danger">
-<p class="admonition-title">Work without propellers</p>
-<p>Remove all propellers and keep the LiPo disconnected while assembling or soldering. Use a smoke stopper for the first battery connection.</p>
-</div>
-<h2 id="parts-used-in-this-stage">Parts used in this stage</h2>
+<p><code>tshark</code> is Wireshark's command-line packet analyzer. It uses the same protocol
+dissectors and display filters as Wireshark, but prints decoded packets in a
+terminal or a script-friendly table.</p>
+<h2 id="install">Install</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>tshark<span class="w"> </span>tcpdump
+</code></pre></div></td></tr></table></div>
+<h2 id="capture-mavlink-and-print-selected-fields">Capture MAVLink and print selected fields</h2>
+<p>This pipeline captures MAVLink UDP traffic on the loopback interface and sends
+it directly to <code>tshark</code> without creating a capture file:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>lo<span class="w"> </span>-nn<span class="w"> </span>-s<span class="w"> </span><span class="m">0</span><span class="w"> </span>-U<span class="w"> </span>-w<span class="w"> </span>-<span class="w"> </span><span class="s1">&#39;udp dst port 14550&#39;</span><span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span>tshark<span class="w"> </span>-l<span class="w"> </span>-r<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span>-d<span class="w"> </span>udp.port<span class="o">==</span><span class="m">14550</span>,mavlink_proto<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span>-T<span class="w"> </span>fields<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span>-e<span class="w"> </span>frame.time_relative<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span>-e<span class="w"> </span>mavlink_proto.msgid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span>-e<span class="w"> </span>_ws.col.Info<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span>-E<span class="w"> </span><span class="nv">header</span><span class="o">=</span>y<span class="w"> </span>-E<span class="w"> </span><span class="nv">separator</span><span class="o">=</span>/t
+</code></pre></div></td></tr></table></div>
+<p>The pipe separates capture from decoding:</p>
 <ul>
-<li><a href="https://www.aliexpress.com/item/1005007050176242.html">Apex 5-inch frame</a></li>
-<li><a href="https://www.aliexpress.com/item/1005009474189574.html">JiJieFPV F722 Mini 20×20 mm FC and ESC stack</a></li>
-<li>XT60 battery lead and capacitor supplied with the stack</li>
-<li>Hex drivers, soldering iron, solder, flux, heat-shrink, multimeter, and smoke stopper</li>
+<li><code>tcpdump</code> captures only UDP packets whose destination port is <code>14550</code>.</li>
+<li><code>tshark</code> decodes those packets as MAVLink and prints the requested fields.</li>
 </ul>
-<p>The AliExpress stack listing contains several ESC variants. Check the exact option in the order details and the markings on the received boards before choosing a battery. Do not use the product title alone as the electrical specification.</p>
-<h2 id="assemble-the-frame">Assemble the frame</h2>
-<p><img alt="Apex 5-inch frame assembly schematic" src="image.png" /></p>
-<ol>
-<li>Lay out the four arms, bottom plates, top plate, standoffs, camera plates, and screws. Compare them with the assembly schematic before tightening anything.</li>
-<li>Place the arms between the center plates and install their screws loosely. Confirm that every arm is fully seated and that the frame lies flat.</li>
-<li>Install the front and rear printed parts, side plates, and standoffs.</li>
-<li>Tighten the frame gradually, alternating between screws. Use threadlocker only where a metal screw enters metal; threadlocker can damage plastic.</li>
-<li>Check the carbon-fibre edges for loose fibres or sharp spots, then remove conductive carbon dust from the frame.</li>
-<li>Leave the top plate off so the electronics remain accessible.</li>
-</ol>
-<p><img alt="Assembled Apex 5-inch frame" src="image-1.png" /></p>
-<p>Before continuing, confirm that the arms cannot move and that no screw protrudes into the battery or electronics area.</p>
-<h2 id="inspect-and-dry-fit-the-flight-stack">Inspect and dry-fit the flight stack</h2>
-<p><img alt="JiJieFPV F722 Mini flight-controller and ESC stack" src="f722-mini-stack.webp" /></p>
-<p><em>Product image from the <a href="https://www.aliexpress.com/item/1005009474189574.html">AliExpress listing</a>.</em></p>
-<p>The ESC is the lower board with the large battery and motor pads. The flight controller is the upper board with the USB connector and small signal pads.</p>
-<ol>
-<li>Inspect both boards for damaged components, solder splashes, or bent connectors.</li>
-<li>Find the frame's 20×20 mm mounting pattern and dry-fit the supplied screws and soft grommets. Do not drill the carbon or force the stack onto a different pattern.</li>
-<li>Put the ESC on the bottom and the flight controller above it. Keep both boards clear of the conductive carbon frame.</li>
-<li>Point the flight-controller arrow toward the front when practical and keep the USB connector accessible. If the board must face another direction, record the rotation for the later Betaflight setup.</li>
-<li>Check that the battery lead can exit the frame without touching an arm or propeller.</li>
-<li>Tighten the stack nuts only enough to remove play. Do not crush the soft vibration-isolation grommets.</li>
-</ol>
-<h2 id="connect-the-main-power-lead">Connect the main power lead</h2>
-<p><img alt="Top view of the F722 Mini flight controller and ESC" src="f722-mini-board-layout.webp" /></p>
-<p><img alt="alt text" src="images/minif722_pinout.png" /></p>
-<p><em>Product image from the <a href="https://www.aliexpress.com/item/1005009474189574.html">AliExpress listing</a>. Always follow the labels printed on the received board.</em></p>
-<div class="admonition warning">
-<p class="admonition-title">Verify before soldering</p>
-<p>Variants in this listing have different ESC and voltage ratings. Confirm the purchased variant and capacitor voltage from the order details or included documentation. The steps below identify polarity but do not establish a safe battery-cell count.</p>
-</div>
-<ol>
-<li>Remove the stack from the carbon frame before soldering.</li>
-<li>On the ESC, identify the large battery pads marked <code>+</code> and <code>−</code>. Verify the markings on the physical board, not only in the image.</li>
-<li>Cut the XT60 lead only as long as needed, then slide on any required heat-shrink before soldering.</li>
-<li>Tin the ESC battery pads and the stripped wire ends. Solder the red wire to <code>+</code> and the black wire to <code>−</code>.</li>
-<li>Solder the capacitor across the same pads with short leads. Connect its <code>−</code> lead—the side marked with a stripe—to the ESC <code>−</code> pad.</li>
-<li>Inspect for solder bridges, loose wire strands, and joints that can touch the frame. Insulate exposed connections where necessary.</li>
-<li>With no battery connected, use a multimeter to confirm there is no hard short between the ESC <code>+</code> and <code>−</code> pads. A resistance reading may start low while the capacitor charges, but it must not remain near zero.</li>
-<li>Reinstall the stack and connect the FC-to-ESC harness only after comparing the pin labels at both ends. A plug fitting mechanically does not prove that its pin order is correct.</li>
-<li>Recheck polarity, keep the propellers removed, and make the first battery connection through a smoke stopper. Disconnect immediately if it trips, a component heats up, or anything smells abnormal.</li>
-</ol>
-<h2 id="checkpoint">Checkpoint</h2>
-<p>At the end of this stage:</p>
-<ul>
-<li>the frame is rigid and the top plate is still removable;</li>
-<li>the stack cannot touch the carbon frame;</li>
-<li>the USB connector and battery lead are accessible;</li>
-<li>the XT60 lead and capacitor have correct polarity;</li>
-<li>there is no measured hard short across the battery input; and</li>
-<li>first power-up succeeds through a smoke stopper.</li>
-</ul>
-<h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://youtu.be/Q8BfHbKZXsw">How to assemble the Apex frame</a></li>
-</ul>
-<p>The next stage is motor installation and wiring.</p>
+<h3 id="tcpdump-options">tcpdump options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i lo</code></td>
+<td>Capture on the loopback interface. Replace <code>lo</code> with the required interface.</td>
+</tr>
+<tr>
+<td><code>-nn</code></td>
+<td>Do not resolve host names or service names.</td>
+</tr>
+<tr>
+<td><code>-s 0</code></td>
+<td>Capture each complete packet instead of truncating it.</td>
+</tr>
+<tr>
+<td><code>-U</code></td>
+<td>Write each packet to the pipe immediately.</td>
+</tr>
+<tr>
+<td><code>-w -</code></td>
+<td>Write pcap data to standard output.</td>
+</tr>
+<tr>
+<td><code>'udp dst port 14550'</code></td>
+<td>BPF capture filter: keep only UDP packets sent to port <code>14550</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tshark-options">tshark options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-l</code></td>
+<td>Flush each output line immediately.</td>
+</tr>
+<tr>
+<td><code>-r -</code></td>
+<td>Read pcap data from standard input.</td>
+</tr>
+<tr>
+<td><code>-d udp.port==14550,mavlink_proto</code></td>
+<td>Decode UDP port <code>14550</code> as MAVLink.</td>
+</tr>
+<tr>
+<td><code>-T fields</code></td>
+<td>Print a table containing only selected fields.</td>
+</tr>
+<tr>
+<td><code>-e FIELD</code></td>
+<td>Add one field as an output column; repeat it for more columns.</td>
+</tr>
+<tr>
+<td><code>-E header=y</code></td>
+<td>Print the field names as a header row.</td>
+</tr>
+<tr>
+<td><code>-E separator=/t</code></td>
+<td>Separate columns with a tab.</td>
+</tr>
+</tbody>
+</table>
+<p>The example prints elapsed capture time, MAVLink message ID, and Wireshark's
+Info column. Add or remove <code>-e</code> arguments to control the output:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>-e<span class="w"> </span>frame.time_relative<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>-e<span class="w"> </span>mavlink_proto.sysid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>-e<span class="w"> </span>mavlink_proto.compid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>-e<span class="w"> </span>mavlink_proto.msgid
+</code></pre></div></td></tr></table></div>
+<p>List available MAVLink fields:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>tshark<span class="w"> </span>-G<span class="w"> </span>fields<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;mavlink_proto\.&#39;</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="add-a-tshark-display-filter">Add a tshark display filter</h2>
+<p>The quoted tcpdump expression is a <strong>capture filter</strong>: rejected packets never
+reach <code>tshark</code>. Use <code>-Y</code> for a Wireshark <strong>display filter</strong> after packets have
+been captured and decoded.</p>
+<p>For example, add this option to show only MAVLink message ID <code>0</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>-Y<span class="w"> </span><span class="s1">&#39;mavlink_proto.msgid == 0&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>The relevant part of the command becomes:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">7</a></span>
+<span class="normal"><a href="#__codelineno-5-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>tshark<span class="w"> </span>-l<span class="w"> </span>-r<span class="w"> </span>-<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span>-d<span class="w"> </span>udp.port<span class="o">==</span><span class="m">14550</span>,mavlink_proto<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span>-Y<span class="w"> </span><span class="s1">&#39;mavlink_proto.msgid == 0&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">  </span>-T<span class="w"> </span>fields<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">  </span>-e<span class="w"> </span>frame.time_relative<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">  </span>-e<span class="w"> </span>mavlink_proto.msgid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">  </span>-e<span class="w"> </span>_ws.col.Info<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">  </span>-E<span class="w"> </span><span class="nv">header</span><span class="o">=</span>y<span class="w"> </span>-E<span class="w"> </span><span class="nv">separator</span><span class="o">=</span>/t
+</code></pre></div></td></tr></table></div>
+<p>Use the capture filter to reduce incoming traffic, the display filter to select
+decoded packets, and <code>-e</code> fields to choose the columns displayed.</p>
 
 
 
@@ -938,14 +1021,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
         <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
       
-        <script src="../../../../../assets/mathjax.js"></script>
+        <script src="../../../assets/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
@@ -953,9 +1036,9 @@
       
         <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
       
-        <script src="../../../../../assets/mermaid-viewer.js"></script>
+        <script src="../../../assets/mermaid-viewer.js"></script>
       
-        <script src="../../../../../assets/cpp-runner.js"></script>
+        <script src="../../../assets/cpp-runner.js"></script>
       
     
   </body>
