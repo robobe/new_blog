@@ -829,6 +829,109 @@
 - std::unique_ptr
 - std::shared_ptr
 - std::weak_ptr</p>
+<hr />
+<p>The course is not really about smart pointers. It is about C++ ownership and lifetime management, with smart pointers as the main tools.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Topic</th>
+<th>What you should understand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Object lifetime and scope</td>
+<td>Stack objects, dynamic objects, constructors/destructors</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Raw pointers and references</td>
+<td>Pointer syntax, <code>nullptr</code>, observer vs owner</td>
+</tr>
+<tr>
+<td>3</td>
+<td>RAII</td>
+<td>Why modern C++ avoids manual cleanup</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>std::unique_ptr</code> basics</td>
+<td>Exclusive ownership, <code>make_unique</code>, <code>-&gt;</code>, <code>*</code>, <code>.get()</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Moving <code>unique_ptr</code></td>
+<td><code>std::move</code>, moved-from state, ownership transfer</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>unique_ptr</code> in APIs</td>
+<td>Passing by reference, raw pointer, value, returning ownership</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>unique_ptr</code> with containers</td>
+<td><code>vector&lt;unique_ptr&lt;T&gt;&gt;</code>, polymorphic collections</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Advanced <code>unique_ptr</code></td>
+<td>Arrays, custom deleters, <code>reset</code>, <code>release</code>, <code>swap</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>std::shared_ptr</code></td>
+<td>Reference counting and shared lifetime</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>std::weak_ptr</code></td>
+<td>Observation without ownership</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Cyclic ownership</td>
+<td>Why <code>shared_ptr</code> can still leak</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Smart pointers in class design</td>
+<td>Composition, parent/child relationships</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Polymorphism</td>
+<td><code>unique_ptr&lt;Base&gt;</code>, virtual destructors, factories</td>
+</tr>
+<tr>
+<td>14</td>
+<td>C APIs and external resources</td>
+<td>Files, sockets, handles, custom deleters</td>
+</tr>
+<tr>
+<td>15</td>
+<td>PImpl and incomplete types</td>
+<td>Real library/API design</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Ownership-oriented API design</td>
+<td>Deciding between <code>T&amp;</code>, <code>T*</code>, <code>unique_ptr</code>, <code>shared_ptr</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td>Anti-patterns and debugging</td>
+<td>Double delete, dangling pointers, unnecessary <code>shared_ptr</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Final project</td>
+<td>Design a small ownership-heavy application</td>
+</tr>
+</tbody>
+</table>
 <h3 id="stdunique_ptr">std::unique_ptr</h3>
 <p>Only one owner, memory is deleted automatically when pointer goes out of scope</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -962,6 +1065,18 @@ void example()
 <ul>
 <li><a href="https://youtu.be/YokY6HzLkXs">Back to Basics: C++ Smart Pointers - David Olsen - CppCon 2022</a></li>
 </ul>
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="01_object_lifetime_and_scope">
+            <p>1. Object Lifetime and Scope</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="02_raw_pointers_and_references">
+            <p>2. Raw Pointers and References</p>
+        </a>
+    </div>
+</div>
 
 
 
