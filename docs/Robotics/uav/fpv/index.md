@@ -47,6 +47,16 @@ tags:
         <p>Telemetry</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="power">
+        <p>ESC Input Capacitor</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="camera">
+        <p>Camera and Video Design</p>
+        </a>
+    </div>
 </div>
 
 ---

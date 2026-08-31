@@ -9,6 +9,7 @@ tags:
 - [I Design My Own FPV Drones, And It's Easier Than You Think (GIVEAWAY!) ](https://www.youtube.com/watch?v=U6zWFtaXNfw)
 
 # Read and watch
+- [Full-Stack Flight: Building a Quadcopter Ecosystem from Scratch](https://timhanewich.medium.com/full-stack-flight-building-a-quadcopter-ecosystem-from-scratch-18d43386bb6d)
 - [ How To build a 7-Inch FPV Drone In 2026 ](https://youtu.be/WeniBTXIi9A)
 - [ DIY 3D Printed VTOL UAV | ArduPilot AET405WING + ELRS + IPC Digital FPV Build & Flight Test ](https://youtu.be/FE3cvICdO2A)
 - [ Build The Smallest ESP32 Brushless Rocket Drone | ESP-BLAST ](https://youtu.be/pUi1T12QYAU)

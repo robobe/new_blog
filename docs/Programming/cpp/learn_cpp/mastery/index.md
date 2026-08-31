@@ -48,6 +48,18 @@ missions.
             </p>
         </details>
     </div>
+    <div class="grid-item">
+        <a href="07_modern_cpp/">
+            <p>07 — Modern C++</p>
+        </a>
+        <details>
+            <summary>More...</summary>
+            <p>
+                Learn type deduction, structured bindings, optional values,
+                and the roadmap for later modern C++ features.
+            </p>
+        </details>
+    </div>
 </div>
 
 ## Progress
@@ -58,6 +70,7 @@ missions.
 | 02 — Values and Expressions | Planned |
 | 03 — Control Flow and Functions | Planned |
 | 04 — [Text and Data Modeling](04_text_and_data_modeling/index.md) | Available |
+| 07 — [Modern C++](07_modern_cpp/index.md) | In progress |
 | Later core and specialization lessons | See the [saved plan](plan.md) |
 
 <!-- post-content-skill: 1.0.0 -->

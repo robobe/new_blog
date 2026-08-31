@@ -40,6 +40,18 @@ Overlays -> Manage overlays -> Enable NPU, then reboot the system.
 
 ![alt text](images/enable_npu.png)
 
+
+---
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="rknn">
+            <img src="images/rknn.png"  width="150" height="150">
+            <p>RKNN and YOLO</p>
+        </a>
+    </div>
+</div>
+
 ---
 
 ### GStreamer

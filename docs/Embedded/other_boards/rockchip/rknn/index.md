@@ -68,7 +68,7 @@ For C/C++ deployment, the board image often already contains the NPU driver and 
 Install python whell from [github airockchip/rknn-toolkit2](https://github.com/airockchip/rknn-toolkit2/tree/master/rknn-toolkit2/packages/x86_64)
 
 ### Convert model
-[ultralytics yolo25](https://docs.ultralytics.com/integrations/rockchip-rknn)
+[ultralytics yolo26](https://docs.ultralytics.com/integrations/rockchip-rknn)
 
 ```
 yolo export model=yolo26n.pt format=rknn name=rk3588 opset=13
@@ -92,6 +92,21 @@ yolo26n.onnx       ← opset=13 applies HERE
 yolo26n-rk3588.rknn
 ```
 
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="zoo/">
+            <p>RKNN Model Zoo YOLOv8</p>
+            <image src="images/zoo.png" width=150 height=150/>
+        </a>
+        <details>
+            <summary>More...</summary>
+            <p>
+                Convert a pretrained YOLOv8 ONNX model for RK3566, copy it to
+                the board, run RKNNLite inference, and understand the output.
+            </p>
+        </details>
+    </div>
+</div>
 
 ### Convert to INT8
 INT8 quantization requires a representative calibration dataset. During RKNN compilation, representative images are passed through the network so RKNN Toolkit2 can determine quantization ranges/scales.
@@ -326,6 +341,6 @@ Saved: bus_detected.jpg
 ## Reference
 - [YOLO26 on RK3588; Hybrid INT8 Quantization (RKNN)](https://github.com/mahdieh-jokar/yolo26n-rknn-int8-quantization/blob/main/README.md)
 - [YoloV8-NPU](https://github.com/Qengineering/YoloV8-NPU/tree/main)
-
+- [Convert Custom Trained YOLO Models](https://docs.radxa.com/en/som/cm/cm3/app-development/ai/rknn-custom-yolo)
 
 
