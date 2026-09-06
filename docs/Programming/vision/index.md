@@ -24,10 +24,16 @@ tags:
         <p>nvidia</p>
         </a>
     </div>
-     <div class="grid-item">
+    <div class="grid-item">
     <a href=optical_flow>
         <img src="images/of.png"   width="150" height="150">
         <p>Optical Flow</p>
+        </a>
+    </div>
+    <div class="grid-item">
+        <a href="yolo">
+            <img src="../ai/images/yolo-metrics.svg" width="150" height="150">
+            <p>YOLO</p>
         </a>
     </div>
 

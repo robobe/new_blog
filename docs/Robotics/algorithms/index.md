@@ -7,7 +7,7 @@ tags:
 
 <div class="grid-container">
  <!-- <div class="grid-item">
-        <a href="slam">
+        <a href="../navigation/slam/">
                 <img src="images/slam.png"  width="150" height="150">
                 <p>SLAM</p>
             </a>

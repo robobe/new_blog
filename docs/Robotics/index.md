@@ -53,4 +53,9 @@
             <p>Visual Navigation</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="navigation">
+            <p>Navigation</p>
+        </a>
+    </div>
 </div>
