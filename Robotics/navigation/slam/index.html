@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/fpv/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/navigation/slam/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>FPV - Nodes and Pipes</title>
+        <title>SLAM from beginner to advanced - Nodes and Pipes</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#projects" class="md-skip">
+        <a href="#slam-simultaneous-localization-and-mapping" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              FPV
+              SLAM from beginner to advanced
             
           </span>
         </div>
@@ -676,6 +676,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -684,10 +686,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#projects" class="md-nav__link">
+  <a href="#learning-path-beginning-to-advanced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Projects
+        Learning path: beginning to advanced
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-concepts-in-slam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Concepts in SLAM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resources
       
     </span>
   </a>
@@ -715,14 +739,35 @@
       
       
       
-        <span class="md-tag">drone</span>
+        <span class="md-tag">localization</span>
       
     
       
       
       
       
-        <span class="md-tag">fpv</span>
+        <span class="md-tag">mapping</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">navigation</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">robotics</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">slam</span>
       
     
   </nav>
@@ -732,76 +777,85 @@
   
 
 
-  <h1>FPV</h1>
-
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="forces_and_design">
-        <p>Forces and Design</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="props">
-        <img src="images/props.svg" width="150" height="150">
-        <p>Propellers</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="motors">
-        <img src="images/motors.svg" width="150" height="150">
-        <p>Motors</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="frame">
-        <img src="images/frame.svg" width="150" height="150">
-        <p>Frame</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="radio_link">
-        <img src="images/radio_link.svg" width="150" height="150">
-        <p>Radio Link</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="video_link">
-        <img src="images/video_link.svg" width="150" height="150">
-        <p>Video Link</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="telemetry">
-        <img src="images/telemetry.svg" width="150" height="150">
-        <p>Telemetry</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="power">
-        <p>ESC Input Capacitor</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="camera">
-        <p>Camera and Video Design</p>
-        </a>
-    </div>
-</div>
-
+<h1 id="slam-simultaneous-localization-and-mapping">SLAM (Simultaneous Localization and Mapping)</h1>
+<p>SLAM (Simultaneous Localization and Mapping) is a technique used in robotics and computer vision to create a map of an unknown environment while simultaneously keeping track of the robot's location within that environment. It is a fundamental problem in robotics, particularly for autonomous vehicles, drones, and mobile robots.
+SLAM algorithms typically use sensor data (such as LiDAR, cameras, or IMU) to build a map of the environment and estimate the robot's position. The process involves two main components:</p>
+<ol>
+<li><strong>Mapping — “What is around me?”</strong> Creating a representation of the environment, which can be a 2D or 3D map, depending on the application.</li>
+<li><strong>Localization — “Where am I?”</strong> Determining the robot's position and orientation within the created map.</li>
+</ol>
+<h2 id="learning-path-beginning-to-advanced">Learning path: beginning to advanced</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Topic</th>
+<th>Main goal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="geometry_and_coordinate_frames/">Geometry and coordinate frames</a></td>
+<td>Start with 2D frames and translation, then 3D; learn rotation and pose.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sensors and odometry</td>
+<td>Use camera, LiDAR, wheel, and IMU measurements to estimate motion.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Probabilistic estimation</td>
+<td>Handle noise and covariance; learn localization, Kalman/EKF updates, and particle filters.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Visual odometry</td>
+<td>Estimate camera motion between images and understand accumulated drift.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Basic SLAM</td>
+<td>Estimate poses and a map together using landmarks, scan matching, and data association; explore EKF SLAM.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Graph SLAM</td>
+<td>Use loop closure and nonlinear optimization to correct the trajectory and map.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Visual-inertial SLAM</td>
+<td>Combine camera and IMU measurements.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Practical deployment</td>
+<td>Explore ORB-SLAM3 or RTAB-Map; integrate SLAM with navigation tools such as Nav2.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-concepts-in-slam">Key Concepts in SLAM</h2>
+<ul>
+<li><strong>Sensor Fusion</strong>: Combining data from multiple sensors to improve the accuracy and robustness of the SLAM system.</li>
+<li><strong>Feature Extraction</strong>: Identifying and extracting key features from the sensor data that can be used for mapping and localization.</li>
+<li><strong>Data Association</strong>: Matching observed features with previously mapped features to maintain consistency in the map and the robot's position.</li>
+<li><strong>Loop Closure</strong>: Recognizing when the robot has returned to a previously visited location, which helps to correct drift in the map and improve accuracy.</li>
+<li><strong>Graph-Based SLAM</strong>: A popular approach that represents the SLAM problem as a graph, where nodes represent poses (robot positions and orientations) and edges represent constraints (observations or measurements).</li>
+<li><strong>Particle Filters</strong>: A probabilistic approach to SLAM that uses a set of particles to represent the robot's belief about its position and the map.</li>
+<li><strong>Kalman Filters</strong>: A mathematical approach to estimate the state of a dynamic system, for linear models with Gaussian noise; SLAM generally needs nonlinear extensions.</li>
+<li><strong>Extended Kalman Filter (EKF)</strong>: An extension of the Kalman filter that can handle non-linear systems, commonly used in SLAM.</li>
+<li><strong>Visual SLAM (V-SLAM)</strong>: A specific type of SLAM that uses visual data from cameras to perform mapping and localization.</li>
+<li><strong>LiDAR SLAM</strong>: A type of SLAM that uses LiDAR sensors to create high-resolution maps of the environment.</li>
+</ul>
 <hr />
-<h2 id="projects">Projects</h2>
-<div class="grid-container">
-    <div class="grid-item">
-        <a href="build_guide">
-        <p>5inch Build Guide</p>
-        </a>
-    </div>
-    <div class="grid-item">
-        <a href="power_system">
-            <p>Power System</p>
-        </a>
-    </div>
-</div>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://www.youtube.com/playlist?list=PLpUPoM7Rgzi_7YWn14Va2FODh7LzADBSm">Claus Brenner SLAM lectures</a></li>
+<li><a href="https://medium.com/machinevision/overview-of-slam-50b7f49903b7">Overview of SLAM</a></li>
+<li><a href="https://medium.com/machinevision/implement-slam-from-scratch-b1fb599f40c8">Implement SLAM from scratch</a></li>
+</ul>
 
 
 

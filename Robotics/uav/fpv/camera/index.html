@@ -12,7 +12,7 @@
         <meta name="author" content="robobe">
       
       
-        <link rel="canonical" href="https://robobe.github.io/Programming/cpp/learn_cpp/multithread/">
+        <link rel="canonical" href="https://robobe.github.io/Robotics/uav/fpv/camera/">
       
       
       
@@ -25,7 +25,7 @@
     
     
       
-        <title>Modern C++ multithreading - Nodes and Pipes</title>
+        <title>FPV Camera and Video-System Design - Nodes and Pipes</title>
       
     
     
@@ -79,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#fpv-camera-and-video-system-design" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Modern C++ multithreading
+              FPV Camera and Video-System Design
             
           </span>
         </div>
@@ -258,7 +263,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../Robotics/" class="md-tabs__link">
+      <a href="../../../" class="md-tabs__link">
         
   
   
@@ -277,7 +282,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../" class="md-tabs__link">
+      <a href="../../../../Programming/" class="md-tabs__link">
         
   
   
@@ -499,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../Robotics/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   
@@ -526,7 +531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../" class="md-nav__link">
+      <a href="../../../../Programming/" class="md-nav__link">
         
   
   
@@ -671,6 +676,171 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#camera-shutter-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera shutter types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera shutter types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rolling-shutter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rolling shutter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-shutter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global shutter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mechanical-shutter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanical shutter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-global-shutter-versus-rolling-shutter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video: global shutter versus rolling shutter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raspberry-pi-camera-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raspberry Pi camera comparison
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Raspberry Pi camera comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#which-camera-fits-which-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which camera fits which job?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#end-to-end-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-end latency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resolution-frame-rate-and-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolution, frame rate, and bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-of-view-and-lens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field of view and lens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exposure-low-light-and-dynamic-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exposure, low light, and dynamic range
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera-interface-and-processing-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera interface and processing hardware
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-and-electrical-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power and electrical noise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -691,21 +861,35 @@
       
       
       
-        <span class="md-tag">cpp</span>
+        <span class="md-tag">camera</span>
       
     
       
       
       
       
-        <span class="md-tag">modern</span>
+        <span class="md-tag">fpv</span>
       
     
       
       
       
       
-        <span class="md-tag">threading</span>
+        <span class="md-tag">latency</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">shutter</span>
+      
+    
+      
+      
+      
+      
+        <span class="md-tag">video</span>
       
     
   </nav>
@@ -715,92 +899,279 @@
   
 
 
-  <h1>Modern C++ multithreading</h1>
+<h1 id="fpv-camera-and-video-system-design">FPV camera and video-system design</h1>
+<p>An FPV camera is the first part of a complete video system. A good design must
+consider:
+- motion distortion
+-  latency
+-  field of view
+-  low-light performance
+-  encoding
+-  radio bandwidth
+-  power noise
+-  mechanical mounting
+-  sensor resolution.</p>
+<h2 id="camera-shutter-types">Camera shutter types</h2>
+<p>The shutter describes how the sensor exposes its pixels.</p>
+<h3 id="rolling-shutter">Rolling shutter</h3>
+<p>A rolling-shutter sensor exposes and reads the image one row after another.
+Different rows therefore represent slightly different moments in time.</p>
+<p>Advantages:</p>
+<ul>
+<li>Common, inexpensive sensors</li>
+<li>High resolution</li>
+<li>Good image quality and dynamic range</li>
+<li>Many compact camera modules available</li>
+</ul>
+<p>Disadvantages for FPV:</p>
+<ul>
+<li>Fast rotation can bend vertical objects.</li>
+<li>Propellers can appear curved or broken.</li>
+<li>Motor vibration can produce a wobbling <strong>jello</strong> image.</li>
+<li>Longer exposure in low light increases motion blur.</li>
+</ul>
+<p>Rolling shutter is normally acceptable for general FPV when the camera is
+mounted rigidly, vibration is controlled, and exposure time remains short.</p>
+<h3 id="global-shutter">Global shutter</h3>
+<p>A global-shutter sensor exposes all pixels during the same time interval. It
+greatly reduces the geometric distortion created by rapid motion and vibration.</p>
+<p>Advantages:</p>
+<ul>
+<li>Better representation of fast motion</li>
+<li>Less rolling-shutter wobble and skew</li>
+<li>Useful for visual odometry, machine vision, and synchronized cameras</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Often lower resolution or more expensive</li>
+<li>May require a larger module and external lens</li>
+<li>Does not eliminate ordinary motion blur; exposure time still matters</li>
+</ul>
+<p>Raspberry Pi explains the difference using rotating propellers: a rolling
+shutter scans them line by line, while its Global Shutter Camera captures all
+pixels together. <a href="https://www.raspberrypi.com/documentation/accessories/camera.html">Raspberry Pi camera documentation</a></p>
+<h3 id="mechanical-shutter">Mechanical shutter</h3>
+<p>A mechanical shutter physically blocks and exposes the sensor. It is common in
+still cameras but uncommon in FPV because it adds weight, moving parts, delay,
+and wear. FPV video systems normally use electronic rolling or global shutters.</p>
+<hr />
+<h2 id="video-global-shutter-versus-rolling-shutter">Video: global shutter versus rolling shutter</h2>
+<div style="position: relative; width: 100%; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube-nocookie.com/embed/YmEH8z1JWgc"
+        title="Global Shutter vs. Rolling Shutter"
+        style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
 
+<h2 id="raspberry-pi-camera-comparison">Raspberry Pi camera comparison</h2>
+<p>The frame rates below are maximum documented sensor/video modes, not guaranteed
+end-to-end FPV display rates. Encoding, the Raspberry Pi model, radio link, and
+receiver can reduce the delivered frame rate.</p>
 <table>
 <thead>
 <tr>
-<th>Stage</th>
-<th>Topic</th>
-<th>Key C++ APIs</th>
-<th>Hands-on</th>
+<th>Camera</th>
+<th>Sensor</th>
+<th>Shutter</th>
+<th style="text-align: right;">Full resolution</th>
+<th>Example maximum video modes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>Thread basics</td>
-<td><code>std::jthread</code>, <code>std::thread</code></td>
-<td>Run two workers</td>
+<td>Camera Module 2</td>
+<td>Sony IMX219</td>
+<td>Rolling</td>
+<td style="text-align: right;">3280 × 2464, 8 MP</td>
+<td>1080p47; 1640 × 1232p41; 640 × 480p206</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Thread lifetime</td>
-<td>RAII, <code>join</code>, <code>stop_token</code></td>
-<td>Stoppable worker</td>
+<td>Camera Module 3</td>
+<td>Sony IMX708</td>
+<td>Rolling</td>
+<td style="text-align: right;">4608 × 2592, 11.9 MP</td>
+<td>2304 × 1296p56; HDR p30; 1536 × 864p120</td>
 </tr>
 <tr>
-<td>3</td>
-<td>Data races</td>
-<td>shared state</td>
-<td>Intentionally create/fix a race</td>
+<td>Camera Module 3 Wide</td>
+<td>Sony IMX708</td>
+<td>Rolling</td>
+<td style="text-align: right;">4608 × 2592, 11.9 MP</td>
+<td>2304 × 1296p56; HDR p30; 1536 × 864p120</td>
 </tr>
 <tr>
-<td>4</td>
-<td>Mutexes</td>
-<td><code>mutex</code>, <code>lock_guard</code>, <code>scoped_lock</code></td>
-<td>Safe counter</td>
+<td>High Quality Camera</td>
+<td>Sony IMX477</td>
+<td>Rolling</td>
+<td style="text-align: right;">4056 × 3040, 12.3 MP</td>
+<td>2028 × 1080p50; 2028 × 1520p40; 1332 × 990p120</td>
 </tr>
 <tr>
-<td>5</td>
-<td>Condition variables</td>
-<td><code>condition_variable</code></td>
-<td>Producer/consumer</td>
+<td>AI Camera</td>
+<td>Sony IMX500</td>
+<td>Rolling</td>
+<td style="text-align: right;">4056 × 3040, 12.3 MP</td>
+<td>2028 × 1520p30; full resolution p10</td>
 </tr>
 <tr>
-<td>6</td>
-<td>Atomics</td>
-<td><code>atomic</code>, memory ordering basics</td>
-<td>Atomic counter</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Tasks &amp; results</td>
-<td><code>future</code>, <code>promise</code>, <code>async</code></td>
-<td>Parallel calculation</td>
-</tr>
-<tr>
-<td>8</td>
-<td>C++20 coordination</td>
-<td>semaphore, latch, barrier</td>
-<td>Worker synchronization</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Thread-safe structures</td>
-<td>queues, ownership</td>
-<td>Blocking queue</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Thread pools</td>
-<td>work queues, workers</td>
-<td>Build small pool</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Advanced atomics</td>
-<td>memory model</td>
-<td>SPSC queue</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Architecture</td>
-<td>message passing, executors</td>
-<td>Robotics pipeline</td>
+<td>Global Shutter Camera</td>
+<td>Sony IMX296</td>
+<td>Global</td>
+<td style="text-align: right;">1456 × 1088, 1.58 MP</td>
+<td>1456 × 1088p60</td>
 </tr>
 </tbody>
 </table>
+<p>These specifications come from Raspberry Pi's <a href="https://www.raspberrypi.com/documentation/accessories/camera.html#hardware-specifications">camera hardware comparison</a>. The <a href="https://datasheets.raspberrypi.com/camera/ai-camera-product-brief.pdf">AI Camera product brief</a> also specifies 30 fps in its 2×2-binned mode and 10 fps at full resolution.</p>
+<h3 id="which-camera-fits-which-job">Which camera fits which job?</h3>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Good starting option</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General digital FPV</td>
+<td>Camera Module 3 Wide</td>
+<td>Compact, autofocus, wide view, and useful high-frame-rate modes</td>
+</tr>
+<tr>
+<td>Lowest geometric motion distortion</td>
+<td>Global Shutter Camera</td>
+<td>Exposes all pixels together</td>
+</tr>
+<tr>
+<td>Interchangeable lenses</td>
+<td>HQ or Global Shutter Camera</td>
+<td>C/CS-mount lens support</td>
+</tr>
+<tr>
+<td>Onboard object detection</td>
+<td>AI Camera</td>
+<td>IMX500 includes neural-network acceleration</td>
+</tr>
+<tr>
+<td>Low-cost experiment</td>
+<td>Camera Module 2</td>
+<td>Small and widely supported</td>
+</tr>
+</tbody>
+</table>
+<p>The AI Camera can produce image and inference streams, but onboard AI does not
+automatically reduce pilot-view latency. Choose it when inference is part of the
+mission, not merely because it is newer. <a href="https://www.raspberrypi.com/documentation/accessories/ai-camera.html">Raspberry Pi AI Camera documentation</a></p>
+<h2 id="end-to-end-latency">End-to-end latency</h2>
+<p>FPV latency is the sum of every pipeline stage:</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Exposure and sensor readout] --&gt; B[ISP processing]
+    B --&gt; C[Video encoder]
+    C --&gt; D[Transmit queue]
+    D --&gt; E[Radio link]
+    E --&gt; F[Receiver buffer]
+    F --&gt; G[Video decoder]
+    G --&gt; H[Display refresh]</code></pre>
+<p>Measure glass-to-glass latency—from a real-world event in front of the camera
+until that event appears on the display. Camera FPS alone does not describe this
+delay.</p>
+<p>At 60 fps, one frame lasts approximately:</p>
+<div class="arithmatex">\[
+\frac{1}{60} = 16.7\text{ ms}
+\]</div>
+<p>Every extra queued frame can therefore add about 16.7 ms before considering
+encoding, radio, decoding, and display delay.</p>
+<p>For low latency:</p>
+<ul>
+<li>Avoid unnecessary frame queues.</li>
+<li>Use a hardware encoder when available.</li>
+<li>Disable B-frames when the encoder supports a low-latency mode.</li>
+<li>Use a short GOP when quick recovery matters, accepting the bitrate cost.</li>
+<li>Configure receiver buffers deliberately instead of accepting large defaults.</li>
+<li>Measure under packet loss, not only on a workbench.</li>
+</ul>
+<h2 id="resolution-frame-rate-and-bandwidth">Resolution, frame rate, and bandwidth</h2>
+<p>Resolution and FPS increase both image detail and required processing and radio
+bandwidth. Uncompressed BGR video requires approximately:</p>
+<div class="arithmatex">\[
+bitrate = width \times height \times 3 \times FPS \times 8
+\]</div>
+<p>For 1920 × 1080 at 60 fps:</p>
+<div class="arithmatex">\[
+1920 \times 1080 \times 3 \times 60 \times 8
+\approx 2.99\text{ Gbit/s}
+\]</div>
+<p>An FPV radio link therefore normally sends compressed video such as H.264 or
+H.265. Actual compressed bitrate depends strongly on motion, scene detail,
+encoder settings, and acceptable quality.</p>
+<p>Choose the operating mode for the complete link. A stable 720p60 stream can be
+more useful for piloting than a delayed or frequently corrupted 4K stream.</p>
+<h2 id="field-of-view-and-lens">Field of view and lens</h2>
+<p>A wider lens shows more of the environment and makes rapid rotation feel less
+disorienting, but distant objects become smaller and edge distortion increases.
+A narrow lens shows more detail ahead but provides less peripheral awareness.</p>
+<p>Check:</p>
+<ul>
+<li>Horizontal, vertical, and diagonal field of view</li>
+<li>Lens focal length</li>
+<li>Fixed focus versus autofocus</li>
+<li>Minimum focus distance</li>
+<li>Aperture or f-number</li>
+<li>Replaceable-lens support</li>
+<li>Whether the frame or propellers appear in the image</li>
+</ul>
+<p>Autofocus can hunt during rapid scene changes. A fixed focus, or locked
+autofocus position, may provide more predictable FPV behavior.</p>
+<h2 id="exposure-low-light-and-dynamic-range">Exposure, low light, and dynamic range</h2>
+<p>Short exposure reduces motion blur but collects less light. Increasing analog
+gain brightens the image but adds noise. For outdoor flight, the camera must
+also handle bright sky and dark ground in the same frame.</p>
+<p>Evaluate:</p>
+<ul>
+<li>Sensor and pixel size</li>
+<li>Lens aperture</li>
+<li>Maximum useful gain</li>
+<li>Minimum practical exposure time</li>
+<li>HDR or wide-dynamic-range mode</li>
+<li>Highlight recovery and shadow noise</li>
+<li>Daylight, sunset, and indoor behavior</li>
+</ul>
+<p>HDR may improve dynamic range but can reduce maximum frame rate or add processing
+latency. Test the exact mode used by the video link.</p>
+<h2 id="camera-interface-and-processing-hardware">Camera interface and processing hardware</h2>
+<p>Raspberry Pi cameras normally use CSI-2. Confirm:</p>
+<ul>
+<li>Camera connector type and ribbon-cable compatibility</li>
+<li>Number of CSI lanes and supported sensor mode</li>
+<li>Raspberry Pi model and hardware-encoder capabilities</li>
+<li>ISP capacity when capturing multiple streams</li>
+<li>Memory bandwidth and CPU/GPU load</li>
+<li>Software support in <code>libcamera</code>, <code>rpicam-apps</code>, or Picamera2</li>
+<li>Whether recording, AI inference, and streaming can run together at the target
+  FPS</li>
+</ul>
+<p>Do not assume that a sensor's maximum mode can also be encoded, transmitted,
+decoded, and displayed at that rate.</p>
+<h2 id="power-and-electrical-noise">Power and electrical noise</h2>
+<p>Motors and ESCs create substantial switching noise. A camera or transmitter
+powered from a noisy rail can show horizontal lines, resets, or corrupted data.</p>
+<p>Plan for:</p>
+<ul>
+<li>Correct input-voltage range</li>
+<li>Peak and average power consumption</li>
+<li>A regulator with enough current and thermal margin</li>
+<li>Input and local decoupling capacitors</li>
+<li>Short power and ground paths</li>
+<li>Separation from ESC phase wires and high-current battery wiring</li>
+<li>Ground-loop avoidance</li>
+<li>Filtering validated under full motor load</li>
+</ul>
 
 
 
