@@ -4,188 +4,217 @@ tags:
     - control
 ---
 
-## Learning path
+learning Active Disturbance Rejection Control (ADRC) using a simple spring–mass system without a damper.
+A motor moves a cart attached to a spring. Our goal is to move the cart to a target position and hold it there, even when the spring pulls it back or an unknown external force pushes it.
+We will learn how to:
 
-1. PID on mass system
-2. Add unknown disturbance
-3. Add observer that estimates velocity
-4. Extend observer to estimate disturbance
-5. Cancel disturbance in control law
-
-
-## The code ADRC idea is
-- Do not perfectly model the disturbance
-- Estimate it
-- Cancel it
+1. Describe the cart’s motion using Newton’s law.
+2. Use an observer to estimate velocity and the combined effect of the spring and unknown forces, using measured position and motor input.
+3. Use those estimates to calculate a motor force that reaches the target, reduces bouncing, and counteracts disturbances.
 
 
----
+### The physical system
 
-## Mass System Simulation
+$$
+ma = u - kx + d(t)
+$$
 
-Start with the simplest case: a unit mass moving along one axis with no
-disturbance.
+| Symbol | Meaning |
+|---|---|
+| \(m\) | Cart mass |
+| \(a\) | Acceleration |
+| \(u\) | Motor force we choose |
+| \(x\) | Position relative to the spring’s resting position |
+| \(k\) | Spring stiffness |
+| \(d(t)\) | Unknown external force |
 
-```text
-a = u
-```
 
-The controller command `u` directly creates acceleration `a`. Acceleration does
-not change position directly. It first changes velocity, and velocity changes
-position:
 
-```text
-v_dot = a
-x_dot = v
-```
+### Control
 
-That is why the state of the mass needs two values:
+Goal: **Move the cart to target position and stop it there**
 
-- `x`: position, where the mass is
-- `v`: velocity, how fast the position is changing
+There are two different things we need:
+- The **physical equation** describes how the cart moves.
+- The **control equation** decides what motor force to apply.
 
-If the simulation only stored `x`, it would not know how the mass is moving
-between control updates. The velocity `v` is the memory of previous acceleration.
+#### Physical equation
 
-With a small timestep `dt`, the no-disturbance simulation is:
+$$
+ma = u - kx + d(t)
+$$
 
-```python
-a = u
-v += a * dt
-x += v * dt
-```
+##### Step 2
+Divide every term by mass
+tells us how forces change the cart velocity
 
-After that basic model is working, add the unknown disturbance. The environment
-adds `d` to the acceleration, so the plant becomes:
+$$
+a = \frac{1}{m}u - \frac{k}{m}x + \frac{d(t)}{m}
+$$
 
-```text
-a = u + d
-```
+##### Step 3
+Group the equation into two parts
 
-Because this is a unit mass, force and acceleration have the same numeric value.
-For a different mass `m`, the model would be `a = (u + d) / m`.
+$$
+b_0 = \frac{1}{m},
+\qquad
+f = -\frac{k}{m}x + \frac{d(t)}{m}
+$$
 
-The simulation advances the continuous system with a small fixed timestep `dt`.
-At each step:
+the equation become
 
-1. Read the current position as the measurement `y`.
-2. Let the controller compute a new command `u`.
-3. Compute the disturbance at the current time.
-4. Update acceleration, velocity, and position.
+$$
+a = b_0u + f
+$$
 
-The plant update is Euler integration:
+!!! tip Read it
 
-```python
-d = 0.5 * np.sin(2 * t)
-a = u + d
-v += a * dt
-x += v * dt
-```
+    Actual acceleration = acceleration from the motor + acceleration from the other effects.
 
-In `code/simple.py`, the simulation uses `dt = 0.001` seconds for `T = 5.0`
-seconds. The reference position is `1.0`, so the controller tries to move the
-mass from `x = 0` to `x = 1` while rejecting the sinusoidal disturbance.
+The observer will estimate **f**. we do not need to calculate the spring and external push separately.
 
----
+##### Step 4
+Decide what acceleration we want
 
-## ADRC in `code/simple.py`
+$$
+a_{\text{wanted}} = k_p(r-x)
+$$
 
-Active Disturbance Rejection Control (ADRC) treats everything that is not the
-known control input as a disturbance and estimates it online. In
-[`simple.py`](code/simple.py), the plant is a simple mass:
+| Symbol | Meaning |
+|---|---|
+| r | Constant target position |
+| x | current position |
+| $k_p$ | some gain |
 
-```python
-a = u + d
-```
 
-In this example, the system is a point mass moving in one dimension. The state
-of the mass is its position `x` and velocity `v`. The controller sends a command
-`u`, and the plant turns the total force into acceleration:
 
-- `a`: acceleration of the mass
-- `u`: control input chosen by the controller
-- `d`: unknown disturbance added by the real system
 
-So `u` is the part we control, and `d` is the part we do not control. If there
-were no disturbance, the mass would accelerate only according to `u`. Because
-`d` exists, the real acceleration becomes `u + d`.
+- Cart below the target → positive acceleration.
+- Cart beyond the target → negative acceleration.
+- Larger position error → stronger response.
 
-The controller only measures position `y = x`. It does not measure velocity
-directly, and it does not know the disturbance `d`, so it uses an Extended State
-Observer (ESO) to estimate all three values:
+$$
+a_{\text{wanted}} = k_p(r-x) - k_dv
+$$
 
-- `z1`: estimated position
-- `z2`: estimated velocity
-- `z3`: estimated total disturbance
+The term \(-k_dv\) opposes movement. This is braking produced by the motor, even though there is no physical damper.
 
-For a second-order system, position changes because of velocity and velocity
-changes because of acceleration:
+##### Step 5
+Find the motor force that produce that acceleration
 
-```text
-x_dot = v
-v_dot = b0 * u + disturbance
-```
+$$
+a_{\text{wanted}} = b_0u + f
+$$
 
-That is why the observer needs `z1` and `z2`. ADRC then adds one extra state,
-`z3`, for the unknown part of the acceleration. This includes the real external
-disturbance, modeling error, friction, wrong mass estimate, or anything else
-that makes the plant behave differently from `b0 * u`.
+Subtract $f$ from both side
 
-The observer compares the estimated position with the measured position:
+$$
+b_0u = a_{\text{wanted}} - f
+$$
 
-```python
-error = self.z1 - y
-```
+Then divide by $b_0$
 
-Then it corrects `z1`, `z2`, and `z3` using the gains `beta1`, `beta2`, and
-`beta3`:
+$$
+u = \frac{a_{\text{wanted}} - f}{b_0}
+$$
 
-```python
-self.beta1 = 3 * w0
-self.beta2 = 3 * w0**2
-self.beta3 = w0**3
-```
+!!! info The subtraction is the disturbance compensation
+    If the other effects already add acceleration, reduce the motor contribution. If they oppose us, increase it.
 
-These gains come from choosing an observer bandwidth `w0`. A larger `w0` makes
-`z1`, `z2`, and `z3` react faster to measurement error, but it also amplifies
-noise and can require a smaller `dt`. In this example:
 
-```python
-observer_bandwidth=30.0
-controller_bandwidth=5.0
-```
+##### Step 6
+We do not know the true **velocity** or **disturbance**. Our observer provides:
 
-The observer is intentionally faster than the controller. A common starting
-rule is:
+| Observer output | Estimates |
+|---|---|
+| \(z_1\) | Position \(x\) |
+| \(z_2\) | Velocity \(v\) |
+| \(z_3\) | Total disturbance \(f\) |
 
-```text
-observer_bandwidth = 3 to 10 * controller_bandwidth
-```
+$$
+a_{\text{wanted}} = k_p(r-z_1) - k_dz_2
+$$
 
-Here the ratio is `30 / 5 = 6`, which is a reasonable first choice.
+**Then use $z_3$ in place of $f$**
 
-The controller uses `z1` and `z2` like a normal PD controller:
+$$
+u = \frac{k_p(r-z_1) - k_dz_2 - z_3}{b_0}
+$$
 
-```python
-a_desired = kp * (ref - z1) + kd * (0 - z2)
-```
-
-Then it subtracts the estimated disturbance:
-
-```python
-u = (a_desired - z3) / b0
-```
-
-So the role of the three observer states is:
-
-- `z1` tells the controller where the mass is.
-- `z2` tells the controller how fast the mass is moving.
-- `z3` tells the controller how much unknown acceleration should be cancelled.
-
+<div style="border: 1px solid gray; padding: 12px;">
+<b>That is our Linear ADRC control equation.</b>
+</div>
 
 ---
 
-## Reference
+#### Demo: use the Linear ADRC control equation
 
-[adrc controller](https://www.youtube.com/watch?v=4SE_t6-DnQ4&list=PLq9ofiBVTfA4VNMVnCCFWjLdfVxZqoWKv)
-- [ Active Disturbance Rejection Control the intuitive way part 1 ](https://youtu.be/DS5VEFD-r_A)
+- Mass: \(1\) kg, so \(b_0=1\).
+- Target: \(1\) m.
+- Estimated position: \(0.5\) m.
+- Estimated velocity: \(0\).
+- Estimated disturbance: \(-2\ \mathrm{m/s^2}\), because the spring pulls left.
+- Position gain: \(k_p=4\).
+
+**Wanted acceleration**
+
+$$
+a_{\text{wanted}} = 4(1-0.5) = 2
+$$
+
+**The motor force is**
+
+$$
+u = \frac{2-(-2)}{1} = 4
+$$
+
+The motor contributes \(+4\ \mathrm{m/s^2}\), while the spring contributes \(-2\ \mathrm{m/s^2}\). Together, they produce the wanted \(+2\ \mathrm{m/s^2}\).
+
+
+<div style="border: 1px solid gray; padding: 12px;">
+<b>The controller has three jobs:
+
+- pull toward the target,
+- brake the motion.
+- compensate for the estimated disturbance.</b>
+</div>
+
+---
+
+### Demo
+
+![ADRC spring-cart simulation](media/mass-spring.gif)
+
+The animation is generated by `code/mass-spring.py`. Its `simulate()` method
+steps the physical system forward in time with a 1 ms timestep:
+
+1. It calculates the motor force from the ADRC control equation using the
+   target position and the observer estimates $z_1$, $z_2$, and $z_3$.
+2. It applies the motor force, the spring force $-kx$, and any external
+   force to the cart, then updates its position and velocity.
+3. It updates the extended state observer, which estimates position,
+   velocity, and the combined disturbance.
+
+At $t=2$ seconds, the simulation adds an unknown $1\,\mathrm{N}$ force:
+
+$$
+d(t) =
+\begin{cases}
+0 & t < 2 \\
+1\,\mathrm{N} & t \ge 2
+\end{cases}
+$$
+
+The controller is not told about this force. It only sees the cart position
+and knows the force it commanded. The observer detects the resulting change
+and $z_3$ converges to the total disturbance from both the spring and the
+extra push. The controller then compensates for that estimate, allowing the
+cart to return to the $1\,\mathrm{m}$ target and remain there.
+
+To regenerate the animation files:
+
+```bash
+python docs/Robotics/control/adrc/code/mass-spring.py \
+    --export \
+    --output-dir docs/Robotics/control/adrc/media
+```
