@@ -53,3 +53,5 @@ tags:
 |   |   |
 |   |   |
 |   |   |
+
+- [Build The Smallest ESP32 Brushless Rocket Drone | ESP-BLAST ](https://www.youtube.com/watch?v=pUi1T12QYAU&t=729s)

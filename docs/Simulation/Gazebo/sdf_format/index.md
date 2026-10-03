@@ -14,5 +14,10 @@ SDFormat (Simulation Description Format), sometimes abbreviated as SDF, is an XM
             <p>frames and pose</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="wind/">
+            <p>wind</p>
+        </a>
+    </div>
     
 </div>

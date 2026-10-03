@@ -50,6 +50,11 @@ Overlays -> Manage overlays -> Enable NPU, then reboot the system.
             <p>RKNN and YOLO</p>
         </a>
     </div>
+    <div class="grid-item">
+        <a href="rga">
+            <p>RGA</p>
+        </a>
+    </div>
 </div>
 
 ---

@@ -88,8 +88,18 @@ tags:
         </a>
     </div>
     <div class="grid-item">
-        <a href="sdf_format/joint_friction/">
+        <a href="sdf_format/wind/">
             <p>Wind</p>
+        </a>
+    </div>
+</div>
+
+## Tools
+
+<div class="grid-container">
+    <div class="grid-item">
+        <a href="plugins/tools">
+            <p>Record</p>
         </a>
     </div>
 </div>

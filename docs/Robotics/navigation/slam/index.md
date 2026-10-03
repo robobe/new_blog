@@ -47,6 +47,7 @@ SLAM algorithms typically use sensor data (such as LiDAR, cameras, or IMU) to bu
 
 ## Resources
 
+- [SLAM course](https://github.com/ariarobotics/robotic-mapping?trk=public_post_comment-text)
 - [Claus Brenner SLAM lectures](https://www.youtube.com/playlist?list=PLpUPoM7Rgzi_7YWn14Va2FODh7LzADBSm)
 - [Overview of SLAM](https://medium.com/machinevision/overview-of-slam-50b7f49903b7)
 - [Implement SLAM from scratch](https://medium.com/machinevision/implement-slam-from-scratch-b1fb599f40c8)
