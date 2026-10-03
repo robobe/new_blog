@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#learning-path" class="md-skip">
+        <a href="#the-physical-system" class="md-skip">
           Skip to content
         </a>
       
@@ -684,10 +684,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#learning-path" class="md-nav__link">
+  <a href="#the-physical-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Learning path
+        The physical system
       
     </span>
   </a>
@@ -695,46 +695,130 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-code-adrc-idea-is" class="md-nav__link">
+  <a href="#control" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The code ADRC idea is
+        Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Physical equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#mass-system-simulation" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mass System Simulation
+        Step 3
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#adrc-in-codesimplepy" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#step-4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ADRC in code/simple.py
+        Step 4
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reference
+        Step 5
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demo-use-the-linear-adrc-control-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo: use the Linear ADRC control equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-the-controller-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the controller works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -771,148 +855,322 @@
 
   <h1>ADRC</h1>
 
-<h2 id="learning-path">Learning path</h2>
+<p>learning Active Disturbance Rejection Control (ADRC) using a simple spring–mass system without a damper.
+A motor moves a cart attached to a spring. Our goal is to move the cart to a target position and hold it there, even when the spring pulls it back or an unknown external force pushes it.
+We will learn how to:</p>
 <ol>
-<li>PID on mass system</li>
-<li>Add unknown disturbance</li>
-<li>Add observer that estimates velocity</li>
-<li>Extend observer to estimate disturbance</li>
-<li>Cancel disturbance in control law</li>
+<li>Describe the cart’s motion using Newton’s law.</li>
+<li>Use an observer to estimate velocity and the combined effect of the spring and unknown forces, using measured position and motor input.</li>
+<li>Use those estimates to calculate a motor force that reaches the target, reduces bouncing, and counteracts disturbances.</li>
 </ol>
-<h2 id="the-code-adrc-idea-is">The code ADRC idea is</h2>
+<h3 id="the-physical-system">The physical system</h3>
+<div class="arithmatex">\[
+ma = u - kx + d(t)
+\]</div>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>Cart mass</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(a\)</span></td>
+<td>Acceleration</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(u\)</span></td>
+<td>Motor force we choose</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x\)</span></td>
+<td>Position relative to the spring’s resting position</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span></td>
+<td>Spring stiffness</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(d(t)\)</span></td>
+<td>Unknown external force</td>
+</tr>
+</tbody>
+</table>
+<h3 id="control">Control</h3>
+<p>Goal: <strong>Move the cart to target position and stop it there</strong></p>
+<p>There are two different things we need:
+- The <strong>physical equation</strong> describes how the cart moves.
+- The <strong>control equation</strong> decides what motor force to apply.</p>
+<h4 id="physical-equation">Physical equation</h4>
+<div class="arithmatex">\[
+ma = u - kx + d(t)
+\]</div>
+<h5 id="step-2">Step 2</h5>
+<p>Divide every term by mass
+tells us how forces change the cart velocity</p>
+<div class="arithmatex">\[
+a = \frac{1}{m}u - \frac{k}{m}x + \frac{d(t)}{m}
+\]</div>
+<h5 id="step-3">Step 3</h5>
+<p>Group the equation into two parts</p>
+<div class="arithmatex">\[
+b_0 = \frac{1}{m},
+\qquad
+f = -\frac{k}{m}x + \frac{d(t)}{m}
+\]</div>
+<p>the equation become</p>
+<div class="arithmatex">\[
+a = b_0u + f
+\]</div>
+<div class="admonition tip read it">
+<p class="admonition-title">Tip</p>
+<p>Actual acceleration = acceleration from the motor + acceleration from the other effects.</p>
+</div>
+<p>The observer will estimate <strong>f</strong>. we do not need to calculate the spring and external push separately.</p>
+<h5 id="step-4">Step 4</h5>
+<p>Decide what acceleration we want</p>
+<div class="arithmatex">\[
+a_{\text{wanted}} = k_p(r-x)
+\]</div>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td>Constant target position</td>
+</tr>
+<tr>
+<td>x</td>
+<td>current position</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k_p\)</span></td>
+<td>some gain</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>Do not perfectly model the disturbance</li>
-<li>Estimate it</li>
-<li>Cancel it</li>
+<li>Cart below the target → positive acceleration.</li>
+<li>Cart beyond the target → negative acceleration.</li>
+<li>Larger position error → stronger response.</li>
 </ul>
+<div class="arithmatex">\[
+a_{\text{wanted}} = k_p(r-x) - k_dv
+\]</div>
+<p>The term <span class="arithmatex">\(-k_dv\)</span> opposes movement. This is braking produced by the motor, even though there is no physical damper.</p>
+<h5 id="step-5">Step 5</h5>
+<p>Find the motor force that produce that acceleration</p>
+<div class="arithmatex">\[
+a_{\text{wanted}} = b_0u + f
+\]</div>
+<p>Subtract <span class="arithmatex">\(f\)</span> from both side</p>
+<div class="arithmatex">\[
+b_0u = a_{\text{wanted}} - f
+\]</div>
+<p>Then divide by <span class="arithmatex">\(b_0\)</span></p>
+<div class="arithmatex">\[
+u = \frac{a_{\text{wanted}} - f}{b_0}
+\]</div>
+<div class="admonition info the subtraction is the disturbance compensation">
+<p class="admonition-title">Info</p>
+<p>If the other effects already add acceleration, reduce the motor contribution. If they oppose us, increase it.</p>
+</div>
+<h5 id="step-6">Step 6</h5>
+<p>We do not know the true <strong>velocity</strong> or <strong>disturbance</strong>. Our observer provides:</p>
+<table>
+<thead>
+<tr>
+<th>Observer output</th>
+<th>Estimates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(z_1\)</span></td>
+<td>Position <span class="arithmatex">\(x\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(z_2\)</span></td>
+<td>Velocity <span class="arithmatex">\(v\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(z_3\)</span></td>
+<td>Total disturbance <span class="arithmatex">\(f\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="arithmatex">\[
+a_{\text{wanted}} = k_p(r-z_1) - k_dz_2
+\]</div>
+<p><strong>Then use <span class="arithmatex">\(z_3\)</span> in place of <span class="arithmatex">\(f\)</span></strong></p>
+<div class="arithmatex">\[
+u = \frac{k_p(r-z_1) - k_dz_2 - z_3}{b_0}
+\]</div>
+<div style="border: 1px solid gray; padding: 12px;">
+<b>That is our Linear ADRC control equation.</b>
+</div>
+
 <hr />
-<h2 id="mass-system-simulation">Mass System Simulation</h2>
-<p>Start with the simplest case: a unit mass moving along one axis with no
-disturbance.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>a = u
+<h4 id="demo-use-the-linear-adrc-control-equation">Demo: use the Linear ADRC control equation</h4>
+<ul>
+<li>Mass: <span class="arithmatex">\(1\)</span> kg, so <span class="arithmatex">\(b_0=1\)</span>.</li>
+<li>Target: <span class="arithmatex">\(1\)</span> m.</li>
+<li>Estimated position: <span class="arithmatex">\(0.5\)</span> m.</li>
+<li>Estimated velocity: <span class="arithmatex">\(0\)</span>.</li>
+<li>Estimated disturbance: <span class="arithmatex">\(-2\ \mathrm{m/s^2}\)</span>, because the spring pulls left.</li>
+<li>Position gain: <span class="arithmatex">\(k_p=4\)</span>.</li>
+</ul>
+<p><strong>Wanted acceleration</strong></p>
+<div class="arithmatex">\[
+a_{\text{wanted}} = 4(1-0.5) = 2
+\]</div>
+<p><strong>The motor force is</strong></p>
+<div class="arithmatex">\[
+u = \frac{2-(-2)}{1} = 4
+\]</div>
+<p>The motor contributes <span class="arithmatex">\(+4\ \mathrm{m/s^2}\)</span>, while the spring contributes <span class="arithmatex">\(-2\ \mathrm{m/s^2}\)</span>. Together, they produce the wanted <span class="arithmatex">\(+2\ \mathrm{m/s^2}\)</span>.</p>
+<div style="border: 1px solid gray; padding: 12px;">
+<b>The controller has three jobs:
+
+- pull toward the target,
+- brake the motion.
+- compensate for the estimated disturbance.</b>
+</div>
+
+<hr />
+<h3 id="demo">Demo</h3>
+<p><img alt="ADRC spring-cart simulation" src="media/mass-spring.gif" /></p>
+<p>The animation is generated by <code>code/mass-spring.py</code>. Its <code>simulate()</code> method
+steps the physical system forward in time with a 1 ms timestep:</p>
+<ol>
+<li>It calculates the motor force from the ADRC control equation using the
+   target position and the observer estimates <span class="arithmatex">\(z_1\)</span>, <span class="arithmatex">\(z_2\)</span>, and <span class="arithmatex">\(z_3\)</span>.</li>
+<li>It applies the motor force, the spring force <span class="arithmatex">\(-kx\)</span>, and any external
+   force to the cart, then updates its position and velocity.</li>
+<li>It updates the extended state observer, which estimates position,
+   velocity, and the combined disturbance.</li>
+</ol>
+<p>The core of the simulation is:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">():</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.001</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">mass</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="n">spring_stiffness</span> <span class="o">=</span> <span class="mf">2.0</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>    <span class="n">target</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>    <span class="n">kp</span><span class="p">,</span> <span class="n">kd</span> <span class="o">=</span> <span class="mf">16.0</span><span class="p">,</span> <span class="mf">8.0</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="n">position</span> <span class="o">=</span> <span class="n">speed</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="n">z1</span> <span class="o">=</span> <span class="n">z2</span> <span class="o">=</span> <span class="n">z3</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="n">b0</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">mass</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="n">w</span> <span class="o">=</span> <span class="mf">25.0</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="n">beta1</span><span class="p">,</span> <span class="n">beta2</span><span class="p">,</span> <span class="n">beta3</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">w</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">w</span><span class="o">**</span><span class="mi">3</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">times</span><span class="p">:</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>        <span class="n">extra_force</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mf">2.0</span> <span class="k">else</span> <span class="mf">0.0</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>        <span class="c1"># ADRC controller</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>        <span class="n">motor_force</span> <span class="o">=</span> <span class="p">(</span><span class="n">kp</span> <span class="o">*</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">z1</span><span class="p">)</span> <span class="o">-</span> <span class="n">kd</span> <span class="o">*</span> <span class="n">z2</span> <span class="o">-</span> <span class="n">z3</span><span class="p">)</span> <span class="o">/</span> <span class="n">b0</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>        <span class="c1"># Physical cart</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>        <span class="n">spring_force</span> <span class="o">=</span> <span class="o">-</span><span class="n">spring_stiffness</span> <span class="o">*</span> <span class="n">position</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>        <span class="n">acceleration</span> <span class="o">=</span> <span class="p">(</span><span class="n">motor_force</span> <span class="o">+</span> <span class="n">spring_force</span> <span class="o">+</span> <span class="n">extra_force</span><span class="p">)</span> <span class="o">/</span> <span class="n">mass</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>        <span class="c1"># Extended state observer</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>        <span class="n">error</span> <span class="o">=</span> <span class="n">position</span> <span class="o">-</span> <span class="n">z1</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>        <span class="n">dz1</span> <span class="o">=</span> <span class="n">z2</span> <span class="o">+</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">error</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>        <span class="n">dz2</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">*</span> <span class="n">motor_force</span> <span class="o">+</span> <span class="n">z3</span> <span class="o">+</span> <span class="n">beta2</span> <span class="o">*</span> <span class="n">error</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="n">dz3</span> <span class="o">=</span> <span class="n">beta3</span> <span class="o">*</span> <span class="n">error</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="n">z1</span> <span class="o">+=</span> <span class="n">dz1</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>        <span class="n">z2</span> <span class="o">+=</span> <span class="n">dz2</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>        <span class="n">z3</span> <span class="o">+=</span> <span class="n">dz3</span> <span class="o">*</span> <span class="n">dt</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>        <span class="n">position</span> <span class="o">+=</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">dt</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>        <span class="n">speed</span> <span class="o">+=</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">dt</span>
 </code></pre></div></td></tr></table></div>
-<p>The controller command <code>u</code> directly creates acceleration <code>a</code>. Acceleration does
-not change position directly. It first changes velocity, and velocity changes
-position:</p>
+<h4 id="how-the-controller-works">How the controller works</h4>
+<p>The controller has one goal: make the cart behave as if it were moving toward
+the target with a desired acceleration. It uses the estimated position and
+velocity rather than requiring a velocity sensor:</p>
+<div class="arithmatex">\[
+a_{\text{wanted}} = k_p(r-z_1) - k_dz_2
+\]</div>
+<ul>
+<li><span class="arithmatex">\(k_p(r-z_1)\)</span> pulls the cart toward the target.</li>
+<li><span class="arithmatex">\(-k_dz_2\)</span> brakes the cart as it moves, preventing excessive bouncing.</li>
+</ul>
+<p>The cart also has acceleration that the controller does not directly command:
+the spring force and the unknown external push. The ESO combines those effects
+into <span class="arithmatex">\(z_3\)</span>. The controller subtracts that estimate when calculating the motor
+force:</p>
+<div class="arithmatex">\[
+u = \frac{k_p(r-z_1) - k_dz_2 - z_3}{b_0}
+\]</div>
+<p>This means the controller does not need to know the spring stiffness or the
+external force exactly. For example, when the cart is at the 1 m target,
+the spring pulls it left. The controller sees this as a negative disturbance and
+applies enough positive motor force to hold the cart at the target.</p>
+<p>At <span class="arithmatex">\(t=2\)</span> seconds, the simulation adds an unknown <span class="arithmatex">\(1\,\mathrm{N}\)</span> force:</p>
+<div class="arithmatex">\[
+d(t) =
+\begin{cases}
+0 &amp; t &lt; 2 \\
+1\,\mathrm{N} &amp; t \ge 2
+\end{cases}
+\]</div>
+<p>The controller is not told about this force. It only sees the cart position
+and knows the force it commanded. The observer detects the resulting change
+and <span class="arithmatex">\(z_3\)</span> converges to the total disturbance from both the spring and the
+extra push. The controller then compensates for that estimate, allowing the
+cart to return to the <span class="arithmatex">\(1\,\mathrm{m}\)</span> target and remain there.</p>
+<p>To regenerate the animation files:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
-<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>v_dot = a
-<a id="__codelineno-1-2" name="__codelineno-1-2"></a>x_dot = v
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>python<span class="w"> </span>docs/Robotics/control/adrc/code/mass-spring.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">    </span>--export<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span>--output-dir<span class="w"> </span>docs/Robotics/control/adrc/media
 </code></pre></div></td></tr></table></div>
-<p>That is why the state of the mass needs two values:</p>
-<ul>
-<li><code>x</code>: position, where the mass is</li>
-<li><code>v</code>: velocity, how fast the position is changing</li>
-</ul>
-<p>If the simulation only stored <code>x</code>, it would not know how the mass is moving
-between control updates. The velocity <code>v</code> is the memory of previous acceleration.</p>
-<p>With a small timestep <code>dt</code>, the no-disturbance simulation is:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
-<span class="normal"><a href="#__codelineno-2-2">2</a></span>
-<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">a</span> <span class="o">=</span> <span class="n">u</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">v</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">dt</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="n">x</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="n">dt</span>
-</code></pre></div></td></tr></table></div>
-<p>After that basic model is working, add the unknown disturbance. The environment
-adds <code>d</code> to the acceleration, so the plant becomes:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>a = u + d
-</code></pre></div></td></tr></table></div>
-<p>Because this is a unit mass, force and acceleration have the same numeric value.
-For a different mass <code>m</code>, the model would be <code>a = (u + d) / m</code>.</p>
-<p>The simulation advances the continuous system with a small fixed timestep <code>dt</code>.
-At each step:</p>
-<ol>
-<li>Read the current position as the measurement <code>y</code>.</li>
-<li>Let the controller compute a new command <code>u</code>.</li>
-<li>Compute the disturbance at the current time.</li>
-<li>Update acceleration, velocity, and position.</li>
-</ol>
-<p>The plant update is Euler integration:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
-<span class="normal"><a href="#__codelineno-4-2">2</a></span>
-<span class="normal"><a href="#__codelineno-4-3">3</a></span>
-<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">d</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="n">a</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="n">d</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="n">v</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">dt</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="n">x</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="n">dt</span>
-</code></pre></div></td></tr></table></div>
-<p>In <code>code/simple.py</code>, the simulation uses <code>dt = 0.001</code> seconds for <code>T = 5.0</code>
-seconds. The reference position is <code>1.0</code>, so the controller tries to move the
-mass from <code>x = 0</code> to <code>x = 1</code> while rejecting the sinusoidal disturbance.</p>
-<hr />
-<h2 id="adrc-in-codesimplepy">ADRC in <code>code/simple.py</code></h2>
-<p>Active Disturbance Rejection Control (ADRC) treats everything that is not the
-known control input as a disturbance and estimates it online. In
-<a href="code/simple.py"><code>simple.py</code></a>, the plant is a simple mass:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">a</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="n">d</span>
-</code></pre></div></td></tr></table></div>
-<p>In this example, the system is a point mass moving in one dimension. The state
-of the mass is its position <code>x</code> and velocity <code>v</code>. The controller sends a command
-<code>u</code>, and the plant turns the total force into acceleration:</p>
-<ul>
-<li><code>a</code>: acceleration of the mass</li>
-<li><code>u</code>: control input chosen by the controller</li>
-<li><code>d</code>: unknown disturbance added by the real system</li>
-</ul>
-<p>So <code>u</code> is the part we control, and <code>d</code> is the part we do not control. If there
-were no disturbance, the mass would accelerate only according to <code>u</code>. Because
-<code>d</code> exists, the real acceleration becomes <code>u + d</code>.</p>
-<p>The controller only measures position <code>y = x</code>. It does not measure velocity
-directly, and it does not know the disturbance <code>d</code>, so it uses an Extended State
-Observer (ESO) to estimate all three values:</p>
-<ul>
-<li><code>z1</code>: estimated position</li>
-<li><code>z2</code>: estimated velocity</li>
-<li><code>z3</code>: estimated total disturbance</li>
-</ul>
-<p>For a second-order system, position changes because of velocity and velocity
-changes because of acceleration:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
-<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>x_dot = v
-<a id="__codelineno-6-2" name="__codelineno-6-2"></a>v_dot = b0 * u + disturbance
-</code></pre></div></td></tr></table></div>
-<p>That is why the observer needs <code>z1</code> and <code>z2</code>. ADRC then adds one extra state,
-<code>z3</code>, for the unknown part of the acceleration. This includes the real external
-disturbance, modeling error, friction, wrong mass estimate, or anything else
-that makes the plant behave differently from <code>b0 * u</code>.</p>
-<p>The observer compares the estimated position with the measured position:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z1</span> <span class="o">-</span> <span class="n">y</span>
-</code></pre></div></td></tr></table></div>
-<p>Then it corrects <code>z1</code>, <code>z2</code>, and <code>z3</code> using the gains <code>beta1</code>, <code>beta2</code>, and
-<code>beta3</code>:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
-<span class="normal"><a href="#__codelineno-8-2">2</a></span>
-<span class="normal"><a href="#__codelineno-8-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">beta1</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">w0</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">beta2</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">w0</span><span class="o">**</span><span class="mi">2</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">beta3</span> <span class="o">=</span> <span class="n">w0</span><span class="o">**</span><span class="mi">3</span>
-</code></pre></div></td></tr></table></div>
-<p>These gains come from choosing an observer bandwidth <code>w0</code>. A larger <code>w0</code> makes
-<code>z1</code>, <code>z2</code>, and <code>z3</code> react faster to measurement error, but it also amplifies
-noise and can require a smaller <code>dt</code>. In this example:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
-<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">observer_bandwidth</span><span class="o">=</span><span class="mf">30.0</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="n">controller_bandwidth</span><span class="o">=</span><span class="mf">5.0</span>
-</code></pre></div></td></tr></table></div>
-<p>The observer is intentionally faster than the controller. A common starting
-rule is:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>observer_bandwidth = 3 to 10 * controller_bandwidth
-</code></pre></div></td></tr></table></div>
-<p>Here the ratio is <code>30 / 5 = 6</code>, which is a reasonable first choice.</p>
-<p>The controller uses <code>z1</code> and <code>z2</code> like a normal PD controller:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="n">a_desired</span> <span class="o">=</span> <span class="n">kp</span> <span class="o">*</span> <span class="p">(</span><span class="n">ref</span> <span class="o">-</span> <span class="n">z1</span><span class="p">)</span> <span class="o">+</span> <span class="n">kd</span> <span class="o">*</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span> <span class="n">z2</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-<p>Then it subtracts the estimated disturbance:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">u</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_desired</span> <span class="o">-</span> <span class="n">z3</span><span class="p">)</span> <span class="o">/</span> <span class="n">b0</span>
-</code></pre></div></td></tr></table></div>
-<p>So the role of the three observer states is:</p>
-<ul>
-<li><code>z1</code> tells the controller where the mass is.</li>
-<li><code>z2</code> tells the controller how fast the mass is moving.</li>
-<li><code>z3</code> tells the controller how much unknown acceleration should be cancelled.</li>
-</ul>
-<hr />
-<h2 id="reference">Reference</h2>
-<p><a href="https://www.youtube.com/watch?v=4SE_t6-DnQ4&amp;list=PLq9ofiBVTfA4VNMVnCCFWjLdfVxZqoWKv">adrc controller</a>
-- <a href="https://youtu.be/DS5VEFD-r_A"> Active Disturbance Rejection Control the intuitive way part 1 </a></p>
 
 
 
