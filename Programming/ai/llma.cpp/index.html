@@ -1,0 +1,1482 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guides, notes and useful stuff for learning robotics systems.">
+      
+      
+        <meta name="author" content="robobe">
+      
+      
+        <link rel="canonical" href="https://robobe.github.io/Programming/ai/llma.cpp/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>llma.cpp - Nodes and Pipes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+      <link rel="stylesheet" href="../../../assets/mermaid-viewer.css">
+    
+      <link rel="stylesheet" href="../../../assets/cpp.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Nodes and Pipes" class="md-header__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nodes and Pipes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              llma.cpp
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROS/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ROS
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Simulation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Simulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Robotics/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Robotics
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Programming
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Embedded/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Embedded
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../DevOps/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DevOps
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../Other/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Other
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../projects/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Projects
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nodes and Pipes" class="md-nav__button md-logo" aria-label="Nodes and Pipes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Nodes and Pipes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/robobe/new_blog" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Simulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Robotics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robotics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedded
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DevOps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DevOps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Other/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuda-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CUDA support
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CUDA support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-latest-cuda-toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        install latest cuda toolkit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-path-for-current-nvcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update path for current nvcc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-llmacpp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build llma.cpp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-tutorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI tutorial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models-to-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models to download
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qwen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qwen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vision-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vision example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coding-model-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coding model example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-web-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Server web chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install PI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Config pi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usgae" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usgae
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usgae">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        login
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#omp-oh-my-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OMP (Oh My Pi)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <span class="md-tag">llma</span>
+      
+    
+  </nav>
+
+
+  
+  
+
+
+  <h1>llma.cpp</h1>
+
+<p>llama.cpp is a lightweight C/C++ runtime for running large language models locally. It uses efficient model formats and quantization to make inference practical on CPUs and optionally GPUs, without requiring a cloud service.</p>
+<h2 id="install">Install</h2>
+<h3 id="cuda-support">CUDA support</h3>
+<h4 id="install-latest-cuda-toolkit">install latest cuda toolkit</h4>
+<p><a href="https://developer.nvidia.com/cuda-downloads">cude download</a></p>
+<p><img alt="alt text" src="images/cuda_install.png" /></p>
+<h3 id="update-path-for-current-nvcc">Update path for current nvcc</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># 1. Append the new CUDA 13 paths to the bottom of your ~/.bashrc file</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=/usr/local/cuda-13/bin:$PATH&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export LD_LIBRARY_PATH=/usr/local/cuda-13/lib64:$LD_LIBRARY_PATH&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="c1"># 2. Apply the changes immediately to your current terminal session</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="c1"># 3. Verify that the system is now pointing to the correct version</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>nvcc<span class="w"> </span>--version
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="build-llmacpp">Build llma.cpp</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># 1. Completely delete the broken build cache directory</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>rm<span class="w"> </span>-rf<span class="w"> </span>build/
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># 2. Configure CMake by explicitly pointing to the CUDA 13 nvcc compiler</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build<span class="w"> </span>-DGGML_CUDA<span class="o">=</span>ON<span class="w"> </span>-DCMAKE_CUDA_COMPILER<span class="o">=</span>/usr/local/cuda-13/bin/nvcc
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1"># 3. Build llama.cpp</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build<span class="w"> </span>-j
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="models">Models</h3>
+<p>Download GGUF models from <a href="https://huggingface.co/ggml-org">ggml-org on Hugging Face</a>, such as <a href="https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/tree/main">Qwen2.5-VL-3B-Instruct-GGUF</a>. The <a href="https://github.com/ggml-org/llama.cpp/blob/master/docs/models.md">llama.cpp model guide</a> explains downloading models with <code>-hf</code>.</p>
+<div class="admonition info path">
+<p class="admonition-title">Info</p>
+<p>The models locate in <code>~/.cache/huggingface/hub</code></p>
+</div>
+<p>Model files usually use the <code>.gguf</code> format, which packages the model weights, tokenizer, and metadata for llama.cpp. A typical name is <code>Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf</code>: model family, model size, tuned variant, then quantization.</p>
+<p><code>Q4_K_M</code> is a 4-bit K-quant model in the medium-quality variant. It is a practical balance of file size, memory use, speed, and output quality; lower-bit variants use less memory, while higher-bit variants generally preserve more quality.</p>
+<table>
+<thead>
+<tr>
+<th>Example filename</th>
+<th>Quantization</th>
+<th>Typical trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Model-Q2_K.gguf</code></td>
+<td>2-bit K-quant</td>
+<td>Smallest memory use, with a noticeable quality loss</td>
+</tr>
+<tr>
+<td><code>Model-Q4_K_M.gguf</code></td>
+<td>4-bit K-quant, medium variant</td>
+<td>A common balance of quality and memory use</td>
+</tr>
+<tr>
+<td><code>Model-Q6_K.gguf</code></td>
+<td>6-bit K-quant</td>
+<td>More memory use, with quality closer to the original model</td>
+</tr>
+<tr>
+<td><code>Model-Q8_0.gguf</code></td>
+<td>8-bit quantization</td>
+<td>Largest of these examples, with the least quality loss</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q4</td>
+<td>4-bit quantization (weights are stored using ~4 bits per parameter)</td>
+</tr>
+<tr>
+<td>K</td>
+<td>Uses K-quant method (a more advanced quantization technique from llama.cpp)</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Medium quality variant of the K-quant</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="cli-tutorial">CLI tutorial</h3>
+<p><code>-hf</code> downloads the selected GGUF file on first use and reuses its local cache afterwards.</p>
+<ol>
+<li>Download and chat with a model:</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>./build/bin/llama-cli<span class="w"> </span>-hf<span class="w"> </span>ggml-org/Qwen2.5-VL-3B-Instruct-GGUF:Q4_K_M<span class="w">  </span>-c<span class="w"> </span><span class="m">16384</span>
+</code></pre></div></td></tr></table></div>
+<p><img alt="alt text" src="images/llama_cpp.png" /></p>
+<div class="admonition tip context">
+<p class="admonition-title">Tip</p>
+<p>In LLMs, Context (often called the context window) is the short-term memory of the AI. It is the total amount of text—both your prompt and the AI's response—that the model can read and remember at any given single moment.</p>
+<p>Think of it like a desk surface:
+- A <strong>small context</strong> means a small desk. The AI can  only look at a few pages of text at once. If your conversation gets too long, it forgets the beginning.
+- A <strong>large context</strong> means a massive desk. The AI can read entire books, long code files, or multiple high-resolution images all at the exact same time without forgetting anything.</p>
+</div>
+<div class="admonition tip context and return text for code">
+<p class="admonition-title">Tip</p>
+<ul>
+<li>To prevent Out of Memory crashes on your RTX 5070: Keep -c around 4096 or <strong>16384</strong>.</li>
+<li>To prevent the AI from cutting off mid-code: Always set <strong>-n -1</strong> so it has the freedom to write the full script without a strict limit.</li>
+</ul>
+</div>
+<hr />
+<h3 id="models-to-download">Models to download</h3>
+<h3 id="qwen">Qwen</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>[Family/Version] - [Capability] - [Size] - [Type] - [File Format] : [Quantization]
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>     Qwen2.5     -     VL       -  3B   - Instruct -   GGUF      :   Q4_K_M
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Qwen2.5 — family and version:</strong> Alibaba's Qwen model family, version 2.5.</li>
+<li><strong>VL — capability:</strong> Vision-Language, meaning the model supports text and images. Other variants include <code>Coder</code> for programming and <code>Math</code> for mathematics.</li>
+<li><strong>3B — parameter count:</strong> Approximately 3 billion parameters. Larger models generally need more memory; size alone does not determine quality or speed.</li>
+<li><strong>Instruct — training type:</strong> Fine-tuned to follow instructions and respond as an assistant. A <code>Base</code> model primarily continues text and has not received this instruction tuning.</li>
+<li><strong>GGUF — file format:</strong> Stores model weights and metadata for runtimes such as llama.cpp.</li>
+<li><strong>Q4_K_M — quantization:</strong> A mostly 4-bit K-quant scheme with a medium variant, balancing memory use and model quality.</li>
+</ul>
+<p>Here, <code>:Q4_K_M</code> selects a quantization in a llama.cpp Hugging Face download identifier. An actual filename may look like <code>Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Common Qwen capabilities and uses</p>
+<table>
+<thead>
+<tr>
+<th>Capability tag</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No specialist tag</strong></td>
+<td>General writing, summarization, translation, and questions. Check the model card for supported inputs.</td>
+</tr>
+<tr>
+<td><strong>Coder</strong></td>
+<td>Generate, explain, debug, and complete code.</td>
+</tr>
+<tr>
+<td><strong>Math</strong></td>
+<td>Solve mathematical problems and follow mathematical reasoning.</td>
+</tr>
+<tr>
+<td><strong>VL</strong> (Vision-Language)</td>
+<td>Understand images, read text in screenshots or documents, and interpret charts. Some versions also support video.</td>
+</tr>
+<tr>
+<td><strong>Audio</strong></td>
+<td>Understand audio, transcribe speech, and answer questions about sounds.</td>
+</tr>
+<tr>
+<td><strong>Omni</strong></td>
+<td>Combine text, image, audio, and video understanding, with text and speech responses.</td>
+</tr>
+</tbody>
+</table>
+<p>Tags vary by generation, and runtime support depends on the specific model. <code>Instruct</code> describes instruction tuning, while <code>GGUF</code> and <code>Q4_K_M</code> describe packaging and quantization.</p>
+<p>Sources: <a href="https://qwen.readthedocs.io/en/stable/getting_started/concepts.html">Qwen model concepts</a>, <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni technical report</a>.</p>
+</div>
+<hr />
+<h3 id="server">Server</h3>
+<ol>
+<li>Start a local OpenAI-compatible API server. It listens on <code>http://127.0.0.1:9931</code> by default:</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>./build/bin/llama-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">  </span>-hf<span class="w"> </span>ggml-org/Qwen2.5-VL-3B-Instruct-GGUF:Q4_K_M
+</code></pre></div></td></tr></table></div>
+<p>Add <code>-ngl 99</code> to either command to offload as many layers as possible to a compatible GPU.</p>
+<ol>
+<li>In another terminal, send a chat request:</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>curl<span class="w"> </span>http://127.0.0.1:9931/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;:&quot;local&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Hello&quot;}]}&#39;</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="vision-example">Vision example</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>./build/bin/llama-mtmd-cli \
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>  -hf ggml-org/Qwen2.5-VL-3B-Instruct-GGUF:Q4_K_M \
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>  --image &quot;$HOME/Downloads/sim_godot.png&quot; \
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>  -p &quot;Describe the image in brief&quot; \
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>  -n 128
+</code></pre></div></td></tr></table></div>
+<hr />
+<h3 id="coding-model-example">Coding model example</h3>
+<p><a href="https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF">Qwen2.5-Coder-7B-Instruct-GGUF</a> is a code-focused model. The <code>Q4_K_M</code> variant is about 4.7 GB and is a practical choice for local coding assistance.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">download the model</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>./llama-cli<span class="w"> </span>-hf<span class="w"> </span>Qwen/Qwen2.5-Coder-7B-Instruct-GGUF:Q4_K_M
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>./llama-server<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">  </span>-hf<span class="w"> </span>Qwen/Qwen2.5-Coder-7B-Instruct-GGUF:Q4_K_M<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">  </span>-ngl<span class="w"> </span><span class="m">99</span>
+</code></pre></div></td></tr></table></div>
+<p>The server exposes an OpenAI-compatible API at <code>http://127.0.0.1:9931/v1</code>, which can be used by OpenCode. In another terminal, send a coding prompt:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>curl<span class="w"> </span>http://127.0.0.1:9931/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;:&quot;local&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Write hello world Python function.&quot;}]}&#39;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">pipe to jq for content only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span>
+<span class="normal"><a href="#__codelineno-10-8">8</a></span>
+<span class="normal"><a href="#__codelineno-10-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://127.0.0.1:9931/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="s1">    &quot;messages&quot;: [</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="s1">      {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write a Python hello-world program.&quot;}</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="s1">    ],</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="s1">    &quot;temperature&quot;: 0.2,</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="s1">    &quot;max_tokens&quot;: 500</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="s1">  }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.choices[0].message.content&#39;</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">bench check</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>./llama-bench<span class="w">   </span>-hf<span class="w"> </span>Qwen/Qwen2.5-Coder-7B-Instruct-GGUF:Q4_K_M<span class="w">   </span>-ngl<span class="w"> </span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="m">99</span><span class="w">   </span>-p<span class="w"> </span><span class="m">512</span><span class="w">   </span>-n<span class="w"> </span><span class="m">128</span><span class="w">   </span>-r<span class="w"> </span><span class="m">3</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="c1">##</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>ggml_cuda_init:<span class="w"> </span>found<span class="w"> </span><span class="m">1</span><span class="w"> </span>CUDA<span class="w"> </span>devices<span class="w"> </span><span class="o">(</span>Total<span class="w"> </span>VRAM:<span class="w"> </span><span class="m">7705</span><span class="w"> </span>MiB<span class="o">)</span>:
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">  </span>Device<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>NVIDIA<span class="w"> </span>GeForce<span class="w"> </span>RTX<span class="w"> </span><span class="m">5070</span><span class="w"> </span>Laptop<span class="w"> </span>GPU,<span class="w"> </span>compute<span class="w"> </span>capability<span class="w"> </span><span class="m">12</span>.0,<span class="w"> </span>VMM:<span class="w"> </span>yes,<span class="w"> </span>VRAM:<span class="w"> </span><span class="m">7705</span><span class="w"> </span>MiB
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="p">|</span><span class="w"> </span>model<span class="w">                          </span><span class="p">|</span><span class="w">       </span>size<span class="w"> </span><span class="p">|</span><span class="w">     </span>params<span class="w"> </span><span class="p">|</span><span class="w"> </span>backend<span class="w">    </span><span class="p">|</span><span class="w"> </span>ngl<span class="w"> </span><span class="p">|</span><span class="w">            </span><span class="nb">test</span><span class="w"> </span><span class="p">|</span><span class="w">                  </span>t/s<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="p">|</span><span class="w"> </span>------------------------------<span class="w"> </span><span class="p">|</span><span class="w"> </span>---------:<span class="w"> </span><span class="p">|</span><span class="w"> </span>---------:<span class="w"> </span><span class="p">|</span><span class="w"> </span>----------<span class="w"> </span><span class="p">|</span><span class="w"> </span>--:<span class="w"> </span><span class="p">|</span><span class="w"> </span>--------------:<span class="w"> </span><span class="p">|</span><span class="w"> </span>-------------------:<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="p">|</span><span class="w"> </span>qwen2<span class="w"> </span>7B<span class="w"> </span>Q4_K<span class="w"> </span>-<span class="w"> </span>Medium<span class="w">         </span><span class="p">|</span><span class="w">   </span><span class="m">4</span>.36<span class="w"> </span>GiB<span class="w"> </span><span class="p">|</span><span class="w">     </span><span class="m">7</span>.62<span class="w"> </span>B<span class="w"> </span><span class="p">|</span><span class="w"> </span>CUDA<span class="w">       </span><span class="p">|</span><span class="w">  </span><span class="m">99</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>pp512<span class="w"> </span><span class="p">|</span><span class="w">       </span><span class="m">679</span>.68<span class="w"> </span>±<span class="w"> </span><span class="m">74</span>.75<span class="w"> </span><span class="p">|</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="p">|</span><span class="w"> </span>qwen2<span class="w"> </span>7B<span class="w"> </span>Q4_K<span class="w"> </span>-<span class="w"> </span>Medium<span class="w">         </span><span class="p">|</span><span class="w">   </span><span class="m">4</span>.36<span class="w"> </span>GiB<span class="w"> </span><span class="p">|</span><span class="w">     </span><span class="m">7</span>.62<span class="w"> </span>B<span class="w"> </span><span class="p">|</span><span class="w"> </span>CUDA<span class="w">       </span><span class="p">|</span><span class="w">  </span><span class="m">99</span><span class="w"> </span><span class="p">|</span><span class="w">           </span>tg128<span class="w"> </span><span class="p">|</span><span class="w">         </span><span class="m">11</span>.72<span class="w"> </span>±<span class="w"> </span><span class="m">0</span>.04<span class="w"> </span><span class="p">|</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="pi">Pi</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>./llama-server \
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>  -hf unsloth/Qwen3.5-4B-GGUF:Q4_K_M \
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>  --alias local-qwen \
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>  --jinja \
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>  --chat-template-kwargs &#39;{&quot;enable_thinking&quot;:false}&#39; \
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>  --no-skip-chat-parsing \
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>  --no-mmproj \
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a>  -ngl 99 \
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a>  -np 1 \
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>  -c 16384 \
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a>  --host 127.0.0.1 \
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a>  --port 8080
+</code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Meaning</th>
+<th>Why use it here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-hf unsloth/Qwen3.5-4B-GGUF:Q4_K_M</code></td>
+<td>Downloads and loads the <code>Q4_K_M</code> quantization from the named Hugging Face repository.</td>
+<td>Avoids manually downloading a GGUF file.</td>
+</tr>
+<tr>
+<td><code>--alias local-qwen</code></td>
+<td>Publishes the model under this name in the server's OpenAI-compatible API.</td>
+<td>Clients can request <code>local-qwen</code> instead of the Hugging Face repository name.</td>
+</tr>
+<tr>
+<td><code>--jinja</code></td>
+<td>Enables the model's Jinja chat template.</td>
+<td>Required for the model's chat and structured tool-call format.</td>
+</tr>
+<tr>
+<td><code>--no-skip-chat-parsing</code></td>
+<td>Parses structured chat output instead of returning it as plain text.</td>
+<td>Lets API clients receive parsed assistant and tool-call messages.</td>
+</tr>
+<tr>
+<td><code>--no-mmproj</code></td>
+<td>Disables automatic loading of a multimodal projector.</td>
+<td>This text-only setup does not need image support.</td>
+</tr>
+<tr>
+<td><code>-ngl 99</code></td>
+<td>Offloads as many model layers as possible to the GPU.</td>
+<td><code>99</code> exceeds the model's layer count, so all layers that fit use CUDA.</td>
+</tr>
+<tr>
+<td><code>-np 1</code></td>
+<td>Creates one parallel request slot.</td>
+<td>Keeps VRAM use predictable on an 8 GB GPU.</td>
+</tr>
+<tr>
+<td><code>-c 8192</code></td>
+<td>Sets the context window to 8,192 tokens.</td>
+<td>Fits local agent prompts while keeping the KV cache within VRAM.</td>
+</tr>
+<tr>
+<td><code>--host 127.0.0.1</code></td>
+<td>Binds the server only to the local machine.</td>
+<td>Prevents other devices on the network from accessing the model.</td>
+</tr>
+<tr>
+<td><code>--port 8080</code></td>
+<td>Selects the HTTP port.</td>
+<td>Matches the Pi configuration's <code>baseUrl</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="server-web-chat">Server web chat</h3>
+<p><img alt="alt text" src="images/llama_web.png" /></p>
+<h3 id="install-pi">Install PI</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">install</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://pi.dev/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div></td></tr></table></div>
+<h3 id="config-pi">Config pi</h3>
+<p>put <code>model.json</code> in folder <code>~/.pi/agent</code></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.pi/agent/models.json</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span>
+<span class="normal"><a href="#__codelineno-14-12">12</a></span>
+<span class="normal"><a href="#__codelineno-14-13">13</a></span>
+<span class="normal"><a href="#__codelineno-14-14">14</a></span>
+<span class="normal"><a href="#__codelineno-14-15">15</a></span>
+<span class="normal"><a href="#__codelineno-14-16">16</a></span>
+<span class="normal"><a href="#__codelineno-14-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;providers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">    </span><span class="nt">&quot;local-llama&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">      </span><span class="nt">&quot;baseUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:8080/v1&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">      </span><span class="nt">&quot;api&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openai-completions&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">      </span><span class="nt">&quot;apiKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="w">      </span><span class="nt">&quot;models&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="w">          </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local-qwen&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Local Qwen3.5&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="w">          </span><span class="nt">&quot;contextWindow&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16384</span><span class="p">,</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="w">          </span><span class="nt">&quot;maxTokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4096</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="usgae">Usgae</h3>
+<p><code>bash title run
+pi</code></p>
+<h4 id="login">login</h4>
+<p><img alt="alt text" src="images/pi_llama_login.png" /></p>
+<h4 id="set-model">Set model</h4>
+<p><img alt="alt text" src="images/pi_llama_models.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">qwen 2.5</p>
+<p>I don't success with qwen 2.5 in agent mode that the model create edit or run files. qwen 3.5 run out of the box</p>
+</div>
+<hr />
+<h2 id="omp-oh-my-pi">OMP (Oh My Pi)</h2>
+<hr />
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://youtu.be/eItrjzseZdo">28 llama.cpp Flags You Should Know </a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="../" target="_blank" rel="noopener" title="Back to parent" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "content.code.annotate", "navigation.top", "navigation.tabs", "navigation.sections", "navigation.expand", "search.suggest", "search.highlight", "search.share", "content.code.mermaid"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+      
+        <script src="../../../assets/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+      
+        <script src="../../../assets/mermaid-viewer.js"></script>
+      
+        <script src="../../../assets/cpp-runner.js"></script>
+      
+    
+  </body>
+</html>
