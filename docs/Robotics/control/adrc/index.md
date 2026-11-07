@@ -195,6 +195,72 @@ steps the physical system forward in time with a 1 ms timestep:
 3. It updates the extended state observer, which estimates position,
    velocity, and the combined disturbance.
 
+The core of the simulation is:
+
+```python
+def simulate():
+    dt = 0.001
+    times = np.arange(0, 6, dt)
+    mass = 1.0
+    spring_stiffness = 2.0
+    target = 1.0
+    kp, kd = 16.0, 8.0
+    position = speed = 0.0
+    z1 = z2 = z3 = 0.0
+    b0 = 1.0 / mass
+    w = 25.0
+    beta1, beta2, beta3 = 3 * w, 3 * w**2, w**3
+
+    for t in times:
+        extra_force = 1.0 if t >= 2.0 else 0.0
+
+        # ADRC controller
+        motor_force = (kp * (target - z1) - kd * z2 - z3) / b0
+
+        # Physical cart
+        spring_force = -spring_stiffness * position
+        acceleration = (motor_force + spring_force + extra_force) / mass
+
+        # Extended state observer
+        error = position - z1
+        dz1 = z2 + beta1 * error
+        dz2 = b0 * motor_force + z3 + beta2 * error
+        dz3 = beta3 * error
+        z1 += dz1 * dt
+        z2 += dz2 * dt
+        z3 += dz3 * dt
+
+        position += speed * dt + 0.5 * acceleration * dt**2
+        speed += acceleration * dt
+```
+
+#### How the controller works
+
+The controller has one goal: make the cart behave as if it were moving toward
+the target with a desired acceleration. It uses the estimated position and
+velocity rather than requiring a velocity sensor:
+
+$$
+a_{\text{wanted}} = k_p(r-z_1) - k_dz_2
+$$
+
+- $k_p(r-z_1)$ pulls the cart toward the target.
+- $-k_dz_2$ brakes the cart as it moves, preventing excessive bouncing.
+
+The cart also has acceleration that the controller does not directly command:
+the spring force and the unknown external push. The ESO combines those effects
+into $z_3$. The controller subtracts that estimate when calculating the motor
+force:
+
+$$
+u = \frac{k_p(r-z_1) - k_dz_2 - z_3}{b_0}
+$$
+
+This means the controller does not need to know the spring stiffness or the
+external force exactly. For example, when the cart is at the 1 m target,
+the spring pulls it left. The controller sees this as a negative disturbance and
+applies enough positive motor force to hold the cart at the target.
+
 At $t=2$ seconds, the simulation adds an unknown $1\,\mathrm{N}$ force:
 
 $$

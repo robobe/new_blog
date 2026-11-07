@@ -13,22 +13,22 @@ tags:
 <div class="grid-container">
     <div class="grid-item">
         <a href="pid">
-                <img src="images/pid.png"  width="150" height="150">
-                <p>PID</p></a>
+            <img src="images/pid.png" alt="PID controller" width="150" height="150">
+            <p>PID</p>
+        </a>
     </div>
-     <div class="grid-item">
+    <div class="grid-item">
         <a href="state_space_model">
-                <img src="images/state_space.png"  width="150" height="150">
-                <p>State Space Model</p>
-            </a>
+            <img src="images/state_space.png" alt="State-space model" width="150" height="150">
+            <p>State Space Model</p>
+        </a>
     </div>
-    <!-- <div class="grid-item">
-        <a href="lqr">
-                <img src="images/lqr.png"  width="150" height="150">
-                <p>LQR</p>
-            </a>
-    </div> -->
-   
+    <div class="grid-item">
+        <a href="adrc">
+            <img src="images/ADRC.png" alt="Active Disturbance Rejection Control" width="150" height="150">
+            <p>ADRC</p>
+        </a>
+    </div>
 </div>
 ---
 
